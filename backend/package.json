@@ -1,0 +1,35 @@
+{
+  "name": "aast-backend-combined",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "neo": "nodemon index.js neo",
+    "sql": "nodemon index.js sql",
+    "meili": "nodemon index.js meili"
+  },
+  "dependencies": {
+    "@chroma-core/default-embed": "^0.1.9",
+    "axios": "^1.13.2",
+    "body-parser": "^1.20.2",
+    "chromadb": "^3.1.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "meilisearch": "^0.31.0",
+    "mysql2": "^3.6.0",
+    "neo4j-driver": "^5.9.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10",
+    "vite": "^7.2.4"
+  },
+  "description": "- db/mysql.js        - MySQL pool helper\r - db/neo4j.js        - Neo4j driver + session helper\r - db/meili.js        - MeiliSearch client\r - routes/auth.js     - authentication (MySQL)\r - routes/graph.js    - graph queries (Neo4j)\r - routes/search.js   - search + indexing (MeiliSearch)\r - index.js           - main Express server",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
