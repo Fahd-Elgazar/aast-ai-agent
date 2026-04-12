@@ -1,10 +1,10 @@
-// db/neo4j.js
 import neo4j from "neo4j-driver";
 import dotenv from "dotenv";
 
 dotenv.config();
 
 let driver;
+const DATABASE = process.env.NEO4J_DATABASE || "neo4j-data-new";
 
 export async function connectNeo4j() {
   try {
@@ -16,9 +16,10 @@ export async function connectNeo4j() {
       )
     );
 
-    // Verify connection
     await driver.verifyConnectivity();
     console.log("✅ Connected to Neo4j successfully.");
+    console.log("🗄️ Using Neo4j database:", DATABASE);
+
     return driver;
   } catch (error) {
     console.error("❌ Failed to connect to Neo4j:", error.message);
@@ -27,8 +28,13 @@ export async function connectNeo4j() {
 }
 
 export function getSession() {
-  if (!driver) throw new Error("Neo4j driver not initialized. Call connectNeo4j() first.");
-  return driver.session();
+  if (!driver) {
+    throw new Error("Neo4j driver not initialized. Call connectNeo4j() first.");
+  }
+
+  return driver.session({
+    database: DATABASE, // 🔴 FORCE DATABASE
+  });
 }
 
 export { driver };

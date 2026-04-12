@@ -1,4 +1,5 @@
-// orchestrator.js (top)
+// orchestrator.js
+
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -7,190 +8,482 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import fs from "fs";
 import path from "path";
+import fetch from "node-fetch";
 
 import chatbotRouter from "./routes/chatbot.js";
 import { searchFAQ } from "./faqService.js";
-import { callGeminiMessages } from "./geminiService.js";
 import { checkGreeting } from "./greetings.js";
 import { ragSearch } from "./ragService.js";
+import { fetchNeo4jContext } from "./services/neo4jcontext.js";
+import { connectNeo4j } from "./db/neo4j.js";
+import { getSession } from "./db/neo4j.js";
 
 const app = express();
 const PORT = 8000;
 
 /* ============================================================
-   📁 LOGGING SETUP
+   📁 LOGGING SYSTEM (IMPROVED)
 ============================================================ */
+
 const LOG_DIR = path.resolve(process.cwd(), "logs");
-try { fs.mkdirSync(LOG_DIR, { recursive: true }); } catch (e) {}
+
+if (!fs.existsSync(LOG_DIR)) {
+  fs.mkdirSync(LOG_DIR, { recursive: true });
+}
+
 const QUERY_LOG = path.join(LOG_DIR, "chat.log");
 
-console.log("LOG PATH:", QUERY_LOG, "CWD:", process.cwd());
-
 function logToFile(text) {
+
+  const timestamp = new Date().toLocaleString();
+  const entry = `[${timestamp}] ${text}\n`;
+
   try {
-    fs.appendFileSync(QUERY_LOG, text + "\n", "utf8");
+    fs.appendFileSync(QUERY_LOG, entry, "utf8");
   } catch (err) {
-    console.error("❌ Failed to write query log:", err);
+    console.error("❌ Log write failed:", err);
   }
+
 }
 
 function makeId() {
-  return Math.random().toString(16).slice(2, 8);
+  return Math.random().toString(16).slice(2, 10);
 }
 
 app.use(cors());
 app.use(bodyParser.json());
-
 app.use("/api/chatbot/legacy", chatbotRouter);
 
 /* ============================================================
-   🧠 Conversation memory
+   🧠 CONVERSATION MEMORY
 ============================================================ */
-const conversations = new Map();
 
-function pushConversationTurn(convId, role, content, maxTurns = 12) {
-  const arr = conversations.get(convId) || [];
-  arr.push({ role, content });
-  const start = Math.max(0, arr.length - maxTurns);
-  conversations.set(convId, arr.slice(start));
+const conversations = new Map();
+const MAX_TURNS = 12;
+const SESSION_TTL = 3 * 60 * 60 * 1000;
+
+function getConversation(cid) {
+
+  const now = Date.now();
+  const convo = conversations.get(cid);
+
+  if (!convo || now - convo.lastActive > SESSION_TTL) {
+
+    const fresh = {
+      messages: [
+        {
+          role: "system",
+          content: `
+You are the AAST University Assistant.
+
+You receive verified knowledge triples from a Knowledge Graph.
+
+Rules:
+- Only use the information provided in the graph context.
+- Do not invent information.
+- If the graph does not contain the answer say:
+"I don't have that information in the knowledge graph."
+
+Be concise and professional.
+`
+        }
+      ],
+      lastActive: now
+    };
+
+    conversations.set(cid, fresh);
+    return fresh;
+  }
+
+  convo.lastActive = now;
+  return convo;
+}
+
+function pushTurn(convo, role, content) {
+
+  convo.messages.push({ role, content });
+
+  if (convo.messages.length > MAX_TURNS) {
+
+    const system = convo.messages[0];
+    const tail = convo.messages.slice(-MAX_TURNS);
+
+    convo.messages = [system, ...tail];
+  }
 }
 
 /* ============================================================
-   🤖 MAIN ORCHESTRATOR
+   🧠 OLLAMA INTENT CLASSIFIER (WITH DEBUG LOGGING)
 ============================================================ */
-app.post("/api/chatbot/query", async (req, res) => {
-  const { query } = req.body ?? {};
 
-  if (!query || typeof query !== "string") {
-    return res.status(400).json({ error: "query is required" });
-  }
-
-  const cid = makeId();
-  const time = new Date().toLocaleString();
-
-  console.log(`${time} 🔥 [${cid}] User: ${query}`);
-  logToFile(`${time} | [${cid}] User: ${query}`);
-
-  /* ------------------ GREETING ------------------ */
-  let answer = checkGreeting(query);
-  if (answer) {
-    logToFile(`${time} | [${cid}] Bot: ${answer}`);
-    return res.json({ answer, source: "greeting", cid });
-  }
-
-  /* ------------------ STEP 1: RAG FIRST ------------------ */
-  let ragUsed = false;
+async function extractDynamicIntent(query) {
 
   try {
-    const rag = await ragSearch(query, 3);
-    const convId = cid;
 
-    if (rag && rag.distance < 0.25) {
-      logToFile(`${time} | [${cid}] Bot (RAG): ${rag.doc}`);
-      return res.json({
-        answer: rag.doc,
-        source: "rag-only",
-        cid
-      });
-    }
+    const res = await fetch("http://localhost:11434/api/generate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "llama3.2:3b-instruct-q4_K_M",
+      prompt: `
+      Extract structured information from the query.
 
-    if (rag) {
-      ragUsed = true;
+      Return in this exact format:
+      INTENT: <ONE WORD>
+      ENTITIES: <comma separated list>
 
-      if (!conversations.has(convId)) {
-        conversations.set(convId, [
-          {
-            role: "system",
-            content:
-              "You are an official AAST college assistant. Be concise and factual. If you don't know, say you don't know."
-          }
-        ]);
+      Examples:
+      Query: Who is the dean of AI college?
+      INTENT: DEAN
+      ENTITIES: AI college
+
+      Query: What are prerequisites for machine learning?
+      INTENT: PREREQUISITE
+      ENTITIES: Machine Learning
+
+      Query: ${query}
+
+      Output:
+      `,
+        stream: false
+      })
+    });
+
+    const data = await res.json();
+
+    const rawToken = data?.response || "";
+    // 🔵 ADDED: structured parsing
+    let intent = "ALL";
+    let entities = [];
+
+    try {
+
+      const intentMatch = rawToken.match(/INTENT:\s*(.*)/i);
+      const entityMatch = rawToken.match(/ENTITIES:\s*(.*)/i);
+
+      if (intentMatch) {
+        intent = intentMatch[1].trim().toUpperCase().replace(/[^A-Z]/g, "");
       }
 
-      pushConversationTurn(
-        convId,
-        "system",
-        `Use the following AAST context to answer:\n${rag.doc}`,
-        12
+      if (entityMatch) {
+        entities = entityMatch[1]
+          .split(",")
+          .map(e => e.trim())
+          .filter(e => e.length > 0);
+      }
+
+    } catch (err) {
+      console.log("⚠️ Parsing failed");
+    }
+
+    console.log(`🔎 LLM RAW INTENT TOKEN: "${rawToken.trim()}"`);
+    logToFile(`OLLAMA INTENT RAW TOKEN: "${rawToken.trim()}"`);
+
+    const cleanKeyword =
+      rawToken
+        .trim()
+        .toUpperCase()
+        .replace(/[^A-Z]/g, "");
+
+    console.log(`🧠 LLM CLEANED KEYWORD: ${cleanKeyword || "ALL"}`);
+    logToFile(`OLLAMA INTENT CLEANED: "${cleanKeyword}"`);
+
+      return {
+        intent: intent || "ALL",
+        entities
+      };
+
+  } catch (err) {
+
+    logToFile(`OLLAMA INTENT ERROR: ${err.message}`);
+    console.error("❌ Intent extraction failed:", err);
+
+    return "ALL";
+  }
+}
+// 🔵 ADDED: ENTITY SEARCH
+async function fetchEntitiesFromNeo4j(entities) {
+
+  if (!entities || entities.length === 0) return [];
+
+  const session = getSession();
+
+  try {
+
+    const results = [];
+
+    for (const entity of entities) {
+
+      const res = await session.run(
+        `
+        MATCH (n)
+        WHERE toLower(n.name) CONTAINS toLower($entity)
+        OPTIONAL MATCH (n)-[r]->(m)
+        RETURN n, r, m
+        LIMIT 10
+        `,
+        { entity }
       );
-    }
-  } catch (err) {
-    console.error("❌ RAG failed:", err);
-  }
 
-  /* ------------------ STEP 2: FAQ (FALLBACK) ------------------ */
-  try {
-    const faqHit = searchFAQ(query);
-    if (faqHit && !ragUsed) {
-      logToFile(`${time} | [${cid}] Bot: ${faqHit.answer}`);
-      return res.json({
-        answer: faqHit.answer,
-        source: "faq",
-        faqId: faqHit.id,
-        cid
-      });
-    }
-  } catch (err) {
-    console.error("❌ FAQ search failed:", err);
-  }
+      res.records.forEach(record => {
 
-  /* ------------------ STEP 3: LLM ------------------ */
-  try {
-    const convId = cid;
+        const n = record.get("n");
+        const r = record.get("r");
+        const m = record.get("m");
 
-    if (!conversations.has(convId)) {
-      conversations.set(convId, [
-        {
-          role: "system",
-          content:
-            "You are an official AAST college assistant. Be concise and factual. If you don't know, say you don't know."
+        if (n && r && m) {
+          results.push({
+            text: `(${n.labels[0]}: "${n.properties.name}") --[${r.type}]--> (${m.labels[0]}: "${m.properties.name}")`
+          });
         }
-      ]);
+
+      });
+
     }
 
-    pushConversationTurn(convId, "user", query, 12);
+    return results;
 
-    const messages = conversations.get(convId);
-    const llmText = await callGeminiMessages({ messages });
-
-    if (llmText && llmText.trim()) {
-      answer = llmText.trim();
-      pushConversationTurn(convId, "assistant", answer, 12);
-      logToFile(`${time} | [${cid}] Bot: ${answer}`);
-      return res.json({ answer, source: "llm-gemini", cid });
-    }
   } catch (err) {
-    console.error("❌ Gemini failed:", err);
+
+    console.error("❌ Entity search error:", err);
+    return [];
+
+  } finally {
+
+    await session.close();
+
   }
 
-  /* ------------------ FALLBACK ------------------ */
-  answer = "I couldn't find an answer.";
-  logToFile(`${time} | [${cid}] Bot: ${answer}`);
-  return res.json({ answer, source: "fallback", cid });
-});
-
+}
 /* ============================================================
-   🌍 Helper Endpoints
+   🤖 MAIN CHAT ENDPOINT
 ============================================================ */
-app.get("/", (req, res) => {
-  res.send("🚀 Orchestrator backend running");
-});
 
-app.get("/api/chatbot/history/:cid", (req, res) => {
-  res.json({
-    cid: req.params.cid,
-    history: conversations.get(req.params.cid) || []
+app.post("/api/chatbot/query", async (req, res) => {
+
+  const { query, cid } = req.body ?? {};
+
+  if (!query) {
+    return res.status(400).json({ error: "query required" });
+  }
+
+  const conversationId = cid || makeId();
+  const convo = getConversation(conversationId);
+
+  const time = new Date().toLocaleString();
+
+  console.log(`${time} 🔥 [${conversationId}] ${query}`);
+  logToFile(`USER [${conversationId}]: ${query}`);
+
+  // 🔵 ADDED
+  console.log("🧭 PIPELINE START");
+  logToFile("PIPELINE START");
+
+  /* ---------- GREETING CHECK ---------- */
+
+  let answer = checkGreeting(query);
+
+  if (answer) {
+
+    logToFile(`BOT [${conversationId}]: (Greeting)`);
+
+    return res.json({
+      answer,
+      source: "greeting",
+      cid: conversationId
+    });
+  }
+
+  /* ---------- INTENT CLASSIFICATION ---------- */
+
+  const intentData = await extractDynamicIntent(query);
+
+const intentKeyword = intentData.intent;
+const entities = intentData.entities || [];
+
+// 🔵 ADDED LOG
+console.log("🧠 ENTITIES DETECTED:", entities);
+logToFile(`ENTITIES: ${entities.join(", ")}`);
+
+  console.log(`🧠 Intent detected: ${intentKeyword}`);
+  logToFile(`INTENT USED: ${intentKeyword}`);
+
+  // 🔵 ADDED
+  console.log("🔍 RETRIEVAL STRATEGY: intent → vector search → fallback");
+  logToFile("RETRIEVAL STRATEGY: intent → vector search → fallback");
+
+  /* ---------- GRAPH RETRIEVAL ---------- */
+
+  let graphContext = [];
+
+  try {
+
+    graphContext = await fetchNeo4jContext(query, intentKeyword, 5);
+    // 🔵 ADDED: entity-based retrieval
+const entityContext = await fetchEntitiesFromNeo4j(entities);
+
+// 🔵 MERGE RESULTS
+const combined = [...graphContext, ...entityContext];
+
+// remove duplicates
+const unique = [];
+const seen = new Set();
+
+for (const item of combined) {
+  if (!seen.has(item.text)) {
+    seen.add(item.text);
+    unique.push(item);
+  }
+}
+
+graphContext = unique;
+// 🔵 LOGGING
+console.log(`🔗 Entity facts added: ${entityContext.length}`);
+logToFile(`ENTITY FACT COUNT: ${entityContext.length}`);
+
+    console.log(`🧩 Neo4j facts retrieved: ${graphContext.length}`);
+    logToFile(`NEO4J FACT COUNT: ${graphContext.length}`);
+
+    // 🔵 ADDED
+    if (graphContext.length === 0) {
+      console.log("⚠️ No graph results returned");
+      logToFile("NO GRAPH RESULTS");
+    }
+
+    console.log("📊 Neo4j Relations:");
+
+    graphContext.slice(0, 20).forEach((fact, i) => {
+
+      const line = `${i + 1}. ${fact.text}`;
+
+      console.log(line);
+      logToFile(`FACT ${i + 1}: ${fact.text}`);
+
+    });
+
+  } catch (err) {
+
+    console.error("❌ Neo4j retrieval error:", err);
+    logToFile(`NEO4J ERROR: ${err.message}`);
+  }
+
+  /* ---------- FAQ FALLBACK ---------- */
+
+  const faqHit = searchFAQ(query);
+
+  if (faqHit && graphContext.length === 0) {
+
+    logToFile(`BOT [${conversationId}]: (FAQ)`);
+
+    return res.json({
+      answer: faqHit.answer,
+      source: "faq",
+      cid: conversationId
+    });
+  }
+
+  /* ---------- BUILD GRAPH CONTEXT ---------- */
+
+  const graphText = graphContext.map(f => f.text).join("\n");
+
+  // 🔵 ADDED
+  console.log("📜 GRAPH TEXT SENT TO LLM:");
+  console.log(graphText);
+  logToFile("GRAPH TEXT SENT TO LLM:");
+  logToFile(graphText);
+
+  const systemPrompt = `
+You are the AAST University Assistant.
+
+Use the knowledge graph context below to answer the question.
+
+If the information is not present say:
+"I don't have that information in the knowledge graph."
+
+GRAPH CONTEXT:
+${graphText}
+`;
+
+  pushTurn(convo, "system", systemPrompt);
+  pushTurn(convo, "user", query);
+
+  /* ---------- OLLAMA ANSWER GENERATION ---------- */
+
+  try {
+
+    const prompt = convo.messages
+      .map(m => `${m.role.toUpperCase()}: ${m.content}`)
+      .join("\n\n");
+
+    // 🔵 ADDED
+    console.log("🧠 FULL PROMPT SENT TO LLM:");
+    console.log(prompt);
+    logToFile("FULL PROMPT SENT TO LLM:");
+    logToFile(prompt);
+
+    const resLLM = await fetch("http://localhost:11434/api/generate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "llama3.2:3b-instruct-q4_K_M",
+        prompt,
+        stream: false
+      })
+    });
+
+    const data = await resLLM.json();
+
+    // 🔵 ADDED
+    console.log("🤖 RAW OLLAMA RESPONSE:", data);
+    logToFile(`RAW OLLAMA RESPONSE: ${JSON.stringify(data)}`);
+
+    answer = (data?.response || "").trim();
+
+    // 🔵 ADDED
+    console.log("💬 FINAL LLM ANSWER:", answer);
+    logToFile(`FINAL LLM ANSWER: ${answer}`);
+
+    pushTurn(convo, "assistant", answer);
+
+    logToFile(`BOT [${conversationId}]: ${answer}`);
+
+    return res.json({
+      answer,
+      source: "ollama-graph",
+      cid: conversationId
+    });
+
+  } catch (err) {
+
+    console.error("❌ Ollama generation error:", err);
+    logToFile(`OLLAMA ERROR: ${err.message}`);
+  }
+
+  return res.json({
+    answer: "I couldn't generate a response.",
+    cid: conversationId
   });
-});
 
-app.post("/api/chatbot/clear/:cid", (req, res) => {
-  conversations.delete(req.params.cid);
-  res.json({ ok: true, cid: req.params.cid });
 });
 
 /* ============================================================
-   ▶️ START SERVER
+   ▶ START SERVER
 ============================================================ */
-app.listen(PORT, () => {
-  console.log(`🚀 Orchestrator running on http://localhost:${PORT}`);
-});
+
+(async () => {
+
+  try {
+
+    await connectNeo4j();
+
+    app.listen(PORT, () => {
+      console.log(`🚀 Orchestrator running at http://localhost:${PORT}`);
+    });
+
+  } catch (err) {
+
+    console.error("❌ Failed to start:", err.message);
+    process.exit(1);
+  }
+
+})();

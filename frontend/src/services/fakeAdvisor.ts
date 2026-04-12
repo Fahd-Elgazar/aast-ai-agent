@@ -1,4 +1,4 @@
-// frontend/src/services/fakeAdvisor.ts
+let conversationId: string | null = null;
 
 export async function sendMessageToAdvisor(
   message: string,
@@ -12,24 +12,30 @@ export async function sendMessageToAdvisor(
       },
       body: JSON.stringify({
         query: message,
+        cid: conversationId,
       }),
-    })
+    });
 
     if (!res.ok) {
-      throw new Error(`Backend error: ${res.status}`)
+      throw new Error(`Backend error: ${res.status}`);
     }
 
-    const data = await res.json()
+    const data = await res.json();
+
+    // 🔑 STORE CID FOR NEXT MESSAGE
+    if (data.cid) {
+      conversationId = data.cid;
+    }
 
     return {
       responseText: data.answer,
-    }
+    };
   } catch (error) {
-    console.error('Advisor backend error:', error)
+    console.error('Advisor backend error:', error);
 
     return {
       responseText:
         'Sorry, I am currently unable to reach the advisor service.',
-    }
+    };
   }
 }
