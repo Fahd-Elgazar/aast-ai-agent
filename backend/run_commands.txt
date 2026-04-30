@@ -1,0 +1,13 @@
+chroma :
+chroma run --path ./chroma_aast --host localhost --port 8001
+neo4j :
+npm run neo
+sql :
+npm run sql
+meilisearch :
+start meilisearch then 
+npm run meili
+orechestrator :
+node orchestrator.js
+test web :
+npm run dev
