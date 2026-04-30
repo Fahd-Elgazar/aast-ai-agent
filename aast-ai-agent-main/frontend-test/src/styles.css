@@ -1,0 +1,32 @@
+:root {
+  --bg: #0f172a;
+  --card: #0b1220;
+  --accent: #2dd4bf;
+  --muted: #9aa4b2;
+  --surf: #071029;
+}
+
+html,body,#root { height:100%; margin:0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background: #f6f8fb; color:#111827; }
+
+.wrap { max-width:1100px; margin:28px auto; padding:18px; background: white; border-radius:10px; box-shadow: 0 6px 30px rgba(12,34,63,0.08); }
+header { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+header h1 { margin:0; font-size:20px; }
+.urls { display:flex; gap:10px; align-items:center; }
+.urls input { width:220px; margin-left:8px; padding:6px 8px; border-radius:6px; border:1px solid #e2e8f0; }
+
+main { display:flex; gap:16px; margin-top:18px; }
+.left { flex:1; display:flex; flex-direction:column; gap:12px; }
+.right { width:340px; display:flex; flex-direction:column; gap:12px; }
+.messages { min-height:420px; max-height:60vh; overflow:auto; padding:12px; border-radius:8px; background:#f3f6fb; border:1px solid #e6eef7; }
+.message { margin-bottom:8px; display:flex; }
+.message .bubble { padding:10px 12px; border-radius:10px; max-width:80%; }
+.message.user { justify-content:flex-end; }
+.message.user .bubble { background:#111827; color:white; border-radius:12px; }
+.message.assistant .bubble { background:white; color:#111827; border:1px solid #e6eef7; }
+.composer { display:flex; flex-direction:column; gap:8px; }
+.composer textarea { min-height:72px; padding:10px; border-radius:8px; border:1px solid #e6eef7; resize:vertical; }
+.controls { display:flex; justify-content:flex-end; }
+.controls button { background:var(--accent); color:#052023; padding:8px 12px; border-radius:8px; border:none; cursor:pointer; }
+
+.panel { padding:10px; background:#fff; border-radius:8px; border:1px solid #e6eef7; }
+.panel pre { white-space:pre-wrap; font-size:13px; }
