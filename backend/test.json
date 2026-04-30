@@ -1,5 +1,0 @@
-{
-  "model": "llama3.2:3b-instruct-q4_K_M",
-  "stream": false,
-  "prompt": "Facts:\nAli Ali Mohamed Fahmy is the Dean of the College of Artificial Intelligence.\n\nQuestion: Who is the dean of the College of Artificial Intelligence?\nAnswer:"
-}
