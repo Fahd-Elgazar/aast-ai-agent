@@ -16,10 +16,17 @@ import chatbotRouter from "./routes/chatbot.js";
 import { connectNeo4j, getSession } from "./db/neo4j.js";
 import { connectMySQL } from "./db/mysql.js";
 import { connectMeili } from "./db/meili.js";
+import mongoose from "mongoose";
 
+mongoose.connect("mongodb://127.0.0.1:27017/authDB")
+  .then(() => console.log("MongoDB connected"))
+  .catch(err => console.log(err));
 dotenv.config();
-
+import authRoutes from "./routes/auth.js";
 const app = express();
+app.use(express.json());
+app.use("/auth", authRoutes);
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use("/health", createHealthRouter());

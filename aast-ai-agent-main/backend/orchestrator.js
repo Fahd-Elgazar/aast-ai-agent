@@ -278,7 +278,7 @@ async function extractDynamicIntent(query, requestId, isRetry = false) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          model: "gemma4:e4b",
+          model: "gemma4:e2b",
           prompt: `Analyze the user's intent.
 Rules:
 - Output ONLY valid JSON, starting with { and ending with }.
@@ -736,7 +736,7 @@ app.post("/api/chatbot/query", async (req, res) => {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
-                model: "gemma4:e4b",
+                model: "gemma4:e2b",
                 prompt: `Recommend a major for a student who asked: "${query}". Answer briefly in 2 sentences.`,
                 stream: false
               })
