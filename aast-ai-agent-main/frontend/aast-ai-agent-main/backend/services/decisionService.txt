@@ -1,0 +1,182 @@
+import fetch from "node-fetch";
+import dotenv from "dotenv";
+import { callOllama } from "./ollamaService.js";
+
+dotenv.config();
+
+const API_URL = process.env.DECISION_API_URL || "http://127.0.0.1:8005";
+const SECRET_KEY = process.env.INTERNAL_SECRET_KEY || "your-secret-key-here";
+
+/**
+ * Normalizes string inputs: lowercases and trims.
+ */
+function normalizeString(str) {
+  if (typeof str !== "string") return str;
+  return str.toLowerCase().trim();
+}
+
+/**
+ * Normalizes profile and preferences data.
+ */
+function normalizeData(profile, preferences) {
+  const p = profile || {};
+  const pref = preferences || {};
+
+  const normalizedProfile = {
+    certificate_type: normalizeString(p.certificate_type || p.certificateType) || "unknown",
+    high_school_percentage: parseFloat(p.high_school_percentage || p.highSchoolPercentage) || 0,
+    budget: parseFloat(p.budget) || 0,
+    track_type: normalizeString(p.track_type || p.trackType) || "unknown",
+  };
+
+  const normalizedPreferences = {
+    interests: (pref.interests || []).filter(i => typeof i === "string").map(normalizeString).filter(Boolean),
+    career_goals: (pref.career_goals || pref.careerGoals || []).filter(i => typeof i === "string").map(normalizeString).filter(Boolean),
+  };
+
+  return { studentProfile: normalizedProfile, preferences: normalizedPreferences };
+}
+
+/**
+ * Validates the inputs before calling the API.
+ */
+function validateInput(studentProfile, preferences) {
+  if (studentProfile.high_school_percentage < 0 || studentProfile.high_school_percentage > 100) {
+    throw new Error("Invalid high school percentage. Must be between 0 and 100.");
+  }
+  if (studentProfile.budget < 0) {
+    throw new Error("Invalid budget. Must be a positive number.");
+  }
+}
+
+/**
+ * Extracts JSON from text using a rule-based approach first, then falls back to LLM.
+ * @param {string} text - The raw text containing the JSON payload
+ * @returns {Promise<Object>} Extracted JSON data containing profile and preferences
+ */
+export async function extractProfileData(text) {
+  if (!text || typeof text !== "string") {
+    throw new Error("Invalid input text for extraction.");
+  }
+
+  // 1. Rule-based extraction
+  try {
+    let jsonString = null;
+    const markdownMatch = text.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
+
+    if (markdownMatch && markdownMatch[1]) {
+      jsonString = markdownMatch[1];
+    } else {
+      const firstBrace = text.indexOf("{");
+      const lastBrace = text.lastIndexOf("}");
+      if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+        jsonString = text.substring(firstBrace, lastBrace + 1);
+      }
+    }
+
+    if (jsonString) {
+      const parsed = JSON.parse(jsonString);
+      if (
+        parsed &&
+        (parsed.studentProfile || parsed.student_profile) &&
+        (parsed.preferences)
+      ) {
+        return parsed;
+      }
+      if (parsed.student_profile || parsed.studentProfile || parsed.preferences || parsed.certificate_type) {
+        return parsed;
+      }
+    }
+  } catch (err) {
+    console.warn("Rule-based JSON extraction failed, falling back to LLM...");
+  }
+
+  // 2. Fallback to LLM for JSON extraction
+  try {
+    console.log("Using LLM fallback for JSON extraction...");
+    const prompt = `Extract the student profile and preferences from the text below. 
+Return ONLY a valid JSON object with the exact following structure, no other text or explanation:
+{
+  "studentProfile": {
+    "certificate_type": "string",
+    "high_school_percentage": number,
+    "budget": number,
+    "track_type": "string"
+  },
+  "preferences": {
+    "interests": ["string"],
+    "career_goals": ["string"]
+  }
+}
+
+Text to extract from:
+${text}`;
+
+    const llmResponse = await callOllama(prompt);
+
+    const firstBrace = llmResponse.indexOf("{");
+    const lastBrace = llmResponse.lastIndexOf("}");
+    if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+      return JSON.parse(llmResponse.substring(firstBrace, lastBrace + 1));
+    }
+    throw new Error("LLM did not return a parsable JSON block.");
+  } catch (err) {
+    console.error("LLM JSON extraction failed:", err.message);
+    throw new Error("Failed to extract valid profile data from input.");
+  }
+}
+
+/**
+ * Sends structured profile and preferences to the FastAPI Decision Service
+ * @param {Object} rawStudentProfile - The student's profile 
+ * @param {Object} rawPreferences - The student's preferences
+ * @returns {Promise<Object>} The recommendation payload from the Python service or safe fallback
+ */
+export async function getRecommendation(rawStudentProfile, rawPreferences) {
+  try {
+    // 1. Normalize Inputs
+    const { studentProfile, preferences } = normalizeData(rawStudentProfile, rawPreferences);
+
+    // 2. Input Validation
+    validateInput(studentProfile, preferences);
+
+    // 3. 5-second timeout
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+    const response = await fetch(`${API_URL}/api/v1/decisions/recommend`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Internal-Secret": SECRET_KEY,
+      },
+      body: JSON.stringify({
+        student_profile: studentProfile,
+        preferences: preferences,
+      }),
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeoutId);
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error(`❌ Decision Service HTTP Error [${response.status}]:`, errorText);
+      throw new Error(`Decision Service returned ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    // 4. Safe fallback message for any failure (timeout, network error, API error, validation)
+    const errorReason = err.name === "AbortError" ? "Request timed out" : err.message;
+    console.error("❌ Decision Service Exception:", errorReason);
+
+    return {
+      success: false,
+      is_fallback: true,
+      message: "Our AI recommendation engine is currently prioritizing other requests. Please reach out to admission@aast.edu or try again closely.",
+      recommendations: []
+    };
+  }
+}
