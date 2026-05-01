@@ -61,11 +61,6 @@ chroma_aast/
 *.gz
 
 # ========================
-# Frontend (ignore completely)
-# ========================
-frontend/
-
-# ========================
 # OS files
 # ========================
 .DS_Store
