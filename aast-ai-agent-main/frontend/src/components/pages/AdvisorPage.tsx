@@ -23,6 +23,20 @@ const AdvisorPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [graph, setGraph] = useState<GraphData | null>(null);
 
+  useEffect(() => {
+    setGraph({
+      nodes: [
+        { id: "1", label: "Student" },
+        { id: "2", label: "AI" },
+        { id: "3", label: "Machine Learning" }
+      ],
+      links: [
+        { source: "1", target: "2", type: "INTERESTED_IN" },
+        { source: "2", target: "3", type: "INCLUDES" }
+      ]
+    });
+  }, []);
+
   // 🎤 Speech States
   const [isRecording, setIsRecording] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -30,8 +44,6 @@ const AdvisorPage = () => {
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const recognitionRef = useRef<any>(null);
   
-  // 🔥 Crucial: Track input in a ref so the speech 'onend' callback 
-  // can read the latest value without stale closures.
   const inputRef = useRef(input);
 
   useEffect(() => {
@@ -41,12 +53,10 @@ const AdvisorPage = () => {
   const currentSession = sessions.find((s) => s.id === currentSessionId);
   const messages = currentSession?.messages || [];
 
-  // 🔄 Scroll to bottom
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isLoading]);
 
-  // 📦 Load sessions
   useEffect(() => {
     const saved = localStorage.getItem("chat_sessions");
     if (saved) {
@@ -73,12 +83,10 @@ const AdvisorPage = () => {
     }
   }, []);
 
-  // 💾 Save sessions
   useEffect(() => {
     localStorage.setItem("chat_sessions", JSON.stringify(sessions));
   }, [sessions]);
 
-  // 🆕 Create session
   function createNewSession(): string {
     const newSession: ChatSession = {
       id: crypto.randomUUID(),
@@ -88,11 +96,9 @@ const AdvisorPage = () => {
     };
     setSessions((prev) => [newSession, ...prev]);
     setCurrentSessionId(newSession.id);
-    setGraph(null);
     return newSession.id;
   }
 
-  // 💾 Save message safely
   const safeSaveMessage = async (message: any) => {
     try {
       await saveMessage(message);
@@ -101,9 +107,7 @@ const AdvisorPage = () => {
     }
   };
 
-  // 🚀 SEND MESSAGE logic (Extracted for reuse)
   const sendMessage = useCallback(async () => {
-    // Read from ref to ensure we have the most recent voice transcript
     const userText = inputRef.current.trim();
     if (!userText) return;
 
@@ -143,8 +147,8 @@ const AdvisorPage = () => {
       timestamp: new Date().toISOString(),
     });
 
-    setInput(""); // Clear UI
-    inputRef.current = ""; // Clear Ref
+    setInput("");
+    inputRef.current = "";
     setIsLoading(true);
 
     try {
@@ -185,7 +189,6 @@ const AdvisorPage = () => {
     }
   }, [currentSessionId, currentSession, navigate]);
 
-  // 🎤 SPEECH-TO-TEXT WITH AUTO-STOP & AUTO-SEND
   const handleSpeechToText = useCallback(() => {
     const SpeechRecognition =
       (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition;
@@ -197,7 +200,6 @@ const AdvisorPage = () => {
 
     if (!recognitionRef.current) {
       const recognition = new SpeechRecognition();
-      // continuous: false ensures 'onend' triggers as soon as user stops talking
       recognition.continuous = false; 
       recognition.interimResults = false;
       recognition.lang = "en-US";
@@ -210,7 +212,6 @@ const AdvisorPage = () => {
       recognition.onend = () => {
         setIsRecording(false);
         setIsProcessing(false);
-        // 🔥 Trigger send automatically if voice captured text
         if (inputRef.current.trim()) {
           sendMessage();
         }
@@ -248,76 +249,110 @@ const AdvisorPage = () => {
   }, [isRecording, sendMessage]);
 
   return (
-    <div className="grid h-full grid-cols-[250px_1fr_1fr] gap-6 p-4">
-      {/* 🧭 SIDEBAR */}
-      <div className="flex flex-col gap-4 bg-navy-900 text-white p-4 rounded-xl">
-        <button onClick={createNewSession} className="bg-navy-700 hover:bg-navy-600 p-2 rounded-lg transition-colors">
-          + New Chat
-        </button>
-        <div className="flex-1 overflow-y-auto space-y-2">
-          {sessions.map((s) => (
-            <button
-              key={s.id}
-              onClick={() => setCurrentSessionId(s.id)}
-              className={`block w-full text-left p-2 rounded transition-colors ${s.id === currentSessionId ? "bg-navy-700" : "hover:bg-navy-800"}`}
-            >
-              {s.title}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* 💬 CHAT AREA */}
-      <div className="flex flex-col bg-white rounded-xl shadow overflow-hidden border border-gray-200">
-        <div className="bg-navy-800 text-white p-4 font-bold">AI Academic Advisor</div>
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
-          {messages.map((m) => <ChatMessage key={m.id} message={m} />)}
-          {isLoading && <p className="text-gray-400 italic animate-pulse">AI is thinking...</p>}
-          <div ref={messagesEndRef} />
-        </div>
-
-        <div className="flex items-center gap-2 p-3 border-t bg-gray-50">
-          <input
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-            placeholder={isRecording ? "Listening..." : "Type a message..."}
-            className="flex-1 border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-navy-500 bg-white"
-          />
-
-          {/* 🎤 Production Mic Button */}
-          <button 
-            onClick={handleSpeechToText}
-            disabled={isProcessing || isLoading}
-            className={`flex h-10 w-10 items-center justify-center rounded-full transition-all duration-300 ${
-              isRecording ? 'bg-red-500 animate-pulse shadow-lg scale-110' : 'bg-gray-200 hover:bg-gray-300'
-            } ${isProcessing ? 'cursor-wait opacity-50' : ''}`}
-            title="Voice Input"
+    /* 
+      THE ULTIMATE FIX:
+      1. mt-[110px]: Physically moves the container down from the top so it doesn't hide behind the header.
+      2. h-[calc(100vh-130px)]: Sets height to the viewport minus the header and a bit extra for the bottom gap.
+      3. flex: Used a wrapper to ensure the grid doesn't try to occupy space it shouldn't.
+    */
+    <div className="flex flex-col w-full h-screen overflow-hidden bg-gray-50">
+      <div 
+        className="grid grid-cols-[250px_1.6fr_1fr] gap-4 p-4 mt-[110px] w-full"
+        style={{ height: 'calc(100vh - 130px)' }}
+      >
+        {/* 🧭 SIDEBAR */}
+        <div className="flex flex-col bg-navy-900 text-white p-4 rounded-xl h-full shadow-lg">
+          <button
+            onClick={createNewSession}
+            className="bg-navy-700 hover:bg-navy-600 p-2 rounded-lg transition-colors mb-4 font-semibold"
           >
-            {isProcessing ? (
-              <div className="h-4 w-4 animate-spin rounded-full border-2 border-navy-500 border-t-transparent" />
-            ) : isRecording ? (
-              <div className="h-3 w-3 bg-white rounded-sm" />
-            ) : (
-              <span className="text-lg">🎤</span>
+            + New Chat
+          </button>
+
+          <div className="flex-1 overflow-y-auto space-y-2 custom-scrollbar">
+            {sessions.map((s) => (
+              <button
+                key={s.id}
+                onClick={() => setCurrentSessionId(s.id)}
+                className={`block w-full text-left p-3 rounded-lg transition-colors ${
+                  s.id === currentSessionId
+                    ? "bg-navy-700 border-l-4 border-gold-400"
+                    : "hover:bg-navy-800"
+                }`}
+              >
+                {s.title}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* 💬 CHAT AREA */}
+        <div className="flex flex-col bg-white rounded-xl shadow-xl border border-gray-200 h-full overflow-hidden">
+          {/* HEADER */}
+          <div className="bg-navy-800 text-white p-4 font-bold">
+            AI Academic Advisor
+          </div>
+
+          {/* MESSAGES */}
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
+            {messages.map((m) => (
+              <ChatMessage key={m.id} message={m} />
+            ))}
+
+            {isLoading && (
+              <p className="text-gray-400 italic animate-pulse">
+                AI is thinking...
+              </p>
             )}
-          </button>
 
-          <button 
-            onClick={sendMessage} 
-            disabled={isLoading || !input.trim()}
-            className="bg-gold-400 hover:bg-gold-500 disabled:bg-gray-300 px-6 py-2 rounded-lg font-bold transition-colors"
-          >
-            Send
-          </button>
+            <div ref={messagesEndRef} />
+          </div>
+
+          {/* INPUT */}
+          <div className="p-3 border-t bg-white">
+            <div className="flex items-center gap-2">
+              <input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+                placeholder={isRecording ? "Listening..." : "Type a message..."}
+                className="flex-1 border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-navy-500 bg-gray-50"
+              />
+
+              <button
+                onClick={handleSpeechToText}
+                disabled={isProcessing || isLoading}
+                className={`flex h-10 w-10 items-center justify-center rounded-full transition-all ${
+                  isRecording
+                    ? "bg-red-500 animate-pulse scale-110 shadow-lg"
+                    : "bg-gray-200 hover:bg-gray-300"
+                }`}
+              >
+                🎤
+              </button>
+
+              <button
+                onClick={sendMessage}
+                disabled={isLoading || !input.trim()}
+                className="bg-navy-800 text-white hover:bg-navy-700 disabled:bg-gray-300 px-6 py-2 rounded-lg font-bold transition-all"
+              >
+                Send
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
 
-      {/* 📊 GRAPH EXPLORER */}
-      <div className="bg-navy-900 text-white rounded-xl flex flex-col border border-navy-800">
-        <div className="p-4 border-b border-navy-800 font-semibold">Neo4j Graph Explorer</div>
-        <div className="flex-1">
-          <GraphVisualizer data={graph} />
+        {/* 📊 GRAPH EXPLORER */}
+        <div className="flex flex-col bg-navy-900 text-white rounded-xl border border-navy-800 h-full shadow-lg overflow-hidden">
+          {/* HEADER */}
+          <div className="p-4 border-b border-navy-800 font-semibold bg-navy-800">
+            Neo4j Graph Explorer
+          </div>
+
+          {/* GRAPH */}
+          <div className="flex-1 p-2 bg-white">
+            <GraphVisualizer graphData={graph} />
+          </div>
         </div>
       </div>
     </div>
