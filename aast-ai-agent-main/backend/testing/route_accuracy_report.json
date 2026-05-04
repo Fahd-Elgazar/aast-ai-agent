@@ -1,0 +1,232 @@
+{
+  "total_queries": 35,
+  "route_accuracy_percent": "11.43",
+  "misroute_percent": "88.57",
+  "accuracy_by_route_class": {
+    "KG_ONLY": "0.00%",
+    "RAG_ONLY": "0.00%",
+    "HYBRID_KG_RAG": "0.00%",
+    "DECISION_ENGINE": "0.00%",
+    "CAREER_ENGINE": "0.00%",
+    "FAQ": "0.00%",
+    "LLM_FALLBACK": "100.00%"
+  },
+  "hybrid_precision_percent": "0.00",
+  "faq_precision_percent": "0.00",
+  "fallback_frequency_percent": "100.00",
+  "confidence_realism_score": "0.00%",
+  "average_latency_ms": "736",
+  "worst_latency_ms": 5937,
+  "low_confidence_mismatches": 35,
+  "confusion_matrix": {
+    "KG_ONLY": {
+      "LLM_FALLBACK": 7
+    },
+    "RAG_ONLY": {
+      "LLM_FALLBACK": 7
+    },
+    "HYBRID_KG_RAG": {
+      "LLM_FALLBACK": 5
+    },
+    "DECISION_ENGINE": {
+      "LLM_FALLBACK": 4
+    },
+    "CAREER_ENGINE": {
+      "LLM_FALLBACK": 4
+    },
+    "FAQ": {
+      "LLM_FALLBACK": 4
+    },
+    "LLM_FALLBACK": {
+      "LLM_FALLBACK": 4
+    }
+  },
+  "misroute_examples": [
+    {
+      "query_id": "Q_KG_01",
+      "expected": "KG_ONLY",
+      "predicted": "LLM_FALLBACK",
+      "confidence": 0
+    },
+    {
+      "query_id": "Q_KG_02",
+      "expected": "KG_ONLY",
+      "predicted": "LLM_FALLBACK",
+      "confidence": 0
+    },
+    {
+      "query_id": "Q_KG_03",
+      "expected": "KG_ONLY",
+      "predicted": "LLM_FALLBACK",
+      "confidence": 0
+    },
+    {
+      "query_id": "Q_KG_04",
+      "expected": "KG_ONLY",
+      "predicted": "LLM_FALLBACK",
+      "confidence": 0
+    },
+    {
+      "query_id": "Q_KG_05",
+      "expected": "KG_ONLY",
+      "predicted": "LLM_FALLBACK",
+      "confidence": 0
+    },
+    {
+      "query_id": "Q_KG_06",
+      "expected": "KG_ONLY",
+      "predicted": "LLM_FALLBACK",
+      "confidence": 0
+    },
+    {
+      "query_id": "Q_KG_07",
+      "expected": "KG_ONLY",
+      "predicted": "LLM_FALLBACK",
+      "confidence": 0
+    },
+    {
+      "query_id": "Q_RAG_01",
+      "expected": "RAG_ONLY",
+      "predicted": "LLM_FALLBACK",
+      "confidence": 0
+    },
+    {
+      "query_id": "Q_RAG_02",
+      "expected": "RAG_ONLY",
+      "predicted": "LLM_FALLBACK",
+      "confidence": 0
+    },
+    {
+      "query_id": "Q_RAG_03",
+      "expected": "RAG_ONLY",
+      "predicted": "LLM_FALLBACK",
+      "confidence": 0
+    },
+    {
+      "query_id": "Q_RAG_04",
+      "expected": "RAG_ONLY",
+      "predicted": "LLM_FALLBACK",
+      "confidence": 0
+    },
+    {
+      "query_id": "Q_RAG_05",
+      "expected": "RAG_ONLY",
+      "predicted": "LLM_FALLBACK",
+      "confidence": 0
+    },
+    {
+      "query_id": "Q_RAG_06",
+      "expected": "RAG_ONLY",
+      "predicted": "LLM_FALLBACK",
+      "confidence": 0
+    },
+    {
+      "query_id": "Q_RAG_07",
+      "expected": "RAG_ONLY",
+      "predicted": "LLM_FALLBACK",
+      "confidence": 0
+    },
+    {
+      "query_id": "Q_HYB_01",
+      "expected": "HYBRID_KG_RAG",
+      "predicted": "LLM_FALLBACK",
+      "confidence": 0
+    },
+    {
+      "query_id": "Q_HYB_02",
+      "expected": "HYBRID_KG_RAG",
+      "predicted": "LLM_FALLBACK",
+      "confidence": 0
+    },
+    {
+      "query_id": "Q_HYB_03",
+      "expected": "HYBRID_KG_RAG",
+      "predicted": "LLM_FALLBACK",
+      "confidence": 0
+    },
+    {
+      "query_id": "Q_HYB_04",
+      "expected": "HYBRID_KG_RAG",
+      "predicted": "LLM_FALLBACK",
+      "confidence": 0
+    },
+    {
+      "query_id": "Q_HYB_05",
+      "expected": "HYBRID_KG_RAG",
+      "predicted": "LLM_FALLBACK",
+      "confidence": 0
+    },
+    {
+      "query_id": "Q_DEC_01",
+      "expected": "DECISION_ENGINE",
+      "predicted": "LLM_FALLBACK",
+      "confidence": 0
+    },
+    {
+      "query_id": "Q_DEC_02",
+      "expected": "DECISION_ENGINE",
+      "predicted": "LLM_FALLBACK",
+      "confidence": 0
+    },
+    {
+      "query_id": "Q_DEC_03",
+      "expected": "DECISION_ENGINE",
+      "predicted": "LLM_FALLBACK",
+      "confidence": 0
+    },
+    {
+      "query_id": "Q_DEC_04",
+      "expected": "DECISION_ENGINE",
+      "predicted": "LLM_FALLBACK",
+      "confidence": 0
+    },
+    {
+      "query_id": "Q_CAR_01",
+      "expected": "CAREER_ENGINE",
+      "predicted": "LLM_FALLBACK",
+      "confidence": 0
+    },
+    {
+      "query_id": "Q_CAR_02",
+      "expected": "CAREER_ENGINE",
+      "predicted": "LLM_FALLBACK",
+      "confidence": 0
+    },
+    {
+      "query_id": "Q_CAR_03",
+      "expected": "CAREER_ENGINE",
+      "predicted": "LLM_FALLBACK",
+      "confidence": 0
+    },
+    {
+      "query_id": "Q_CAR_04",
+      "expected": "CAREER_ENGINE",
+      "predicted": "LLM_FALLBACK",
+      "confidence": 0
+    },
+    {
+      "query_id": "Q_FAQ_01",
+      "expected": "FAQ",
+      "predicted": "LLM_FALLBACK",
+      "confidence": 0
+    },
+    {
+      "query_id": "Q_FAQ_02",
+      "expected": "FAQ",
+      "predicted": "LLM_FALLBACK",
+      "confidence": 0
+    },
+    {
+      "query_id": "Q_FAQ_03",
+      "expected": "FAQ",
+      "predicted": "LLM_FALLBACK",
+      "confidence": 0
+    },
+    {
+      "query_id": "Q_FAQ_04",
+      "expected": "FAQ",
+      "predicted": "LLM_FALLBACK",
+      "confidence": 0
+    }
+  ]
+}

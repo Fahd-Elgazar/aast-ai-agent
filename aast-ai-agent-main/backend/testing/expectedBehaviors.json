@@ -1,0 +1,65 @@
+[
+  {
+    "route": "KG_ONLY",
+    "expected_min_confidence": 0.4,
+    "expected_source_types": ["KG"],
+    "retrieval_expectations": "Exact node and edge structural matches.",
+    "fallback_expectations": "LLM_FALLBACK on empty KG.",
+    "contradiction_sensitivity": "Low",
+    "required_citation_presence": false
+  },
+  {
+    "route": "RAG_ONLY",
+    "expected_min_confidence": 0.5,
+    "expected_source_types": ["RAG"],
+    "retrieval_expectations": "Semantic policy chunk retrieval with distance < 0.6.",
+    "fallback_expectations": "LLM_FALLBACK on missing docs.",
+    "contradiction_sensitivity": "High",
+    "required_citation_presence": true
+  },
+  {
+    "route": "HYBRID_KG_RAG",
+    "expected_min_confidence": 0.6,
+    "expected_source_types": ["KG", "RAG"],
+    "retrieval_expectations": "Both structural nodes and semantic policies returned.",
+    "fallback_expectations": "Degrade to KG_ONLY or RAG_ONLY on partial failure.",
+    "contradiction_sensitivity": "High",
+    "required_citation_presence": true
+  },
+  {
+    "route": "DECISION_ENGINE",
+    "expected_min_confidence": 0.8,
+    "expected_source_types": ["DECISION", "INTERACTIVE"],
+    "retrieval_expectations": "Algorithmic recommendation or comparison table.",
+    "fallback_expectations": "LLM_FALLBACK if memory completely corrupted.",
+    "contradiction_sensitivity": "None",
+    "required_citation_presence": false
+  },
+  {
+    "route": "CAREER_ENGINE",
+    "expected_min_confidence": 0.7,
+    "expected_source_types": ["CAREER"],
+    "retrieval_expectations": "Job market paths, required skills, industry demand.",
+    "fallback_expectations": "LLM_FALLBACK.",
+    "contradiction_sensitivity": "Low",
+    "required_citation_presence": false
+  },
+  {
+    "route": "FAQ",
+    "expected_min_confidence": 0.9,
+    "expected_source_types": ["FAQ"],
+    "retrieval_expectations": "Exact static match.",
+    "fallback_expectations": "None.",
+    "contradiction_sensitivity": "None",
+    "required_citation_presence": false
+  },
+  {
+    "route": "LLM_FALLBACK",
+    "expected_min_confidence": 0.1,
+    "expected_source_types": ["LLM"],
+    "retrieval_expectations": "Conversational grounding.",
+    "fallback_expectations": "System error.",
+    "contradiction_sensitivity": "High",
+    "required_citation_presence": false
+  }
+]

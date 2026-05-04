@@ -1,0 +1,3348 @@
+[
+  {
+    "id": "6511a66b4562d1168d3a3005979798d2",
+    "title": "AI Emergence and Applications",
+    "content": "such as: smart cities, autonomous cars, diseases diagnose, etc.",
+    "category": "institutional",
+    "subcategory": "ai_emergence_and_applications",
+    "priority": "low",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "AI history",
+      "smart cities",
+      "autonomous cars"
+    ]
+  },
+  {
+    "id": "5e597281bb41d77062ca3c6e7311ffd4",
+    "title": "AI Application Areas",
+    "content": "and integrate the actions of human with digital systems to be able to reduce labor costs as well as prevent human error;",
+    "category": "institutional",
+    "subcategory": "ai_application_areas",
+    "priority": "low",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "tuition_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "robotic process automation",
+      "computer vision",
+      "natural language understanding",
+      "prediction"
+    ]
+  },
+  {
+    "id": "21983774bc55d342fd9264b1427ae4b6",
+    "title": "Dean's Study Advice",
+    "content": "Here are some advice to you: Study regularly throughout the semester for all your classes;",
+    "category": "institutional",
+    "subcategory": "dean's_study_advice",
+    "priority": "low",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "study habits",
+      "academic standards",
+      "AI research"
+    ]
+  },
+  {
+    "id": "f3705cfb85f058b7a521c10b1ab728f3",
+    "title": "Accreditation and Membership",
+    "content": "The College of Artificial Intelligence (CAI) is accredited by the Supreme Council of Universities in Egypt",
+    "category": "academic_policies",
+    "subcategory": "accreditation_and_membership",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "compliance_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Supreme Council of Universities",
+      "ANQAHE",
+      "accreditation"
+    ]
+  },
+  {
+    "id": "ffb8317467615c64c4b051bac88f42df",
+    "title": "Accreditation and Membership",
+    "content": "and is a member of the Arab Network for Quality Assurance in Higher Education",
+    "category": "academic_policies",
+    "subcategory": "accreditation_and_membership",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "compliance_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Supreme Council of Universities",
+      "ANQAHE",
+      "accreditation"
+    ]
+  },
+  {
+    "id": "6278dd8dbb14477ac42dd5bef7daa113",
+    "title": "Educational Quality Commitment",
+    "content": "CAI is committed to maintaining high standards of education",
+    "category": "academic_policies",
+    "subcategory": "educational_quality_commitment",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "education standards",
+      "program improvement",
+      "industry needs"
+    ]
+  },
+  {
+    "id": "1ba9bec96ea734a2602a9652b89417e1",
+    "title": "Educational Quality Commitment",
+    "content": "and continuously improving its programs to meet the needs of students",
+    "category": "academic_policies",
+    "subcategory": "educational_quality_commitment",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "education standards",
+      "program improvement",
+      "industry needs"
+    ]
+  },
+  {
+    "id": "44329014f0bb44c28c33130b922991d5",
+    "title": "Internal and External Evaluations",
+    "content": "CAI regularly undergoes internal and external evaluations to ensure that it meets the quality standards set by accrediting bodies",
+    "category": "academic_policies",
+    "subcategory": "internal_and_external_evaluations",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "grading_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "quality standards",
+      "internal evaluation",
+      "external evaluation"
+    ]
+  },
+  {
+    "id": "d51cd4e9818b203956fdbef795d73e15",
+    "title": "Internal and External Evaluations",
+    "content": "and to enhance the overall educational experience for its students.",
+    "category": "academic_policies",
+    "subcategory": "internal_and_external_evaluations",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "grading_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "quality standards",
+      "internal evaluation",
+      "external evaluation"
+    ]
+  },
+  {
+    "id": "c9ca72142cc87cc8d5a4821759be5e7a",
+    "title": "AI Labs and Learning",
+    "content": "and applications. These labs include: The College of Artificial Intelligence offers to the staff",
+    "category": "institutional",
+    "subcategory": "ai_labs_and_learning",
+    "priority": "low",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "infrastructure",
+    "quality_score": 0.8,
+    "tags": [
+      "hands-on learning",
+      "AI technologies",
+      "laboratories"
+    ]
+  },
+  {
+    "id": "3b86419a99c0599de54947c310d27dbb",
+    "title": "AI Labs and Learning",
+    "content": "and students a combination of basic labs as well as state-of-art research labs.",
+    "category": "institutional",
+    "subcategory": "ai_labs_and_learning",
+    "priority": "low",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "infrastructure",
+    "quality_score": 0.8,
+    "tags": [
+      "hands-on learning",
+      "AI technologies",
+      "laboratories"
+    ]
+  },
+  {
+    "id": "258d388de8d2c48e45b68c8c225e1f97",
+    "title": "Basic AI Labs",
+    "content": "The basic labs include: Computer Lab, Data Science Lab,",
+    "category": "institutional",
+    "subcategory": "basic_ai_labs",
+    "priority": "low",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "infrastructure",
+    "quality_score": 0.65,
+    "tags": [
+      "computer lab",
+      "data science lab",
+      "robotics lab"
+    ]
+  },
+  {
+    "id": "56ab523ac0c6fbf60497ef700c47f68e",
+    "title": "Research AI Labs",
+    "content": "The research labs include: Natural Language Processing Lab,",
+    "category": "institutional",
+    "subcategory": "research_ai_labs",
+    "priority": "low",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "infrastructure",
+    "quality_score": 0.65,
+    "tags": [
+      "natural language processing",
+      "computer vision lab",
+      "machine learning lab"
+    ]
+  },
+  {
+    "id": "703cc970d827de63739e757d2fae33e3",
+    "title": "Lab Hardware and Software",
+    "content": "These labs are equipped with the latest hardware",
+    "category": "institutional",
+    "subcategory": "lab_hardware_and_software",
+    "priority": "low",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "infrastructure",
+    "quality_score": 0.65,
+    "tags": [
+      "hardware tools",
+      "software tools",
+      "AI research"
+    ]
+  },
+  {
+    "id": "45732073764a4cf9565f39e280c97ef4",
+    "title": "Accredited Summer Studies",
+    "content": "Offering accredited summer studies for the students of the College of Artificial Intelligence",
+    "category": "academic_programs",
+    "subcategory": "accredited_summer_studies",
+    "priority": "medium",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "summer studies",
+      "accredited study",
+      "student opportunity"
+    ]
+  },
+  {
+    "id": "bfb4027cba35270b095791bf103fe4e7",
+    "title": "Teaching Participation",
+    "content": "Participation in the courses teaching activities both Face to Face Education",
+    "category": "academic_programs",
+    "subcategory": "teaching_participation",
+    "priority": "medium",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "teaching participation",
+      "face-to-face education",
+      "online teaching"
+    ]
+  },
+  {
+    "id": "ada0596af8dc3bab5a9beea4623ce348",
+    "title": "Optional UClan Summer Courses",
+    "content": "Availability of accredited courses at the University of Central Lancashire during the summer semester,",
+    "category": "academic_programs",
+    "subcategory": "optional_uclan_summer_courses",
+    "priority": "medium",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "infrastructure",
+    "quality_score": 0.8,
+    "tags": [
+      "summer semester",
+      "accredited courses",
+      "optional enrollment"
+    ]
+  },
+  {
+    "id": "9bdeb734932bc01bf99fea1c2d143e3e",
+    "title": "Optional UClan Summer Courses",
+    "content": "in which students of the College of Artificial Intelligence can enroll on an optional basis",
+    "category": "academic_programs",
+    "subcategory": "optional_uclan_summer_courses",
+    "priority": "medium",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "summer semester",
+      "accredited courses",
+      "optional enrollment"
+    ]
+  },
+  {
+    "id": "b783fbd4fb54cb3352734b9250562069",
+    "title": "Undergraduate Admission Requirements",
+    "content": "Students must meet the following admission requirements: Completion of secondary education certificate",
+    "category": "admissions_registration",
+    "subcategory": "undergraduate_admission_requirements",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.95,
+    "tags": [
+      "secondary education",
+      "minimum score",
+      "admission exams",
+      "required documents"
+    ]
+  },
+  {
+    "id": "81289e0e3b8882abec68210e52c77727",
+    "title": "Undergraduate Admission Requirements",
+    "content": "(Math section or Science Section) or equivalent certificates.",
+    "category": "admissions_registration",
+    "subcategory": "undergraduate_admission_requirements",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "secondary education",
+      "minimum score",
+      "admission exams",
+      "required documents"
+    ]
+  },
+  {
+    "id": "1521a01e1f408b771ee6ad64b46b283e",
+    "title": "Undergraduate Admission Requirements",
+    "content": "Meeting the minimum score required to join the college which is announced",
+    "category": "admissions_registration",
+    "subcategory": "undergraduate_admission_requirements",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "secondary education",
+      "minimum score",
+      "admission exams",
+      "required documents"
+    ]
+  },
+  {
+    "id": "4babccacf0502e406ae693290a2ab8f1",
+    "title": "Undergraduate Admission Requirements",
+    "content": "before the beginning of each semester, in light of the minimum score mandated by AASTMT,",
+    "category": "admissions_registration",
+    "subcategory": "undergraduate_admission_requirements",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "secondary education",
+      "minimum score",
+      "admission exams",
+      "required documents"
+    ]
+  },
+  {
+    "id": "76368d2f22f3bc01385c9d6eaca2a401",
+    "title": "Undergraduate Admission Requirements",
+    "content": "as well as the annually announced terms, regulations",
+    "category": "admissions_registration",
+    "subcategory": "undergraduate_admission_requirements",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "secondary education",
+      "minimum score",
+      "admission exams",
+      "required documents"
+    ]
+  },
+  {
+    "id": "388044f3e983c7f7074b7261c7aad62a",
+    "title": "Undergraduate Admission Requirements",
+    "content": "and qualifying courses per certificate as specified by the AASTMT Supreme Council of Education Affairs.",
+    "category": "admissions_registration",
+    "subcategory": "undergraduate_admission_requirements",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "secondary education",
+      "minimum score",
+      "admission exams",
+      "required documents"
+    ]
+  },
+  {
+    "id": "a5433ad8287a319206bb1ead0cb08112",
+    "title": "Undergraduate Admission Requirements",
+    "content": "Showing good conduct with no dishonoring judicial sentence issued against them.",
+    "category": "admissions_registration",
+    "subcategory": "undergraduate_admission_requirements",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "secondary education",
+      "minimum score",
+      "admission exams",
+      "required documents"
+    ]
+  },
+  {
+    "id": "678a96642d9c5f58cf9b7970e76431a3",
+    "title": "Undergraduate Admission Requirements",
+    "content": "Submission of all required admission documents. Approval of delegating entities",
+    "category": "admissions_registration",
+    "subcategory": "undergraduate_admission_requirements",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.95,
+    "tags": [
+      "secondary education",
+      "minimum score",
+      "admission exams",
+      "required documents"
+    ]
+  },
+  {
+    "id": "bd2cb19a5b8bdbe4634ab65f43a3c87a",
+    "title": "Undergraduate Admission Requirements",
+    "content": "in case of student’s delegation from any country",
+    "category": "admissions_registration",
+    "subcategory": "undergraduate_admission_requirements",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "secondary education",
+      "minimum score",
+      "admission exams",
+      "required documents"
+    ]
+  },
+  {
+    "id": "319393b64052058ce10954f351cce1ae",
+    "title": "Undergraduate Admission Requirements",
+    "content": "or authority. Passing admission exams determined by AASTMT.",
+    "category": "admissions_registration",
+    "subcategory": "undergraduate_admission_requirements",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "secondary education",
+      "minimum score",
+      "admission exams",
+      "required documents"
+    ]
+  },
+  {
+    "id": "bc8c5e26bc1a155d68f73849cc0e12aa",
+    "title": "Credit Hour Definition",
+    "content": "Credit Hours: A Credit Hour for every semester week",
+    "category": "admissions_registration",
+    "subcategory": "credit_hour_definition",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "registration_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "credit hour",
+      "theoretical study",
+      "practical work"
+    ]
+  },
+  {
+    "id": "9593326abfa3b16adeda5db83bec4862",
+    "title": "Credit Hour Definition",
+    "content": "(CH) is equivalent to one hour of theoretical study",
+    "category": "admissions_registration",
+    "subcategory": "credit_hour_definition",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "transfer_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "credit hour",
+      "theoretical study",
+      "practical work"
+    ]
+  },
+  {
+    "id": "22a11bf37f9a4387479229347e6b435f",
+    "title": "Credit Hour Definition",
+    "content": "(50 minutes) , not less than two hours of practical",
+    "category": "admissions_registration",
+    "subcategory": "credit_hour_definition",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "registration_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "credit hour",
+      "theoretical study",
+      "practical work"
+    ]
+  },
+  {
+    "id": "8c671a5689d05f59e89a34c5a882ad16",
+    "title": "Credit Hour Definition",
+    "content": "or three hours of practical or applied work.",
+    "category": "admissions_registration",
+    "subcategory": "credit_hour_definition",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "registration_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "credit hour",
+      "theoretical study",
+      "practical work"
+    ]
+  },
+  {
+    "id": "278335842bcc3c12379170e14d75702b",
+    "title": "Semester Course Load",
+    "content": "The CH determines the course load a student is allowed to register for in each semester.",
+    "category": "admissions_registration",
+    "subcategory": "semester_course_load",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "registration_policy",
+    "quality_score": 0.95,
+    "tags": [
+      "course load",
+      "semester registration",
+      "credit hours"
+    ]
+  },
+  {
+    "id": "6ff5fe8b10581d0b4e8729160397f2f0",
+    "title": "Semester Course Load",
+    "content": "and examination results. The educational load is usually between 12 CHs",
+    "category": "admissions_registration",
+    "subcategory": "semester_course_load",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "registration_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "course load",
+      "semester registration",
+      "credit hours"
+    ]
+  },
+  {
+    "id": "60eedd13cb460f9496641e4ccb5bb017",
+    "title": "Semester Course Load",
+    "content": "(low load) and 18 CHs (full load) .",
+    "category": "admissions_registration",
+    "subcategory": "semester_course_load",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "registration_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "course load",
+      "semester registration",
+      "credit hours"
+    ]
+  },
+  {
+    "id": "a01d68896893f7343f30a291d1512a94",
+    "title": "Low Load Recommendation",
+    "content": "Students with low grades in the Secondary Certificate",
+    "category": "admissions_registration",
+    "subcategory": "low_load_recommendation",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "grading_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "low load",
+      "secondary certificate",
+      "study support"
+    ]
+  },
+  {
+    "id": "53cbba7303d4a8671c9c7f592b2d690c",
+    "title": "Low Load Recommendation",
+    "content": "or those who face problems in their study are advised to take the low load CHs in order to help them overcome their educational problems.",
+    "category": "admissions_registration",
+    "subcategory": "low_load_recommendation",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "low load",
+      "secondary certificate",
+      "study support"
+    ]
+  },
+  {
+    "id": "f54bbc16d79355fb09efadb68d5f3d8f",
+    "title": "External Transfer Requirements",
+    "content": "All transfer applications, both external and internal, are submitted to the Admission",
+    "category": "admissions_registration",
+    "subcategory": "external_transfer_requirements",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "admission_policy",
+    "quality_score": 1.0,
+    "tags": [
+      "external transfer",
+      "accredited university",
+      "credit transfer"
+    ]
+  },
+  {
+    "id": "4dc6b83026054dbdd661d057b8e45324",
+    "title": "External Transfer Requirements",
+    "content": "and Registration Deanery according to the following: Transfer from Other Institutions:",
+    "category": "admissions_registration",
+    "subcategory": "external_transfer_requirements",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "transfer_policy",
+    "quality_score": 0.95,
+    "tags": [
+      "external transfer",
+      "accredited university",
+      "credit transfer"
+    ]
+  },
+  {
+    "id": "0e55bb593106cf2e5d8a225367b2cca5",
+    "title": "External Transfer Requirements",
+    "content": "AASTMT accepts students transferred from other institutions provided the university is accredited,",
+    "category": "admissions_registration",
+    "subcategory": "external_transfer_requirements",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.95,
+    "tags": [
+      "external transfer",
+      "accredited university",
+      "credit transfer"
+    ]
+  },
+  {
+    "id": "a621c7349da1afa01581dab1b10c9783",
+    "title": "External Transfer Requirements",
+    "content": "the student meets AASTMT admission requirements, and was not dismissed for disciplinary reasons.",
+    "category": "admissions_registration",
+    "subcategory": "external_transfer_requirements",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.95,
+    "tags": [
+      "external transfer",
+      "accredited university",
+      "credit transfer"
+    ]
+  },
+  {
+    "id": "229c6523cb04b9c78cc0495668d17127",
+    "title": "External Transfer Requirements",
+    "content": "Transferred students should have completed at least one academic semester elsewhere.",
+    "category": "admissions_registration",
+    "subcategory": "external_transfer_requirements",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "transfer_policy",
+    "quality_score": 0.95,
+    "tags": [
+      "external transfer",
+      "accredited university",
+      "credit transfer"
+    ]
+  },
+  {
+    "id": "a1e56694b1bb88496d1dcaef57435ee5",
+    "title": "External Transfer Requirements",
+    "content": "Courses may be transferred if equivalent and the grade is at least 'C';",
+    "category": "admissions_registration",
+    "subcategory": "external_transfer_requirements",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "grading_policy",
+    "quality_score": 1.0,
+    "tags": [
+      "external transfer",
+      "accredited university",
+      "credit transfer"
+    ]
+  },
+  {
+    "id": "428a0d28eac3be9765673d28c980fc89",
+    "title": "External Transfer Requirements",
+    "content": "these are not calculated in the GPA but count toward graduation hours,",
+    "category": "admissions_registration",
+    "subcategory": "external_transfer_requirements",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "grading_policy",
+    "quality_score": 1.0,
+    "tags": [
+      "external transfer",
+      "accredited university",
+      "credit transfer"
+    ]
+  },
+  {
+    "id": "9e21ab2dfa388c45488a702d5f1431fd",
+    "title": "Internal Transfer Rules",
+    "content": "Optional Transfer within AASTMT: Students may transfer departments",
+    "category": "admissions_registration",
+    "subcategory": "internal_transfer_rules",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "transfer_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "internal transfer",
+      "new major",
+      "graduation requirements"
+    ]
+  },
+  {
+    "id": "fac24e219da4088d713cf9f599cbe7b6",
+    "title": "Internal Transfer Rules",
+    "content": "or colleges within AASTMT provided they meet admission requirements for the new major,",
+    "category": "admissions_registration",
+    "subcategory": "internal_transfer_rules",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.95,
+    "tags": [
+      "internal transfer",
+      "new major",
+      "graduation requirements"
+    ]
+  },
+  {
+    "id": "2713355b6164de98cd274b5473222b98",
+    "title": "Internal Transfer Rules",
+    "content": "have sufficient time remaining to complete the degree,",
+    "category": "admissions_registration",
+    "subcategory": "internal_transfer_rules",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "transfer_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "internal transfer",
+      "new major",
+      "graduation requirements"
+    ]
+  },
+  {
+    "id": "36a140740a62be4ef5c84c4f2cd642af",
+    "title": "Internal Transfer Rules",
+    "content": "and previous grades in relevant courses shall be counted toward the new graduation requirements.",
+    "category": "admissions_registration",
+    "subcategory": "internal_transfer_rules",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "grading_policy",
+    "quality_score": 0.95,
+    "tags": [
+      "internal transfer",
+      "new major",
+      "graduation requirements"
+    ]
+  },
+  {
+    "id": "70271c5c08f788e9d6d6b6e3df5f8bb4",
+    "title": "Academic Year Structure",
+    "content": "The academic year consists of two regular 15-week semesters",
+    "category": "academic_programs",
+    "subcategory": "academic_year_structure",
+    "priority": "medium",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "fall semester",
+      "spring semester",
+      "exam period"
+    ]
+  },
+  {
+    "id": "4b3f2d7721a6ae307ff9a673333e1a90",
+    "title": "Academic Year Structure",
+    "content": "(Fall starting in September and Spring starting in February)",
+    "category": "academic_programs",
+    "subcategory": "academic_year_structure",
+    "priority": "medium",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "fall semester",
+      "spring semester",
+      "exam period"
+    ]
+  },
+  {
+    "id": "734ce310696a604d4ca5daeb5f4ebe32",
+    "title": "Optional Summer Semester",
+    "content": "An optional 5-week summer semester starts in June/July followed by one week of exams.",
+    "category": "academic_programs",
+    "subcategory": "optional_summer_semester",
+    "priority": "medium",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "summer semester",
+      "June July",
+      "exam week"
+    ]
+  },
+  {
+    "id": "3c96ff39cd805534aa0030b286f60f02",
+    "title": "Official Academic Calendar",
+    "content": "The official academic calendar is issued annually by the Academy President.",
+    "category": "academic_programs",
+    "subcategory": "official_academic_calendar",
+    "priority": "medium",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "academic calendar",
+      "annual issuance",
+      "Academy President"
+    ]
+  },
+  {
+    "id": "3f30c4deaaa1ba19c201a7f3097fad49",
+    "title": "Credit Hour System",
+    "content": "AASTMT utilizes a credit hour system where courses are assigned specific credit values.",
+    "category": "academic_programs",
+    "subcategory": "credit_hour_system",
+    "priority": "medium",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "registration_policy",
+    "quality_score": 0.95,
+    "tags": [
+      "credit values",
+      "course structure",
+      "credit hour system"
+    ]
+  },
+  {
+    "id": "2fe276c7bb41f8df34343c238cd970ec",
+    "title": "GPA Scale Calculation",
+    "content": "The Grade Point Average (GPA) is calculated on a scale of 0.0 to 4.0 by dividing total points achieved by total registered hours.",
+    "category": "grading_policies",
+    "subcategory": "gpa_scale_calculation",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "grading_policy",
+    "quality_score": 0.95,
+    "tags": [
+      "GPA scale",
+      "total points",
+      "registered hours"
+    ]
+  },
+  {
+    "id": "9491994782e8f087864fd562209cea93",
+    "title": "GPA Scale Calculation",
+    "content": "Points for a course are determined by multiplying the student's score by the course's credit hours.",
+    "category": "grading_policies",
+    "subcategory": "gpa_scale_calculation",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "grading_policy",
+    "quality_score": 0.95,
+    "tags": [
+      "GPA scale",
+      "total points",
+      "registered hours"
+    ]
+  },
+  {
+    "id": "12092411eda604ca4c5da32a8540608b",
+    "title": "Academic Probation Rule",
+    "content": "Probation occurs if a GPA falls below 2.0",
+    "category": "academic_rules",
+    "subcategory": "academic_probation_rule",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "grading_policy",
+    "quality_score": 0.95,
+    "tags": [
+      "academic probation",
+      "GPA below 2.0",
+      "academic status"
+    ]
+  },
+  {
+    "id": "78e64f307c8144273ccd2cf17b038a2c",
+    "title": "Underachievement Rule",
+    "content": "Underachievement is triggered if a student completes less than 50% of required credits",
+    "category": "academic_rules",
+    "subcategory": "underachievement_rule",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "underachievement",
+      "required credits",
+      "academic status"
+    ]
+  },
+  {
+    "id": "0fc9ea1610283c4b59d6c9634d54f131",
+    "title": "Forced Withdrawal Rule",
+    "content": "Forced Withdrawal occurs if absence limits are exceeded.",
+    "category": "academic_rules",
+    "subcategory": "forced_withdrawal_rule",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "registration_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "forced withdrawal",
+      "absence limits",
+      "academic status"
+    ]
+  },
+  {
+    "id": "3d927a38cf7450ecf2512fa9973df19c",
+    "title": "Course Prerequisite Requirement",
+    "content": "Many courses require Pre-requisites to be completed before registration.",
+    "category": "academic_rules",
+    "subcategory": "course_prerequisite_requirement",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "prerequisite_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "prerequisites",
+      "course registration",
+      "course sequence"
+    ]
+  },
+  {
+    "id": "153374cc44eed9d2d4f374553e1b91a4",
+    "title": "Academic Advisor Support",
+    "content": "Each student is assigned an Academic Advisor to assist with course selection",
+    "category": "academic_policies",
+    "subcategory": "academic_advisor_support",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "compliance_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "academic advisor",
+      "course selection",
+      "academic planning"
+    ]
+  },
+  {
+    "id": "77f09f9de81e628a62d259e21a31009a",
+    "title": "New Student Orientation",
+    "content": "New students participate in an Orientation Program to learn about registration",
+    "category": "admissions_registration",
+    "subcategory": "new_student_orientation",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "registration_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "orientation program",
+      "registration rights",
+      "new students"
+    ]
+  },
+  {
+    "id": "5ed9fa794b9f22ef64c6daf25434f56a",
+    "title": "Academic Integrity Code",
+    "content": "All students must adhere to strict Academic Integrity codes.",
+    "category": "academic_rules",
+    "subcategory": "academic_integrity_code",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "academic integrity",
+      "student conduct",
+      "ethics"
+    ]
+  },
+  {
+    "id": "0fb011f093e10d9d1155f82c7c4c8488",
+    "title": "Student Affairs Review",
+    "content": "Behavioral or ethical offenses are reviewed by the Student Affairs Committee.",
+    "category": "academic_rules",
+    "subcategory": "student_affairs_review",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "student affairs committee",
+      "behavioral offenses",
+      "ethical offenses"
+    ]
+  },
+  {
+    "id": "f781f4f1d8b77219ac928d849314babb",
+    "title": "Semester GPA Calculation",
+    "content": "Cumulative GPA is calculated at the end of each semester by dividing total acquired points by total registered credit hours.",
+    "category": "grading_policies",
+    "subcategory": "semester_gpa_calculation",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "grading_policy",
+    "quality_score": 1.0,
+    "tags": [
+      "cumulative GPA",
+      "semester calculation",
+      "credit hours"
+    ]
+  },
+  {
+    "id": "402d7464982c86181359323fd7236401",
+    "title": "Course Passing Requirements",
+    "content": "To pass a course, a student must earn at least 50/100 total marks",
+    "category": "grading_policies",
+    "subcategory": "course_passing_requirements",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "grading_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "passing marks",
+      "final exam",
+      "course completion"
+    ]
+  },
+  {
+    "id": "eea887ad9e86a89895ae0ac2f31c088f",
+    "title": "Final Exam Absence Penalty",
+    "content": "If a student fails to attend the final exam without an excuse,",
+    "category": "grading_policies",
+    "subcategory": "final_exam_absence_penalty",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "attendance_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "final exam absence",
+      "unexcused zero",
+      "assessment policy"
+    ]
+  },
+  {
+    "id": "17dc4e86eb79c3f7bfdf6ccdcf96986c",
+    "title": "Failed Course Repeat Policy",
+    "content": "Students must repeat failed courses, with the maximum grade for success being 3.00",
+    "category": "grading_policies",
+    "subcategory": "failed_course_repeat_policy",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "grading_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "failed courses",
+      "repeat policy",
+      "maximum grade 3.00"
+    ]
+  },
+  {
+    "id": "b902d3e8c90b4a549692979451dc5624",
+    "title": "Conditioned Pass Repeat Rule",
+    "content": "If the cumulative GPA is below 2.00, students",
+    "category": "grading_policies",
+    "subcategory": "conditioned_pass_repeat_rule",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "grading_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "conditioned pass",
+      "GPA below 2.00",
+      "grade improvement"
+    ]
+  },
+  {
+    "id": "c60f09758d2e666c3064e4fce62d88a1",
+    "title": "Conditioned Pass Repeat Rule",
+    "content": "must repeat courses with conditioned passes (D) to improve their average.",
+    "category": "grading_policies",
+    "subcategory": "conditioned_pass_repeat_rule",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "conditioned pass",
+      "GPA below 2.00",
+      "grade improvement"
+    ]
+  },
+  {
+    "id": "d17810a686953c6f6ced0545b9c8a2e0",
+    "title": "Maximum Grade for Repeated Courses",
+    "content": "(B) . For any repeated course, the highest achieved grade is the one used in the cumulative",
+    "category": "grading_policies",
+    "subcategory": "maximum_grade_for_repeated_courses",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "grading_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "repeat policy",
+      "grade cap",
+      "GPA calculation"
+    ]
+  },
+  {
+    "id": "503a64031a8f41fa94e578c71572d890",
+    "title": "Repeated Course Grade Rule",
+    "content": "and credit hours are counted only once in the cumulative",
+    "category": "grading_policies",
+    "subcategory": "repeated_course_grade_rule",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "grading_policy",
+    "quality_score": 0.95,
+    "tags": [
+      "repeated courses",
+      "highest grade",
+      "cumulative GPA"
+    ]
+  },
+  {
+    "id": "01b6c98a18f72e5c6434eea7cab21047",
+    "title": "Incomplete Grade Deadline",
+    "content": "'Incomplete' grades must be resolved by the first week of the following semester,",
+    "category": "grading_policies",
+    "subcategory": "incomplete_grade_deadline",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "grading_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "incomplete grade",
+      "following semester",
+      "withdrawn status"
+    ]
+  },
+  {
+    "id": "961bc4212807bb2392ed4d7969944aaf",
+    "title": "Program Duration and Semesters",
+    "content": "The program study duration is 4 years divided into 8 academic semesters",
+    "category": "academic_programs",
+    "subcategory": "program_duration_and_semesters",
+    "priority": "medium",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "4-year program",
+      "8 semesters",
+      "AI foundation"
+    ]
+  },
+  {
+    "id": "be33ef47df8f585d8d326ba6452b1a61",
+    "title": "Program Duration and Semesters",
+    "content": "and provides graduates with a strong foundation and expertise in all state-of-the-art artificial intelligence technologies",
+    "category": "academic_programs",
+    "subcategory": "program_duration_and_semesters",
+    "priority": "medium",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "4-year program",
+      "8 semesters",
+      "AI foundation"
+    ]
+  },
+  {
+    "id": "d543e568a238400420d674f3b4fbb01b",
+    "title": "First Four Semesters",
+    "content": "During the first 4 semesters students study introductory courses in programming,",
+    "category": "academic_programs",
+    "subcategory": "first_four_semesters",
+    "priority": "medium",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "introductory courses",
+      "programming",
+      "mathematics",
+      "core AI"
+    ]
+  },
+  {
+    "id": "c35842ab709fa5465e05a26ddd0cf644",
+    "title": "Tuition Exemption Scholarship",
+    "content": "Scholarships providing exemption from tuition fees are awarded each semester to the student with the highest cumulative",
+    "category": "academic_policies",
+    "subcategory": "tuition_exemption_scholarship",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "scholarship_policy",
+    "quality_score": 1.0,
+    "tags": [
+      "tuition exemption",
+      "highest GPA",
+      "major scholarship"
+    ]
+  },
+  {
+    "id": "72fbf043b10af32c7c42082b37f8f91d",
+    "title": "Scholarship Eligibility Criteria",
+    "content": "To qualify, a student must maintain a GPA of at least 3.4,",
+    "category": "academic_policies",
+    "subcategory": "scholarship_eligibility_criteria",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "scholarship_policy",
+    "quality_score": 0.95,
+    "tags": [
+      "GPA 3.4",
+      "15 students",
+      "study hours"
+    ]
+  },
+  {
+    "id": "7d919aff794987532f021e587afb1112",
+    "title": "Scholarship Eligibility Criteria",
+    "content": "belong to a major with at least 15 students,",
+    "category": "academic_policies",
+    "subcategory": "scholarship_eligibility_criteria",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "scholarship_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "GPA 3.4",
+      "15 students",
+      "study hours"
+    ]
+  },
+  {
+    "id": "69f61f869450f03862775018fc2146f5",
+    "title": "Scholarship Eligibility Criteria",
+    "content": "and have completed all previous study hours without interruption",
+    "category": "academic_policies",
+    "subcategory": "scholarship_eligibility_criteria",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "scholarship_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "GPA 3.4",
+      "15 students",
+      "study hours"
+    ]
+  },
+  {
+    "id": "d4b18488b96cec1867f8fc5890b6a5ec",
+    "title": "Scholarship Major and Summer Rules",
+    "content": "The scholarship does not apply to the summer semester and",
+    "category": "academic_policies",
+    "subcategory": "scholarship_major_and_summer_rules",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "scholarship_policy",
+    "quality_score": 0.95,
+    "tags": [
+      "summer semester",
+      "same major",
+      "scholarship conditions"
+    ]
+  },
+  {
+    "id": "f2d131b9b50fc8409d66222e5a719b39",
+    "title": "Scholarship Major and Summer Rules",
+    "content": "requires the student to remain in the same major.",
+    "category": "academic_policies",
+    "subcategory": "scholarship_major_and_summer_rules",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "scholarship_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "summer semester",
+      "same major",
+      "scholarship conditions"
+    ]
+  },
+  {
+    "id": "5c6db9768baa5b8a213961ad82109968",
+    "title": "Scholarship Tie Rules",
+    "content": "If multiple students have the same GPA, the",
+    "category": "academic_policies",
+    "subcategory": "scholarship_tie_rules",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "scholarship_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "equal division",
+      "4.00 GPA",
+      "full scholarship"
+    ]
+  },
+  {
+    "id": "6f459aa8d497a67be7a20a5ba5c20fb2",
+    "title": "Scholarship Tie Rules",
+    "content": "scholarship is divided equally, except if multiple students achieve a 4.00,",
+    "category": "academic_policies",
+    "subcategory": "scholarship_tie_rules",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "scholarship_policy",
+    "quality_score": 0.95,
+    "tags": [
+      "equal division",
+      "4.00 GPA",
+      "full scholarship"
+    ]
+  },
+  {
+    "id": "59ae6a3cabcb7a652e7c5d02adf02094",
+    "title": "Scholarship Tie Rules",
+    "content": "in which case each receives a full scholarship.",
+    "category": "academic_policies",
+    "subcategory": "scholarship_tie_rules",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "scholarship_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "equal division",
+      "4.00 GPA",
+      "full scholarship"
+    ]
+  },
+  {
+    "id": "e1b71859c51bd9dddb337098eb82cf13",
+    "title": "Transfer Student Scholarship Eligibility",
+    "content": "Transferred students from abroad are eligible only after completing two semesters in the same major.",
+    "category": "academic_policies",
+    "subcategory": "transfer_student_scholarship_eligibility",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "scholarship_policy",
+    "quality_score": 0.95,
+    "tags": [
+      "transferred students",
+      "two semesters",
+      "same major"
+    ]
+  },
+  {
+    "id": "9461c9afd458d713265793cb4886267a",
+    "title": "Contact Information",
+    "content": "Please feel free to contact us if you need any further information:",
+    "category": "institutional",
+    "subcategory": "contact_information",
+    "priority": "low",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "tuition_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "cai@aast.edu",
+      "WhatsApp",
+      "+20 1141 6060 29"
+    ]
+  },
+  {
+    "id": "e899caf99b0c96d4197479ac309580de",
+    "title": "UClan Double Degree and Supervision",
+    "content": "The cooperation with the University of Central Lancashire includes the offering of a Graduation Double Certificate",
+    "category": "international_relations",
+    "subcategory": "uclan_double_degree_and_supervision",
+    "priority": "medium",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "graduation_policy",
+    "quality_score": 0.95,
+    "tags": [
+      "double degree",
+      "UClan",
+      "postgraduate supervision",
+      "international certificate"
+    ]
+  },
+  {
+    "id": "475be9d00db33af60d3579b8a69485b0",
+    "title": "UClan Double Degree and Supervision",
+    "content": "(one from UClan and one from CAI) .",
+    "category": "international_relations",
+    "subcategory": "uclan_double_degree_and_supervision",
+    "priority": "medium",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "double degree",
+      "UClan",
+      "postgraduate supervision",
+      "international certificate"
+    ]
+  },
+  {
+    "id": "be143e65aa52d23dbabd362205b3a183",
+    "title": "UClan Double Degree and Supervision",
+    "content": "It also provides for Joint Supervision of Master",
+    "category": "international_relations",
+    "subcategory": "uclan_double_degree_and_supervision",
+    "priority": "medium",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "double degree",
+      "UClan",
+      "postgraduate supervision",
+      "international certificate"
+    ]
+  },
+  {
+    "id": "79c2a4a11d11a32a905f4afcce047967",
+    "title": "Scholarship Eligibility for Transfer Students",
+    "content": "Transferred students from abroad or other institutions are only",
+    "category": "academic_policies",
+    "subcategory": "scholarship_eligibility_for_transfer_students",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "scholarship_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "transfer students",
+      "scholarship eligibility",
+      "waiting period"
+    ]
+  },
+  {
+    "id": "30bf2585e97083e4fb4573d521e834cd",
+    "title": "Scholarship Eligibility for Transfer Students",
+    "content": "eligible for tuition fee exemption scholarships after they have completed at least two full semesters within the same major at CAI.",
+    "category": "academic_policies",
+    "subcategory": "scholarship_eligibility_for_transfer_students",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "scholarship_policy",
+    "quality_score": 1.0,
+    "tags": [
+      "transfer students",
+      "scholarship eligibility",
+      "waiting period"
+    ]
+  },
+  {
+    "id": "496937327ca8d27df47c452365dd4ca8",
+    "title": "Admission Score Mandates",
+    "content": "The minimum scores required to join the college are mandated by the AASTMT Supreme Council of Education Affairs.",
+    "category": "admissions_registration",
+    "subcategory": "admission_score_mandates",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Supreme Council",
+      "admission scores",
+      "regulations"
+    ]
+  },
+  {
+    "id": "0a70e1170c3ae55622663e437d1fa3b2",
+    "title": "Admission Score Mandates",
+    "content": "These terms, regulations, and qualifying courses per certificate are announced annually",
+    "category": "admissions_registration",
+    "subcategory": "admission_score_mandates",
+    "priority": "high",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.95,
+    "tags": [
+      "Supreme Council",
+      "admission scores",
+      "regulations"
+    ]
+  },
+  {
+    "id": "13c96f64db27245e628133fb85e4dc3b",
+    "title": "Lab Infrastructure Standards",
+    "content": "The basic and research labs ( including Robotics,",
+    "category": "infrastructure",
+    "subcategory": "lab_infrastructure_standards",
+    "priority": "medium",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "infrastructure",
+    "quality_score": 0.65,
+    "tags": [
+      "lab equipment",
+      "AI hardware",
+      "research facilities"
+    ]
+  },
+  {
+    "id": "29328885482e898253db7e0a2a74dc67",
+    "title": "Lab Infrastructure Standards",
+    "content": "Data Science, NLP, and Computer Vision) are equipped with the latest hardware",
+    "category": "infrastructure",
+    "subcategory": "lab_infrastructure_standards",
+    "priority": "medium",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "infrastructure",
+    "quality_score": 0.65,
+    "tags": [
+      "lab equipment",
+      "AI hardware",
+      "research facilities"
+    ]
+  },
+  {
+    "id": "d16fd6b69ae824782a01c481b3375969",
+    "title": "Lab Infrastructure Standards",
+    "content": "and software tools specifically designed to support advanced research",
+    "category": "infrastructure",
+    "subcategory": "lab_infrastructure_standards",
+    "priority": "medium",
+    "source": "CAI_rag3_cleaned.json",
+    "program_level": "undergraduate",
+    "document_type": "infrastructure",
+    "quality_score": 0.65,
+    "tags": [
+      "lab equipment",
+      "AI hardware",
+      "research facilities"
+    ]
+  },
+  {
+    "id": "8ad369a845c165fd0fff0f6148ca0f81",
+    "title": "MSc Study at the College of Artificial Intelligence",
+    "content": "The Master of Science (M.Sc.) in Artificial Intelligence at AASTMT",
+    "category": "postgraduate_programs",
+    "subcategory": "msc_study_at_the_college_of_artificial_intelligence",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "M.Sc. AI",
+      "Postgraduate",
+      "Digital Twins",
+      "XAI",
+      "Hybrid Learning",
+      "AASTMT"
+    ]
+  },
+  {
+    "id": "8a289343217c12fc3ab0a30b7fb9ad59",
+    "title": "MSc Study at the College of Artificial Intelligence",
+    "content": "(New El-Alamein City/Alexandria) is a research-focused program designed to prepare technology leaders.",
+    "category": "postgraduate_programs",
+    "subcategory": "msc_study_at_the_college_of_artificial_intelligence",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "M.Sc. AI",
+      "Postgraduate",
+      "Digital Twins",
+      "XAI",
+      "Hybrid Learning",
+      "AASTMT"
+    ]
+  },
+  {
+    "id": "cb5c5a7b5661edcd607272bf6edafe13",
+    "title": "MSc Study at the College of Artificial Intelligence",
+    "content": "The curriculum covers core and emerging fields including Machine Learning,",
+    "category": "postgraduate_programs",
+    "subcategory": "msc_study_at_the_college_of_artificial_intelligence",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "M.Sc. AI",
+      "Postgraduate",
+      "Digital Twins",
+      "XAI",
+      "Hybrid Learning",
+      "AASTMT"
+    ]
+  },
+  {
+    "id": "023d0bd7d1cc180cb7ed3f6dba1a95b7",
+    "title": "MSc Study at the College of Artificial Intelligence",
+    "content": "Computer Vision, Robotics, Natural Language Processing (NLP) ,",
+    "category": "postgraduate_programs",
+    "subcategory": "msc_study_at_the_college_of_artificial_intelligence",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.5,
+    "tags": [
+      "M.Sc. AI",
+      "Postgraduate",
+      "Digital Twins",
+      "XAI",
+      "Hybrid Learning",
+      "AASTMT"
+    ]
+  },
+  {
+    "id": "59d19d2ff286c25ea71c0520727c5508",
+    "title": "MSc Study at the College of Artificial Intelligence",
+    "content": "Digital Twins, and Explainable AI (XAI) . The program operates on a credit-hour system with a flexible duration of 2 to 5 years",
+    "category": "postgraduate_programs",
+    "subcategory": "msc_study_at_the_college_of_artificial_intelligence",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "M.Sc. AI",
+      "Postgraduate",
+      "Digital Twins",
+      "XAI",
+      "Hybrid Learning",
+      "AASTMT"
+    ]
+  },
+  {
+    "id": "0f2e1d3fc566f0e2213f86d0040d0b25",
+    "title": "MSc Study at the College of Artificial Intelligence",
+    "content": "and follows a hybrid learning model (60-70% face-to-face and 30-40% remote)",
+    "category": "postgraduate_programs",
+    "subcategory": "msc_study_at_the_college_of_artificial_intelligence",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "M.Sc. AI",
+      "Postgraduate",
+      "Digital Twins",
+      "XAI",
+      "Hybrid Learning",
+      "AASTMT"
+    ]
+  },
+  {
+    "id": "430efff9acca34cdc5cd706d973cf7e2",
+    "title": "MSc Study at the College of Artificial Intelligence",
+    "content": ". Graduation requires the completion of 36 credit hours,",
+    "category": "postgraduate_programs",
+    "subcategory": "msc_study_at_the_college_of_artificial_intelligence",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "graduation_policy",
+    "quality_score": 0.95,
+    "tags": [
+      "M.Sc. AI",
+      "Postgraduate",
+      "Digital Twins",
+      "XAI",
+      "Hybrid Learning",
+      "AASTMT"
+    ]
+  },
+  {
+    "id": "ede7294b1b33f40e01ea0a98396f4a2b",
+    "title": "MSc Study at the College of Artificial Intelligence",
+    "content": "maintaining a minimum GPA of 2.2, and publishing at least one research paper in a Q3",
+    "category": "postgraduate_programs",
+    "subcategory": "msc_study_at_the_college_of_artificial_intelligence",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "grading_policy",
+    "quality_score": 0.95,
+    "tags": [
+      "M.Sc. AI",
+      "Postgraduate",
+      "Digital Twins",
+      "XAI",
+      "Hybrid Learning",
+      "AASTMT"
+    ]
+  },
+  {
+    "id": "4b6b98ee1f4a8c80352c2632e57bf21b",
+    "title": "MSc Study at the College of Artificial Intelligence",
+    "content": "(or higher) Scopus or Web of Science indexed journal.",
+    "category": "postgraduate_programs",
+    "subcategory": "msc_study_at_the_college_of_artificial_intelligence",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "M.Sc. AI",
+      "Postgraduate",
+      "Digital Twins",
+      "XAI",
+      "Hybrid Learning",
+      "AASTMT"
+    ]
+  },
+  {
+    "id": "ebc8c5856eca579b57fe1bd09806e973",
+    "title": "MSc Admission Checklist",
+    "content": "Applicants must submit the following documents to the Office of the Vice Dean for Postgraduate Studies:",
+    "category": "admissions",
+    "subcategory": "msc_admission_checklist",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Admission Documents",
+      "Registration",
+      "Postgraduate Checklist",
+      "Application Requirements"
+    ]
+  },
+  {
+    "id": "eddba417594124d159c73f885822555f",
+    "title": "MSc Admission Checklist",
+    "content": "1. Official academic transcripts from all prior institutions.",
+    "category": "admissions",
+    "subcategory": "msc_admission_checklist",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "Admission Documents",
+      "Registration",
+      "Postgraduate Checklist",
+      "Application Requirements"
+    ]
+  },
+  {
+    "id": "e87de3cd46231f1c307b665a76aa52ef",
+    "title": "MSc Admission Checklist",
+    "content": "2. A formal explanation of the grading scale used by those institutions.",
+    "category": "admissions",
+    "subcategory": "msc_admission_checklist",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.95,
+    "tags": [
+      "Admission Documents",
+      "Registration",
+      "Postgraduate Checklist",
+      "Application Requirements"
+    ]
+  },
+  {
+    "id": "3aec2bd5bdaa09b36e5edb0b191f9ecd",
+    "title": "MSc Admission Checklist",
+    "content": "3. Certified 'True Copies' of all submitted documents",
+    "category": "admissions",
+    "subcategory": "msc_admission_checklist",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "Admission Documents",
+      "Registration",
+      "Postgraduate Checklist",
+      "Application Requirements"
+    ]
+  },
+  {
+    "id": "83e836ed5de6ff2b18490723549fb18a",
+    "title": "MSc Admission Checklist",
+    "content": "(non-refundable) . 4. A clear copy of Passport",
+    "category": "admissions",
+    "subcategory": "msc_admission_checklist",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "tuition_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "Admission Documents",
+      "Registration",
+      "Postgraduate Checklist",
+      "Application Requirements"
+    ]
+  },
+  {
+    "id": "1b40adb9b41bb882d2bdeaedebf12a0a",
+    "title": "MSc Admission Checklist",
+    "content": "or National ID. 5. A fully completed application form.",
+    "category": "admissions",
+    "subcategory": "msc_admission_checklist",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "Admission Documents",
+      "Registration",
+      "Postgraduate Checklist",
+      "Application Requirements"
+    ]
+  },
+  {
+    "id": "b71518ea41b40536795b6dcfe87e5b3b",
+    "title": "MSc Admission Checklist",
+    "content": "6. A financial plan for sponsored or funded applicants.",
+    "category": "admissions",
+    "subcategory": "msc_admission_checklist",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "tuition_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "Admission Documents",
+      "Registration",
+      "Postgraduate Checklist",
+      "Application Requirements"
+    ]
+  },
+  {
+    "id": "13db638417049c7590ff74f9ac35d7ac",
+    "title": "MSc Tuition & Fees Framework",
+    "content": "Tuition fees are calculated based on the number of registered credit hours.",
+    "category": "financial_policies",
+    "subcategory": "msc_tuition_&_fees_framework",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "tuition_policy",
+    "quality_score": 1.0,
+    "tags": [
+      "Tuition Fees",
+      "Payment Policy",
+      "Refunds",
+      "Financial Regulations",
+      "Scholarships"
+    ]
+  },
+  {
+    "id": "6ff5760d4c547d12588f5d0202f4afe3",
+    "title": "MSc Tuition & Fees Framework",
+    "content": "Fees for each course must be paid at the start of every semester,",
+    "category": "financial_policies",
+    "subcategory": "msc_tuition_&_fees_framework",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "tuition_policy",
+    "quality_score": 0.95,
+    "tags": [
+      "Tuition Fees",
+      "Payment Policy",
+      "Refunds",
+      "Financial Regulations",
+      "Scholarships"
+    ]
+  },
+  {
+    "id": "ec9373925eb970ec488f715d2a7aa756",
+    "title": "MSc Tuition & Fees Framework",
+    "content": "either in full or per registered hour. Late payments result in registration cancellation",
+    "category": "financial_policies",
+    "subcategory": "msc_tuition_&_fees_framework",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "tuition_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Tuition Fees",
+      "Payment Policy",
+      "Refunds",
+      "Financial Regulations",
+      "Scholarships"
+    ]
+  },
+  {
+    "id": "c0e62108addeb43142baaea868457ab6",
+    "title": "MSc Tuition & Fees Framework",
+    "content": "and being barred from lectures. Partial refunds are only available",
+    "category": "financial_policies",
+    "subcategory": "msc_tuition_&_fees_framework",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "tuition_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Tuition Fees",
+      "Payment Policy",
+      "Refunds",
+      "Financial Regulations",
+      "Scholarships"
+    ]
+  },
+  {
+    "id": "40585f6398ecc83723b8191b931f82b4",
+    "title": "MSc Tuition & Fees Framework",
+    "content": "if a course is dropped within the first 3 weeks of the semester.",
+    "category": "financial_policies",
+    "subcategory": "msc_tuition_&_fees_framework",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "tuition_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Tuition Fees",
+      "Payment Policy",
+      "Refunds",
+      "Financial Regulations",
+      "Scholarships"
+    ]
+  },
+  {
+    "id": "7452de78063fdcf0b9d564f979fad341",
+    "title": "MSc Tuition & Fees Framework",
+    "content": "Scholarships and discounts ( such as sibling discounts)",
+    "category": "financial_policies",
+    "subcategory": "msc_tuition_&_fees_framework",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "scholarship_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Tuition Fees",
+      "Payment Policy",
+      "Refunds",
+      "Financial Regulations",
+      "Scholarships"
+    ]
+  },
+  {
+    "id": "7d275eccb526272914249c21f6360370",
+    "title": "MSc Program Structure and Academic Requirements",
+    "content": "The program consists of 36 credit hours: 2 core courses",
+    "category": "academic_policies",
+    "subcategory": "msc_program_structure_and_academic_requirements",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "graduation_policy",
+    "quality_score": 0.95,
+    "tags": [
+      "Program Structure",
+      "Thesis Registration",
+      "Credit Hours",
+      "GPA Requirements",
+      "Bridge Courses"
+    ]
+  },
+  {
+    "id": "b20af204dbe3a98078260f245f469000",
+    "title": "MSc Program Structure and Academic Requirements",
+    "content": "(6 hours) , 4 elective courses (12 hours)",
+    "category": "academic_policies",
+    "subcategory": "msc_program_structure_and_academic_requirements",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "graduation_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "Program Structure",
+      "Thesis Registration",
+      "Credit Hours",
+      "GPA Requirements",
+      "Bridge Courses"
+    ]
+  },
+  {
+    "id": "fba4c64c5901947d639b12a1dd8c41d4",
+    "title": "MSc Program Structure and Academic Requirements",
+    "content": ", and a Research Thesis (18 hours) .",
+    "category": "academic_policies",
+    "subcategory": "msc_program_structure_and_academic_requirements",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "research_requirement",
+    "quality_score": 0.8,
+    "tags": [
+      "Program Structure",
+      "Thesis Registration",
+      "Credit Hours",
+      "GPA Requirements",
+      "Bridge Courses"
+    ]
+  },
+  {
+    "id": "66d9de10f24845705ae431db6ca62e5c",
+    "title": "MSc Program Structure and Academic Requirements",
+    "content": "Thesis registration is permitted after successfully passing 12 credit hours of coursework",
+    "category": "academic_policies",
+    "subcategory": "msc_program_structure_and_academic_requirements",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "research_requirement",
+    "quality_score": 1.0,
+    "tags": [
+      "Program Structure",
+      "Thesis Registration",
+      "Credit Hours",
+      "GPA Requirements",
+      "Bridge Courses"
+    ]
+  },
+  {
+    "id": "9c788bfb73eabec65b665c04dc271a8b",
+    "title": "MSc Program Structure and Academic Requirements",
+    "content": "and presenting a research proposal in a formal seminar.",
+    "category": "academic_policies",
+    "subcategory": "msc_program_structure_and_academic_requirements",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "graduation_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "Program Structure",
+      "Thesis Registration",
+      "Credit Hours",
+      "GPA Requirements",
+      "Bridge Courses"
+    ]
+  },
+  {
+    "id": "d85adf4280bbdd47071f155fca77bcb9",
+    "title": "MSc Program Structure and Academic Requirements",
+    "content": "The primary language of instruction and thesis writing is English.",
+    "category": "academic_policies",
+    "subcategory": "msc_program_structure_and_academic_requirements",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "research_requirement",
+    "quality_score": 0.95,
+    "tags": [
+      "Program Structure",
+      "Thesis Registration",
+      "Credit Hours",
+      "GPA Requirements",
+      "Bridge Courses"
+    ]
+  },
+  {
+    "id": "2da411c06ab484494c0858d11cb40cd7",
+    "title": "MSc Program Structure and Academic Requirements",
+    "content": "Admission requires a minimum GPA of 2.40/4.00 (or 'Good' grade)",
+    "category": "academic_policies",
+    "subcategory": "msc_program_structure_and_academic_requirements",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "admission_policy",
+    "quality_score": 1.0,
+    "tags": [
+      "Program Structure",
+      "Thesis Registration",
+      "Credit Hours",
+      "GPA Requirements",
+      "Bridge Courses"
+    ]
+  },
+  {
+    "id": "54d419bcb2bde5e3ba392c503fb0cf64",
+    "title": "MSc Program Structure and Academic Requirements",
+    "content": ". Graduates from non-computing Engineering or Science majors may be required to pass a qualifying exam",
+    "category": "academic_policies",
+    "subcategory": "msc_program_structure_and_academic_requirements",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "graduation_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Program Structure",
+      "Thesis Registration",
+      "Credit Hours",
+      "GPA Requirements",
+      "Bridge Courses"
+    ]
+  },
+  {
+    "id": "49cf1aacc886ddfaf824de80453ceae6",
+    "title": "Graduation Requirements and Academic Integrity",
+    "content": "To graduate, students must publish at least one research paper in a Q3",
+    "category": "compliance",
+    "subcategory": "graduation_requirements_and_academic_integrity",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "graduation_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Graduation Criteria",
+      "Research Publication",
+      "Scopus",
+      "Web of Science",
+      "Plagiarism Policy",
+      "Academic Integrity"
+    ]
+  },
+  {
+    "id": "97ec94e79b6365887ae59b9018f1aab4",
+    "title": "Graduation Requirements and Academic Integrity",
+    "content": "or higher journal indexed in Web of Science",
+    "category": "compliance",
+    "subcategory": "graduation_requirements_and_academic_integrity",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "graduation_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "Graduation Criteria",
+      "Research Publication",
+      "Scopus",
+      "Web of Science",
+      "Plagiarism Policy",
+      "Academic Integrity"
+    ]
+  },
+  {
+    "id": "8e59d4c566355479e07fdc806cd7911e",
+    "title": "Graduation Requirements and Academic Integrity",
+    "content": "or Scopus before their final defense. Course evaluation is based on 60% coursework and 40% final exam,",
+    "category": "compliance",
+    "subcategory": "graduation_requirements_and_academic_integrity",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "grading_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Graduation Criteria",
+      "Research Publication",
+      "Scopus",
+      "Web of Science",
+      "Plagiarism Policy",
+      "Academic Integrity"
+    ]
+  },
+  {
+    "id": "2af6e0045c814058a266e17a7ee3d398",
+    "title": "Graduation Requirements and Academic Integrity",
+    "content": "with a minimum passing grade of 60% per course.",
+    "category": "compliance",
+    "subcategory": "graduation_requirements_and_academic_integrity",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "grading_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "Graduation Criteria",
+      "Research Publication",
+      "Scopus",
+      "Web of Science",
+      "Plagiarism Policy",
+      "Academic Integrity"
+    ]
+  },
+  {
+    "id": "a3b6c43a7a58e83bee6c16fb6471cebd",
+    "title": "Graduation Requirements & Academic Integrity",
+    "content": "with a 60% minimum passing grade. The college maintains a zero-tolerance policy for plagiarism;",
+    "category": "compliance",
+    "subcategory": "graduation_requirements_&_academic_integrity",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "grading_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Graduation Requirements",
+      "Research Publication",
+      "Scopus",
+      "Web of Science",
+      "Evaluation",
+      "Academic Integrity"
+    ]
+  },
+  {
+    "id": "9503fe1e18a40d75f16f66e2b950fa27",
+    "title": "Graduation Requirements and Academic Integrity",
+    "content": "and academic dishonesty; failure to uphold these standards results in immediate dismissal from the program.",
+    "category": "compliance",
+    "subcategory": "graduation_requirements_and_academic_integrity",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "graduation_policy",
+    "quality_score": 0.95,
+    "tags": [
+      "Graduation Criteria",
+      "Research Publication",
+      "Scopus",
+      "Web of Science",
+      "Plagiarism Policy",
+      "Academic Integrity"
+    ]
+  },
+  {
+    "id": "59b1adfab29c51c16ad30850bbdc569c",
+    "title": "Program Description",
+    "content": "one of the first specialized AI colleges in the Arab region,",
+    "category": "postgraduate_programs",
+    "subcategory": "program_description",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Program Description",
+      "M.Sc. AI",
+      "AASTMT",
+      "CAI",
+      "El Alamein Campus",
+      "Postgraduate"
+    ]
+  },
+  {
+    "id": "ceb73f1a19add007a924f1863bf3e1be",
+    "title": "Program Description",
+    "content": "established in 2019 at the El Alamein campus.",
+    "category": "postgraduate_programs",
+    "subcategory": "program_description",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "Program Description",
+      "M.Sc. AI",
+      "AASTMT",
+      "CAI",
+      "El Alamein Campus",
+      "Postgraduate"
+    ]
+  },
+  {
+    "id": "9bfb80ef0d0646ea7eaf618d4cb0c4d0",
+    "title": "Program Description",
+    "content": "The program is designed to equip graduate students with both foundational",
+    "category": "postgraduate_programs",
+    "subcategory": "program_description",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Program Description",
+      "M.Sc. AI",
+      "AASTMT",
+      "CAI",
+      "El Alamein Campus",
+      "Postgraduate"
+    ]
+  },
+  {
+    "id": "377f486a10c47cf7d3b8f5023048df62",
+    "title": "Program Description",
+    "content": "and advanced knowledge in AI, preparing them for leadership roles in research, industry,",
+    "category": "postgraduate_programs",
+    "subcategory": "program_description",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Program Description",
+      "M.Sc. AI",
+      "AASTMT",
+      "CAI",
+      "El Alamein Campus",
+      "Postgraduate"
+    ]
+  },
+  {
+    "id": "1cbf0f7fd46154b0f478dd781d15dea1",
+    "title": "MSc Admission & Administrative Requirements",
+    "content": "Admission requires a Bachelor’s degree with a minimum",
+    "category": "admissions",
+    "subcategory": "msc_admission_&_administrative_requirements",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Admission Requirements",
+      "GPA",
+      "Eligibility",
+      "Deadlines",
+      "Hybrid Learning",
+      "Study Format"
+    ]
+  },
+  {
+    "id": "0997d69db37fb04a0a3865d36a6e5ee4",
+    "title": "Admission Requirements",
+    "content": "Applicants with a 'Pass' grade may be accepted provided they already possess an academic diploma in the same specialization with a grade of at least 'Good.' The program is open to graduates of faculties of Computer Science",
+    "category": "admissions",
+    "subcategory": "admission_requirements",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Admission Requirements",
+      "GPA",
+      "Eligibility",
+      "Qualifying Exam",
+      "Bridge Courses",
+      "Postgraduate"
+    ]
+  },
+  {
+    "id": "35f0d6bd36432cec1010cb5a9510eecc",
+    "title": "Admission Requirements",
+    "content": "and Information Technology, Artificial Intelligence, Computer Engineering, and the Computer Science division within the Faculty of Science.",
+    "category": "admissions",
+    "subcategory": "admission_requirements",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Admission Requirements",
+      "GPA",
+      "Eligibility",
+      "Qualifying Exam",
+      "Bridge Courses",
+      "Postgraduate"
+    ]
+  },
+  {
+    "id": "5a333e314ed48a35dde9f49163699b4d",
+    "title": "Admission Requirements",
+    "content": "Graduates of other Engineering or Science specializations may be admitted",
+    "category": "admissions",
+    "subcategory": "admission_requirements",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Admission Requirements",
+      "GPA",
+      "Eligibility",
+      "Qualifying Exam",
+      "Bridge Courses",
+      "Postgraduate"
+    ]
+  },
+  {
+    "id": "782bd3c894649b0712ce24126d0da0dd",
+    "title": "Admission Requirements",
+    "content": "after passing a qualifying exam or completing supplementary courses determined by the faculty.",
+    "category": "admissions",
+    "subcategory": "admission_requirements",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Admission Requirements",
+      "GPA",
+      "Eligibility",
+      "Qualifying Exam",
+      "Bridge Courses",
+      "Postgraduate"
+    ]
+  },
+  {
+    "id": "17ecca7824f843b03670e610b1de7951",
+    "title": "Admission Requirements",
+    "content": "Holders of a bachelor's degree in Management Information Systems are also",
+    "category": "admissions",
+    "subcategory": "admission_requirements",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Admission Requirements",
+      "GPA",
+      "Eligibility",
+      "Qualifying Exam",
+      "Bridge Courses",
+      "Postgraduate"
+    ]
+  },
+  {
+    "id": "51a8d265844dded480936a5e492ce0fa",
+    "title": "Admission Requirements",
+    "content": "eligible, provided they possess an equivalent academic diploma with a grade of 'Good.'",
+    "category": "admissions",
+    "subcategory": "admission_requirements",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.95,
+    "tags": [
+      "Admission Requirements",
+      "GPA",
+      "Eligibility",
+      "Qualifying Exam",
+      "Bridge Courses",
+      "Postgraduate"
+    ]
+  },
+  {
+    "id": "4e6790f1afbf3b9d6d0feccc5b16757d",
+    "title": "Official Documents Required for Admission",
+    "content": "and Research at the El Alamein Branch: Official Academic Transcripts from each college",
+    "category": "admissions",
+    "subcategory": "official_documents_required_for_admission",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Admission Documents",
+      "Registration",
+      "Postgraduate",
+      "Transcripts",
+      "Identification",
+      "Financial Plan"
+    ]
+  },
+  {
+    "id": "c7176b92ae68f79bd0949001b1b448b8",
+    "title": "Official Documents Required for Admission",
+    "content": "or university previously attended; a Grading Scale Explanation",
+    "category": "admissions",
+    "subcategory": "official_documents_required_for_admission",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Admission Documents",
+      "Registration",
+      "Postgraduate",
+      "Transcripts",
+      "Identification",
+      "Financial Plan"
+    ]
+  },
+  {
+    "id": "e285f61a06d1ad07446cd1a1ffcd3200",
+    "title": "Official Documents Required for Admission",
+    "content": "including a clear explanation of the evaluation scale used by previous institutions;",
+    "category": "admissions",
+    "subcategory": "official_documents_required_for_admission",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Admission Documents",
+      "Registration",
+      "Postgraduate",
+      "Transcripts",
+      "Identification",
+      "Financial Plan"
+    ]
+  },
+  {
+    "id": "91fa57a7a64f2f1047e0d1f17ac774d5",
+    "title": "Official Documents Required for Admission",
+    "content": "officially certified copies of all documents (non-returnable) ;",
+    "category": "admissions",
+    "subcategory": "official_documents_required_for_admission",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "Admission Documents",
+      "Registration",
+      "Postgraduate",
+      "Transcripts",
+      "Identification",
+      "Financial Plan"
+    ]
+  },
+  {
+    "id": "6594e35c0f8e54abc8972c3434021a43",
+    "title": "Official Documents Required for Admission",
+    "content": "a clear copy of a valid passport or national ID card;",
+    "category": "admissions",
+    "subcategory": "official_documents_required_for_admission",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Admission Documents",
+      "Registration",
+      "Postgraduate",
+      "Transcripts",
+      "Identification",
+      "Financial Plan"
+    ]
+  },
+  {
+    "id": "f92e7e994e8d12d7ce60e0fb7a426a1a",
+    "title": "Official Documents Required for Admission",
+    "content": "a fully completed admission application form; and a financial plan",
+    "category": "admissions",
+    "subcategory": "official_documents_required_for_admission",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "tuition_policy",
+    "quality_score": 0.95,
+    "tags": [
+      "Admission Documents",
+      "Registration",
+      "Postgraduate",
+      "Transcripts",
+      "Identification",
+      "Financial Plan"
+    ]
+  },
+  {
+    "id": "93d8ad9f2fa9d62806d2d1502bd9a64f",
+    "title": "Official Documents Required for Admission",
+    "content": "if the applicant is sponsored or funded by a specific entity",
+    "category": "admissions",
+    "subcategory": "official_documents_required_for_admission",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Admission Documents",
+      "Registration",
+      "Postgraduate",
+      "Transcripts",
+      "Identification",
+      "Financial Plan"
+    ]
+  },
+  {
+    "id": "ae4c33e9dfa8acacd04cd6b20ca796ae",
+    "title": "Guidelines for Tuition & Fees",
+    "content": "The following regulatory rules—approved by the Dean of Admissions",
+    "category": "financial_policies",
+    "subcategory": "guidelines_for_tuition_&_fees",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "tuition_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Tuition Fees",
+      "Financial Regulations",
+      "Payment Policy",
+      "Refund Policy",
+      "Credit Hours",
+      "Registration"
+    ]
+  },
+  {
+    "id": "e585cb30d0c0ecf6fa6786c8dd1bb7c7",
+    "title": "Guidelines for Tuition & Fees",
+    "content": "Payment can be made in full for the entire semester",
+    "category": "financial_policies",
+    "subcategory": "guidelines_for_tuition_&_fees",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "tuition_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Tuition Fees",
+      "Financial Regulations",
+      "Payment Policy",
+      "Refund Policy",
+      "Credit Hours",
+      "Registration"
+    ]
+  },
+  {
+    "id": "1b03e0e055aa0c2a8292ee8fa2eb9c92",
+    "title": "Guidelines for Tuition & Fees",
+    "content": "or according to the number of registered credit hours.",
+    "category": "financial_policies",
+    "subcategory": "guidelines_for_tuition_&_fees",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "tuition_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Tuition Fees",
+      "Financial Regulations",
+      "Payment Policy",
+      "Refund Policy",
+      "Credit Hours",
+      "Registration"
+    ]
+  },
+  {
+    "id": "553d11d685efb9dcc8a02db7a80248c7",
+    "title": "Guidelines for Tuition & Fees",
+    "content": "Failure to pay tuition fees on time will result in the student's registration being cancelled",
+    "category": "financial_policies",
+    "subcategory": "guidelines_for_tuition_&_fees",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "tuition_policy",
+    "quality_score": 1.0,
+    "tags": [
+      "Tuition Fees",
+      "Financial Regulations",
+      "Payment Policy",
+      "Refund Policy",
+      "Credit Hours",
+      "Registration"
+    ]
+  },
+  {
+    "id": "310da067322a2cd77b77a58844be259c",
+    "title": "Academic Structure & Specializations",
+    "content": ". Specializations include Natural Language Processing (NLP) ,",
+    "category": "postgraduate_programs",
+    "subcategory": "academic_structure_&_specializations",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "Program Structure",
+      "Credit Hours",
+      "Specializations",
+      "NLP",
+      "XAI",
+      "Digital Twins"
+    ]
+  },
+  {
+    "id": "02b46da58c822d7162314061f25ee748",
+    "title": "Academic Structure & Specializations",
+    "content": "Computer Vision, Robotics, Embedded AI, Cognitive Systems, and emerging fields",
+    "category": "postgraduate_programs",
+    "subcategory": "academic_structure_&_specializations",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "Program Structure",
+      "Credit Hours",
+      "Specializations",
+      "NLP",
+      "XAI",
+      "Digital Twins"
+    ]
+  },
+  {
+    "id": "6f36fe4ace1a8d453ee2124f4be305b2",
+    "title": "Academic Structure & Specializations",
+    "content": "such as Digital Twins, AI in Pharmacy/Biotechnology, and Explainable AI",
+    "category": "postgraduate_programs",
+    "subcategory": "academic_structure_&_specializations",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Program Structure",
+      "Credit Hours",
+      "Specializations",
+      "NLP",
+      "XAI",
+      "Digital Twins"
+    ]
+  },
+  {
+    "id": "ee2c90c73ae816105e754bed7a7c40ac",
+    "title": "Academic Structure & Specializations",
+    "content": "(XAI) . Instruction and the research thesis are primarily in English,",
+    "category": "postgraduate_programs",
+    "subcategory": "academic_structure_&_specializations",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "research_requirement",
+    "quality_score": 0.95,
+    "tags": [
+      "Program Structure",
+      "Credit Hours",
+      "Specializations",
+      "NLP",
+      "XAI",
+      "Digital Twins"
+    ]
+  },
+  {
+    "id": "d08c8783346b3c98e8b8965883cfa5e1",
+    "title": "Academic Structure & Specializations",
+    "content": "with Arabic allowed only in exceptional cases with board approval.",
+    "category": "postgraduate_programs",
+    "subcategory": "academic_structure_&_specializations",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Program Structure",
+      "Credit Hours",
+      "Specializations",
+      "NLP",
+      "XAI",
+      "Digital Twins"
+    ]
+  },
+  {
+    "id": "094bfb05a0c2519cf61f880d9c0b1f21",
+    "title": "MSc Admission & Administrative Requirements",
+    "content": "AI, Computer Engineering, or Science (CS major) .",
+    "category": "admissions",
+    "subcategory": "msc_admission_&_administrative_requirements",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "Admission Requirements",
+      "GPA",
+      "Eligibility",
+      "Deadlines",
+      "Hybrid Learning",
+      "Study Format"
+    ]
+  },
+  {
+    "id": "d4f41a311ba56ab8123259980fb1c922",
+    "title": "MSc Admission & Administrative Requirements",
+    "content": "Other Engineering/Science graduates must pass a qualifying exam",
+    "category": "admissions",
+    "subcategory": "msc_admission_&_administrative_requirements",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "Admission Requirements",
+      "GPA",
+      "Eligibility",
+      "Deadlines",
+      "Hybrid Learning",
+      "Study Format"
+    ]
+  },
+  {
+    "id": "1afc02296fb611181ab5f1a454fa9a76",
+    "title": "MSc Admission & Administrative Requirements",
+    "content": "or complete remedial courses. Application deadlines are early September",
+    "category": "admissions",
+    "subcategory": "msc_admission_&_administrative_requirements",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "Admission Requirements",
+      "GPA",
+      "Eligibility",
+      "Deadlines",
+      "Hybrid Learning",
+      "Study Format"
+    ]
+  },
+  {
+    "id": "7efa63a207968161c921b75f90ae0db6",
+    "title": "MSc Admission & Administrative Requirements",
+    "content": "(Fall) and early February (Spring) . The degree duration is 2 to 5 years,",
+    "category": "admissions",
+    "subcategory": "msc_admission_&_administrative_requirements",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Admission Requirements",
+      "GPA",
+      "Eligibility",
+      "Deadlines",
+      "Hybrid Learning",
+      "Study Format"
+    ]
+  },
+  {
+    "id": "8dfa54186a67d87b87a6f515be02239f",
+    "title": "MSc Admission & Administrative Requirements",
+    "content": "utilizing a hybrid learning format (60–70% face-to-face in New Alamein",
+    "category": "admissions",
+    "subcategory": "msc_admission_&_administrative_requirements",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "admission_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Admission Requirements",
+      "GPA",
+      "Eligibility",
+      "Deadlines",
+      "Hybrid Learning",
+      "Study Format"
+    ]
+  },
+  {
+    "id": "f2d44a25ccc1c235e9655238470af385",
+    "title": "Graduation Requirements & Academic Integrity",
+    "content": "before the final seminar. Thesis registration requires passing 12 credit hours",
+    "category": "compliance",
+    "subcategory": "graduation_requirements_&_academic_integrity",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "research_requirement",
+    "quality_score": 1.0,
+    "tags": [
+      "Graduation Requirements",
+      "Research Publication",
+      "Scopus",
+      "Web of Science",
+      "Evaluation",
+      "Academic Integrity"
+    ]
+  },
+  {
+    "id": "5dea4789eb0a2834e5b238515a23e581",
+    "title": "General Information, Fees & Contact",
+    "content": "and set each semester. Partial refunds are only available within the first 3 weeks of withdrawal.",
+    "category": "financial_policies",
+    "subcategory": "general_information,_fees_&_contact",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "tuition_policy",
+    "quality_score": 0.95,
+    "tags": [
+      "Tuition Fees",
+      "Refunds",
+      "Scholarships",
+      "Degree Title",
+      "Contact Information",
+      "WhatsApp"
+    ]
+  },
+  {
+    "id": "5f3aca1b045ea92c7e0fa96320f3e88c",
+    "title": "General Information, Fees & Contact",
+    "content": "Scholarships and discounts (e.g., sibling discounts) are available per Arab Academic regulations.",
+    "category": "financial_policies",
+    "subcategory": "general_information,_fees_&_contact",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "scholarship_policy",
+    "quality_score": 1.0,
+    "tags": [
+      "Tuition Fees",
+      "Refunds",
+      "Scholarships",
+      "Degree Title",
+      "Contact Information",
+      "WhatsApp"
+    ]
+  },
+  {
+    "id": "bbd63701c50778b3384bed784d398033",
+    "title": "General Information, Fees & Contact",
+    "content": "Graduates receive a Master of Science (M.Sc.) in Artificial Intelligence.",
+    "category": "financial_policies",
+    "subcategory": "general_information,_fees_&_contact",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "tuition_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Tuition Fees",
+      "Refunds",
+      "Scholarships",
+      "Degree Title",
+      "Contact Information",
+      "WhatsApp"
+    ]
+  },
+  {
+    "id": "26d61c2a0f8fd09161f0c08162c37ec6",
+    "title": "General Information, Fees & Contact",
+    "content": "For inquiries, contact the Office of the Vice Dean for Postgraduate Studies at the Alamein branch via WhatsApp: +201093231831.",
+    "category": "financial_policies",
+    "subcategory": "general_information,_fees_&_contact",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "tuition_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Tuition Fees",
+      "Refunds",
+      "Scholarships",
+      "Degree Title",
+      "Contact Information",
+      "WhatsApp"
+    ]
+  },
+  {
+    "id": "eb5be076212161b049fb3bb9fc9316c2",
+    "title": "Specific Academic Milestones",
+    "content": "Graduation requires a minimum cumulative GPA of 2.",
+    "category": "academic_policies",
+    "subcategory": "specific_academic_milestones",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "grading_policy",
+    "quality_score": 0.95,
+    "tags": [
+      "GPA Requirement",
+      "Thesis Registration",
+      "Bilingual Summary",
+      "Academic Milestones"
+    ]
+  },
+  {
+    "id": "8e6c2bdd0ff81b3cde29e3b83cf98c4e",
+    "title": "Specific Academic Milestones",
+    "content": "2. The Research Thesis registration is officially permitted only",
+    "category": "academic_policies",
+    "subcategory": "specific_academic_milestones",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "research_requirement",
+    "quality_score": 0.8,
+    "tags": [
+      "GPA Requirement",
+      "Thesis Registration",
+      "Bilingual Summary",
+      "Academic Milestones"
+    ]
+  },
+  {
+    "id": "868669f557474571e8ec58613e85460b",
+    "title": "Specific Academic Milestones",
+    "content": "after the successful completion of 12 credit hours of coursework.",
+    "category": "academic_policies",
+    "subcategory": "specific_academic_milestones",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "registration_policy",
+    "quality_score": 0.95,
+    "tags": [
+      "GPA Requirement",
+      "Thesis Registration",
+      "Bilingual Summary",
+      "Academic Milestones"
+    ]
+  },
+  {
+    "id": "1093a6c5d516669c662116f4cb375dbf",
+    "title": "Specific Academic Milestones",
+    "content": "If a thesis is granted exceptional approval to be written in Arabic,",
+    "category": "academic_policies",
+    "subcategory": "specific_academic_milestones",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "scholarship_policy",
+    "quality_score": 0.95,
+    "tags": [
+      "GPA Requirement",
+      "Thesis Registration",
+      "Bilingual Summary",
+      "Academic Milestones"
+    ]
+  },
+  {
+    "id": "333877737b3973fc5b0369b85b7c1e4c",
+    "title": "Specific Academic Milestones",
+    "content": "it must include a comprehensive bilingual summary in both Arabic",
+    "category": "academic_policies",
+    "subcategory": "specific_academic_milestones",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "GPA Requirement",
+      "Thesis Registration",
+      "Bilingual Summary",
+      "Academic Milestones"
+    ]
+  },
+  {
+    "id": "9a3fe8dc3ffd2defa45604401342d7c8",
+    "title": "Faculty and Supervision",
+    "content": "The program is delivered by a specialized group of Professors",
+    "category": "academic_policies",
+    "subcategory": "faculty_and_supervision",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Faculty",
+      "Supervision",
+      "Main Supervisor",
+      "Research Progress"
+    ]
+  },
+  {
+    "id": "506f2bec99f6fa923c8422e47c306b25",
+    "title": "Faculty and Supervision",
+    "content": "and Assistant Professors from Egyptian universities. For each researcher,",
+    "category": "academic_policies",
+    "subcategory": "faculty_and_supervision",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "Faculty",
+      "Supervision",
+      "Main Supervisor",
+      "Research Progress"
+    ]
+  },
+  {
+    "id": "dda39e4226260677803cf5e40f2da8b5",
+    "title": "Faculty and Supervision",
+    "content": "the College Board appoints a main supervisor based on the Department Committee's recommendation.",
+    "category": "academic_policies",
+    "subcategory": "faculty_and_supervision",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "research_requirement",
+    "quality_score": 0.8,
+    "tags": [
+      "Faculty",
+      "Supervision",
+      "Main Supervisor",
+      "Research Progress"
+    ]
+  },
+  {
+    "id": "e47a1039e78f160311923937e17ba653",
+    "title": "Faculty and Supervision",
+    "content": "The supervision committee may be modified later based on the student's research progress",
+    "category": "academic_policies",
+    "subcategory": "faculty_and_supervision",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Faculty",
+      "Supervision",
+      "Main Supervisor",
+      "Research Progress"
+    ]
+  },
+  {
+    "id": "0b9372dafc2d361099a3dfdecde4b24f",
+    "title": "Detailed Eligibility for 'Pass' Degree Holders",
+    "content": "Applicants with a 'Pass' (Satisfactory) general grade are only",
+    "category": "admissions",
+    "subcategory": "detailed_eligibility_for_'pass'_degree_holders",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "scholarship_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "Eligibility",
+      "Academic Diploma",
+      "Admission Criteria"
+    ]
+  },
+  {
+    "id": "57cddb1c6be4bd17b0b1463670b8d805",
+    "title": "Detailed Eligibility for 'Pass' Degree Holders",
+    "content": "eligible for admission if they have previously obtained an 'Academic Diploma' in the same specialization.",
+    "category": "admissions",
+    "subcategory": "detailed_eligibility_for_'pass'_degree_holders",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "scholarship_policy",
+    "quality_score": 0.95,
+    "tags": [
+      "Eligibility",
+      "Academic Diploma",
+      "Admission Criteria"
+    ]
+  },
+  {
+    "id": "5884deca5d77dfb63ce8af1dbc97e9b2",
+    "title": "Detailed Eligibility for 'Pass' Degree Holders",
+    "content": "This diploma must have been completed with a minimum grade of 'Good'.",
+    "category": "admissions",
+    "subcategory": "detailed_eligibility_for_'pass'_degree_holders",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "scholarship_policy",
+    "quality_score": 0.8,
+    "tags": [
+      "Eligibility",
+      "Academic Diploma",
+      "Admission Criteria"
+    ]
+  },
+  {
+    "id": "24a172e364ecb9a7a8f322f929393fe0",
+    "title": "Digital Application & Research Timeline",
+    "content": "An online application portal is currently under development",
+    "category": "admissions",
+    "subcategory": "digital_application_&_research_timeline",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "Online Application",
+      "Research Timeline",
+      "Final Seminar",
+      "Publication Deadline"
+    ]
+  },
+  {
+    "id": "76fc4ab1b4973b4fa1b69c7b1d595a1e",
+    "title": "Digital Application & Research Timeline",
+    "content": "and will be available soon. Regarding research, the mandatory publication in a Scopus/Web of Science",
+    "category": "admissions",
+    "subcategory": "digital_application_&_research_timeline",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "infrastructure",
+    "quality_score": 0.8,
+    "tags": [
+      "Online Application",
+      "Research Timeline",
+      "Final Seminar",
+      "Publication Deadline"
+    ]
+  },
+  {
+    "id": "15ec414394ce9c6d72d3f587b3d30b4c",
+    "title": "Digital Application & Research Timeline",
+    "content": "(Min. Q 3) journal must be completed specifically",
+    "category": "admissions",
+    "subcategory": "digital_application_&_research_timeline",
+    "priority": "high",
+    "source": "cai_msc.json",
+    "program_level": "postgraduate",
+    "document_type": "general_policy",
+    "quality_score": 0.65,
+    "tags": [
+      "Online Application",
+      "Research Timeline",
+      "Final Seminar",
+      "Publication Deadline"
+    ]
+  }
+]

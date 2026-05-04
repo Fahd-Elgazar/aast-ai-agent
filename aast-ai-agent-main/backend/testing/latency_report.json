@@ -1,0 +1,12 @@
+{
+  "metadata": {
+    "total_queries": 35,
+    "network_failures": 35,
+    "timeout_failures": 0,
+    "degraded_route_count": 0,
+    "estimated_avg_health_probe_latency_ms": "0",
+    "estimated_avg_fusion_latency_ms": "0"
+  },
+  "routes": {},
+  "targets_validation": {}
+}

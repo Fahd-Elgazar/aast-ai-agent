@@ -149,7 +149,12 @@ const AdvisorPage = () => {
 
     try {
       const response = await askAgent(userText);
-      if (!response || !response.source) return;
+
+      console.log("Agent Response:", response);
+
+      if (!response) {
+        throw new Error("No response from backend");
+      }
 
       const botMessage: ChatMessageType = {
         id: (Date.now() + 1).toString(),
@@ -158,7 +163,7 @@ const AdvisorPage = () => {
           ? response.answer + "\n\n👉 Click to visualize graph"
           : response.answer || "No response.",
         timestamp: new Date(),
-        source: response.source,
+        source: response.source || response.route || "AI",
         decision: response.decision ?? undefined,
         hasGraph: !!response.graph,
       };

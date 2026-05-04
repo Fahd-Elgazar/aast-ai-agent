@@ -84,11 +84,14 @@ async function embed(text, requestId = "none") {
 }
 
 async function refineAnswerWithLocalLLM(facts, query) {
+  // Disable GRAPH augmentation if ENABLE_GRAPH is set to false
+  if (process.env.ENABLE_GRAPH === 'false') return null;
+
   const factTexts = facts.map(fact => fact?.text).filter(Boolean);
   if (factTexts.length === 0) return null;
 
-  const maxAttempts = Number(process.env.RAG_MAX_ATTEMPTS || 2);
-  const timeoutMs = Number(process.env.RAG_TIMEOUT_MS || 8000);
+  const maxAttempts = Number(process.env.GRAPH_MAX_ATTEMPTS || 2);
+  const timeoutMs = Number(process.env.GRAPH_TIMEOUT_MS || 8000);
   let lastError = null;
 
   for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
@@ -102,7 +105,7 @@ async function refineAnswerWithLocalLLM(facts, query) {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          model: process.env.OLLAMA_RAG_MODEL || process.env.OLLAMA_MODEL || "llama3.1",
+          model: process.env.OLLAMA_GRAPH_MODEL || process.env.OLLAMA_MODEL || "llama3.1",
           prompt: `User Question:
 ${query}
 
@@ -117,33 +120,33 @@ Generate a concise academic answer using only the facts above. If the facts are 
 
       clearTimeout(timeout);
       if (!res.ok) {
-        throw new Error(`RAG service returned HTTP ${res.status}`);
+        throw new Error(`GRAPH service returned HTTP ${res.status}`);
       }
 
       const json = await res.json();
       const response = json?.response?.trim();
       if (response) {
         if (attempt > 1) {
-          incrementMetric("rag.retry_success");
+        incrementMetric("knowledge_graph.retry_success");
         }
         return response;
       } else {
-        throw new Error("RAG response empty");
+        throw new Error("GRAPH response empty");
       }
     } catch (err) {
       clearTimeout(timeout);
       lastError = err;
 
       if (err.name === "AbortError") {
-        incrementMetric("rag.timeout");
-        logger.warn("RAG request timed out", {
+        incrementMetric("knowledge_graph.timeout");
+        logger.warn("GRAPH request timed out", {
           attempt,
           maxAttempts,
           timeoutMs
         });
       } else {
-        incrementMetric("rag.error");
-        logger.warn("RAG request failed", {
+        incrementMetric("knowledge_graph.error");
+        logger.warn("GRAPH augmentation unavailable", {
           attempt,
           maxAttempts,
           error: err.message
@@ -152,7 +155,7 @@ Generate a concise academic answer using only the facts above. If the facts are 
     }
   }
 
-  incrementMetric("rag.failed");
+  incrementMetric("knowledge_graph.failed");
   return null;
 }
 
@@ -1088,7 +1091,7 @@ function normalizeLastMessages(lastMessages) {
   return String(lastMessages);
 }
 
-function buildRagResponse(answer, confidence, facts) {
+function buildGraphResponse(answer, confidence, facts) {
   const response = Array.isArray(facts) ? facts : [];
 
   Object.defineProperties(response, {
@@ -1105,7 +1108,7 @@ function buildRagResponse(answer, confidence, facts) {
       enumerable: false
     },
     source: {
-      value: "rag",
+      value: "knowledge_graph",
       enumerable: false
     }
   });
@@ -1261,20 +1264,20 @@ ${query}`;
 
     if (selectedFacts.length === 0) {
       incrementMetric("retrieval.no_results");
-      return buildRagResponse(NO_RESULT_MESSAGE, 0, []);
+      return buildGraphResponse(NO_RESULT_MESSAGE, 0, []);
     }
 
     const refinedAnswer = await refineAnswerWithLocalLLM(selectedFacts, query);
     const answer = refinedAnswer || synthesizeAnswer(selectedFacts);
 
-    return buildRagResponse(answer, confidence, selectedFacts);
+    return buildGraphResponse(answer, confidence, selectedFacts);
   } catch (err) {
     incrementMetric("retrieval.error");
     logger.error("Neo4j context error", {
       requestId,
       error: err
     });
-    return buildRagResponse(NO_RESULT_MESSAGE, 0, []);
+    return buildGraphResponse(NO_RESULT_MESSAGE, 0, []);
   } finally {
     recordDuration("query.latency_ms", stopQueryTimer());
     await session.close();

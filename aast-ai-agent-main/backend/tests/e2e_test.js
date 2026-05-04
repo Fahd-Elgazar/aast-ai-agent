@@ -33,12 +33,12 @@ async function runE2E() {
 
     await sleep(1000);
 
-    // b) Ask a RAG question
-    console.log("\n[Step 2] Sending RAG Question...");
+    // b) Ask a GRAPH question
+    console.log("\n[Step 2] Sending GRAPH Question...");
     response = await sendQuery("What are the engineering modules?", currentCid);
     console.log(`✨ CID Maintained: ${response.cid === currentCid}`);
     console.log(`🤖 Bot Answer: ${response.answer.substring(0, 50)}...`);
-    if (response.source !== "rag" && response.source !== "faq") console.warn("⚠️ Source issue on RAG");
+    if (response.source !== "knowledge_graph" && response.source !== "faq") console.warn("⚠️ Source issue on GRAPH");
 
     await sleep(2000);
 

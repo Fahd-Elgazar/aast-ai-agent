@@ -19,7 +19,7 @@ async function getCollection() {
   return collectionCache;
 }
 
-export async function ragSearch(query, k = 3) {
+export async function knowledgeGraphSearch(query, k = 3) {
   const collection = await getCollection();
 
   const res = await collection.query({

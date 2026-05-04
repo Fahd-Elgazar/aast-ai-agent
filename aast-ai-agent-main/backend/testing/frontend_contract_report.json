@@ -1,0 +1,431 @@
+{
+  "total_validations": 35,
+  "contract_success_rate": "0.00%",
+  "malformed_payload_rate": "100.00%",
+  "frontend_break_risk_percent": "100.00%",
+  "target_validation": {
+    "Frontend Break Risk === 0%": "FAIL"
+  },
+  "failures": [
+    {
+      "query_id": "Q_KG_01",
+      "issues": [
+        "Missing/invalid 'answer'",
+        "Missing/invalid 'route'",
+        "Missing/invalid 'confidence'",
+        "Missing/invalid 'sources' array",
+        "Missing/invalid 'citations' array",
+        "Missing/invalid 'reasoning'",
+        "Missing/invalid 'metadata.trace'"
+      ]
+    },
+    {
+      "query_id": "Q_KG_02",
+      "issues": [
+        "Missing/invalid 'answer'",
+        "Missing/invalid 'route'",
+        "Missing/invalid 'confidence'",
+        "Missing/invalid 'sources' array",
+        "Missing/invalid 'citations' array",
+        "Missing/invalid 'reasoning'",
+        "Missing/invalid 'metadata.trace'"
+      ]
+    },
+    {
+      "query_id": "Q_KG_03",
+      "issues": [
+        "Missing/invalid 'answer'",
+        "Missing/invalid 'route'",
+        "Missing/invalid 'confidence'",
+        "Missing/invalid 'sources' array",
+        "Missing/invalid 'citations' array",
+        "Missing/invalid 'reasoning'",
+        "Missing/invalid 'metadata.trace'"
+      ]
+    },
+    {
+      "query_id": "Q_KG_04",
+      "issues": [
+        "Missing/invalid 'answer'",
+        "Missing/invalid 'route'",
+        "Missing/invalid 'confidence'",
+        "Missing/invalid 'sources' array",
+        "Missing/invalid 'citations' array",
+        "Missing/invalid 'reasoning'",
+        "Missing/invalid 'metadata.trace'"
+      ]
+    },
+    {
+      "query_id": "Q_KG_05",
+      "issues": [
+        "Missing/invalid 'answer'",
+        "Missing/invalid 'route'",
+        "Missing/invalid 'confidence'",
+        "Missing/invalid 'sources' array",
+        "Missing/invalid 'citations' array",
+        "Missing/invalid 'reasoning'",
+        "Missing/invalid 'metadata.trace'"
+      ]
+    },
+    {
+      "query_id": "Q_KG_06",
+      "issues": [
+        "Missing/invalid 'answer'",
+        "Missing/invalid 'route'",
+        "Missing/invalid 'confidence'",
+        "Missing/invalid 'sources' array",
+        "Missing/invalid 'citations' array",
+        "Missing/invalid 'reasoning'",
+        "Missing/invalid 'metadata.trace'"
+      ]
+    },
+    {
+      "query_id": "Q_KG_07",
+      "issues": [
+        "Missing/invalid 'answer'",
+        "Missing/invalid 'route'",
+        "Missing/invalid 'confidence'",
+        "Missing/invalid 'sources' array",
+        "Missing/invalid 'citations' array",
+        "Missing/invalid 'reasoning'",
+        "Missing/invalid 'metadata.trace'"
+      ]
+    },
+    {
+      "query_id": "Q_RAG_01",
+      "issues": [
+        "Missing/invalid 'answer'",
+        "Missing/invalid 'route'",
+        "Missing/invalid 'confidence'",
+        "Missing/invalid 'sources' array",
+        "Missing/invalid 'citations' array",
+        "Missing/invalid 'reasoning'",
+        "Missing/invalid 'metadata.trace'"
+      ]
+    },
+    {
+      "query_id": "Q_RAG_02",
+      "issues": [
+        "Missing/invalid 'answer'",
+        "Missing/invalid 'route'",
+        "Missing/invalid 'confidence'",
+        "Missing/invalid 'sources' array",
+        "Missing/invalid 'citations' array",
+        "Missing/invalid 'reasoning'",
+        "Missing/invalid 'metadata.trace'"
+      ]
+    },
+    {
+      "query_id": "Q_RAG_03",
+      "issues": [
+        "Missing/invalid 'answer'",
+        "Missing/invalid 'route'",
+        "Missing/invalid 'confidence'",
+        "Missing/invalid 'sources' array",
+        "Missing/invalid 'citations' array",
+        "Missing/invalid 'reasoning'",
+        "Missing/invalid 'metadata.trace'"
+      ]
+    },
+    {
+      "query_id": "Q_RAG_04",
+      "issues": [
+        "Missing/invalid 'answer'",
+        "Missing/invalid 'route'",
+        "Missing/invalid 'confidence'",
+        "Missing/invalid 'sources' array",
+        "Missing/invalid 'citations' array",
+        "Missing/invalid 'reasoning'",
+        "Missing/invalid 'metadata.trace'"
+      ]
+    },
+    {
+      "query_id": "Q_RAG_05",
+      "issues": [
+        "Missing/invalid 'answer'",
+        "Missing/invalid 'route'",
+        "Missing/invalid 'confidence'",
+        "Missing/invalid 'sources' array",
+        "Missing/invalid 'citations' array",
+        "Missing/invalid 'reasoning'",
+        "Missing/invalid 'metadata.trace'"
+      ]
+    },
+    {
+      "query_id": "Q_RAG_06",
+      "issues": [
+        "Missing/invalid 'answer'",
+        "Missing/invalid 'route'",
+        "Missing/invalid 'confidence'",
+        "Missing/invalid 'sources' array",
+        "Missing/invalid 'citations' array",
+        "Missing/invalid 'reasoning'",
+        "Missing/invalid 'metadata.trace'"
+      ]
+    },
+    {
+      "query_id": "Q_RAG_07",
+      "issues": [
+        "Missing/invalid 'answer'",
+        "Missing/invalid 'route'",
+        "Missing/invalid 'confidence'",
+        "Missing/invalid 'sources' array",
+        "Missing/invalid 'citations' array",
+        "Missing/invalid 'reasoning'",
+        "Missing/invalid 'metadata.trace'"
+      ]
+    },
+    {
+      "query_id": "Q_HYB_01",
+      "issues": [
+        "Missing/invalid 'answer'",
+        "Missing/invalid 'route'",
+        "Missing/invalid 'confidence'",
+        "Missing/invalid 'sources' array",
+        "Missing/invalid 'citations' array",
+        "Missing/invalid 'reasoning'",
+        "Missing/invalid 'metadata.trace'"
+      ]
+    },
+    {
+      "query_id": "Q_HYB_02",
+      "issues": [
+        "Missing/invalid 'answer'",
+        "Missing/invalid 'route'",
+        "Missing/invalid 'confidence'",
+        "Missing/invalid 'sources' array",
+        "Missing/invalid 'citations' array",
+        "Missing/invalid 'reasoning'",
+        "Missing/invalid 'metadata.trace'"
+      ]
+    },
+    {
+      "query_id": "Q_HYB_03",
+      "issues": [
+        "Missing/invalid 'answer'",
+        "Missing/invalid 'route'",
+        "Missing/invalid 'confidence'",
+        "Missing/invalid 'sources' array",
+        "Missing/invalid 'citations' array",
+        "Missing/invalid 'reasoning'",
+        "Missing/invalid 'metadata.trace'"
+      ]
+    },
+    {
+      "query_id": "Q_HYB_04",
+      "issues": [
+        "Missing/invalid 'answer'",
+        "Missing/invalid 'route'",
+        "Missing/invalid 'confidence'",
+        "Missing/invalid 'sources' array",
+        "Missing/invalid 'citations' array",
+        "Missing/invalid 'reasoning'",
+        "Missing/invalid 'metadata.trace'"
+      ]
+    },
+    {
+      "query_id": "Q_HYB_05",
+      "issues": [
+        "Missing/invalid 'answer'",
+        "Missing/invalid 'route'",
+        "Missing/invalid 'confidence'",
+        "Missing/invalid 'sources' array",
+        "Missing/invalid 'citations' array",
+        "Missing/invalid 'reasoning'",
+        "Missing/invalid 'metadata.trace'"
+      ]
+    },
+    {
+      "query_id": "Q_DEC_01",
+      "issues": [
+        "Missing/invalid 'answer'",
+        "Missing/invalid 'route'",
+        "Missing/invalid 'confidence'",
+        "Missing/invalid 'sources' array",
+        "Missing/invalid 'citations' array",
+        "Missing/invalid 'reasoning'",
+        "Missing/invalid 'metadata.trace'"
+      ]
+    },
+    {
+      "query_id": "Q_DEC_02",
+      "issues": [
+        "Missing/invalid 'answer'",
+        "Missing/invalid 'route'",
+        "Missing/invalid 'confidence'",
+        "Missing/invalid 'sources' array",
+        "Missing/invalid 'citations' array",
+        "Missing/invalid 'reasoning'",
+        "Missing/invalid 'metadata.trace'"
+      ]
+    },
+    {
+      "query_id": "Q_DEC_03",
+      "issues": [
+        "Missing/invalid 'answer'",
+        "Missing/invalid 'route'",
+        "Missing/invalid 'confidence'",
+        "Missing/invalid 'sources' array",
+        "Missing/invalid 'citations' array",
+        "Missing/invalid 'reasoning'",
+        "Missing/invalid 'metadata.trace'"
+      ]
+    },
+    {
+      "query_id": "Q_DEC_04",
+      "issues": [
+        "Missing/invalid 'answer'",
+        "Missing/invalid 'route'",
+        "Missing/invalid 'confidence'",
+        "Missing/invalid 'sources' array",
+        "Missing/invalid 'citations' array",
+        "Missing/invalid 'reasoning'",
+        "Missing/invalid 'metadata.trace'"
+      ]
+    },
+    {
+      "query_id": "Q_CAR_01",
+      "issues": [
+        "Missing/invalid 'answer'",
+        "Missing/invalid 'route'",
+        "Missing/invalid 'confidence'",
+        "Missing/invalid 'sources' array",
+        "Missing/invalid 'citations' array",
+        "Missing/invalid 'reasoning'",
+        "Missing/invalid 'metadata.trace'"
+      ]
+    },
+    {
+      "query_id": "Q_CAR_02",
+      "issues": [
+        "Missing/invalid 'answer'",
+        "Missing/invalid 'route'",
+        "Missing/invalid 'confidence'",
+        "Missing/invalid 'sources' array",
+        "Missing/invalid 'citations' array",
+        "Missing/invalid 'reasoning'",
+        "Missing/invalid 'metadata.trace'"
+      ]
+    },
+    {
+      "query_id": "Q_CAR_03",
+      "issues": [
+        "Missing/invalid 'answer'",
+        "Missing/invalid 'route'",
+        "Missing/invalid 'confidence'",
+        "Missing/invalid 'sources' array",
+        "Missing/invalid 'citations' array",
+        "Missing/invalid 'reasoning'",
+        "Missing/invalid 'metadata.trace'"
+      ]
+    },
+    {
+      "query_id": "Q_CAR_04",
+      "issues": [
+        "Missing/invalid 'answer'",
+        "Missing/invalid 'route'",
+        "Missing/invalid 'confidence'",
+        "Missing/invalid 'sources' array",
+        "Missing/invalid 'citations' array",
+        "Missing/invalid 'reasoning'",
+        "Missing/invalid 'metadata.trace'"
+      ]
+    },
+    {
+      "query_id": "Q_FAQ_01",
+      "issues": [
+        "Missing/invalid 'answer'",
+        "Missing/invalid 'route'",
+        "Missing/invalid 'confidence'",
+        "Missing/invalid 'sources' array",
+        "Missing/invalid 'citations' array",
+        "Missing/invalid 'reasoning'",
+        "Missing/invalid 'metadata.trace'"
+      ]
+    },
+    {
+      "query_id": "Q_FAQ_02",
+      "issues": [
+        "Missing/invalid 'answer'",
+        "Missing/invalid 'route'",
+        "Missing/invalid 'confidence'",
+        "Missing/invalid 'sources' array",
+        "Missing/invalid 'citations' array",
+        "Missing/invalid 'reasoning'",
+        "Missing/invalid 'metadata.trace'"
+      ]
+    },
+    {
+      "query_id": "Q_FAQ_03",
+      "issues": [
+        "Missing/invalid 'answer'",
+        "Missing/invalid 'route'",
+        "Missing/invalid 'confidence'",
+        "Missing/invalid 'sources' array",
+        "Missing/invalid 'citations' array",
+        "Missing/invalid 'reasoning'",
+        "Missing/invalid 'metadata.trace'"
+      ]
+    },
+    {
+      "query_id": "Q_FAQ_04",
+      "issues": [
+        "Missing/invalid 'answer'",
+        "Missing/invalid 'route'",
+        "Missing/invalid 'confidence'",
+        "Missing/invalid 'sources' array",
+        "Missing/invalid 'citations' array",
+        "Missing/invalid 'reasoning'",
+        "Missing/invalid 'metadata.trace'"
+      ]
+    },
+    {
+      "query_id": "Q_LLM_01",
+      "issues": [
+        "Missing/invalid 'answer'",
+        "Missing/invalid 'route'",
+        "Missing/invalid 'confidence'",
+        "Missing/invalid 'sources' array",
+        "Missing/invalid 'citations' array",
+        "Missing/invalid 'reasoning'",
+        "Missing/invalid 'metadata.trace'"
+      ]
+    },
+    {
+      "query_id": "Q_LLM_02",
+      "issues": [
+        "Missing/invalid 'answer'",
+        "Missing/invalid 'route'",
+        "Missing/invalid 'confidence'",
+        "Missing/invalid 'sources' array",
+        "Missing/invalid 'citations' array",
+        "Missing/invalid 'reasoning'",
+        "Missing/invalid 'metadata.trace'"
+      ]
+    },
+    {
+      "query_id": "Q_LLM_03",
+      "issues": [
+        "Missing/invalid 'answer'",
+        "Missing/invalid 'route'",
+        "Missing/invalid 'confidence'",
+        "Missing/invalid 'sources' array",
+        "Missing/invalid 'citations' array",
+        "Missing/invalid 'reasoning'",
+        "Missing/invalid 'metadata.trace'"
+      ]
+    },
+    {
+      "query_id": "Q_LLM_04",
+      "issues": [
+        "Missing/invalid 'answer'",
+        "Missing/invalid 'route'",
+        "Missing/invalid 'confidence'",
+        "Missing/invalid 'sources' array",
+        "Missing/invalid 'citations' array",
+        "Missing/invalid 'reasoning'",
+        "Missing/invalid 'metadata.trace'"
+      ]
+    }
+  ]
+}
