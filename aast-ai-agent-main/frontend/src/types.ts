@@ -70,7 +70,7 @@ export interface ChatSession {
 export interface GraphNode {
   id: string;
   label?: string;
-  group: number;
+  group?: number;
   x?: number;
   y?: number;
   fx?: number | null;
@@ -78,9 +78,9 @@ export interface GraphNode {
 }
 
 export interface GraphLink {
-  source: string | GraphNode;
-  target: string | GraphNode;
-  value?: number;
+  source: string;
+  target: string;
+  type?: string;
 }
 
 export interface GraphData {
