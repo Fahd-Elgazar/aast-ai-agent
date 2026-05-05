@@ -32,7 +32,9 @@ const logger = {
 };
 
 const ROUTES = {
+    KG_DIRECT: 'KG_DIRECT',
     KG_ONLY: 'KG_ONLY',
+    RAG_DIRECT: 'RAG_DIRECT',
     RAG_ONLY: 'RAG_ONLY',
     HYBRID_KG_RAG: 'HYBRID_KG_RAG',
     DECISION_ENGINE: 'DECISION_ENGINE',
@@ -232,8 +234,9 @@ const SIGNAL_DICTIONARY = {
 class BrainRouter {
     constructor() {
         this.confidenceThresholds = {
-            HIGH: 0.75,
-            MEDIUM: 0.45,
+            HIGH: 0.70,
+            MEDIUM: 0.38,
+            DEGRADED: 0.25,
             HYBRID_TRIGGER: 0.40 // If both KG and RAG cross this, HYBRID is highly considered
         };
 
@@ -252,6 +255,7 @@ class BrainRouter {
             category_boost: 0.40,
             intent_boost: 0.30,
             context_boost: 0.15,
+            deterministic_policy_boost: 1.10,
 
             base_llm: 0.10
         };
@@ -279,12 +283,14 @@ class BrainRouter {
         // Approximate theoretical max based on dictionary size + standard boosts
         const theoreticalMax = {
             kg_score: 2.0,
-            rag_score: 2.5, // RAG dictionary is largest, needs higher max to penalize over-weighting
+            rag_score: 1.6, // Policy routes must not be diluted below deterministic execution thresholds.
             decision_score: 1.5,
             career_score: 1.5,
             faq_score: 1.5,
             hybrid_score: 2.0,
-            llm_score: 1.0
+            llm_score: 1.0,
+            kg_direct_score: 1.0,
+            rag_direct_score: 1.0
         };
 
         for (const [key, value] of Object.entries(rawScores)) {
@@ -336,7 +342,9 @@ class BrainRouter {
 
         switch (route) {
             case ROUTES.KG_ONLY: this.metrics.kg_hits++; break;
+            case ROUTES.KG_DIRECT: this.metrics.kg_hits++; break;
             case ROUTES.RAG_ONLY: this.metrics.rag_hits++; break;
+            case ROUTES.RAG_DIRECT: this.metrics.rag_hits++; break;
             case ROUTES.HYBRID_KG_RAG: this.metrics.hybrid_hits++; break;
             case ROUTES.FAQ: this.metrics.faq_hits++; break;
             case ROUTES.DECISION_ENGINE: this.metrics.decision_hits++; break;
@@ -353,6 +361,84 @@ class BrainRouter {
             avg_confidence,
             ambiguity_rate
         });
+    }
+
+    /**
+     * DETERMINISTIC QUERY CLASSIFIER
+     * Detects exact factual academic queries that should bypass the hybrid pipeline.
+     */
+    isDeterministicAcademicQuery(query) {
+        const deterministicPatterns = [
+            /who teaches/i,
+            /who is teaching/i,
+            /taught by/i,
+            /instructor/i,
+            /lecturer/i,
+            /professor/i,
+            /doctor/i,
+            /prerequisite/i,
+            /prereq/i,
+            /pre-requisite/i,
+            /pre requisite/i,
+            /required before/i,
+            /dean/i,
+            /vice dean/i,
+            /office/i,
+            /location of/i,
+            /where is/i,
+            /room/i,
+            /hall/i,
+            /building/i,
+            /faculty/i,
+            /department head/i,
+            /advisor/i,
+            /schedule/i,
+            /course owner/i
+        ];
+        return deterministicPatterns.some(pattern => pattern.test(query));
+    }
+
+    /**
+     * DETERMINISTIC POLICY CLASSIFIER
+     * Locks official academic policy questions to RAG before ambiguity logic can
+     * dilute them into hybrid or LLM fallback paths.
+     */
+    classifyDeterministicPolicyQuery(query) {
+        const policyPatterns = {
+            gpa: /\b(gpa|cgpa|grade point|cumulative average|minimum gpa)\b/i,
+            transfer: /\b(transfer|credit transfer|transferred credits|internal transfer|external transfer|switch major|change major)\b/i,
+            probation: /\b(probation|academic warning|academic standing|underachievement|dismissal|academic risk)\b/i,
+            scholarship: /\b(scholarship|financial aid|tuition exemption|fee waiver|discount|grant|bursary|eligibility)\b/i,
+            admission: /\b(admission|admissions|apply|application|enrollment|joining|entry requirements|acceptance)\b/i,
+            tuition: /\b(tuition|fees|payment|cost|charge|late payment|overdue|semester fees)\b/i,
+            regulation: /\b(regulation|regulations|rules|handbook|bylaw|academic regulations)\b/i,
+            policy: /\b(policy|policies|academic policy|institutional policy|student affairs|student conduct)\b/i
+        };
+
+        const matchedCategories = Object.entries(policyPatterns)
+            .filter(([, pattern]) => pattern.test(query))
+            .map(([category]) => category);
+
+        const questionFraming = /\b(minimum|required|requirements|rule|rules|eligible|eligibility|allowed|must|can i|how do|what are|what is|when|deadline)\b/i.test(query);
+        const explicitPolicyTerm = /\b(policy|policies|regulation|regulations|rules|handbook|probation|scholarship|tuition|admission|transfer|gpa|cgpa)\b/i.test(query);
+
+        let score = 0;
+        if (matchedCategories.length > 0) score += 0.45;
+        score += Math.min(0.35, matchedCategories.length * 0.12);
+        if (questionFraming) score += 0.12;
+        if (explicitPolicyTerm) score += 0.12;
+
+        const strongPolicyEvidence =
+            matchedCategories.length >= 2 ||
+            (matchedCategories.length >= 1 && questionFraming) ||
+            /\b(probation rules|scholarship eligibility|admission requirements|tuition regulations|minimum gpa|gpa for transfer)\b/i.test(query);
+
+        return {
+            deterministic: strongPolicyEvidence,
+            strong_policy_evidence: strongPolicyEvidence,
+            score: parseFloat(Math.min(1.0, score).toFixed(3)),
+            matched_categories: matchedCategories
+        };
     }
 
     /**
@@ -395,15 +481,43 @@ class BrainRouter {
         // 4. Adjust signals based on conversation context (e.g., follow-up context)
         this._applyContextBoost(signals, sessionContext);
 
+        // 4.5 Deterministic policy classifier (Phase 6 repair)
+        const deterministicPolicy = this.classifyDeterministicPolicyQuery(lowerQuery);
+        if (deterministicPolicy.strong_policy_evidence) {
+            signals.rag_score += this.signalWeights.deterministic_policy_boost + (deterministicPolicy.score * 0.45);
+            signals.rag_direct_score = Math.max(0.85, deterministicPolicy.score);
+
+            // Policy terms such as GPA/scholarship can appear in KG dictionaries;
+            // keep KG available as fallback, but do not let it suppress RAG.
+            if (!this.isDeterministicAcademicQuery(lowerQuery)) {
+                signals.kg_score *= 0.45;
+                signals.hybrid_score *= 0.5;
+            }
+
+            logger.debug('ANALYZE', 'Deterministic policy query detected, boosting rag_direct_score', deterministicPolicy);
+        } else {
+            signals.rag_direct_score = 0;
+        }
+
         // 5. Determine hybrid potential
         // If both KG (structure) and RAG (policy) score high enough, boost hybrid.
-        const isHybridCandidate = signals.kg_score >= this.confidenceThresholds.HYBRID_TRIGGER &&
+        const isHybridCandidate = !deterministicPolicy.strong_policy_evidence &&
+            signals.kg_score >= this.confidenceThresholds.HYBRID_TRIGGER &&
             signals.rag_score >= this.confidenceThresholds.HYBRID_TRIGGER;
 
         if (isHybridCandidate) {
             // Synergistic boost
             signals.hybrid_score += (signals.kg_score + signals.rag_score) * this.signalWeights.hybrid_boost;
             logger.debug('ANALYZE', 'Hybrid conditions met, boosting hybrid_score', { hybrid_score: signals.hybrid_score });
+        }
+
+        // 5.5 Detect Deterministic Factual Academic Queries (PHASE 4)
+        if (this.isDeterministicAcademicQuery(lowerQuery)) {
+            signals.kg_score += 1.0;
+            signals.kg_direct_score = 1.0;
+            logger.debug('ANALYZE', 'Deterministic academic query detected, boosting kg_direct_score');
+        } else {
+            signals.kg_direct_score = 0;
         }
 
         // 6. Normalize Signals (CRITICAL LAYER)
@@ -414,6 +528,7 @@ class BrainRouter {
             normalized_query: lowerQuery,
             signals: normalizedSignals,
             is_hybrid_candidate: isHybridCandidate,
+            deterministic_policy: deterministicPolicy,
             context_applied: Object.keys(sessionContext).length > 0
         };
     }
@@ -516,7 +631,7 @@ class BrainRouter {
      */
     determineBestRoute(analysisPayload, healthStatus = {}) {
         const routeStartTime = Date.now();
-        const { signals, is_hybrid_candidate } = analysisPayload;
+        const { signals, is_hybrid_candidate, deterministic_policy } = analysisPayload;
 
         // Ensure healthStatus has defaults
         const health = {
@@ -533,6 +648,42 @@ class BrainRouter {
             .sort((a, b) => b[1] - a[1])
             .filter(s => s[1] > 0);
 
+        // 0. Evaluate Deterministic RAG Policy Shortcut (Phase 6 hardened)
+        if (
+            deterministic_policy?.strong_policy_evidence &&
+            signals.rag_direct_score >= 0.70 &&
+            health.rag
+        ) {
+            logger.info('ROUTING_DECISION', 'Hard deterministic RAG policy path enforced', {
+                matched_categories: deterministic_policy.matched_categories
+            });
+            return {
+                route: ROUTES.RAG_DIRECT,
+                confidence: 0.96,
+                reasoning: "Deterministic academic policy query detected. Bypassing LLM fallback and prioritizing verified RAG policy sources.",
+                fallback_chain: [ROUTES.RAG_ONLY, ROUTES.LLM_FALLBACK],
+                services_required: ['rag'],
+                ambiguity_score: 0,
+                ambiguity_detected: false,
+                deterministic_policy
+            };
+        }
+
+        // 1. Evaluate Deterministic KG Shortcut (PHASE 4.2 Hardened)
+        if (signals.kg_direct_score >= 0.70 && health.kg) {
+            logger.info('ROUTING_DECISION', 'Hard deterministic KG path enforced');
+            return {
+                route: ROUTES.KG_DIRECT,
+                confidence: 0.99,
+                reasoning: "Deterministic academic factual query detected. Bypassing hybrid logic for guaranteed accuracy.",
+                fallback_chain: [ROUTES.KG_ONLY, ROUTES.RAG_ONLY, ROUTES.LLM_FALLBACK],
+                services_required: ['kg'],
+                ambiguity_score: 0,
+                ambiguity_detected: false,
+                deterministic_policy
+            };
+        }
+
         // Ambiguity Engine
         const ambiguityData = this.detectAmbiguity(sortedSignals);
 
@@ -544,7 +695,7 @@ class BrainRouter {
 
         if (ambiguityData.ambiguity_detected && !ambiguityData.prefer_hybrid) {
             // Lower confidence to reflect uncertainty
-            bestScore = Math.max(0.1, bestScore - 0.15);
+            bestScore = Math.max(0.2, bestScore - 0.05);
         }
 
         if (sortedSignals.length > 0) {
@@ -645,9 +796,26 @@ class BrainRouter {
             }
             // 7. Low Confidence Fallback
             else {
-                bestRoute = ROUTES.LLM_FALLBACK;
-                reasoning = `Highest signal (${topSignal}) scored only ${topScore.toFixed(2)}, missing confidence threshold. Routing to LLM_FALLBACK to handle ambiguity.`;
-                fallbackChain = [];
+                if (signals.kg_score >= this.confidenceThresholds.DEGRADED && health.kg) {
+                    bestRoute = ROUTES.KG_ONLY;
+                    bestScore = signals.kg_score;
+                    reasoning = `Low-confidence but usable academic structural signal detected. Gracefully degrading to KG_ONLY instead of catastrophic fallback.`;
+                    requiredServices = ['kg'];
+                    fallbackChain = [ROUTES.RAG_ONLY, ROUTES.LLM_FALLBACK];
+                } 
+                else if (signals.rag_score >= this.confidenceThresholds.DEGRADED && health.rag) {
+                    bestRoute = ROUTES.RAG_ONLY;
+                    bestScore = signals.rag_score;
+                    reasoning = `Low-confidence but usable policy/institutional signal detected. Gracefully degrading to RAG_ONLY instead of catastrophic fallback.`;
+                    requiredServices = ['rag'];
+                    fallbackChain = [ROUTES.LLM_FALLBACK];
+                } 
+                else {
+                    bestRoute = ROUTES.LLM_FALLBACK;
+                    reasoning = `All signals below degraded safety threshold. Routing to LLM_FALLBACK as true last resort.`;
+                    requiredServices = ['llm'];
+                    fallbackChain = [];
+                }
             }
         }
 
@@ -690,7 +858,8 @@ class BrainRouter {
             fallback_chain: fallbackChain,
             services_required: requiredServices,
             ambiguity_score: ambiguityData.ambiguity_score,
-            ambiguity_detected: ambiguityData.ambiguity_detected
+            ambiguity_detected: ambiguityData.ambiguity_detected,
+            deterministic_policy
         };
     }
 
@@ -713,7 +882,7 @@ class BrainRouter {
             case 'admissions':
             case 'registration':
             case 'housing':
-                signals.rag_score += boost;
+                signals.rag_score += Math.max(boost, 0.28);
                 break;
             case 'curriculum':
             case 'institutional':

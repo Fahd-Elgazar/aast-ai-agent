@@ -1,11 +1,11 @@
 {
-  "timestamp": "2026-05-03T13:18:36.804557",
+  "timestamp": "2026-05-05T08:32:32.235457",
   "collection_name": "aast_academic_rag_production",
   "total_entries_indexed": 184,
   "embedding_model": "BAAI/bge-m3",
   "vector_size": 1024,
   "batch_size": 64,
   "payload_fields_indexed": 6,
-  "total_runtime_seconds": 27.43,
+  "total_runtime_seconds": 33.26,
   "production_status": "READY"
 }

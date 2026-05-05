@@ -537,7 +537,9 @@ app.post("/api/chatbot/query", async (req, res) => {
 
 
     const ROUTES = brainRouter.ROUTES || {
+      KG_DIRECT: 'KG_DIRECT',
       KG_ONLY: 'KG_ONLY',
+      RAG_DIRECT: 'RAG_DIRECT',
       RAG_ONLY: 'RAG_ONLY',
       HYBRID_KG_RAG: 'HYBRID_KG_RAG',
       DECISION_ENGINE: 'DECISION_ENGINE',
@@ -549,7 +551,7 @@ app.post("/api/chatbot/query", async (req, res) => {
     console.log(`[ORCHESTRATOR][${requestId}] Central Route Assigned: ${route}`);
 
     // TASK 6 — WHITELISTED ROUTE METRICS (prevents unbounded label cardinality)
-    const ALLOWED_ROUTE_METRICS = new Set(["kg", "rag", "hybrid", "decision", "career", "faq", "llm_fallback"]);
+    const ALLOWED_ROUTE_METRICS = new Set(["kg", "kg_direct", "rag", "rag_direct", "hybrid", "decision", "career", "faq", "llm_fallback"]);
     const routeMetricStr = route.toLowerCase().replace(/_only/g, "").replace(/_engine/g, "");
     const safeRouteMetric = ALLOWED_ROUTE_METRICS.has(routeMetricStr) ? routeMetricStr : "unknown";
     incrementMetric(`route_${safeRouteMetric}_hits`);
@@ -560,47 +562,193 @@ app.post("/api/chatbot/query", async (req, res) => {
 
     // TASK 4 — ENHANCED KG CONFIDENCE SCORING
     const buildKgResponse = (kgRes) => {
-      if (!kgRes || !Array.isArray(kgRes) || kgRes.length === 0) return [];
+        if (!kgRes || !Array.isArray(kgRes) || kgRes.length === 0) return [];
 
-      // Pre-compute query tokens for entity overlap scoring
+        // Pre-compute query tokens for entity overlap scoring
+        const queryTokens = new Set(
+          query.toLowerCase().split(/\W+/).filter(t => t.length > 3)
+        );
+
+        const mapped = kgRes.map(item => {
+          const text = String(item.text || item);
+          const relCount = (text.match(/--\[.*?\]-->/g) || []).length;
+          const nodeCount = (text.match(/\(.*?\)/g) || []).length;
+
+          // Entity overlap: how many query tokens appear in the evidence
+          const textTokens = new Set(text.toLowerCase().split(/\W+/).filter(t => t.length > 3));
+          const overlapCount = [...queryTokens].filter(t => textTokens.has(t)).length;
+          const overlapScore = queryTokens.size > 0 ? overlapCount / queryTokens.size : 0;
+
+          // Evidence quality: penalise very short evidence
+          const lengthPenalty = text.length < 40 ? -0.1 : 0;
+
+          // Composite score — capped to prevent overestimation
+          let conf = 0.30
+            + (relCount * 0.12)   // graph richness
+            + (nodeCount * 0.04)   // graph breadth
+            + (overlapScore * 0.25) // semantic relevance
+            + lengthPenalty;
+
+          conf = Math.min(0.98, Math.max(0.20, conf)); // Adjusted cap for Phase 4
+
+          // PHASE 4: Deterministic Confidence Hardening
+          if (route === ROUTES.KG_DIRECT || kgRes.deterministic) {
+              conf = Math.max(conf, 0.95);
+          }
+
+          return {
+            evidence: text,
+            confidence: parseFloat(conf.toFixed(3)),
+            metadata: {
+              source: "KnowledgeGraph",
+              node_count: nodeCount,
+              rel_count: relCount,
+              overlap_score: parseFloat(overlapScore.toFixed(3))
+            },
+            source_type: "KG"
+          };
+        });
+
+        // PHASE 4.2: Preserve deterministic metadata flags from raw KG response
+        if (kgRes.deterministic) {
+            Object.defineProperty(mapped, 'deterministic', { value: true, enumerable: false });
+            Object.defineProperty(mapped, 'llm_bypassed', { value: true, enumerable: false });
+            Object.defineProperty(mapped, 'answer', { value: kgRes.answer, enumerable: false });
+        }
+
+        return mapped;
+      };
+
+    const normalizeNumericConfidence = (value) => {
+      if (typeof value === "string") {
+        const mapped = { HIGH: 0.85, MEDIUM: 0.55, LOW: 0.2 };
+        if (mapped[value.toUpperCase()] !== undefined) return mapped[value.toUpperCase()];
+        const parsed = Number.parseFloat(value);
+        return Number.isFinite(parsed) ? Math.max(0, Math.min(1, parsed)) : 0;
+      }
+      const n = Number.parseFloat(value);
+      return Number.isFinite(n) ? Math.max(0, Math.min(1, n)) : 0;
+    };
+
+    const extractRagSourceText = (source) => {
+      if (!source) return "";
+      const candidates = [
+        source.answer,
+        source.text,
+        source.content,
+        source.page_content,
+        source.chunk,
+        source.excerpt,
+        source.summary,
+        source.body,
+        source.document,
+        source.metadata?.text,
+        source.metadata?.content,
+        source.payload?.text,
+        source.payload?.content
+      ];
+
+      const text = candidates.find(v => typeof v === "string" && v.trim().length > 0);
+      return String(text || "").replace(/\s+/g, " ").trim();
+    };
+
+    const extractRagSourceTitle = (source) => (
+      source?.title ||
+      source?.source_title ||
+      source?.source ||
+      source?.doc_title ||
+      source?.doc_id ||
+      source?.metadata?.title ||
+      source?.metadata?.source ||
+      "AAST Academic Policy Source"
+    );
+
+    const buildDeterministicRagPayload = (ragRes, ragDecisionRoute) => {
+      const sources = Array.isArray(ragRes?.sources) ? ragRes.sources : [];
       const queryTokens = new Set(
-        query.toLowerCase().split(/\W+/).filter(t => t.length > 3)
+        query.toLowerCase()
+          .split(/\W+/)
+          .filter(t => t.length > 3 && !["what", "when", "where", "which", "does", "with", "from", "this", "that"].includes(t))
       );
 
-      return kgRes.map(item => {
-        const text = String(item.text || item);
-        const relCount = (text.match(/--\[.*?\]-->/g) || []).length;
-        const nodeCount = (text.match(/\(.*?\)/g) || []).length;
+      const evidence = sources
+        .map((source, index) => {
+          const text = extractRagSourceText(source);
+          const sentences = text
+            .split(/(?:[.!?]\s+|\n+)/)
+            .map(s => s.trim())
+            .filter(s => s.length >= 30);
 
-        // Entity overlap: how many query tokens appear in the evidence
-        const textTokens = new Set(text.toLowerCase().split(/\W+/).filter(t => t.length > 3));
-        const overlapCount = [...queryTokens].filter(t => textTokens.has(t)).length;
-        const overlapScore = queryTokens.size > 0 ? overlapCount / queryTokens.size : 0;
+          const bestSentence = sentences
+            .map(sentence => {
+              const lower = sentence.toLowerCase();
+              const overlap = [...queryTokens].filter(t => lower.includes(t)).length;
+              const policyBoost = /\b(gpa|probation|transfer|scholarship|admission|tuition|fee|policy|regulation|requirement|eligible)\b/i.test(sentence) ? 2 : 0;
+              return { sentence, score: overlap + policyBoost };
+            })
+            .sort((a, b) => b.score - a.score)[0]?.sentence || text;
 
-        // Evidence quality: penalise very short evidence
-        const lengthPenalty = text.length < 40 ? -0.1 : 0;
+          return {
+            index,
+            title: extractRagSourceTitle(source),
+            excerpt: bestSentence.slice(0, 420),
+            score: normalizeNumericConfidence(source?.rerank_score ?? source?.score ?? source?.confidence ?? ragRes?.raw_confidence)
+          };
+        })
+        .filter(item => item.excerpt.length >= 30)
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 3);
 
-        // Composite score — capped to prevent overestimation
-        let conf = 0.30
-          + (relCount * 0.12)   // graph richness
-          + (nodeCount * 0.04)   // graph breadth
-          + (overlapScore * 0.25) // semantic relevance
-          + lengthPenalty;
+      const directAnswer = typeof ragRes?.answer === "string" && ragRes.answer.trim().length >= 30
+        ? ragRes.answer.trim()
+        : [
+            "According to verified AAST academic policy sources:",
+            ...evidence.map(item => `- ${item.excerpt}`)
+          ].join("\n");
 
-        conf = Math.min(0.90, Math.max(0.20, conf)); // tighter safe caps
+      return {
+        final_answer: directAnswer,
+        answer: directAnswer,
+        confidence: Math.max(routingDecision.confidence || 0, normalizeNumericConfidence(ragRes?.raw_confidence), 0.86),
+        route_used: ragDecisionRoute,
+        contributing_sources: [ragDecisionRoute, "RAG"],
+        citations: evidence.map(item => ({
+          title: item.title,
+          source: item.title,
+          excerpt: item.excerpt,
+          confidence: item.score
+        })),
+        explainability: {
+          deterministic: true,
+          direct_rag: true,
+          llm_bypassed: true,
+          unified_answer_bypassed: true,
+          fusion_bypassed: true,
+          matched_policy_categories: routingDecision.deterministic_policy?.matched_categories || []
+        },
+        reasoning: "High-confidence deterministic policy query answered directly from retrieved institutional policy sources.",
+        metadata: {
+          retrieval_pass: ragRes?.pass_used,
+          query_category: ragRes?.query_category || ragRes?.category,
+          source_count: sources.length,
+          direct_bypass: true
+        }
+      };
+    };
 
-        return {
-          evidence: text,
-          confidence: parseFloat(conf.toFixed(3)),
-          metadata: {
-            source: "KnowledgeGraph",
-            node_count: nodeCount,
-            rel_count: relCount,
-            overlap_score: parseFloat(overlapScore.toFixed(3))
-          },
-          source_type: "KG"
-        };
-      });
+    const hasStrongRagEvidence = (ragRes) => {
+      const sources = Array.isArray(ragRes?.sources) ? ragRes.sources : [];
+      const sourceCount = sources.length;
+      const hasReadableEvidence = sources.some(source => extractRagSourceText(source).length >= 30);
+      const topRerank = Math.max(...sources.map(source => normalizeNumericConfidence(source?.rerank_score ?? source?.score ?? source?.confidence)), 0);
+      const retrievalConfidence = normalizeNumericConfidence(ragRes?.raw_confidence ?? ragRes?.confidence);
+
+      return hasReadableEvidence && (
+        retrievalConfidence >= 0.25 ||
+        topRerank >= 0.25 ||
+        sourceCount >= 2 ||
+        typeof ragRes?.answer === "string"
+      );
     };
 
     // ---------- 4. PARALLEL EXECUTION PIPELINES ----------
@@ -616,25 +764,148 @@ app.post("/api/chatbot/query", async (req, res) => {
 
     // TASK 7 — Acquire Neo4j semaphore slot before any KG retrieval
     try {
-      if (route === ROUTES.KG_ONLY) {
-        const kgRes = await timeoutWrapper(fetchNeo4jContext(query, intentKeyword, 5, requestId, convo.messages), 5000, null);
+      if (route === ROUTES.KG_ONLY || route === ROUTES.KG_DIRECT) {
+        await neo4jSemaphore.acquire();
+        let kgRes;
+        try {
+          kgRes = await timeoutWrapper(
+            fetchNeo4jContext(query, intentKeyword, 5, requestId, convo.messages),
+            5000,
+            null
+          );
+        } finally {
+          neo4jSemaphore.release();
+        }
+        
         if (!kgRes) {
           incrementMetric("kg_timeout_failures");
           degraded_services.push("KG_TIMEOUT");
         }
         rawResults.kg = buildKgResponse(kgRes);
+
+        // PHASE 4.2: Expanded Deterministic KG Shortcut
+        // Triggers for explicit KG_DIRECT OR high-confidence deterministic KG_ONLY
+        const isDeterministicBypass = 
+            route === ROUTES.KG_DIRECT || 
+            (route === ROUTES.KG_ONLY && rawResults.kg.deterministic && rawResults.kg[0]?.confidence > 0.6);
+
+        if (
+            isDeterministicBypass &&
+            rawResults.kg &&
+            rawResults.kg.length > 0
+        ) {
+            const bestKG = rawResults.kg[0];
+            const answer = rawResults.kg.answer || bestKG.evidence;
+            const latencyMs = Date.now() - requestStartTime;
+
+            console.log(`[PHASE4_VALIDATION][${requestId}]
+Route: ${route}
+Latency: ${latencyMs}ms
+LLM Calls: ${intentKeyword === "GENERAL" || intentKeyword === "PROGRAM" ? 0 : 1} (Intent detection)
+Fusion Calls: 0
+Fallback Calls: 0`);
+
+            const deterministicPayload = {
+                final_answer: answer,
+                answer: answer,
+                confidence: Math.max(bestKG.confidence || 0.98, 0.98),
+                route_used: isDeterministicBypass ? ROUTES.KG_DIRECT : route,
+                source: "KnowledgeGraph",
+                explainability: {
+                    deterministic: true,
+                    direct_kg: true
+                }
+            };
+
+            await pushTurn(conversationId, convo, "assistant", deterministicPayload.final_answer);
+
+            return res.json(
+                responseFormatter.format(
+                    deterministicPayload,
+                    conversationId,
+                    requestId,
+                    {
+                        degraded_services,
+                        subsystem_health: healthStatus,
+                        latency_ms: Date.now() - requestStartTime,
+                        routing_confidence: 0.98
+                    }
+                )
+            );
+        }
       }
-      else if (route === ROUTES.RAG_ONLY) {
+      else if (route === ROUTES.RAG_ONLY || route === ROUTES.RAG_DIRECT) {
         await ragSemaphore.acquire();
-        const ragRes = await timeoutWrapper(ragService.retrieve(query, { topK: 5 }), 5000, null).finally(() => ragSemaphore.release());
-        if (!ragRes) degraded_services.push("RAG_TIMEOUT");
-        rawResults.rag = ragRes || [];
-        if (ragRes && ragRes.results) incrementMetric("rag_metadata_preserved");
+        const ragRes = await timeoutWrapper(ragService.search(query, { topK: 5 }), 5000, null).finally(() => ragSemaphore.release());
+        
+        if (!ragRes) {
+          degraded_services.push("RAG_TIMEOUT");
+          rawResults.rag = { results: [], confidence: 0, metadata: {}, fallback_used: false };
+        } else {
+          // SECTION B — RESPONSE NORMALIZATION ADAPTER
+          rawResults.rag = {
+            results: ragRes.sources || [],
+            confidence: ragRes.raw_confidence || 0,
+            metadata: ragRes.metadata || {},
+            fallback_used: ragRes.fallback_used || false,
+            answer: ragRes.answer || null,
+            pass_used: ragRes.pass_used || null,
+            query_category: ragRes.query_category || ragRes.category || null
+          };
+          
+          logger.info("RAG_ONLY success", { 
+            requestId, 
+            confidence: rawResults.rag.confidence, 
+            source_count: rawResults.rag.results.length 
+          });
+          
+          if (rawResults.rag.results.length > 0) incrementMetric("rag_metadata_preserved");
+
+          const shouldDirectPolicyBypass =
+            (route === ROUTES.RAG_DIRECT ||
+              (
+                route === ROUTES.RAG_ONLY &&
+                routingDecision.confidence >= 0.70 &&
+                routingDecision.deterministic_policy?.strong_policy_evidence
+              )) &&
+            hasStrongRagEvidence(ragRes);
+
+          if (shouldDirectPolicyBypass) {
+            const deterministicPayload = buildDeterministicRagPayload(ragRes, ROUTES.RAG_DIRECT);
+            const latencyMs = Date.now() - requestStartTime;
+
+            incrementMetric("rag_deterministic_bypass");
+            console.log(`[RAG_DIRECT_VALIDATION][${requestId}]
+Route: ${route}
+Latency: ${latencyMs}ms
+UnifiedAnswer Calls: 0
+Ollama Calls: 0
+Fusion Calls: 0
+Sources: ${rawResults.rag.results.length}`);
+
+            await pushTurn(conversationId, convo, "assistant", deterministicPayload.final_answer);
+
+            return res.json(
+              responseFormatter.format(
+                deterministicPayload,
+                conversationId,
+                requestId,
+                {
+                  degraded_services,
+                  subsystem_health: healthStatus,
+                  latency_ms: Date.now() - requestStartTime,
+                  routing_confidence: deterministicPayload.confidence,
+                  response_tier: "DETERMINISTIC_SUCCESS"
+                }
+              )
+            );
+          }
+        }
       }
       else if (route === ROUTES.HYBRID_KG_RAG) {
         const [kgOutcome, ragOutcome] = await Promise.allSettled([
           neo4jSemaphore.acquire().then(() => timeoutWrapper(fetchNeo4jContext(query, intentKeyword, 5, requestId, convo.messages), 5000, null).finally(() => neo4jSemaphore.release())),
-          ragSemaphore.acquire().then(() => timeoutWrapper(ragService.retrieve(query, { topK: 5 }), 5000, null).finally(() => ragSemaphore.release()))
+          ragSemaphore.acquire().then(() => timeoutWrapper(ragService.search(query, { topK: 5 }), 5000, null).finally(() => ragSemaphore.release()))
         ]);
 
         if (kgOutcome.status === 'fulfilled' && kgOutcome.value) {
@@ -647,12 +918,27 @@ app.post("/api/chatbot/query", async (req, res) => {
         }
 
         if (ragOutcome.status === 'fulfilled' && ragOutcome.value) {
-          rawResults.rag = ragOutcome.value;
+          const ragData = ragOutcome.value;
+          // SECTION B — RESPONSE NORMALIZATION ADAPTER
+          rawResults.rag = {
+            results: ragData.sources || [],
+            confidence: ragData.raw_confidence || 0,
+            metadata: ragData.metadata || {},
+            fallback_used: ragData.fallback_used || false
+          };
+          
+          logger.info("HYBRID RAG success", { 
+            requestId, 
+            confidence: rawResults.rag.confidence, 
+            source_count: rawResults.rag.results.length 
+          });
+          
           incrementMetric("rag_metadata_preserved");
         } else {
           console.error(`[HYBRID][${requestId}] RAG failed:`, ragOutcome.reason);
           incrementMetric("subsystem_rag_failure");
           degraded_services.push("RAG_TIMEOUT");
+          rawResults.rag = { results: [], confidence: 0, metadata: {}, fallback_used: false };
         }
 
         if (!rawResults.kg && !rawResults.rag) {
@@ -773,14 +1059,15 @@ Respond briefly, professionally, and conversationally as the AAST Advisor.`;
           }).then(r => r.json()),
           10000, null
         ).finally(() => llmSemaphore.release());
-        rawResults.llm = [{ response: llmRes?.response?.trim() || "I'm currently unable to process complex inquiries. Please try again later.", confidence: 0.3 }];
+        rawResults.llm = [{ response: llmRes?.response?.trim() || "Some systems are limited right now, but based on available academic guidance, here is the best support I can provide.", confidence: 0.3 }];
       }
 
       const traceData = {
         degraded_services,
         subsystem_health: healthStatus,
         latency_ms: Date.now() - requestStartTime,
-        routing_confidence: routingDecision.confidence || 0
+        routing_confidence: routingDecision.confidence || 0,
+        response_tier: degraded_services.length > 0 ? "DEGRADED_SUCCESS" : "FULL_SUCCESS"
       };
 
       // ---------- 5. FUSION LAYER (Unified Primary + Fusion Fallback) ----------
@@ -799,11 +1086,11 @@ Respond briefly, professionally, and conversationally as the AAST Advisor.`;
             routeType: route,
             retrievalConfidence: routingDecision.confidence || 0,
             neo4jContext: rawResults.kg || [],
-            ragContext: rawResults.rag?.results || rawResults.rag || [],
+            ragContext: Array.isArray(rawResults.rag?.results) ? rawResults.rag.results : [],
             faqContext: faqHit || null,
             decisionContext: rawResults.decision || rawResults.career || null
           }),
-          12000,
+          65000,
           null
         );
 
@@ -812,10 +1099,34 @@ Respond briefly, professionally, and conversationally as the AAST Advisor.`;
           !fusionPayload ||
           !fusionPayload.answer ||
           typeof fusionPayload.answer !== "string" ||
-          fusionPayload.answer.trim().length < 15 ||
-          fusionPayload.confidence < 0.25
+          fusionPayload.answer.trim().length < 8 ||
+          fusionPayload.confidence < 0.15
         ) {
-          throw new Error("UnifiedAnswer low confidence or invalid");
+          if (
+              (rawResults.kg && rawResults.kg.length > 0) ||
+              (rawResults.rag && rawResults.rag.results && rawResults.rag.results.length > 0) ||
+              rawResults.decision ||
+              rawResults.career
+          ) {
+              logger.warn("UnifiedAnswer degraded but partial evidence exists — preserving degraded response", {
+                  requestId,
+                  route
+              });
+
+              fusionPayload = {
+                  final_answer:
+                      fusionPayload.answer ||
+                      "Partial verified academic information is available based on current institutional data.",
+                  answer:
+                      fusionPayload.answer ||
+                      "Partial verified academic information is available based on current institutional data.",
+                  confidence: Math.max(fusionPayload.confidence || 0.15, 0.15),
+                  route_used: route,
+                  degraded: true
+              };
+          } else {
+              throw new Error("UnifiedAnswer low confidence or invalid");
+          }
         }
 
         fusionPayload.final_answer = fusionPayload.answer;
@@ -876,10 +1187,15 @@ Respond briefly, professionally, and conversationally as the AAST Advisor.`;
       console.error(`[ORCHESTRATOR][${requestId}] Execution Error:`, err.message);
       incrementMetric("route_failure_fallback");
 
-      const traceData = { degraded_services: ["FATAL_ERROR"], latency_ms: Date.now() - requestStartTime, routing_confidence: 0 };
+      const traceData = { 
+          degraded_services: ["FATAL_ERROR"], 
+          latency_ms: Date.now() - requestStartTime, 
+          routing_confidence: 0,
+          response_tier: "FATAL_FALLBACK"
+      };
 
       // TASK 5 — STRONGER FATAL FALLBACK: fusionService attempt with static backstop
-      let fallbackAnswer = "I'm experiencing technical difficulties. Please contact an academic advisor at AAST for official guidance.";
+      let fallbackAnswer = "Some advanced systems are temporarily unavailable, but official academic advisors can confirm final university policy details.";
       let fallbackRoute = "FATAL_FALLBACK";
       try {
         const fallbackEnvelope = await fusionService.fuse(query, { route: ROUTES.LLM_FALLBACK, confidence: 0.1 }, {

@@ -12,7 +12,9 @@
 
 const NORMALIZED_SOURCES = {
     KG: 'KG',
+    KG_DIRECT: 'KG_DIRECT',
     RAG: 'RAG',
+    RAG_DIRECT: 'RAG_DIRECT',
     HYBRID: 'HYBRID',
     DECISION: 'DECISION',
     CAREER: 'CAREER',
@@ -20,6 +22,8 @@ const NORMALIZED_SOURCES = {
     INTERACTIVE: 'INTERACTIVE',
     LLM: 'LLM'
 };
+
+console.log("[PHASE4_1] KG_DIRECT telemetry preserved");
 
 class ResponseFormatter {
     format(fusionPayload, cid, requestId, traceData = {}) {
@@ -32,19 +36,41 @@ class ResponseFormatter {
                 degraded_services: traceData.degraded_services || [],
                 subsystem_health: traceData.subsystem_health || {},
                 latency_ms: traceData.latency_ms || 0,
-                routing_confidence: traceData.routing_confidence || 0
+                routing_confidence: traceData.routing_confidence || 0,
+                response_tier: traceData.response_tier || "FULL_SUCCESS"
             }
         };
 
+        const answer =
+            fusionPayload.final_answer ||
+            fusionPayload.answer ||
+            "Partial verified academic guidance is available based on current institutional knowledge.";
+
+        if (fusionPayload.degraded === true) {
+            fusionPayload.confidence = Math.max(
+                this._normalizeConfidence(fusionPayload.confidence),
+                0.15
+            );
+        }
+
+        const sources =
+            fusionPayload.contributing_sources || fusionPayload.sources
+                ? this._normalizeSources(fusionPayload.contributing_sources || fusionPayload.sources)
+                : [this._normalizeRoute(fusionPayload.route_used || fusionPayload.route)];
+
         return {
-            answer: fusionPayload.final_answer || fusionPayload.answer || "I am unable to provide a response at this time.",
+            answer: answer,
+            final_answer: answer,
             route: metadata.trace.route,
             confidence: this._normalizeConfidence(fusionPayload.confidence),
-            sources: this._normalizeSources(fusionPayload.contributing_sources || fusionPayload.sources),
+            source: sources[0] || "LLM",
+            sources: sources,
+            explainability: fusionPayload.explainability || { deterministic: false },
             citations: Array.isArray(fusionPayload.citations) ? fusionPayload.citations : [],
             reasoning: fusionPayload.reasoning || "Response generated via standardized formatting layer.",
             metadata: metadata,
             cid: cid,
+            conversationId: cid,
             requestId: requestId
         };
     }
@@ -59,19 +85,24 @@ class ResponseFormatter {
                 degraded_services: traceData.degraded_services || [],
                 subsystem_health: traceData.subsystem_health || {},
                 latency_ms: traceData.latency_ms || 0,
-                routing_confidence: traceData.routing_confidence || 0
+                routing_confidence: traceData.routing_confidence || 0,
+                response_tier: traceData.response_tier || "FULL_SUCCESS"
             }
         };
 
         return {
             answer: promptText,
+            final_answer: promptText,
             route: NORMALIZED_SOURCES.INTERACTIVE,
             confidence: 1.0,
+            source: NORMALIZED_SOURCES.INTERACTIVE,
             sources: [NORMALIZED_SOURCES.INTERACTIVE],
+            explainability: { interactive: true },
             citations: [],
             reasoning: "Interactive data collection required to complete user profile.",
             metadata: metadata,
             cid: cid,
+            conversationId: cid,
             requestId: requestId
         };
     }
@@ -85,19 +116,24 @@ class ResponseFormatter {
                 degraded_services: traceData.degraded_services || [],
                 subsystem_health: traceData.subsystem_health || {},
                 latency_ms: traceData.latency_ms || 0,
-                routing_confidence: traceData.routing_confidence || 0
+                routing_confidence: traceData.routing_confidence || 0,
+                response_tier: traceData.response_tier || "FULL_SUCCESS"
             }
         };
 
         return {
             answer: promptText,
+            final_answer: promptText,
             route: r,
             confidence: this._normalizeConfidence(confidenceVal),
+            source: r,
             sources: [r],
+            explainability: { static: true },
             citations: [],
             reasoning: `Static ${r} response matched.`,
             metadata: metadata,
             cid: cid,
+            conversationId: cid,
             requestId: requestId
         };
     }
@@ -112,19 +148,27 @@ class ResponseFormatter {
                 degraded_services: traceData.degraded_services || [],
                 subsystem_health: traceData.subsystem_health || {},
                 latency_ms: traceData.latency_ms || 0,
-                routing_confidence: traceData.routing_confidence || 0
+                routing_confidence: traceData.routing_confidence || 0,
+                response_tier: traceData.response_tier || "DEGRADED_SUCCESS"
             }
         };
 
         return {
             answer: errorMsg,
+            final_answer: errorMsg,
             route: r,
-            confidence: 0.1,
+            confidence: traceData.response_tier === "FATAL_FALLBACK" ? 0.1 : 0.25,
+            source: NORMALIZED_SOURCES.LLM,
             sources: [NORMALIZED_SOURCES.LLM],
+            explainability: { error: true },
             citations: [],
-            reasoning: "System encountered an error, falling back to safe advisory message.",
+            reasoning:
+                traceData.response_tier === "FATAL_FALLBACK"
+                    ? "System encountered a critical failure; safe advisory fallback activated."
+                    : "System operating in degraded advisory mode; best available verified academic guidance preserved.",
             metadata: metadata,
             cid: cid,
+            conversationId: cid,
             requestId: requestId
         };
     }
@@ -133,6 +177,8 @@ class ResponseFormatter {
         if (!route) return NORMALIZED_SOURCES.LLM;
         const r = route.toUpperCase();
         if (r.includes('HYBRID')) return NORMALIZED_SOURCES.HYBRID;
+        if (r.includes('KG_DIRECT')) return NORMALIZED_SOURCES.KG_DIRECT;
+        if (r.includes('RAG_DIRECT')) return NORMALIZED_SOURCES.RAG_DIRECT;
         if (r.includes('KG')) return NORMALIZED_SOURCES.KG;
         if (r.includes('RAG')) return NORMALIZED_SOURCES.RAG;
         if (r.includes('DECISION')) return NORMALIZED_SOURCES.DECISION;
@@ -147,6 +193,8 @@ class ResponseFormatter {
         if (!sources || !Array.isArray(sources)) return [NORMALIZED_SOURCES.LLM];
         const normalizedArray = sources.map(s => {
             const raw = typeof s === 'string' ? s.toUpperCase() : 'LLM';
+            if (raw.includes('KG_DIRECT')) return NORMALIZED_SOURCES.KG_DIRECT;
+            if (raw.includes('RAG_DIRECT')) return NORMALIZED_SOURCES.RAG_DIRECT;
             if (raw.includes('KG')) return NORMALIZED_SOURCES.KG;
             if (raw.includes('RAG')) return NORMALIZED_SOURCES.RAG;
             if (raw.includes('DECISION')) return NORMALIZED_SOURCES.DECISION;

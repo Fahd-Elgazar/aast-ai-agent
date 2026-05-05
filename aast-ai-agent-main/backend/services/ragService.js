@@ -19,6 +19,7 @@
  * Output modes:
  *   RAG | HYBRID | DEGRADED | FAILURE
  *
+ * 
  * Pipeline:
  *   User Query
  *     ↓ detectQueryCategory()        ← intent / category detection
@@ -47,8 +48,8 @@ const CONFIG = {
     ANSWER_URL: process.env.RAG_ANSWER_URL || 'http://localhost:8002',
 
     // ── Endpoint paths (configurable for API version changes) ─
-    RETRIEVER_PATH: process.env.RAG_RETRIEVER_PATH || '/retrieve',
-    RETRIEVER_PATH_ALT: process.env.RAG_RETRIEVER_PATH_ALT || '/search',   // fallback if /retrieve 404s
+    RETRIEVER_PATH: process.env.RAG_RETRIEVER_PATH || '/search',
+    RETRIEVER_PATH_ALT: process.env.RAG_RETRIEVER_PATH_ALT || '/search',   // Both default to /search per production fix
     ANSWER_PATH: process.env.RAG_ANSWER_PATH || '/answer',
     ANSWER_PATH_ALT: process.env.RAG_ANSWER_PATH_ALT || '/generate', // fallback if /answer 404s
     HEALTH_PATH_RETRIEVER: process.env.RAG_HEALTH_PATH_RETRIEVER || '/health',
@@ -539,7 +540,7 @@ class RAGService {
         // Detect semantic category early — used for boosting and reranking
         const categoryResult = this.detectQueryCategory(query);
         const queryCategory = categoryResult.category;
-        logger.info('SEARCH', `Multi-pass retrieval | category: ${queryCategory}`, { 
+        logger.info('SEARCH', `Multi-pass retrieval | category: ${queryCategory}`, {
             query,
             confidence: categoryResult.confidence,
             signals: categoryResult.matched_signals
@@ -920,7 +921,7 @@ class RAGService {
             'when', 'where', 'which', 'who', 'please', 'give', 'show', 'find', 'let',
             'explain', 'describe', 'list', 'tell', 'help',
         ]);
-        
+
         // Institutional anchor terms to preserve (adaptive filtering)
         const PRESERVE_TERMS = new Set([
             'scholarship', 'gpa', 'admission', 'probation', 'visa', 'dean', 'faculty',
@@ -986,7 +987,7 @@ class RAGService {
         for (const [category, signals] of Object.entries(CATEGORY_SIGNALS)) {
             let categoryScore = 0;
             const matched = [];
-            
+
             for (const signal of signals) {
                 // Support phrase-level and exact token matching
                 const regex = new RegExp(`\\b${signal}\\b`, 'i');
@@ -998,7 +999,7 @@ class RAGService {
                     matched.push(signal);
                 }
             }
-            
+
             // Check synonyms related to this category for extra weight
             for (const [canonical, surfaces] of Object.entries(SYNONYM_DICT)) {
                 if (signals.includes(canonical)) {
@@ -1024,13 +1025,13 @@ class RAGService {
 
         const sorted = Object.entries(scores).sort((a, b) => b[1].score - a[1].score);
         const best = sorted[0];
-        
+
         const confidence = totalSignalsMatched > 0 ? (best[1].score / totalSignalsMatched) : 0;
 
         logger.debug('SEARCH', 'Category detected via semantic scoring', {
             category: best[0], confidence: confidence.toFixed(2), signals: best[1].matched
         });
-        
+
         return {
             category: best[0],
             confidence: parseFloat(confidence.toFixed(4)),
@@ -1094,7 +1095,7 @@ class RAGService {
                 else if (p === 'low') normalizedPriority = 0.3;
             } else if (typeof source.priority === 'number') {
                 const rawPriority = Math.max(1, Math.min(10, source.priority));
-                normalizedPriority = (10 - rawPriority) / 9; 
+                normalizedPriority = (10 - rawPriority) / 9;
             }
             score += normalizedPriority * CONFIG.RERANK_PRIORITY_WEIGHT;
 
@@ -1135,15 +1136,53 @@ class RAGService {
     // ══════════════════════════════════════════════════════════
 
     /**
+     * Maps internal UI/signal categories to backend-supported category strings.
+     * Prevents mismatch errors in retrieval filtering.
+     * @private
+     */
+    _mapCategory(category) {
+        if (!category || category === 'GENERAL' || category === 'unknown') return null;
+
+        const MAPPING = {
+            'academic_policy': 'admissions_registration',
+            'transfer': 'admissions_registration',
+            'grading': 'academic_rules',
+            'admissions': 'admissions_registration',
+            'registration': 'admissions_registration',
+            'curriculum': 'academic_rules',
+            'examination': 'academic_rules',
+            'financial_aid': 'tuition_scholarships',
+            'tuition': 'tuition_scholarships',
+            'housing': 'campus_life',
+            'institutional': 'campus_life'
+        };
+
+        return MAPPING[category] || null;
+    }
+
+    /**
+     * Normalizes payload for the /search endpoint contract.
+     * Removes unsupported fields: search_type, category_hint, filters.
+     * @private
+     */
+    _normalizePayload(query, topK, category) {
+        return {
+            query,
+            top_k: topK || CONFIG.TOP_K,
+            category: this._mapCategory(category),
+            program_level: null,
+            priority_only: false
+        };
+    }
+
+    /**
      * Sends a retrieval request to the FastAPI retriever service.
-     * Payload includes:
-     *   - query          : expanded / simplified query text
-     *   - top_k          : retrieval depth (standard or deep)
-     *   - search_type    : 'hybrid' | 'semantic' | 'keyword'
-     *   - category_hint  : detected semantic category for boosting
-     *   - filters        : category preference filter (non-GENERAL queries)
-     *
-     * Automatically falls back to alternate endpoint if primary 404s.
+     * Payload normalized to strict /search contract:
+     *   - query
+     *   - top_k
+     *   - category (mapped)
+     *   - program_level: null
+     *   - priority_only: false
      *
      * @param {string} query
      * @param {number} topK
@@ -1152,15 +1191,12 @@ class RAGService {
      * @private
      */
     async _callRetriever(query, topK, category) {
-        const payload = {
-            query,
-            top_k: topK || CONFIG.TOP_K,
-            search_type: CONFIG.SEARCH_TYPE,
-            category_hint: category !== 'GENERAL' ? category : undefined,
-            filters: category !== 'GENERAL'
-                ? { category_preference: category }
-                : undefined,
-        };
+        const payload = this._normalizePayload(query, topK, category);
+
+        logger.info('SEARCH', `Calling retriever at ${CONFIG.RETRIEVER_PATH}`, {
+            payload,
+            original_category: category
+        });
 
         const result = await this._callWithEndpointFallback(
             CONFIG.RETRIEVER_URL,
@@ -1171,13 +1207,24 @@ class RAGService {
         );
 
         if (!result.success) {
-            logger.warn('SEARCH', 'Retriever failed on all endpoints', { error: result.error });
+            logger.warn('SEARCH', 'Retriever failed on all endpoints', {
+                error: result.error,
+                endpoint: CONFIG.RETRIEVER_PATH,
+                payload
+            });
             return this._emptyRetrieverResult(result.error);
         }
 
         const data = result.data;
-        const rawScore = safeFloat(data.confidence ?? data.score ?? data.avg_score ?? 0);
+        // Production Fix: Use avg_confidence as primary signal
+        const rawScore = safeFloat(data.avg_confidence ?? data.confidence ?? data.score ?? 0);
         const sources = this._extractSources(data);
+
+        logger.info('SEARCH', 'Retriever success', {
+            confidence: rawScore.toFixed(3),
+            source_count: sources.length,
+            fallback_used: data.fallback_used || false
+        });
 
         return {
             success: true,
@@ -1186,11 +1233,11 @@ class RAGService {
             sources,
             source_count: sources.length,
             source_diversity: this._computeSourceDiversity(sources),
-            fallback_used: false,
-            category: data.category || data.intent || category || 'GENERAL',
-            metadata: data.metadata || {},
+            fallback_used: data.fallback_used || false,
+            category: data.category_filter || data.category || category || 'GENERAL',
+            metadata: data.metadata || { latency_seconds: data.latency_seconds },
             endpoint_used: result.endpoint_used,
-            top_k_used: topK,
+            top_k_used: payload.top_k,
         };
     }
 
@@ -1233,7 +1280,8 @@ class RAGService {
         }
 
         const data = result.data;
-        const rawScore = safeFloat(data.confidence ?? data.score ?? 0);
+        // Production Fix: Extract avg_confidence from answer engine if present
+        const rawScore = safeFloat(data.avg_confidence ?? data.confidence ?? data.score ?? 0);
         const sources = this._extractSources(data);
 
         return {
@@ -1443,28 +1491,28 @@ class RAGService {
         if (!Array.isArray(sources) || sources.length === 0) {
             return { chunk_diversity: 0, document_diversity: 0, category_diversity: 0, overall_score: 0 };
         }
-        
+
         const chunks = new Set();
         const docs = new Set();
         const categories = new Set();
-        
+
         sources.forEach(s => {
             const chunkId = s.id || s.chunk_id || (s.text ? s.text.substring(0, 20) : Math.random().toString());
             const docId = s.doc_id || s.source || s.title || chunkId;
             const category = s.category || s.doc_type || s.type || 'unknown';
-            
+
             chunks.add(chunkId);
             docs.add(docId);
             categories.add(category);
         });
-        
+
         const docDiv = docs.size;
         const catDiv = categories.size;
         const chunkDiv = chunks.size;
-        
+
         // Document diversity is weighted higher than chunk diversity
         const overallScore = (docDiv * 2) + catDiv + (chunkDiv * 0.5);
-        
+
         return {
             chunk_diversity: chunkDiv,
             document_diversity: docDiv,
@@ -1567,22 +1615,22 @@ class RAGService {
      */
     _deduplicateSources(sources) {
         if (!Array.isArray(sources) || sources.length === 0) return [];
-        
+
         const seen = new Map();
         const deduplicated = [];
-        
+
         for (const source of sources) {
             const docId = source.doc_id || source.id || '';
             const sourceFile = source.source_file || source.source || '';
             const title = source.title || '';
-            
+
             const groupKey = (docId || sourceFile || title || '').toLowerCase();
-            
+
             if (!groupKey) {
                 deduplicated.push(source);
                 continue;
             }
-            
+
             if (!seen.has(groupKey)) {
                 seen.set(groupKey, source);
                 deduplicated.push(source);
@@ -1590,7 +1638,7 @@ class RAGService {
                 const existing = seen.get(groupKey);
                 const existingScore = safeFloat(existing.score || existing.confidence || existing.rerank_score || 0);
                 const newScore = safeFloat(source.score || source.confidence || source.rerank_score || 0);
-                
+
                 if (newScore > existingScore) {
                     const idx = deduplicated.indexOf(existing);
                     if (idx !== -1) deduplicated[idx] = source;
@@ -1598,7 +1646,7 @@ class RAGService {
                 }
             }
         }
-        
+
         return deduplicated;
     }
 
@@ -1608,17 +1656,17 @@ class RAGService {
      */
     async _validateCapabilities() {
         if (this._telemetry.capabilities.validated) return;
-        
+
         logger.info('STARTUP', 'Validating retriever capabilities...');
         try {
             const res = await this._callWithEndpointFallback(
                 CONFIG.RETRIEVER_URL, CONFIG.RETRIEVER_PATH, CONFIG.RETRIEVER_PATH_ALT,
-                { query: "test capabilities", top_k: 1, search_type: 'hybrid' }, 'retriever'
+                this._normalizePayload("test capabilities", 1, 'GENERAL'), 'retriever'
             );
-            
+
             if (res.success) {
                 this._telemetry.capabilities.hybrid = true;
-                this._telemetry.capabilities.semantic = true; 
+                this._telemetry.capabilities.semantic = true;
                 this._telemetry.capabilities.keyword = true;
                 logger.info('STARTUP', 'Hybrid search fully supported.');
             } else if (res.error && res.error.toLowerCase().includes('search_type')) {
@@ -1640,22 +1688,22 @@ class RAGService {
      */
     async _runSyntheticProbes() {
         if (this._telemetry.circuit_breaker.state === 'OPEN') return;
-        
+
         const now = Date.now();
         if (this._telemetry.synthetic_probes.last_run && now - this._telemetry.synthetic_probes.last_run < 300000) return;
-        
+
         this._telemetry.synthetic_probes.last_run = now;
         logger.info('HEALTH', 'Running synthetic health probes...');
-        
+
         const testQueries = [
             { query: "admission requirements", category: "admissions" },
             { query: "GPA probation", category: "academic_policy" },
             { query: "scholarship eligibility", category: "financial_aid" }
         ];
-        
+
         let passed = 0;
         const results = [];
-        
+
         for (const test of testQueries) {
             try {
                 const res = await this._callRetriever(test.query, 3, test.category);
@@ -1666,7 +1714,7 @@ class RAGService {
                 results.push({ query: test.query, success: false, error: e.message });
             }
         }
-        
+
         this._telemetry.synthetic_probes.status = passed === testQueries.length ? 'PASS' : (passed > 0 ? 'DEGRADED' : 'FAIL');
         this._telemetry.synthetic_probes.results = results;
     }
@@ -1680,13 +1728,13 @@ class RAGService {
         if (!ragResult || !ragResult.success) {
             return "I'm currently unable to retrieve academic information. Please try again later or contact your advisor directly.";
         }
-        
+
         let response = ragResult.answer || "I found some relevant academic information for you.";
         const sources = ragResult.sources || [];
-        
+
         // Remove robotic formatting
         response = response.replace(/^(Answer:|A:|Response:)\s*/i, '');
-        
+
         // Contextual tone
         if (ragResult.confidence === 'HIGH') {
             // Already highly confident, answer directly
@@ -1695,19 +1743,19 @@ class RAGService {
         } else {
             response = `I couldn't find an exact match, but here is some related information: ${response}`;
         }
-        
+
         // Attach evidence
         if (sources.length > 0) {
             const sourceTitles = sources.slice(0, 2)
                 .map(s => s.title || s.source || s.doc_id || 'Academic Handbook')
                 .filter(Boolean);
-            
+
             if (sourceTitles.length > 0) {
                 const uniqueTitles = [...new Set(sourceTitles)];
                 response += `\n\n*(Source: ${uniqueTitles.join(', ')})*`;
             }
         }
-        
+
         return response;
     }
 

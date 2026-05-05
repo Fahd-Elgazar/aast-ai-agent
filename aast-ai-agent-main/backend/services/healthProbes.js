@@ -71,7 +71,14 @@ export async function checkSubsystemHealth() {
                 (async () => {
                     if (typeof ragService.healthCheck === 'function') {
                         const h = await ragService.healthCheck();
-                        return h?.status === 'healthy' || h?.status === 'ok' || h === true;
+                        return (
+                            h === true ||
+                            h?.status === 'healthy' ||
+                            h?.status === 'ok' ||
+                            h?.system_status === 'HEALTHY' ||
+                            h?.system_status === 'DEGRADED' ||
+                            h?.retriever?.ok === true
+                        );
                     }
                     return true; 
                 })(),

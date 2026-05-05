@@ -19,74 +19,44 @@
  *   or reliance on outside knowledge.
  *
  * AUTHOR:  AAST Academic Advisor Engineering Team
- * VERSION: 4.0.0  — Enterprise optimization patch
+ * VERSION: 4.1.1  — Final Phase 3 stability micro-patches
  *
- * CHANGELOG (v4.0.0):
- *   - TASK 1: Route-adaptive Ollama inference parameters (per-route temperature map).
- *   - TASK 2: Structured UnifiedAnswerResult response object with toString() backward compat.
- *   - TASK 3: Anti-truncation guard — detects, repairs, or falls back on incomplete responses.
- *   - TASK 4: Retry logic — 1 auto-retry on timeout with exponential backoff + observability.
- *   - TASK 5: Decision block depth-limited safe serialization with value truncation.
- *   - TASK 6: Source attribution metadata (faq/kg/rag/decision booleans) in result + logs.
- *   - TASK 7: Policy response formatting directive for RAG_ONLY and HYBRID routes.
- *   - TASK 8: Tiered prompt token alerts — 3500 WARNING, 5000 CRITICAL.
+ * CHANGELOG (v4.1.1):
+ *   - Fixed immutability violation: cloning inference options before mutation in degraded mode.
+ *   - Improved prompt trimming accuracy: implemented iterative build-measure-trim-rebuild loop.
+ *   - Polished deterministic fallback tone: replaced mechanical prefixes with professional academic language.
+ *   - Enhanced source attribution: deterministic fallback now uses robust builder-level usage detection.
+ *   - Added recursive critical trimming safety loop to prevent token budget overflows.
  *
- * CHANGELOG (v3.0.0):
- *   - Route-aware prompt specialization (routeType parameter).
- *   - Confidence gating at 0.40 threshold (retrievalConfidence).
- *   - Prompt size optimization (KG ≤3, RAG ≤5, 1 FAQ, decision summary).
- *   - AbortController timeout protection (25s) on Ollama calls.
- *   - Enterprise-grade structured observability logging throughout.
- *   - Response sanitization pipeline (meta-phrases, garbage, repetition).
- *   - Priority source ordering enforced: FAQ > Decision > KG > RAG.
- *   - Preserved full modularity, exports, orchestrator compatibility.
+ * CHANGELOG (v4.1.0):
+ *   - Removed direct fetch and localized Ollama infra in favor of centralized ollamaService.
+ *   - Implemented tiered confidence gating (0.25 degraded threshold).
+ *   - Added deterministic fallback mechanism to preserve verified context on LLM failure.
+ *   - Implemented proactive prompt auto-trimming to prevent context window overflow.
+ *   - Integrated generateStableResponse for improved inference reliability.
  * ============================================================
  */
 
-import fetch from "node-fetch";
+import { generateStableResponse } from "./ollamaService.js";
 
 // ─────────────────────────────────────────────────────────────
 // SECTION 0 — CONFIGURATION CONSTANTS
 // ─────────────────────────────────────────────────────────────
 
-/**
- * Base URL for the Ollama inference server.
- * Resolved from OLLAMA_BASE_URL env var; falls back to localhost for dev.
- */
-const OLLAMA_BASE_URL =
-    (process.env.OLLAMA_BASE_URL ?? "http://localhost:11434").replace(/\/$/, "");
-
-/** Full generate endpoint — constructed from the resolved base URL. */
-const OLLAMA_URL = `${OLLAMA_BASE_URL}/api/generate`;
-
 /** Model used for final answer synthesis. DO NOT CHANGE. */
 const MODEL = "gemma4:e2b";
 
 /**
- * Timeout in milliseconds for a single Ollama inference call.
- * AbortController cancels the request after this duration.
- */
-const OLLAMA_TIMEOUT_MS = 25_000;
-
-/**
- * Maximum number of automatic retries on Ollama timeout.
- * Only AbortError (timeout) triggers retry — not HTTP or parse errors.
- * Kept at 1 to avoid compounding latency; exponential backoff is applied.
- */
-const OLLAMA_MAX_RETRIES = 1;
-
-/**
- * Base delay in milliseconds for the first retry backoff interval.
- * Actual delay for attempt N = OLLAMA_RETRY_BASE_DELAY_MS * 2^(N-1).
- * With MAX_RETRIES=1: single retry waits 1 000 ms before re-attempting.
- */
-const OLLAMA_RETRY_BASE_DELAY_MS = 1_000;
-
-/**
  * Minimum retrieval confidence score (0–1).
- * Below this threshold the LLM call is bypassed → INSUFFICIENT_DATA_PHRASE.
+ * Below this threshold the LLM call is bypassed.
  */
 const CONFIDENCE_GATE_THRESHOLD = 0.40;
+
+/**
+ * Threshold for degraded operation (0–1).
+ * Between this and the full threshold, we operate in high-caution mode.
+ */
+const DEGRADED_CONFIDENCE_THRESHOLD = 0.25;
 
 /** Maximum KG facts to inject into the prompt. */
 const MAX_KG_FACTS = 3;
@@ -340,9 +310,10 @@ function estimateTokens(text) {
  * Sorts by confidence descending, caps at MAX_KG_FACTS.
  *
  * @param {Array<{ evidence?: string, confidence?: number, metadata?: object }>} neo4jContext
+ * @param {number} [limit=MAX_KG_FACTS]
  * @returns {{ block: string, count: number, used: boolean }}
  */
-function buildNeo4jBlock(neo4jContext) {
+function buildNeo4jBlock(neo4jContext, limit = MAX_KG_FACTS) {
     if (!Array.isArray(neo4jContext) || neo4jContext.length === 0) {
         return { block: "", count: 0, used: false };
     }
@@ -350,7 +321,7 @@ function buildNeo4jBlock(neo4jContext) {
     const sorted = [...neo4jContext].sort((a, b) =>
         (b.confidence ?? 0) - (a.confidence ?? 0)
     );
-    const capped = sorted.slice(0, MAX_KG_FACTS);
+    const capped = sorted.slice(0, limit);
 
     const lines = capped
         .map((item, idx) => {
@@ -386,12 +357,13 @@ function buildNeo4jBlock(neo4jContext) {
 /**
  * Builds a readable text block from RAG-retrieved document chunks.
  * Accepts { results } envelope, raw array, or pre-joined string.
- * Caps at MAX_RAG_PASSAGES.
+ * Caps at limit (default MAX_RAG_PASSAGES).
  *
  * @param {{ results?: Array<object> } | Array<object> | string | null} ragContext
+ * @param {number} [limit=MAX_RAG_PASSAGES]
  * @returns {{ block: string, count: number, used: boolean }}
  */
-function buildRagBlock(ragContext) {
+function buildRagBlock(ragContext, limit = MAX_RAG_PASSAGES) {
     if (!ragContext) return { block: "", count: 0, used: false };
 
     let unwrapped = ragContext;
@@ -421,7 +393,7 @@ function buildRagBlock(ragContext) {
 
     if (passages.length === 0) return { block: "", count: 0, used: false };
 
-    const capped = passages.slice(0, MAX_RAG_PASSAGES);
+    const capped = passages.slice(0, limit);
 
     const block =
         "### Retrieved Document Context (RAG — Verified Passages)\n" +
@@ -564,19 +536,63 @@ function buildDecisionBlock(decisionContext) {
 }
 
 /**
+ * PROMPT AUTO-TRIMMING (Phase 3 Stabilization)
+ * ───────────────────────────────────────────
+ * Proactively reduces context sizes based on prompt budget thresholds.
+ *
+ * @param {number} currentTokens
+ * @returns {object} Trimmed limits for builders
+ */
+function trimContextToBudget(currentTokens) {
+    const config = {
+        kgFacts: MAX_KG_FACTS,
+        ragPassages: MAX_RAG_PASSAGES,
+        includeRag: true,
+        includeKg: true,
+        includeDecision: true,
+        includeFaq: true,
+    };
+
+    if (currentTokens >= PROMPT_TOKEN_CRITICAL_THRESHOLD) {
+        logWarn("context_trimming_critical", { tokens: currentTokens });
+        // Drop low-priority context first: RAG > KG
+        config.includeRag = false;
+        config.includeKg = false;
+        // Decision and FAQ preserved as highest priority
+    } else if (currentTokens >= PROMPT_TOKEN_WARN_THRESHOLD) {
+        logWarn("context_trimming_warning", { tokens: currentTokens });
+        // Reduce counts progressively
+        config.kgFacts = Math.max(1, Math.floor(MAX_KG_FACTS / 2));
+        config.ragPassages = Math.max(2, Math.floor(MAX_RAG_PASSAGES / 2));
+    }
+
+    return config;
+}
+
+/**
  * Aggregates all context blocks into a single composite payload.
  * Priority ordering: FAQ (1st) → Decision (2nd) → KG (3rd) → RAG (4th).
  *
  * TASK 6: Computes sources_used attribution booleans from builder results.
  *
  * @param {object} params
+ * @param {object} [trimConfig]
  * @returns {{ payload: string, metrics: object, sources_used: SourcesUsed }}
  */
-function buildContextPayload({ neo4jContext, ragContext, faqContext, decisionContext }) {
-    const faqResult = buildFaqBlock(faqContext);
-    const decisionResult = buildDecisionBlock(decisionContext);
-    const kgResult = buildNeo4jBlock(neo4jContext);
-    const ragResult = buildRagBlock(ragContext);
+function buildContextPayload({ neo4jContext, ragContext, faqContext, decisionContext }, trimConfig = null) {
+    const config = trimConfig || {
+        kgFacts: MAX_KG_FACTS,
+        ragPassages: MAX_RAG_PASSAGES,
+        includeRag: true,
+        includeKg: true,
+        includeDecision: true,
+        includeFaq: true
+    };
+
+    const faqResult = config.includeFaq ? buildFaqBlock(faqContext) : { block: "", count: 0, used: false };
+    const decisionResult = config.includeDecision ? buildDecisionBlock(decisionContext) : { block: "", count: 0, used: false };
+    const kgResult = config.includeKg ? buildNeo4jBlock(neo4jContext, config.kgFacts) : { block: "", count: 0, used: false };
+    const ragResult = config.includeRag ? buildRagBlock(ragContext, config.ragPassages) : { block: "", count: 0, used: false };
 
     // Priority order strictly enforced: FAQ > Decision > KG > RAG
     const orderedBlocks = [
@@ -613,6 +629,53 @@ function buildContextPayload({ neo4jContext, ragContext, faqContext, decisionCon
     return { payload, metrics, sources_used };
 }
 
+/**
+ * DETERMINISTIC FALLBACK BUILDER (Phase 3 Stabilization)
+ * ──────────────────────────────────────────────────
+ * Synthesizes a verified answer from structured context without LLM inference.
+ * Used as a primary safety net for LLM failures or timeouts.
+ */
+function buildDeterministicFallbackAnswer({ faqContext, decisionContext, neo4jContext, ragContext }) {
+    // 1. FAQ answer (Highest precision)
+    if (faqContext?.answer) {
+        return `According to verified university policy: ${faqContext.answer}`;
+    }
+
+    // 2. Decision summary
+    if (decisionContext) {
+        const outcome = decisionContext.outcome || decisionContext.verdict;
+        if (outcome) {
+            return `Based on verified academic evaluation: The advisory system has determined the outcome is: ${outcome}. Please contact your advisor for full details.`;
+        }
+    }
+
+    // 3. KG top fact
+    if (Array.isArray(neo4jContext) && neo4jContext.length > 0) {
+        const sorted = [...neo4jContext].sort((a, b) => (b.confidence ?? 0) - (a.confidence ?? 0));
+        const topFact = sorted[0];
+        const evidence = topFact?.evidence || topFact?.text || topFact?.content;
+        if (evidence) {
+            return `According to verified university records: ${evidence}`;
+        }
+    }
+
+    // 4. RAG summary (First passage)
+    if (ragContext) {
+        let firstPassage = "";
+        if (Array.isArray(ragContext) && ragContext[0]) {
+            firstPassage = typeof ragContext[0] === 'string' ? ragContext[0] : (ragContext[0].text || ragContext[0].content);
+        } else if (ragContext.results && ragContext.results[0]) {
+            firstPassage = ragContext.results[0].text || ragContext.results[0].content;
+        }
+
+        if (firstPassage && firstPassage.length > 20) {
+            return `According to official university documentation: ${firstPassage.slice(0, 300).trim()}...`;
+        }
+    }
+
+    return null;
+}
+
 
 // ─────────────────────────────────────────────────────────────
 // SECTION 4 — PROMPT BUILDER (Route-Aware)
@@ -630,7 +693,7 @@ You are an expert academic advisor at AAST (Arab Academy for Science, Technology
 Your role is to assist students with accurate, trustworthy, and professional academic guidance.
 
 STRICT RULES YOU MUST FOLLOW AT ALL TIMES:
-\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+───
 1. ONLY use the verified context provided below. Do NOT use any outside knowledge.
 2. NEVER hallucinate, invent, speculate, or assume any university policy, rule, or data.
 3. NEVER reference facts, names, deadlines, requirements, or regulations not explicitly in the provided context.
@@ -640,7 +703,7 @@ STRICT RULES YOU MUST FOLLOW AT ALL TIMES:
 6. NEVER say "according to my training data" or "based on my knowledge" — speak purely from the verified context given.
 
 TONE AND STYLE:
-\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+───
 - Warm, professional, and student-friendly.
 - Clear and direct. Plain English. No invented jargon.
 - Empathetic and encouraging where appropriate.
@@ -652,10 +715,10 @@ TONE AND STYLE:
 - ALWAYS write complete sentences. Never end mid-sentence or with a dangling clause.
 
 RESPONSE QUALITY STANDARDS:
-\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+───
 - Accuracy over creativity. When uncertain, err toward caution.
 - Every factual claim must be traceable to the provided context.
-- Prioritise: FAQ answer \u2192 Decision factors \u2192 Knowledge Graph facts \u2192 Document passages.
+- Prioritise: FAQ answer → Decision factors → Knowledge Graph facts → Document passages.
 `.trim();
 
 /**
@@ -686,7 +749,7 @@ function buildPrompt(query, contextPayload, routeType) {
         ROUTE_INSTRUCTIONS[routeType] ??
         ROUTE_INSTRUCTIONS[ROUTE_TYPES.LLM_FALLBACK];
 
-    const divider = "\u2500".repeat(60);
+    const divider = "─".repeat(60);
 
     const contextSection = contextPayload
         ? `VERIFIED CONTEXT:\n${divider}\n${contextPayload}\n${divider}`
@@ -928,165 +991,19 @@ function createResult({
  * @param {string} route
  * @param {number} confidence
  * @param {number} latency_ms
+ * @param {SourcesUsed} [sources_used]
  * @returns {UnifiedAnswerResult}
  */
-function createFallbackResult(answerText, route, confidence, latency_ms) {
+function createFallbackResult(answerText, route, confidence, latency_ms, sources_used = null) {
     return createResult({
         answer: answerText,
         route,
         confidence,
-        sources_used: { faq: false, kg: false, rag: false, decision: false },
+        sources_used: sources_used || { faq: false, kg: false, rag: false, decision: false },
         latency_ms,
         sanitized: false,
         truncated: false,
     });
-}
-
-
-// ─────────────────────────────────────────────────────────────
-// SECTION 7 — LLM INTERFACE (Timeout + Retry Protected)
-// TASK 1: inferenceOptions injected per route.
-// TASK 4: callOllamaWithRetry wraps callOllama with 1-retry
-//         exponential backoff on timeout only.
-// ─────────────────────────────────────────────────────────────
-
-/**
- * Sends the assembled prompt to the Ollama inference endpoint.
- *
- * @param {string}  prompt
- * @param {{ temperature: number, top_p: number, repeat_penalty: number }} inferenceOptions
- * @param {number}  [timeoutMs=OLLAMA_TIMEOUT_MS]
- * @returns {Promise<string>} Raw model output.
- * @throws {Error} On timeout, network failure, or empty/malformed response.
- */
-async function callOllama(
-    prompt,
-    inferenceOptions = ROUTE_INFERENCE_OPTIONS[ROUTE_TYPES.LLM_FALLBACK],
-    timeoutMs = OLLAMA_TIMEOUT_MS
-) {
-    const controller = new AbortController();
-    const timeoutHandle = setTimeout(() => controller.abort(), timeoutMs);
-
-    const requestBody = {
-        model: MODEL,
-        prompt,
-        stream: false,
-        options: {
-            temperature: inferenceOptions.temperature,
-            top_p: inferenceOptions.top_p,
-            repeat_penalty: inferenceOptions.repeat_penalty,
-        },
-    };
-
-    let response;
-    try {
-        response = await fetch(OLLAMA_URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(requestBody),
-            signal: controller.signal,
-        });
-    } finally {
-        // Always clear timeout — prevents memory leak on long-running processes
-        clearTimeout(timeoutHandle);
-    }
-
-    if (!response.ok) {
-        throw new Error(
-            `Ollama inference failed: HTTP ${response.status} ${response.statusText}`
-        );
-    }
-
-    const data = await response.json();
-
-    const answer =
-        data?.response?.trim() ??
-        data?.message?.content?.trim() ??
-        null;
-
-    if (!answer) {
-        throw new Error("Ollama returned an empty or unrecognised response payload.");
-    }
-
-    return answer;
-}
-
-/**
- * TASK 4 — Retry wrapper for callOllama with exponential backoff.
- *
- * Retry policy:
- *   - ONLY AbortError (timeout) triggers retry. Rationale: timeouts are
- *     transient load conditions; HTTP/parse errors signal structural problems
- *     that an immediate retry is unlikely to resolve.
- *   - Maximum retries: OLLAMA_MAX_RETRIES (1).
- *   - Backoff: OLLAMA_RETRY_BASE_DELAY_MS * 2^(attempt-1) ms.
- *     Attempt 0 → immediate; attempt 1 → 1 000 ms wait.
- *   - Every attempt and retry is individually logged for full traceability.
- *   - If all retries are exhausted, the final error is re-thrown to the caller.
- *
- * @param {string}  prompt
- * @param {{ temperature: number, top_p: number, repeat_penalty: number }} inferenceOptions
- * @param {string}  route            - Resolved route type (log context only).
- * @returns {Promise<string>}          Raw model output.
- * @throws {Error}                     If all attempts exhaust without success.
- */
-async function callOllamaWithRetry(prompt, inferenceOptions, route) {
-    let lastError;
-
-    for (let attempt = 0; attempt <= OLLAMA_MAX_RETRIES; attempt++) {
-        const isRetry = attempt > 0;
-
-        if (isRetry) {
-            const backoffMs = OLLAMA_RETRY_BASE_DELAY_MS * Math.pow(2, attempt - 1);
-            logWarn("ollama_retry_scheduled", {
-                route,
-                attempt,
-                max_retries: OLLAMA_MAX_RETRIES,
-                backoff_ms: backoffMs,
-                error_reason: lastError?.message ?? "unknown",
-            });
-            await new Promise(resolve => setTimeout(resolve, backoffMs));
-        }
-
-        const attemptStart = Date.now();
-
-        try {
-            const result = await callOllama(prompt, inferenceOptions);
-            const attemptMs = Date.now() - attemptStart;
-
-            if (isRetry) {
-                logInfo("ollama_retry_succeeded", {
-                    route,
-                    attempt,
-                    attempt_latency_ms: attemptMs,
-                });
-            }
-
-            return result;
-
-        } catch (error) {
-            lastError = error;
-            const attemptMs = Date.now() - attemptStart;
-            const isTimeout = error?.name === "AbortError";
-
-            logWarn("ollama_attempt_failed", {
-                route,
-                attempt,
-                is_timeout: isTimeout,
-                error_message: error?.message ?? String(error),
-                attempt_latency_ms: attemptMs,
-            });
-
-            // Non-timeout errors are not retried — propagate immediately
-            if (!isTimeout) throw error;
-
-            // Last allowed attempt exhausted — propagate the timeout error
-            if (attempt >= OLLAMA_MAX_RETRIES) throw error;
-        }
-    }
-
-    // Unreachable — satisfies linters
-    throw lastError;
 }
 
 
@@ -1104,32 +1021,6 @@ async function callOllamaWithRetry(prompt, inferenceOptions, route) {
  * answer text, route used, source attribution, latency, and sanitization
  * flags. The object's toString() returns the answer string directly for
  * soft backward compatibility with v3 orchestrators.
- *
- * ── ORCHESTRATOR USAGE (v4 — Recommended) ─────────────────────────────
- * ```js
- * const result = await generateUnifiedAnswer({
- *   query,
- *   routeType:           "HYBRID",
- *   retrievalConfidence: 0.78,
- *   neo4jContext:        kgResults,
- *   ragContext:          await ragService.retrieve(query),
- *   faqContext:          searchFAQ(query),
- *   decisionContext:     decisionResult.factors,
- * });
- *
- * // Native v4 access
- * return responseFormatter.format(result.answer, {
- *   sources:   result.sources_used,
- *   route:     result.route,
- *   latency:   result.latency_ms,
- * });
- * ```
- *
- * ── ORCHESTRATOR USAGE (v3 backward compat — no changes needed) ───────
- * ```js
- * const answer = await generateUnifiedAnswer({ query, ... });
- * return responseFormatter.format(answer);  // toString() → result.answer
- * ```
  *
  * @param {object} params
  * @param {string}  params.query
@@ -1159,74 +1050,69 @@ export async function generateUnifiedAnswer({
 
     const resolvedRoute = resolveRouteType(routeType);
     const truncatedQuery = query.trim().slice(0, 120);
+    const pipelineStart = Date.now();
 
-    // ── Confidence Gate ───────────────────────────────────────────────
-    if (
-        typeof retrievalConfidence === "number" &&
-        retrievalConfidence < CONFIDENCE_GATE_THRESHOLD
-    ) {
+    // ── Tiered Confidence Gating (Phase 3 Stabilization) ────────────────
+    const isDegraded = retrievalConfidence >= DEGRADED_CONFIDENCE_THRESHOLD && retrievalConfidence < CONFIDENCE_GATE_THRESHOLD;
+
+    if (retrievalConfidence < DEGRADED_CONFIDENCE_THRESHOLD) {
         logWarn("confidence_gate_triggered", {
             route: resolvedRoute,
             retrieval_confidence: retrievalConfidence,
-            threshold: CONFIDENCE_GATE_THRESHOLD,
+            threshold: DEGRADED_CONFIDENCE_THRESHOLD,
             query_preview: truncatedQuery,
-            fallback_reason: "below_confidence_threshold",
+            fallback_reason: "below_minimum_confidence",
         });
         return createFallbackResult(INSUFFICIENT_DATA_PHRASE, resolvedRoute, retrievalConfidence, 0);
     }
 
-    const pipelineStart = Date.now();
-
     logInfo("pipeline_start", {
         route: resolvedRoute,
         retrieval_confidence: retrievalConfidence,
+        is_degraded: isDegraded,
         query_preview: truncatedQuery,
-        model: MODEL,
-        ollama_url: OLLAMA_URL,
-        max_retries: OLLAMA_MAX_RETRIES,
+        model: MODEL
     });
 
     try {
-        // ── Step 1: Assemble context payload ─────────────────────────────
-        const { payload: contextPayload, metrics: contextMetrics, sources_used } =
-            buildContextPayload({ neo4jContext, ragContext, faqContext, decisionContext });
+        // ── Step 1: Assemble context with auto-trimming budget checks ─────
+        let currentTrimConfig = null;
+        let contextPayload, contextMetrics, sources_used;
+        let prompt, promptTokenEst;
 
-        logInfo("context_built", {
+        // FINAL MICRO-PATCH 2: Iterative build-measure-trim-rebuild loop
+        for (let pass = 1; pass <= 3; pass++) {
+            ({ payload: contextPayload, metrics: contextMetrics, sources_used } =
+                buildContextPayload({ neo4jContext, ragContext, faqContext, decisionContext }, currentTrimConfig));
+
+            prompt = buildPrompt(query.trim(), contextPayload, resolvedRoute);
+            promptTokenEst = estimateTokens(prompt);
+
+            if (promptTokenEst < PROMPT_TOKEN_WARN_THRESHOLD) break;
+            if (pass === 3) break; // Exceeded max passes
+
+            logWarn("budget_exceeded_recalculating_trim", { pass, tokens: promptTokenEst });
+            currentTrimConfig = trimContextToBudget(promptTokenEst);
+        }
+
+        logInfo("context_finalized", {
             route: resolvedRoute,
             ...contextMetrics,
+            final_prompt_tokens: promptTokenEst
         });
 
         // ── Step 2: Build inference prompt ───────────────────────────────
-        const prompt = buildPrompt(query.trim(), contextPayload, resolvedRoute);
-        const promptTokenEst = estimateTokens(prompt);
+        // (Handled by iterative loop above)
 
-        logInfo("prompt_built", {
-            route: resolvedRoute,
-            prompt_chars: prompt.length,
-            prompt_tokens_est: promptTokenEst,
-        });
+        // ── Step 3: Resolve route-adaptive inference options ────────────
+        // FINAL MICRO-PATCH 1: FIX IMMUTABILITY VIOLATION
+        const inferenceOptions = { ...buildInferenceOptions(resolvedRoute) };
 
-        // TASK 8 — Tiered token budget alerts
-        if (promptTokenEst >= PROMPT_TOKEN_CRITICAL_THRESHOLD) {
-            logError("prompt_token_critical", {
-                route: resolvedRoute,
-                prompt_tokens_est: promptTokenEst,
-                threshold: PROMPT_TOKEN_CRITICAL_THRESHOLD,
-                impact: "CRITICAL: context truncation by model is probable — answer quality at serious risk",
-                action: "reduce neo4jContext, ragContext, or decisionContext payload before calling",
-            });
-        } else if (promptTokenEst >= PROMPT_TOKEN_WARN_THRESHOLD) {
-            logWarn("prompt_token_warning", {
-                route: resolvedRoute,
-                prompt_tokens_est: promptTokenEst,
-                threshold: PROMPT_TOKEN_WARN_THRESHOLD,
-                impact: "WARNING: prompt approaching context limit — monitor for quality degradation",
-                action: "consider reducing context sources if answer quality decreases",
-            });
+        // Implement Degraded Mode: Lower temperature for caution
+        if (isDegraded) {
+            logInfo("degraded_mode_active", { original_temp: inferenceOptions.temperature });
+            inferenceOptions.temperature = Math.min(inferenceOptions.temperature, 0.10);
         }
-
-        // ── Step 3: Resolve route-adaptive inference options (TASK 1) ────
-        const inferenceOptions = buildInferenceOptions(resolvedRoute);
 
         logInfo("inference_options_resolved", {
             route: resolvedRoute,
@@ -1235,9 +1121,14 @@ export async function generateUnifiedAnswer({
             repeat_penalty: inferenceOptions.repeat_penalty,
         });
 
-        // ── Step 4: Inference with retry (TASK 4) ────────────────────────
+        // ── Step 4: Inference with centralized ollamaService ────────────
         const ollamaStart = Date.now();
-        const rawAnswer = await callOllamaWithRetry(prompt, inferenceOptions, resolvedRoute);
+        const rawAnswer = await generateStableResponse({
+            prompt,
+            model: MODEL,
+            requestId: `unified_${Date.now()}`,
+            options: inferenceOptions,
+        });
         const ollamaLatencyMs = Date.now() - ollamaStart;
 
         logInfo("ollama_response_received", {
@@ -1274,7 +1165,7 @@ export async function generateUnifiedAnswer({
             sources_used,
         });
 
-        // ── Step 6: Return structured result (TASK 2) ────────────────────
+        // ── Step 6: Return structured result ────────────────────
         return createResult({
             answer: finalAnswer,
             route: resolvedRoute,
@@ -1286,19 +1177,43 @@ export async function generateUnifiedAnswer({
         });
 
     } catch (error) {
-        const isTimeout = error?.name === "AbortError";
         const totalLatencyMs = Date.now() - pipelineStart;
 
         logError("pipeline_failed", {
             route: resolvedRoute,
             query_preview: truncatedQuery,
-            model: MODEL,
-            ollama_url: OLLAMA_URL,
-            error_type: isTimeout ? "timeout_exhausted" : "inference_error",
             error_message: error?.message ?? String(error),
             total_latency_ms: totalLatencyMs,
-            fallback_triggered: true,
         });
+
+        // ── Phase 3: Deterministic Fallback ──────────────────────────────
+        const deterministicAnswer = buildDeterministicFallbackAnswer({
+            faqContext,
+            decisionContext,
+            neo4jContext,
+            ragContext
+        });
+
+        // FINAL MICRO-PATCH 4: Robust source attribution for deterministic fallback
+        const fallbackSources = {
+            faq: !!buildFaqBlock(faqContext).used,
+            decision: !!buildDecisionBlock(decisionContext).used,
+            kg: !!buildNeo4jBlock(neo4jContext).used,
+            rag: !!buildRagBlock(ragContext).used,
+        };
+
+        if (deterministicAnswer) {
+            logInfo("deterministic_fallback_successful", { route: resolvedRoute });
+            return createResult({
+                answer: deterministicAnswer,
+                route: resolvedRoute,
+                confidence: retrievalConfidence,
+                sources_used: fallbackSources,
+                latency_ms: totalLatencyMs,
+                sanitized: false,
+                truncated: false
+            });
+        }
 
         return createFallbackResult(FALLBACK_ANSWER, resolvedRoute, retrievalConfidence, totalLatencyMs);
     }
@@ -1307,34 +1222,28 @@ export async function generateUnifiedAnswer({
 
 // ─────────────────────────────────────────────────────────────
 // NAMED INTERNAL EXPORTS
-// Fully backward-compatible with v2 and v3 orchestrator imports.
-// All v3 exports preserved; v4 additions clearly annotated.
 // ─────────────────────────────────────────────────────────────
 
 export {
     // ── Configuration ─────────────────────────────────────────────────
-    OLLAMA_BASE_URL,
-    OLLAMA_URL,
     MODEL,
-    OLLAMA_TIMEOUT_MS,
-    OLLAMA_MAX_RETRIES,                  // NEW v4
-    OLLAMA_RETRY_BASE_DELAY_MS,          // NEW v4
     CONFIDENCE_GATE_THRESHOLD,
+    DEGRADED_CONFIDENCE_THRESHOLD,       // NEW Phase 3
     MAX_KG_FACTS,
     MAX_RAG_PASSAGES,
-    DECISION_MAX_DEPTH,                  // NEW v4
-    DECISION_MAX_VALUE_CHARS,            // NEW v4
-    PROMPT_TOKEN_WARN_THRESHOLD,         // NEW v4 (replaces inline literal)
-    PROMPT_TOKEN_CRITICAL_THRESHOLD,     // NEW v4
+    DECISION_MAX_DEPTH,
+    DECISION_MAX_VALUE_CHARS,
+    PROMPT_TOKEN_WARN_THRESHOLD,
+    PROMPT_TOKEN_CRITICAL_THRESHOLD,
     FALLBACK_ANSWER,
     INSUFFICIENT_DATA_PHRASE,
 
     // ── Route system ──────────────────────────────────────────────────
     ROUTE_TYPES,
     ROUTE_INSTRUCTIONS,
-    ROUTE_INFERENCE_OPTIONS,             // NEW v4
+    ROUTE_INFERENCE_OPTIONS,
     resolveRouteType,
-    buildInferenceOptions,               // NEW v4
+    buildInferenceOptions,
 
     // ── Context builders ──────────────────────────────────────────────
     buildNeo4jBlock,
@@ -1342,7 +1251,9 @@ export {
     buildFaqBlock,
     buildDecisionBlock,
     buildContextPayload,
-    depthLimitedSerialize,               // NEW v4
+    depthLimitedSerialize,
+    trimContextToBudget,                  // NEW Phase 3
+    buildDeterministicFallbackAnswer,     // NEW Phase 3
 
     // ── Prompt assembly ───────────────────────────────────────────────
     BASE_SYSTEM_PROMPT,
@@ -1350,15 +1261,11 @@ export {
 
     // ── Response pipeline ─────────────────────────────────────────────
     sanitizeResponse,
-    repairTruncation,                    // NEW v4
+    repairTruncation,
 
     // ── Result factories ──────────────────────────────────────────────
-    createResult,                        // NEW v4
-    createFallbackResult,                // NEW v4
-
-    // ── LLM interface ─────────────────────────────────────────────────
-    callOllama,
-    callOllamaWithRetry,                 // NEW v4
+    createResult,
+    createFallbackResult,
 
     // ── Observability utilities ───────────────────────────────────────
     logInfo,

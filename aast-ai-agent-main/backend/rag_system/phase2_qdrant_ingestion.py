@@ -69,7 +69,7 @@ def parse_args():
     parser.add_argument(
         "--input",
         required=True,
-        help=r"C:\Users\mh978\Downloads\CAI_AAST\cleaned_chunked_cai_production_v4.json"
+        help=r"C:\Users\mh978\Downloads\AI_AGENT\aast-ai-agent-main\backend\rag_system\cleaned_chunked_cai_production_v4.json"
     )
 
     parser.add_argument(

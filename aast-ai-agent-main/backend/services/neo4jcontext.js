@@ -159,6 +159,73 @@ Generate a concise academic answer using only the facts above. If the facts are 
   return null;
 }
 
+async function safeDeterministicReformatter(baseAnswer, query) {
+  if (process.env.ENABLE_GRAPH === 'false') return null;
+
+  const maxAttempts = Number(process.env.REFORMAT_MAX_ATTEMPTS || 1);
+  const timeoutMs = Number(process.env.REFORMAT_TIMEOUT_MS || 4000);
+
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), timeoutMs);
+
+    try {
+      const res = await fetch(`${OLLAMA_BASE_URL}/api/generate`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          model: process.env.OLLAMA_GRAPH_MODEL || process.env.OLLAMA_MODEL || "llama3.1",
+          prompt: `Reformat the following academic answer for clarity and professionalism.
+
+STRICT RULES:
+- Use ONLY the provided facts
+- Do NOT add new information
+- Do NOT infer
+- Do NOT assume
+- Do NOT change factual meaning
+- Do NOT omit important facts
+- Keep answer concise
+- If facts are insufficient, return original answer unchanged
+
+User Question:
+${query}
+
+Facts:
+${baseAnswer}`,
+          stream: false
+        }),
+        signal: controller.signal
+      });
+
+      clearTimeout(timeout);
+      if (!res.ok) throw new Error(`Reformat service HTTP ${res.status}`);
+
+      const json = await res.json();
+      const response = json?.response?.trim();
+      if (response && response.length > 0) {
+        incrementMetric("knowledge_graph.safe_reformat_success");
+        return response;
+      }
+      throw new Error("Empty reformat response");
+    } catch (err) {
+      clearTimeout(timeout);
+      if (err.name === "AbortError") {
+        incrementMetric("knowledge_graph.safe_reformat_timeout");
+      } else {
+        incrementMetric("knowledge_graph.safe_reformat_failure");
+      }
+      logger.warn("Safe reformat failed, using base answer", {
+        attempt,
+        error: err.message
+      });
+    }
+  }
+
+  return null;
+}
+
 /* ============================================================
    QUERY UNDERSTANDING
 ============================================================ */
@@ -1091,7 +1158,7 @@ function normalizeLastMessages(lastMessages) {
   return String(lastMessages);
 }
 
-function buildGraphResponse(answer, confidence, facts) {
+function buildGraphResponse(answer, confidence, facts, isDeterministicKG = false, reformatted = false) {
   const response = Array.isArray(facts) ? facts : [];
 
   Object.defineProperties(response, {
@@ -1109,6 +1176,18 @@ function buildGraphResponse(answer, confidence, facts) {
     },
     source: {
       value: "knowledge_graph",
+      enumerable: false
+    },
+    deterministic: {
+      value: isDeterministicKG,
+      enumerable: false
+    },
+    llm_bypassed: {
+      value: isDeterministicKG,
+      enumerable: false
+    },
+    reformatted: {
+      value: reformatted,
       enumerable: false
     }
   });
@@ -1197,6 +1276,10 @@ export async function fetchNeo4jContext(query, intent = "ALL", limit = 5, reques
 
   const session = getSession();
   const detectedIntent = detectIntent(query, intent);
+
+  const deterministicIntents = ["TEACHING", "PREREQUISITE", "ADMIN", "PERSON"];
+  const isDeterministicKG = deterministicIntents.includes(detectedIntent);
+
   const keywordParams = buildKeywordParams(query);
   const { keywords } = keywordParams;
   const resultLimit = Math.max(limit * 3, 8);
@@ -1264,20 +1347,46 @@ ${query}`;
 
     if (selectedFacts.length === 0) {
       incrementMetric("retrieval.no_results");
-      return buildGraphResponse(NO_RESULT_MESSAGE, 0, []);
+      return buildGraphResponse(NO_RESULT_MESSAGE, 0, [], isDeterministicKG, false);
     }
 
-    const refinedAnswer = await refineAnswerWithLocalLLM(selectedFacts, query);
-    const answer = refinedAnswer || synthesizeAnswer(selectedFacts);
+    let answer;
+    let reformatted = false;
+    if (isDeterministicKG) {
+      const deterministicBaseAnswer = synthesizeAnswer(selectedFacts);
 
-    return buildGraphResponse(answer, confidence, selectedFacts);
+      const refinedAnswer = process.env.KG_DETERMINISTIC_REFORMAT === "true"
+        ? await safeDeterministicReformatter(
+            deterministicBaseAnswer,
+            query
+          )
+        : null;
+
+      answer = refinedAnswer || deterministicBaseAnswer;
+      reformatted = !!refinedAnswer;
+
+      logger.info("[PHASE5_1] Deterministic KG synthesized without LLM", {
+        requestId,
+        detectedIntent,
+        llm_bypassed: true,
+        reformatted,
+        factsUsed: selectedFacts.length
+      });
+
+      incrementMetric("knowledge_graph.deterministic_bypass");
+    } else {
+      const refinedAnswer = await refineAnswerWithLocalLLM(selectedFacts, query);
+      answer = refinedAnswer || synthesizeAnswer(selectedFacts);
+    }
+
+    return buildGraphResponse(answer, confidence, selectedFacts, isDeterministicKG, reformatted);
   } catch (err) {
     incrementMetric("retrieval.error");
     logger.error("Neo4j context error", {
       requestId,
       error: err
     });
-    return buildGraphResponse(NO_RESULT_MESSAGE, 0, []);
+    return buildGraphResponse(NO_RESULT_MESSAGE, 0, [], false, false);
   } finally {
     recordDuration("query.latency_ms", stopQueryTimer());
     await session.close();
