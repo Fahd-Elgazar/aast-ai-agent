@@ -237,7 +237,7 @@ class BrainRouter {
             HIGH: 0.70,
             MEDIUM: 0.38,
             DEGRADED: 0.25,
-            HYBRID_TRIGGER: 0.40 // If both KG and RAG cross this, HYBRID is highly considered
+            HYBRID_TRIGGER: 0.35 // If multi-domain signals cross this, HYBRID is highly considered
         };
 
         this.signalWeights = {
@@ -282,8 +282,8 @@ class BrainRouter {
         const normalized = {};
         // Approximate theoretical max based on dictionary size + standard boosts
         const theoreticalMax = {
-            kg_score: 2.0,
-            rag_score: 1.6, // Policy routes must not be diluted below deterministic execution thresholds.
+            kg_score: 1.6,
+            rag_score: 1.6, // Aligned domain normalization to prevent KG overweighting
             decision_score: 1.5,
             career_score: 1.5,
             faq_score: 1.5,
@@ -500,14 +500,16 @@ class BrainRouter {
         }
 
         // 5. Determine hybrid potential
-        // If both KG (structure) and RAG (policy) score high enough, boost hybrid.
-        const isHybridCandidate = !deterministicPolicy.strong_policy_evidence &&
-            signals.kg_score >= this.confidenceThresholds.HYBRID_TRIGGER &&
-            signals.rag_score >= this.confidenceThresholds.HYBRID_TRIGGER;
+        // Expanded to include combinations of KG, RAG, CAREER, DECISION
+        const isHybridCandidate = !deterministicPolicy.strong_policy_evidence && (
+            (signals.kg_score >= this.confidenceThresholds.HYBRID_TRIGGER && signals.rag_score >= this.confidenceThresholds.HYBRID_TRIGGER) ||
+            (signals.kg_score >= this.confidenceThresholds.HYBRID_TRIGGER && (signals.career_score >= 0.4 || signals.decision_score >= 0.4)) ||
+            (signals.rag_score >= this.confidenceThresholds.HYBRID_TRIGGER && (signals.career_score >= 0.4 || signals.decision_score >= 0.4))
+        );
 
         if (isHybridCandidate) {
             // Synergistic boost
-            signals.hybrid_score += (signals.kg_score + signals.rag_score) * this.signalWeights.hybrid_boost;
+            signals.hybrid_score += (Math.max(signals.kg_score, signals.rag_score) + 0.3) * this.signalWeights.hybrid_boost;
             logger.debug('ANALYZE', 'Hybrid conditions met, boosting hybrid_score', { hybrid_score: signals.hybrid_score });
         }
 
@@ -642,6 +644,20 @@ class BrainRouter {
             faq: healthStatus.faq !== false,
             llm: healthStatus.llm !== false
         };
+
+        // PHASE 8: HYBRID OVERRIDE REGEX
+        if (/electives|specialization|career path|cybersecurity|scholarship|academic path|roadmap|best path/i.test(analysisPayload.original_query)) {
+            logger.info('ROUTING_DECISION', 'Hybrid override regex triggered');
+            return {
+                route: ROUTES.HYBRID_KG_RAG,
+                confidence: 0.92,
+                reasoning: "Query contains high-value hybrid academic-career tokens. Forcing hybrid synthesis.",
+                fallback_chain: [ROUTES.KG_ONLY, ROUTES.RAG_ONLY, ROUTES.LLM_FALLBACK],
+                services_required: ['kg', 'rag'],
+                ambiguity_score: 0,
+                ambiguity_detected: false
+            };
+        }
 
         // Sort signals by score descending
         const sortedSignals = Object.entries(signals)

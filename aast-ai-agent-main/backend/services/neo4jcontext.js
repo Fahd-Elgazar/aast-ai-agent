@@ -1397,24 +1397,43 @@ export function convertToGraphData(neo4jResults) {
   const nodesMap = new Map();
   const links = [];
   const results = Array.isArray(neo4jResults) ? neo4jResults : neo4jResults?.facts || [];
+  const linkKeys = new Set();
+
+  const buildNode = (id, type, properties = {}, group = 1) => ({
+    id,
+    label: id,
+    type: type || "Entity",
+    properties: properties && typeof properties === "object" ? properties : {},
+    group
+  });
+
+  const upsertNode = (id, type, properties = {}, group = 1) => {
+    if (!id) return;
+    const existing = nodesMap.get(id);
+    nodesMap.set(id, {
+      ...(existing || {}),
+      ...buildNode(id, type, properties, group)
+    });
+  };
+
+  const addLink = (source, target, type) => {
+    if (!source || !target) return;
+    const relType = type || "RELATED_TO";
+    const key = `${source}::${relType}::${target}`;
+    if (linkKeys.has(key)) return;
+    linkKeys.add(key);
+    links.push({
+      source,
+      target,
+      type: relType
+    });
+  };
 
   for (const item of results) {
     if (item?.graph?.source && item?.graph?.target) {
-      nodesMap.set(item.graph.source, {
-        id: item.graph.source,
-        label: item.graph.sourceLabel || "Entity",
-        group: 1
-      });
-      nodesMap.set(item.graph.target, {
-        id: item.graph.target,
-        label: item.graph.targetLabel || "Entity",
-        group: 2
-      });
-      links.push({
-        source: item.graph.source,
-        target: item.graph.target,
-        type: item.graph.type
-      });
+      upsertNode(item.graph.source, item.graph.sourceLabel, item.graph.sourceProperties, 1);
+      upsertNode(item.graph.target, item.graph.targetLabel, item.graph.targetProperties, 2);
+      addLink(item.graph.source, item.graph.target, item.graph.type);
       continue;
     }
 
@@ -1430,9 +1449,9 @@ export function convertToGraphData(neo4jResults) {
     const targetLabel = relMatch[4].trim();
     const targetName = relMatch[5].trim();
 
-    nodesMap.set(sourceName, { id: sourceName, label: sourceLabel, group: 1 });
-    nodesMap.set(targetName, { id: targetName, label: targetLabel, group: 2 });
-    links.push({ source: sourceName, target: targetName, type: relType });
+    upsertNode(sourceName, sourceLabel, {}, 1);
+    upsertNode(targetName, targetLabel, {}, 2);
+    addLink(sourceName, targetName, relType);
   }
 
   return {

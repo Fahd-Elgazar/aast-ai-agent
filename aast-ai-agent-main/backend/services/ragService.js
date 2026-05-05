@@ -668,12 +668,27 @@ class RAGService {
         const result = await this._callAnswerEngine(query);
 
         if (result.success) {
+            const categoryResult = this.detectQueryCategory(query);
             logger.info('ANSWER', 'Answer engine responded successfully', {
                 confidence: result.confidence,
                 source_count: result.sources?.length ?? 0,
                 latency_ms: elapsedMs(start),
             });
-            return { ...result, latency_ms: elapsedMs(start) };
+            return this._buildSearchResult(
+                {
+                    ...result,
+                    mode: 'RAG_DIRECT',
+                    metadata: {
+                        ...(result.metadata || {}),
+                        direct_answer: true
+                    }
+                },
+                'RAG_DIRECT',
+                query,
+                categoryResult.category,
+                { direct_answer_ms: elapsedMs(start) },
+                elapsedMs(start)
+            );
         }
 
         this._telemetry.total_failures++;
@@ -684,7 +699,15 @@ class RAGService {
         return this._buildFailureResult(
             'answer_failure',
             result.recovery_hint || 'Answer engine unavailable',
-            { latency_ms: elapsedMs(start) }
+            {
+                latency_ms: elapsedMs(start),
+                metadata: {
+                    retrieval_method: 'answer_engine_direct',
+                    route_safety: 'SAFE_FAILURE',
+                    source_count: 0,
+                    rerank_confidence: 0
+                }
+            }
         );
     }
 
@@ -1238,6 +1261,7 @@ class RAGService {
             metadata: data.metadata || { latency_seconds: data.latency_seconds },
             endpoint_used: result.endpoint_used,
             top_k_used: payload.top_k,
+            answer: data.answer || data.response || data.text || '',
         };
     }
 
@@ -1281,7 +1305,7 @@ class RAGService {
 
         const data = result.data;
         // Production Fix: Extract avg_confidence from answer engine if present
-        const rawScore = safeFloat(data.avg_confidence ?? data.confidence ?? data.score ?? 0);
+        const rawScore = safeFloat(data.answer_confidence ?? data.avg_confidence ?? data.confidence ?? data.score ?? 0);
         const sources = this._extractSources(data);
 
         return {
@@ -1384,11 +1408,28 @@ class RAGService {
      * @private
      */
     _buildSearchResult(payload, pass, queryUsed, queryCategory, passLatencies, totalLatency) {
-        const mode = payload.fallback_used
-            ? 'DEGRADED'
-            : CONFIG.SEARCH_TYPE === 'hybrid'
-                ? 'HYBRID'
-                : 'RAG';
+        const rankedSources = Array.isArray(payload.sources) ? payload.sources : [];
+        const diversityMetrics =
+            payload.source_diversity && typeof payload.source_diversity === 'object'
+                ? payload.source_diversity
+                : this._computeSourceDiversity(rankedSources);
+        const usedFacts = this._buildUsedFacts(rankedSources);
+        const missingInformation = this._buildMissingInformation(
+            usedFacts,
+            payload.raw_confidence,
+            rankedSources
+        );
+        const mode = payload.mode || (
+            payload.fallback_used
+                ? 'DEGRADED'
+                : CONFIG.SEARCH_TYPE === 'hybrid'
+                    ? 'HYBRID'
+                    : 'RAG'
+        );
+        const rerankConfidence = Math.max(
+            ...rankedSources.map(source => safeFloat(source?.rerank_score ?? source?.score ?? source?.confidence)),
+            0
+        );
 
         this._updateAvgLatency(totalLatency);
 
@@ -1400,14 +1441,30 @@ class RAGService {
             query_category: queryCategory,
             confidence: payload.confidence || this.normalizeConfidence(payload.raw_confidence),
             raw_confidence: payload.raw_confidence ?? 0,
-            sources: payload.sources || [],
-            source_count: payload.source_count ?? (payload.sources?.length || 0),
-            source_diversity: payload.source_diversity?.overall_score ?? (typeof payload.source_diversity === 'number' ? payload.source_diversity : this._computeSourceDiversity(payload.sources).overall_score),
-            diversity_metrics: payload.source_diversity && typeof payload.source_diversity === 'object' ? payload.source_diversity : this._computeSourceDiversity(payload.sources),
+            sources: rankedSources,
+            source_count: payload.source_count ?? rankedSources.length,
+            source_diversity: diversityMetrics.overall_score,
+            diversity_metrics: diversityMetrics,
             fallback_used: payload.fallback_used ?? false,
             category: payload.category || queryCategory || 'GENERAL',
-            answer: payload.answer || null,
-            metadata: payload.metadata || {},
+            answer: payload.answer || '',
+            used_facts: usedFacts,
+            missing_information: missingInformation,
+            metadata: {
+                ...(payload.metadata || {}),
+                retrieval_method: payload.fallback_used
+                    ? 'answer_engine_fallback'
+                    : payload.mode === 'RAG_DIRECT'
+                        ? 'answer_engine_direct'
+                        : CONFIG.SEARCH_TYPE,
+                source_count: payload.source_count ?? rankedSources.length,
+                rerank_confidence: parseFloat(rerankConfidence.toFixed(4)),
+                route_safety: payload.fallback_used
+                    ? 'SAFE_FALLBACK'
+                    : payload.mode === 'RAG_DIRECT'
+                        ? 'DETERMINISTIC_DIRECT'
+                        : 'SAFE_RETRIEVAL'
+            },
             endpoint_used: payload.endpoint_used || null,
 
             // Full observability envelope for monitoring + debugging
@@ -1417,8 +1474,8 @@ class RAGService {
                 search_type: CONFIG.SEARCH_TYPE,
                 top_k_used: payload.top_k_used || CONFIG.TOP_K,
                 rerank_applied: true,
-                top_rerank_score: payload.sources?.[0]?.rerank_score ?? null,
-                source_diversity: payload.source_diversity ?? 0,
+                top_rerank_score: rankedSources[0]?.rerank_score ?? null,
+                source_diversity: diversityMetrics,
                 fallback_pass: pass.startsWith('PASS_3'),
                 query_category: queryCategory,
                 telemetry_snapshot: {
@@ -1441,6 +1498,8 @@ class RAGService {
      * @private
      */
     _buildFailureResult(failureType, recoveryHint, extras = {}) {
+        const { metadata: extraMetadata = {}, ...restExtras } = extras;
+
         return {
             success: false,
             mode: 'FAILURE',
@@ -1448,17 +1507,25 @@ class RAGService {
             recovery_hint: recoveryHint,
             confidence: 'LOW',
             raw_confidence: 0,
+            answer: '',
             sources: [],
+            used_facts: [],
+            missing_information: ['Insufficient institutional policy evidence found.'],
             source_count: 0,
             source_diversity: 0,
             fallback_used: true,
             category: 'UNKNOWN',
-            answer: null,
-            metadata: {},
+            metadata: {
+                retrieval_method: 'failure',
+                source_count: 0,
+                rerank_confidence: 0,
+                route_safety: 'SAFE_FAILURE',
+                ...extraMetadata
+            },
             observability: { search_type: CONFIG.SEARCH_TYPE },
             system_status: 'DEGRADED',
             retrieved_at: new Date().toISOString(),
-            ...extras,
+            ...restExtras,
         };
     }
 
@@ -1527,8 +1594,9 @@ class RAGService {
      * @private
      */
     _extractSources(data) {
-        return (
+        const rawSources = (
             Array.isArray(data.sources) ? data.sources :
+                Array.isArray(data.verified_sources) ? data.verified_sources :
                 Array.isArray(data.documents) ? data.documents :
                     Array.isArray(data.results) ? data.results :
                         Array.isArray(data.hits) ? data.hits :
@@ -1536,6 +1604,7 @@ class RAGService {
                                 Array.isArray(data.references) ? data.references :
                                     []
         );
+        return rawSources.map((source, index) => this._normalizeSourceForExplainability(source, index));
     }
 
     /**
@@ -1545,9 +1614,17 @@ class RAGService {
      */
     _emptyRetrieverResult(errorMsg) {
         return {
-            success: false, confidence: 'LOW', raw_confidence: 0, sources: [],
+            success: false, confidence: 'LOW', raw_confidence: 0, answer: '', sources: [],
+            used_facts: [], missing_information: ['Insufficient institutional policy evidence found.'],
             source_count: 0, source_diversity: 0, fallback_used: true,
-            category: 'UNKNOWN', metadata: {}, error: errorMsg,
+            category: 'UNKNOWN',
+            metadata: {
+                retrieval_method: 'retriever_failure',
+                source_count: 0,
+                rerank_confidence: 0,
+                route_safety: 'SAFE_FAILURE'
+            },
+            error: errorMsg,
         };
     }
 
@@ -1648,6 +1725,101 @@ class RAGService {
         }
 
         return deduplicated;
+    }
+
+    _extractSourceText(source) {
+        if (typeof source === 'string') return source.trim();
+
+        const candidates = [
+            source?.excerpt,
+            source?.passage,
+            source?.text,
+            source?.content,
+            source?.chunk_text,
+            source?.page_content,
+            source?.snippet,
+            source?.quote,
+            source?.summary,
+            source?.metadata?.excerpt,
+            source?.metadata?.text,
+            source?.metadata?.content
+        ];
+
+        for (const candidate of candidates) {
+            if (typeof candidate === 'string' && candidate.trim()) {
+                return candidate.replace(/\s+/g, ' ').trim();
+            }
+        }
+
+        return '';
+    }
+
+    _extractSourceTitle(source, fallbackIndex = 0) {
+        if (typeof source === 'string') return `AAST Policy Source ${fallbackIndex + 1}`;
+
+        return (
+            source?.title ||
+            source?.source_title ||
+            source?.source ||
+            source?.doc_title ||
+            source?.doc_id ||
+            source?.source_file ||
+            source?.metadata?.title ||
+            source?.metadata?.source ||
+            `AAST Policy Source ${fallbackIndex + 1}`
+        );
+    }
+
+    _normalizeSourceForExplainability(source, index = 0) {
+        if (typeof source === 'string') {
+            const excerpt = this._extractSourceText(source).slice(0, 420);
+            const title = this._extractSourceTitle(source, index);
+
+            return {
+                id: `source_${index + 1}`,
+                title,
+                source: title,
+                excerpt,
+                text: excerpt,
+                attribution: title
+            };
+        }
+
+        const excerpt = this._extractSourceText(source).slice(0, 420);
+        const title = this._extractSourceTitle(source, index);
+
+        return {
+            ...source,
+            title,
+            source: source?.source || title,
+            excerpt: source?.excerpt || excerpt,
+            text: source?.text || excerpt,
+            attribution: title
+        };
+    }
+
+    _buildUsedFacts(sources, limit = 3) {
+        if (!Array.isArray(sources) || sources.length === 0) return [];
+
+        return sources
+            .map(source => this._extractSourceText(source))
+            .filter(text => text.length > 0)
+            .slice(0, limit)
+            .map(text => text.slice(0, 420));
+    }
+
+    _buildMissingInformation(usedFacts, rawConfidence, sources) {
+        const hasEvidence =
+            Array.isArray(sources) &&
+            sources.length > 0 &&
+            Array.isArray(usedFacts) &&
+            usedFacts.length > 0;
+
+        if (hasEvidence && safeFloat(rawConfidence) >= CONFIG.MEDIUM_CONFIDENCE_FLOOR) {
+            return [];
+        }
+
+        return ['Insufficient institutional policy evidence found.'];
     }
 
     /**

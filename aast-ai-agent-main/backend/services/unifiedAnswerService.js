@@ -38,6 +38,7 @@
  */
 
 import { generateStableResponse } from "./ollamaService.js";
+import { convertToGraphData } from "./neo4jcontext.js";
 
 // ─────────────────────────────────────────────────────────────
 // SECTION 0 — CONFIGURATION CONSTANTS
@@ -118,6 +119,8 @@ const ROUTE_TYPES = Object.freeze({
     RAG_ONLY: "RAG_ONLY",
     FAQ_ONLY: "FAQ_ONLY",
     DECISION: "DECISION",
+    CAREER: "CAREER",
+    GENERAL: "GENERAL",
     HYBRID: "HYBRID",
     LLM_FALLBACK: "LLM_FALLBACK",
 });
@@ -146,6 +149,8 @@ const ROUTE_INFERENCE_OPTIONS = Object.freeze({
     [ROUTE_TYPES.FAQ_ONLY]: { temperature: 0.10, top_p: 0.75, repeat_penalty: 1.10 },
     [ROUTE_TYPES.RAG_ONLY]: { temperature: 0.25, top_p: 0.85, repeat_penalty: 1.15 },
     [ROUTE_TYPES.DECISION]: { temperature: 0.20, top_p: 0.82, repeat_penalty: 1.12 },
+    [ROUTE_TYPES.CAREER]: { temperature: 0.20, top_p: 0.82, repeat_penalty: 1.12 },
+    [ROUTE_TYPES.GENERAL]: { temperature: 0.22, top_p: 0.84, repeat_penalty: 1.12 },
     [ROUTE_TYPES.HYBRID]: { temperature: 0.30, top_p: 0.88, repeat_penalty: 1.15 },
     [ROUTE_TYPES.LLM_FALLBACK]: { temperature: 0.05, top_p: 0.70, repeat_penalty: 1.20 },
 });
@@ -214,6 +219,24 @@ You are presenting the outcome and reasoning of a rule-based decision engine eva
 - Do not soften or contradict the engine's verdict; present it professionally.
 `.trim(),
 
+    [ROUTE_TYPES.CAREER]: `
+ROUTE: Career Engine
+You are presenting a verified academic-to-career roadmap.
+- Lead with the target role or pathway clearly.
+- Explain the top skills, progression logic, and academic preparation steps from the provided evidence.
+- Keep the response practical and student-friendly.
+- Do not invent market claims, certifications, or university rules not present in the context.
+`.trim(),
+
+    [ROUTE_TYPES.GENERAL]: `
+ROUTE: General Academic Guidance
+You are answering with the best verified academic context available.
+- Prefer grounded academic guidance over broad motivational language.
+- If the context is partial, state the limitation clearly.
+- Do not imply policy certainty unless verified policy evidence is present.
+- Keep the response useful, cautious, and professionally phrased.
+`.trim(),
+
     [ROUTE_TYPES.HYBRID]: `
 ROUTE: Hybrid (Multi-Source)
 You are synthesizing from multiple verified sources of different types.
@@ -236,6 +259,8 @@ You are operating in maximum-caution mode because retrieval confidence is low or
 - Encourage the student to verify with their official academic advisor or university portal.
 `.trim(),
 };
+
+const EMPTY_GRAPH = Object.freeze({ nodes: [], links: [] });
 
 
 // ─────────────────────────────────────────────────────────────
@@ -500,18 +525,21 @@ function depthLimitedSerialize(
  * @returns {{ block: string, count: number, used: boolean }}
  */
 function buildDecisionBlock(decisionContext) {
+    const normalizedDecisionContext =
+        Array.isArray(decisionContext) ? decisionContext[0] ?? null : decisionContext;
+
     if (
-        !decisionContext ||
-        typeof decisionContext !== "object" ||
-        Array.isArray(decisionContext) ||
-        Object.keys(decisionContext).length === 0
+        !normalizedDecisionContext ||
+        typeof normalizedDecisionContext !== "object" ||
+        Array.isArray(normalizedDecisionContext) ||
+        Object.keys(normalizedDecisionContext).length === 0
     ) {
         return { block: "", count: 0, used: false };
     }
 
     let summary;
     try {
-        const safe = depthLimitedSerialize(decisionContext);
+        const safe = depthLimitedSerialize(normalizedDecisionContext);
 
         const factorLines = Object.entries(safe).map(([k, v]) => {
             const displayValue =
@@ -532,7 +560,7 @@ function buildDecisionBlock(decisionContext) {
         "### Decision Engine Factors (Rule-Based Engine — Verified Logic)\n" +
         summary;
 
-    return { block, count: Object.keys(decisionContext).length, used: true };
+    return { block, count: Object.keys(normalizedDecisionContext).length, used: true };
 }
 
 /**
@@ -630,20 +658,56 @@ function buildContextPayload({ neo4jContext, ragContext, faqContext, decisionCon
 }
 
 /**
+ * PHASE 8.5 — DETERMINISTIC HYBRID FUSION SYNTHESIS
+ * Merges top KG facts and top RAG passages into a coherent advisory response
+ * without LLM inference. Ensures recruiter-grade coverage of both domains.
+ *
+ * @param {Array} neo4jContext
+ * @param {Array} ragContext
+ * @returns {string} Fused hybrid answer
+ */
+function buildDeterministicHybridAnswer(neo4jContext, ragContext) {
+    const kgFacts = extractKgFacts(neo4jContext, 2);
+    const ragFacts = extractRagFacts(ragContext, 2);
+
+    if (kgFacts.length === 0 && ragFacts.length === 0) return "";
+
+    const parts = [];
+
+    if (kgFacts.length > 0) {
+        parts.push(kgFacts.join(" "));
+    }
+
+    if (ragFacts.length > 0) {
+        const ragIntro = "According to verified university academic regulations: ";
+        parts.push(ragIntro + ragFacts.join(" "));
+    }
+
+    return parts.join("\n\n").trim();
+}
+
+/**
  * DETERMINISTIC FALLBACK BUILDER (Phase 3 Stabilization)
  * ──────────────────────────────────────────────────
  * Synthesizes a verified answer from structured context without LLM inference.
  * Used as a primary safety net for LLM failures or timeouts.
  */
 function buildDeterministicFallbackAnswer({ faqContext, decisionContext, neo4jContext, ragContext }) {
+    const normalizedDecisionContext =
+        Array.isArray(decisionContext) ? decisionContext[0] ?? null : decisionContext;
+
     // 1. FAQ answer (Highest precision)
     if (faqContext?.answer) {
         return `According to verified university policy: ${faqContext.answer}`;
     }
 
     // 2. Decision summary
-    if (decisionContext) {
-        const outcome = decisionContext.outcome || decisionContext.verdict;
+    if (normalizedDecisionContext) {
+        const outcome =
+            normalizedDecisionContext.outcome ||
+            normalizedDecisionContext.verdict ||
+            normalizedDecisionContext.recommendation ||
+            normalizedDecisionContext.career_path;
         if (outcome) {
             return `Based on verified academic evaluation: The advisory system has determined the outcome is: ${outcome}. Please contact your advisor for full details.`;
         }
@@ -729,10 +793,68 @@ RESPONSE QUALITY STANDARDS:
  * @returns {string} A valid ROUTE_TYPES value.
  */
 function resolveRouteType(routeType) {
-    if (routeType && Object.values(ROUTE_TYPES).includes(routeType)) {
-        return routeType;
+    const normalizedRoute = String(routeType || "").trim().toUpperCase();
+
+    if (normalizedRoute && Object.values(ROUTE_TYPES).includes(normalizedRoute)) {
+        return normalizedRoute;
     }
+
+    if (normalizedRoute === "HYBRID_KG_RAG") return ROUTE_TYPES.HYBRID;
+    if (["DECISION_ENGINE", "DECISION", "RECOMMEND", "RECOMMENDATION", "COMPARISON"].includes(normalizedRoute)) {
+        return ROUTE_TYPES.DECISION;
+    }
+    if (["CAREER_ENGINE", "CAREER", "CAREER_PATH_DETAIL"].includes(normalizedRoute)) {
+        return ROUTE_TYPES.CAREER;
+    }
+    if (normalizedRoute === "GENERAL") return ROUTE_TYPES.GENERAL;
+    if (normalizedRoute === "KG") return ROUTE_TYPES.KG_ONLY;
+    if (normalizedRoute === "RAG") return ROUTE_TYPES.RAG_ONLY;
+    if (normalizedRoute === "FAQ") return ROUTE_TYPES.FAQ_ONLY;
+
     return ROUTE_TYPES.LLM_FALLBACK;
+}
+
+function normalizeExplainabilityRoute(routeType, query = "", decisionContext = null) {
+    const normalizedRoute = String(routeType || "").trim().toUpperCase();
+    const normalizedQuery = String(query || "").toLowerCase();
+    const normalizedDecisionContext =
+        Array.isArray(decisionContext) ? decisionContext[0] ?? null : decisionContext;
+    const recommendationText = String(
+        normalizedDecisionContext?.recommendation ||
+        normalizedDecisionContext?.career_path ||
+        normalizedDecisionContext?.outcome ||
+        ""
+    ).toLowerCase();
+
+    if (normalizedRoute === "HYBRID_KG_RAG" || normalizedRoute === "HYBRID") return "HYBRID_KG_RAG";
+    if (["CAREER_ENGINE", "CAREER", "CAREER_PATH_DETAIL"].includes(normalizedRoute)) return "CAREER";
+    if (normalizedRoute === "LLM_FALLBACK") return "LLM_FALLBACK";
+    if (normalizedRoute === "GENERAL") return "GENERAL";
+    if (normalizedRoute === "FAQ_ONLY") return "GENERAL";
+    if (normalizedRoute === "KG_ONLY") return "GENERAL";
+    if (normalizedRoute === "RAG_ONLY") return "GENERAL";
+
+    if (
+        normalizedRoute === "COMPARISON" ||
+        recommendationText.startsWith("comparison:") ||
+        /\b(compare|comparison|versus|vs)\b/.test(normalizedQuery)
+    ) {
+        return "COMPARISON";
+    }
+
+    if (
+        normalizedRoute === "RECOMMEND" ||
+        normalizedRoute === "RECOMMENDATION" ||
+        /\b(best major|recommend|recommended major|which major)\b/.test(normalizedQuery)
+    ) {
+        return "RECOMMENDATION";
+    }
+
+    if (normalizedRoute === "DECISION_ENGINE" || normalizedRoute === "DECISION") {
+        return "DECISION";
+    }
+
+    return "LLM_FALLBACK";
 }
 
 /**
@@ -968,6 +1090,361 @@ function sanitizeResponse(rawResponse) {
  * @param {object} params
  * @returns {UnifiedAnswerResult}
  */
+function normalizeProbability(value, fallback = 0) {
+    const n = Number.parseFloat(value);
+    if (!Number.isFinite(n)) return fallback;
+    return Math.max(0, Math.min(1, n));
+}
+
+function unwrapDecisionContext(decisionContext) {
+    return Array.isArray(decisionContext) ? decisionContext[0] ?? null : decisionContext;
+}
+
+function dedupeTextList(values) {
+    const seen = new Set();
+    const deduped = [];
+
+    for (const value of values) {
+        const text = String(value || "").replace(/\s+/g, " ").trim();
+        if (!text) continue;
+        const key = text.toLowerCase();
+        if (seen.has(key)) continue;
+        seen.add(key);
+        deduped.push(text);
+    }
+
+    return deduped;
+}
+
+function truncateEvidence(text, maxChars = 320) {
+    const normalized = String(text || "").replace(/\s+/g, " ").trim();
+    if (!normalized) return "";
+    return normalized.length > maxChars ? `${normalized.slice(0, maxChars).trim()}...` : normalized;
+}
+
+function extractKgFacts(neo4jContext, limit = MAX_KG_FACTS) {
+    if (!Array.isArray(neo4jContext) || neo4jContext.length === 0) return [];
+
+    return dedupeTextList(
+        neo4jContext
+            .slice()
+            .sort((a, b) => (b?.confidence ?? 0) - (a?.confidence ?? 0))
+            .map(item => item?.evidence ?? item?.text ?? item?.content ?? "")
+            .map(text => truncateEvidence(text, 260))
+    ).slice(0, limit);
+}
+
+function extractRagFacts(ragContext, limit = MAX_RAG_PASSAGES) {
+    if (!ragContext) return [];
+
+    const normalizedContext =
+        typeof ragContext === "object" &&
+        !Array.isArray(ragContext) &&
+        Array.isArray(ragContext.results)
+            ? ragContext.results
+            : ragContext;
+
+    if (typeof normalizedContext === "string") {
+        return dedupeTextList(
+            normalizedContext
+                .split(/\n{2,}/)
+                .map(text => truncateEvidence(text, 320))
+        ).slice(0, limit);
+    }
+
+    if (!Array.isArray(normalizedContext)) return [];
+
+    return dedupeTextList(
+        normalizedContext.map(item => {
+            if (typeof item === "string") return truncateEvidence(item, 320);
+            return truncateEvidence(
+                item?.excerpt ??
+                item?.text ??
+                item?.content ??
+                item?.pageContent ??
+                item?.page_content ??
+                item?.summary ??
+                item?.answer ??
+                item?.metadata?.text ??
+                item?.metadata?.content ??
+                "",
+                320
+            );
+        })
+    ).slice(0, limit);
+}
+
+function extractFaqFacts(faqContext) {
+    if (!faqContext || typeof faqContext !== "object") return [];
+    return dedupeTextList([truncateEvidence(faqContext.answer, 260)]);
+}
+
+function extractDecisionFacts(decisionContext, limit = 4) {
+    const normalizedDecisionContext = unwrapDecisionContext(decisionContext);
+    if (!normalizedDecisionContext || typeof normalizedDecisionContext !== "object") return [];
+
+    const factors = normalizedDecisionContext.factors || normalizedDecisionContext.market_data || normalizedDecisionContext;
+    const evidence = [
+        normalizedDecisionContext.recommendation,
+        normalizedDecisionContext.career_path,
+        normalizedDecisionContext.outcome,
+        normalizedDecisionContext.verdict,
+        normalizedDecisionContext.reason,
+        factors?.reason,
+        factors?.recommended_major ? `Recommended major: ${factors.recommended_major}` : "",
+        Array.isArray(factors?.top_skills) && factors.top_skills.length > 0
+            ? `Top skills: ${factors.top_skills.join(", ")}`
+            : "",
+        Array.isArray(factors?.career_roadmap?.target_roles) && factors.career_roadmap.target_roles.length > 0
+            ? `Target roles: ${factors.career_roadmap.target_roles.join(", ")}`
+            : "",
+        Array.isArray(factors?.career_roadmap?.top_skills) && factors.career_roadmap.top_skills.length > 0
+            ? `Career roadmap skills: ${factors.career_roadmap.top_skills.join(", ")}`
+            : "",
+        factors?.career_roadmap?.industry_demand ? `Industry demand: ${factors.career_roadmap.industry_demand}` : "",
+        Array.isArray(factors?.next_steps) && factors.next_steps.length > 0
+            ? `Next steps: ${factors.next_steps.join(", ")}`
+            : "",
+        factors?.salary_outlook ? `Salary outlook: ${factors.salary_outlook}` : "",
+        factors?.skills_overlap ? `Skills overlap: ${factors.skills_overlap}` : "",
+    ];
+
+    return dedupeTextList(evidence.map(text => truncateEvidence(text, 320))).slice(0, limit);
+}
+
+function buildExplainabilityGraph(neo4jContext) {
+    if (!Array.isArray(neo4jContext) || neo4jContext.length === 0) {
+        return { nodes: [], links: [] };
+    }
+
+    try {
+        const graph = convertToGraphData(neo4jContext);
+        return {
+            nodes: Array.isArray(graph?.nodes) ? graph.nodes : [],
+            links: Array.isArray(graph?.links) ? graph.links : []
+        };
+    } catch {
+        return { nodes: [], links: [] };
+    }
+}
+
+function normalizeContractConfidence(confidence, responseRoute, { failure = false, weak = false } = {}) {
+    const numericConfidence = normalizeProbability(confidence, weak ? 0.35 : 0.55);
+
+    if (failure) return 0.2;
+    if (responseRoute === "HYBRID_KG_RAG") return parseFloat(Math.max(0.70, Math.min(0.89, numericConfidence)).toFixed(3));
+    if (["DECISION", "RECOMMENDATION", "CAREER", "COMPARISON"].includes(responseRoute)) {
+        return parseFloat(Math.max(0.70, Math.min(0.89, numericConfidence)).toFixed(3));
+    }
+    if (responseRoute === "GENERAL" || responseRoute === "LLM_FALLBACK") {
+        if (numericConfidence < 0.50) {
+            return parseFloat(Math.max(0.20, Math.min(0.49, numericConfidence)).toFixed(3));
+        }
+        return parseFloat(Math.max(0.50, Math.min(0.69, numericConfidence)).toFixed(3));
+    }
+
+    return parseFloat(Math.max(0.50, Math.min(0.69, numericConfidence)).toFixed(3));
+}
+
+function buildExplainabilitySources(responseRoute, sources_used, { faqContext, decisionContext } = {}) {
+    const sources = [];
+    const normalizedDecisionContext = unwrapDecisionContext(decisionContext);
+
+    if (responseRoute === "HYBRID_KG_RAG") {
+        if (sources_used?.kg) sources.push("KG_DIRECT");
+        if (sources_used?.rag) sources.push("RAG_DIRECT");
+        if (normalizedDecisionContext) sources.push("DECISION");
+    }
+
+    if (["GENERAL", "LLM_FALLBACK"].includes(responseRoute)) {
+        if (sources_used?.kg) sources.push("KG_DIRECT");
+        if (sources_used?.rag) sources.push("RAG_DIRECT");
+    }
+
+    if (["DECISION", "RECOMMENDATION", "COMPARISON"].includes(responseRoute)) {
+        if (normalizedDecisionContext) sources.push("DECISION");
+    }
+
+    if (responseRoute === "CAREER") {
+        if (normalizedDecisionContext) sources.push("CAREER");
+    }
+
+    if (faqContext?.answer || sources_used?.faq) {
+        sources.push("FAQ");
+    }
+
+    if (["DECISION", "RECOMMENDATION", "COMPARISON", "CAREER", "HYBRID_KG_RAG"].includes(responseRoute)) {
+        if (sources_used?.kg) sources.push("KG_DIRECT");
+        if (sources_used?.rag) sources.push("RAG_DIRECT");
+    }
+
+    return [...new Set(sources)];
+}
+
+function buildMissingInformation({
+    responseRoute,
+    normalizedConfidence,
+    usedFacts,
+    sources_used,
+    decisionContext,
+    failure = false,
+    limitedEvidenceMessage = "Response generated with limited institutional evidence."
+}) {
+    if (failure) return ["Insufficient evidence available."];
+
+    const normalizedDecisionContext = unwrapDecisionContext(decisionContext);
+    const factors = normalizedDecisionContext?.factors || normalizedDecisionContext?.market_data || normalizedDecisionContext || {};
+    const missing = [];
+
+    if (responseRoute === "HYBRID_KG_RAG") {
+        if (usedFacts.length === 0 || !sources_used?.kg || !sources_used?.rag) {
+            missing.push("Partial institutional evidence available.");
+        }
+    }
+
+    if (responseRoute === "GENERAL" || responseRoute === "LLM_FALLBACK") {
+        if (normalizedConfidence < 0.7) {
+            missing.push(limitedEvidenceMessage);
+        }
+    }
+
+    if (["DECISION", "RECOMMENDATION", "COMPARISON", "CAREER"].includes(responseRoute)) {
+        const missingFields = [
+            ...(Array.isArray(normalizedDecisionContext?.missing_fields) ? normalizedDecisionContext.missing_fields : []),
+            ...(Array.isArray(factors?.missing_fields) ? factors.missing_fields : [])
+        ];
+
+        missingFields.forEach(field => {
+            const normalizedField = String(field).toLowerCase();
+            if (normalizedField.includes("gpa") || normalizedField.includes("percentage")) {
+                missing.push("Missing GPA information.");
+            } else if (normalizedField.includes("goal") || normalizedField.includes("interest")) {
+                missing.push("Missing goals information.");
+            } else if (normalizedField.includes("special")) {
+                missing.push("Missing specialization information.");
+            } else {
+                missing.push(`Missing ${String(field).trim()} information.`);
+            }
+        });
+
+        if (responseRoute === "CAREER" && !Array.isArray(factors?.target_roles) && !Array.isArray(factors?.career_roadmap?.target_roles)) {
+            missing.push("Missing specialization information.");
+        }
+    }
+
+    if (usedFacts.length === 0 && missing.length === 0) {
+        missing.push("Insufficient evidence available.");
+    }
+
+    return dedupeTextList(missing);
+}
+
+function buildReasoning({
+    responseRoute,
+    sources_used,
+    normalizedConfidence,
+    missingInformation,
+    failure = false
+}) {
+    if (failure) {
+        return "System fallback triggered due to insufficient evidence.";
+    }
+
+    if (responseRoute === "HYBRID_KG_RAG") {
+        return `Deterministic hybrid fusion combined ${sources_used?.kg ? "knowledge graph facts" : "available structured records"} with ${sources_used?.rag ? "retrieved policy passages" : "available document evidence"} to produce a grounded academic answer${missingInformation.length > 0 ? " with partial coverage safeguards." : "."}`;
+    }
+
+    if (["DECISION", "RECOMMENDATION", "COMPARISON"].includes(responseRoute)) {
+        return "Recommendation logic was derived from verified decision-engine factors and any available supporting academic evidence.";
+    }
+
+    if (responseRoute === "CAREER") {
+        return "Career guidance was synthesized from the verified roadmap output and any available institutional support evidence.";
+    }
+
+    if (responseRoute === "GENERAL") {
+        return `General advisory synthesis used the best available verified context${normalizedConfidence < 0.7 ? " with explicit evidence limitations." : "."}`;
+    }
+
+    return `Fallback path used limited verified institutional context${normalizedConfidence < 0.5 ? " with weak evidence safeguards." : "."}`;
+}
+
+function buildExplainabilityMetadata({
+    requestedRoute,
+    resolvedRoute,
+    responseRoute,
+    normalizedConfidence,
+    sources_used,
+    latency_ms,
+    sanitized,
+    truncated,
+    contextMetrics,
+    providedMetadata,
+    graph,
+    usedFacts,
+    failure = false,
+    decisionContext
+}) {
+    const normalizedDecisionContext = unwrapDecisionContext(decisionContext);
+    const factors = normalizedDecisionContext?.factors || normalizedDecisionContext?.market_data || normalizedDecisionContext || {};
+    const decisionConfidence = normalizeProbability(
+        normalizedDecisionContext?.confidence ??
+        factors?.confidence ??
+        factors?.confidence_breakdown?.overall,
+        normalizedConfidence
+    );
+
+    const baseMetadata = {
+        route_requested: requestedRoute,
+        inference_route: resolvedRoute,
+        route_safety: failure ? "SAFE_FAILURE" : normalizedConfidence >= 0.7 ? "SAFE_VERIFIED" : "SAFE_LIMITED",
+        latency_ms,
+        sanitized,
+        truncated,
+        source_count: Array.isArray(usedFacts) ? usedFacts.length : 0,
+        graph_node_count: Array.isArray(graph?.nodes) ? graph.nodes.length : 0,
+        graph_link_count: Array.isArray(graph?.links) ? graph.links.length : 0,
+        evidence_coverage: {
+            faq: !!sources_used?.faq,
+            kg: !!sources_used?.kg,
+            rag: !!sources_used?.rag,
+            decision: !!sources_used?.decision
+        },
+        ...(contextMetrics || {})
+    };
+
+    if (responseRoute === "HYBRID_KG_RAG") {
+        baseMetadata.fusion_strategy = "KG_RAG_EVIDENCE_BLEND";
+        baseMetadata.confidence_blend = parseFloat(((normalizedConfidence + normalizeProbability(decisionConfidence, normalizedConfidence)) / 2).toFixed(3));
+        baseMetadata.coverage_quality = usedFacts.length >= 4 ? "HIGH" : usedFacts.length >= 2 ? "MEDIUM" : "LOW";
+    }
+
+    if (["DECISION", "RECOMMENDATION", "COMPARISON"].includes(responseRoute)) {
+        baseMetadata.decision_factors = Object.keys(factors || {});
+        baseMetadata.decision_confidence = decisionConfidence;
+    }
+
+    if (responseRoute === "CAREER") {
+        baseMetadata.career_confidence = decisionConfidence;
+        baseMetadata.roadmap_confidence = normalizeProbability(
+            factors?.career_roadmap?.confidence ??
+            factors?.confidence_breakdown?.overall ??
+            decisionConfidence,
+            decisionConfidence
+        );
+    }
+
+    if (responseRoute === "GENERAL" || responseRoute === "LLM_FALLBACK") {
+        baseMetadata.fallback_path = responseRoute;
+        baseMetadata.evidence_limitations = normalizedConfidence < 0.7;
+    }
+
+    return {
+        ...baseMetadata,
+        ...(providedMetadata || {})
+    };
+}
+
 function createResult({
     answer,
     route,
@@ -976,9 +1453,101 @@ function createResult({
     latency_ms,
     sanitized,
     truncated = false,
+    query = "",
+    requestedRoute = route,
+    neo4jContext = [],
+    ragContext = [],
+    faqContext = null,
+    decisionContext = null,
+    contextMetrics = {},
+    metadata = {},
+    reasoning = "",
+    failure = false,
+    missing_information = null,
+    used_facts = null,
+    graph = null,
+    sources = null,
 }) {
-    const result = { answer, route, confidence, sources_used, latency_ms, sanitized, truncated };
-    // Soft backward compat: string coercion (template literals, implicit) returns answer
+    const responseRoute = normalizeExplainabilityRoute(route, query, decisionContext);
+    const normalizedConfidence = normalizeContractConfidence(confidence, responseRoute, {
+        failure,
+        weak: normalizeProbability(confidence, 0) < 0.5
+    });
+    const explainabilityGraph = graph || (responseRoute === "HYBRID_KG_RAG"
+        ? buildExplainabilityGraph(neo4jContext)
+        : { nodes: [], links: [] });
+    const kgFacts = extractKgFacts(neo4jContext, responseRoute === "HYBRID_KG_RAG" ? 2 : MAX_KG_FACTS);
+    const ragFacts = extractRagFacts(ragContext, responseRoute === "HYBRID_KG_RAG" ? 3 : MAX_RAG_PASSAGES);
+    const faqFacts = extractFaqFacts(faqContext);
+    const decisionFacts = extractDecisionFacts(decisionContext, 4);
+    const compiledFacts = used_facts || (
+        responseRoute === "HYBRID_KG_RAG"
+            ? [...kgFacts.slice(0, 2), ...ragFacts.slice(0, 3), ...decisionFacts.slice(0, 2)]
+            : ["DECISION", "RECOMMENDATION", "COMPARISON"].includes(responseRoute)
+                ? [...decisionFacts, ...ragFacts.slice(0, 2), ...kgFacts.slice(0, 1)]
+                : responseRoute === "CAREER"
+                    ? [...decisionFacts, ...ragFacts.slice(0, 2)]
+                    : responseRoute === "GENERAL"
+                        ? [...kgFacts.slice(0, 2), ...ragFacts.slice(0, 2), ...faqFacts.slice(0, 1)]
+                        : [...faqFacts.slice(0, 1), ...kgFacts.slice(0, 1), ...ragFacts.slice(0, 1)]
+    );
+    const finalUsedFacts = dedupeTextList(compiledFacts).slice(0, 6);
+    const finalMissingInformation = Array.isArray(missing_information)
+        ? missing_information
+        : buildMissingInformation({
+            responseRoute,
+            normalizedConfidence,
+            usedFacts: finalUsedFacts,
+            sources_used,
+            decisionContext,
+            failure,
+            limitedEvidenceMessage: "Response generated with limited institutional evidence."
+        });
+    const finalSources = Array.isArray(sources)
+        ? [...new Set(sources)]
+        : buildExplainabilitySources(responseRoute, sources_used, { faqContext, decisionContext });
+    const finalReasoning = reasoning || buildReasoning({
+        responseRoute,
+        sources_used,
+        normalizedConfidence,
+        missingInformation: finalMissingInformation,
+        failure
+    });
+    const finalMetadata = buildExplainabilityMetadata({
+        requestedRoute,
+        resolvedRoute: route,
+        responseRoute,
+        normalizedConfidence,
+        sources_used,
+        latency_ms,
+        sanitized,
+        truncated,
+        contextMetrics,
+        providedMetadata: metadata,
+        graph: explainabilityGraph,
+        usedFacts: finalUsedFacts,
+        failure,
+        decisionContext
+    });
+    finalMetadata.source_count = Array.isArray(finalSources) ? finalSources.length : 0;
+    finalMetadata.used_fact_count = Array.isArray(finalUsedFacts) ? finalUsedFacts.length : 0;
+
+    const result = {
+        answer,
+        confidence: normalizedConfidence,
+        used_facts: finalUsedFacts,
+        missing_information: finalMissingInformation,
+        graph: explainabilityGraph || EMPTY_GRAPH,
+        route: responseRoute,
+        sources: finalSources,
+        reasoning: finalReasoning,
+        metadata: finalMetadata,
+        sources_used,
+        latency_ms,
+        sanitized,
+        truncated
+    };
+
     result.toString = () => answer;
     return result;
 }
@@ -994,15 +1563,28 @@ function createResult({
  * @param {SourcesUsed} [sources_used]
  * @returns {UnifiedAnswerResult}
  */
-function createFallbackResult(answerText, route, confidence, latency_ms, sources_used = null) {
+function createFallbackResult(answerText, route, confidence, latency_ms, sources_used = null, options = {}) {
     return createResult({
         answer: answerText,
-        route,
-        confidence,
+        route: options.route || "LLM_FALLBACK",
+        requestedRoute: route,
+        confidence: options.confidence ?? confidence,
         sources_used: sources_used || { faq: false, kg: false, rag: false, decision: false },
         latency_ms,
         sanitized: false,
         truncated: false,
+        query: options.query || "",
+        neo4jContext: options.neo4jContext || [],
+        ragContext: options.ragContext || [],
+        faqContext: options.faqContext || null,
+        decisionContext: options.decisionContext || null,
+        contextMetrics: options.contextMetrics || {},
+        metadata: options.metadata || { route_safety: "SAFE_FAILURE" },
+        reasoning: options.reasoning || "System fallback triggered due to insufficient evidence.",
+        missing_information: options.missing_information || ["Insufficient evidence available."],
+        graph: { nodes: [], links: [] },
+        sources: options.sources || [],
+        failure: options.failure ?? true,
     });
 }
 
@@ -1041,16 +1623,47 @@ export async function generateUnifiedAnswer({
     faqContext = null,
     decisionContext = null,
 } = {}) {
+    const requestedRoute = routeType;
 
     // ── Guard: query is mandatory ─────────────────────────────────────
     if (!query || typeof query !== "string" || query.trim() === "") {
         logError("invalid_query", { reason: "empty_or_non_string_query" });
-        return createFallbackResult(FALLBACK_ANSWER, ROUTE_TYPES.LLM_FALLBACK, retrievalConfidence, 0);
+        return createFallbackResult(FALLBACK_ANSWER, requestedRoute, retrievalConfidence, 0, null, {
+            route: "LLM_FALLBACK",
+            metadata: { route_safety: "SAFE_FAILURE" },
+            reasoning: "System fallback triggered due to insufficient evidence.",
+            missing_information: ["Insufficient evidence available."],
+            failure: true
+        });
     }
 
     const resolvedRoute = resolveRouteType(routeType);
     const truncatedQuery = query.trim().slice(0, 120);
     const pipelineStart = Date.now();
+
+    // PHASE 8: DETERMINISTIC EMPTY-CONTEXT GUARD
+    // Pre-calculate block metadata to check for total evidence absence
+    const faqMeta = buildFaqBlock(faqContext);
+    const decisionMeta = buildDecisionBlock(decisionContext);
+    const kgMeta = buildNeo4jBlock(neo4jContext);
+    const ragMeta = buildRagBlock(ragContext);
+
+    if (!faqMeta.used && !decisionMeta.used && !kgMeta.used && !ragMeta.used) {
+        logWarn("total_evidence_absence_early_exit", { route: routeType, query: truncatedQuery });
+        return createFallbackResult(
+            "Insufficient verified academic evidence was found for this query.",
+            requestedRoute,
+            0.2,
+            Date.now() - pipelineStart,
+            null,
+            {
+                route: "LLM_FALLBACK",
+                reasoning: "All retrieval systems returned insufficient evidence. Bypassing LLM synthesis for safety.",
+                missing_information: ["Insufficient evidence available."],
+                metadata: { route_safety: "SAFE_FAILURE" }
+            }
+        );
+    }
 
     // ── Tiered Confidence Gating (Phase 3 Stabilization) ────────────────
     const isDegraded = retrievalConfidence >= DEGRADED_CONFIDENCE_THRESHOLD && retrievalConfidence < CONFIDENCE_GATE_THRESHOLD;
@@ -1063,7 +1676,18 @@ export async function generateUnifiedAnswer({
             query_preview: truncatedQuery,
             fallback_reason: "below_minimum_confidence",
         });
-        return createFallbackResult(INSUFFICIENT_DATA_PHRASE, resolvedRoute, retrievalConfidence, 0);
+        return createFallbackResult(INSUFFICIENT_DATA_PHRASE, requestedRoute, retrievalConfidence, 0, null, {
+            query,
+            route: "LLM_FALLBACK",
+            neo4jContext,
+            ragContext,
+            faqContext,
+            decisionContext,
+            metadata: { route_safety: "SAFE_FAILURE" },
+            reasoning: "System fallback triggered due to insufficient evidence.",
+            missing_information: ["Insufficient evidence available."],
+            failure: true
+        });
     }
 
     logInfo("pipeline_start", {
@@ -1174,6 +1798,19 @@ export async function generateUnifiedAnswer({
             latency_ms: totalLatencyMs,
             sanitized,
             truncated,
+            query,
+            requestedRoute,
+            neo4jContext,
+            ragContext,
+            faqContext,
+            decisionContext,
+            contextMetrics,
+            metadata: {
+                model: MODEL,
+                is_degraded: isDegraded,
+                prompt_tokens: promptTokenEst,
+                ollama_latency_ms: ollamaLatencyMs
+            }
         });
 
     } catch (error) {
@@ -1202,6 +1839,35 @@ export async function generateUnifiedAnswer({
             rag: !!buildRagBlock(ragContext).used,
         };
 
+        // PHASE 8.5 — DETERMINISTIC HYBRID FUSION FALLBACK
+        if (resolvedRoute === ROUTE_TYPES.HYBRID && fallbackSources.kg && fallbackSources.rag) {
+            const hybridAnswer = buildDeterministicHybridAnswer(neo4jContext, ragContext);
+            if (hybridAnswer) {
+                logInfo("deterministic_hybrid_fallback_successful", { route: resolvedRoute });
+                return createResult({
+                    answer: hybridAnswer,
+                    route: "HYBRID_KG_RAG",
+                    confidence: 0.89,
+                    sources_used: fallbackSources,
+                    latency_ms: totalLatencyMs,
+                    sanitized: false,
+                    truncated: false,
+                    query,
+                    requestedRoute,
+                    neo4jContext,
+                    ragContext,
+                    faqContext,
+                    decisionContext,
+                    metadata: {
+                        route_safety: "SAFE_HYBRID_FALLBACK",
+                        fallback_type: "DETERMINISTIC_HYBRID",
+                        kg_fact_count: (kgMeta || buildNeo4jBlock(neo4jContext)).count,
+                        rag_fact_count: (ragMeta || buildRagBlock(ragContext)).count
+                    }
+                });
+            }
+        }
+
         if (deterministicAnswer) {
             logInfo("deterministic_fallback_successful", { route: resolvedRoute });
             return createResult({
@@ -1211,11 +1877,32 @@ export async function generateUnifiedAnswer({
                 sources_used: fallbackSources,
                 latency_ms: totalLatencyMs,
                 sanitized: false,
-                truncated: false
+                truncated: false,
+                query,
+                requestedRoute,
+                neo4jContext,
+                ragContext,
+                faqContext,
+                decisionContext,
+                metadata: {
+                    deterministic_fallback: true,
+                    route_safety: "SAFE_FALLBACK"
+                }
             });
         }
 
-        return createFallbackResult(FALLBACK_ANSWER, resolvedRoute, retrievalConfidence, totalLatencyMs);
+        return createFallbackResult(FALLBACK_ANSWER, requestedRoute, retrievalConfidence, totalLatencyMs, fallbackSources, {
+            query,
+            route: "LLM_FALLBACK",
+            neo4jContext,
+            ragContext,
+            faqContext,
+            decisionContext,
+            metadata: { route_safety: "SAFE_FAILURE" },
+            reasoning: "System fallback triggered due to insufficient evidence.",
+            missing_information: ["Insufficient evidence available."],
+            failure: true
+        });
     }
 }
 

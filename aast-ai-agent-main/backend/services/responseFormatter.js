@@ -63,6 +63,20 @@ class ResponseFormatter {
             final_answer: answer,
             route: metadata.trace.route,
             confidence: this._normalizeConfidence(fusionPayload.confidence),
+            used_facts: Array.isArray(fusionPayload.used_facts)
+                ? fusionPayload.used_facts
+                : [],
+            missing_information: Array.isArray(fusionPayload.missing_information)
+                ? fusionPayload.missing_information
+                : [],
+            graph: {
+                nodes: Array.isArray(fusionPayload.graph?.nodes)
+                    ? fusionPayload.graph.nodes
+                    : [],
+                links: Array.isArray(fusionPayload.graph?.links)
+                    ? fusionPayload.graph.links
+                    : []
+            },
             source: sources[0] || "LLM",
             sources: sources,
             explainability: fusionPayload.explainability || { deterministic: false },
@@ -95,6 +109,12 @@ class ResponseFormatter {
             final_answer: promptText,
             route: NORMALIZED_SOURCES.INTERACTIVE,
             confidence: 1.0,
+            used_facts: [],
+            missing_information: [],
+            graph: {
+                nodes: [],
+                links: []
+            },
             source: NORMALIZED_SOURCES.INTERACTIVE,
             sources: [NORMALIZED_SOURCES.INTERACTIVE],
             explainability: { interactive: true },
@@ -126,6 +146,12 @@ class ResponseFormatter {
             final_answer: promptText,
             route: r,
             confidence: this._normalizeConfidence(confidenceVal),
+            used_facts: [],
+            missing_information: [],
+            graph: {
+                nodes: [],
+                links: []
+            },
             source: r,
             sources: [r],
             explainability: { static: true },
@@ -158,6 +184,12 @@ class ResponseFormatter {
             final_answer: errorMsg,
             route: r,
             confidence: traceData.response_tier === "FATAL_FALLBACK" ? 0.1 : 0.25,
+            used_facts: [],
+            missing_information: [],
+            graph: {
+                nodes: [],
+                links: []
+            },
             source: NORMALIZED_SOURCES.LLM,
             sources: [NORMALIZED_SOURCES.LLM],
             explainability: { error: true },

@@ -443,7 +443,9 @@ app.post("/api/chatbot/query", async (req, res) => {
     console.log(`[Chatbot][${requestId}] Request Started`);
 
     const { query, cid } = req.body ?? {};
-    if (!query) return res.status(400).json({ error: "query required", requestId });
+    if (!query) {
+      return res.status(400).json(responseFormatter.formatErrorFallback("Query is required.", "ERROR", "UNKNOWN", requestId, {}));
+    }
 
     const conversationId = cid || makeId();
     console.log(`[REQUEST][${requestId}] ${query} CID: ${conversationId}`);
@@ -459,7 +461,7 @@ app.post("/api/chatbot/query", async (req, res) => {
       await pushTurn(conversationId, convo, "assistant", answer);
       incrementMetric("route_greeting_hits");
       const earlyTrace = { degraded_services: [], subsystem_health: {}, latency_ms: Date.now() - requestStartTime, routing_confidence: 1.0 };
-      return res.json(responseFormatter.formatStatic(answer, "GREETING", 1.0, conversationId, requestId, earlyTrace));
+      return res.json(responseFormatter.formatStatic(answer, "FAQ", 1.0, conversationId, requestId, earlyTrace));
     }
 
     const faqHit = searchFAQ(query);
@@ -467,7 +469,16 @@ app.post("/api/chatbot/query", async (req, res) => {
       await pushTurn(conversationId, convo, "assistant", faqHit.answer);
       incrementMetric("route_faq_hits");
       const earlyTrace = { degraded_services: [], subsystem_health: {}, latency_ms: Date.now() - requestStartTime, routing_confidence: 0.9 };
-      return res.json(responseFormatter.formatStatic(faqHit.answer, "FAQ", 0.9, conversationId, requestId, earlyTrace));
+      const faqPayload = {
+        answer: faqHit.answer,
+        confidence: 0.9,
+        route: "FAQ",
+        sources: ["FAQ"],
+        used_facts: [faqHit.answer],
+        missing_information: [],
+        graph: { nodes: [], links: [] }
+      };
+      return res.json(responseFormatter.format(faqPayload, conversationId, requestId, earlyTrace));
     }
 
     // ---------- 2. INTENT CLASSIFICATION ----------
@@ -529,13 +540,6 @@ app.post("/api/chatbot/query", async (req, res) => {
 
     let route = routingDecision.route;
 
-    // ISSUE 4: ROUTE MEMORY PERSISTENCE
-    convo.lastRoute = route;
-    await saveConversation(conversationId, convo);
-
-
-
-
     const ROUTES = brainRouter.ROUTES || {
       KG_DIRECT: 'KG_DIRECT',
       KG_ONLY: 'KG_ONLY',
@@ -548,6 +552,30 @@ app.post("/api/chatbot/query", async (req, res) => {
       LLM_FALLBACK: 'LLM_FALLBACK'
     };
 
+    // PHASE 8: DETERMINISTIC ROUTE LOCKING
+    if (
+        routingDecision?.deterministic_kg === true ||
+        routingDecision?.hard_route === "KG_DIRECT" ||
+        routingDecision?.route === ROUTES.KG_DIRECT
+    ) {
+        route = ROUTES.KG_DIRECT;
+    }
+
+    // SECTION B — QUERY-SAFETY LOCK
+    // PHASE 8: Prevent single-domain KG locks from collapsing multi-domain hybrid intent.
+    if (
+        route !== ROUTES.HYBRID_KG_RAG &&
+        /who teaches|dean|prerequisite|prerequisites|requirements|head of department|program director/i.test(query)
+    ) {
+        route = ROUTES.KG_DIRECT;
+    }
+
+    console.log(`[ROUTE_LOCK][${requestId}] Final locked route: ${route}`);
+
+    // ISSUE 4: ROUTE MEMORY PERSISTENCE
+    convo.lastRoute = route;
+    await saveConversation(conversationId, convo);
+
     console.log(`[ORCHESTRATOR][${requestId}] Central Route Assigned: ${route}`);
 
     // TASK 6 — WHITELISTED ROUTE METRICS (prevents unbounded label cardinality)
@@ -559,6 +587,7 @@ app.post("/api/chatbot/query", async (req, res) => {
     let rawResults = {};
     let interactivePrompt = null;
     let degraded_services = [];
+    let kgRawData = null; // Hoisted for universal explainability injection
 
     // TASK 4 — ENHANCED KG CONFIDENCE SCORING
     const buildKgResponse = (kgRes) => {
@@ -712,6 +741,12 @@ app.post("/api/chatbot/query", async (req, res) => {
         confidence: Math.max(routingDecision.confidence || 0, normalizeNumericConfidence(ragRes?.raw_confidence), 0.86),
         route_used: ragDecisionRoute,
         contributing_sources: [ragDecisionRoute, "RAG"],
+        used_facts: evidence.map(item => item.excerpt),
+        missing_information: [],
+        graph: {
+            nodes: [],
+            links: []
+        },
         citations: evidence.map(item => ({
           title: item.title,
           source: item.title,
@@ -766,9 +801,8 @@ app.post("/api/chatbot/query", async (req, res) => {
     try {
       if (route === ROUTES.KG_ONLY || route === ROUTES.KG_DIRECT) {
         await neo4jSemaphore.acquire();
-        let kgRes;
         try {
-          kgRes = await timeoutWrapper(
+          kgRawData = await timeoutWrapper(
             fetchNeo4jContext(query, intentKeyword, 5, requestId, convo.messages),
             5000,
             null
@@ -777,14 +811,30 @@ app.post("/api/chatbot/query", async (req, res) => {
           neo4jSemaphore.release();
         }
         
-        if (!kgRes) {
+        if (!kgRawData) {
           incrementMetric("kg_timeout_failures");
           degraded_services.push("KG_TIMEOUT");
         }
-        rawResults.kg = buildKgResponse(kgRes);
+        rawResults.kg = buildKgResponse(kgRawData);
+
+        // PHASE 8: DETERMINISTIC KG EMPTY-RESULT GUARD
+        if (route === ROUTES.KG_ONLY && (!rawResults.kg || rawResults.kg.length === 0)) {
+          console.log(`[ORCHESTRATOR][${requestId}] KG_ONLY empty-result exit triggered.`);
+          return res.json(
+            responseFormatter.format({
+              answer: "I couldn't find verified knowledge graph evidence for this query.",
+              confidence: 0.25,
+              used_facts: [],
+              missing_information: ["No verified institutional graph evidence found."],
+              graph: { nodes: [], links: [] },
+              route: "KG_ONLY",
+              sources: [],
+              reasoning: "Knowledge graph search completed but returned no verified matches."
+            }, conversationId, requestId)
+          );
+        }
 
         // PHASE 4.2: Expanded Deterministic KG Shortcut
-        // Triggers for explicit KG_DIRECT OR high-confidence deterministic KG_ONLY
         const isDeterministicBypass = 
             route === ROUTES.KG_DIRECT || 
             (route === ROUTES.KG_ONLY && rawResults.kg.deterministic && rawResults.kg[0]?.confidence > 0.6);
@@ -809,8 +859,12 @@ Fallback Calls: 0`);
                 final_answer: answer,
                 answer: answer,
                 confidence: Math.max(bestKG.confidence || 0.98, 0.98),
-                route_used: isDeterministicBypass ? ROUTES.KG_DIRECT : route,
-                source: "KnowledgeGraph",
+                route_used: ROUTES.KG_DIRECT,
+                sources: ["KG_DIRECT"],
+                used_facts: rawResults.kg.map(f => f.evidence),
+                missing_information: [],
+                graph: convertToGraphData(kgRawData),
+                source: "KG_DIRECT",
                 explainability: {
                     deterministic: true,
                     direct_kg: true
@@ -861,6 +915,23 @@ Fallback Calls: 0`);
           
           if (rawResults.rag.results.length > 0) incrementMetric("rag_metadata_preserved");
 
+          // PHASE 8: DETERMINISTIC RAG EMPTY-RESULT GUARD
+          if (route === ROUTES.RAG_ONLY && (!rawResults.rag || !rawResults.rag.results || rawResults.rag.results.length === 0)) {
+            console.log(`[ORCHESTRATOR][${requestId}] RAG_ONLY empty-result exit triggered.`);
+            return res.json(
+              responseFormatter.format({
+                answer: "I couldn't find verified institutional policy evidence for this query.",
+                confidence: 0.25,
+                used_facts: [],
+                missing_information: ["No verified institutional policy evidence found."],
+                graph: { nodes: [], links: [] },
+                route: "RAG_ONLY",
+                sources: [],
+                reasoning: "Policy retrieval completed but returned no verified sources."
+              }, conversationId, requestId)
+            );
+          }
+
           const shouldDirectPolicyBypass =
             (route === ROUTES.RAG_DIRECT ||
               (
@@ -909,7 +980,8 @@ Sources: ${rawResults.rag.results.length}`);
         ]);
 
         if (kgOutcome.status === 'fulfilled' && kgOutcome.value) {
-          rawResults.kg = buildKgResponse(kgOutcome.value);
+          kgRawData = kgOutcome.value;
+          rawResults.kg = buildKgResponse(kgRawData);
         } else {
           console.error(`[HYBRID][${requestId}] KG failed:`, kgOutcome.reason);
           incrementMetric("subsystem_kg_failure");
@@ -1176,6 +1248,41 @@ Respond briefly, professionally, and conversationally as the AAST Advisor.`;
         throw new Error("Malformed final answer");
       }
 
+      // PHASE 8: UNIVERSAL EXPLAINABILITY RESPONSE CONTRACT INJECTION
+      fusionPayload.used_facts = Array.isArray(fusionPayload.used_facts) ? fusionPayload.used_facts : [];
+      fusionPayload.missing_information = Array.isArray(fusionPayload.missing_information) ? fusionPayload.missing_information : [];
+      fusionPayload.graph = (fusionPayload.graph && typeof fusionPayload.graph === 'object') ? fusionPayload.graph : { nodes: [], links: [] };
+
+      // Enrich with Knowledge Graph evidence
+      if (route.includes("KG") || route.includes("HYBRID")) {
+        if (rawResults.kg && rawResults.kg.length > 0) {
+          fusionPayload.used_facts = [...new Set([...fusionPayload.used_facts, ...rawResults.kg.map(f => f.evidence)])];
+          if (kgRawData) {
+            fusionPayload.graph = convertToGraphData(kgRawData);
+          }
+        } else {
+          fusionPayload.missing_information.push("No specific Knowledge Graph records were found for this query.");
+        }
+      }
+
+      // Enrich with RAG/Policy evidence
+      if (route.includes("RAG") || route.includes("HYBRID")) {
+        if (rawResults.rag?.results && rawResults.rag.results.length > 0) {
+          const ragFacts = rawResults.rag.results.map(f => extractRagSourceText(f)).filter(t => t.length > 20);
+          fusionPayload.used_facts = [...new Set([...fusionPayload.used_facts, ...ragFacts])];
+        }
+      }
+
+      // Enrich with Decision/Career engine outcomes
+      if (route === ROUTES.DECISION_ENGINE || route === ROUTES.CAREER_ENGINE || intentKeyword === "RECOMMEND" || intentKeyword === "COMPARISON") {
+          if (rawResults.decision && rawResults.decision[0]) {
+              fusionPayload.used_facts.push(rawResults.decision[0].recommendation);
+          }
+          if (rawResults.career && rawResults.career[0]) {
+              fusionPayload.used_facts.push(rawResults.career[0].career_path);
+          }
+      }
+
       await pushTurn(conversationId, convo, "assistant", fusionPayload.final_answer);
 
       incrementMetric("response_formatter_success");
@@ -1216,7 +1323,7 @@ Respond briefly, professionally, and conversationally as the AAST Advisor.`;
     }
   } catch (globalErr) {
     console.error(`[ORCHESTRATOR][${requestId}] Fatal Global Error:`, globalErr.message);
-    return res.status(500).json({ error: "Fatal Internal Orchestrator Error", requestId });
+    return res.status(500).json(responseFormatter.formatErrorFallback("Fatal Internal Orchestrator Error", "ERROR", "UNKNOWN", requestId, {}));
   }
 });
 
