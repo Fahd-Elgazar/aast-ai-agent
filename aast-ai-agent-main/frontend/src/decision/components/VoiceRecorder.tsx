@@ -3,7 +3,8 @@ import { Mic, Square, Loader2 } from 'lucide-react';
 import { askAgent } from '../../services/agentService';
 
 interface VoiceRecorderProps {
-  onResponseFetched: (reply: string, data: any[], transcribedText?: string) => void;
+  cid?: string | null;
+  onResponseFetched: (reply: string, data: any[], transcribedText?: string, response?: any) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
 }
@@ -72,7 +73,7 @@ function extractRecommendations(response: any) {
   return [];
 }
 
-export default function VoiceRecorder({ onResponseFetched, setLoading, setError }: VoiceRecorderProps) {
+export default function VoiceRecorder({ cid, onResponseFetched, setLoading, setError }: VoiceRecorderProps) {
   const [isRecording, setIsRecording] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const recognitionRef = useRef<BrowserSpeechRecognition | null>(null);
@@ -82,8 +83,8 @@ export default function VoiceRecorder({ onResponseFetched, setLoading, setError 
     setLoading(true);
 
     try {
-      const response = await askAgent(transcript);
-      onResponseFetched(response.answer || "", extractRecommendations(response), transcript);
+      const response = await askAgent(transcript, cid);
+      onResponseFetched(response.answer || "", extractRecommendations(response), transcript, response);
     } catch (err) {
       console.error("Voice transcript orchestrator error:", err);
       setError("Failed to process voice transcript through the orchestrator.");

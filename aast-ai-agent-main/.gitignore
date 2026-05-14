@@ -25,6 +25,8 @@ __pycache__/
 # Databases / Vector DB
 # ========================
 chroma_aast/
+backend/data/conversations.json
+backend/decision_memory.json
 
 # ========================
 # Large / compressed files
@@ -35,9 +37,11 @@ chroma_aast/
 *.gz
 
 # ========================
-# Frontend (ignore completely)
+# Frontend build/runtime artifacts
 # ========================
-frontend/
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
 
 # ========================
 # OS files

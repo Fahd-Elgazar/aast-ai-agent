@@ -32,6 +32,8 @@ __pycache__/
 # Databases / Vector DB
 # ========================
 chroma_aast/
+aast-ai-agent-main/backend/data/conversations.json
+aast-ai-agent-main/backend/decision_memory.json
 
 # ========================
 # Large / compressed files

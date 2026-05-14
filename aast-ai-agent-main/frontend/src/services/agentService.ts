@@ -1,11 +1,11 @@
 const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:8000/api";
 
-export const askAgent = async (input: string) => {
-  let sessionCid = localStorage.getItem("agent_cid");
+export const askAgent = async (input: string, cid?: string | null) => {
+  let sessionCid = cid === undefined ? localStorage.getItem("agent_cid") : cid;
   const res = await fetch(`${API_BASE}/chatbot/query`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ query: input, cid: sessionCid })
+    body: JSON.stringify({ query: input, cid: sessionCid || undefined })
   });
 
   if (!res.ok) {

@@ -28,27 +28,10 @@ async function initMemory() {
     if (fs.existsSync(MEMORY_FILE)) {
       const data = await fs.promises.readFile(MEMORY_FILE, "utf-8");
       const parsed = JSON.parse(data);
-      const now = Date.now();
-      const ttl = 3 * 60 * 60 * 1000;
-      
       for (const [k, v] of Object.entries(parsed)) {
-        const lastActive = v.lastActive || now;
-        const remaining = (lastActive + ttl) - now;
-        
-        if (remaining <= 0) {
-          continue;
-        }
-        
         decisionMemory.set(k, v);
-        const timer = setTimeout(async () => {
-          decisionMemory.delete(k);
-          decisionTimers.delete(k);
-          scheduleSave();
-        }, remaining);
-        decisionTimers.set(k, timer);
       }
       console.log(`[Memory] Loaded ${decisionMemory.size} sessions from disk.`);
-      scheduleSave();
     }
   } catch (err) {
     console.error("Failed to load persistent memory:", err.message);
@@ -147,17 +130,18 @@ export async function updateUserMemory(cid, newData) {
 
   scheduleSave();
 
+  return updated;
+}
+
+export async function deleteUserMemory(cid) {
   if (decisionTimers.has(cid)) {
     clearTimeout(decisionTimers.get(cid));
-  }
-  const timer = setTimeout(async () => {
-    decisionMemory.delete(cid);
     decisionTimers.delete(cid);
-    scheduleSave();
-  }, 3 * 60 * 60 * 1000);
-  decisionTimers.set(cid, timer);
+  }
 
-  return updated;
+  const deleted = decisionMemory.delete(cid);
+  if (deleted) scheduleSave();
+  return deleted;
 }
 
 /* ============================================================

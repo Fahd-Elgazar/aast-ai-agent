@@ -67,6 +67,32 @@ export interface ChatSession {
   createdAt: string;
 }
 
+export interface ConversationMessage {
+  id: string;
+  role: "user" | "assistant" | "model";
+  content?: string;
+  text?: string;
+  createdAt?: string;
+}
+
+export interface ConversationSummary {
+  cid: string;
+  title: string;
+  createdAt: string;
+  updatedAt: string;
+  lastActive: number;
+  pinned: boolean;
+  titleGenerated?: boolean;
+  titleSource?: "auto" | "manual" | string;
+  messageCount: number;
+  preview?: string;
+  lastRoute?: string | null;
+}
+
+export interface ConversationDetail extends ConversationSummary {
+  messages: ConversationMessage[];
+}
+
 export interface GraphNode {
   id: string;
   label?: string;
@@ -81,6 +107,7 @@ export interface GraphLink {
   source: string;
   target: string;
   type?: string;
+  value?: number;
 }
 
 export interface GraphData {

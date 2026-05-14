@@ -11,19 +11,38 @@ import bodyParser from "body-parser";
 import fs from "fs";
 import path from "path";
 import fetch from "node-fetch";
-import { createClient } from "redis";
 
 import chatbotRouter from "./routes/chatbot.js";
 import decisionRouter from "./routes/decision.js";
+import createConversationsRouter from "./routes/conversations.js";
 import createHealthRouter from "./routes/health.js";
 import { searchFAQ } from "./faqService.js";
 import { checkGreeting } from "./greetings.js";
 import { fetchNeo4jContext, convertToGraphData } from "./services/neo4jcontext.js";
 import { connectNeo4j, getSession } from "./db/neo4j.js";
-import { getRecommendation, getUserMemory, buildCareerRoadmap, compareMajors, updateUserMemory } from "./services/decisionService.js";
+import { getRecommendation, getUserMemory, buildCareerRoadmap, compareMajors, updateUserMemory, deleteUserMemory } from "./services/decisionService.js";
 import { incrementMetric, recordDuration } from "./services/metrics.js";
 import { logger } from "./services/logger.js";
 import { generateUnifiedAnswer } from "./services/unifiedAnswerService.js";
+import {
+  MAX_CONTEXT_TURNS,
+  deleteConversation,
+  flushConversations,
+  getConversation,
+  getConversationContext,
+  getConversationById,
+  getConversationStats,
+  getConversationSummary,
+  loadConversations,
+  listConversations,
+  makeConversationId,
+  normalizeConversationId,
+  createConversation,
+  pinConversation,
+  pushTurn,
+  renameConversation,
+  saveConversation
+} from "./services/conversationService.js";
 // PHASE 4: AGENTIC CORE IMPORTS
 import brainRouter from "./services/brainRouter.js";
 import fusionService from "./services/fusionService.js";
@@ -72,10 +91,6 @@ function logToFile(text) {
     });
 }
 
-function makeId() {
-  return Math.random().toString(16).slice(2, 10);
-}
-
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -99,125 +114,36 @@ app.use("/api/chatbot/legacy", chatbotRouter);
 app.use("/api/decision", decisionRouter);
 
 /* ============================================================
-   🧠 CONVERSATION MEMORY & CACHE (REDIS PRODUCTION VERSION)
+   CONVERSATION MEMORY & CACHE (PERSISTENT CHAT HISTORY)
 =========================================================== */
 
-// TASK 2 & 9 — REDIS DEGRADED MODE: in-memory fallback when Redis is unavailable
-const inMemoryStore = new Map(); // fallback store
-let redisAvailable = false;
+await loadConversations();
 
-const redisClient = createClient({
-  url: process.env.REDIS_URL || "redis://localhost:6379"
+const conversationServiceApi = {
+  listConversations,
+  createConversation,
+  getConversationById,
+  renameConversation,
+  pinConversation,
+  deleteConversation
+};
+
+app.use("/api/conversations", createConversationsRouter({
+  conversationService: conversationServiceApi,
+  onDeleteConversation: deleteUserMemory
+}));
+
+const CACHE_TTL = 5 * 60 * 1000; // intent/cache telemetry only
+
+process.once("SIGINT", async () => {
+  await flushConversations();
+  process.exit(0);
 });
 
-redisClient.on("error", err => {
-  logger.error("Redis Client Error", { error: err.message });
+process.once("SIGTERM", async () => {
+  await flushConversations();
+  process.exit(0);
 });
-
-try {
-  await redisClient.connect();
-  redisAvailable = true;
-  console.log("✅ Redis connected successfully");
-} catch (redisErr) {
-  redisAvailable = false;
-  console.warn("⚠️ Redis unavailable — operating in degraded in-memory mode:", redisErr.message);
-  logger.warn("Redis connection failed; using in-memory fallback", { error: redisErr.message });
-}
-
-const CACHE_TTL = 5 * 60 * 1000; // 5 min
-const MAX_TURNS = 12;
-const SESSION_TTL_SECONDS = 60 * 60 * 3; // 3 hours
-
-// TASK 10 — DEAD CODE REVIEW
-// embedQuery and cosineSimilarity are retained for potential future semantic cache use
-// but are NOT called in the active pipeline. Marked clearly to avoid confusion.
-/* [UNUSED — reserved for semantic cache phase]
-async function embedQuery(text) { ... }
-function cosineSimilarity(a, b) { ... }
-*/
-
-function buildFreshConversation() {
-  return {
-    messages: [
-      {
-        role: "system",
-        content:
-          `You are the AAST University Assistant. Use only verified knowledge from the Graph. If not found, say "I don't have that information in the knowledge graph."`
-      }
-    ],
-    lastActive: Date.now()
-  };
-}
-
-// TASK 9 — REDIS-AWARE HELPERS: seamless Redis / in-memory dual-mode operation
-async function saveConversation(cid, convo) {
-  convo.lastActive = Date.now();
-  if (redisAvailable) {
-    try {
-      await redisClient.set(
-        `conversation:${cid}`,
-        JSON.stringify(convo),
-        { EX: SESSION_TTL_SECONDS }
-      );
-      return;
-    } catch (err) {
-      logger.warn("saveConversation Redis write failed, falling back to memory", { cid, error: err.message });
-    }
-  }
-  // In-memory fallback with TTL eviction
-  inMemoryStore.set(cid, { data: convo, expiresAt: Date.now() + SESSION_TTL_SECONDS * 1000 });
-}
-
-async function getConversation(cid) {
-  try {
-    if (redisAvailable) {
-      const existing = await redisClient.get(`conversation:${cid}`);
-      if (existing) {
-        const convo = JSON.parse(existing);
-        convo.lastActive = Date.now();
-        await saveConversation(cid, convo);
-        return convo;
-      }
-    } else {
-      // In-memory fallback read with TTL check
-      const entry = inMemoryStore.get(cid);
-      if (entry && entry.expiresAt > Date.now()) {
-        entry.data.lastActive = Date.now();
-        return entry.data;
-      } else if (entry) {
-        inMemoryStore.delete(cid); // evict expired
-      }
-    }
-    const fresh = buildFreshConversation();
-    await saveConversation(cid, fresh);
-    return fresh;
-  } catch (err) {
-    logger.error("Conversation retrieval failed", { cid, error: err.message });
-    return buildFreshConversation();
-  }
-}
-
-async function pushTurn(cid, convo, role, content) {
-  convo.messages.push({ role, content });
-  if (convo.messages.length > MAX_TURNS) {
-    const system = convo.messages[0];
-    const tail = convo.messages.slice(-(MAX_TURNS - 1));
-    convo.messages = [system, ...tail];
-  }
-  await saveConversation(cid, convo);
-}
-
-// TASK 10 — updateSystemPrompt is retained but currently unused in active pipeline
-// Kept for future system-prompt injection features
-async function updateSystemPrompt(cid, convo, content) {
-  const systemIdx = convo.messages.findIndex(m => m.role === "system");
-  if (systemIdx !== -1) {
-    convo.messages[systemIdx].content = content;
-  } else {
-    convo.messages.unshift({ role: "system", content });
-  }
-  await saveConversation(cid, convo);
-}
 
 /* ============================================================
    🧠 OLLAMA INTENT CLASSIFIER (HARDENED)
@@ -243,7 +169,7 @@ function pruneIntentCache() {
 
 function getRuntimeCacheStatus() {
   return {
-    conversations: "redis_managed",
+    ...getConversationStats(),
     maxConversations: null,
     intentCacheEntries: intentCache.size,
     neo4jCacheEntries: neo4jCache.size,
@@ -424,6 +350,8 @@ app.post("/api/chatbot/query", async (req, res) => {
   const requestStartTime = Date.now();
   incrementMetric("http_chatbot_query_total");
   const originalJson = res.json;
+  let conversationId = "UNKNOWN";
+  let convo = null;
 
   res.json = function (body) {
     const duration = Date.now() - requestStartTime;
@@ -431,11 +359,15 @@ app.post("/api/chatbot/query", async (req, res) => {
     recordDuration("http_chatbot_latency_ms", duration);
     logger.info("Chatbot response completed", {
       requestId,
-      source: body.route || body.source || "unknown",
+      source: body?.route || body?.source || "unknown",
       durationMs: duration,
       responseBytes: size
     });
-    console.log(`[RESPONSE][${requestId}] route=${body.route || body.source || "unknown"} time=${duration}ms size=${size}b`);
+    console.log(`[RESPONSE][${requestId}] route=${body?.route || body?.source || "unknown"} time=${duration}ms size=${size}b`);
+    if (body?.cid && !body.conversation) {
+      const conversation = getConversationSummary(body.cid);
+      if (conversation) body.conversation = conversation;
+    }
     return originalJson.call(this, body);
   };
 
@@ -447,10 +379,10 @@ app.post("/api/chatbot/query", async (req, res) => {
       return res.status(400).json(responseFormatter.formatErrorFallback("Query is required.", "ERROR", "UNKNOWN", requestId, {}));
     }
 
-    const conversationId = cid || makeId();
+    conversationId = normalizeConversationId(cid) || makeConversationId();
     console.log(`[REQUEST][${requestId}] ${query} CID: ${conversationId}`);
 
-    const convo = await getConversation(conversationId);
+    convo = await getConversation(conversationId);
 
     logToFile(`USER [${conversationId}]: ${query}`);
     await pushTurn(conversationId, convo, "user", query);
@@ -803,7 +735,7 @@ app.post("/api/chatbot/query", async (req, res) => {
         await neo4jSemaphore.acquire();
         try {
           kgRawData = await timeoutWrapper(
-            fetchNeo4jContext(query, intentKeyword, 5, requestId, convo.messages),
+            fetchNeo4jContext(query, intentKeyword, 5, requestId, getConversationContext(conversationId, MAX_CONTEXT_TURNS)),
             5000,
             null
           );
@@ -975,7 +907,7 @@ Sources: ${rawResults.rag.results.length}`);
       }
       else if (route === ROUTES.HYBRID_KG_RAG) {
         const [kgOutcome, ragOutcome] = await Promise.allSettled([
-          neo4jSemaphore.acquire().then(() => timeoutWrapper(fetchNeo4jContext(query, intentKeyword, 5, requestId, convo.messages), 5000, null).finally(() => neo4jSemaphore.release())),
+          neo4jSemaphore.acquire().then(() => timeoutWrapper(fetchNeo4jContext(query, intentKeyword, 5, requestId, getConversationContext(conversationId, MAX_CONTEXT_TURNS)), 5000, null).finally(() => neo4jSemaphore.release())),
           ragSemaphore.acquire().then(() => timeoutWrapper(ragService.search(query, { topK: 5 }), 5000, null).finally(() => ragSemaphore.release()))
         ]);
 
@@ -1104,7 +1036,7 @@ Sources: ${rawResults.rag.results.length}`);
       if (route === ROUTES.LLM_FALLBACK) {
         incrementMetric("route_llm_fallback_hits");
         incrementMetric("llm_fallback_rate");
-        const history = convo.messages.slice(-3).map(m => `${m.role.toUpperCase()}: ${m.content}`).join("\n");
+        const history = getConversationContext(conversationId, 4).map(m => `${m.role.toUpperCase()}: ${m.content}`).join("\n");
 
         const prompt = `You are the AAST Academic Super-Agent, a professional, grounded, and helpful university advisor.
 Your primary role is to assist students with major selection, career advice, and academic policies.
@@ -1317,7 +1249,9 @@ Respond briefly, professionally, and conversationally as the AAST Advisor.`;
         incrementMetric("fatal_static_fallback_used");
       }
 
-      await pushTurn(conversationId, convo, "assistant", fallbackAnswer);
+      if (conversationId !== "UNKNOWN") {
+        await pushTurn(conversationId, convo, "assistant", fallbackAnswer);
+      }
 
       return res.status(200).json(responseFormatter.formatErrorFallback(fallbackAnswer, fallbackRoute, conversationId, requestId, traceData));
     }
