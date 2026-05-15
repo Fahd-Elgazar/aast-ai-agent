@@ -7,12 +7,12 @@
  * ============================================================
  */
 
-import fetch from "node-fetch";
 import { getSession } from "../db/neo4j.js";
 import ragService from "./ragService.js";
 import { searchFAQ } from "../faqService.js";
 import { getRecommendation, buildCareerRoadmap } from "./decisionService.js";
 import { incrementMetric } from "./metrics.js";
+import { getOllamaRuntimeStatus } from "./ollamaService.js";
 
 const HEALTH_CACHE_TTL = 15000; // 15 seconds
 const MAX_STALE_HEALTH_MS = 60000; // 60 seconds
@@ -87,7 +87,14 @@ export async function checkSubsystemHealth() {
 
             // LLM Health
             timeoutWrapper(
-                fetch(`${process.env.OLLAMA_BASE_URL || "http://localhost:11434"}/api/tags`).then(res => res.ok).catch(() => false),
+                (async () => {
+                    const llm = getOllamaRuntimeStatus();
+                    return llm.breaker_state !== "OPEN" && (
+                        llm.server_healthy ||
+                        llm.primary_health?.healthy ||
+                        llm.backup_health?.healthy
+                    );
+                })(),
                 2000, cachedHealth.llm
             ),
 

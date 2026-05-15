@@ -37,15 +37,19 @@
  * ============================================================
  */
 
-import { generateStableResponse } from "./ollamaService.js";
+import {
+    generateStableResponse,
+    getLastGenerationMetadata,
+    getOllamaRuntimeStatus
+} from "./ollamaService.js";
 import { convertToGraphData } from "./neo4jcontext.js";
 
 // ─────────────────────────────────────────────────────────────
 // SECTION 0 — CONFIGURATION CONSTANTS
 // ─────────────────────────────────────────────────────────────
 
-/** Model used for final answer synthesis. DO NOT CHANGE. */
-const MODEL = "gemma4:e2b";
+/** Model used for final answer synthesis. Gemma remains the default primary. */
+const MODEL = process.env.PRIMARY_MODEL || process.env.OLLAMA_MODEL || "gemma4:e2b";
 
 /**
  * Minimum retrieval confidence score (0–1).
@@ -1695,7 +1699,8 @@ export async function generateUnifiedAnswer({
         retrieval_confidence: retrievalConfidence,
         is_degraded: isDegraded,
         query_preview: truncatedQuery,
-        model: MODEL
+        model: MODEL,
+        backup_model: getOllamaRuntimeStatus().backup_model
     });
 
     try {
@@ -1747,18 +1752,24 @@ export async function generateUnifiedAnswer({
 
         // ── Step 4: Inference with centralized ollamaService ────────────
         const ollamaStart = Date.now();
+        const ollamaRequestId = `unified_${Date.now()}`;
         const rawAnswer = await generateStableResponse({
             prompt,
             model: MODEL,
-            requestId: `unified_${Date.now()}`,
+            requestId: ollamaRequestId,
             options: inferenceOptions,
         });
         const ollamaLatencyMs = Date.now() - ollamaStart;
+        const ollamaRuntime = getOllamaRuntimeStatus();
+        const ollamaGenerationMeta = getLastGenerationMetadata(ollamaRequestId);
 
         logInfo("ollama_response_received", {
             route: resolvedRoute,
             ollama_latency_ms: ollamaLatencyMs,
             raw_response_chars: rawAnswer.length,
+            model_used: ollamaGenerationMeta?.model || ollamaRuntime.active_model,
+            breaker_state: ollamaRuntime.breaker_state,
+            failover_active: ollamaRuntime.failover_active,
         });
 
         // ── Step 5: Sanitize + truncation repair ─────────────────────────
@@ -1806,8 +1817,17 @@ export async function generateUnifiedAnswer({
             decisionContext,
             contextMetrics,
             metadata: {
-                model: MODEL,
+                model: ollamaGenerationMeta?.model || MODEL,
+                primary_model: ollamaRuntime.primary_model,
+                backup_model: ollamaRuntime.backup_model,
                 is_degraded: isDegraded,
+                llm_failover_active: ollamaRuntime.failover_active,
+                breaker_state: ollamaRuntime.breaker_state,
+                primary_failures: ollamaRuntime.primary_failures,
+                backup_activations: ollamaRuntime.backup_activations,
+                failover_count: ollamaRuntime.failover_count,
+                recovery_success: ollamaRuntime.recovery_success,
+                failover_used: !!ollamaGenerationMeta?.failover_used,
                 prompt_tokens: promptTokenEst,
                 ollama_latency_ms: ollamaLatencyMs
             }
@@ -1815,12 +1835,15 @@ export async function generateUnifiedAnswer({
 
     } catch (error) {
         const totalLatencyMs = Date.now() - pipelineStart;
+        const ollamaRuntimeOnFailure = getOllamaRuntimeStatus();
 
         logError("pipeline_failed", {
             route: resolvedRoute,
             query_preview: truncatedQuery,
             error_message: error?.message ?? String(error),
             total_latency_ms: totalLatencyMs,
+            breaker_state: ollamaRuntimeOnFailure.breaker_state,
+            failover_active: ollamaRuntimeOnFailure.failover_active,
         });
 
         // ── Phase 3: Deterministic Fallback ──────────────────────────────
@@ -1861,6 +1884,10 @@ export async function generateUnifiedAnswer({
                     metadata: {
                         route_safety: "SAFE_HYBRID_FALLBACK",
                         fallback_type: "DETERMINISTIC_HYBRID",
+                        primary_model: ollamaRuntimeOnFailure.primary_model,
+                        backup_model: ollamaRuntimeOnFailure.backup_model,
+                        breaker_state: ollamaRuntimeOnFailure.breaker_state,
+                        llm_failover_active: ollamaRuntimeOnFailure.failover_active,
                         kg_fact_count: (kgMeta || buildNeo4jBlock(neo4jContext)).count,
                         rag_fact_count: (ragMeta || buildRagBlock(ragContext)).count
                     }
@@ -1886,7 +1913,15 @@ export async function generateUnifiedAnswer({
                 decisionContext,
                 metadata: {
                     deterministic_fallback: true,
-                    route_safety: "SAFE_FALLBACK"
+                    route_safety: "SAFE_FALLBACK",
+                    primary_model: ollamaRuntimeOnFailure.primary_model,
+                    backup_model: ollamaRuntimeOnFailure.backup_model,
+                    breaker_state: ollamaRuntimeOnFailure.breaker_state,
+                    llm_failover_active: ollamaRuntimeOnFailure.failover_active,
+                    primary_failures: ollamaRuntimeOnFailure.primary_failures,
+                    backup_activations: ollamaRuntimeOnFailure.backup_activations,
+                    failover_count: ollamaRuntimeOnFailure.failover_count,
+                    recovery_success: ollamaRuntimeOnFailure.recovery_success
                 }
             });
         }
@@ -1898,7 +1933,17 @@ export async function generateUnifiedAnswer({
             ragContext,
             faqContext,
             decisionContext,
-            metadata: { route_safety: "SAFE_FAILURE" },
+            metadata: {
+                route_safety: "SAFE_FAILURE",
+                primary_model: ollamaRuntimeOnFailure.primary_model,
+                backup_model: ollamaRuntimeOnFailure.backup_model,
+                breaker_state: ollamaRuntimeOnFailure.breaker_state,
+                llm_failover_active: ollamaRuntimeOnFailure.failover_active,
+                primary_failures: ollamaRuntimeOnFailure.primary_failures,
+                backup_activations: ollamaRuntimeOnFailure.backup_activations,
+                failover_count: ollamaRuntimeOnFailure.failover_count,
+                recovery_success: ollamaRuntimeOnFailure.recovery_success
+            },
             reasoning: "System fallback triggered due to insufficient evidence.",
             missing_information: ["Insufficient evidence available."],
             failure: true

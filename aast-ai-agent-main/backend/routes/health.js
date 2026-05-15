@@ -4,9 +4,9 @@ import { getSession } from "../db/neo4j.js";
 import { getDecisionMemoryStatus } from "../services/decisionService.js";
 import { getMetricsSnapshot } from "../services/metrics.js";
 import { logger } from "../services/logger.js";
+import { getOllamaRuntimeStatus } from "../services/ollamaService.js";
 
 const DEFAULT_TIMEOUT_MS = Number(process.env.HEALTH_TIMEOUT_MS || 2500);
-const OLLAMA_URL = process.env.OLLAMA_BASE_URL || "http://localhost:11434";
 const DECISION_API_URL = process.env.DECISION_API_URL || "http://127.0.0.1:8005";
 
 function withTimeout(timeoutMs = DEFAULT_TIMEOUT_MS) {
@@ -42,28 +42,44 @@ async function checkNeo4j() {
 
 async function checkOllama() {
   const start = Date.now();
-  const timeout = withTimeout();
+  const status = getOllamaRuntimeStatus();
 
-  try {
-    const res = await fetch(`${OLLAMA_URL}/api/tags`, {
-      method: "GET",
-      signal: timeout.signal
-    });
-
-    return {
-      ok: res.ok,
-      latencyMs: Date.now() - start,
-      status: res.status
-    };
-  } catch (err) {
-    return {
-      ok: false,
-      latencyMs: Date.now() - start,
-      error: err.name === "AbortError" ? "timeout" : err.message
-    };
-  } finally {
-    timeout.clear();
-  }
+  return {
+    ok: status.breaker_state !== "OPEN" && (
+      status.server_healthy ||
+      status.primary_health?.healthy ||
+      status.backup_health?.healthy
+    ),
+    latencyMs: Date.now() - start,
+    breakerState: status.breaker_state,
+    startup_readiness_phase: status.startup_readiness_phase,
+    ollama_ready: status.ollama_ready,
+    ollama_wait_attempts: status.ollama_wait_attempts,
+    ollama_wait_duration_ms: status.ollama_wait_duration_ms,
+    startupReadinessPhase: status.startup_readiness_phase,
+    ollamaReady: status.ollama_ready,
+    ollamaWaitAttempts: status.ollama_wait_attempts,
+    ollamaWaitDurationMs: status.ollama_wait_duration_ms,
+    failoverActive: status.failover_active,
+    activeModel: status.active_model,
+    truePrimaryModel: status.true_primary_model,
+    activeRuntimeModel: status.active_runtime_model,
+    primaryModel: status.primary_model,
+    backupModel: status.backup_model,
+    activeBackupModel: status.failover_active ? status.backup_model : null,
+    primaryColdStartPending: status.primary_cold_start_pending,
+    preloadWarning: status.preload_warning,
+    startupPreloadStatus: status.startup_preload_status,
+    backupReady: status.backup_ready,
+    installedStatus: status.installed_status,
+    startupReadiness: status.startup_validation,
+    missingModelWarnings: status.missing_model_warnings,
+    recommendedCommands: status.recommended_commands,
+    primary: status.primary_health,
+    backup: status.backup_health,
+    failoverCount: status.failover_count,
+    recoverySuccess: status.recovery_success
+  };
 }
 
 async function checkDecisionApi() {

@@ -1,228 +1,92 @@
 /**
- * ============================================================
- * AAST Explainable Hybrid GraphRAG Academic Advisor
- * Production-Grade Ollama Service (Phase 3 Stability Patch)
- * ============================================================
+ * Centralized Ollama inference layer with Gemma-first failover.
  *
- * PURPOSE:
- * Centralized resilient Ollama inference layer for all backend LLM usage.
- *
- * FIXES INCLUDED:
- * - Unified model registry
- * - Shared timeout hierarchy
- * - 3-tier retry resilience
- * - Preserved AbortError for upstream retry detection
- * - HTTP 500 / 503 / ECONNRESET retry support
- * - Cold-start warmup
- * - Health probes
- * - Model preload
- * - Adaptive backoff
- * - Structured observability
- * - Reduced raw logging
- * - Frontend compatibility preserved
- * ============================================================
+ * Public API compatibility is intentionally preserved:
+ * - generateStableResponse(...)
+ * - callOllama(prompt, model, requestId)
+ * - checkOllamaHealth()
+ * - warmupOllama(model)
  */
 
 import fetch from "node-fetch";
+import { LLM_CONFIG } from "../config/llmConfig.js";
+import { modelFailoverManager } from "./modelFailoverManager.js";
 
-/// ─────────────────────────────────────────────────────────────
-// CONFIGURATION
-// ─────────────────────────────────────────────────────────────
-
-const OLLAMA_BASE_URL =
-  (process.env.OLLAMA_BASE_URL || "http://localhost:11434").replace(/\/$/, "");
-
-const OLLAMA_GENERATE_URL = `${OLLAMA_BASE_URL}/api/generate`;
-const OLLAMA_TAGS_URL = `${OLLAMA_BASE_URL}/api/tags`;
-
-const DEFAULT_MODEL = process.env.OLLAMA_MODEL || "gemma4:e2b";
-
-const OLLAMA_TIMEOUT_MS = Number(process.env.OLLAMA_TIMEOUT_MS || 25000);
-
-const MAX_RETRIES = Number(process.env.OLLAMA_MAX_RETRIES || 3);
-
-const BASE_RETRY_DELAY_MS = Number(
-  process.env.OLLAMA_RETRY_BASE_DELAY_MS || 1500
-);
-
-const HEALTHCHECK_TIMEOUT_MS = 5000;
-
-// Phase 3 Production State
-let lastWarmupAt = 0;
-const WARMUP_INTERVAL_MS = 300000; // 5 min
-
-let cachedHealth = null;
-let cachedHealthAt = 0;
-const HEALTH_CACHE_TTL_MS = 30000; // 30 sec
-
-let consecutiveFailures = 0;
-const FAILURE_THRESHOLD = 5;
-const CIRCUIT_BREAKER_RESET_MS = 60000;
-let circuitBreakerTrippedAt = 0;
-
-// ─────────────────────────────────────────────────────────────
-// OBSERVABILITY
-// ─────────────────────────────────────────────────────────────
+const lastGenerationMetadata = new Map();
+const MAX_GENERATION_METADATA = 100;
 
 function log(level, event, payload = {}) {
-  const logger =
-    level === "ERROR"
-      ? console.error
-      : level === "WARN"
-        ? console.warn
-        : console.log;
+  const writer =
+    level === "ERROR" ? console.error : level === "WARN" ? console.warn : console.log;
 
-  logger(
-    JSON.stringify({
-      level,
-      service: "OllamaService",
-      event,
-      timestamp: new Date().toISOString(),
-      ...payload,
-    })
-  );
+  writer(JSON.stringify({
+    level,
+    service: "OllamaService",
+    event,
+    timestamp: new Date().toISOString(),
+    ...payload,
+  }));
 }
 
-function logInfo(event, payload) {
-  log("INFO", event, payload);
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function logWarn(event, payload) {
-  log("WARN", event, payload);
+function isRetryableStatus(status) {
+  return [408, 409, 425, 429, 500, 502, 503, 504].includes(status);
 }
 
-function logError(event, payload) {
-  log("ERROR", event, payload);
-}
-
-// ─────────────────────────────────────────────────────────────
-// RETRYABLE ERROR DETECTION
-// ─────────────────────────────────────────────────────────────
-
-function isRetryableError(error) {
+export function isRetryableError(error) {
   if (!error) return false;
-
+  if (error.retryable === true) return true;
   if (error.name === "AbortError") return true;
+  if (isRetryableStatus(error.status)) return true;
 
-  const msg = (error.message || "").toLowerCase();
-
+  const message = String(error.message || "").toLowerCase();
   return (
-    msg.includes("http 500") ||
-    msg.includes("http 503") ||
-    msg.includes("econnreset") ||
-    msg.includes("socket hang up") ||
-    msg.includes("network") ||
-    msg.includes("fetch failed") ||
-    msg.includes("model is loading")
+    message.includes("http 500") ||
+    message.includes("http 502") ||
+    message.includes("http 503") ||
+    message.includes("http 504") ||
+    message.includes("econnreset") ||
+    message.includes("socket hang up") ||
+    message.includes("network") ||
+    message.includes("fetch failed") ||
+    message.includes("model is loading") ||
+    message.includes("timed out") ||
+    message.includes("timeout")
   );
 }
 
-// ─────────────────────────────────────────────────────────────
-// HEALTH CHECK
-// ─────────────────────────────────────────────────────────────
+function retryDelayMs(retryNumber) {
+  const exponential =
+    LLM_CONFIG.retries.baseDelayMs * Math.pow(2, Math.max(0, retryNumber - 1));
+  return Math.min(exponential, LLM_CONFIG.retries.maxDelayMs);
+}
 
-export async function checkOllamaHealth() {
-  const now = Date.now();
-  if (cachedHealth && (now - cachedHealthAt < HEALTH_CACHE_TTL_MS)) {
-    return cachedHealth;
-  }
-
-  const controller = new AbortController();
-  const timer = setTimeout(
-    () => controller.abort(),
-    HEALTHCHECK_TIMEOUT_MS
+function createOllamaHttpError(response, bodyPreview = "") {
+  const error = new Error(
+    `Ollama returned HTTP ${response.status}: ${response.statusText}`
   );
-
-  try {
-    const res = await fetch(OLLAMA_TAGS_URL, {
-      method: "GET",
-      signal: controller.signal,
-    });
-
-    clearTimeout(timer);
-
-    if (!res.ok) {
-      throw new Error(`Health check failed: HTTP ${res.status}`);
-    }
-
-    const data = await res.json();
-
-    const models =
-      Array.isArray(data.models) ? data.models.map((m) => m.name) : [];
-
-    const modelAvailable = models.includes(DEFAULT_MODEL);
-
-    logInfo("health_check_passed", {
-      model: DEFAULT_MODEL,
-      available_models: models.length,
-      model_available: modelAvailable,
-    });
-
-    cachedHealth = {
-      healthy: true,
-      modelAvailable,
-      models,
-    };
-    cachedHealthAt = now;
-
-    return cachedHealth;
-  } catch (error) {
-    clearTimeout(timer);
-
-    logError("health_check_failed", {
-      error_message: error.message,
-    });
-
-    // Don't cache failures for the full TTL
-    return {
-      healthy: false,
-      modelAvailable: false,
-      models: [],
-    };
-  }
+  error.status = response.status;
+  error.retryable = isRetryableStatus(response.status);
+  error.bodyPreview = bodyPreview;
+  return error;
 }
 
-// ─────────────────────────────────────────────────────────────
-// WARMUP
-// ─────────────────────────────────────────────────────────────
+function rememberGenerationMetadata(requestId, metadata) {
+  if (!requestId) return;
 
-export async function warmupOllama(model = DEFAULT_MODEL) {
-  const now = Date.now();
-  if (now - lastWarmupAt < WARMUP_INTERVAL_MS) {
-    return true;
-  }
+  lastGenerationMetadata.set(requestId, {
+    ...metadata,
+    recorded_at: new Date().toISOString(),
+  });
 
-  try {
-    logInfo("warmup_start", { model });
-
-    await executeOllamaRequest({
-      prompt: "ping",
-      model,
-      requestId: "warmup",
-      timeoutMs: 10000,
-      options: {
-        temperature: 0.0,
-        top_p: 0.1,
-      }
-    });
-
-    lastWarmupAt = now;
-    logInfo("warmup_success", { model });
-
-    return true;
-  } catch (error) {
-    logWarn("warmup_failed", {
-      model,
-      error_message: error.message,
-    });
-
-    return false;
+  while (lastGenerationMetadata.size > MAX_GENERATION_METADATA) {
+    const oldestKey = lastGenerationMetadata.keys().next().value;
+    lastGenerationMetadata.delete(oldestKey);
   }
 }
-
-// ─────────────────────────────────────────────────────────────
-// LOW-LEVEL REQUEST
-// ─────────────────────────────────────────────────────────────
 
 async function executeOllamaRequest({
   prompt,
@@ -230,199 +94,412 @@ async function executeOllamaRequest({
   requestId,
   timeoutMs,
   options = {},
+  role,
 }) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
-
   const start = Date.now();
 
   try {
-    const response = await fetch(OLLAMA_GENERATE_URL, {
+    const response = await fetch(LLM_CONFIG.generateUrl, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         model,
         prompt,
         stream: false,
+        keep_alive: LLM_CONFIG.keepAlive,
         options,
       }),
       signal: controller.signal,
     });
 
-    clearTimeout(timer);
-
-    const duration = Date.now() - start;
+    const durationMs = Date.now() - start;
 
     if (!response.ok) {
-      throw new Error(
-        `Ollama returned HTTP ${response.status}: ${response.statusText}`
-      );
+      const bodyPreview = await response.text().catch(() => "");
+      throw createOllamaHttpError(response, bodyPreview.slice(0, 240));
     }
 
     const data = await response.json();
-
     const answer =
       data?.response?.trim() ||
       data?.message?.content?.trim() ||
       "";
 
     if (!answer) {
-      throw new Error("Ollama returned empty response");
-    }
-
-    logInfo("request_success", {
-      requestId,
-      model,
-      duration_ms: duration,
-      response_chars: answer.length,
-    });
-
-    // Reset circuit breaker on success
-    consecutiveFailures = 0;
-
-    return answer;
-  } catch (error) {
-    clearTimeout(timer);
-
-    const duration = Date.now() - start;
-
-    // Increment failure counter
-    consecutiveFailures++;
-    if (consecutiveFailures >= FAILURE_THRESHOLD) {
-      circuitBreakerTrippedAt = Date.now();
-      logError("circuit_breaker_tripped", { consecutiveFailures });
-    }
-
-    // Preserve AbortError
-    if (error.name === "AbortError") {
-      logWarn("request_timeout", {
-        requestId,
-        model,
-        timeout_ms: timeoutMs,
-        duration_ms: duration,
-      });
-
+      const error = new Error("Ollama returned empty response");
+      error.retryable = true;
       throw error;
     }
 
-    logWarn("request_failure", {
+    log("INFO", "request_success", {
       requestId,
       model,
-      duration_ms: duration,
-      error_message: error.message,
+      role,
+      duration_ms: durationMs,
+      response_chars: answer.length,
+    });
+
+    return { answer, durationMs };
+  } catch (error) {
+    const durationMs = Date.now() - start;
+
+    log(error.name === "AbortError" ? "WARN" : "WARN", "request_failure", {
+      requestId,
+      model,
+      role,
+      duration_ms: durationMs,
+      timeout_ms: timeoutMs,
+      retryable: isRetryableError(error),
+      error_message: error.name === "AbortError" ? "timeout" : error.message,
+      status: error.status,
     });
 
     throw error;
+  } finally {
+    clearTimeout(timer);
   }
 }
 
-// ─────────────────────────────────────────────────────────────
-// STABLE PRODUCTION INTERFACE
-// ─────────────────────────────────────────────────────────────
-
-export async function generateStableResponse({
+async function generateWithRetries({
   prompt,
-  model = DEFAULT_MODEL,
-  requestId = "none",
-  timeoutMs = OLLAMA_TIMEOUT_MS,
-  options = {},
-  skipWarmup = false,
+  model,
+  role,
+  requestId,
+  retryLimit,
+  timeoutMs,
+  deadlineAt,
+  options,
 }) {
-  if (!prompt || typeof prompt !== "string") {
-    throw new Error("Prompt is required for Ollama generation.");
-  }
+  const startedAt = Date.now();
+  let lastError = null;
 
-  // Step 0: Circuit Breaker Check
-  if (consecutiveFailures >= FAILURE_THRESHOLD) {
-    const timeSinceTrip = Date.now() - circuitBreakerTrippedAt;
-    if (timeSinceTrip < CIRCUIT_BREAKER_RESET_MS) {
-      logWarn("circuit_breaker_reject", { requestId, timeSinceTrip });
-      throw new Error("Ollama service temporarily suspended due to repeated failures.");
-    } else {
-      // Cooldown expired, reset for a retry attempt
-      logInfo("circuit_breaker_cooldown_expired", { requestId });
-      consecutiveFailures = 0;
+  for (let attempt = 0; attempt <= retryLimit; attempt += 1) {
+    const remainingMs = deadlineAt - Date.now();
+
+    if (remainingMs < LLM_CONFIG.timeouts.minRemainingMs) {
+      lastError = new Error("LLM request deadline exhausted before next attempt");
+      lastError.retryable = true;
+      break;
     }
-  }
 
-  // Step 1: Health Check
-  const health = await checkOllamaHealth();
+    const attemptTimeoutMs = Math.min(timeoutMs, remainingMs);
 
-  if (!health.healthy) {
-    throw new Error("Ollama server unavailable.");
-  }
+    log("INFO", "generation_attempt", {
+      requestId,
+      model,
+      role,
+      attempt,
+      retry_limit: retryLimit,
+      timeout_ms: attemptTimeoutMs,
+      remaining_budget_ms: remainingMs,
+      breaker_state: modelFailoverManager.getStatus().breaker_state,
+    });
 
-  if (!health.modelAvailable) {
-    throw new Error(`Required Ollama model unavailable: ${model}`);
-  }
-
-  // Step 2: Warmup if needed
-  if (!skipWarmup) {
-    await warmupOllama(model);
-  }
-
-  let lastError;
-
-  // Correct loop: 0 is initial, 1..MAX_RETRIES are retries.
-  // Total attempts = initial + MAX_RETRIES.
-  for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
     try {
-      if (attempt > 0) {
-        const delay =
-          BASE_RETRY_DELAY_MS * Math.pow(2, attempt - 1);
-
-        logWarn("retry_scheduled", {
-          requestId,
-          attempt,
-          delay_ms: delay,
-        });
-
-        await new Promise((resolve) =>
-          setTimeout(resolve, delay)
-        );
-      }
-
-      logInfo("generation_attempt", {
-        requestId,
-        model,
-        attempt,
-      });
-
-      return await executeOllamaRequest({
+      const result = await executeOllamaRequest({
         prompt,
         model,
         requestId,
-        timeoutMs,
+        timeoutMs: attemptTimeoutMs,
         options,
+        role,
       });
+
+      const latencyMs = Date.now() - startedAt;
+      modelFailoverManager.recordModelSuccess({ model, role, latencyMs });
+
+      return {
+        answer: result.answer,
+        attempts: attempt + 1,
+        latencyMs,
+        model,
+        role,
+      };
     } catch (error) {
       lastError = error;
 
-      if (!isRetryableError(error) || attempt >= MAX_RETRIES) {
+      if (!isRetryableError(error) || attempt >= retryLimit) {
         break;
       }
+
+      const delayMs = retryDelayMs(attempt + 1);
+
+      if (deadlineAt - Date.now() - delayMs < LLM_CONFIG.timeouts.minRemainingMs) {
+        break;
+      }
+
+      log("WARN", "retry_scheduled", {
+        requestId,
+        model,
+        role,
+        attempt,
+        next_attempt: attempt + 1,
+        delay_ms: delayMs,
+      });
+
+      await sleep(delayMs);
     }
   }
 
-  logError("generation_failed", {
+  const latencyMs = Date.now() - startedAt;
+  modelFailoverManager.recordModelFailure({
+    model,
+    role,
+    error: lastError,
+    latencyMs,
+  });
+
+  log("ERROR", "generation_failed", {
     requestId,
     model,
-    retries_exhausted: true,
+    role,
+    attempts: retryLimit + 1,
+    latency_ms: latencyMs,
     error_message: lastError?.message,
+    breaker_state: modelFailoverManager.getStatus().breaker_state,
   });
 
   throw lastError;
 }
 
-// ─────────────────────────────────────────────────────────────
-// BACKWARD COMPATIBILITY
-// ─────────────────────────────────────────────────────────────
+export async function checkOllamaHealth() {
+  const status = await modelFailoverManager.refreshHealth();
+
+  return {
+    healthy: status.server_healthy && status.breaker_state !== "OPEN",
+    modelAvailable: status.primary_health.available,
+    backupModelAvailable: status.backup_health.available,
+    models: status.available_models,
+    primary: status.primary_health,
+    backup: status.backup_health,
+    breakerState: status.breaker_state,
+    startup_readiness_phase: status.startup_readiness_phase,
+    ollama_ready: status.ollama_ready,
+    ollama_wait_attempts: status.ollama_wait_attempts,
+    ollama_wait_duration_ms: status.ollama_wait_duration_ms,
+    startupReadinessPhase: status.startup_readiness_phase,
+    ollamaReady: status.ollama_ready,
+    ollamaWaitAttempts: status.ollama_wait_attempts,
+    ollamaWaitDurationMs: status.ollama_wait_duration_ms,
+    failoverActive: status.failover_active,
+    truePrimaryModel: status.true_primary_model,
+    activeRuntimeModel: status.active_runtime_model,
+    primaryColdStartPending: status.primary_cold_start_pending,
+    preloadWarning: status.preload_warning,
+    startupPreloadStatus: status.startup_preload_status,
+    backupReady: status.backup_ready,
+  };
+}
+
+export async function warmupOllama(model = LLM_CONFIG.primaryModel) {
+  return modelFailoverManager.preloadModel(model);
+}
+
+export async function preloadOllamaModels() {
+  return modelFailoverManager.preloadModels();
+}
+
+export function getOllamaRuntimeStatus() {
+  return modelFailoverManager.getStatus();
+}
+
+export function getLastGenerationMetadata(requestId) {
+  return lastGenerationMetadata.get(requestId) || null;
+}
+
+export async function generateStableResponse({
+  prompt,
+  model = LLM_CONFIG.primaryModel,
+  requestId = "none",
+  timeoutMs = LLM_CONFIG.timeouts.primaryMs,
+  deadlineMs = LLM_CONFIG.timeouts.generationDeadlineMs,
+  options = {},
+  skipWarmup = true,
+} = {}) {
+  if (!prompt || typeof prompt !== "string") {
+    throw new Error("Prompt is required for Ollama generation.");
+  }
+
+  modelFailoverManager.start();
+  modelFailoverManager.scheduleRecoveryProbeIfDue();
+
+  if (skipWarmup === false) {
+    log("INFO", "warmup_skipped_for_latency", {
+      requestId,
+      reason: "per_request_warmup_disabled",
+    });
+  }
+
+  const initialRoute = modelFailoverManager.getInitialRoute(model);
+  const runtimeStatusBeforeAttempt = modelFailoverManager.getStatus();
+  const primaryColdStartAttempt =
+    initialRoute.role === "primary" &&
+    runtimeStatusBeforeAttempt.primary_cold_start_pending === true;
+  const requestStartedAt = Date.now();
+  const effectiveDeadlineMs = primaryColdStartAttempt
+    ? Math.max(deadlineMs, LLM_CONFIG.timeouts.primaryColdStartMs)
+    : Math.min(
+        Math.max(deadlineMs, LLM_CONFIG.timeouts.minRemainingMs),
+        LLM_CONFIG.timeouts.generationDeadlineMs
+      );
+  const deadlineAt = requestStartedAt + effectiveDeadlineMs;
+
+  if (initialRoute.role === "none") {
+    const status = modelFailoverManager.getStatus();
+    const error = new Error(
+      initialRoute.reason === "waiting_for_ollama"
+        ? "Ollama generation unavailable: startup readiness is waiting for Ollama."
+        : "Ollama generation unavailable: primary and backup models are unhealthy."
+    );
+    error.code =
+      initialRoute.reason === "waiting_for_ollama"
+        ? "LLM_WAITING_FOR_OLLAMA"
+        : "LLM_CIRCUIT_OPEN";
+
+    rememberGenerationMetadata(requestId, {
+      success: false,
+      model: null,
+      role: "none",
+      failover_used: false,
+      ...status,
+    });
+
+    log("ERROR", "breaker_open_reject", {
+      requestId,
+      ...status,
+    });
+
+    throw error;
+  }
+
+  if (initialRoute.role === "backup") {
+    log("WARN", "backup_route_selected", {
+      requestId,
+      reason: initialRoute.reason,
+      primary_model: LLM_CONFIG.primaryModel,
+      backup_model: LLM_CONFIG.backupModel,
+      ...modelFailoverManager.getStatus(),
+    });
+  }
+
+  if (primaryColdStartAttempt) {
+    log("WARN", "primary_cold_start_live_retry", {
+      requestId,
+      model: initialRoute.model,
+      timeout_ms: LLM_CONFIG.timeouts.primaryColdStartMs,
+      deadline_ms: effectiveDeadlineMs,
+      breaker_state: runtimeStatusBeforeAttempt.breaker_state,
+      message: "Gemma remains primary; startup preload warning will be resolved by this live request if successful.",
+    });
+  }
+
+  try {
+    const initialResult = await generateWithRetries({
+      prompt,
+      model: initialRoute.model,
+      role: initialRoute.role,
+      requestId,
+      retryLimit:
+        initialRoute.role === "backup"
+          ? LLM_CONFIG.retries.backupLimit
+          : LLM_CONFIG.retries.primaryLimit,
+      timeoutMs:
+        initialRoute.role === "backup"
+          ? LLM_CONFIG.timeouts.backupMs
+          : primaryColdStartAttempt
+            ? Math.max(timeoutMs, LLM_CONFIG.timeouts.primaryColdStartMs)
+            : timeoutMs,
+      deadlineAt,
+      options,
+    });
+
+    rememberGenerationMetadata(requestId, {
+      success: true,
+      failover_used: initialRoute.role === "backup",
+      primary_cold_start_attempt: primaryColdStartAttempt,
+      ...initialResult,
+      ...modelFailoverManager.getStatus(),
+    });
+
+    return initialResult.answer;
+  } catch (primaryError) {
+    if (!modelFailoverManager.canFallbackToBackup(initialRoute.role)) {
+      if (initialRoute.role === "primary") {
+        log("WARN", "primary_failure_below_failover_threshold", {
+          requestId,
+          primary_model: LLM_CONFIG.primaryModel,
+          backup_model: LLM_CONFIG.backupModel,
+          error_message: primaryError?.message,
+          message: "Gemma remains active until consecutive runtime failures reach the failover threshold.",
+          ...modelFailoverManager.getStatus(),
+        });
+      }
+
+      if (initialRoute.role === "backup") {
+        modelFailoverManager.recordAllModelsFailed("backup_failed_while_degraded");
+      }
+
+      rememberGenerationMetadata(requestId, {
+        success: false,
+        model: initialRoute.model,
+        role: initialRoute.role,
+        failover_used: initialRoute.role === "backup",
+        primary_cold_start_attempt: primaryColdStartAttempt,
+        error_message: primaryError?.message,
+        ...modelFailoverManager.getStatus(),
+      });
+
+      throw primaryError;
+    }
+
+    modelFailoverManager.activateBackup("primary_generation_failed");
+
+    try {
+      const backupResult = await generateWithRetries({
+        prompt,
+        model: LLM_CONFIG.backupModel,
+        role: "backup",
+        requestId,
+        retryLimit: LLM_CONFIG.retries.backupLimit,
+        timeoutMs: LLM_CONFIG.timeouts.backupMs,
+        deadlineAt,
+        options,
+      });
+
+      rememberGenerationMetadata(requestId, {
+        success: true,
+        failover_used: true,
+        primary_cold_start_attempt: primaryColdStartAttempt,
+        primary_error: primaryError?.message,
+        ...backupResult,
+        ...modelFailoverManager.getStatus(),
+      });
+
+      return backupResult.answer;
+    } catch (backupError) {
+      modelFailoverManager.recordAllModelsFailed("primary_and_backup_failed");
+
+      rememberGenerationMetadata(requestId, {
+        success: false,
+        model: LLM_CONFIG.backupModel,
+        role: "backup",
+        failover_used: true,
+        primary_cold_start_attempt: primaryColdStartAttempt,
+        primary_error: primaryError?.message,
+        backup_error: backupError?.message,
+        ...modelFailoverManager.getStatus(),
+      });
+
+      throw backupError;
+    }
+  }
+}
 
 export async function callOllama(
   prompt,
-  model = DEFAULT_MODEL,
+  model = LLM_CONFIG.primaryModel,
   requestId = "none"
 ) {
   return generateStableResponse({
@@ -432,13 +509,18 @@ export async function callOllama(
   });
 }
 
-// ─────────────────────────────────────────────────────────────
-// STARTUP DIAGNOSTIC
-// ─────────────────────────────────────────────────────────────
+modelFailoverManager.start();
 
-logInfo("ollama_service_initialized", {
-  base_url: OLLAMA_BASE_URL,
-  model: DEFAULT_MODEL,
-  timeout_ms: OLLAMA_TIMEOUT_MS,
-  max_retries: MAX_RETRIES,
+log("INFO", "ollama_service_initialized", {
+  base_url: LLM_CONFIG.ollamaBaseUrl,
+  primary_model: LLM_CONFIG.primaryModel,
+  backup_model: LLM_CONFIG.backupModel,
+  primary_retry_limit: LLM_CONFIG.retries.primaryLimit,
+  backup_retry_limit: LLM_CONFIG.retries.backupLimit,
+  primary_timeout_ms: LLM_CONFIG.timeouts.primaryMs,
+  backup_timeout_ms: LLM_CONFIG.timeouts.backupMs,
+  generation_deadline_ms: LLM_CONFIG.timeouts.generationDeadlineMs,
+  primary_max_failures: LLM_CONFIG.failover.primaryMaxFailures,
+  breaker_threshold: LLM_CONFIG.failover.breakerThreshold,
+  half_open_interval_ms: LLM_CONFIG.failover.halfOpenIntervalMs,
 });

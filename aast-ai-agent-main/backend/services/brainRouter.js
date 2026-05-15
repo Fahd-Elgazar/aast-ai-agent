@@ -91,6 +91,8 @@ const SIGNAL_DICTIONARY = {
         'mobile computing',
         'cognitive computing',
         'natural language processing',
+        'artificial intelligence',
+        'blockchain',
         'nlp',
         'computer vision',
         'image processing',

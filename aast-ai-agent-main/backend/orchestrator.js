@@ -24,6 +24,8 @@ import { getRecommendation, getUserMemory, buildCareerRoadmap, compareMajors, up
 import { incrementMetric, recordDuration } from "./services/metrics.js";
 import { logger } from "./services/logger.js";
 import { generateUnifiedAnswer } from "./services/unifiedAnswerService.js";
+import { modelFailoverManager } from "./services/modelFailoverManager.js";
+import { normalizeAcademicQuery } from "./services/academicQueryNormalizer.js";
 import {
   MAX_CONTEXT_TURNS,
   deleteConversation,
@@ -374,25 +376,49 @@ app.post("/api/chatbot/query", async (req, res) => {
   try {
     console.log(`[Chatbot][${requestId}] Request Started`);
 
-    const { query, cid } = req.body ?? {};
-    if (!query) {
+    const { query: rawQuery, cid } = req.body ?? {};
+    if (!rawQuery || typeof rawQuery !== "string" || rawQuery.trim() === "") {
       return res.status(400).json(responseFormatter.formatErrorFallback("Query is required.", "ERROR", "UNKNOWN", requestId, {}));
     }
 
+    const originalQuery = rawQuery.trim();
+    const normalization = normalizeAcademicQuery(originalQuery);
+    const query = normalization.normalized || originalQuery;
+    const normalizationTrace = {
+      enabled: true,
+      changed: normalization.changed,
+      original_query: originalQuery,
+      normalized_query: query,
+      correction_count: normalization.correction_count,
+      corrections: normalization.corrections
+    };
+
     conversationId = normalizeConversationId(cid) || makeConversationId();
-    console.log(`[REQUEST][${requestId}] ${query} CID: ${conversationId}`);
+    console.log(`[REQUEST][${requestId}] ${originalQuery} CID: ${conversationId}`);
+
+    if (normalization.changed) {
+      incrementMetric("query_normalization_applied");
+      incrementMetric(`query_normalization_corrections_${Math.min(normalization.correction_count, 5)}`);
+      logger.info("Academic query normalized", {
+        requestId,
+        originalQuery,
+        normalizedQuery: query,
+        corrections: normalization.corrections
+      });
+      console.log(`[NORMALIZE][${requestId}] "${originalQuery}" -> "${query}"`);
+    }
 
     convo = await getConversation(conversationId);
 
-    logToFile(`USER [${conversationId}]: ${query}`);
-    await pushTurn(conversationId, convo, "user", query);
+    logToFile(`USER [${conversationId}]: ${originalQuery}`);
+    await pushTurn(conversationId, convo, "user", originalQuery);
 
     // ---------- 1. PRE-ROUTING (GREETING/FAQ) ----------
     let answer = checkGreeting(query);
     if (answer) {
       await pushTurn(conversationId, convo, "assistant", answer);
       incrementMetric("route_greeting_hits");
-      const earlyTrace = { degraded_services: [], subsystem_health: {}, latency_ms: Date.now() - requestStartTime, routing_confidence: 1.0 };
+      const earlyTrace = { degraded_services: [], subsystem_health: {}, latency_ms: Date.now() - requestStartTime, routing_confidence: 1.0, query_normalization: normalizationTrace };
       return res.json(responseFormatter.formatStatic(answer, "FAQ", 1.0, conversationId, requestId, earlyTrace));
     }
 
@@ -400,7 +426,7 @@ app.post("/api/chatbot/query", async (req, res) => {
     if (faqHit) {
       await pushTurn(conversationId, convo, "assistant", faqHit.answer);
       incrementMetric("route_faq_hits");
-      const earlyTrace = { degraded_services: [], subsystem_health: {}, latency_ms: Date.now() - requestStartTime, routing_confidence: 0.9 };
+      const earlyTrace = { degraded_services: [], subsystem_health: {}, latency_ms: Date.now() - requestStartTime, routing_confidence: 0.9, query_normalization: normalizationTrace };
       const faqPayload = {
         answer: faqHit.answer,
         confidence: 0.9,
@@ -445,7 +471,7 @@ app.post("/api/chatbot/query", async (req, res) => {
 
     if (intentKeyword === "UNKNOWN_TIMEOUT") {
       incrementMetric("route_timeout_errors");
-      const earlyTrace = { degraded_services: ["INTENT_TIMEOUT"], subsystem_health: {}, latency_ms: Date.now() - requestStartTime, routing_confidence: 0.1 };
+      const earlyTrace = { degraded_services: ["INTENT_TIMEOUT"], subsystem_health: {}, latency_ms: Date.now() - requestStartTime, routing_confidence: 0.1, query_normalization: normalizationTrace };
       return res.status(503).json(responseFormatter.formatErrorFallback("System is busy, please try again.", "ERROR", conversationId, requestId, earlyTrace));
     }
 
@@ -814,7 +840,8 @@ Fallback Calls: 0`);
                         degraded_services,
                         subsystem_health: healthStatus,
                         latency_ms: Date.now() - requestStartTime,
-                        routing_confidence: 0.98
+                        routing_confidence: 0.98,
+                        query_normalization: normalizationTrace
                     }
                 )
             );
@@ -898,7 +925,8 @@ Sources: ${rawResults.rag.results.length}`);
                   subsystem_health: healthStatus,
                   latency_ms: Date.now() - requestStartTime,
                   routing_confidence: deterministicPayload.confidence,
-                  response_tier: "DETERMINISTIC_SUCCESS"
+                  response_tier: "DETERMINISTIC_SUCCESS",
+                  query_normalization: normalizationTrace
                 }
               )
             );
@@ -1071,7 +1099,8 @@ Respond briefly, professionally, and conversationally as the AAST Advisor.`;
         subsystem_health: healthStatus,
         latency_ms: Date.now() - requestStartTime,
         routing_confidence: routingDecision.confidence || 0,
-        response_tier: degraded_services.length > 0 ? "DEGRADED_SUCCESS" : "FULL_SUCCESS"
+        response_tier: degraded_services.length > 0 ? "DEGRADED_SUCCESS" : "FULL_SUCCESS",
+        query_normalization: normalizationTrace
       };
 
       // ---------- 5. FUSION LAYER (Unified Primary + Fusion Fallback) ----------
@@ -1230,7 +1259,8 @@ Respond briefly, professionally, and conversationally as the AAST Advisor.`;
           degraded_services: ["FATAL_ERROR"], 
           latency_ms: Date.now() - requestStartTime, 
           routing_confidence: 0,
-          response_tier: "FATAL_FALLBACK"
+          response_tier: "FATAL_FALLBACK",
+          query_normalization: normalizationTrace
       };
 
       // TASK 5 — STRONGER FATAL FALLBACK: fusionService attempt with static backstop
@@ -1260,6 +1290,29 @@ Respond briefly, professionally, and conversationally as the AAST Advisor.`;
     return res.status(500).json(responseFormatter.formatErrorFallback("Fatal Internal Orchestrator Error", "ERROR", "UNKNOWN", requestId, {}));
   }
 });
+
+try {
+  console.log("[Startup] Waiting for Ollama readiness orchestration...");
+  const llmStartupStatus = await modelFailoverManager.waitForStartupCompletion();
+  logger.info("LLM startup readiness orchestration completed", {
+    startupReadinessPhase: llmStartupStatus.startup_readiness_phase,
+    ollamaReady: llmStartupStatus.ollama_ready,
+    breakerState: llmStartupStatus.breaker_state,
+    truePrimaryModel: llmStartupStatus.true_primary_model,
+    activeRuntimeModel: llmStartupStatus.active_runtime_model,
+    ollamaWaitAttempts: llmStartupStatus.ollama_wait_attempts,
+    ollamaWaitDurationMs: llmStartupStatus.ollama_wait_duration_ms
+  });
+  console.log(
+    `[Startup] Ollama phase=${llmStartupStatus.startup_readiness_phase} ` +
+    `ready=${llmStartupStatus.ollama_ready} breaker=${llmStartupStatus.breaker_state}`
+  );
+} catch (startupErr) {
+  logger.error("LLM startup readiness orchestration failed", {
+    error: startupErr.message
+  });
+  console.error("[Startup] LLM readiness orchestration failed:", startupErr.message);
+}
 
 // Start the server
 app.listen(PORT, () => {

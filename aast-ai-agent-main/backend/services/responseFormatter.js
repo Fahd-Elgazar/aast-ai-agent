@@ -37,7 +37,8 @@ class ResponseFormatter {
                 subsystem_health: traceData.subsystem_health || {},
                 latency_ms: traceData.latency_ms || 0,
                 routing_confidence: traceData.routing_confidence || 0,
-                response_tier: traceData.response_tier || "FULL_SUCCESS"
+                response_tier: traceData.response_tier || "FULL_SUCCESS",
+                query_normalization: traceData.query_normalization || null
             }
         };
 
@@ -100,7 +101,8 @@ class ResponseFormatter {
                 subsystem_health: traceData.subsystem_health || {},
                 latency_ms: traceData.latency_ms || 0,
                 routing_confidence: traceData.routing_confidence || 0,
-                response_tier: traceData.response_tier || "FULL_SUCCESS"
+                response_tier: traceData.response_tier || "FULL_SUCCESS",
+                query_normalization: traceData.query_normalization || null
             }
         };
 
@@ -137,7 +139,8 @@ class ResponseFormatter {
                 subsystem_health: traceData.subsystem_health || {},
                 latency_ms: traceData.latency_ms || 0,
                 routing_confidence: traceData.routing_confidence || 0,
-                response_tier: traceData.response_tier || "FULL_SUCCESS"
+                response_tier: traceData.response_tier || "FULL_SUCCESS",
+                query_normalization: traceData.query_normalization || null
             }
         };
 
@@ -175,7 +178,8 @@ class ResponseFormatter {
                 subsystem_health: traceData.subsystem_health || {},
                 latency_ms: traceData.latency_ms || 0,
                 routing_confidence: traceData.routing_confidence || 0,
-                response_tier: traceData.response_tier || "DEGRADED_SUCCESS"
+                response_tier: traceData.response_tier || "DEGRADED_SUCCESS",
+                query_normalization: traceData.query_normalization || null
             }
         };
 
