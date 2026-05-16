@@ -3,14 +3,11 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL || "http://localhost:11434";
-
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import fs from "fs";
 import path from "path";
-import fetch from "node-fetch";
 
 import chatbotRouter from "./routes/chatbot.js";
 import decisionRouter from "./routes/decision.js";
@@ -25,6 +22,8 @@ import { incrementMetric, recordDuration } from "./services/metrics.js";
 import { logger } from "./services/logger.js";
 import { generateUnifiedAnswer } from "./services/unifiedAnswerService.js";
 import { modelFailoverManager } from "./services/modelFailoverManager.js";
+import { generateStableResponse } from "./services/ollamaService.js";
+import { gemmaWarmService } from "./services/gemmaWarmService.js";
 import { normalizeAcademicQuery } from "./services/academicQueryNormalizer.js";
 import {
   MAX_CONTEXT_TURNS,
@@ -254,20 +253,10 @@ async function extractDynamicIntent(query, requestId, isRetry = false) {
   }
   incrementMetric("cache_miss");
 
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 20000); // 20s
-
   try {
     const safeQuery = sanitizePromptInput(query);
     console.time(`[LLM][${requestId}]`);
-    let res;
-    try {
-      res = await fetch(`${OLLAMA_BASE_URL}/api/generate`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          model: process.env.OLLAMA_INTENT_MODEL || process.env.OLLAMA_MODEL || "gemma4:e2b",
-          prompt: `Analyze the user's intent.
+    const intentPrompt = `Analyze the user's intent.
 Rules:
 - Output ONLY valid JSON, starting with { and ending with }.
 - No markdown, no code blocks, no explanations, no conversational text.
@@ -283,18 +272,27 @@ Exact format:
   "intent": "GENERAL | RECOMMEND | CAREER_PATH_DETAIL | COMPARISON | REJECT",
   "entities": ["..."],
   "confidence": 0.0
-}`,
-          stream: false
-        }),
-        signal: controller.signal
+}`;
+    let rawToken = "";
+    try {
+      rawToken = await generateStableResponse({
+        prompt: intentPrompt,
+        model: process.env.OLLAMA_INTENT_MODEL || process.env.PRIMARY_MODEL || process.env.OLLAMA_MODEL || "gemma4:e2b",
+        requestId: `intent_${requestId}`,
+        timeoutMs: Number(process.env.INTENT_TIMEOUT_MS || 12000),
+        deadlineMs: Number(process.env.INTENT_DEADLINE_MS || 18000),
+        routeType: "INTENT",
+        trafficType: "intent",
+        options: {
+          temperature: 0,
+          top_p: 0.1,
+          repeat_penalty: 1.08,
+          num_predict: 96,
+        },
       });
     } finally {
       console.timeEnd(`[LLM][${requestId}]`);
     }
-
-    clearTimeout(timeout);
-    const data = await res.json();
-    const rawToken = data?.response || "";
 
     // Log raw LLM response
     console.log(`[LLM RAW][${requestId}]`, rawToken.trim());
@@ -327,8 +325,12 @@ Exact format:
     pruneIntentCache();
     return result;
   } catch (err) {
-    clearTimeout(timeout);
-    if (err.name === "AbortError") {
+    if (
+      err.name === "AbortError" ||
+      err.code === "GEMMA_QUEUE_TIMEOUT" ||
+      err.code === "GEMMA_QUEUE_OVERFLOW" ||
+      /timeout|timed out|queue/i.test(err.message || "")
+    ) {
       if (!isRetry) {
         console.warn(`[Intent][${requestId}] Timeout, retrying...`);
         return extractDynamicIntent(query, requestId, true);
@@ -486,7 +488,7 @@ app.post("/api/chatbot/query", async (req, res) => {
     const healthStatus = await checkSubsystemHealth();
 
     const analysisPayload = brainRouter.analyzeQuery(
-      { query, intent: intentKeyword },
+      { query, intent: intentKeyword, normalization: normalizationTrace },
       intentKeyword,
       { lastRoute: convo.lastRoute || null }
     );
@@ -497,6 +499,8 @@ app.post("/api/chatbot/query", async (req, res) => {
     );
 
     let route = routingDecision.route;
+    const initialRoute = route;
+    const routeOverrideReasons = [];
 
     const ROUTES = brainRouter.ROUTES || {
       KG_DIRECT: 'KG_DIRECT',
@@ -517,15 +521,28 @@ app.post("/api/chatbot/query", async (req, res) => {
         routingDecision?.route === ROUTES.KG_DIRECT
     ) {
         route = ROUTES.KG_DIRECT;
+        routeOverrideReasons.push("deterministic_kg_lock");
     }
 
     // SECTION B — QUERY-SAFETY LOCK
-    // PHASE 8: Prevent single-domain KG locks from collapsing multi-domain hybrid intent.
+    // PHASE 8: Direct entity lock only; hybrid triggers are protected above.
     if (
         route !== ROUTES.HYBRID_KG_RAG &&
-        /who teaches|dean|prerequisite|prerequisites|requirements|head of department|program director/i.test(query)
+        !routingDecision?.routing_features?.force_hybrid &&
+        /who teaches|who is teaching|who is|dean|vice dean|head of department|program director|department head/i.test(query)
     ) {
         route = ROUTES.KG_DIRECT;
+        routeOverrideReasons.push("direct_academic_entity_lock");
+    }
+
+    if (route !== routingDecision.route) {
+      routingDecision.route = route;
+      routingDecision.telemetry = {
+        ...(routingDecision.telemetry || {}),
+        route_chosen: route,
+        initial_route: initialRoute,
+        override_reasons: routeOverrideReasons
+      };
     }
 
     console.log(`[ROUTE_LOCK][${requestId}] Final locked route: ${route}`);
@@ -546,10 +563,27 @@ app.post("/api/chatbot/query", async (req, res) => {
     let interactivePrompt = null;
     let degraded_services = [];
     let kgRawData = null; // Hoisted for universal explainability injection
+    const routeDiagnostics = {
+      ...(routingDecision.telemetry || {}),
+      initial_route: initialRoute,
+      final_route: route,
+      route_reasoning: routingDecision.reasoning,
+      thresholds_used: routingDecision.thresholds || routingDecision.telemetry?.thresholds_used || {},
+      fallback_chain: routingDecision.fallback_chain || [],
+      fallback_triggers: [],
+      failure_diagnostics: [],
+      query_normalization: normalizationTrace
+    };
 
     // TASK 4 — ENHANCED KG CONFIDENCE SCORING
     const buildKgResponse = (kgRes) => {
         if (!kgRes || !Array.isArray(kgRes) || kgRes.length === 0) return [];
+        const kgMetadata = kgRes.metadata || {};
+        const routeFeatures = routingDecision.routing_features || {};
+        const parseConfidence = (value) => {
+          const n = Number.parseFloat(value);
+          return Number.isFinite(n) ? Math.max(0, Math.min(1, n)) : 0;
+        };
 
         // Pre-compute query tokens for entity overlap scoring
         const queryTokens = new Set(
@@ -560,6 +594,7 @@ app.post("/api/chatbot/query", async (req, res) => {
           const text = String(item.text || item);
           const relCount = (text.match(/--\[.*?\]-->/g) || []).length;
           const nodeCount = (text.match(/\(.*?\)/g) || []).length;
+          const sourceScore = parseConfidence(item.score ?? item.baseScore ?? kgRes.confidence);
 
           // Entity overlap: how many query tokens appear in the evidence
           const textTokens = new Set(text.toLowerCase().split(/\W+/).filter(t => t.length > 3));
@@ -574,6 +609,9 @@ app.post("/api/chatbot/query", async (req, res) => {
             + (relCount * 0.12)   // graph richness
             + (nodeCount * 0.04)   // graph breadth
             + (overlapScore * 0.25) // semantic relevance
+            + (sourceScore * 0.18)
+            + ((routeFeatures.entity_confidence || 0) * 0.08)
+            + ((routeFeatures.alias_confidence || 0) * 0.05)
             + lengthPenalty;
 
           conf = Math.min(0.98, Math.max(0.20, conf)); // Adjusted cap for Phase 4
@@ -590,7 +628,11 @@ app.post("/api/chatbot/query", async (req, res) => {
               source: "KnowledgeGraph",
               node_count: nodeCount,
               rel_count: relCount,
-              overlap_score: parseFloat(overlapScore.toFixed(3))
+              overlap_score: parseFloat(overlapScore.toFixed(3)),
+              source_score: parseFloat(sourceScore.toFixed(3)),
+              entity_score: routeFeatures.entity_confidence || 0,
+              alias_score: routeFeatures.alias_confidence || 0,
+              kg_retrieval: kgMetadata
             },
             source_type: "KG"
           };
@@ -602,6 +644,8 @@ app.post("/api/chatbot/query", async (req, res) => {
             Object.defineProperty(mapped, 'llm_bypassed', { value: true, enumerable: false });
             Object.defineProperty(mapped, 'answer', { value: kgRes.answer, enumerable: false });
         }
+        Object.defineProperty(mapped, 'metadata', { value: kgMetadata, enumerable: false });
+        Object.defineProperty(mapped, 'confidence', { value: kgRes.confidence || mapped[0]?.confidence || 0, enumerable: false });
 
         return mapped;
       };
@@ -744,6 +788,39 @@ app.post("/api/chatbot/query", async (req, res) => {
       );
     };
 
+    const retrieveRagEvidence = async (fallbackReason) => {
+      routeDiagnostics.fallback_triggers.push(fallbackReason);
+      await ragSemaphore.acquire();
+      const ragRes = await timeoutWrapper(ragService.search(query, { topK: 5 }), 5000, null)
+        .finally(() => ragSemaphore.release());
+
+      if (!ragRes) {
+        degraded_services.push("RAG_TIMEOUT");
+        routeDiagnostics.failure_diagnostics.push("RAG_TIMEOUT");
+        rawResults.rag = { results: [], confidence: 0, metadata: {}, fallback_used: false };
+        return null;
+      }
+
+      rawResults.rag = {
+        results: ragRes.sources || [],
+        confidence: ragRes.raw_confidence || 0,
+        metadata: ragRes.metadata || {},
+        fallback_used: ragRes.fallback_used || false,
+        answer: ragRes.answer || null,
+        pass_used: ragRes.pass_used || null,
+        query_category: ragRes.query_category || ragRes.category || null
+      };
+
+      logger.info("RAG fallback retrieval success", {
+        requestId,
+        fallbackReason,
+        confidence: rawResults.rag.confidence,
+        source_count: rawResults.rag.results.length
+      });
+
+      return ragRes;
+    };
+
     // ---------- 4. PARALLEL EXECUTION PIPELINES ----------
     // TASK 8 — PROMPT TOKEN BUDGET LOGGING
     const estimatedTokens = Math.ceil(query.length / 4);
@@ -772,11 +849,31 @@ app.post("/api/chatbot/query", async (req, res) => {
         if (!kgRawData) {
           incrementMetric("kg_timeout_failures");
           degraded_services.push("KG_TIMEOUT");
+          routeDiagnostics.failure_diagnostics.push("KG_TIMEOUT");
         }
         rawResults.kg = buildKgResponse(kgRawData);
 
         // PHASE 8: DETERMINISTIC KG EMPTY-RESULT GUARD
-        if (route === ROUTES.KG_ONLY && (!rawResults.kg || rawResults.kg.length === 0)) {
+        if ((route === ROUTES.KG_ONLY || route === ROUTES.KG_DIRECT) && (!rawResults.kg || rawResults.kg.length === 0)) {
+          const ragFallbackAllowed =
+            (routingDecision.fallback_chain || []).some(candidate => candidate === ROUTES.RAG_ONLY || candidate === ROUTES.RAG_DIRECT) &&
+            healthStatus.rag !== false;
+
+          if (ragFallbackAllowed) {
+            const ragFallback = await retrieveRagEvidence("KG_EMPTY_RAG_ESCALATION");
+            if (rawResults.rag?.results?.length > 0 || hasStrongRagEvidence(ragFallback)) {
+              degraded_services.push("KG_EMPTY");
+              routeDiagnostics.failure_diagnostics.push("KG_EMPTY");
+              route = ROUTES.RAG_ONLY;
+              routingDecision.route = route;
+              routeDiagnostics.final_route = route;
+              routeDiagnostics.route_chosen = route;
+              console.log(`[ORCHESTRATOR][${requestId}] KG empty; escalated to RAG_ONLY with evidence.`);
+            }
+          }
+        }
+
+        if ((route === ROUTES.KG_ONLY || route === ROUTES.KG_DIRECT) && (!rawResults.kg || rawResults.kg.length === 0)) {
           console.log(`[ORCHESTRATOR][${requestId}] KG_ONLY empty-result exit triggered.`);
           return res.json(
             responseFormatter.format({
@@ -788,7 +885,15 @@ app.post("/api/chatbot/query", async (req, res) => {
               route: "KG_ONLY",
               sources: [],
               reasoning: "Knowledge graph search completed but returned no verified matches."
-            }, conversationId, requestId)
+            }, conversationId, requestId, {
+              degraded_services,
+              subsystem_health: healthStatus,
+              latency_ms: Date.now() - requestStartTime,
+              routing_confidence: routingDecision.confidence || 0,
+              response_tier: "DEGRADED_SUCCESS",
+              query_normalization: normalizationTrace,
+              route_diagnostics: routeDiagnostics
+            })
           );
         }
 
@@ -841,7 +946,8 @@ Fallback Calls: 0`);
                         subsystem_health: healthStatus,
                         latency_ms: Date.now() - requestStartTime,
                         routing_confidence: 0.98,
-                        query_normalization: normalizationTrace
+                        query_normalization: normalizationTrace,
+                        route_diagnostics: routeDiagnostics
                     }
                 )
             );
@@ -853,6 +959,7 @@ Fallback Calls: 0`);
         
         if (!ragRes) {
           degraded_services.push("RAG_TIMEOUT");
+          routeDiagnostics.failure_diagnostics.push("RAG_TIMEOUT");
           rawResults.rag = { results: [], confidence: 0, metadata: {}, fallback_used: false };
         } else {
           // SECTION B — RESPONSE NORMALIZATION ADAPTER
@@ -876,6 +983,7 @@ Fallback Calls: 0`);
 
           // PHASE 8: DETERMINISTIC RAG EMPTY-RESULT GUARD
           if (route === ROUTES.RAG_ONLY && (!rawResults.rag || !rawResults.rag.results || rawResults.rag.results.length === 0)) {
+            routeDiagnostics.failure_diagnostics.push("RAG_EMPTY");
             console.log(`[ORCHESTRATOR][${requestId}] RAG_ONLY empty-result exit triggered.`);
             return res.json(
               responseFormatter.format({
@@ -887,7 +995,15 @@ Fallback Calls: 0`);
                 route: "RAG_ONLY",
                 sources: [],
                 reasoning: "Policy retrieval completed but returned no verified sources."
-              }, conversationId, requestId)
+              }, conversationId, requestId, {
+                degraded_services,
+                subsystem_health: healthStatus,
+                latency_ms: Date.now() - requestStartTime,
+                routing_confidence: routingDecision.confidence || 0,
+                response_tier: "DEGRADED_SUCCESS",
+                query_normalization: normalizationTrace,
+                route_diagnostics: routeDiagnostics
+              })
             );
           }
 
@@ -926,7 +1042,8 @@ Sources: ${rawResults.rag.results.length}`);
                   latency_ms: Date.now() - requestStartTime,
                   routing_confidence: deterministicPayload.confidence,
                   response_tier: "DETERMINISTIC_SUCCESS",
-                  query_normalization: normalizationTrace
+                  query_normalization: normalizationTrace,
+                  route_diagnostics: routeDiagnostics
                 }
               )
             );
@@ -947,6 +1064,7 @@ Sources: ${rawResults.rag.results.length}`);
           incrementMetric("subsystem_kg_failure");
           incrementMetric("kg_timeout_failures");
           degraded_services.push("KG_TIMEOUT");
+          routeDiagnostics.failure_diagnostics.push("KG_TIMEOUT");
         }
 
         if (ragOutcome.status === 'fulfilled' && ragOutcome.value) {
@@ -956,7 +1074,10 @@ Sources: ${rawResults.rag.results.length}`);
             results: ragData.sources || [],
             confidence: ragData.raw_confidence || 0,
             metadata: ragData.metadata || {},
-            fallback_used: ragData.fallback_used || false
+            fallback_used: ragData.fallback_used || false,
+            answer: ragData.answer || null,
+            pass_used: ragData.pass_used || null,
+            query_category: ragData.query_category || ragData.category || null
           };
           
           logger.info("HYBRID RAG success", { 
@@ -970,13 +1091,18 @@ Sources: ${rawResults.rag.results.length}`);
           console.error(`[HYBRID][${requestId}] RAG failed:`, ragOutcome.reason);
           incrementMetric("subsystem_rag_failure");
           degraded_services.push("RAG_TIMEOUT");
+          routeDiagnostics.failure_diagnostics.push("RAG_TIMEOUT");
           rawResults.rag = { results: [], confidence: 0, metadata: {}, fallback_used: false };
         }
 
-        if (!rawResults.kg && !rawResults.rag) {
+        if ((!rawResults.kg || rawResults.kg.length === 0) && (!rawResults.rag?.results || rawResults.rag.results.length === 0)) {
           console.warn(`[HYBRID][${requestId}] Total failure. Degrading to LLM.`);
           route = ROUTES.LLM_FALLBACK;
+          routingDecision.route = route;
+          routeDiagnostics.final_route = route;
+          routeDiagnostics.route_chosen = route;
           degraded_services.push("HYBRID_TOTAL_FAILURE");
+          routeDiagnostics.fallback_triggers.push("HYBRID_TOTAL_FAILURE_LLM_ESCALATION");
         }
       }
       else if (route === ROUTES.DECISION_ENGINE) {
@@ -1079,19 +1205,25 @@ Respond briefly, professionally, and conversationally as the AAST Advisor.`;
 
         // TASK 7 — LLM semaphore for concurrency protection
         await llmSemaphore.acquire();
-        const llmRes = await timeoutWrapper(
-          fetch(`${OLLAMA_BASE_URL}/api/generate`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              model: process.env.OLLAMA_FALLBACK_MODEL || process.env.OLLAMA_MODEL || "gemma4:e2b",
-              prompt: prompt,
-              stream: false
-            })
-          }).then(r => r.json()),
-          10000, null
+        const llmText = await timeoutWrapper(
+          generateStableResponse({
+            prompt,
+            model: process.env.OLLAMA_FALLBACK_MODEL || process.env.PRIMARY_MODEL || process.env.OLLAMA_MODEL || "gemma4:e2b",
+            requestId: `fallback_${requestId}`,
+            timeoutMs: Number(process.env.FALLBACK_LLM_TIMEOUT_MS || 12000),
+            deadlineMs: Number(process.env.FALLBACK_LLM_DEADLINE_MS || 18000),
+            routeType: "LLM_FALLBACK",
+            trafficType: "fallback",
+            options: {
+              temperature: 0.08,
+              top_p: 0.72,
+              repeat_penalty: 1.18,
+              num_predict: 220
+            }
+          }),
+          18000, null
         ).finally(() => llmSemaphore.release());
-        rawResults.llm = [{ response: llmRes?.response?.trim() || "Some systems are limited right now, but based on available academic guidance, here is the best support I can provide.", confidence: 0.3 }];
+        rawResults.llm = [{ response: llmText?.trim() || "Some systems are limited right now, but based on available academic guidance, here is the best support I can provide.", confidence: 0.3 }];
       }
 
       const traceData = {
@@ -1100,7 +1232,22 @@ Respond briefly, professionally, and conversationally as the AAST Advisor.`;
         latency_ms: Date.now() - requestStartTime,
         routing_confidence: routingDecision.confidence || 0,
         response_tier: degraded_services.length > 0 ? "DEGRADED_SUCCESS" : "FULL_SUCCESS",
-        query_normalization: normalizationTrace
+        query_normalization: normalizationTrace,
+        route_diagnostics: {
+          ...routeDiagnostics,
+          final_route: route,
+          route_chosen: route,
+          kg_hit_quality: {
+            result_count: rawResults.kg?.length || 0,
+            confidence: rawResults.kg?.confidence || rawResults.kg?.[0]?.confidence || 0,
+            metadata: rawResults.kg?.metadata || {}
+          },
+          rag_hit_quality: {
+            result_count: rawResults.rag?.results?.length || 0,
+            confidence: rawResults.rag?.confidence || 0,
+            metadata: rawResults.rag?.metadata || {}
+          }
+        }
       };
 
       // ---------- 5. FUSION LAYER (Unified Primary + Fusion Fallback) ----------
@@ -1260,7 +1407,12 @@ Respond briefly, professionally, and conversationally as the AAST Advisor.`;
           latency_ms: Date.now() - requestStartTime, 
           routing_confidence: 0,
           response_tier: "FATAL_FALLBACK",
-          query_normalization: normalizationTrace
+          query_normalization: normalizationTrace,
+          route_diagnostics: {
+            ...routeDiagnostics,
+            final_route: "FATAL_FALLBACK",
+            failure_diagnostics: [...(routeDiagnostics.failure_diagnostics || []), err.message]
+          }
       };
 
       // TASK 5 — STRONGER FATAL FALLBACK: fusionService attempt with static backstop
@@ -1307,11 +1459,13 @@ try {
     `[Startup] Ollama phase=${llmStartupStatus.startup_readiness_phase} ` +
     `ready=${llmStartupStatus.ollama_ready} breaker=${llmStartupStatus.breaker_state}`
   );
+  gemmaWarmService.start();
 } catch (startupErr) {
   logger.error("LLM startup readiness orchestration failed", {
     error: startupErr.message
   });
   console.error("[Startup] LLM readiness orchestration failed:", startupErr.message);
+  gemmaWarmService.start();
 }
 
 // Start the server

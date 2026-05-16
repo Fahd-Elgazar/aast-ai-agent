@@ -1638,11 +1638,26 @@ class RAGService {
         const start = process.hrtime();
         try {
             const res = await httpClient.get(url, { timeout: CONFIG.HEALTH_TIMEOUT_MS });
-            return { ok: true, name, status: res.status, latency_ms: elapsedMs(start) };
+            const details = res.data && typeof res.data === 'object' ? res.data : {};
+            return {
+                ok: true,
+                name,
+                status_code: res.status,
+                service_status: details.status || null,
+                latency_ms: elapsedMs(start),
+                embedding: details.embedding || null,
+                memory: details.memory || null,
+                collection_name: details.collection_name || null,
+                qdrant_connected: details.qdrant_connected,
+                details,
+            };
         } catch (err) {
             return {
                 ok: false, name, error: err.message,
-                status: err.response?.status || null, latency_ms: elapsedMs(start),
+                status_code: err.response?.status || null,
+                service_status: err.response?.data?.status || null,
+                latency_ms: elapsedMs(start),
+                details: err.response?.data || null,
             };
         }
     }

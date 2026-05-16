@@ -6,7 +6,21 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const ORCHESTRATOR_URL = 'http://localhost:8000/api/chatbot/query';
+const ORCHESTRATOR_URL =
+    process.env.ORCHESTRATOR_URL ||
+    `http://localhost:${process.env.ORCHESTRATOR_PORT || 8004}/api/chatbot/query`;
+
+function canonicalRoute(route) {
+    const raw = String(route || "LLM_FALLBACK").toUpperCase();
+    if (raw.includes("HYBRID")) return "HYBRID_KG_RAG";
+    if (raw.includes("KG")) return "KG_ONLY";
+    if (raw.includes("RAG")) return "RAG_ONLY";
+    if (raw.includes("DECISION")) return "DECISION_ENGINE";
+    if (raw.includes("CAREER")) return "CAREER_ENGINE";
+    if (raw.includes("FAQ")) return "FAQ";
+    if (raw.includes("INTERACTIVE")) return "INTERACTIVE";
+    return "LLM_FALLBACK";
+}
 
 async function runRouteBenchmark() {
     console.log("========================================================");
@@ -52,7 +66,8 @@ async function runRouteBenchmark() {
         const latency = Date.now() - startTime;
         latencies.push(latency);
         
-        const predictedRoute = data.metadata?.trace?.route || data.route || "LLM_FALLBACK";
+        const predictedRouteRaw = data.metadata?.trace?.route || data.route || "LLM_FALLBACK";
+        const predictedRoute = canonicalRoute(predictedRouteRaw);
         const conf = data.confidence || 0;
 
         if (!confusionMatrix[expectedRoute]) confusionMatrix[expectedRoute] = {};

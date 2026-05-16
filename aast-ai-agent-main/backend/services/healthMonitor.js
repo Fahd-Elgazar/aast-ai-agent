@@ -44,6 +44,10 @@ function buildPullCommand(model) {
   return `ollama pull ${model}`;
 }
 
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export class HealthMonitor {
   constructor(config = LLM_CONFIG, logger = defaultLogger) {
     this.config = config;
@@ -324,6 +328,13 @@ export class HealthMonitor {
             temperature: 0,
             top_p: 0.1,
             num_predict: 1,
+            num_ctx: Math.min(this.config.gemma.numCtx, this.config.gemma.minNumCtx),
+            ...(this.config.gemma.numThread > 0
+              ? { num_thread: this.config.gemma.numThread }
+              : {}),
+            ...(this.config.gemma.numBatch > 0
+              ? { num_batch: this.config.gemma.numBatch }
+              : {}),
           },
         }),
         signal: controller.signal,
@@ -374,7 +385,7 @@ export class HealthMonitor {
   async preloadModels(
     models = [this.config.primaryModel, this.config.backupModel],
     {
-      prompt = "hi",
+      prompt = ".",
       timeoutMs = this.config.timeouts.preloadMs,
       recordFailure = false,
     } = {}
@@ -388,25 +399,34 @@ export class HealthMonitor {
       updated_at: nowIso(),
     };
 
-    const results = await Promise.allSettled(
-      uniqueModels.map((model) =>
-        this.probeModel(model, {
+    const summary = [];
+
+    for (const [index, model] of uniqueModels.entries()) {
+      if (index > 0 && this.config.timeouts.preloadStaggerMs > 0) {
+        await sleep(this.config.timeouts.preloadStaggerMs);
+      }
+
+      try {
+        const result = await this.probeModel(model, {
           timeoutMs,
           reason: "startup_preload",
           prompt,
           recordFailure,
-        })
-      )
-    );
-
-    const summary = results.map((result, index) => ({
-      model: uniqueModels[index],
-      ok: result.status === "fulfilled" && result.value?.ok === true,
-      error:
-        result.status === "rejected"
-          ? result.reason?.message || String(result.reason)
-          : result.value?.error,
-    }));
+        });
+        summary.push({
+          model,
+          ok: result?.ok === true,
+          latencyMs: result?.latencyMs,
+          error: result?.error,
+        });
+      } catch (error) {
+        summary.push({
+          model,
+          ok: false,
+          error: error?.message || String(error),
+        });
+      }
+    }
 
     const primaryResult = summary.find((item) => item.model === this.config.primaryModel);
     const backupResult = summary.find((item) => item.model === this.config.backupModel);

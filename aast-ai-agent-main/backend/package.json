@@ -4,10 +4,13 @@
   "type": "module",
   "scripts": {
     "start": "node index.js",
+    "start:orchestrator": "node --max-old-space-size=3072 orchestrator.js",
     "dev": "nodemon index.js",
+    "dev:orchestrator": "nodemon --exec \"node --max-old-space-size=3072\" orchestrator.js",
     "neo": "nodemon index.js neo",
     "sql": "nodemon index.js sql",
-    "meili": "nodemon index.js meili"
+    "meili": "nodemon index.js meili",
+    "test:routing": "node testing/routingPrecisionCalibration.test.js"
   },
   "dependencies": {
     "@chroma-core/default-embed": "^0.1.9",

@@ -2,6 +2,7 @@ import { getSession } from "../db/neo4j.js";
 import fetch from "node-fetch";
 import { logger } from "./logger.js";
 import { incrementMetric, recordDuration, startTimer } from "./metrics.js";
+import { generateStableResponse } from "./ollamaService.js";
 
 const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL || "http://localhost:11434";
 
@@ -95,49 +96,42 @@ async function refineAnswerWithLocalLLM(facts, query) {
   let lastError = null;
 
   for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), timeoutMs);
-
     try {
-      const res = await fetch(`${OLLAMA_BASE_URL}/api/generate`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
+      const response = await generateStableResponse({
+        model: process.env.OLLAMA_GRAPH_MODEL || process.env.PRIMARY_MODEL || process.env.OLLAMA_MODEL || "gemma4:e2b",
+        requestId: `graph_refine_${Date.now()}`,
+        timeoutMs,
+        deadlineMs: Math.max(timeoutMs, 12000),
+        routeType: "KG_ONLY",
+        trafficType: "graph_refine",
+        options: {
+          temperature: 0.08,
+          top_p: 0.72,
+          repeat_penalty: 1.15,
+          num_predict: 160
         },
-        body: JSON.stringify({
-          model: process.env.OLLAMA_GRAPH_MODEL || process.env.OLLAMA_MODEL || "llama3.1",
-          prompt: `User Question:
+        prompt: `User Question:
 ${query}
 
 Academic Facts:
 ${factTexts.join("\n")}
 
 Generate a concise academic answer using only the facts above. If the facts are insufficient, say that the information was not found.`,
-          stream: false
-        }),
-        signal: controller.signal
       });
 
-      clearTimeout(timeout);
-      if (!res.ok) {
-        throw new Error(`GRAPH service returned HTTP ${res.status}`);
-      }
-
-      const json = await res.json();
-      const response = json?.response?.trim();
-      if (response) {
+      const cleanedResponse = response?.trim();
+      if (cleanedResponse) {
         if (attempt > 1) {
         incrementMetric("knowledge_graph.retry_success");
         }
-        return response;
+        return cleanedResponse;
       } else {
         throw new Error("GRAPH response empty");
       }
     } catch (err) {
-      clearTimeout(timeout);
       lastError = err;
 
-      if (err.name === "AbortError") {
+      if (err.name === "AbortError" || /timeout|timed out/i.test(err.message || "")) {
         incrementMetric("knowledge_graph.timeout");
         logger.warn("GRAPH request timed out", {
           attempt,
@@ -166,18 +160,21 @@ async function safeDeterministicReformatter(baseAnswer, query) {
   const timeoutMs = Number(process.env.REFORMAT_TIMEOUT_MS || 4000);
 
   for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), timeoutMs);
-
     try {
-      const res = await fetch(`${OLLAMA_BASE_URL}/api/generate`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
+      const response = await generateStableResponse({
+        model: process.env.OLLAMA_GRAPH_MODEL || process.env.PRIMARY_MODEL || process.env.OLLAMA_MODEL || "gemma4:e2b",
+        requestId: `graph_reformat_${Date.now()}`,
+        timeoutMs,
+        deadlineMs: Math.max(timeoutMs, 8000),
+        routeType: "KG_ONLY",
+        trafficType: "graph_reformat",
+        options: {
+          temperature: 0.05,
+          top_p: 0.70,
+          repeat_penalty: 1.12,
+          num_predict: 120
         },
-        body: JSON.stringify({
-          model: process.env.OLLAMA_GRAPH_MODEL || process.env.OLLAMA_MODEL || "llama3.1",
-          prompt: `Reformat the following academic answer for clarity and professionalism.
+        prompt: `Reformat the following academic answer for clarity and professionalism.
 
 STRICT RULES:
 - Use ONLY the provided facts
@@ -194,24 +191,16 @@ ${query}
 
 Facts:
 ${baseAnswer}`,
-          stream: false
-        }),
-        signal: controller.signal
       });
 
-      clearTimeout(timeout);
-      if (!res.ok) throw new Error(`Reformat service HTTP ${res.status}`);
-
-      const json = await res.json();
-      const response = json?.response?.trim();
-      if (response && response.length > 0) {
+      const cleanedResponse = response?.trim();
+      if (cleanedResponse && cleanedResponse.length > 0) {
         incrementMetric("knowledge_graph.safe_reformat_success");
-        return response;
+        return cleanedResponse;
       }
       throw new Error("Empty reformat response");
     } catch (err) {
-      clearTimeout(timeout);
-      if (err.name === "AbortError") {
+      if (err.name === "AbortError" || /timeout|timed out/i.test(err.message || "")) {
         incrementMetric("knowledge_graph.safe_reformat_timeout");
       } else {
         incrementMetric("knowledge_graph.safe_reformat_failure");
@@ -667,11 +656,22 @@ function buildPersonCypher(searchLimit, resultLimit) {
       )
       AND ${keywordContainsPredicate("personNode")}
 
-    // Compute exact-match booleans early for filtering
+    // Compute exact/contains booleans early for filtering. Person aliases
+    // often normalize to the bare name while KG records may include titles.
     WITH personNode, semanticScore,
       ${exactEntityPredicate("personNode", "$phraseKeywords")} AS _nodeExactPhrase,
-      ANY(k IN $keywords WHERE ${normalizeCypherExpression("personNode.name")} = ${normalizedKeywordCypher()}) AS _nodeExactKw
-    WHERE _nodeExactPhrase OR _nodeExactKw
+      ANY(k IN $keywords WHERE ${normalizeCypherExpression("personNode.name")} = ${normalizedKeywordCypher()}) AS _nodeExactKw,
+      ANY(k IN $phraseKeywords WHERE
+        ${normalizeCypherExpression("personNode.name")} CONTAINS ${normalizedKeywordCypher()}
+        OR ${normalizeCypherExpression("personNode.title")} CONTAINS ${normalizedKeywordCypher()}
+        OR ${normalizeCypherExpression("personNode.role")} CONTAINS ${normalizedKeywordCypher()}
+      ) AS _nodePhraseContains,
+      ANY(k IN $keywords WHERE size(k) >= 4 AND (
+        ${normalizeCypherExpression("personNode.name")} CONTAINS ${normalizedKeywordCypher()}
+        OR ${normalizeCypherExpression("personNode.title")} CONTAINS ${normalizedKeywordCypher()}
+        OR ${normalizeCypherExpression("personNode.role")} CONTAINS ${normalizedKeywordCypher()}
+      )) AS _nodeKeywordContains
+    WHERE _nodeExactPhrase OR _nodeExactKw OR _nodePhraseContains OR _nodeKeywordContains
 
     OPTIONAL MATCH (personNode)-[profileRel]-(relatedNode)
     WHERE profileRel IS NULL
@@ -1158,7 +1158,7 @@ function normalizeLastMessages(lastMessages) {
   return String(lastMessages);
 }
 
-function buildGraphResponse(answer, confidence, facts, isDeterministicKG = false, reformatted = false) {
+function buildGraphResponse(answer, confidence, facts, isDeterministicKG = false, reformatted = false, metadata = {}) {
   const response = Array.isArray(facts) ? facts : [];
 
   Object.defineProperties(response, {
@@ -1188,6 +1188,10 @@ function buildGraphResponse(answer, confidence, facts, isDeterministicKG = false
     },
     reformatted: {
       value: reformatted,
+      enumerable: false
+    },
+    metadata: {
+      value: metadata,
       enumerable: false
     }
   });
@@ -1347,7 +1351,15 @@ ${query}`;
 
     if (selectedFacts.length === 0) {
       incrementMetric("retrieval.no_results");
-      return buildGraphResponse(NO_RESULT_MESSAGE, 0, [], isDeterministicKG, false);
+      return buildGraphResponse(NO_RESULT_MESSAGE, 0, [], isDeterministicKG, false, {
+        detected_intent: detectedIntent,
+        retrieval_threshold: usedThreshold,
+        vector_index: usedIndexName,
+        semantic_fallback_used: semanticFallbackUsed,
+        keyword_count: keywords.length,
+        selected_fact_count: 0,
+        failure_reason: "NO_SELECTED_FACTS"
+      });
     }
 
     let answer;
@@ -1379,14 +1391,27 @@ ${query}`;
       answer = refinedAnswer || synthesizeAnswer(selectedFacts);
     }
 
-    return buildGraphResponse(answer, confidence, selectedFacts, isDeterministicKG, reformatted);
+    return buildGraphResponse(answer, confidence, selectedFacts, isDeterministicKG, reformatted, {
+      detected_intent: detectedIntent,
+      retrieval_threshold: usedThreshold,
+      vector_index: usedIndexName,
+      semantic_fallback_used: semanticFallbackUsed,
+      keyword_count: keywords.length,
+      selected_fact_count: selectedFacts.length,
+      top_fact_score: selectedFacts[0]?.score || 0,
+      top_fact_base_score: selectedFacts[0]?.baseScore || 0
+    });
   } catch (err) {
     incrementMetric("retrieval.error");
     logger.error("Neo4j context error", {
       requestId,
       error: err
     });
-    return buildGraphResponse(NO_RESULT_MESSAGE, 0, [], false, false);
+    return buildGraphResponse(NO_RESULT_MESSAGE, 0, [], false, false, {
+      detected_intent: detectedIntent,
+      failure_reason: "KG_EXCEPTION",
+      error: err.message
+    });
   } finally {
     recordDuration("query.latency_ms", stopQueryTimer());
     await session.close();

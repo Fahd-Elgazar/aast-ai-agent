@@ -5,6 +5,7 @@ import {
   OllamaReadinessService,
   STARTUP_READINESS_PHASES,
 } from "./ollamaReadinessService.js";
+import { getGemmaTelemetrySnapshot } from "./gemmaTelemetryService.js";
 
 function emitLog(level, event, payload = {}) {
   if (level === "DEBUG" && process.env.LLM_DEBUG !== "true") {
@@ -545,6 +546,7 @@ export class ModelFailoverManager {
     const circuit = this.circuit.getSnapshot();
     const health = this.healthMonitor.getStatus();
     const readiness = this.readinessService.getStatus();
+    const gemmaTelemetry = getGemmaTelemetrySnapshot();
     const failoverActive =
       circuit.breaker_state === CIRCUIT_STATES.DEGRADED ||
       circuit.breaker_state === CIRCUIT_STATES.HALF_OPEN;
@@ -593,6 +595,14 @@ export class ModelFailoverManager {
       server_healthy: health.server_healthy,
       primary_health: health.primary,
       backup_health: health.backup,
+      gemma_telemetry: gemmaTelemetry,
+      gemma_memory_pressure: gemmaTelemetry.gemma_memory_pressure,
+      gemma_queue_depth: gemmaTelemetry.gemma_queue_depth,
+      gemma_active_requests: gemmaTelemetry.gemma_active_requests,
+      gemma_context_size: gemmaTelemetry.gemma_context_size,
+      avg_generation_latency: gemmaTelemetry.avg_generation_latency,
+      overload_retries: gemmaTelemetry.overload_retries,
+      warm_pool_active: gemmaTelemetry.warm_pool_active,
       available_models: health.available_models,
       startup_validation: health.startup_validation,
       installed_status: {

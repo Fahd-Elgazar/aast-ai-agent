@@ -11,14 +11,15 @@ Dependencies:
 ========================================================
 """
 
+import gc
 import logging
+import os
 import re
+import threading
 import time
 from contextlib import asynccontextmanager
 from typing import List, Dict, Any, Optional
 
-import numpy as np
-from sentence_transformers import SentenceTransformer
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
@@ -38,6 +39,12 @@ QDRANT_PORT = 6333
 COLLECTION_NAME = "aast_academic_rag_production"
 
 EMBEDDING_MODEL = "BAAI/bge-m3"
+EMBEDDING_INIT_MODE = os.getenv("RAG_EMBEDDING_INIT_MODE", "lazy").strip().lower()
+EMBEDDING_DEVICE = os.getenv("RAG_EMBEDDING_DEVICE", "cpu").strip() or "cpu"
+EMBEDDING_BATCH_SIZE = max(1, int(os.getenv("RAG_EMBED_BATCH_SIZE", "4")))
+EMBEDDING_LOW_CPU_MEM_USAGE = os.getenv("RAG_LOW_CPU_MEM_USAGE", "true").lower() in {"1", "true", "yes", "on"}
+EMBEDDING_DYNAMIC_QUANTIZE = os.getenv("RAG_EMBEDDING_DYNAMIC_QUANTIZE", "false").lower() in {"1", "true", "yes", "on"}
+TORCH_NUM_THREADS = max(1, int(os.getenv("RAG_TORCH_NUM_THREADS", "1")))
 
 DEFAULT_TOP_K = 8
 FINAL_TOP_K = 5
@@ -75,6 +82,34 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
+os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
+os.environ.setdefault("OMP_NUM_THREADS", str(TORCH_NUM_THREADS))
+os.environ.setdefault("MKL_NUM_THREADS", str(TORCH_NUM_THREADS))
+
+
+def _process_memory_mb() -> Dict[str, Optional[float]]:
+    try:
+        import psutil  # type: ignore
+
+        process = psutil.Process(os.getpid())
+        rss = process.memory_info().rss / 1024 / 1024
+        return {"rss_mb": round(rss, 1)}
+    except Exception:
+        return {"rss_mb": None}
+
+
+def _configure_torch_runtime():
+    try:
+        import torch  # type: ignore
+
+        torch.set_num_threads(TORCH_NUM_THREADS)
+        if hasattr(torch, "set_num_interop_threads"):
+            torch.set_num_interop_threads(1)
+        return torch
+    except Exception as exc:
+        logger.warning("Torch runtime tuning skipped: %s", exc)
+        return None
+
 # ============================================================
 # REQUEST MODELS
 # ============================================================
@@ -93,17 +128,99 @@ class SearchRequest(BaseModel):
 
 class EmbeddingEngine:
     def __init__(self):
-        logger.info(f"Loading embedding model: {EMBEDDING_MODEL}")
-        start = time.time()
-        self.model = SentenceTransformer(EMBEDDING_MODEL)
-        logger.info(f"Embedding model loaded in {time.time() - start:.2f}s")
+        self.model = None
+        self.load_lock = threading.Lock()
+        self.loaded_at: Optional[float] = None
+        self.last_error: Optional[str] = None
+        self.load_seconds: Optional[float] = None
+        self.encode_count = 0
+        self.last_encode_seconds: Optional[float] = None
 
-    def encode_query(self, query: str) -> np.ndarray:
-        return self.model.encode(
+    def _build_model(self):
+        torch = _configure_torch_runtime()
+        from sentence_transformers import SentenceTransformer
+
+        kwargs = {"device": EMBEDDING_DEVICE}
+        if EMBEDDING_LOW_CPU_MEM_USAGE:
+            kwargs["model_kwargs"] = {"low_cpu_mem_usage": True}
+
+        try:
+            model = SentenceTransformer(EMBEDDING_MODEL, **kwargs)
+        except TypeError:
+            kwargs.pop("model_kwargs", None)
+            model = SentenceTransformer(EMBEDDING_MODEL, **kwargs)
+
+        if EMBEDDING_DYNAMIC_QUANTIZE and torch is not None:
+            try:
+                model._first_module().auto_model = torch.quantization.quantize_dynamic(
+                    model._first_module().auto_model,
+                    {torch.nn.Linear},
+                    dtype=torch.qint8,
+                )
+                logger.info("Dynamic quantization applied to embedding model (opt-in).")
+            except Exception as exc:
+                logger.warning("Dynamic quantization skipped: %s", exc)
+
+        return model
+
+    def load(self):
+        if self.model is not None:
+            return self.model
+
+        with self.load_lock:
+            if self.model is not None:
+                return self.model
+
+            logger.info(
+                "Lazy-loading embedding model %s on %s (low_cpu_mem_usage=%s, batch=%s)",
+                EMBEDDING_MODEL,
+                EMBEDDING_DEVICE,
+                EMBEDDING_LOW_CPU_MEM_USAGE,
+                EMBEDDING_BATCH_SIZE,
+            )
+            start = time.time()
+            try:
+                self.model = self._build_model()
+                self.loaded_at = time.time()
+                self.load_seconds = round(self.loaded_at - start, 3)
+                self.last_error = None
+                logger.info("Embedding model loaded in %.2fs", self.load_seconds)
+                return self.model
+            except Exception as exc:
+                self.last_error = str(exc)
+                logger.exception("Embedding model load failed.")
+                gc.collect()
+                raise
+
+    def encode_query(self, query: str) -> Any:
+        start = time.time()
+        model = self.load()
+        vector = model.encode(
             query,
+            batch_size=EMBEDDING_BATCH_SIZE,
             normalize_embeddings=True,
             convert_to_numpy=True
         )
+        self.encode_count += 1
+        self.last_encode_seconds = round(time.time() - start, 3)
+        return vector
+
+    def status(self) -> Dict[str, Any]:
+        return {
+            "model": EMBEDDING_MODEL,
+            "init_mode": EMBEDDING_INIT_MODE,
+            "loaded": self.model is not None,
+            "device": EMBEDDING_DEVICE,
+            "low_cpu_mem_usage": EMBEDDING_LOW_CPU_MEM_USAGE,
+            "dynamic_quantize": EMBEDDING_DYNAMIC_QUANTIZE,
+            "batch_size": EMBEDDING_BATCH_SIZE,
+            "torch_num_threads": TORCH_NUM_THREADS,
+            "loaded_at": self.loaded_at,
+            "load_seconds": self.load_seconds,
+            "last_error": self.last_error,
+            "encode_count": self.encode_count,
+            "last_encode_seconds": self.last_encode_seconds,
+        }
 
 
 # ============================================================
@@ -193,6 +310,10 @@ class ProductionRetriever:
             raise ConnectionError(f"Unable to connect to Qdrant: {e}")
 
         self.embedder = EmbeddingEngine()
+        self.started_at = time.time()
+
+        if EMBEDDING_INIT_MODE == "eager":
+            self.embedder.load()
 
     def _extract_points(self, response: Any) -> List[Any]:
         """Safely extract points from Qdrant response regardless of SDK version/format."""
@@ -420,7 +541,7 @@ retriever: Optional[ProductionRetriever] = None
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     global retriever
-    logger.info("Initializing ProductionRetriever...")
+    logger.info("Initializing ProductionRetriever with embedding init mode: %s", EMBEDDING_INIT_MODE)
     retriever = ProductionRetriever()
     logger.info("ProductionRetriever ready.")
     yield
@@ -453,6 +574,9 @@ def root():
 
 @app.post("/search")
 def search_endpoint(request: SearchRequest):
+    if retriever is None:
+        raise HTTPException(status_code=503, detail="Retriever is still initializing.")
+
     if not request.query.strip():
         raise HTTPException(
             status_code=422,
@@ -479,13 +603,27 @@ def search_endpoint(request: SearchRequest):
 @app.get("/health")
 def system_health():
     try:
+        if retriever is None:
+            return {
+                "status": "starting",
+                "qdrant_connected": False,
+                "embedding": {
+                    "model": EMBEDDING_MODEL,
+                    "init_mode": EMBEDDING_INIT_MODE,
+                    "loaded": False
+                },
+                "memory": _process_memory_mb(),
+            }
+
         collections = retriever.client.get_collections()
         return {
             "status": "healthy",
             "qdrant_connected": True,
             "embedding_model": EMBEDDING_MODEL,
+            "embedding": retriever.embedder.status(),
             "collection_name": COLLECTION_NAME,
-            "collections_available": len(collections.collections)
+            "collections_available": len(collections.collections),
+            "memory": _process_memory_mb(),
         }
 
     except Exception as e:

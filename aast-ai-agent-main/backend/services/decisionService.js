@@ -252,7 +252,18 @@ Text:
 ${text}
 `;
 
-    const llmPromise = callOllama(prompt);
+    const llmPromise = callOllama(prompt, undefined, `decision_extract_${Date.now()}`, {
+      routeType: "DECISION_EXTRACTION",
+      trafficType: "decision_extraction",
+      timeoutMs: Number(process.env.DECISION_EXTRACT_TIMEOUT_MS || 12000),
+      deadlineMs: Number(process.env.DECISION_EXTRACT_DEADLINE_MS || 18000),
+      options: {
+        temperature: 0,
+        top_p: 0.1,
+        repeat_penalty: 1.08,
+        num_predict: 160,
+      },
+    });
 
     const timeoutPromise = new Promise((_, reject) =>
       setTimeout(() => reject(new Error("LLM timeout")), 60000)

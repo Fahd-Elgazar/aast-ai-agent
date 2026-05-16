@@ -38,7 +38,8 @@ class ResponseFormatter {
                 latency_ms: traceData.latency_ms || 0,
                 routing_confidence: traceData.routing_confidence || 0,
                 response_tier: traceData.response_tier || "FULL_SUCCESS",
-                query_normalization: traceData.query_normalization || null
+                query_normalization: traceData.query_normalization || null,
+                route_diagnostics: traceData.route_diagnostics || null
             }
         };
 
@@ -80,7 +81,10 @@ class ResponseFormatter {
             },
             source: sources[0] || "LLM",
             sources: sources,
-            explainability: fusionPayload.explainability || { deterministic: false },
+            explainability: {
+                ...(fusionPayload.explainability || { deterministic: false }),
+                route_diagnostics: traceData.route_diagnostics || fusionPayload.route_diagnostics || null
+            },
             citations: Array.isArray(fusionPayload.citations) ? fusionPayload.citations : [],
             reasoning: fusionPayload.reasoning || "Response generated via standardized formatting layer.",
             metadata: metadata,
@@ -102,7 +106,8 @@ class ResponseFormatter {
                 latency_ms: traceData.latency_ms || 0,
                 routing_confidence: traceData.routing_confidence || 0,
                 response_tier: traceData.response_tier || "FULL_SUCCESS",
-                query_normalization: traceData.query_normalization || null
+                query_normalization: traceData.query_normalization || null,
+                route_diagnostics: traceData.route_diagnostics || null
             }
         };
 
@@ -119,7 +124,7 @@ class ResponseFormatter {
             },
             source: NORMALIZED_SOURCES.INTERACTIVE,
             sources: [NORMALIZED_SOURCES.INTERACTIVE],
-            explainability: { interactive: true },
+            explainability: { interactive: true, route_diagnostics: traceData.route_diagnostics || null },
             citations: [],
             reasoning: "Interactive data collection required to complete user profile.",
             metadata: metadata,
@@ -140,7 +145,8 @@ class ResponseFormatter {
                 latency_ms: traceData.latency_ms || 0,
                 routing_confidence: traceData.routing_confidence || 0,
                 response_tier: traceData.response_tier || "FULL_SUCCESS",
-                query_normalization: traceData.query_normalization || null
+                query_normalization: traceData.query_normalization || null,
+                route_diagnostics: traceData.route_diagnostics || null
             }
         };
 
@@ -157,7 +163,7 @@ class ResponseFormatter {
             },
             source: r,
             sources: [r],
-            explainability: { static: true },
+            explainability: { static: true, route_diagnostics: traceData.route_diagnostics || null },
             citations: [],
             reasoning: `Static ${r} response matched.`,
             metadata: metadata,
@@ -179,7 +185,8 @@ class ResponseFormatter {
                 latency_ms: traceData.latency_ms || 0,
                 routing_confidence: traceData.routing_confidence || 0,
                 response_tier: traceData.response_tier || "DEGRADED_SUCCESS",
-                query_normalization: traceData.query_normalization || null
+                query_normalization: traceData.query_normalization || null,
+                route_diagnostics: traceData.route_diagnostics || null
             }
         };
 
@@ -196,7 +203,7 @@ class ResponseFormatter {
             },
             source: NORMALIZED_SOURCES.LLM,
             sources: [NORMALIZED_SOURCES.LLM],
-            explainability: { error: true },
+            explainability: { error: true, route_diagnostics: traceData.route_diagnostics || null },
             citations: [],
             reasoning:
                 traceData.response_tier === "FATAL_FALLBACK"

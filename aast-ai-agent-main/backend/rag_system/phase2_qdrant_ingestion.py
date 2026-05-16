@@ -14,13 +14,13 @@ Environment : Windows-compatible, Python 3.9+
 import argparse
 import json
 import logging
+import os
 import time
 from datetime import datetime
 from pathlib import Path
 from typing import List, Dict, Any
 
 import numpy as np
-from sentence_transformers import SentenceTransformer
 from tenacity import retry, stop_after_attempt, wait_exponential
 
 from qdrant_client import QdrantClient
@@ -42,9 +42,16 @@ QDRANT_PORT = 6333
 
 EMBEDDING_MODEL = "BAAI/bge-m3"
 VECTOR_SIZE = 1024
-BATCH_SIZE = 64
+BATCH_SIZE = max(1, int(os.getenv("RAG_INGEST_BATCH_SIZE", os.getenv("RAG_EMBED_BATCH_SIZE", "8"))))
+EMBEDDING_DEVICE = os.getenv("RAG_EMBEDDING_DEVICE", "cpu").strip() or "cpu"
+EMBEDDING_LOW_CPU_MEM_USAGE = os.getenv("RAG_LOW_CPU_MEM_USAGE", "true").lower() in {"1", "true", "yes", "on"}
+TORCH_NUM_THREADS = max(1, int(os.getenv("RAG_TORCH_NUM_THREADS", "1")))
 
 REPORT_FILE = "ingestion_report.json"
+
+os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
+os.environ.setdefault("OMP_NUM_THREADS", str(TORCH_NUM_THREADS))
+os.environ.setdefault("MKL_NUM_THREADS", str(TORCH_NUM_THREADS))
 
 # ============================================================
 # LOGGING
@@ -148,7 +155,25 @@ class EmbeddingEngine:
     def __init__(self, model_name: str):
         logger.info(f"Loading embedding model: {model_name}")
         start = time.time()
-        self.model = SentenceTransformer(model_name)
+        try:
+            import torch  # type: ignore
+
+            torch.set_num_threads(TORCH_NUM_THREADS)
+            if hasattr(torch, "set_num_interop_threads"):
+                torch.set_num_interop_threads(1)
+        except Exception as exc:
+            logger.warning(f"Torch thread tuning skipped: {exc}")
+
+        from sentence_transformers import SentenceTransformer
+
+        kwargs = {"device": EMBEDDING_DEVICE}
+        if EMBEDDING_LOW_CPU_MEM_USAGE:
+            kwargs["model_kwargs"] = {"low_cpu_mem_usage": True}
+        try:
+            self.model = SentenceTransformer(model_name, **kwargs)
+        except TypeError:
+            kwargs.pop("model_kwargs", None)
+            self.model = SentenceTransformer(model_name, **kwargs)
         logger.info(
             f"Embedding model loaded in {time.time() - start:.2f}s"
         )
@@ -369,6 +394,9 @@ def generate_ingestion_report(
         "embedding_model": EMBEDDING_MODEL,
         "vector_size": VECTOR_SIZE,
         "batch_size": BATCH_SIZE,
+        "embedding_device": EMBEDDING_DEVICE,
+        "torch_num_threads": TORCH_NUM_THREADS,
+        "low_cpu_mem_usage": EMBEDDING_LOW_CPU_MEM_USAGE,
         "payload_fields_indexed": 6,
         "total_runtime_seconds": round(total_time, 2),
         "production_status": "READY"

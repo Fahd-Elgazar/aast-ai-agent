@@ -15,6 +15,8 @@
 'use strict';
 
 import ragService from './ragService.js';
+import { ROUTING_CALIBRATION } from '../config/routingCalibration.js';
+import { ACADEMIC_ALIAS_GROUPS } from './academicAliases.js';
 
 // ─────────────────────────────────────────────────────────────
 // LOGGER & CONSTANTS
@@ -42,6 +44,49 @@ const ROUTES = {
     FAQ: 'FAQ',
     LLM_FALLBACK: 'LLM_FALLBACK'
 };
+
+function escapeRegExp(value) {
+    return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function clamp(value, min = 0, max = 1) {
+    const parsed = Number.parseFloat(value);
+    if (!Number.isFinite(parsed)) return min;
+    return Math.min(max, Math.max(min, parsed));
+}
+
+function tokenCount(query) {
+    return String(query || '').split(/\s+/).filter(Boolean).length;
+}
+
+const ALIAS_LOOKUP = ACADEMIC_ALIAS_GROUPS
+    .flatMap(group => [
+        { surface: group.canonical, canonical: group.canonical, category: group.category, canonical_hit: true },
+        ...group.aliases.map(alias => ({
+            surface: alias,
+            canonical: group.canonical,
+            category: group.category,
+            canonical_hit: false
+        }))
+    ])
+    .sort((a, b) => b.surface.length - a.surface.length);
+
+function matchAliasSignals(query) {
+    const matched = [];
+    const seen = new Set();
+
+    for (const entry of ALIAS_LOOKUP) {
+        const pattern = new RegExp(`(^|[^A-Za-z0-9])${escapeRegExp(entry.surface)}(?=$|[^A-Za-z0-9])`, 'i');
+        if (!pattern.test(query)) continue;
+
+        const key = `${entry.category}:${entry.canonical}:${entry.surface}`;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        matched.push(entry);
+    }
+
+    return matched;
+}
 
 // Foundational token dictionaries (supplemented by regex patterns later)
 const SIGNAL_DICTIONARY = {
@@ -235,11 +280,12 @@ const SIGNAL_DICTIONARY = {
 
 class BrainRouter {
     constructor() {
+        this.calibration = ROUTING_CALIBRATION;
         this.confidenceThresholds = {
             HIGH: 0.70,
-            MEDIUM: 0.38,
-            DEGRADED: 0.25,
-            HYBRID_TRIGGER: 0.35 // If multi-domain signals cross this, HYBRID is highly considered
+            MEDIUM: ROUTING_CALIBRATION.kgConfidenceThreshold,
+            DEGRADED: ROUTING_CALIBRATION.llmFallbackThreshold,
+            HYBRID_TRIGGER: ROUTING_CALIBRATION.hybridConfidenceThreshold
         };
 
         this.signalWeights = {
@@ -258,6 +304,9 @@ class BrainRouter {
             intent_boost: 0.30,
             context_boost: 0.15,
             deterministic_policy_boost: 1.10,
+            person_alias_boost: ROUTING_CALIBRATION.personAliasBoost,
+            requirements_hybrid_boost: ROUTING_CALIBRATION.requirementsHybridBoost,
+            scholarship_hybrid_boost: ROUTING_CALIBRATION.scholarshipHybridBoost,
 
             base_llm: 0.10
         };
@@ -318,9 +367,10 @@ class BrainRouter {
             const top2 = sortedSignals[1];
             const diff = top1[1] - top2[1];
 
-            if (diff <= 0.10 && top1[1] > 0.2) {
+            const ambiguityMargin = this.calibration.ambiguityMargin;
+            if (diff <= ambiguityMargin && top1[1] > 0.2) {
                 ambiguity_detected = true;
-                ambiguity_score = parseFloat((0.10 - diff).toFixed(3));
+                ambiguity_score = parseFloat((ambiguityMargin - diff).toFixed(3));
 
                 const topKeys = [top1[0], top2[0]];
                 if (topKeys.includes('kg_score') && topKeys.includes('rag_score')) {
@@ -443,6 +493,172 @@ class BrainRouter {
         };
     }
 
+    classifyQuestionFeatures(query, existingIntent = null, sessionContext = {}) {
+        const lowerQuery = String(query || '').toLowerCase();
+        const aliases = matchAliasSignals(lowerQuery);
+        const aliasCategories = new Set(aliases.map(alias => alias.category));
+        const aliasConfidence = aliases.length === 0
+            ? 0
+            : clamp(Math.max(...aliases.map(alias => alias.canonical_hit ? 0.82 : 0.94)));
+
+        const hasCourseCode = /\b[a-z]{2,5}\s*\d{3,4}\b/i.test(lowerQuery);
+        const hasSpecificSubject = /\b(machine learning|natural language processing|mobile computing|blockchain|deep learning|computer vision|data science|artificial intelligence|software engineering|nlp|ml)\b/i.test(lowerQuery);
+        const hasPerson = aliasCategories.has('faculty_person') || /\b(who is|dr|doctor|professor|prof)\b/i.test(lowerQuery);
+        const hasFacultyRole = aliasCategories.has('faculty_role') || /\b(dean|vice dean|head of department|hod|program director|department head)\b/i.test(lowerQuery);
+        const hasTeaching = /\b(who teaches|who is teaching|teacher|teaches|teaching|taught by|instructor|lecturer)\b/i.test(lowerQuery);
+        const hasCoursePrereq = /\b(prerequisite|prerequisites|prereq|pre requisite|required before|depends on|before taking)\b/i.test(lowerQuery);
+        const hasRequirements = /\b(requirement|requirements|required|eligibility|eligible|criteria|condition|conditions)\b/i.test(lowerQuery);
+        const hasScholarship = /\b(scholarship|scholarships|financial aid|tuition exemption|fee waiver|discount|grant|bursary)\b/i.test(lowerQuery);
+        const hasFees = /\b(fee|fees|tuition|cost|payment|price|charges)\b/i.test(lowerQuery);
+        const hasGpa = /\b(gpa|cgpa|grade point|minimum grade)\b/i.test(lowerQuery);
+        const hasProgram = /\b(program|major|track|tracks|department|college|faculty|course|courses|curriculum|specialization)\b/i.test(lowerQuery);
+        const hasComparison = /\b(compare|comparison|vs|versus|difference between|different from|better)\b/i.test(lowerQuery);
+        const hasAdvisory = /\b(should i|recommend|advise|advice|choose|help me decide|best for me|suit me|fits me)\b/i.test(lowerQuery);
+        const hasConversational = /\b(favorite color|joke|story|write a|script|poem|unmotivated|motivate|summarize the plot)\b/i.test(lowerQuery);
+        const hasPlanning = /\b(plan|planning|roadmap|path|career path|decision support|case|cases)\b/i.test(lowerQuery);
+
+        const classes = [];
+        if (hasPerson) classes.push('person');
+        if (hasFacultyRole) classes.push('leadership');
+        if (hasTeaching) classes.push('teaching');
+        if (hasCoursePrereq) classes.push('course_prerequisite');
+        if (hasScholarship) classes.push('scholarship');
+        if (hasFees) classes.push('fees');
+        if (hasGpa) classes.push('gpa');
+        if (hasRequirements && !hasCoursePrereq) classes.push('requirements');
+        if (hasComparison) classes.push('comparison');
+        if (hasAdvisory) classes.push('advisory');
+        if (hasPlanning) classes.push('planning');
+        if (hasConversational) classes.push('conversational');
+
+        const entityConfidence = clamp(Math.max(
+            hasCourseCode ? 0.92 : 0,
+            hasPerson && aliases.length > 0 ? 0.94 : 0,
+            hasPerson ? 0.78 : 0,
+            hasFacultyRole ? 0.86 : 0,
+            hasSpecificSubject ? 0.82 : 0,
+            hasProgram ? 0.64 : 0
+        ));
+
+        const specificity = clamp(
+            (tokenCount(lowerQuery) >= 4 ? 0.20 : 0.08) +
+            (hasCourseCode ? 0.28 : 0) +
+            (hasSpecificSubject ? 0.22 : 0) +
+            (hasPerson || hasFacultyRole ? 0.22 : 0) +
+            (hasRequirements || hasCoursePrereq ? 0.16 : 0) +
+            (hasGpa || hasFees || hasScholarship ? 0.14 : 0)
+        );
+
+        const semanticAmbiguity = clamp(
+            Math.max(0, classes.length - 1) * 0.14 +
+            (hasAdvisory && (hasRequirements || hasScholarship || hasFees) ? 0.2 : 0) +
+            (hasComparison && hasProgram ? 0.12 : 0)
+        );
+
+        const hybridTriggerReasons = [];
+        if (hasScholarship) hybridTriggerReasons.push('scholarship_hybrid_boost');
+        if (hasRequirements && !hasCoursePrereq) hybridTriggerReasons.push('requirements_hybrid_boost');
+        if ((hasGpa || hasFees) && hasProgram) hybridTriggerReasons.push('policy_program_intersection');
+        if (hasCoursePrereq && (hasGpa || hasScholarship || /\bprobation|policy|rule|allowed|can i\b/i.test(lowerQuery))) {
+            hybridTriggerReasons.push('course_policy_intersection');
+        }
+        if (hasComparison && (hasSpecificSubject || /\btrack|tracks|requirements|fees|scholarship|gpa\b/i.test(lowerQuery))) {
+            hybridTriggerReasons.push('comparison_structured_policy_blend');
+        }
+        if (semanticAmbiguity >= 0.28 && (hasProgram || hasSpecificSubject)) hybridTriggerReasons.push('semantic_ambiguity');
+
+        let questionClass = 'general';
+        if (hasConversational && !hasProgram && !hasSpecificSubject) questionClass = 'conversational';
+        else if (hasTeaching) questionClass = 'faculty_teaching';
+        else if (hasPerson) questionClass = 'faculty_person';
+        else if (hasFacultyRole) questionClass = 'leadership';
+        else if (hasCoursePrereq) questionClass = 'course_prerequisite';
+        else if (hasScholarship) questionClass = 'scholarship';
+        else if (hasRequirements) questionClass = 'requirements';
+        else if (hasFees) questionClass = 'fees';
+        else if (hasComparison) questionClass = 'comparison';
+        else if (hasAdvisory) questionClass = 'advisory';
+
+        return {
+            question_class: questionClass,
+            entity_confidence: entityConfidence,
+            alias_confidence: aliasConfidence,
+            query_specificity: specificity,
+            semantic_ambiguity: semanticAmbiguity,
+            matched_aliases: aliases.map(alias => ({
+                category: alias.category,
+                canonical: alias.canonical,
+                surface: alias.surface,
+                canonical_hit: alias.canonical_hit
+            })).slice(0, 8),
+            class_signals: [...new Set(classes)],
+            hybrid_trigger_reasons: [...new Set(hybridTriggerReasons)],
+            historical_route: sessionContext?.lastRoute || null,
+            intent_hint: existingIntent || null,
+            force_hybrid: hybridTriggerReasons.length > 0 && !(hasTeaching || (hasPerson && !hasRequirements && !hasScholarship && !hasFees)),
+            force_kg: (hasTeaching || hasPerson || hasFacultyRole || hasCoursePrereq) && hybridTriggerReasons.length === 0,
+            allow_llm_direct: hasConversational && !hasProgram && !hasSpecificSubject && !hasRequirements && !hasScholarship,
+        };
+    }
+
+    applyFeatureCalibration(signals, features) {
+        if (!features) return;
+
+        if (features.entity_confidence > 0) {
+            signals.kg_score += features.entity_confidence * 0.34;
+        }
+
+        if (features.alias_confidence > 0) {
+            signals.kg_score += features.alias_confidence * this.signalWeights.person_alias_boost;
+        }
+
+        if (features.force_kg) {
+            signals.kg_score += 0.42 + (features.query_specificity * 0.2);
+            signals.kg_direct_score = Math.max(signals.kg_direct_score || 0, 0.72 + (features.entity_confidence * 0.2));
+        }
+
+        if (features.hybrid_trigger_reasons.includes('requirements_hybrid_boost')) {
+            signals.hybrid_score += this.signalWeights.requirements_hybrid_boost;
+            signals.rag_score += 0.22;
+            signals.kg_score += 0.12;
+        }
+
+        if (features.hybrid_trigger_reasons.includes('scholarship_hybrid_boost')) {
+            signals.hybrid_score += this.signalWeights.scholarship_hybrid_boost;
+            signals.rag_score += 0.32;
+            signals.kg_score += 0.16;
+        }
+
+        if (features.hybrid_trigger_reasons.includes('policy_program_intersection')) {
+            signals.hybrid_score += 0.32;
+            signals.rag_score += 0.22;
+            signals.kg_score += 0.18;
+        }
+
+        if (features.hybrid_trigger_reasons.includes('course_policy_intersection')) {
+            signals.hybrid_score += 0.36;
+            signals.rag_score += 0.24;
+            signals.kg_score += 0.24;
+        }
+
+        if (features.hybrid_trigger_reasons.includes('comparison_structured_policy_blend')) {
+            signals.hybrid_score += 0.28;
+            signals.kg_score += 0.20;
+            signals.rag_score += 0.14;
+        }
+
+        if (features.historical_route) {
+            this._applyContextBoost(signals, { lastRoute: features.historical_route }, this.calibration.historicalRouteBoost);
+        }
+
+        if (features.allow_llm_direct) {
+            signals.llm_score += 0.34;
+            signals.kg_score *= 0.35;
+            signals.rag_score *= 0.35;
+            signals.hybrid_score *= 0.35;
+        }
+    }
+
     /**
      * 1. analyzeQuery(query, existingIntent, sessionContext)
      * Performs deep semantic decomposition of the query by combining
@@ -461,6 +677,7 @@ class BrainRouter {
                 : query?.query || "";
 
         const lowerQuery = normalizedQuery.toLowerCase();
+        const features = this.classifyQuestionFeatures(lowerQuery, existingIntent, sessionContext);
 
         // 1. Extract base lexical and structural signals
         const signals = this.detectRoutingSignals(lowerQuery);
@@ -480,8 +697,8 @@ class BrainRouter {
         // 3. Adjust signals based on pre-classified intent (if available)
         this._applyIntentBoost(signals, existingIntent);
 
-        // 4. Adjust signals based on conversation context (e.g., follow-up context)
-        this._applyContextBoost(signals, sessionContext);
+        // 4. Apply deterministic multi-factor calibration before hard route gates.
+        this.applyFeatureCalibration(signals, features);
 
         // 4.5 Deterministic policy classifier (Phase 6 repair)
         const deterministicPolicy = this.classifyDeterministicPolicyQuery(lowerQuery);
@@ -491,7 +708,7 @@ class BrainRouter {
 
             // Policy terms such as GPA/scholarship can appear in KG dictionaries;
             // keep KG available as fallback, but do not let it suppress RAG.
-            if (!this.isDeterministicAcademicQuery(lowerQuery)) {
+            if (!this.isDeterministicAcademicQuery(lowerQuery) && !features.force_hybrid) {
                 signals.kg_score *= 0.45;
                 signals.hybrid_score *= 0.5;
             }
@@ -503,11 +720,10 @@ class BrainRouter {
 
         // 5. Determine hybrid potential
         // Expanded to include combinations of KG, RAG, CAREER, DECISION
-        const isHybridCandidate = !deterministicPolicy.strong_policy_evidence && (
-            (signals.kg_score >= this.confidenceThresholds.HYBRID_TRIGGER && signals.rag_score >= this.confidenceThresholds.HYBRID_TRIGGER) ||
-            (signals.kg_score >= this.confidenceThresholds.HYBRID_TRIGGER && (signals.career_score >= 0.4 || signals.decision_score >= 0.4)) ||
-            (signals.rag_score >= this.confidenceThresholds.HYBRID_TRIGGER && (signals.career_score >= 0.4 || signals.decision_score >= 0.4))
-        );
+        const isHybridCandidate = features.force_hybrid || (!deterministicPolicy.strong_policy_evidence && (
+            signals.kg_score >= this.confidenceThresholds.HYBRID_TRIGGER &&
+            signals.rag_score >= this.confidenceThresholds.HYBRID_TRIGGER
+        ));
 
         if (isHybridCandidate) {
             // Synergistic boost
@@ -516,7 +732,7 @@ class BrainRouter {
         }
 
         // 5.5 Detect Deterministic Factual Academic Queries (PHASE 4)
-        if (this.isDeterministicAcademicQuery(lowerQuery)) {
+        if (this.isDeterministicAcademicQuery(lowerQuery) && !features.force_hybrid) {
             signals.kg_score += 1.0;
             signals.kg_direct_score = 1.0;
             logger.debug('ANALYZE', 'Deterministic academic query detected, boosting kg_direct_score');
@@ -533,6 +749,14 @@ class BrainRouter {
             signals: normalizedSignals,
             is_hybrid_candidate: isHybridCandidate,
             deterministic_policy: deterministicPolicy,
+            routing_features: features,
+            thresholds: {
+                kg_confidence_threshold: this.confidenceThresholds.MEDIUM,
+                hybrid_confidence_threshold: this.confidenceThresholds.HYBRID_TRIGGER,
+                llm_fallback_threshold: this.confidenceThresholds.DEGRADED,
+                deterministic_kg_threshold: this.calibration.deterministicKgThreshold,
+                deterministic_rag_threshold: this.calibration.deterministicRagThreshold
+            },
             context_applied: Object.keys(sessionContext).length > 0
         };
     }
@@ -635,7 +859,7 @@ class BrainRouter {
      */
     determineBestRoute(analysisPayload, healthStatus = {}) {
         const routeStartTime = Date.now();
-        const { signals, is_hybrid_candidate, deterministic_policy } = analysisPayload;
+        const { signals, is_hybrid_candidate, deterministic_policy, routing_features, thresholds } = analysisPayload;
 
         // Ensure healthStatus has defaults
         const health = {
@@ -647,18 +871,57 @@ class BrainRouter {
             llm: healthStatus.llm !== false
         };
 
-        // PHASE 8: HYBRID OVERRIDE REGEX
-        if (/electives|specialization|career path|cybersecurity|scholarship|academic path|roadmap|best path/i.test(analysisPayload.original_query)) {
-            logger.info('ROUTING_DECISION', 'Hybrid override regex triggered');
-            return {
+        const buildDecision = ({
+            route,
+            confidence,
+            reasoning,
+            fallback_chain = [],
+            services_required = [],
+            ambiguity_score = 0,
+            ambiguity_detected = false,
+            deterministic_policy: policy = deterministic_policy,
+            routing_features: features = routing_features,
+            extra = {}
+        }) => ({
+            route,
+            confidence: parseFloat(clamp(confidence).toFixed(3)),
+            reasoning,
+            fallback_chain,
+            services_required,
+            ambiguity_score,
+            ambiguity_detected,
+            deterministic_policy: policy,
+            routing_features: features,
+            thresholds: thresholds || {},
+            telemetry: {
+                route_chosen: route,
+                confidence_score: parseFloat(clamp(confidence).toFixed(3)),
+                entity_score: features?.entity_confidence || 0,
+                alias_score: features?.alias_confidence || 0,
+                query_specificity: features?.query_specificity || 0,
+                semantic_ambiguity: features?.semantic_ambiguity || 0,
+                hybrid_trigger_reasons: features?.hybrid_trigger_reasons || [],
+                alias_expansions: features?.matched_aliases || [],
+                thresholds_used: thresholds || {},
+                fallback_chain
+            },
+            ...extra
+        });
+
+        // Forced hybrid is intentionally limited to multi-domain academic policy
+        // intersections. Career-only and advisory queries stay eligible for their
+        // dedicated engines.
+        if (routing_features?.force_hybrid && health.kg && health.rag) {
+            logger.info('ROUTING_DECISION', 'Calibrated hybrid trigger enforced');
+            return buildDecision({
                 route: ROUTES.HYBRID_KG_RAG,
-                confidence: 0.92,
-                reasoning: "Query contains high-value hybrid academic-career tokens. Forcing hybrid synthesis.",
+                confidence: Math.max(signals.hybrid_score, signals.kg_score, signals.rag_score, 0.82),
+                reasoning: `Hybrid forced by calibrated academic trigger(s): ${routing_features.hybrid_trigger_reasons.join(', ')}.`,
                 fallback_chain: [ROUTES.KG_ONLY, ROUTES.RAG_ONLY, ROUTES.LLM_FALLBACK],
                 services_required: ['kg', 'rag'],
                 ambiguity_score: 0,
                 ambiguity_detected: false
-            };
+            });
         }
 
         // Sort signals by score descending
@@ -669,13 +932,13 @@ class BrainRouter {
         // 0. Evaluate Deterministic RAG Policy Shortcut (Phase 6 hardened)
         if (
             deterministic_policy?.strong_policy_evidence &&
-            signals.rag_direct_score >= 0.70 &&
+            signals.rag_direct_score >= this.calibration.deterministicRagThreshold &&
             health.rag
         ) {
             logger.info('ROUTING_DECISION', 'Hard deterministic RAG policy path enforced', {
                 matched_categories: deterministic_policy.matched_categories
             });
-            return {
+            return buildDecision({
                 route: ROUTES.RAG_DIRECT,
                 confidence: 0.96,
                 reasoning: "Deterministic academic policy query detected. Bypassing LLM fallback and prioritizing verified RAG policy sources.",
@@ -684,13 +947,13 @@ class BrainRouter {
                 ambiguity_score: 0,
                 ambiguity_detected: false,
                 deterministic_policy
-            };
+            });
         }
 
         // 1. Evaluate Deterministic KG Shortcut (PHASE 4.2 Hardened)
-        if (signals.kg_direct_score >= 0.70 && health.kg) {
+        if (signals.kg_direct_score >= this.calibration.deterministicKgThreshold && health.kg) {
             logger.info('ROUTING_DECISION', 'Hard deterministic KG path enforced');
-            return {
+            return buildDecision({
                 route: ROUTES.KG_DIRECT,
                 confidence: 0.99,
                 reasoning: "Deterministic academic factual query detected. Bypassing hybrid logic for guaranteed accuracy.",
@@ -699,7 +962,7 @@ class BrainRouter {
                 ambiguity_score: 0,
                 ambiguity_detected: false,
                 deterministic_policy
-            };
+            });
         }
 
         // Ambiguity Engine
@@ -869,7 +1132,7 @@ class BrainRouter {
             reasoning
         });
 
-        return {
+        return buildDecision({
             route: bestRoute,
             confidence: parseFloat(bestScore.toFixed(3)),
             reasoning,
@@ -878,7 +1141,7 @@ class BrainRouter {
             ambiguity_score: ambiguityData.ambiguity_score,
             ambiguity_detected: ambiguityData.ambiguity_detected,
             deterministic_policy
-        };
+        });
     }
 
     // ─────────────────────────────────────────────────────────────
@@ -924,7 +1187,16 @@ class BrainRouter {
 
         const boostMap = {
             'recommendation': 'decision_score',
+            'recommend': 'decision_score',
+            'comparison': 'decision_score',
+            'decision': 'decision_score',
             'course_info': 'kg_score',
+            'course': 'kg_score',
+            'program': 'kg_score',
+            'person': 'kg_score',
+            'admin': 'kg_score',
+            'dean': 'kg_score',
+            'prerequisite': 'kg_score',
             'policy': 'rag_score',
             'career': 'career_score',
             'faq': 'faq_score',
@@ -943,11 +1215,11 @@ class BrainRouter {
      * of the last conversation turn, aiding follow-up questions.
      * @private
      */
-    _applyContextBoost(signals, context) {
+    _applyContextBoost(signals, context, overrideBoost = null) {
         if (!context || !context.lastRoute) return;
 
         const last = context.lastRoute;
-        const contextBoost = this.signalWeights.context_boost; // Subtle continuity anchor
+        const contextBoost = overrideBoost ?? this.signalWeights.context_boost; // Subtle continuity anchor
 
         switch (last) {
             case ROUTES.DECISION_ENGINE:

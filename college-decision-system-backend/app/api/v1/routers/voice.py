@@ -11,7 +11,7 @@ class VoiceResponseSchema(BaseModel):
     recommendations: list[ProgramRecommendationSchema] = []
     transcribed_text: str | None = None
 
-from app.application.services.speech_service import SpeechService
+from app.application.services.speech_service import get_speech_service, get_voice_runtime_status
 from app.application.use_cases.recommend_programs import (
     RecommendProgramsRequest,
     RecommendProgramsUseCase,
@@ -22,11 +22,10 @@ from app.infrastructure.db.repositories.decision_fee_repo import DecisionFeeRepo
 from app.application.services.fee_category_resolver import FeeCategoryResolver
 from app.application.services.tuition_calculator import TuitionCalculator
 from app.application.services.training_intensity_deriver import TrainingIntensityDeriver
+from app.config.settings import settings
 from app.infrastructure.db.session import SessionLocal
 
 router = APIRouter(tags=["voice"])
-
-speech_service_instance = SpeechService()
 
 def get_recommend_use_case():
     db = SessionLocal()
@@ -50,6 +49,11 @@ def get_recommend_use_case():
         db.close()
 
 
+@router.get("/voice-health")
+def voice_health():
+    return get_voice_runtime_status()
+
+
 @router.post(
     "/voice-entry",
     response_model=VoiceResponseSchema,
@@ -60,14 +64,28 @@ async def voice_to_decision(
     file: UploadFile = File(...),
     use_case: RecommendProgramsUseCase = Depends(get_recommend_use_case),
 ):
+    if not settings.VOICE_ENABLED:
+        raise HTTPException(status_code=404, detail="Voice subsystem is disabled by configuration.")
+
     if not file.filename.endswith((".wav", ".mp3", ".m4a", ".ogg", ".flac", ".webm")):
         raise HTTPException(status_code=400, detail="Unsupported audio format")
 
-    temp_file_path = f"temp_{file.filename}"
+    safe_filename = os.path.basename(file.filename)
+    temp_dir = settings.VOICE_TEMP_DIR
+    os.makedirs(temp_dir, exist_ok=True)
+    temp_file_path = os.path.join(temp_dir, f"temp_{os.getpid()}_{safe_filename}")
     try:
         async with aiofiles.open(temp_file_path, 'wb') as out_file:
             content = await file.read()
+            max_bytes = settings.VOICE_MAX_UPLOAD_MB * 1024 * 1024
+            if len(content) > max_bytes:
+                raise HTTPException(
+                    status_code=413,
+                    detail=f"Audio file exceeds {settings.VOICE_MAX_UPLOAD_MB} MB limit.",
+                )
             await out_file.write(content)
+
+        speech_service_instance = get_speech_service()
 
         # 1. Transcribe
         transcribed_text = speech_service_instance.transcribe_audio(temp_file_path)

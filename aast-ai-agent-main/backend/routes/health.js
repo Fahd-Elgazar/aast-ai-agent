@@ -5,6 +5,7 @@ import { getDecisionMemoryStatus } from "../services/decisionService.js";
 import { getMetricsSnapshot } from "../services/metrics.js";
 import { logger } from "../services/logger.js";
 import { getOllamaRuntimeStatus } from "../services/ollamaService.js";
+import ragService from "../services/ragService.js";
 
 const DEFAULT_TIMEOUT_MS = Number(process.env.HEALTH_TIMEOUT_MS || 2500);
 const DECISION_API_URL = process.env.DECISION_API_URL || "http://127.0.0.1:8005";
@@ -16,6 +17,20 @@ function withTimeout(timeoutMs = DEFAULT_TIMEOUT_MS) {
   return {
     signal: controller.signal,
     clear: () => clearTimeout(timeout)
+  };
+}
+
+function getProcessMemory() {
+  const memory = process.memoryUsage();
+  const toMb = (value) => Math.round((Number(value || 0) / 1024 / 1024) * 10) / 10;
+
+  return {
+    pid: process.pid,
+    rss_mb: toMb(memory.rss),
+    heap_total_mb: toMb(memory.heapTotal),
+    heap_used_mb: toMb(memory.heapUsed),
+    external_mb: toMb(memory.external),
+    node_options: process.env.NODE_OPTIONS || null
   };
 }
 
@@ -71,6 +86,13 @@ async function checkOllama() {
     preloadWarning: status.preload_warning,
     startupPreloadStatus: status.startup_preload_status,
     backupReady: status.backup_ready,
+    gemma_memory_pressure: status.gemma_memory_pressure,
+    gemma_queue_depth: status.gemma_queue_depth,
+    gemma_context_size: status.gemma_context_size,
+    warm_pool_active: status.warm_pool_active,
+    avg_generation_latency: status.avg_generation_latency,
+    overload_retries: status.overload_retries,
+    gemmaTelemetry: status.gemma_telemetry,
     installedStatus: status.installed_status,
     startupReadiness: status.startup_validation,
     missingModelWarnings: status.missing_model_warnings,
@@ -92,10 +114,19 @@ async function checkDecisionApi() {
       signal: timeout.signal
     });
 
+    let body = null;
+    try {
+      body = await res.json();
+    } catch {
+      body = null;
+    }
+
     return {
       ok: res.ok,
       latencyMs: Date.now() - start,
-      status: res.status
+      status: res.status,
+      voice: body?.voice || null,
+      startup: body?.startup || null
     };
   } catch (err) {
     return {
@@ -108,39 +139,165 @@ async function checkDecisionApi() {
   }
 }
 
+async function checkRag() {
+  const start = Date.now();
+
+  try {
+    const health = await Promise.race([
+      ragService.healthCheck(),
+      new Promise((resolve) =>
+        setTimeout(
+          () => resolve({ status: "timeout", ok: false }),
+          Number(process.env.RAG_HEALTH_TIMEOUT_MS || 5000)
+        )
+      )
+    ]);
+
+    return {
+      ok:
+        health === true ||
+        health?.status === "healthy" ||
+        health?.status === "ok" ||
+        health?.system_status === "HEALTHY" ||
+        health?.system_status === "DEGRADED" ||
+        health?.retriever?.ok === true,
+      latencyMs: Date.now() - start,
+      ...health
+    };
+  } catch (err) {
+    return {
+      ok: false,
+      latencyMs: Date.now() - start,
+      error: err.message
+    };
+  }
+}
+
+function buildDeploymentRecommendations({ ollama, rag, decisionApi, processMemory }) {
+  const recommendations = [];
+  const gemmaPressure = ollama?.gemma_memory_pressure;
+
+  if (gemmaPressure?.high) {
+    recommendations.push(
+      `Gemma memory pressure is ${gemmaPressure.level}; keep GEMMA_MAX_ACTIVE_REQUESTS=1 and reduce concurrent browser/dev tasks.`
+    );
+  }
+
+  if (ollama?.gemma_queue_depth > 0) {
+    recommendations.push(
+      "Gemma queue has pending work; reduce parallel chat requests or lower GEMMA_QUEUE_MAX_DEPTH for stricter backpressure."
+    );
+  }
+
+  const ragEmbedding = rag?.retriever?.embedding || rag?.embedding;
+  if (ragEmbedding && ragEmbedding.loaded === false) {
+    recommendations.push(
+      "BGE-M3 is deferred; first RAG query will be slower while the singleton embedder loads."
+    );
+  }
+
+  if (decisionApi?.voice?.whisper_loaded === false) {
+    recommendations.push(
+      "Whisper is deferred; first voice request will load the model at runtime."
+    );
+  }
+
+  if (processMemory.heap_used_mb > 2500) {
+    recommendations.push(
+      "Node heap is high; keep NODE_OPTIONS=--max-old-space-size=4096 for Vite/backend local runs."
+    );
+  }
+
+  if (recommendations.length === 0) {
+    recommendations.push("No immediate resource bottleneck detected.");
+  }
+
+  return recommendations;
+}
+
+async function buildHealthPayload(getCacheStatus) {
+  const [neo4j, ollama, decisionApi, rag] = await Promise.all([
+    checkNeo4j(),
+    checkOllama(),
+    checkDecisionApi(),
+    checkRag()
+  ]);
+
+  const processMemory = getProcessMemory();
+  const payload = {
+    ok: neo4j.ok && ollama.ok,
+    timestamp: new Date().toISOString(),
+    services: {
+      neo4j,
+      ollama,
+      decisionApi,
+      rag
+    },
+    memory: {
+      process: processMemory,
+      decision: getDecisionMemoryStatus(),
+      cache: typeof getCacheStatus === "function" ? getCacheStatus() : null
+    },
+    frontend: {
+      node_options: process.env.NODE_OPTIONS || "--max-old-space-size=4096",
+      vite_guidance: "Use npm run dev or npm run dev:lowmem from the frontend package."
+    },
+    readiness: {
+      startup_phase: ollama.startup_readiness_phase,
+      ollama_ready: ollama.ollama_ready,
+      rag_ready: rag.ok,
+      voice_deferred: decisionApi?.voice?.whisper_loaded === false,
+      bge_m3_deferred:
+        rag?.retriever?.embedding?.loaded === false ||
+        rag?.embedding?.loaded === false
+    },
+    diagnostics: {
+      recommendations: buildDeploymentRecommendations({
+        ollama,
+        rag,
+        decisionApi,
+        processMemory
+      })
+    },
+    metrics: getMetricsSnapshot()
+  };
+
+  return payload;
+}
+
 export default function createHealthRouter({ getCacheStatus } = {}) {
   const router = express.Router();
 
   router.get("/", async (req, res) => {
-    const [neo4j, ollama, decisionApi] = await Promise.all([
-      checkNeo4j(),
-      checkOllama(),
-      checkDecisionApi()
-    ]);
-
-    const payload = {
-      ok: neo4j.ok && ollama.ok,
-      timestamp: new Date().toISOString(),
-      services: {
-        neo4j,
-        ollama,
-        decisionApi
-      },
-      memory: {
-        decision: getDecisionMemoryStatus(),
-        cache: typeof getCacheStatus === "function" ? getCacheStatus() : null
-      },
-      metrics: getMetricsSnapshot()
-    };
+    const payload = await buildHealthPayload(getCacheStatus);
 
     logger.debug("Health check completed", {
       ok: payload.ok,
-      neo4j: neo4j.ok,
-      ollama: ollama.ok,
-      decisionApi: decisionApi.ok
+      neo4j: payload.services.neo4j.ok,
+      ollama: payload.services.ollama.ok,
+      decisionApi: payload.services.decisionApi.ok,
+      rag: payload.services.rag.ok
     });
 
     res.status(payload.ok ? 200 : 503).json(payload);
+  });
+
+  router.get("/enterprise", async (req, res) => {
+    const payload = await buildHealthPayload(getCacheStatus);
+    res.status(payload.ok ? 200 : 503).json({
+      ...payload,
+      dashboard: {
+        gemma: payload.services.ollama.gemmaTelemetry,
+        rag: payload.services.rag,
+        voice: payload.services.decisionApi.voice,
+        queues: {
+          gemma_queue_depth: payload.services.ollama.gemma_queue_depth,
+          gemma_active_requests:
+            payload.services.ollama.gemmaTelemetry?.gemma_active_requests
+        },
+        startup: payload.readiness
+      }
+    });
   });
 
   router.get("/metrics", (req, res) => {

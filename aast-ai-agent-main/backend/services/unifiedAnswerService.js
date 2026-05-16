@@ -43,6 +43,8 @@ import {
     getOllamaRuntimeStatus
 } from "./ollamaService.js";
 import { convertToGraphData } from "./neo4jcontext.js";
+import { LLM_CONFIG } from "../config/llmConfig.js";
+import { getGemmaTelemetrySnapshot } from "./gemmaTelemetryService.js";
 
 // ─────────────────────────────────────────────────────────────
 // SECTION 0 — CONFIGURATION CONSTANTS
@@ -85,13 +87,13 @@ const DECISION_MAX_DEPTH = 3;
  * Prompt token count at which a WARNING-level alert is emitted.
  * Signals the prompt is approaching the model's comfortable context budget.
  */
-const PROMPT_TOKEN_WARN_THRESHOLD = 3_500;
+const PROMPT_TOKEN_WARN_THRESHOLD = Math.floor(LLM_CONFIG.gemma.maxContextTokens * 0.80);
 
 /**
  * Prompt token count at which a CRITICAL-level alert is emitted.
  * At this size, context truncation by the model is likely, degrading quality.
  */
-const PROMPT_TOKEN_CRITICAL_THRESHOLD = 5_000;
+const PROMPT_TOKEN_CRITICAL_THRESHOLD = LLM_CONFIG.gemma.maxContextTokens;
 
 /**
  * Fallback message returned when the generation system is unavailable.
@@ -149,13 +151,13 @@ const ROUTE_TYPES = Object.freeze({
  * @type {Record<string, { temperature: number, top_p: number, repeat_penalty: number }>}
  */
 const ROUTE_INFERENCE_OPTIONS = Object.freeze({
-    [ROUTE_TYPES.KG_ONLY]: { temperature: 0.15, top_p: 0.80, repeat_penalty: 1.15 },
+    [ROUTE_TYPES.KG_ONLY]: { temperature: 0.12, top_p: 0.78, repeat_penalty: 1.16 },
     [ROUTE_TYPES.FAQ_ONLY]: { temperature: 0.10, top_p: 0.75, repeat_penalty: 1.10 },
-    [ROUTE_TYPES.RAG_ONLY]: { temperature: 0.25, top_p: 0.85, repeat_penalty: 1.15 },
-    [ROUTE_TYPES.DECISION]: { temperature: 0.20, top_p: 0.82, repeat_penalty: 1.12 },
-    [ROUTE_TYPES.CAREER]: { temperature: 0.20, top_p: 0.82, repeat_penalty: 1.12 },
-    [ROUTE_TYPES.GENERAL]: { temperature: 0.22, top_p: 0.84, repeat_penalty: 1.12 },
-    [ROUTE_TYPES.HYBRID]: { temperature: 0.30, top_p: 0.88, repeat_penalty: 1.15 },
+    [ROUTE_TYPES.RAG_ONLY]: { temperature: 0.16, top_p: 0.82, repeat_penalty: 1.16 },
+    [ROUTE_TYPES.DECISION]: { temperature: 0.14, top_p: 0.80, repeat_penalty: 1.15 },
+    [ROUTE_TYPES.CAREER]: { temperature: 0.14, top_p: 0.80, repeat_penalty: 1.15 },
+    [ROUTE_TYPES.GENERAL]: { temperature: 0.16, top_p: 0.82, repeat_penalty: 1.15 },
+    [ROUTE_TYPES.HYBRID]: { temperature: 0.18, top_p: 0.84, repeat_penalty: 1.16 },
     [ROUTE_TYPES.LLM_FALLBACK]: { temperature: 0.05, top_p: 0.70, repeat_penalty: 1.20 },
 });
 
@@ -244,7 +246,7 @@ You are answering with the best verified academic context available.
     [ROUTE_TYPES.HYBRID]: `
 ROUTE: Hybrid (Multi-Source)
 You are synthesizing from multiple verified sources of different types.
-- Prioritize in order: FAQ answer → Decision factors → Knowledge Graph facts → Retrieved documents.
+- Prioritize in order: FAQ answer → Knowledge Graph facts → Decision factors → Retrieved documents.
 - Use each source for what it does best: FAQ for confirmed policy wording, Decision for eligibility
   verdict, KG for specific entities and relationships, RAG for regulatory depth.
 - Where the answer draws on policy or regulatory documents, use the framing:
@@ -327,6 +329,46 @@ function estimateTokens(text) {
     return Math.ceil((text ?? "").length / 4);
 }
 
+function hardTruncateToTokenBudget(text, maxTokens) {
+    const value = String(text ?? "");
+    const maxChars = Math.max(0, maxTokens * 4);
+
+    if (estimateTokens(value) <= maxTokens) {
+        return { text: value, truncated: false };
+    }
+
+    return {
+        text:
+            value.slice(0, Math.max(0, maxChars)).trimEnd() +
+            "\n\n[Lower-priority context truncated to protect Gemma context budget.]",
+        truncated: true,
+    };
+}
+
+function routeNumPredict(routeType, promptTokenEst = 0) {
+    const route = String(routeType || "").toUpperCase();
+    const pressure = getGemmaTelemetrySnapshot().gemma_memory_pressure;
+    let value = LLM_CONFIG.gemma.numPredict.synthesis;
+
+    if (route.includes("HYBRID") || route.includes("RAG")) {
+        value = LLM_CONFIG.gemma.numPredict.heavy;
+    } else if (route.includes("KG") || route.includes("FAQ")) {
+        value = LLM_CONFIG.gemma.numPredict.light;
+    } else if (route.includes("FALLBACK")) {
+        value = LLM_CONFIG.gemma.numPredict.fallback;
+    }
+
+    if (promptTokenEst >= PROMPT_TOKEN_WARN_THRESHOLD || pressure.high) {
+        value = Math.min(value, LLM_CONFIG.gemma.numPredict.heavy);
+    }
+
+    if (pressure.critical) {
+        value = Math.min(value, LLM_CONFIG.gemma.numPredict.light);
+    }
+
+    return value;
+}
+
 
 // ─────────────────────────────────────────────────────────────
 // SECTION 3 — CONTEXT BUILDERS
@@ -355,7 +397,10 @@ function buildNeo4jBlock(neo4jContext, limit = MAX_KG_FACTS) {
     const lines = capped
         .map((item, idx) => {
             if (!item || typeof item !== "object") return null;
-            const evidence = (item.evidence ?? item.text ?? item.content ?? "").trim();
+            const rawEvidence = (item.evidence ?? item.text ?? item.content ?? "").trim();
+            const evidence = rawEvidence.length > 800
+                ? `${rawEvidence.slice(0, 800).trimEnd()}\u2026[truncated]`
+                : rawEvidence;
             if (!evidence) return null;
 
             const confidenceLabel =
@@ -422,7 +467,11 @@ function buildRagBlock(ragContext, limit = MAX_RAG_PASSAGES) {
 
     if (passages.length === 0) return { block: "", count: 0, used: false };
 
-    const capped = passages.slice(0, limit);
+    const capped = passages.slice(0, limit).map((passage) =>
+        passage.length > 900
+            ? `${passage.slice(0, 900).trimEnd()}\u2026[truncated]`
+            : passage
+    );
 
     const block =
         "### Retrieved Document Context (RAG — Verified Passages)\n" +
@@ -587,15 +636,15 @@ function trimContextToBudget(currentTokens) {
 
     if (currentTokens >= PROMPT_TOKEN_CRITICAL_THRESHOLD) {
         logWarn("context_trimming_critical", { tokens: currentTokens });
-        // Drop low-priority context first: RAG > KG
+        // Drop low-priority context first while preserving KG and decision facts.
         config.includeRag = false;
-        config.includeKg = false;
-        // Decision and FAQ preserved as highest priority
+        config.kgFacts = Math.max(1, MAX_KG_FACTS);
+        config.includeKg = true;
+        config.includeDecision = true;
     } else if (currentTokens >= PROMPT_TOKEN_WARN_THRESHOLD) {
         logWarn("context_trimming_warning", { tokens: currentTokens });
-        // Reduce counts progressively
-        config.kgFacts = Math.max(1, Math.floor(MAX_KG_FACTS / 2));
-        config.ragPassages = Math.max(2, Math.floor(MAX_RAG_PASSAGES / 2));
+        config.kgFacts = MAX_KG_FACTS;
+        config.ragPassages = Math.max(1, Math.floor(MAX_RAG_PASSAGES / 2));
     }
 
     return config;
@@ -626,11 +675,11 @@ function buildContextPayload({ neo4jContext, ragContext, faqContext, decisionCon
     const kgResult = config.includeKg ? buildNeo4jBlock(neo4jContext, config.kgFacts) : { block: "", count: 0, used: false };
     const ragResult = config.includeRag ? buildRagBlock(ragContext, config.ragPassages) : { block: "", count: 0, used: false };
 
-    // Priority order strictly enforced: FAQ > Decision > KG > RAG
+    // Priority order: FAQ direct answer, then KG facts > Decision > RAG.
     const orderedBlocks = [
         faqResult.block,
-        decisionResult.block,
         kgResult.block,
+        decisionResult.block,
         ragResult.block,
     ].filter(Boolean);
 
@@ -1724,6 +1773,36 @@ export async function generateUnifiedAnswer({
             currentTrimConfig = trimContextToBudget(promptTokenEst);
         }
 
+        const safePromptLimit = Math.max(
+            512,
+            LLM_CONFIG.gemma.maxContextTokens - LLM_CONFIG.gemma.contextHeadroomTokens
+        );
+
+        if (promptTokenEst > safePromptLimit) {
+            const emptyPromptTokens = estimateTokens(buildPrompt(query.trim(), "", resolvedRoute));
+            const contextBudget = Math.max(128, safePromptLimit - emptyPromptTokens);
+            const truncation = hardTruncateToTokenBudget(contextPayload, contextBudget);
+
+            if (truncation.truncated) {
+                contextPayload = truncation.text;
+                prompt = buildPrompt(query.trim(), contextPayload, resolvedRoute);
+                promptTokenEst = estimateTokens(prompt);
+                contextMetrics = {
+                    ...contextMetrics,
+                    payload_chars: contextPayload.length,
+                    payload_tokens_est: estimateTokens(contextPayload),
+                    hard_truncated: true,
+                    safe_prompt_limit: safePromptLimit,
+                };
+                logWarn("context_hard_truncated", {
+                    route: resolvedRoute,
+                    final_prompt_tokens: promptTokenEst,
+                    safe_prompt_limit: safePromptLimit,
+                    context_budget_tokens: contextBudget,
+                });
+            }
+        }
+
         logInfo("context_finalized", {
             route: resolvedRoute,
             ...contextMetrics,
@@ -1736,6 +1815,52 @@ export async function generateUnifiedAnswer({
         // ── Step 3: Resolve route-adaptive inference options ────────────
         // FINAL MICRO-PATCH 1: FIX IMMUTABILITY VIOLATION
         const inferenceOptions = { ...buildInferenceOptions(resolvedRoute) };
+        inferenceOptions.num_predict = routeNumPredict(resolvedRoute, promptTokenEst);
+
+        const telemetryBeforeInference = getGemmaTelemetrySnapshot();
+        if (
+            telemetryBeforeInference.gemma_memory_pressure?.critical === true &&
+            promptTokenEst >= LLM_CONFIG.gemma.deferSynthesisTokens
+        ) {
+            const deterministicAnswer = buildDeterministicFallbackAnswer({
+                faqContext,
+                decisionContext,
+                neo4jContext,
+                ragContext
+            });
+
+            if (deterministicAnswer) {
+                const totalLatencyMs = Date.now() - pipelineStart;
+                logWarn("memory_pressure_deferred_heavy_synthesis", {
+                    route: resolvedRoute,
+                    prompt_tokens: promptTokenEst,
+                    memory_pressure: telemetryBeforeInference.gemma_memory_pressure,
+                });
+
+                return createResult({
+                    answer: deterministicAnswer,
+                    route: resolvedRoute,
+                    confidence: retrievalConfidence,
+                    sources_used,
+                    latency_ms: totalLatencyMs,
+                    sanitized: false,
+                    truncated: false,
+                    query,
+                    requestedRoute,
+                    neo4jContext,
+                    ragContext,
+                    faqContext,
+                    decisionContext,
+                    contextMetrics,
+                    metadata: {
+                        memory_deferred: true,
+                        route_safety: "MEMORY_PRESSURE_DEFERRED",
+                        prompt_tokens: promptTokenEst,
+                        gemma_memory_pressure: telemetryBeforeInference.gemma_memory_pressure,
+                    }
+                });
+            }
+        }
 
         // Implement Degraded Mode: Lower temperature for caution
         if (isDegraded) {
@@ -1748,6 +1873,7 @@ export async function generateUnifiedAnswer({
             temperature: inferenceOptions.temperature,
             top_p: inferenceOptions.top_p,
             repeat_penalty: inferenceOptions.repeat_penalty,
+            num_predict: inferenceOptions.num_predict,
         });
 
         // ── Step 4: Inference with centralized ollamaService ────────────
@@ -1758,6 +1884,8 @@ export async function generateUnifiedAnswer({
             model: MODEL,
             requestId: ollamaRequestId,
             options: inferenceOptions,
+            routeType: resolvedRoute,
+            trafficType: "synthesis",
         });
         const ollamaLatencyMs = Date.now() - ollamaStart;
         const ollamaRuntime = getOllamaRuntimeStatus();
@@ -1770,6 +1898,8 @@ export async function generateUnifiedAnswer({
             model_used: ollamaGenerationMeta?.model || ollamaRuntime.active_model,
             breaker_state: ollamaRuntime.breaker_state,
             failover_active: ollamaRuntime.failover_active,
+            prompt_tokens: ollamaGenerationMeta?.promptTokens || promptTokenEst,
+            output_tokens: ollamaGenerationMeta?.outputTokens || estimateTokens(rawAnswer),
         });
 
         // ── Step 5: Sanitize + truncation repair ─────────────────────────
@@ -1829,6 +1959,12 @@ export async function generateUnifiedAnswer({
                 recovery_success: ollamaRuntime.recovery_success,
                 failover_used: !!ollamaGenerationMeta?.failover_used,
                 prompt_tokens: promptTokenEst,
+                prompt_truncated: !!ollamaGenerationMeta?.prompt_truncated || !!contextMetrics?.hard_truncated,
+                num_predict: inferenceOptions.num_predict,
+                output_tokens: ollamaGenerationMeta?.outputTokens || estimateTokens(finalAnswer),
+                gemma_memory_pressure: ollamaRuntime.gemma_memory_pressure,
+                gemma_queue_depth: ollamaRuntime.gemma_queue_depth,
+                overload_retries: ollamaRuntime.overload_retries,
                 ollama_latency_ms: ollamaLatencyMs
             }
         });

@@ -19,6 +19,12 @@ class Settings(BaseSettings):
     GEMINI_API_KEY: SecretStr | None = None
     INTERNAL_SECRET_KEY: SecretStr | None = None
 
+    VOICE_ENABLED: bool = True
+    VOICE_WHISPER_MODEL: str = "base"
+    VOICE_DEVICE: str = "cpu"
+    VOICE_TEMP_DIR: str = "."
+    VOICE_MAX_UPLOAD_MB: int = 25
+    VOICE_FFMPEG_LOCAL_COPY: bool = False
 
     model_config = SettingsConfigDict(
         # Still load from .env if present (e.g., local development),
