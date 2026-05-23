@@ -1,0 +1,12 @@
+node_modules
+npm-debug.log*
+.env
+logs
+*.log
+data.ms
+__pycache__
+rag_system/qdrant_storage
+rag_system/__pycache__
+testing
+tests
+docs

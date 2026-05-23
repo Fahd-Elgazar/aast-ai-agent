@@ -34,9 +34,9 @@ from qdrant_client.http.models import (
 # CONFIGURATION
 # ============================================================
 
-QDRANT_HOST = "localhost"
-QDRANT_PORT = 6333
-COLLECTION_NAME = "aast_academic_rag_production"
+QDRANT_HOST = os.getenv("QDRANT_HOST", "localhost")
+QDRANT_PORT = int(os.getenv("QDRANT_PORT", "6333"))
+COLLECTION_NAME = os.getenv("RAG_COLLECTION_NAME", "aast_academic_rag_production")
 
 EMBEDDING_MODEL = "BAAI/bge-m3"
 EMBEDDING_INIT_MODE = os.getenv("RAG_EMBEDDING_INIT_MODE", "lazy").strip().lower()

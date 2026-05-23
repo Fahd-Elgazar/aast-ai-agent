@@ -21,6 +21,8 @@
     "axios-retry": "^4.5.0",
     "bcrypt": "^6.0.0",
     "body-parser": "^1.20.2",
+    "boxen": "^8.0.1",
+    "chalk": "^5.3.0",
     "chromadb": "^3.1.7",
     "cors": "^2.8.5",
     "dotenv": "^16.6.1",

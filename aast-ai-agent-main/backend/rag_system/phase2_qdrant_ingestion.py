@@ -35,10 +35,10 @@ from qdrant_client.http.models import (
 # CONFIGURATION
 # ============================================================
 
-COLLECTION_NAME = "aast_academic_rag_production"
+COLLECTION_NAME = os.getenv("RAG_COLLECTION_NAME", "aast_academic_rag_production")
 
-QDRANT_HOST = "localhost"
-QDRANT_PORT = 6333
+QDRANT_HOST = os.getenv("QDRANT_HOST", "localhost")
+QDRANT_PORT = int(os.getenv("QDRANT_PORT", "6333"))
 
 EMBEDDING_MODEL = "BAAI/bge-m3"
 VECTOR_SIZE = 1024

@@ -1,0 +1,9 @@
+node_modules
+dist
+.env
+*.log
+codex-*.log
+college-decision-system-backend
+aast-ai-agent-main
+multimodal
+frontend
