@@ -13,6 +13,7 @@ Dependencies:
 """
 
 import logging
+import os
 import time
 import re
 import requests
@@ -28,15 +29,25 @@ from tenacity import retry, stop_after_attempt, wait_exponential
 # CONFIGURATION
 # ============================================================
 
-RETRIEVER_API_URL = "http://localhost:8001/search"
-RETRIEVER_HEALTH_URL = "http://localhost:8001/health"
+RETRIEVER_BASE_URL = os.getenv("RAG_RETRIEVER_URL", os.getenv("RAG_BASE_URL", "http://localhost:8001")).rstrip("/")
+RETRIEVER_API_URL = os.getenv("RAG_RETRIEVER_SEARCH_URL", f"{RETRIEVER_BASE_URL}/search")
+RETRIEVER_HEALTH_URL = os.getenv("RAG_RETRIEVER_HEALTH_URL", f"{RETRIEVER_BASE_URL}/health")
 
-OLLAMA_URL = "http://localhost:11434/api/generate"
-OLLAMA_TAGS_URL = "http://localhost:11434/api/tags"
-LLM_MODEL = "tinyllama"
+OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434").rstrip("/")
+OLLAMA_URL = os.getenv("OLLAMA_GENERATE_URL", f"{OLLAMA_BASE_URL}/api/generate")
+OLLAMA_TAGS_URL = os.getenv("OLLAMA_TAGS_URL", f"{OLLAMA_BASE_URL}/api/tags")
+LLM_MODEL = (
+    os.getenv("RAG_ANSWER_MODEL")
+    or os.getenv("OLLAMA_RAG_MODEL")
+    or os.getenv("PRIMARY_MODEL")
+    or os.getenv("OLLAMA_MODEL")
+    or "tinyllama"
+)
 
 MAX_CONTEXT_CHUNKS = 8
-REQUEST_TIMEOUT = 180
+REQUEST_TIMEOUT = int(os.getenv("RAG_ANSWER_TIMEOUT_SECONDS", "180"))
+RETRIEVER_TIMEOUT = int(os.getenv("RAG_RETRIEVER_TIMEOUT_SECONDS", str(REQUEST_TIMEOUT)))
+HEALTH_TIMEOUT = int(os.getenv("RAG_ANSWER_HEALTH_TIMEOUT_SECONDS", "8"))
 
 MIN_RETRIEVAL_CONFIDENCE = 0.45
 MIN_ANSWER_CONFIDENCE = 0.50
@@ -88,7 +99,7 @@ class RetrieverClient:
             response = requests.post(
                 RETRIEVER_API_URL,
                 json=payload,
-                timeout=REQUEST_TIMEOUT
+                timeout=RETRIEVER_TIMEOUT
             )
             response.raise_for_status()
             return response.json()
@@ -419,15 +430,20 @@ def health():
 
     # 1. Check Retriever
     try:
-        r_resp = requests.get(RETRIEVER_HEALTH_URL, timeout=5)
-        if r_resp.status_code != 200:
+        r_resp = requests.get(RETRIEVER_HEALTH_URL, timeout=HEALTH_TIMEOUT)
+        retriever_status = None
+        try:
+            retriever_status = (r_resp.json() or {}).get("status")
+        except Exception:
+            retriever_status = None
+        if r_resp.status_code != 200 or (retriever_status and retriever_status != "healthy"):
             unhealthy_services.append("retriever")
     except Exception:
         unhealthy_services.append("retriever")
 
     # 2. Check Ollama
     try:
-        o_resp = requests.get(OLLAMA_TAGS_URL, timeout=5)
+        o_resp = requests.get(OLLAMA_TAGS_URL, timeout=HEALTH_TIMEOUT)
         if o_resp.status_code != 200:
             unhealthy_services.append("ollama")
     except Exception:

@@ -33,10 +33,9 @@ function mockResponse(message: string) {
     msg.includes("show") ||
     msg.includes("visualize");
 
-  // 🎯 DECISION RESPONSE
   if (isDecision) {
     return {
-      answer: "Here is a recommendation for you 👇",
+      answer: "Here is a recommendation for you.",
       source: "decision",
       decision: {
         recommended_major: "Artificial Intelligence",
@@ -48,10 +47,9 @@ function mockResponse(message: string) {
     };
   }
 
-  // 🧠 GRAPH RESPONSE
   if (isGraph) {
     return {
-      answer: "Here is a knowledge graph 👇",
+      answer: "Here is a knowledge graph.",
       source: "graph",
       decision: null,
       graph: {
@@ -72,7 +70,6 @@ function mockResponse(message: string) {
     };
   }
 
-  // 💬 NORMAL RESPONSE
   return {
     answer: "This is a mock AI response.",
     source: "mock",

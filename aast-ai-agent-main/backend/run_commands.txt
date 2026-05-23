@@ -23,3 +23,9 @@ uvicorn phase3_retriever:app --port 8001
 
 
 phase 2 python phase2_qdrant_ingestion.py --input C:\Users\mh978\Downloads\AI_AGENT\aast-ai-agent-main\backend\rag_system\cleaned_chunked_cai_production_v4.json --force-rebuild
+
+
+starter.bat full
+starter.bat demo
+starter.bat quick
+starter.bat stop

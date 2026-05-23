@@ -45,6 +45,8 @@ EMBEDDING_BATCH_SIZE = max(1, int(os.getenv("RAG_EMBED_BATCH_SIZE", "4")))
 EMBEDDING_LOW_CPU_MEM_USAGE = os.getenv("RAG_LOW_CPU_MEM_USAGE", "true").lower() in {"1", "true", "yes", "on"}
 EMBEDDING_DYNAMIC_QUANTIZE = os.getenv("RAG_EMBEDDING_DYNAMIC_QUANTIZE", "false").lower() in {"1", "true", "yes", "on"}
 TORCH_NUM_THREADS = max(1, int(os.getenv("RAG_TORCH_NUM_THREADS", "1")))
+HEALTH_REQUIRES_EMBEDDING = os.getenv("RAG_HEALTH_REQUIRES_EMBEDDING", "false").lower() in {"1", "true", "yes", "on"}
+WARMUP_QUERY = os.getenv("RAG_WARMUP_QUERY", "admission requirements academic policies").strip() or "admission requirements academic policies"
 
 DEFAULT_TOP_K = 8
 FINAL_TOP_K = 5
@@ -133,6 +135,7 @@ class EmbeddingEngine:
         self.loaded_at: Optional[float] = None
         self.last_error: Optional[str] = None
         self.load_seconds: Optional[float] = None
+        self.load_started_at: Optional[float] = None
         self.encode_count = 0
         self.last_encode_seconds: Optional[float] = None
 
@@ -179,6 +182,7 @@ class EmbeddingEngine:
                 EMBEDDING_BATCH_SIZE,
             )
             start = time.time()
+            self.load_started_at = start
             try:
                 self.model = self._build_model()
                 self.loaded_at = time.time()
@@ -210,12 +214,14 @@ class EmbeddingEngine:
             "model": EMBEDDING_MODEL,
             "init_mode": EMBEDDING_INIT_MODE,
             "loaded": self.model is not None,
+            "loading": self.load_lock.locked() and self.model is None,
             "device": EMBEDDING_DEVICE,
             "low_cpu_mem_usage": EMBEDDING_LOW_CPU_MEM_USAGE,
             "dynamic_quantize": EMBEDDING_DYNAMIC_QUANTIZE,
             "batch_size": EMBEDDING_BATCH_SIZE,
             "torch_num_threads": TORCH_NUM_THREADS,
             "loaded_at": self.loaded_at,
+            "load_started_at": self.load_started_at,
             "load_seconds": self.load_seconds,
             "last_error": self.last_error,
             "encode_count": self.encode_count,
@@ -314,6 +320,18 @@ class ProductionRetriever:
 
         if EMBEDDING_INIT_MODE == "eager":
             self.embedder.load()
+
+    def warmup(self, query: str = WARMUP_QUERY) -> Dict[str, Any]:
+        start = time.time()
+        self.embedder.encode_query(query)
+        latency = round(time.time() - start, 3)
+        logger.info("Retriever warmup completed in %.2fs", latency)
+        return {
+            "status": "ready",
+            "warmup_query": query,
+            "latency_seconds": latency,
+            "embedding": self.embedder.status(),
+        }
 
     def _extract_points(self, response: Any) -> List[Any]:
         """Safely extract points from Qdrant response regardless of SDK version/format."""
@@ -616,11 +634,15 @@ def system_health():
             }
 
         collections = retriever.client.get_collections()
+        embedding_status = retriever.embedder.status()
+        status = "healthy"
+        if HEALTH_REQUIRES_EMBEDDING and not embedding_status["loaded"]:
+            status = "starting"
         return {
-            "status": "healthy",
+            "status": status,
             "qdrant_connected": True,
             "embedding_model": EMBEDDING_MODEL,
-            "embedding": retriever.embedder.status(),
+            "embedding": embedding_status,
             "collection_name": COLLECTION_NAME,
             "collections_available": len(collections.collections),
             "memory": _process_memory_mb(),
@@ -632,6 +654,22 @@ def system_health():
             "status": "unhealthy",
             "error": "Qdrant unreachable."
         }
+
+
+@app.post("/warmup")
+def warmup_endpoint(request: Optional[SearchRequest] = None):
+    if retriever is None:
+        raise HTTPException(status_code=503, detail="Retriever is still initializing.")
+
+    query = WARMUP_QUERY
+    if request is not None and request.query and request.query.strip():
+        query = request.query.strip()
+
+    try:
+        return retriever.warmup(query)
+    except Exception:
+        logger.exception("Warmup failed.")
+        raise HTTPException(status_code=503, detail="Retriever warmup failed.")
 
 
 @app.get("/benchmark")

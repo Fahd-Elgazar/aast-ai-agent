@@ -19,6 +19,7 @@ const NORMALIZED_SOURCES = {
     DECISION: 'DECISION',
     CAREER: 'CAREER',
     FAQ: 'FAQ',
+    CONVERSATION: 'CONVERSATION',
     INTERACTIVE: 'INTERACTIVE',
     LLM: 'LLM'
 };
@@ -227,6 +228,7 @@ class ResponseFormatter {
         if (r.includes('DECISION')) return NORMALIZED_SOURCES.DECISION;
         if (r.includes('CAREER')) return NORMALIZED_SOURCES.CAREER;
         if (r.includes('FAQ')) return NORMALIZED_SOURCES.FAQ;
+        if (r.includes('CONVERSATION')) return NORMALIZED_SOURCES.CONVERSATION;
         if (r.includes('INTERACTIVE')) return NORMALIZED_SOURCES.INTERACTIVE;
         if (r.includes('GREETING')) return NORMALIZED_SOURCES.FAQ; // Map GREETING to FAQ for frontend safety
         return NORMALIZED_SOURCES.LLM;
@@ -243,6 +245,7 @@ class ResponseFormatter {
             if (raw.includes('DECISION')) return NORMALIZED_SOURCES.DECISION;
             if (raw.includes('CAREER')) return NORMALIZED_SOURCES.CAREER;
             if (raw.includes('FAQ')) return NORMALIZED_SOURCES.FAQ;
+            if (raw.includes('CONVERSATION')) return NORMALIZED_SOURCES.CONVERSATION;
             if (raw.includes('INTERACTIVE')) return NORMALIZED_SOURCES.INTERACTIVE;
             if (raw.includes('GREETING')) return NORMALIZED_SOURCES.FAQ; // Map GREETING to FAQ
             return NORMALIZED_SOURCES.LLM;

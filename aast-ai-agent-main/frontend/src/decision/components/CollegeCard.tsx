@@ -180,7 +180,7 @@ export default function CollegeCard({
 
       {nextSteps && nextSteps.length > 0 && (
         <div className="px-5 pb-4 border-t border-slate-100 pt-4 bg-blue-50/30">
-          <h4 className="text-[10px] font-bold text-blue-600 tracking-wider uppercase mb-2">🚀 Your Next Steps</h4>
+          <h4 className="text-[10px] font-bold text-blue-600 tracking-wider uppercase mb-2">Your Next Steps</h4>
           <div className="flex flex-col gap-2">
             {nextSteps.map((step, idx) => (
               <div

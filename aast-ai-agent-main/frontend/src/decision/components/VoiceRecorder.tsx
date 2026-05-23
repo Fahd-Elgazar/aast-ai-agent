@@ -1,10 +1,16 @@
 import { useRef, useState } from 'react';
 import { Mic, Square, Loader2 } from 'lucide-react';
 import { askAgent } from '../../services/agentService';
+import type { AgentDecisionResponse, DecisionLike, RecommendationCardData } from '../../types';
 
 interface VoiceRecorderProps {
   cid?: string | null;
-  onResponseFetched: (reply: string, data: any[], transcribedText?: string, response?: any) => void;
+  onResponseFetched: (
+    reply: string,
+    data: RecommendationCardData[],
+    transcribedText?: string,
+    response?: AgentDecisionResponse,
+  ) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
 }
@@ -39,7 +45,7 @@ function getSpeechRecognition(): SpeechRecognitionConstructor | undefined {
   return speechWindow.SpeechRecognition || speechWindow.webkitSpeechRecognition;
 }
 
-function decisionToRecommendation(decision: any) {
+function decisionToRecommendation(decision: DecisionLike): RecommendationCardData {
   const rawConf = decision?.confidence || 0;
   const conf = rawConf > 1 ? rawConf : rawConf * 100;
 
@@ -67,7 +73,7 @@ function decisionToRecommendation(decision: any) {
   };
 }
 
-function extractRecommendations(response: any) {
+function extractRecommendations(response: AgentDecisionResponse): RecommendationCardData[] {
   if (Array.isArray(response?.recommendations)) return response.recommendations;
   if (response?.decision) return [decisionToRecommendation(response.decision)];
   return [];
@@ -83,7 +89,7 @@ export default function VoiceRecorder({ cid, onResponseFetched, setLoading, setE
     setLoading(true);
 
     try {
-      const response = await askAgent(transcript, cid);
+      const response = (await askAgent(transcript, cid)) as AgentDecisionResponse;
       onResponseFetched(response.answer || "", extractRecommendations(response), transcript, response);
     } catch (err) {
       console.error("Voice transcript orchestrator error:", err);

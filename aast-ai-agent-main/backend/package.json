@@ -10,7 +10,9 @@
     "neo": "nodemon index.js neo",
     "sql": "nodemon index.js sql",
     "meili": "nodemon index.js meili",
-    "test:routing": "node testing/routingPrecisionCalibration.test.js"
+    "test:routing": "node testing/routingPrecisionCalibration.test.js",
+    "benchmark:golden": "node testing/goldenPathBenchmark.js",
+    "prewarm:golden": "node testing/prewarmGoldenQueries.js"
   },
   "dependencies": {
     "@chroma-core/default-embed": "^0.1.9",

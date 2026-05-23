@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import brainRouter from "../services/brainRouter.js";
 import { normalizeAcademicQuery } from "../services/academicQueryNormalizer.js";
+import { classifyGoldenQuery } from "../config/goldenPathRegistry.js";
 
 const HEALTHY = {
   kg: true,
@@ -45,21 +46,30 @@ function routeQuery(rawQuery, intent = "GENERAL") {
 
 const cases = [
   // Faculty/person hardening
-  { query: "who teaches NLP", expectedGroup: "KG" },
-  { query: "who is hany hanafy", expectedGroup: "KG", alias: "hany hanafy" },
-  { query: "dr hany", expectedGroup: "KG", alias: "hany hanafy" },
-  { query: "vice dean ai", expectedGroup: "KG", alias: "vice dean college of artificial intelligence" },
+  { query: "who teaches NLP", expectedGroup: "KG", goldenId: "golden_hany_teaches" },
+  { query: "who is hany hanafy", expectedGroup: "KG", alias: "hany hanafy", goldenId: "golden_hany_profile" },
+  { query: "What does Hany Hanafy teach?", expectedGroup: "KG", goldenId: "golden_hany_teaches" },
+  { query: "dr hany", expectedGroup: "KG", alias: "hany hanafy", goldenId: "golden_hany_profile" },
+  { query: "vice dean ai", expectedGroup: "KG", alias: "vice dean college of artificial intelligence", goldenId: "golden_vice_dean_ai" },
   { query: "dean computing", expectedGroup: "KG" },
+  { query: "Who is head of quality unit?", expectedGroup: "KG", goldenId: "golden_head_quality_unit" },
+  { query: "Who is the dean of artificial intelligence?", expectedGroup: "KG", goldenId: "golden_dean_department" },
 
   // Academic structural and policy intersections
   { query: "ML prerequisites", expectedGroup: "KG", alias: "machine learning" },
   { query: "blockchain prerequisites", expectedGroup: "KG" },
+  { query: "What are AI prerequisites?", expectedGroup: "KG", goldenId: "golden_ai_prerequisites" },
+  { query: "Modules in AI major", expectedGroup: "KG", goldenId: "golden_modules_major" },
+  { query: "What specializations exist in AI?", intent: "PROGRAM", expectedGroup: "KG", ontologyIntent: "TRACK" },
   { query: "scholarship requirements", expectedGroup: "HYBRID" },
   { query: "mobile computing GPA", expectedGroup: "HYBRID" },
   { query: "AI department fees", expectedGroup: "HYBRID" },
 
   // Complex planning / multi-domain
   { query: "Compare ML vs NLP tracks", expectedGroup: "HYBRID" },
+  { query: "Compare AI vs Cybersecurity", expectedGroup: "DECISION", goldenId: "golden_ai_vs_cybersecurity" },
+  { query: "Recommend best major", expectedGroup: "DECISION", goldenId: "golden_best_major" },
+  { query: "Career roadmap for AI", expectedGroup: "CAREER", goldenId: "golden_ai_career_roadmap" },
   { query: "Scholarship + GPA + fees for AI department", expectedGroup: "HYBRID" },
   { query: "Decision support cases for scholarship GPA and fees", expectedGroup: "HYBRID" },
 
@@ -95,6 +105,29 @@ for (const item of cases) {
     assert.ok(
       aliasTargets.includes(item.alias),
       `${item.query} did not expose alias expansion for ${item.alias}`
+    );
+  }
+
+  if (item.ontologyIntent) {
+    assert.equal(
+      result.analysis.routing_features?.ontology_intent,
+      item.ontologyIntent,
+      `${item.query} did not preserve ontology intent ${item.ontologyIntent}`
+    );
+  }
+
+  if (item.goldenId) {
+    const golden = classifyGoldenQuery(result.query);
+    assert.equal(
+      golden?.id,
+      item.goldenId,
+      `${item.query} did not match expected golden registry id ${item.goldenId}`
+    );
+
+    assert.equal(
+      result.decision.golden_path?.id,
+      item.goldenId,
+      `${item.query} did not expose golden path decision metadata`
     );
   }
 }

@@ -1,0 +1,195 @@
+- main [ref=e78]:
+  - generic [ref=e79]:
+    - heading "AI Advisor" [level=2] [ref=e167]
+    - button "Logout" [ref=e792] [cursor=pointer]
+  - generic [ref=e169]:
+    - complementary [ref=e170]:
+      - generic [ref=e171]:
+        - button "Collapse chat history" [ref=e172] [cursor=pointer]:
+          - img [ref=e173]
+        - button "New Chat" [ref=e176] [cursor=pointer]:
+          - img [ref=e177]
+          - text: New Chat
+      - generic [ref=e178]:
+        - img [ref=e179]
+        - textbox [ref=e182]:
+          - /placeholder: Search chats
+      - generic [ref=e285]:
+        - img [ref=e286]
+        - text: No chats found.
+    - generic [ref=e185]:
+      - generic [ref=e187]:
+        - img [ref=e189]
+        - generic [ref=e192]:
+          - generic [ref=e193]:
+            - heading "AI Academic Advisor" [level=1] [ref=e194]
+            - img [ref=e195]
+          - generic [ref=e198]: New conversation
+      - generic [ref=e288]:
+        - img [ref=e289]
+        - text: Failed to fetch
+      - generic [ref=e200]:
+        - generic [ref=e291]:
+          - generic [ref=e294]:
+            - paragraph [ref=e295]: Show the AI program graph
+            - paragraph [ref=e296]:
+              - img [ref=e297]
+              - text: 09:40 PM
+          - img [ref=e301]
+        - generic [ref=e304]:
+          - img [ref=e306]
+          - generic [ref=e310]:
+            - generic [ref=e311]:
+              - paragraph [ref=e312]: Graph evidence loaded for the AI program.
+              - button "Open graph evidence" [ref=e313] [cursor=pointer]:
+                - img [ref=e314]
+                - text: Open graph evidence
+              - paragraph [ref=e319]:
+                - img [ref=e320]
+                - text: 09:40 PM
+            - button "Read message aloud" [ref=e323] [cursor=pointer]:
+              - img [ref=e324]
+      - generic [ref=e220]:
+        - textbox "Type a message..." [ref=e221]
+        - button "Start voice input" [ref=e222] [cursor=pointer]:
+          - img [ref=e223]
+        - button "Send" [disabled] [ref=e226]:
+          - img [ref=e227]
+          - text: Send
+    - generic [ref=e671]:
+      - generic [ref=e673]:
+        - generic [ref=e674]:
+          - img [ref=e676]
+          - generic [ref=e684]:
+            - generic [ref=e685]:
+              - heading "Neo4j Graph Intelligence" [level=2] [ref=e686]
+              - img [ref=e687]
+            - paragraph [ref=e690]: Explainable academic entities, roles, pathways, and governance links
+        - generic [ref=e691]:
+          - generic [ref=e692]:
+            - img [ref=e693]
+            - text: 10 entities
+          - generic [ref=e697]: 10 relationships
+          - generic [ref=e698]: Cypher verified
+      - generic [ref=e699]:
+        - main [ref=e700]:
+          - generic [ref=e701]:
+            - generic [ref=e702]:
+              - generic [ref=e703]: Search graph entities
+              - generic [ref=e704]:
+                - img [ref=e705]
+                - textbox "Search graph entities" [ref=e708]:
+                  - /placeholder: Search professor, course, major...
+            - toolbar "Graph explorer controls" [ref=e709]:
+              - generic [ref=e710]:
+                - button "Compact graph panel" [ref=e711] [cursor=pointer]:
+                  - img [ref=e712]
+                - button "Balanced graph panel" [pressed] [ref=e715] [cursor=pointer]:
+                  - img [ref=e716]
+                - button "Expand graph panel" [ref=e719] [cursor=pointer]:
+                  - img [ref=e720]
+              - generic [ref=e724]:
+                - button "Zoom in" [ref=e725] [cursor=pointer]:
+                  - img [ref=e726]
+                - button "Zoom out" [ref=e729] [cursor=pointer]:
+                  - img [ref=e730]
+                - button "Fit graph" [ref=e733] [cursor=pointer]:
+                  - img [ref=e734]
+                - button "Hide labels" [pressed] [ref=e739] [cursor=pointer]:
+                  - img [ref=e740]
+              - generic [ref=e744]:
+                - button "Pause layout physics" [pressed] [ref=e745] [cursor=pointer]:
+                  - img [ref=e746]
+                - button "Reset graph layout" [ref=e747] [cursor=pointer]:
+                  - img [ref=e748]
+              - generic [ref=e752]:
+                - button "Show legend panel" [ref=e753] [cursor=pointer]:
+                  - img [ref=e754]
+                - button "Hide inspector panel" [pressed] [ref=e793] [cursor=pointer]:
+                  - img [ref=e794]
+                - button "Unpin inspector panel" [pressed] [ref=e760] [cursor=pointer]:
+                  - img [ref=e761]
+                - button "Keep inspector visible in fullscreen" [pressed] [ref=e763] [cursor=pointer]:
+                  - img [ref=e764]
+              - button "Open fullscreen graph" [ref=e786] [cursor=pointer]:
+                - img [ref=e787]
+          - img "Knowledge graph with 10 nodes and 10 relationships" [ref=e777]:
+            - generic: 10 visible entities / 10 links
+        - complementary [ref=e799]:
+          - generic [ref=e800]:
+            - generic [ref=e801]:
+              - generic [ref=e802]:
+                - paragraph [ref=e803]: Inspector
+                - heading "AAST AI Program" [level=3] [ref=e804]
+              - generic [ref=e805]:
+                - button "Unpin inspector" [ref=e806] [cursor=pointer]:
+                  - img [ref=e807]
+                - button "Collapse inspector" [ref=e809] [cursor=pointer]:
+                  - img [ref=e810]
+            - generic [ref=e813]:
+              - generic [ref=e814]: Program
+              - generic [ref=e815]: Primary evidence
+              - generic [ref=e816]: 7 connections
+            - generic [ref=e817]:
+              - paragraph [ref=e818]: Role
+              - paragraph [ref=e819]: Program
+          - generic [ref=e820]:
+            - generic [ref=e821]:
+              - generic [ref=e822]:
+                - heading "Connected Entities" [level=4] [ref=e823]:
+                  - img [ref=e824]
+                  - text: Connected Entities
+                - button "Collapse" [ref=e828] [cursor=pointer]:
+                  - img [ref=e829]
+                  - text: Collapse
+              - generic [ref=e834]:
+                - button "Belongs to College of Computing Department" [ref=e835] [cursor=pointer]:
+                  - generic [ref=e836]:
+                    - img [ref=e838]
+                    - generic [ref=e841]: Belongs to
+                  - paragraph [ref=e842]: College of Computing
+                  - paragraph [ref=e843]: Department
+                - button "Has course Machine Learning Course" [ref=e844] [cursor=pointer]:
+                  - generic [ref=e845]:
+                    - img [ref=e847]
+                    - generic [ref=e850]: Has course
+                  - paragraph [ref=e851]: Machine Learning
+                  - paragraph [ref=e852]: Course
+                - button "Has course Computer Vision Course" [ref=e853] [cursor=pointer]:
+                  - generic [ref=e854]:
+                    - img [ref=e856]
+                    - generic [ref=e859]: Has course
+                  - paragraph [ref=e860]: Computer Vision
+                  - paragraph [ref=e861]: Course
+                - button "Has course Natural Language Processing Course" [ref=e862] [cursor=pointer]:
+                  - generic [ref=e863]:
+                    - img [ref=e865]
+                    - generic [ref=e868]: Has course
+                  - paragraph [ref=e869]: Natural Language Processing
+                  - paragraph [ref=e870]: Course
+                - button "Leads to AI Engineer Career" [ref=e871] [cursor=pointer]:
+                  - generic [ref=e872]:
+                    - img [ref=e874]
+                    - generic [ref=e877]: Leads to
+                  - paragraph [ref=e878]: AI Engineer
+                  - paragraph [ref=e879]: Career
+                - button "Leads to Software Engineer Career" [ref=e880] [cursor=pointer]:
+                  - generic [ref=e881]:
+                    - img [ref=e883]
+                    - generic [ref=e886]: Leads to
+                  - paragraph [ref=e887]: Software Engineer
+                  - paragraph [ref=e888]: Career
+                - button "Related to Merit Scholarship Policy Scholarship" [ref=e889] [cursor=pointer]:
+                  - generic [ref=e890]:
+                    - img [ref=e892]
+                    - generic [ref=e895]: Related to
+                  - paragraph [ref=e896]: Merit Scholarship Policy
+                  - paragraph [ref=e897]: Scholarship
+            - generic [ref=e898]:
+              - heading "Metadata" [level=4] [ref=e899]:
+                - img [ref=e900]
+                - text: Metadata
+              - paragraph [ref=e903]: No extra metadata fields were included by the backend.
+          - button "Center This Node" [ref=e905] [cursor=pointer]:
+            - img [ref=e906]
+            - text: Center This Node

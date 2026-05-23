@@ -577,11 +577,13 @@ export async function getRecommendation({ studentProfile: inputSP, preferences: 
        🌐 API CALL (WITH TIMEOUT)
     ======================================================== */
 
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 20000);
-
     let response;
-    for (let i = 0; i < 2; i++) {
+    const decisionTimeoutMs = Number(process.env.DECISION_API_TIMEOUT_MS || 7000);
+    const decisionMaxAttempts = Math.max(1, Number(process.env.DECISION_API_MAX_ATTEMPTS || 1));
+
+    for (let i = 0; i < decisionMaxAttempts; i++) {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), decisionTimeoutMs);
       try {
         response = await fetch(`${API_URL}/api/v1/decisions/recommend`, {
           method: "POST",
@@ -597,11 +599,11 @@ export async function getRecommendation({ studentProfile: inputSP, preferences: 
         });
         if (response.ok) break;
       } catch (err) {
-        if (i === 1) throw err;
+        if (i === decisionMaxAttempts - 1) throw err;
+      } finally {
+        clearTimeout(timeout);
       }
     }
-
-    clearTimeout(timeout);
 
     if (!response.ok) {
       throw new Error(`Decision API error: ${response.status}`);

@@ -3,15 +3,16 @@ import CollegeCard from '../components/CollegeCard';
 import VoiceRecorder from '../components/VoiceRecorder';
 import { Send, Bot, User, Loader2 } from 'lucide-react';
 import { askAgent } from '../../services/agentService';
+import type { AgentDecisionResponse, DecisionLike, RecommendationCardData } from '../../types';
 
 type Message = {
   id: string;
   role: 'user' | 'assistant';
   content: string;
-  recommendations?: any[];
+  recommendations?: RecommendationCardData[];
 };
 
-function decisionToRecommendation(decision: any) {
+function decisionToRecommendation(decision: DecisionLike): RecommendationCardData {
   const rawConf = decision?.confidence || 0;
   const conf = rawConf > 1 ? rawConf : rawConf * 100;
 
@@ -41,7 +42,7 @@ function decisionToRecommendation(decision: any) {
   };
 }
 
-function extractRecommendations(response: any) {
+function extractRecommendations(response: AgentDecisionResponse): RecommendationCardData[] {
   if (Array.isArray(response?.recommendations)) return response.recommendations;
   if (response?.decision) return [decisionToRecommendation(response.decision)];
   return [];
@@ -76,7 +77,7 @@ export default function ChatPage() {
     setIsTyping(true);
 
     try {
-      const response = await askAgent(input);
+      const response = (await askAgent(input)) as AgentDecisionResponse;
 
       const replyMsg: Message = {
         id: (Date.now() + 1).toString(),

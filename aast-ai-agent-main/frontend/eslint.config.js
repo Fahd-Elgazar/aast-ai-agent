@@ -6,7 +6,17 @@ import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores([
+    'dist',
+    'frontend',
+    'frontend/**',
+    'aast-ai-agent-main',
+    'aast-ai-agent-main/**',
+    'college-decision-system-backend',
+    'college-decision-system-backend/**',
+    'multimodal',
+    'multimodal/**',
+  ]),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
@@ -18,6 +28,12 @@ export default defineConfig([
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
+    },
+  },
+  {
+    files: ['src/decision/context/StudentContext.tsx'],
+    rules: {
+      'react-refresh/only-export-components': 'off',
     },
   },
 ])

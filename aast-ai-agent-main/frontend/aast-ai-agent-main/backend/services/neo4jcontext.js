@@ -161,8 +161,11 @@ Generate a concise academic answer using only the facts above. If the facts are 
 ============================================================ */
 
 const NO_RESULT_MESSAGE = "I couldn't find relevant academic information for that query.";
-const RELATIONS_PER_NODE = 6;
+const DEFAULT_CONTEXT_LIMIT = 10;
+const RELATIONS_PER_NODE = 25;
+const MAX_PERSON_SUMMARY_LINES = 25;
 const RETRIEVAL_THRESHOLDS = [0.45, 0.35, 0.25];
+const PERSON_LABELS = new Set(["Person", "Professor", "TeachingStaff", "Staff", "Instructor"]);
 const ACADEMIC_RELATIONS = [
   "TEACHES",
   "HAS_COURSE",
@@ -170,18 +173,35 @@ const ACADEMIC_RELATIONS = [
   "HAS_ADMIN",
   "DEAN_OF",
   "HEAD_OF",
+  "HEAD_OF_UNIT",
   "ADMINISTERS",
+  "CHAIRS",
+  "DIRECTS",
+  "MANAGES",
+  "BELONGS_TO",
   "WORKS_IN",
+  "MEMBER_OF",
+  "ACTS_AS",
   "HAS_ROLE"
 ];
 const ADMIN_RELATIONS = [
   "HAS_ADMIN",
   "DEAN_OF",
   "HEAD_OF",
+  "HEAD_OF_UNIT",
   "ADMINISTERS",
   "CHAIRS",
   "DIRECTS",
   "MANAGES"
+];
+const PERSON_PROFILE_RELATIONS = [
+  "TEACHES",
+  "HAS_ROLE",
+  "ACTS_AS",
+  "BELONGS_TO",
+  "WORKS_IN",
+  "MEMBER_OF",
+  ...ADMIN_RELATIONS
 ];
 
 const STOP_WORDS = new Set([
@@ -288,6 +308,18 @@ function normalizeText(value) {
     .trim();
 }
 
+function looksLikeNamedPersonLookup(query, normalizedQuery) {
+  if (!/\btell me about\b/.test(normalizedQuery)) return false;
+  if (/\b(program|programme|major|course|curriculum|prerequisite|college|admission|fee|tuition)\b/.test(normalizedQuery)) {
+    return false;
+  }
+
+  if (/\b(professor|dr|doctor|instructor|staff)\b/.test(normalizedQuery)) return true;
+
+  const lookupTarget = String(query || "").replace(/^.*?\btell me about\b/i, "").trim();
+  return /\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+){1,4}\b/.test(lookupTarget);
+}
+
 function detectIntent(query, requestedIntent = "ALL") {
   const normalizedQuery = normalizeText(query);
   const normalizedIntent = normalizeText(requestedIntent).toUpperCase();
@@ -311,7 +343,7 @@ function detectIntent(query, requestedIntent = "ALL") {
     return "TEACHING";
   }
 
-  if (/\bwho is\b|\b(professor|dr|doctor|instructor|staff)\b/.test(normalizedQuery)) {
+  if (/\bwho is\b|\b(professor|dr|doctor|instructor|staff)\b/.test(normalizedQuery) || looksLikeNamedPersonLookup(query, normalizedQuery)) {
     return "PERSON";
   }
 
@@ -597,26 +629,43 @@ function buildPersonCypher(searchLimit, resultLimit) {
       )
       AND ${keywordContainsPredicate("personNode")}
 
-    // Compute exact-match booleans early for filtering
+    // Compute exact/contains booleans early for filtering. Person aliases
+    // often normalize to the bare name while KG records may include titles.
     WITH personNode, semanticScore,
       ${exactEntityPredicate("personNode", "$phraseKeywords")} AS _nodeExactPhrase,
-      ANY(k IN $keywords WHERE ${normalizeCypherExpression("personNode.name")} = ${normalizedKeywordCypher()}) AS _nodeExactKw
-    WHERE _nodeExactPhrase OR _nodeExactKw
+      ANY(k IN $keywords WHERE ${normalizeCypherExpression("personNode.name")} = ${normalizedKeywordCypher()}) AS _nodeExactKw,
+      ANY(k IN $phraseKeywords WHERE
+        ${normalizeCypherExpression("personNode.name")} CONTAINS ${normalizedKeywordCypher()}
+        OR ${normalizeCypherExpression("personNode.title")} CONTAINS ${normalizedKeywordCypher()}
+        OR ${normalizeCypherExpression("personNode.role")} CONTAINS ${normalizedKeywordCypher()}
+      ) AS _nodePhraseContains,
+      ANY(k IN $keywords WHERE size(k) >= 4 AND (
+        ${normalizeCypherExpression("personNode.name")} CONTAINS ${normalizedKeywordCypher()}
+        OR ${normalizeCypherExpression("personNode.title")} CONTAINS ${normalizedKeywordCypher()}
+        OR ${normalizeCypherExpression("personNode.role")} CONTAINS ${normalizedKeywordCypher()}
+      )) AS _nodeKeywordContains
+    WHERE _nodeExactPhrase OR _nodeExactKw OR _nodePhraseContains OR _nodeKeywordContains
 
-    OPTIONAL MATCH (personNode)-[profileRel]-(relatedNode)
+    // Expand bridged duplicate faculty nodes before collecting profile edges.
+    OPTIONAL MATCH (personNode)-[:IS_SAME_ENTITY]-(samePerson)
+    WITH personNode, semanticScore, [personNode] + collect(DISTINCT samePerson) AS profilePeople
+    UNWIND profilePeople AS profilePerson
+
+    OPTIONAL MATCH (profilePerson)-[profileRel]-(relatedNode)
     WHERE profileRel IS NULL
-      OR type(profileRel) IN ["TEACHES", "HAS_ADMIN", "DEAN_OF", "HEAD_OF", "ADMINISTERS", "CHAIRS", "DIRECTS", "MANAGES", "BELONGS_TO", "WORKS_IN", "MEMBER_OF", "HAS_ROLE"]
+      OR type(profileRel) IN ${cypherStringList(PERSON_PROFILE_RELATIONS)}
 
     WITH personNode, semanticScore, profileRel, relatedNode,
       CASE
         WHEN type(profileRel) = "TEACHES" THEN 1
         WHEN type(profileRel) IN ${cypherStringList(ADMIN_RELATIONS)} THEN 2
+        WHEN type(profileRel) IN ["HAS_ROLE", "ACTS_AS"] THEN 2
         ELSE 3
       END AS relationPriority
     ORDER BY semanticScore DESC, relationPriority ASC
 
     WITH personNode, semanticScore,
-      [row IN collect(CASE WHEN profileRel IS NULL THEN null ELSE { rel: profileRel, related: relatedNode, rank: relationPriority } END) WHERE row IS NOT NULL][0..${RELATIONS_PER_NODE}] AS relationRows
+      [row IN collect(DISTINCT CASE WHEN profileRel IS NULL THEN null ELSE { rel: profileRel, related: relatedNode, rank: relationPriority } END) WHERE row IS NOT NULL][0..${RELATIONS_PER_NODE}] AS relationRows
     UNWIND relationRows + [{ rel: null, related: null, rank: 0 }] AS relationRow
 
     WITH personNode,
@@ -886,6 +935,14 @@ function cleanValue(value) {
   return String(value);
 }
 
+function isPersonLabel(label) {
+  return PERSON_LABELS.has(String(label || ""));
+}
+
+function factKey(fact) {
+  return String(fact?.relationKey || `${fact?.kind || "fact"}:${fact?.label || ""}:${fact?.name || ""}:${fact?.text || ""}`).toLowerCase();
+}
+
 function humanizeTriple(text) {
   const match = text.match(/^\(([^:]+):\s*"([^"]+)"\)\s*--\[([^\]]+)\]-->\s*\(([^:]+):\s*"([^"]+)"\)$/);
   if (!match) return text;
@@ -908,6 +965,30 @@ function humanizeTriple(text) {
     return `${targetName} is a prerequisite for ${sourceName}.`;
   }
 
+  if (["HEAD_OF", "HEAD_OF_UNIT"].includes(relType)) {
+    return `${sourceName} is head of ${targetName}.`;
+  }
+
+  if (["HAS_ROLE", "ACTS_AS"].includes(relType)) {
+    return `${sourceName} serves as ${targetName}.`;
+  }
+
+  if (relType === "WORKS_IN") {
+    return `${sourceName} works in ${targetName}.`;
+  }
+
+  if (relType === "MEMBER_OF") {
+    return `${sourceName} is a member of ${targetName}.`;
+  }
+
+  if (relType === "BELONGS_TO") {
+    return `${sourceName} belongs to ${targetName}.`;
+  }
+
+  if (["ADMINISTERS", "CHAIRS", "DIRECTS", "MANAGES"].includes(relType)) {
+    return `${sourceName} ${relType.toLowerCase().replace(/_/g, " ")} ${targetName}.`;
+  }
+
   if (ADMIN_RELATIONS.includes(relType)) {
     return `${sourceName} has an administrative role for ${targetName}.`;
   }
@@ -916,6 +997,29 @@ function humanizeTriple(text) {
 }
 
 function formatPropertyFact(label, name, props, score, relationRank) {
+  if (isPersonLabel(label)) {
+    const profileProperties = {};
+    for (const key of ["role", "title", "department", "college", "faculty"]) {
+      const value = cleanValue(props?.[key]);
+      if (value) profileProperties[key] = value;
+    }
+
+    const profileText = Object.values(profileProperties).filter(Boolean).join("; ");
+    if (profileText) {
+      return {
+        text: `(${label || "Person"}: "${name}") profile: ${profileText}`,
+        kind: "property",
+        relType: null,
+        label,
+        name,
+        entityName: name,
+        profileProperties,
+        score,
+        relationRank
+      };
+    }
+  }
+
   const preferredKeys = [
     "description",
     "info",
@@ -948,6 +1052,8 @@ function formatPropertyFact(label, name, props, score, relationRank) {
         text: `(${label || "Entity"}: "${name}") ${key}: ${value}`,
         kind: "property",
         relType: null,
+        label,
+        name,
         score,
         relationRank
       };
@@ -958,6 +1064,8 @@ function formatPropertyFact(label, name, props, score, relationRank) {
     text: `${label || "Entity"}: ${name}`,
     kind: "property",
     relType: null,
+    label,
+    name,
     score,
     relationRank
   };
@@ -969,6 +1077,7 @@ function formatRecordFact(record) {
   const props = record.get("props") || {};
   const relatedLabel = record.get("relatedLabel");
   const relatedName = record.get("relatedName");
+  const relatedProps = record.get("relatedProps") || {};
   const relType = record.get("relType");
   const relSourceName = record.get("relSourceName");
   const relSourceLabel = record.get("relSourceLabel");
@@ -984,6 +1093,8 @@ function formatRecordFact(record) {
   }
 
   const triple = `(${relSourceLabel}: "${relSourceName}") --[${relType}]--> (${relTargetLabel}: "${relTargetName}")`;
+  const sourceProperties = relSourceName === name ? props : (relSourceName === relatedName ? relatedProps : {});
+  const targetProperties = relTargetName === name ? props : (relTargetName === relatedName ? relatedProps : {});
 
   return {
     text: humanizeTriple(triple),
@@ -991,6 +1102,14 @@ function formatRecordFact(record) {
     relationKey: `${relType}:${relSourceName}->${relTargetName}`,
     kind: "relation",
     relType,
+    label,
+    name,
+    relatedLabel,
+    relatedName,
+    relSourceName,
+    relSourceLabel,
+    relTargetName,
+    relTargetLabel,
     score,
     baseScore,
     boostedScore,
@@ -998,8 +1117,10 @@ function formatRecordFact(record) {
     graph: {
       source: relSourceName,
       sourceLabel: relSourceLabel,
+      sourceProperties,
       target: relTargetName,
       targetLabel: relTargetLabel,
+      targetProperties,
       type: relType
     }
   };
@@ -1025,8 +1146,162 @@ function getGoodFacts(facts, intent) {
   return facts.filter(fact => (fact.baseScore || fact.score || 0) >= threshold);
 }
 
+function getPersonNameForFact(fact) {
+  if (!fact) return null;
+
+  if (fact.kind === "property" && isPersonLabel(fact.label)) {
+    return fact.entityName || fact.name;
+  }
+
+  const graph = fact.graph || {};
+  if (isPersonLabel(graph.sourceLabel)) return graph.source;
+  if (isPersonLabel(graph.targetLabel)) return graph.target;
+  if (isPersonLabel(fact.relSourceLabel)) return fact.relSourceName;
+  if (isPersonLabel(fact.relTargetLabel)) return fact.relTargetName;
+  return null;
+}
+
+function getOtherEntityNameForPersonFact(fact, personName) {
+  const personKey = normalizeText(personName);
+  const sourceName = fact?.graph?.source || fact?.relSourceName;
+  const targetName = fact?.graph?.target || fact?.relTargetName;
+
+  if (normalizeText(sourceName) === personKey) return targetName;
+  if (normalizeText(targetName) === personKey) return sourceName;
+  return fact?.relatedName || targetName || sourceName;
+}
+
+function personRelationSummaryLine(fact, personName) {
+  const otherName = getOtherEntityNameForPersonFact(fact, personName);
+  if (!otherName || normalizeText(otherName) === normalizeText(personName)) return null;
+
+  switch (fact.relType) {
+    case "TEACHES":
+      return { text: `Teaches ${otherName}`, priority: 1 };
+    case "HEAD_OF":
+    case "HEAD_OF_UNIT":
+      return { text: `Head of ${otherName}`, priority: 2 };
+    case "HAS_ROLE":
+    case "ACTS_AS":
+      return { text: otherName, priority: 3 };
+    case "MANAGES":
+      return { text: `Manages ${otherName}`, priority: 4 };
+    case "ADMINISTERS":
+      return { text: `Administers ${otherName}`, priority: 4 };
+    case "CHAIRS":
+      return { text: `Chairs ${otherName}`, priority: 4 };
+    case "DIRECTS":
+      return { text: `Directs ${otherName}`, priority: 4 };
+    case "WORKS_IN":
+      return { text: `Works in ${otherName}`, priority: 5 };
+    case "MEMBER_OF":
+      return { text: `Member of ${otherName}`, priority: 6 };
+    case "BELONGS_TO":
+      return { text: `Belongs to ${otherName}`, priority: 6 };
+    default:
+      return null;
+  }
+}
+
+function addPersonSummaryLine(lineMap, text, priority) {
+  const cleanText = String(text || "").replace(/\s+/g, " ").trim();
+  if (!cleanText) return;
+
+  const key = normalizeText(cleanText);
+  const existing = lineMap.get(key);
+  if (!existing || priority < existing.priority) {
+    lineMap.set(key, { text: cleanText, priority });
+  }
+}
+
+function buildPersonSummaryFacts(facts) {
+  const groups = new Map();
+
+  for (const fact of facts) {
+    const personName = getPersonNameForFact(fact);
+    const personKey = normalizeText(personName);
+    if (!personKey) continue;
+
+    if (!groups.has(personKey)) {
+      groups.set(personKey, {
+        name: personName,
+        facts: [],
+        maxScore: 0,
+        maxBaseScore: 0
+      });
+    }
+
+    const group = groups.get(personKey);
+    group.facts.push(fact);
+    group.maxScore = Math.max(group.maxScore, fact.score || 0);
+    group.maxBaseScore = Math.max(group.maxBaseScore, fact.baseScore || fact.score || 0);
+  }
+
+  return Array.from(groups.values())
+    .map(group => {
+      const lineMap = new Map();
+
+      for (const fact of group.facts) {
+        if (fact.kind === "property" && fact.profileProperties) {
+          addPersonSummaryLine(lineMap, fact.profileProperties.role, 3);
+          addPersonSummaryLine(lineMap, fact.profileProperties.title, 7);
+          addPersonSummaryLine(lineMap, fact.profileProperties.department, 8);
+          addPersonSummaryLine(lineMap, fact.profileProperties.college, 8);
+          addPersonSummaryLine(lineMap, fact.profileProperties.faculty, 8);
+          continue;
+        }
+
+        if (fact.kind !== "relation") continue;
+        const summaryLine = personRelationSummaryLine(fact, group.name);
+        if (summaryLine) {
+          addPersonSummaryLine(lineMap, summaryLine.text, summaryLine.priority);
+        }
+      }
+
+      const lines = Array.from(lineMap.values())
+        .sort((a, b) => a.priority - b.priority || a.text.localeCompare(b.text))
+        .slice(0, MAX_PERSON_SUMMARY_LINES);
+
+      if (lines.length < 2) return null;
+
+      return {
+        text: `${group.name}:\n${lines.map(line => `- ${line.text}`).join("\n")}`,
+        kind: "person_summary",
+        relType: null,
+        label: "Person",
+        name: group.name,
+        entityName: group.name,
+        summaryType: "person_profile",
+        sourceFactKeys: group.facts.map(factKey),
+        score: group.maxScore,
+        baseScore: group.maxBaseScore,
+        boostedScore: group.maxScore,
+        relationRank: 0
+      };
+    })
+    .filter(Boolean)
+    .sort((a, b) => (b.score || 0) - (a.score || 0));
+}
+
+function selectPersonProfileFacts(sortedFacts, maxFacts) {
+  const summaries = buildPersonSummaryFacts(sortedFacts);
+  const profileFacts = sortedFacts.filter(fact => fact.kind === "property");
+  const relationFacts = sortedFacts.filter(fact => fact.kind === "relation");
+
+  if (summaries.length === 0) {
+    return [...profileFacts, ...relationFacts].slice(0, maxFacts);
+  }
+
+  const supportingKeys = new Set(summaries.flatMap(summary => summary.sourceFactKeys || []));
+  const supportingFacts = sortedFacts.filter(fact => supportingKeys.has(factKey(fact)));
+  const remainingFacts = sortedFacts.filter(fact => !supportingKeys.has(factKey(fact)));
+
+  return [...summaries, ...supportingFacts, ...remainingFacts].slice(0, maxFacts);
+}
+
 function selectTopQualityFacts(facts, intent, limit) {
-  const maxFacts = Math.max(Math.min(limit || 5, 8), 1);
+  const requestedLimit = Number.parseInt(limit, 10) || DEFAULT_CONTEXT_LIMIT;
+  const maxFacts = Math.max(Math.min(requestedLimit, intent === "PERSON" ? DEFAULT_CONTEXT_LIMIT : 8), 1);
   const sorted = dedupeFacts(facts).sort((a, b) => {
     if ((b.score || 0) !== (a.score || 0)) return (b.score || 0) - (a.score || 0);
     return (a.relationRank ?? 3) - (b.relationRank ?? 3);
@@ -1049,9 +1324,7 @@ function selectTopQualityFacts(facts, intent, limit) {
   }
 
   if (intent === "PERSON") {
-    const profileFacts = sorted.filter(fact => fact.kind === "property");
-    const relationFacts = sorted.filter(fact => fact.kind === "relation");
-    return [...profileFacts, ...relationFacts].slice(0, maxFacts);
+    return selectPersonProfileFacts(sorted, maxFacts);
   }
 
   if (intent === "PROGRAM" || intent === "COMPARE") {
@@ -1188,15 +1461,18 @@ function buildQueryPlan(intent, searchLimit, resultLimit) {
   };
 }
 
-export async function fetchNeo4jContext(query, intent = "ALL", limit = 5, requestId = "none", lastMessages = "") {
+export async function fetchNeo4jContext(query, intent = "ALL", limit = DEFAULT_CONTEXT_LIMIT, requestId = "none", lastMessages = "") {
   const stopQueryTimer = startTimer();
   incrementMetric("retrieval.query_total");
 
   const session = getSession();
   const detectedIntent = detectIntent(query, intent);
+  const requestedLimit = Math.max(Number.parseInt(limit, 10) || DEFAULT_CONTEXT_LIMIT, 1);
+  const personRecallBoost = detectedIntent === "PERSON" && /\b(who is|tell me about|doctor|professor|dr|dean)\b/.test(normalizeText(query));
+  const effectiveLimit = personRecallBoost ? Math.max(requestedLimit, DEFAULT_CONTEXT_LIMIT) : requestedLimit;
   const keywordParams = buildKeywordParams(query);
   const { keywords } = keywordParams;
-  const resultLimit = Math.max(limit * 3, 8);
+  const resultLimit = Math.max(effectiveLimit * 3, 8);
   const searchLimit = Math.max(resultLimit * 3, 25);
 
   logger.info("Neo4j retrieval started", {
@@ -1236,7 +1512,7 @@ ${query}`;
 
     const facts = records.map(formatRecordFact);
     const goodFacts = getGoodFacts(facts, detectedIntent);
-    const selectedFacts = selectTopQualityFacts(goodFacts, detectedIntent, limit);
+    const selectedFacts = selectTopQualityFacts(goodFacts, detectedIntent, effectiveLimit);
     const confidence = selectedFacts[0]?.baseScore || selectedFacts[0]?.score || 0;
 
     logger.info("Neo4j retrieval completed", {

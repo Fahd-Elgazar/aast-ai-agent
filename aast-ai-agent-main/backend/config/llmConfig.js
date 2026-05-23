@@ -1,3 +1,7 @@
+import dotenv from "dotenv";
+
+dotenv.config();
+
 function integerFromEnv(name, fallback, { min = 0 } = {}) {
   const raw = process.env[name];
   const parsed = Number.parseInt(raw, 10);
@@ -114,14 +118,14 @@ const LLM_CONFIG = Object.freeze({
     numPredict: Object.freeze({
       light: integerFromEnv("GEMMA_NUM_PREDICT_LIGHT", 128, { min: 16 }),
       intent: integerFromEnv("GEMMA_NUM_PREDICT_INTENT", 96, { min: 16 }),
-      synthesis: integerFromEnv("GEMMA_NUM_PREDICT_SYNTHESIS", 420, {
+      synthesis: integerFromEnv("GEMMA_NUM_PREDICT_SYNTHESIS", 220, {
         min: 64,
       }),
-      heavy: integerFromEnv("GEMMA_NUM_PREDICT_HEAVY", 320, { min: 64 }),
-      fallback: integerFromEnv("GEMMA_NUM_PREDICT_FALLBACK", 220, {
+      heavy: integerFromEnv("GEMMA_NUM_PREDICT_HEAVY", 160, { min: 64 }),
+      fallback: integerFromEnv("GEMMA_NUM_PREDICT_FALLBACK", 160, {
         min: 64,
       }),
-      max: integerFromEnv("GEMMA_NUM_PREDICT_MAX", 512, { min: 64 }),
+      max: integerFromEnv("GEMMA_NUM_PREDICT_MAX", 256, { min: 64 }),
     }),
   }),
 
@@ -147,7 +151,20 @@ const LLM_CONFIG = Object.freeze({
   timeouts: Object.freeze({
     primaryMs: integerFromEnv(
       "PRIMARY_TIMEOUT_MS",
-      integerFromEnv("OLLAMA_TIMEOUT_MS", 12000, { min: 1000 }),
+      integerFromEnv("OLLAMA_TIMEOUT_MS", 20000, { min: 1000 }),
+      { min: 1000 }
+    ),
+    synthesisMs: integerFromEnv(
+      "SYNTHESIS_TIMEOUT_MS",
+      integerFromEnv(
+        "OLLAMA_SYNTHESIS_TIMEOUT_MS",
+        integerFromEnv(
+          "PRIMARY_TIMEOUT_MS",
+          integerFromEnv("OLLAMA_TIMEOUT_MS", 20000, { min: 1000 }),
+          { min: 1000 }
+        ),
+        { min: 1000 }
+      ),
       { min: 1000 }
     ),
     backupMs: integerFromEnv("BACKUP_TIMEOUT_MS", 10000, { min: 1000 }),
@@ -158,7 +175,16 @@ const LLM_CONFIG = Object.freeze({
     ),
     generationDeadlineMs: integerFromEnv(
       "LLM_REQUEST_DEADLINE_MS",
-      22000,
+      20000,
+      { min: 3000 }
+    ),
+    synthesisDeadlineMs: integerFromEnv(
+      "SYNTHESIS_DEADLINE_MS",
+      integerFromEnv(
+        "LLM_SYNTHESIS_DEADLINE_MS",
+        integerFromEnv("LLM_REQUEST_DEADLINE_MS", 20000, { min: 3000 }),
+        { min: 3000 }
+      ),
       { min: 3000 }
     ),
     healthMs: integerFromEnv("HEALTHCHECK_TIMEOUT_MS", 3000, { min: 500 }),

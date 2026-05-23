@@ -16,7 +16,8 @@
 
 import ragService from './ragService.js';
 import { ROUTING_CALIBRATION } from '../config/routingCalibration.js';
-import { ACADEMIC_ALIAS_GROUPS } from './academicAliases.js';
+import { ACADEMIC_ALIAS_GROUPS, ONTOLOGY_NON_PERSON_CATEGORIES } from './academicAliases.js';
+import { ROUTE_PRIORITY, classifyGoldenQuery } from '../config/goldenPathRegistry.js';
 
 // ─────────────────────────────────────────────────────────────
 // LOGGER & CONSTANTS
@@ -44,6 +45,22 @@ const ROUTES = {
     FAQ: 'FAQ',
     LLM_FALLBACK: 'LLM_FALLBACK'
 };
+
+const ONTOLOGY_KG_INTENTS = new Set([
+    'FACILITY',
+    'TRACK',
+    'PARTNER_INSTITUTION',
+    'GOVERNANCE',
+    'POLICY',
+    'CAMPUS',
+    'CURRICULUM'
+]);
+
+const CURRICULUM_INTENT_PATTERN = /\b(week|weekly|topic|topics|syllabus|lecture|lectures|module|modules|transformers?|rag|multimodal|text generation|self-supervised learning)\b/i;
+
+function detectCurriculumIntent(query) {
+    return CURRICULUM_INTENT_PATTERN.test(String(query || ''));
+}
 
 function escapeRegExp(value) {
     return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -95,7 +112,14 @@ const SIGNAL_DICTIONARY = {
         // Core Academic Structure
         'course', 'courses', 'subject', 'subjects',
         'program', 'programs', 'degree', 'specialization', 'specializations',
-        'track', 'tracks', 'curriculum', 'academic structure',
+        'track', 'tracks', 'pathway', 'pathways', 'focus area', 'major track',
+        'curriculum', 'academic structure',
+        'week', 'weekly',
+        'lecture', 'lectures',
+        'topic', 'topics',
+        'module', 'modules',
+        'transformer', 'transformers',
+        'rag', 'multimodal',
         'semester', 'credit hour', 'credits',
 
         // Prerequisites / Course Dependencies
@@ -113,14 +137,21 @@ const SIGNAL_DICTIONARY = {
 
         // Department / Governance
         'department', 'departments',
-        'college', 'campus',
+        'college', 'campus', 'campuses', 'branch',
         'policy', 'grading policy',
         'grading system', 'gpa',
         'scholarship', 'scholarships',
+        'governance', 'governance body', 'governance unit',
+        'quality unit', 'quality assurance unit',
+        'partner institution', 'partner institutions',
+        'partner university', 'academic partner',
+        'international collaboration',
 
         // Course Content
         'syllabus', 'schedule',
-        'lab', 'labs', 'facility', 'facilities',
+        'lab', 'labs', 'laboratory', 'laboratories',
+        'facility', 'facilities', 'facility component',
+        'robotics lab', 'iot lab', 'virtual reality lab',
 
         // Career / Outcomes
         'career', 'career role', 'job role',
@@ -445,7 +476,19 @@ class BrainRouter {
             /department head/i,
             /advisor/i,
             /schedule/i,
-            /course owner/i
+            /course owner/i,
+            /week/i,
+            /weekly/i,
+            /topic/i,
+            /topics/i,
+            /syllabus/i,
+            /lecture/i,
+            /lectures/i,
+            /module/i,
+            /modules/i,
+            /transformers?/i,
+            /\brag\b/i,
+            /multimodal/i
         ];
         return deterministicPatterns.some(pattern => pattern.test(query));
     }
@@ -495,15 +538,36 @@ class BrainRouter {
 
     classifyQuestionFeatures(query, existingIntent = null, sessionContext = {}) {
         const lowerQuery = String(query || '').toLowerCase();
+        const normalizedExistingIntent = String(existingIntent || '')
+            .trim()
+            .toUpperCase()
+            .replace(/[\s-]+/g, '_')
+            .replace(/[^A-Z_]/g, '');
+        const existingOntologyIntentFromInput = ONTOLOGY_KG_INTENTS.has(normalizedExistingIntent)
+            ? normalizedExistingIntent
+            : null;
         const aliases = matchAliasSignals(lowerQuery);
         const aliasCategories = new Set(aliases.map(alias => alias.category));
+        const hasCurriculumSignal = existingOntologyIntentFromInput === 'CURRICULUM' || aliasCategories.has('ontology_curriculum') || detectCurriculumIntent(lowerQuery);
+        const existingOntologyIntent = existingOntologyIntentFromInput || (hasCurriculumSignal ? 'CURRICULUM' : null);
         const aliasConfidence = aliases.length === 0
             ? 0
             : clamp(Math.max(...aliases.map(alias => alias.canonical_hit ? 0.82 : 0.94)));
 
         const hasCourseCode = /\b[a-z]{2,5}\s*\d{3,4}\b/i.test(lowerQuery);
         const hasSpecificSubject = /\b(machine learning|natural language processing|mobile computing|blockchain|deep learning|computer vision|data science|artificial intelligence|software engineering|nlp|ml)\b/i.test(lowerQuery);
-        const hasPerson = aliasCategories.has('faculty_person') || /\b(who is|dr|doctor|professor|prof)\b/i.test(lowerQuery);
+        const hasCurriculum = existingOntologyIntent === 'CURRICULUM' || hasCurriculumSignal;
+        const hasFacility = existingOntologyIntent === 'FACILITY' || aliasCategories.has('ontology_facility') || aliasCategories.has('ontology_facility_component') || /\b(facility|facilities|lab|labs|laboratory|laboratories|facility component|equipment|robotics lab|iot lab|virtual reality lab)\b/i.test(lowerQuery);
+        const hasStructuralPolicy = existingOntologyIntent === 'POLICY' || aliasCategories.has('ontology_policy') || /\b(policy|policies|policy pathway|policy pathways|grading|grading system|grading systems|grading policy|passing criteria|tuition pathway|scholarship pathway|advising pathway)\b/i.test(lowerQuery);
+        const hasExplicitTrackIntent = /\b(track|tracks|specialization|specializations|pathway|pathways|focus area|focus areas|major track|major tracks|concentration|concentrations)\b/i.test(lowerQuery);
+        const hasTrack = existingOntologyIntent === 'TRACK' || (!hasStructuralPolicy && (aliasCategories.has('ontology_track') || hasExplicitTrackIntent));
+        const hasPartnerInstitution = existingOntologyIntent === 'PARTNER_INSTITUTION' || aliasCategories.has('ontology_partner_institution') || /\b(partner institution|partner institutions|partner university|academic partner|international partner|international collaboration|uclan|barcelona)\b/i.test(lowerQuery);
+        const hasGovernance = existingOntologyIntent === 'GOVERNANCE' || aliasCategories.has('ontology_governance') || /\b(governance|governance body|governance unit|quality unit|quality assurance unit|program governance|college governance)\b/i.test(lowerQuery);
+        const hasCampus = existingOntologyIntent === 'CAMPUS' || aliasCategories.has('ontology_campus') || /\b(campus|campuses|branch|branches|el alamein|new el alamein)\b/i.test(lowerQuery);
+        const hasOntologyAlias = [...aliasCategories].some(category => ONTOLOGY_NON_PERSON_CATEGORIES.includes(category));
+        const hasOntologyNonPerson = !!existingOntologyIntent || hasOntologyAlias || hasCurriculum || hasFacility || hasTrack || hasPartnerInstitution || hasGovernance || hasStructuralPolicy || hasCampus;
+        const hasPersonTitleOrAlias = aliasCategories.has('faculty_person') || /\b(dr|doctor|professor|prof|instructor|lecturer|staff)\b/i.test(lowerQuery);
+        const hasPerson = hasPersonTitleOrAlias && !hasOntologyNonPerson;
         const hasFacultyRole = aliasCategories.has('faculty_role') || /\b(dean|vice dean|head of department|hod|program director|department head)\b/i.test(lowerQuery);
         const hasTeaching = /\b(who teaches|who is teaching|teacher|teaches|teaching|taught by|instructor|lecturer)\b/i.test(lowerQuery);
         const hasCoursePrereq = /\b(prerequisite|prerequisites|prereq|pre requisite|required before|depends on|before taking)\b/i.test(lowerQuery);
@@ -511,17 +575,24 @@ class BrainRouter {
         const hasScholarship = /\b(scholarship|scholarships|financial aid|tuition exemption|fee waiver|discount|grant|bursary)\b/i.test(lowerQuery);
         const hasFees = /\b(fee|fees|tuition|cost|payment|price|charges)\b/i.test(lowerQuery);
         const hasGpa = /\b(gpa|cgpa|grade point|minimum grade)\b/i.test(lowerQuery);
-        const hasProgram = /\b(program|major|track|tracks|department|college|faculty|course|courses|curriculum|specialization)\b/i.test(lowerQuery);
+        const hasProgram = /\b(program|major|department|college|faculty|course|courses|curriculum)\b/i.test(lowerQuery) || (!hasExplicitTrackIntent && /\b(track|tracks|pathway|pathways|specialization|specializations)\b/i.test(lowerQuery));
         const hasComparison = /\b(compare|comparison|vs|versus|difference between|different from|better)\b/i.test(lowerQuery);
         const hasAdvisory = /\b(should i|recommend|advise|advice|choose|help me decide|best for me|suit me|fits me)\b/i.test(lowerQuery);
         const hasConversational = /\b(favorite color|joke|story|write a|script|poem|unmotivated|motivate|summarize the plot)\b/i.test(lowerQuery);
         const hasPlanning = /\b(plan|planning|roadmap|path|career path|decision support|case|cases)\b/i.test(lowerQuery);
 
         const classes = [];
+        if (hasCurriculum) classes.push('curriculum');
         if (hasPerson) classes.push('person');
         if (hasFacultyRole) classes.push('leadership');
         if (hasTeaching) classes.push('teaching');
         if (hasCoursePrereq) classes.push('course_prerequisite');
+        if (hasFacility) classes.push('facility');
+        if (hasTrack) classes.push('track');
+        if (hasPartnerInstitution) classes.push('partner_institution');
+        if (hasGovernance) classes.push('governance');
+        if (hasStructuralPolicy) classes.push('kg_policy');
+        if (hasCampus) classes.push('campus');
         if (hasScholarship) classes.push('scholarship');
         if (hasFees) classes.push('fees');
         if (hasGpa) classes.push('gpa');
@@ -536,6 +607,8 @@ class BrainRouter {
             hasPerson && aliases.length > 0 ? 0.94 : 0,
             hasPerson ? 0.78 : 0,
             hasFacultyRole ? 0.86 : 0,
+            hasCurriculum ? 0.94 : 0,
+            hasOntologyNonPerson ? 0.88 : 0,
             hasSpecificSubject ? 0.82 : 0,
             hasProgram ? 0.64 : 0
         ));
@@ -545,6 +618,7 @@ class BrainRouter {
             (hasCourseCode ? 0.28 : 0) +
             (hasSpecificSubject ? 0.22 : 0) +
             (hasPerson || hasFacultyRole ? 0.22 : 0) +
+            (hasOntologyNonPerson ? 0.20 : 0) +
             (hasRequirements || hasCoursePrereq ? 0.16 : 0) +
             (hasGpa || hasFees || hasScholarship ? 0.14 : 0)
         );
@@ -569,10 +643,17 @@ class BrainRouter {
 
         let questionClass = 'general';
         if (hasConversational && !hasProgram && !hasSpecificSubject) questionClass = 'conversational';
+        else if (hasCurriculum) questionClass = 'curriculum';
         else if (hasTeaching) questionClass = 'faculty_teaching';
         else if (hasPerson) questionClass = 'faculty_person';
         else if (hasFacultyRole) questionClass = 'leadership';
         else if (hasCoursePrereq) questionClass = 'course_prerequisite';
+        else if (hasFacility) questionClass = 'facility';
+        else if (hasTrack) questionClass = 'track';
+        else if (hasPartnerInstitution) questionClass = 'partner_institution';
+        else if (hasGovernance) questionClass = 'governance';
+        else if (hasStructuralPolicy) questionClass = 'kg_policy';
+        else if (hasCampus) questionClass = 'campus';
         else if (hasScholarship) questionClass = 'scholarship';
         else if (hasRequirements) questionClass = 'requirements';
         else if (hasFees) questionClass = 'fees';
@@ -594,10 +675,25 @@ class BrainRouter {
             class_signals: [...new Set(classes)],
             hybrid_trigger_reasons: [...new Set(hybridTriggerReasons)],
             historical_route: sessionContext?.lastRoute || null,
-            intent_hint: existingIntent || null,
-            force_hybrid: hybridTriggerReasons.length > 0 && !(hasTeaching || (hasPerson && !hasRequirements && !hasScholarship && !hasFees)),
-            force_kg: (hasTeaching || hasPerson || hasFacultyRole || hasCoursePrereq) && hybridTriggerReasons.length === 0,
-            allow_llm_direct: hasConversational && !hasProgram && !hasSpecificSubject && !hasRequirements && !hasScholarship,
+            ontology_intent: existingOntologyIntent || (hasCurriculum ? 'CURRICULUM'
+                : hasTrack ? 'TRACK'
+                : hasFacility ? 'FACILITY'
+                    : hasPartnerInstitution ? 'PARTNER_INSTITUTION'
+                        : hasGovernance ? 'GOVERNANCE'
+                            : hasStructuralPolicy ? 'POLICY'
+                                : hasCampus ? 'CAMPUS'
+                                    : null),
+            intent_hint: existingOntologyIntent || (hasCurriculum ? 'CURRICULUM'
+                : hasTrack ? 'TRACK'
+                : hasFacility ? 'FACILITY'
+                    : hasPartnerInstitution ? 'PARTNER_INSTITUTION'
+                        : hasGovernance ? 'GOVERNANCE'
+                            : hasStructuralPolicy ? 'POLICY'
+                                : hasCampus ? 'CAMPUS'
+                                    : (existingIntent || null)),
+            force_hybrid: hybridTriggerReasons.length > 0 && !(hasTeaching || (hasPerson && !hasRequirements && !hasScholarship && !hasFees) || (hasOntologyNonPerson && !hasComparison)),
+            force_kg: ((hasTeaching || hasPerson || hasFacultyRole || hasCoursePrereq || (hasOntologyNonPerson && !hasComparison)) && hybridTriggerReasons.length === 0) || hasStructuralPolicy,
+            allow_llm_direct: hasConversational && !hasProgram && !hasSpecificSubject && !hasRequirements && !hasScholarship && !hasOntologyNonPerson,
         };
     }
 
@@ -615,6 +711,16 @@ class BrainRouter {
         if (features.force_kg) {
             signals.kg_score += 0.42 + (features.query_specificity * 0.2);
             signals.kg_direct_score = Math.max(signals.kg_direct_score || 0, 0.72 + (features.entity_confidence * 0.2));
+        }
+
+        if (features.ontology_intent === 'TRACK') {
+            signals.kg_score += 0.30;
+            signals.kg_direct_score = Math.max(signals.kg_direct_score || 0, 0.90);
+        }
+
+        if (features.ontology_intent && features.ontology_intent !== 'TRACK') {
+            signals.kg_score += 0.28;
+            signals.kg_direct_score = Math.max(signals.kg_direct_score || 0, 0.90);
         }
 
         if (features.hybrid_trigger_reasons.includes('requirements_hybrid_boost')) {
@@ -659,6 +765,73 @@ class BrainRouter {
         }
     }
 
+    applyGoldenPathCalibration(signals, features, goldenPath) {
+        if (!goldenPath) return;
+
+        features.golden_path = {
+            id: goldenPath.id,
+            category: goldenPath.category,
+            execution: goldenPath.execution,
+            priority: goldenPath.priority,
+            route: goldenPath.route,
+            registry_version: goldenPath.registry_version
+        };
+        features.question_class = goldenPath.category;
+        features.entity_confidence = Math.max(features.entity_confidence || 0, 0.96);
+        features.query_specificity = Math.max(features.query_specificity || 0, 0.92);
+        features.semantic_ambiguity = 0;
+        features.force_hybrid = goldenPath.route === ROUTES.HYBRID_KG_RAG;
+        features.force_kg = goldenPath.route === ROUTES.KG_DIRECT;
+        features.allow_llm_direct = false;
+
+        switch (goldenPath.route) {
+            case ROUTES.KG_DIRECT:
+                signals.kg_score += 2.4;
+                signals.kg_direct_score = 1.0;
+                signals.hybrid_score *= 0.25;
+                signals.rag_score *= 0.55;
+                signals.llm_score = Math.min(signals.llm_score, 0.05);
+                break;
+            case ROUTES.RAG_DIRECT:
+                signals.rag_score += 2.0;
+                signals.rag_direct_score = 1.0;
+                signals.kg_score *= 0.55;
+                signals.hybrid_score *= 0.35;
+                signals.llm_score = Math.min(signals.llm_score, 0.05);
+                break;
+            case ROUTES.HYBRID_KG_RAG:
+                signals.kg_score += 0.95;
+                signals.rag_score += 0.95;
+                signals.hybrid_score += 1.8;
+                signals.llm_score = Math.min(signals.llm_score, 0.05);
+                break;
+            case ROUTES.DECISION_ENGINE:
+                signals.decision_score += 2.1;
+                signals.kg_score *= 0.35;
+                signals.rag_score *= 0.35;
+                signals.hybrid_score *= 0.25;
+                signals.llm_score = Math.min(signals.llm_score, 0.05);
+                break;
+            case ROUTES.CAREER_ENGINE:
+                signals.career_score += 2.1;
+                signals.decision_score += 0.35;
+                signals.kg_score *= 0.35;
+                signals.rag_score *= 0.35;
+                signals.hybrid_score *= 0.25;
+                signals.llm_score = Math.min(signals.llm_score, 0.05);
+                break;
+            default:
+                break;
+        }
+
+        logger.info('GOLDEN_PATH', 'Golden query calibration applied', {
+            id: goldenPath.id,
+            category: goldenPath.category,
+            route: goldenPath.route,
+            priority: goldenPath.priority
+        });
+    }
+
     /**
      * 1. analyzeQuery(query, existingIntent, sessionContext)
      * Performs deep semantic decomposition of the query by combining
@@ -677,6 +850,7 @@ class BrainRouter {
                 : query?.query || "";
 
         const lowerQuery = normalizedQuery.toLowerCase();
+        const goldenPath = classifyGoldenQuery(normalizedQuery);
         const features = this.classifyQuestionFeatures(lowerQuery, existingIntent, sessionContext);
 
         // 1. Extract base lexical and structural signals
@@ -694,15 +868,31 @@ class BrainRouter {
             logger.warn('ANALYZE', 'Failed to invoke ragService category detection', { error: err.message });
         }
 
-        // 3. Adjust signals based on pre-classified intent (if available)
-        this._applyIntentBoost(signals, existingIntent);
+        // 3. Adjust signals based on pre-classified intent, with ontology
+        // terms taking priority over broad PROGRAM hints.
+        this._applyIntentBoost(signals, features.intent_hint || existingIntent);
 
         // 4. Apply deterministic multi-factor calibration before hard route gates.
         this.applyFeatureCalibration(signals, features);
 
         // 4.5 Deterministic policy classifier (Phase 6 repair)
         const deterministicPolicy = this.classifyDeterministicPolicyQuery(lowerQuery);
-        if (deterministicPolicy.strong_policy_evidence) {
+        const hasStructuralKgPolicyIntent = features.class_signals.includes('kg_policy');
+        const hasAcademicEntityIntent = ['teaching', 'person', 'leadership', 'course_prerequisite']
+            .some(signal => features.class_signals.includes(signal));
+
+        if (deterministicPolicy.strong_policy_evidence && hasAcademicEntityIntent && !hasStructuralKgPolicyIntent) {
+            features.force_hybrid = true;
+            features.force_kg = false;
+            features.hybrid_trigger_reasons = [
+                ...new Set([
+                    ...features.hybrid_trigger_reasons,
+                    'deterministic_academic_policy_mix'
+                ])
+            ];
+        }
+
+        if (deterministicPolicy.strong_policy_evidence && !hasStructuralKgPolicyIntent) {
             signals.rag_score += this.signalWeights.deterministic_policy_boost + (deterministicPolicy.score * 0.45);
             signals.rag_direct_score = Math.max(0.85, deterministicPolicy.score);
 
@@ -737,7 +927,15 @@ class BrainRouter {
             signals.kg_direct_score = 1.0;
             logger.debug('ANALYZE', 'Deterministic academic query detected, boosting kg_direct_score');
         } else {
-            signals.kg_direct_score = 0;
+            signals.kg_direct_score = features.force_kg
+                ? Math.max(signals.kg_direct_score || 0, 0.82)
+                : 0;
+        }
+
+        // 5.6 Demo golden path lock. Applied after generic deterministic
+        // classifiers so the registry is the final authority for showcase flows.
+        if (goldenPath) {
+            this.applyGoldenPathCalibration(signals, features, goldenPath);
         }
 
         // 6. Normalize Signals (CRITICAL LAYER)
@@ -749,6 +947,7 @@ class BrainRouter {
             signals: normalizedSignals,
             is_hybrid_candidate: isHybridCandidate,
             deterministic_policy: deterministicPolicy,
+            golden_path: goldenPath,
             routing_features: features,
             thresholds: {
                 kg_confidence_threshold: this.confidenceThresholds.MEDIUM,
@@ -859,7 +1058,7 @@ class BrainRouter {
      */
     determineBestRoute(analysisPayload, healthStatus = {}) {
         const routeStartTime = Date.now();
-        const { signals, is_hybrid_candidate, deterministic_policy, routing_features, thresholds } = analysisPayload;
+        const { signals, is_hybrid_candidate, deterministic_policy, golden_path, routing_features, thresholds } = analysisPayload;
 
         // Ensure healthStatus has defaults
         const health = {
@@ -902,11 +1101,119 @@ class BrainRouter {
                 semantic_ambiguity: features?.semantic_ambiguity || 0,
                 hybrid_trigger_reasons: features?.hybrid_trigger_reasons || [],
                 alias_expansions: features?.matched_aliases || [],
+                golden_path: golden_path ? {
+                    id: golden_path.id,
+                    category: golden_path.category,
+                    execution: golden_path.execution,
+                    priority: golden_path.priority,
+                    route: golden_path.route
+                } : null,
                 thresholds_used: thresholds || {},
                 fallback_chain
             },
             ...extra
         });
+
+        if (golden_path) {
+            const routePolicy = golden_path.execution || golden_path.route;
+            let route = golden_path.route;
+            let servicesRequired = [];
+            let fallbackChain = [];
+            let degradedReason = null;
+
+            if (route === ROUTES.KG_DIRECT) {
+                servicesRequired = ['kg'];
+                fallbackChain = [ROUTES.RAG_DIRECT, ROUTES.FAQ, ROUTES.LLM_FALLBACK];
+                if (!health.kg) {
+                    degradedReason = 'KG_UNHEALTHY_GOLDEN_DEGRADE';
+                    route = health.rag ? ROUTES.RAG_DIRECT : (health.faq ? ROUTES.FAQ : ROUTES.LLM_FALLBACK);
+                    servicesRequired = route === ROUTES.RAG_DIRECT ? ['rag'] : route === ROUTES.FAQ ? ['faq'] : ['llm'];
+                }
+            } else if (route === ROUTES.RAG_DIRECT) {
+                servicesRequired = ['rag'];
+                fallbackChain = [ROUTES.FAQ, ROUTES.KG_DIRECT, ROUTES.LLM_FALLBACK];
+                if (!health.rag) {
+                    degradedReason = 'RAG_UNHEALTHY_GOLDEN_DEGRADE';
+                    route = health.kg ? ROUTES.KG_DIRECT : (health.faq ? ROUTES.FAQ : ROUTES.LLM_FALLBACK);
+                    servicesRequired = route === ROUTES.KG_DIRECT ? ['kg'] : route === ROUTES.FAQ ? ['faq'] : ['llm'];
+                }
+            } else if (route === ROUTES.HYBRID_KG_RAG) {
+                servicesRequired = ['kg', 'rag'];
+                fallbackChain = [ROUTES.KG_DIRECT, ROUTES.RAG_DIRECT, ROUTES.FAQ, ROUTES.LLM_FALLBACK];
+                if (!health.kg || !health.rag) {
+                    degradedReason = 'HYBRID_PARTIAL_UNHEALTHY_GOLDEN_DEGRADE';
+                    route = health.kg ? ROUTES.KG_DIRECT : (health.rag ? ROUTES.RAG_DIRECT : (health.faq ? ROUTES.FAQ : ROUTES.LLM_FALLBACK));
+                    servicesRequired = route === ROUTES.KG_DIRECT ? ['kg'] : route === ROUTES.RAG_DIRECT ? ['rag'] : route === ROUTES.FAQ ? ['faq'] : ['llm'];
+                }
+            } else if (route === ROUTES.DECISION_ENGINE) {
+                servicesRequired = ['decision'];
+                fallbackChain = [ROUTES.CAREER_ENGINE, ROUTES.FAQ, ROUTES.LLM_FALLBACK];
+                if (!health.decision) {
+                    degradedReason = 'DECISION_UNHEALTHY_GOLDEN_RULE_FALLBACK';
+                }
+            } else if (route === ROUTES.CAREER_ENGINE) {
+                servicesRequired = ['career'];
+                fallbackChain = [ROUTES.DECISION_ENGINE, ROUTES.FAQ, ROUTES.LLM_FALLBACK];
+                if (!health.career) {
+                    degradedReason = 'CAREER_UNHEALTHY_GOLDEN_RULE_FALLBACK';
+                }
+            }
+
+            logger.info('GOLDEN_PATH', 'Golden route enforced', {
+                id: golden_path.id,
+                category: golden_path.category,
+                requested_route: golden_path.route,
+                selected_route: route,
+                routePolicy,
+                degradedReason
+            });
+
+            return buildDecision({
+                route,
+                confidence: Math.max(golden_path.confidence || 0, signals.kg_score, signals.rag_score, signals.decision_score, signals.career_score, 0.94),
+                reasoning: degradedReason
+                    ? `Golden path ${golden_path.id} matched and degraded safely because ${degradedReason}.`
+                    : `Golden path ${golden_path.id} matched. Route locked by registry policy ${routePolicy}.`,
+                fallback_chain: fallbackChain,
+                services_required: servicesRequired,
+                ambiguity_score: 0,
+                ambiguity_detected: false,
+                extra: {
+                    golden_path,
+                    hard_route: golden_path.route,
+                    deterministic_kg: golden_path.route === ROUTES.KG_DIRECT,
+                    route_priority: ROUTE_PRIORITY[routePolicy] || ROUTE_PRIORITY[route] || 0,
+                    degraded_reason: degradedReason
+                }
+            });
+        }
+
+        if (
+            ONTOLOGY_KG_INTENTS.has(routing_features?.ontology_intent) &&
+            !routing_features?.force_hybrid &&
+            health.kg
+        ) {
+            const ontologyFallbackChain = routing_features.ontology_intent === 'CURRICULUM'
+                ? [ROUTES.KG_ONLY]
+                : [ROUTES.KG_ONLY, ROUTES.LLM_FALLBACK];
+            logger.info('ROUTING_DECISION', 'Deterministic ontology KG path enforced', {
+                ontology_intent: routing_features.ontology_intent
+            });
+            return buildDecision({
+                route: ROUTES.KG_DIRECT,
+                confidence: Math.max(signals.kg_direct_score, signals.kg_score, 0.96),
+                reasoning: "Deterministic ontology query detected. Bypassing RAG escalation and using verified KG facts.",
+                fallback_chain: ontologyFallbackChain,
+                services_required: ['kg'],
+                ambiguity_score: 0,
+                ambiguity_detected: false,
+                extra: {
+                    deterministic_kg: true,
+                    hard_route: ROUTES.KG_DIRECT,
+                    ontology_intent: routing_features.ontology_intent
+                }
+            });
+        }
 
         // Forced hybrid is intentionally limited to multi-domain academic policy
         // intersections. Career-only and advisory queries stay eligible for their
@@ -1197,6 +1504,13 @@ class BrainRouter {
             'admin': 'kg_score',
             'dean': 'kg_score',
             'prerequisite': 'kg_score',
+            'facility': 'kg_score',
+            'track': 'kg_score',
+            'partner': 'kg_score',
+            'institution': 'kg_score',
+            'governance': 'kg_score',
+            'campus': 'kg_score',
+            'curriculum': 'kg_score',
             'policy': 'rag_score',
             'career': 'career_score',
             'faq': 'faq_score',

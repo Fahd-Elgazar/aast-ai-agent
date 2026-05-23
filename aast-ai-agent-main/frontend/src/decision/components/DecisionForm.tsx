@@ -1,6 +1,6 @@
-import { useStudent } from '../../decision/context/StudentContext';
+import { useStudent, type CertificateType } from '../../decision/context/StudentContext';
 
-const CERTIFICATE_TYPES = [
+const CERTIFICATE_TYPES: CertificateType[] = [
   "Egyptian Thanaweya Amma (Science)",
   "Egyptian Thanaweya Amma (Math)",
   "Egyptian Thanaweya Amma (Literature)",
@@ -50,7 +50,7 @@ export default function DecisionForm() {
         <select
           className="w-full bg-slate-50 border border-slate-200 text-slate-700 rounded-md p-2 text-sm focus:ring-aast-navy focus:border-aast-navy outline-none"
           value={profile.certificate_type}
-          onChange={e => updateProfile({ certificate_type: e.target.value as any })}
+          onChange={e => updateProfile({ certificate_type: e.target.value as CertificateType | "" })}
         >
           <option value="">Select Certificate</option>
           {CERTIFICATE_TYPES.map(c => <option key={c} value={c}>{c}</option>)}

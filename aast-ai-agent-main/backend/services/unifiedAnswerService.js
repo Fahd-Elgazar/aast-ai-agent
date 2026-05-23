@@ -42,6 +42,10 @@ import {
     getLastGenerationMetadata,
     getOllamaRuntimeStatus
 } from "./ollamaService.js";
+import {
+    generateGeminiSynthesis,
+    isGeminiTimeoutError
+} from "./geminiService.js";
 import { convertToGraphData } from "./neo4jcontext.js";
 import { LLM_CONFIG } from "../config/llmConfig.js";
 import { getGemmaTelemetrySnapshot } from "./gemmaTelemetryService.js";
@@ -50,8 +54,34 @@ import { getGemmaTelemetrySnapshot } from "./gemmaTelemetryService.js";
 // SECTION 0 — CONFIGURATION CONSTANTS
 // ─────────────────────────────────────────────────────────────
 
-/** Model used for final answer synthesis. Gemma remains the default primary. */
+/** Local model retained for Ollama fallback synthesis. */
 const MODEL = process.env.PRIMARY_MODEL || process.env.OLLAMA_MODEL || "gemma4:e2b";
+
+function timeoutFromEnv(names, fallback) {
+    for (const name of names) {
+        const parsed = Number.parseInt(process.env[name], 10);
+        if (Number.isFinite(parsed)) {
+            return parsed;
+        }
+    }
+
+    return fallback;
+}
+
+const SYNTHESIS_TIMEOUT_MS = timeoutFromEnv(
+    ["SYNTHESIS_TIMEOUT_MS", "OLLAMA_SYNTHESIS_TIMEOUT_MS"],
+    LLM_CONFIG.timeouts.synthesisMs || LLM_CONFIG.timeouts.primaryMs
+);
+
+const SYNTHESIS_DEADLINE_MS = timeoutFromEnv(
+    ["SYNTHESIS_DEADLINE_MS", "LLM_SYNTHESIS_DEADLINE_MS"],
+    LLM_CONFIG.timeouts.synthesisDeadlineMs || LLM_CONFIG.timeouts.generationDeadlineMs
+);
+
+const GEMINI_SYNTHESIS_TIMEOUT_MS = timeoutFromEnv(
+    ["GEMINI_SYNTHESIS_TIMEOUT_MS", "GEMINI_TIMEOUT_MS"],
+    10000
+);
 
 /**
  * Minimum retrieval confidence score (0–1).
@@ -69,7 +99,19 @@ const DEGRADED_CONFIDENCE_THRESHOLD = 0.25;
 const MAX_KG_FACTS = 3;
 
 /** Maximum RAG passages to inject into the prompt. */
-const MAX_RAG_PASSAGES = 5;
+const MAX_RAG_PASSAGES = 3;
+
+/** Maximum recent non-system conversation messages to expose to synthesis. */
+const MAX_HISTORY_MESSAGES = 4;
+
+/** Maximum characters per conversation-history message. */
+const MAX_HISTORY_MESSAGE_CHARS = 320;
+
+/** Maximum total characters for the conversation-history prompt block. */
+const MAX_HISTORY_TOTAL_CHARS = 1000;
+
+/** Maximum total characters for lightweight session-memory injection. */
+const MAX_MEMORY_BLOCK_CHARS = 500;
 
 /**
  * Maximum character length for any string value inside the decision
@@ -179,7 +221,7 @@ function buildInferenceOptions(resolvedRouteType) {
  * Per-route behavioral instruction blocks injected into the system prompt.
  *
  * TASK 7: RAG_ONLY and HYBRID now include a policy formatting directive
- * that encourages "According to AAST academic regulations..." framing.
+ * that encourages natural AAST policy anchoring.
  * This grounds policy answers to the institution's own regulatory voice,
  * reducing generic-AI phrasing and increasing perceived authority/trust.
  *
@@ -198,8 +240,8 @@ You are answering from verified, structured factual data extracted from the univ
     [ROUTE_TYPES.RAG_ONLY]: `
 ROUTE: Document Retrieval Only
 You are answering from semantically retrieved policy or regulation documents.
-- When the retrieved content contains a policy rule or regulation, begin your answer with:
-  "According to AAST academic regulations, ..." and continue directly from there.
+- When the retrieved content contains a policy rule or regulation, anchor it naturally with wording like:
+  "AAST academic regulations state that ..." before explaining the rule.
 - Summarize the relevant policy clearly and accurately.
 - Preserve key regulatory language where critical to meaning.
 - If the passage is partial or appears cut off, acknowledge the limitation and recommend
@@ -249,8 +291,8 @@ You are synthesizing from multiple verified sources of different types.
 - Prioritize in order: FAQ answer → Knowledge Graph facts → Decision factors → Retrieved documents.
 - Use each source for what it does best: FAQ for confirmed policy wording, Decision for eligibility
   verdict, KG for specific entities and relationships, RAG for regulatory depth.
-- Where the answer draws on policy or regulatory documents, use the framing:
-  "According to AAST academic regulations, ..." to anchor the answer to the institution's rules.
+- Where the answer draws on policy or regulatory documents, anchor it naturally with wording like:
+  "AAST academic regulations state that ..." before explaining the rule.
 - Where sources overlap and agree, synthesize them seamlessly.
 - Where sources differ, surface the most authoritative source and note any discrepancy.
 - Do not blend uncertain and certain facts without clearly distinguishing confidence levels.
@@ -376,6 +418,290 @@ function routeNumPredict(routeType, promptTokenEst = 0) {
 // strings. The `used` boolean feeds TASK 6 source attribution.
 // ─────────────────────────────────────────────────────────────
 
+async function runOllamaSynthesis({
+    prompt,
+    resolvedRoute,
+    inferenceOptions,
+    requestId,
+    promptTokenEst,
+    fallbackFromGemini = false,
+}) {
+    const ollamaStart = Date.now();
+    const ollamaRequestId = `${fallbackFromGemini ? "unified_ollama_fallback" : "unified"}_${Date.now()}`;
+    const ollamaModel = fallbackFromGemini
+        ? (process.env.OLLAMA_FORMATTER_MODEL || LLM_CONFIG.backupModel || MODEL)
+        : MODEL;
+
+    logInfo("synthesis_timeout_budget_resolved", {
+        route: resolvedRoute,
+        requestId: ollamaRequestId,
+        synthesis_timeout_ms: SYNTHESIS_TIMEOUT_MS,
+        synthesis_deadline_ms: SYNTHESIS_DEADLINE_MS,
+        primary_timeout_ms: LLM_CONFIG.timeouts.primaryMs,
+        generation_deadline_ms: LLM_CONFIG.timeouts.generationDeadlineMs,
+        fallback_from_gemini: fallbackFromGemini,
+    });
+
+    const rawAnswer = await generateStableResponse({
+        prompt,
+        model: ollamaModel,
+        requestId: ollamaRequestId,
+        timeoutMs: SYNTHESIS_TIMEOUT_MS,
+        deadlineMs: SYNTHESIS_DEADLINE_MS,
+        options: inferenceOptions,
+        routeType: resolvedRoute,
+        trafficType: fallbackFromGemini ? "synthesis_fallback" : "synthesis",
+    });
+
+    const ollamaLatencyMs = Date.now() - ollamaStart;
+    const ollamaRuntime = getOllamaRuntimeStatus();
+    const ollamaGenerationMeta = getLastGenerationMetadata(ollamaRequestId);
+
+    logInfo("ollama_response_received", {
+        route: resolvedRoute,
+        requestId,
+        ollama_request_id: ollamaRequestId,
+        ollama_latency_ms: ollamaLatencyMs,
+        raw_response_chars: rawAnswer.length,
+        model_used: ollamaGenerationMeta?.model || ollamaRuntime.active_model,
+        breaker_state: ollamaRuntime.breaker_state,
+        failover_active: ollamaRuntime.failover_active,
+        prompt_tokens: ollamaGenerationMeta?.promptTokens || promptTokenEst,
+        output_tokens: ollamaGenerationMeta?.outputTokens || estimateTokens(rawAnswer),
+        fallback_from_gemini: fallbackFromGemini,
+    });
+
+    return {
+        rawAnswer,
+        synthesisProvider: fallbackFromGemini ? "ollama_fallback" : "ollama",
+        synthesisLatencyMs: ollamaLatencyMs,
+        ollamaLatencyMs,
+        ollamaRuntime,
+        ollamaGenerationMeta,
+        geminiResult: null,
+        geminiFallbackReason: null,
+    };
+}
+
+async function runFinalSynthesis({
+    prompt,
+    resolvedRoute,
+    inferenceOptions,
+    requestId,
+    promptTokenEst,
+    deterministicFallbackAnswer = "",
+}) {
+    const geminiRequestId = `gemini_${Date.now()}`;
+
+    try {
+        console.log(`[GEMINI_SYNTHESIS_ACTIVE][${requestId}] route=${resolvedRoute}`);
+        const geminiResult = await generateGeminiSynthesis({
+            prompt,
+            requestId: geminiRequestId,
+            timeoutMs: GEMINI_SYNTHESIS_TIMEOUT_MS,
+            options: inferenceOptions,
+        });
+
+        console.log(
+            `[GEMINI_SUCCESS][${requestId}] route=${resolvedRoute} latency_ms=${geminiResult.latencyMs}`
+        );
+        logInfo("gemini_response_received", {
+            route: resolvedRoute,
+            requestId,
+            gemini_request_id: geminiRequestId,
+            gemini_latency_ms: geminiResult.latencyMs,
+            model_used: geminiResult.model,
+            raw_response_chars: geminiResult.text.length,
+            prompt_tokens: geminiResult.promptTokens || promptTokenEst,
+            output_tokens: geminiResult.outputTokens || estimateTokens(geminiResult.text),
+            finish_reason: geminiResult.finishReason,
+        });
+
+        return {
+            rawAnswer: geminiResult.text,
+            synthesisProvider: "gemini",
+            synthesisLatencyMs: geminiResult.latencyMs,
+            ollamaLatencyMs: null,
+            ollamaRuntime: getOllamaRuntimeStatus(),
+            ollamaGenerationMeta: null,
+            geminiResult,
+            geminiFallbackReason: null,
+            deterministicFallbackUsed: false,
+        };
+    } catch (geminiError) {
+        const timeout = isGeminiTimeoutError(geminiError);
+        const reason = geminiError?.code || geminiError?.message || "GEMINI_ERROR";
+
+        if (timeout) {
+            console.warn(`[GEMINI_TIMEOUT][${requestId}] route=${resolvedRoute}`);
+        }
+
+        console.warn(`[GEMINI_FALLBACK_TRIGGERED][${requestId}] route=${resolvedRoute} reason=${reason}`);
+        logWarn("gemini_fallback_triggered", {
+            route: resolvedRoute,
+            requestId,
+            gemini_request_id: geminiRequestId,
+            reason,
+            status: geminiError?.status,
+            timeout,
+        });
+
+        if (deterministicFallbackAnswer) {
+            logWarn("gemini_fallback_to_deterministic_context", {
+                route: resolvedRoute,
+                requestId,
+                gemini_request_id: geminiRequestId,
+                reason,
+            });
+
+            return {
+                rawAnswer: deterministicFallbackAnswer,
+                synthesisProvider: "deterministic_context_fallback",
+                synthesisLatencyMs: 0,
+                ollamaLatencyMs: null,
+                ollamaRuntime: getOllamaRuntimeStatus(),
+                ollamaGenerationMeta: null,
+                geminiResult: null,
+                geminiFallbackReason: {
+                    reason,
+                    status: geminiError?.status,
+                    timeout,
+                },
+                deterministicFallbackUsed: true,
+            };
+        }
+
+        console.warn(`[GEMINI_FALLBACK_TO_OLLAMA][${requestId}] route=${resolvedRoute} reason=${reason}`);
+        logWarn("gemini_fallback_to_ollama", {
+            route: resolvedRoute,
+            requestId,
+            gemini_request_id: geminiRequestId,
+            reason,
+            status: geminiError?.status,
+            timeout,
+        });
+
+        const fallback = await runOllamaSynthesis({
+            prompt,
+            resolvedRoute,
+            inferenceOptions,
+            requestId,
+            promptTokenEst,
+            fallbackFromGemini: true,
+        });
+
+        return {
+            ...fallback,
+            geminiFallbackReason: {
+                reason,
+                status: geminiError?.status,
+                timeout,
+            },
+            deterministicFallbackUsed: false,
+        };
+    }
+}
+
+function cleanGraphNodeLabel(value) {
+    let text = String(value || "").trim();
+    if (!text) return "";
+
+    const quoted = text.match(/"([^"]+)"/) || text.match(/'([^']+)'/);
+    if (quoted) return quoted[1].trim();
+
+    const propertyName = text.match(/\b(?:name|title|code|id)\s*:\s*["']?([^"',}]+)["']?/i);
+    if (propertyName) return propertyName[1].trim();
+
+    if (text.includes(":")) {
+        const parts = text.split(":");
+        text = parts[parts.length - 1].trim();
+    }
+
+    return text
+        .replace(/[{}]/g, "")
+        .replace(/\s+/g, " ")
+        .trim();
+}
+
+function cleanGraphRelationLabel(value) {
+    let text = String(value || "").trim();
+    if (!text) return "";
+    if (text.includes(":")) text = text.split(":").pop();
+    return text
+        .replace(/[`"']/g, "")
+        .replace(/\s+/g, "_")
+        .toUpperCase();
+}
+
+function relationToSentence(source, relation, target) {
+    if (!source || !relation || !target) return null;
+
+    const relationText = relation.toLowerCase().replace(/_/g, " ");
+
+    switch (relation) {
+        case "TEACHES":
+            return `${source} teaches ${target}.`;
+        case "HAS_PREREQUISITE":
+        case "REQUIRES":
+            return `${source} requires ${target}.`;
+        case "PREREQUISITE_FOR":
+            return `${source} is a prerequisite for ${target}.`;
+        case "HAS_COURSE":
+            return `${source} includes ${target}.`;
+        case "HEAD_OF":
+        case "HEAD_OF_UNIT":
+            return `${source} is head of ${target}.`;
+        case "DEAN_OF":
+            return `${source} is dean of ${target}.`;
+        case "HAS_ROLE":
+        case "ACTS_AS":
+            return `${source} serves as ${target}.`;
+        case "WORKS_IN":
+            return `${source} works in ${target}.`;
+        case "MEMBER_OF":
+            return `${source} is a member of ${target}.`;
+        case "BELONGS_TO":
+            return `${source} belongs to ${target}.`;
+        case "ADMINISTERS":
+        case "CHAIRS":
+        case "DIRECTS":
+        case "MANAGES":
+            return `${source} ${relationText} ${target}.`;
+        default:
+            return `${source} has ${relationText} relationship with ${target}.`;
+    }
+}
+
+function graphTripleToSentence(sourceRaw, relationRaw, targetRaw) {
+    const source = cleanGraphNodeLabel(sourceRaw);
+    const relation = cleanGraphRelationLabel(relationRaw);
+    const target = cleanGraphNodeLabel(targetRaw);
+    return relationToSentence(source, relation, target);
+}
+
+function normalizeGraphEvidence(text) {
+    let normalized = String(text || "").replace(/\s+/g, " ").trim();
+    if (!normalized) return "";
+
+    const graphTriplePattern =
+        /\(([^()]+)\)\s*-+\s*\[\s*:?\s*([A-Za-z0-9_]+(?::[A-Za-z0-9_]+)?)\s*\]\s*-+>\s*\(([^()]+)\)/g;
+
+    normalized = normalized.replace(graphTriplePattern, (match, source, relation, target) =>
+        graphTripleToSentence(source, relation, target) || match
+    );
+
+    const propertyPattern = /^\(([^:()]+):\s*["']?([^"')]+)["']?\)\s+([A-Za-z0-9_ ]+):\s*(.+)$/;
+    const propertyMatch = normalized.match(propertyPattern);
+    if (propertyMatch) {
+        const entityName = propertyMatch[2].trim();
+        const propertyName = propertyMatch[3].trim().toLowerCase().replace(/_/g, " ");
+        const propertyValue = propertyMatch[4].trim();
+        return `${entityName} ${propertyName}: ${propertyValue}`;
+    }
+
+    return normalized;
+}
+
 /**
  * Builds a readable text block from Neo4j Knowledge Graph results.
  * Sorts by confidence descending, caps at MAX_KG_FACTS.
@@ -397,9 +723,9 @@ function buildNeo4jBlock(neo4jContext, limit = MAX_KG_FACTS) {
     const lines = capped
         .map((item, idx) => {
             if (!item || typeof item !== "object") return null;
-            const rawEvidence = (item.evidence ?? item.text ?? item.content ?? "").trim();
-            const evidence = rawEvidence.length > 800
-                ? `${rawEvidence.slice(0, 800).trimEnd()}\u2026[truncated]`
+            const rawEvidence = normalizeGraphEvidence(item.evidence ?? item.text ?? item.content ?? "");
+            const evidence = rawEvidence.length > 520
+                ? `${rawEvidence.slice(0, 520).trimEnd()}\u2026[truncated]`
                 : rawEvidence;
             if (!evidence) return null;
 
@@ -468,8 +794,8 @@ function buildRagBlock(ragContext, limit = MAX_RAG_PASSAGES) {
     if (passages.length === 0) return { block: "", count: 0, used: false };
 
     const capped = passages.slice(0, limit).map((passage) =>
-        passage.length > 900
-            ? `${passage.slice(0, 900).trimEnd()}\u2026[truncated]`
+        passage.length > 600
+            ? `${passage.slice(0, 600).trimEnd()}\u2026[truncated]`
             : passage
     );
 
@@ -732,7 +1058,7 @@ function buildDeterministicHybridAnswer(neo4jContext, ragContext) {
     }
 
     if (ragFacts.length > 0) {
-        const ragIntro = "According to verified university academic regulations: ";
+        const ragIntro = "AAST academic regulations: ";
         parts.push(ragIntro + ragFacts.join(" "));
     }
 
@@ -770,7 +1096,7 @@ function buildDeterministicFallbackAnswer({ faqContext, decisionContext, neo4jCo
     if (Array.isArray(neo4jContext) && neo4jContext.length > 0) {
         const sorted = [...neo4jContext].sort((a, b) => (b.confidence ?? 0) - (a.confidence ?? 0));
         const topFact = sorted[0];
-        const evidence = topFact?.evidence || topFact?.text || topFact?.content;
+        const evidence = normalizeGraphEvidence(topFact?.evidence || topFact?.text || topFact?.content);
         if (evidence) {
             return `According to verified university records: ${evidence}`;
         }
@@ -828,7 +1154,7 @@ TONE AND STYLE:
 - Natural paragraphs. Bullet lists acceptable when listing steps or options.
 - Do NOT start with "Based on the context provided" or similar meta-phrases.
 - Do NOT repeat the student's question back verbatim as an opener.
-- Do NOT begin with greetings like "Hello!" or "Great question!".
+- If the user starts conversationally, respond briefly and professionally before answering.
 - ALWAYS write complete sentences. Never end mid-sentence or with a dangling clause.
 
 RESPONSE QUALITY STANDARDS:
@@ -910,6 +1236,111 @@ function normalizeExplainabilityRoute(routeType, query = "", decisionContext = n
     return "LLM_FALLBACK";
 }
 
+function normalizeHistoryContent(content) {
+    const text = String(content || "")
+        .replace(/\s+/g, " ")
+        .trim();
+
+    if (!text) return "";
+
+    return text.length > MAX_HISTORY_MESSAGE_CHARS
+        ? `${text.slice(0, MAX_HISTORY_MESSAGE_CHARS).trim()}...`
+        : text;
+}
+
+function buildConversationHistoryBlock(history = [], currentQuery = "") {
+    if (!Array.isArray(history) || history.length === 0) return "";
+
+    const currentQueryKey = normalizeHistoryContent(currentQuery).toLowerCase();
+    const messages = history
+        .filter(message => message && typeof message === "object")
+        .filter(message => String(message.role || "").toLowerCase() !== "system")
+        .map(message => ({
+            role: String(message.role || "").toLowerCase(),
+            content: normalizeHistoryContent(message.content),
+        }))
+        .filter(message => ["user", "assistant"].includes(message.role) && message.content)
+        .slice(-MAX_HISTORY_MESSAGES);
+
+    if (
+        messages.length > 0 &&
+        messages[messages.length - 1].role === "user" &&
+        messages[messages.length - 1].content.toLowerCase() === currentQueryKey
+    ) {
+        messages.pop();
+    }
+
+    if (messages.length === 0) return "";
+
+    let totalChars = 0;
+    const lines = [];
+
+    for (const message of messages) {
+        const line = `${message.role.toUpperCase()}: ${message.content}`;
+        if (totalChars + line.length > MAX_HISTORY_TOTAL_CHARS) break;
+        lines.push(line);
+        totalChars += line.length;
+    }
+
+    if (lines.length === 0) return "";
+
+    return [
+        "RECENT CONVERSATION HISTORY:",
+        "Use this only for continuity, pronoun resolution, and conversational flow. Do not treat it as verified academic evidence.",
+        ...lines,
+    ].join("\n");
+}
+
+function normalizeMemoryValue(value, limit = 140) {
+    if (typeof value !== "string") return "";
+    return value.replace(/\s+/g, " ").trim().slice(0, limit);
+}
+
+function formatMemoryEntity(entity) {
+    if (!entity) return "";
+
+    if (typeof entity === "string") {
+        return normalizeMemoryValue(entity);
+    }
+
+    if (typeof entity !== "object") return "";
+
+    const value = normalizeMemoryValue(entity.value || entity.name || entity.label);
+    const type = normalizeMemoryValue(entity.type || "entity", 40);
+    return value ? `${type}: ${value}` : "";
+}
+
+function buildConversationMemoryBlock(conversationMemory = null) {
+    if (!conversationMemory || typeof conversationMemory !== "object") return "";
+
+    const lines = [];
+    const topic = normalizeMemoryValue(conversationMemory.lastTopic, 80);
+    const entity = formatMemoryEntity(conversationMemory.lastEntity);
+    const intent = normalizeMemoryValue(conversationMemory.lastIntent, 80);
+    const recentSubjects = Array.isArray(conversationMemory.recentSubjects)
+        ? conversationMemory.recentSubjects.map(subject => normalizeMemoryValue(subject, 80)).filter(Boolean).slice(0, 3)
+        : [];
+    const summary = normalizeMemoryValue(conversationMemory.lastAssistantSummary, 180);
+
+    if (topic) lines.push(`- Current topic: ${topic}`);
+    if (entity) lines.push(`- Last discussed entity: ${entity}`);
+    if (recentSubjects.length > 0) lines.push(`- Recent subject: ${recentSubjects.join("; ")}`);
+    if (intent) lines.push(`- Recent intent: ${intent}`);
+    if (summary) lines.push(`- Last assistant answer summary: ${summary}`);
+
+    if (lines.length === 0) return "";
+
+    const block = [
+        "CONVERSATION MEMORY:",
+        "Use only for continuity and pronoun resolution. It is not verified evidence; verified context always wins.",
+        ...lines
+    ].join("\n");
+
+    return block.length > MAX_MEMORY_BLOCK_CHARS
+        ? `${block.slice(0, MAX_MEMORY_BLOCK_CHARS).trimEnd()}...`
+        : block;
+}
+
 /**
  * Assembles the full inference prompt from base system prompt,
  * route-specific behavioral instructions, context payload, and query.
@@ -917,9 +1348,11 @@ function normalizeExplainabilityRoute(routeType, query = "", decisionContext = n
  * @param {string} query
  * @param {string} contextPayload
  * @param {string} routeType
+ * @param {Array} [history=[]]
+ * @param {object|null} [conversationMemory=null]
  * @returns {string}
  */
-function buildPrompt(query, contextPayload, routeType) {
+function buildPrompt(query, contextPayload, routeType, history = [], conversationMemory = null) {
     const routeInstruction =
         ROUTE_INSTRUCTIONS[routeType] ??
         ROUTE_INSTRUCTIONS[ROUTE_TYPES.LLM_FALLBACK];
@@ -929,10 +1362,14 @@ function buildPrompt(query, contextPayload, routeType) {
     const contextSection = contextPayload
         ? `VERIFIED CONTEXT:\n${divider}\n${contextPayload}\n${divider}`
         : `VERIFIED CONTEXT:\n${divider}\n[No structured context was retrieved for this query.]\n${divider}`;
+    const historySection = buildConversationHistoryBlock(history, query);
+    const memorySection = buildConversationMemoryBlock(conversationMemory);
 
     return (
         `${BASE_SYSTEM_PROMPT}\n\n` +
         `${routeInstruction}\n\n` +
+        `${memorySection ? `${memorySection}\n\n` : ""}` +
+        `${historySection ? `${historySection}\n\n` : ""}` +
         `${contextSection}\n\n` +
         `STUDENT QUERY:\n${query.trim()}\n\n` +
         `ADVISOR RESPONSE:`
@@ -957,7 +1394,7 @@ const META_PHRASE_PATTERNS = [
     /my knowledge (cut.?off|cutoff)/gi,
     /i cannot (browse|access|search) the (internet|web|database)/gi,
     /let me (look that up|check|search)/gi,
-    /^(hello!?|hi!?|hey!?|great question!?|sure!?|of course!?)[,\s]/i,
+    /^(great question!?)[,\s]/i,
     /\[no structured context was retrieved[^\]]*\]/gi,
 ];
 
@@ -1183,6 +1620,7 @@ function extractKgFacts(neo4jContext, limit = MAX_KG_FACTS) {
             .slice()
             .sort((a, b) => (b?.confidence ?? 0) - (a?.confidence ?? 0))
             .map(item => item?.evidence ?? item?.text ?? item?.content ?? "")
+            .map(text => normalizeGraphEvidence(text))
             .map(text => truncateEvidence(text, 260))
     ).slice(0, limit);
 }
@@ -1665,6 +2103,8 @@ function createFallbackResult(answerText, route, confidence, latency_ms, sources
  * @param {*}       [params.ragContext=[]]
  * @param {object|null} [params.faqContext=null]
  * @param {object|null} [params.decisionContext=null]
+ * @param {Array}   [params.history=[]]
+ * @param {object|null} [params.conversationMemory=null]
  * @returns {Promise<UnifiedAnswerResult>}
  */
 export async function generateUnifiedAnswer({
@@ -1675,6 +2115,8 @@ export async function generateUnifiedAnswer({
     ragContext = [],
     faqContext = null,
     decisionContext = null,
+    history = [],
+    conversationMemory = null,
 } = {}) {
     const requestedRoute = routeType;
 
@@ -1763,7 +2205,7 @@ export async function generateUnifiedAnswer({
             ({ payload: contextPayload, metrics: contextMetrics, sources_used } =
                 buildContextPayload({ neo4jContext, ragContext, faqContext, decisionContext }, currentTrimConfig));
 
-            prompt = buildPrompt(query.trim(), contextPayload, resolvedRoute);
+            prompt = buildPrompt(query.trim(), contextPayload, resolvedRoute, history, conversationMemory);
             promptTokenEst = estimateTokens(prompt);
 
             if (promptTokenEst < PROMPT_TOKEN_WARN_THRESHOLD) break;
@@ -1779,13 +2221,13 @@ export async function generateUnifiedAnswer({
         );
 
         if (promptTokenEst > safePromptLimit) {
-            const emptyPromptTokens = estimateTokens(buildPrompt(query.trim(), "", resolvedRoute));
+            const emptyPromptTokens = estimateTokens(buildPrompt(query.trim(), "", resolvedRoute, history, conversationMemory));
             const contextBudget = Math.max(128, safePromptLimit - emptyPromptTokens);
             const truncation = hardTruncateToTokenBudget(contextPayload, contextBudget);
 
             if (truncation.truncated) {
                 contextPayload = truncation.text;
-                prompt = buildPrompt(query.trim(), contextPayload, resolvedRoute);
+                prompt = buildPrompt(query.trim(), contextPayload, resolvedRoute, history, conversationMemory);
                 promptTokenEst = estimateTokens(prompt);
                 contextMetrics = {
                     ...contextMetrics,
@@ -1876,30 +2318,31 @@ export async function generateUnifiedAnswer({
             num_predict: inferenceOptions.num_predict,
         });
 
-        // ── Step 4: Inference with centralized ollamaService ────────────
-        const ollamaStart = Date.now();
-        const ollamaRequestId = `unified_${Date.now()}`;
-        const rawAnswer = await generateStableResponse({
-            prompt,
-            model: MODEL,
-            requestId: ollamaRequestId,
-            options: inferenceOptions,
-            routeType: resolvedRoute,
-            trafficType: "synthesis",
+        const deterministicContextAnswer = buildDeterministicFallbackAnswer({
+            faqContext,
+            decisionContext,
+            neo4jContext,
+            ragContext
         });
-        const ollamaLatencyMs = Date.now() - ollamaStart;
-        const ollamaRuntime = getOllamaRuntimeStatus();
-        const ollamaGenerationMeta = getLastGenerationMetadata(ollamaRequestId);
 
-        logInfo("ollama_response_received", {
-            route: resolvedRoute,
-            ollama_latency_ms: ollamaLatencyMs,
-            raw_response_chars: rawAnswer.length,
-            model_used: ollamaGenerationMeta?.model || ollamaRuntime.active_model,
-            breaker_state: ollamaRuntime.breaker_state,
-            failover_active: ollamaRuntime.failover_active,
-            prompt_tokens: ollamaGenerationMeta?.promptTokens || promptTokenEst,
-            output_tokens: ollamaGenerationMeta?.outputTokens || estimateTokens(rawAnswer),
+        // ── Step 4: Gemini final synthesis with Ollama fallback ─────────
+        const {
+            rawAnswer,
+            synthesisProvider,
+            synthesisLatencyMs,
+            ollamaLatencyMs,
+            ollamaRuntime,
+            ollamaGenerationMeta,
+            geminiResult,
+            geminiFallbackReason,
+            deterministicFallbackUsed,
+        } = await runFinalSynthesis({
+            prompt,
+            resolvedRoute,
+            inferenceOptions,
+            requestId: `unified_${Date.now()}`,
+            promptTokenEst,
+            deterministicFallbackAnswer: deterministicContextAnswer,
         });
 
         // ── Step 5: Sanitize + truncation repair ─────────────────────────
@@ -1922,6 +2365,8 @@ export async function generateUnifiedAnswer({
         logInfo("pipeline_complete", {
             route: resolvedRoute,
             total_latency_ms: totalLatencyMs,
+            synthesis_provider: synthesisProvider,
+            synthesis_latency_ms: synthesisLatencyMs,
             ollama_latency_ms: ollamaLatencyMs,
             answer_chars: finalAnswer.length,
             answer_tokens_est: estimateTokens(finalAnswer),
@@ -1947,7 +2392,15 @@ export async function generateUnifiedAnswer({
             decisionContext,
             contextMetrics,
             metadata: {
-                model: ollamaGenerationMeta?.model || MODEL,
+                model: geminiResult?.model || ollamaGenerationMeta?.model || MODEL,
+                synthesis_provider: synthesisProvider,
+                synthesis_latency_ms: synthesisLatencyMs,
+                gemini_model: geminiResult?.model || null,
+                gemini_latency_ms: geminiResult?.latencyMs || null,
+                gemini_finish_reason: geminiResult?.finishReason || null,
+                gemini_fallback_to_ollama: synthesisProvider === "ollama_fallback",
+                gemini_fallback_reason: geminiFallbackReason,
+                deterministic_context_fallback: deterministicFallbackUsed,
                 primary_model: ollamaRuntime.primary_model,
                 backup_model: ollamaRuntime.backup_model,
                 is_degraded: isDegraded,
@@ -1961,7 +2414,7 @@ export async function generateUnifiedAnswer({
                 prompt_tokens: promptTokenEst,
                 prompt_truncated: !!ollamaGenerationMeta?.prompt_truncated || !!contextMetrics?.hard_truncated,
                 num_predict: inferenceOptions.num_predict,
-                output_tokens: ollamaGenerationMeta?.outputTokens || estimateTokens(finalAnswer),
+                output_tokens: geminiResult?.outputTokens || ollamaGenerationMeta?.outputTokens || estimateTokens(finalAnswer),
                 gemma_memory_pressure: ollamaRuntime.gemma_memory_pressure,
                 gemma_queue_depth: ollamaRuntime.gemma_queue_depth,
                 overload_retries: ollamaRuntime.overload_retries,
@@ -2099,6 +2552,10 @@ export {
     DEGRADED_CONFIDENCE_THRESHOLD,       // NEW Phase 3
     MAX_KG_FACTS,
     MAX_RAG_PASSAGES,
+    MAX_HISTORY_MESSAGES,
+    MAX_HISTORY_MESSAGE_CHARS,
+    MAX_HISTORY_TOTAL_CHARS,
+    MAX_MEMORY_BLOCK_CHARS,
     DECISION_MAX_DEPTH,
     DECISION_MAX_VALUE_CHARS,
     PROMPT_TOKEN_WARN_THRESHOLD,
@@ -2119,12 +2576,15 @@ export {
     buildFaqBlock,
     buildDecisionBlock,
     buildContextPayload,
+    normalizeGraphEvidence,
     depthLimitedSerialize,
     trimContextToBudget,                  // NEW Phase 3
     buildDeterministicFallbackAnswer,     // NEW Phase 3
 
     // ── Prompt assembly ───────────────────────────────────────────────
     BASE_SYSTEM_PROMPT,
+    buildConversationHistoryBlock,
+    buildConversationMemoryBlock,
     buildPrompt,
 
     // ── Response pipeline ─────────────────────────────────────────────

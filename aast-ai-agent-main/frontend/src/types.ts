@@ -25,6 +25,13 @@ export interface ScoreBreakdown {
   missing_data_penalty: number;
 }
 
+export interface DecisionConfidenceBreakdown {
+  grades_score?: number;
+  interests_score?: number;
+  market_score?: number;
+  [key: string]: number | string | boolean | null | undefined;
+}
+
 export interface LearningPathStep {
   skill: string;
   steps: string[];
@@ -46,8 +53,49 @@ export interface DecisionData {
   cons_and_risks?: string[];
   alternatives?: string[];
   career_roadmap?: CareerRoadmap | null;
-  confidence_breakdown?: any;
+  confidence_breakdown?: DecisionConfidenceBreakdown;
   next_steps?: string[];
+}
+
+export interface DecisionLike {
+  recommended_major?: string;
+  college_name?: string;
+  confidence?: number;
+  match_type?: string;
+  estimated_semester_fee?: number;
+  currency?: string;
+  fee_mode?: string;
+  affordability_label?: string;
+  score_breakdown?: ScoreBreakdown;
+  confidence_breakdown?: DecisionConfidenceBreakdown;
+  warnings?: string[];
+  reason?: string;
+  career_roadmap?: CareerRoadmap | null;
+  next_steps?: string[];
+  [key: string]: unknown;
+}
+
+export interface RecommendationCardData {
+  program_id?: string;
+  program_name: string;
+  college_name: string;
+  score: number;
+  match_type: string;
+  confidence_level: string;
+  estimated_semester_fee: number | null;
+  currency: string;
+  fee_mode: string;
+  affordability_label: string;
+  score_breakdown: ScoreBreakdown;
+  warnings: string[];
+  career_roadmap?: CareerRoadmap | null;
+  next_steps?: string[];
+}
+
+export interface AgentDecisionResponse {
+  answer?: string;
+  recommendations?: RecommendationCardData[];
+  decision?: DecisionLike;
 }
 
 export interface ChatMessage {

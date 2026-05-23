@@ -36,15 +36,20 @@
 
 import axios from 'axios';
 import axiosRetryPkg from 'axios-retry';
+import dotenv from 'dotenv';
 const axiosRetry = axiosRetryPkg.default ?? axiosRetryPkg;
+
+dotenv.config();
 
 // ─────────────────────────────────────────────────────────────
 // SECTION 1 — CONFIGURATION
 // ─────────────────────────────────────────────────────────────
 
+const RAG_BASE_URL = process.env.RAG_BASE_URL || 'http://localhost:8001';
+
 const CONFIG = {
     // ── Service URLs ──────────────────────────────────────────
-    RETRIEVER_URL: process.env.RAG_RETRIEVER_URL || 'http://localhost:8001',
+    RETRIEVER_URL: process.env.RAG_RETRIEVER_URL || RAG_BASE_URL,
     ANSWER_URL: process.env.RAG_ANSWER_URL || 'http://localhost:8002',
 
     // ── Endpoint paths (configurable for API version changes) ─
@@ -56,14 +61,15 @@ const CONFIG = {
     HEALTH_PATH_ANSWER: process.env.RAG_HEALTH_PATH_ANSWER || '/health',
 
     // ── Reliability ───────────────────────────────────────────
-    TIMEOUT_MS: parseInt(process.env.RAG_TIMEOUT_MS || '15000', 10),
-    MAX_RETRIES: parseInt(process.env.RAG_MAX_RETRIES || '3', 10),
+    TIMEOUT_MS: parseInt(process.env.RAG_TIMEOUT_MS || '20000', 10),
+    COLD_START_TIMEOUT_MS: parseInt(process.env.RAG_COLD_START_TIMEOUT_MS || '25000', 10),
+    MAX_RETRIES: parseInt(process.env.RAG_MAX_RETRIES || '1', 10),
     BACKOFF_BASE_MS: parseInt(process.env.RAG_BACKOFF_BASE_MS || '300', 10),
-    HEALTH_TIMEOUT_MS: parseInt(process.env.RAG_HEALTH_TIMEOUT_MS || '5000', 10),
+    HEALTH_TIMEOUT_MS: parseInt(process.env.RAG_HEALTH_TIMEOUT_MS || '2500', 10),
 
     // ── Circuit Breaker ───────────────────────────────────────
-    CB_FAILURE_THRESHOLD: parseInt(process.env.RAG_CB_FAILURE_THRESHOLD || '5', 10),
-    CB_COOLDOWN_MS: parseInt(process.env.RAG_CB_COOLDOWN_MS || '30000', 10),
+    CB_FAILURE_THRESHOLD: parseInt(process.env.RAG_CB_FAILURE_THRESHOLD || '3', 10),
+    CB_COOLDOWN_MS: parseInt(process.env.RAG_CB_COOLDOWN_MS || '20000', 10),
 
     // ── Confidence thresholds ─────────────────────────────────
     CONFIDENCE_THRESHOLD: parseFloat(process.env.RAG_CONFIDENCE_THRESHOLD || '0.65'),
@@ -371,6 +377,13 @@ axiosRetry(httpClient, {
 // SECTION 6 — UTILITY FUNCTIONS
 // ─────────────────────────────────────────────────────────────
 
+logger.info('CONFIG', 'Effective RAG timeout budgets', {
+    timeout_ms: CONFIG.TIMEOUT_MS,
+    cold_start_timeout_ms: CONFIG.COLD_START_TIMEOUT_MS,
+    health_timeout_ms: CONFIG.HEALTH_TIMEOUT_MS,
+    max_retries: CONFIG.MAX_RETRIES,
+});
+
 /** High-resolution elapsed milliseconds since an hrtime snapshot. */
 const elapsedMs = (start) => {
     const [sec, ns] = process.hrtime(start);
@@ -434,6 +447,7 @@ class RAGService {
                 results: []
             }
         };
+        this._retrieverColdStartPending = true;
     }
 
     // ══════════════════════════════════════════════════════════
@@ -747,7 +761,12 @@ class RAGService {
         }
 
         try {
+            const requestTimeoutMs = this._retrieverColdStartPending && url.startsWith(CONFIG.RETRIEVER_URL)
+                ? Math.max(CONFIG.TIMEOUT_MS, CONFIG.COLD_START_TIMEOUT_MS)
+                : CONFIG.TIMEOUT_MS;
+
             const response = await httpClient.post(url, payload, {
+                timeout: requestTimeoutMs,
                 // Capture raw string to diagnose malformed JSON separately
                 transformResponse: [(data) => data],
             });
@@ -772,6 +791,10 @@ class RAGService {
                     url, preview: String(responseText).slice(0, 200),
                 });
                 throw this._typedError('MALFORMED_JSON', `Malformed JSON from ${url}`, url);
+            }
+
+            if (url.startsWith(CONFIG.RETRIEVER_URL)) {
+                this._retrieverColdStartPending = false;
             }
 
             return parsed;
@@ -1639,8 +1662,12 @@ class RAGService {
         try {
             const res = await httpClient.get(url, { timeout: CONFIG.HEALTH_TIMEOUT_MS });
             const details = res.data && typeof res.data === 'object' ? res.data : {};
+            const serviceStatus = String(details.status || '').toLowerCase();
+            const healthyStatus =
+                !serviceStatus ||
+                ['ok', 'healthy', 'ready'].includes(serviceStatus);
             return {
-                ok: true,
+                ok: res.status >= 200 && res.status < 300 && healthyStatus,
                 name,
                 status_code: res.status,
                 service_status: details.status || null,
@@ -1671,11 +1698,17 @@ class RAGService {
     async _validateEndpoint(name, baseUrl, path) {
         const url = `${baseUrl}${path}`;
         try {
-            await httpClient.request({
+            const response = await httpClient.request({
                 method: 'HEAD', url, timeout: CONFIG.HEALTH_TIMEOUT_MS,
                 // 405 Method Not Allowed = path exists, HEAD unsupported
                 validateStatus: (s) => s < 500,
             });
+            if (response.status === 404) {
+                logger.warn('HEALTH', `Endpoint validation 404: ${url}`, {
+                    name, suggestion: `Verify RAG_${name.toUpperCase()}_PATH`,
+                });
+                return false;
+            }
             return true;
         } catch (err) {
             if (err.response?.status === 404) {

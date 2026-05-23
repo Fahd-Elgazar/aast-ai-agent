@@ -1,3 +1,5 @@
+import type { CareerRoadmap, DecisionConfidenceBreakdown, RecommendationCardData, ScoreBreakdown } from "../types";
+
 const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:8000/api";
 
 export interface RecommendationPayload {
@@ -16,14 +18,11 @@ export interface RecommendationResponse {
   confidence?: number;
   reason?: string;
   warnings?: string[];
-  confidence_breakdown?: {
-    grades_score?: number;
-    interests_score?: number;
-    market_score?: number;
-  };
-  career_roadmap?: unknown;
+  confidence_breakdown?: DecisionConfidenceBreakdown;
+  career_roadmap?: CareerRoadmap | null;
   next_steps?: string[];
-  recommendations?: unknown[];
+  score_breakdown?: ScoreBreakdown;
+  recommendations?: RecommendationCardData[];
   [key: string]: unknown;
 }
 

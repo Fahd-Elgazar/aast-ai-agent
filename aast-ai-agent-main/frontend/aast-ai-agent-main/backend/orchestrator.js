@@ -360,26 +360,132 @@ async function fetchEntitiesFromNeo4j(entities, requestId = "none") {
   console.log(`[NEO4J][${requestId}] Query starting...`);
   console.time(`[NEO4J][${requestId}]`);
   try {
+    const profileRelations = [
+      "TEACHES",
+      "HAS_ROLE",
+      "ACTS_AS",
+      "HAS_ADMIN",
+      "DEAN_OF",
+      "HEAD_OF",
+      "HEAD_OF_UNIT",
+      "ADMINISTERS",
+      "CHAIRS",
+      "DIRECTS",
+      "MANAGES",
+      "BELONGS_TO",
+      "WORKS_IN",
+      "MEMBER_OF"
+    ];
+    const adminRelations = new Set(["HAS_ADMIN", "DEAN_OF", "HEAD_OF", "HEAD_OF_UNIT", "ADMINISTERS", "CHAIRS", "DIRECTS", "MANAGES"]);
+    const personLabels = new Set(["Person", "Professor", "TeachingStaff", "Staff", "Instructor"]);
     const results = [];
+    const resultKeys = new Set();
+    const personGroups = new Map();
+
+    const normalize = (value) => String(value || "").toLowerCase().replace(/\s+/g, " ").trim();
+    const nodeName = (node) => node?.properties?.name || node?.properties?.title || node?.properties?.college || node?.properties?.id || "Unknown";
+    const nodeLabel = (node) => node?.labels?.[0] || "Entity";
+    const isPersonNode = (node) => node?.labels?.some(label => personLabels.has(label));
+    const addResult = (item) => {
+      const key = normalize(item.text);
+      if (!key || resultKeys.has(key)) return;
+      resultKeys.add(key);
+      results.push(item);
+    };
+    const addPersonLine = (personName, line, priority) => {
+      const cleanLine = String(line || "").replace(/\s+/g, " ").trim();
+      if (!personName || !cleanLine) return;
+
+      const personKey = normalize(personName);
+      if (!personGroups.has(personKey)) {
+        personGroups.set(personKey, { name: personName, lines: new Map() });
+      }
+
+      const group = personGroups.get(personKey);
+      const lineKey = normalize(cleanLine);
+      const existing = group.lines.get(lineKey);
+      if (!existing || priority < existing.priority) {
+        group.lines.set(lineKey, { text: cleanLine, priority });
+      }
+    };
+    const addPersonRelationLine = (personName, relType, otherName) => {
+      if (!personName || !otherName || normalize(personName) === normalize(otherName)) return;
+
+      if (relType === "TEACHES") addPersonLine(personName, `Teaches ${otherName}`, 1);
+      else if (["HEAD_OF", "HEAD_OF_UNIT"].includes(relType)) addPersonLine(personName, `Head of ${otherName}`, 2);
+      else if (["HAS_ROLE", "ACTS_AS"].includes(relType)) addPersonLine(personName, otherName, 3);
+      else if (relType === "MANAGES") addPersonLine(personName, `Manages ${otherName}`, 4);
+      else if (relType === "ADMINISTERS") addPersonLine(personName, `Administers ${otherName}`, 4);
+      else if (relType === "CHAIRS") addPersonLine(personName, `Chairs ${otherName}`, 4);
+      else if (relType === "DIRECTS") addPersonLine(personName, `Directs ${otherName}`, 4);
+      else if (relType === "WORKS_IN") addPersonLine(personName, `Works in ${otherName}`, 5);
+      else if (relType === "MEMBER_OF") addPersonLine(personName, `Member of ${otherName}`, 6);
+      else if (relType === "BELONGS_TO") addPersonLine(personName, `Belongs to ${otherName}`, 6);
+    };
+
     for (const entity of entities) {
       const res = await session.run(
-        `MATCH (n) WHERE toLower(n.name) CONTAINS toLower($entity) OPTIONAL MATCH (n)-[r]->(m) RETURN n, r, m LIMIT 5`,
-        { entity }
+        `
+        MATCH (n)
+        WHERE toLower(coalesce(n.name, n.title, n.college, n.id, "")) CONTAINS toLower($entity)
+        WITH n
+        ORDER BY CASE WHEN toLower(coalesce(n.name, n.title, n.college, n.id, "")) = toLower($entity) THEN 0 ELSE 1 END
+        LIMIT 15
+        OPTIONAL MATCH (n)-[r]-(m)
+        WHERE r IS NULL OR type(r) IN $profileRelations
+        WITH n, r, m,
+          CASE
+            WHEN type(r) = "TEACHES" THEN 0
+            WHEN type(r) IN $adminRelations THEN 1
+            WHEN type(r) IN ["HAS_ROLE", "ACTS_AS"] THEN 2
+            ELSE 3
+          END AS relationRank
+        ORDER BY relationRank ASC
+        RETURN n, r, m,
+          CASE WHEN r IS NULL THEN null ELSE startNode(r) END AS sourceNode,
+          CASE WHEN r IS NULL THEN null ELSE endNode(r) END AS targetNode
+        LIMIT 75
+        `,
+        { entity, profileRelations, adminRelations: Array.from(adminRelations) }
       );
       console.log(`[NEO4J][${requestId}] Query executed`);
       res.records.forEach(record => {
         const n = record.get("n");
         const r = record.get("r");
         const m = record.get("m");
-        if (n && r && m) {
-          results.push({ text: `(${n.labels[0]}: "${n.properties.name}") --[${r.type}]--> (${m.labels[0]}: "${m.properties.name}")` });
+        const sourceNode = record.get("sourceNode");
+        const targetNode = record.get("targetNode");
+
+        if (n && isPersonNode(n)) {
+          addPersonLine(nodeName(n), n.properties?.role, 3);
+          addPersonLine(nodeName(n), n.properties?.title, 7);
+        }
+
+        if (n && r && m && sourceNode && targetNode) {
+          const sourceName = nodeName(sourceNode);
+          const targetName = nodeName(targetNode);
+          addResult({ text: `(${nodeLabel(sourceNode)}: "${sourceName}") --[${r.type}]--> (${nodeLabel(targetNode)}: "${targetName}")` });
+
+          if (isPersonNode(sourceNode)) addPersonRelationLine(sourceName, r.type, targetName);
+          if (isPersonNode(targetNode)) addPersonRelationLine(targetName, r.type, sourceName);
         }
       });
     }
     console.timeEnd(`[NEO4J][${requestId}]`);
-    console.log(`[NEO4J][${requestId}] results: ${results.length}`);
-    console.log(`[NEO4J][${requestId}] fallback: ${results.length === 0}`);
-    return results;
+    const summaries = Array.from(personGroups.values())
+      .map(group => {
+        const lines = Array.from(group.lines.values())
+          .sort((a, b) => a.priority - b.priority || a.text.localeCompare(b.text))
+          .slice(0, 25);
+
+        if (lines.length < 2) return null;
+        return { text: `${group.name}:\n${lines.map(line => `- ${line.text}`).join("\n")}` };
+      })
+      .filter(Boolean);
+    const mergedResults = [...summaries, ...results];
+    console.log(`[NEO4J][${requestId}] results: ${mergedResults.length}`);
+    console.log(`[NEO4J][${requestId}] fallback: ${mergedResults.length === 0}`);
+    return mergedResults;
   } catch (err) {
     console.timeEnd(`[NEO4J][${requestId}]`);
     return [];

@@ -148,7 +148,7 @@ async function checkRag() {
       new Promise((resolve) =>
         setTimeout(
           () => resolve({ status: "timeout", ok: false }),
-          Number(process.env.RAG_HEALTH_TIMEOUT_MS || 5000)
+          Number(process.env.RAG_HEALTH_TIMEOUT_MS || 2500)
         )
       )
     ]);
@@ -225,7 +225,7 @@ async function buildHealthPayload(getCacheStatus) {
 
   const processMemory = getProcessMemory();
   const payload = {
-    ok: neo4j.ok && ollama.ok,
+    ok: neo4j.ok && ollama.ok && decisionApi.ok,
     timestamp: new Date().toISOString(),
     services: {
       neo4j,
@@ -245,6 +245,7 @@ async function buildHealthPayload(getCacheStatus) {
     readiness: {
       startup_phase: ollama.startup_readiness_phase,
       ollama_ready: ollama.ollama_ready,
+      decision_ready: decisionApi.ok,
       rag_ready: rag.ok,
       voice_deferred: decisionApi?.voice?.whisper_loaded === false,
       bge_m3_deferred:

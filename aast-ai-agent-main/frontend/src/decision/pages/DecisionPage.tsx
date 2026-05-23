@@ -5,11 +5,13 @@ import DecisionForm from '../../decision/components/DecisionForm';
 import CollegeCard from '../../decision/components/CollegeCard';
 import { Loader2 } from 'lucide-react';
 import { getRecommendation, type RecommendationResponse } from '../../services/decisionApi';
+import type { CareerRoadmap, RecommendationCardData, ScoreBreakdown } from '../../types';
 
-function normalizeRecommendations(data: RecommendationResponse) {
+function normalizeRecommendations(data: RecommendationResponse): RecommendationCardData[] {
   if (data.recommended_major) {
     const rawConf = data.confidence || 0;
     const conf = rawConf > 1 ? rawConf : rawConf * 100;
+    const scoreBreakdown = data.score_breakdown as ScoreBreakdown | undefined;
 
     return [{
       program_id: "rec-1",
@@ -22,7 +24,7 @@ function normalizeRecommendations(data: RecommendationResponse) {
       currency: String(data.currency || "USD"),
       fee_mode: String(data.fee_mode || "Semester"),
       affordability_label: String(data.affordability_label || "Match"),
-      score_breakdown: data.score_breakdown || {
+      score_breakdown: scoreBreakdown || {
         interest_alignment: data.confidence_breakdown?.interests_score || conf,
         affordability: 100,
         employment_outlook: data.confidence_breakdown?.market_score || 85,
@@ -33,18 +35,18 @@ function normalizeRecommendations(data: RecommendationResponse) {
         missing_data_penalty: 0
       },
       warnings: data.warnings || (data.reason ? [data.reason] : []),
-      career_roadmap: data.career_roadmap,
+      career_roadmap: (data.career_roadmap as CareerRoadmap | null | undefined) || null,
       next_steps: data.next_steps || []
     }];
   }
 
-  return Array.isArray(data.recommendations) ? data.recommendations : [];
+  return Array.isArray(data.recommendations) ? (data.recommendations as RecommendationCardData[]) : [];
 }
 
 export default function DashboardPage() {
   const navigate = useNavigate();
   const { profile } = useStudent();
-  const [recommendations, setRecommendations] = useState<any[]>([]);
+  const [recommendations, setRecommendations] = useState<RecommendationCardData[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

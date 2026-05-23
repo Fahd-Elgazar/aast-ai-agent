@@ -1,0 +1,158 @@
+- generic [ref=e41]:
+  - complementary [ref=e42]:
+    - generic [ref=e44]:
+      - img [ref=e46]
+      - generic [ref=e49]:
+        - generic [ref=e50]: UniPortal AI
+        - generic [ref=e51]: AAST Platform
+    - generic [ref=e53]:
+      - img "Somaya Osama avatar" [ref=e54]
+      - generic [ref=e55]:
+        - generic [ref=e56]: Somaya Osama
+        - generic [ref=e57]: Computer Engineering
+        - generic [ref=e58]: g
+    - navigation [ref=e59]:
+      - button "Home" [ref=e60] [cursor=pointer]:
+        - img [ref=e61]
+        - text: Home
+      - button "AI Advisor" [ref=e64] [cursor=pointer]:
+        - img [ref=e65]
+        - text: AI Advisor
+      - button "Courses" [ref=e67] [cursor=pointer]:
+        - img [ref=e68]
+        - text: Courses
+      - button "Results" [ref=e70] [cursor=pointer]:
+        - img [ref=e71]
+        - text: Results
+    - button "Logout" [ref=e74] [cursor=pointer]:
+      - img [ref=e75]
+      - text: Logout
+  - main [ref=e78]:
+    - generic [ref=e79]:
+      - generic [ref=e80]:
+        - heading "AI Advisor" [level=2] [ref=e167]
+        - paragraph [ref=e82]: Academic intelligence workspace
+      - generic [ref=e84]:
+        - img [ref=e85]
+        - textbox [ref=e88]:
+          - /placeholder: Search services...
+    - generic [ref=e169]:
+      - complementary [ref=e170]:
+        - generic [ref=e171]:
+          - button "Collapse chat history" [ref=e172] [cursor=pointer]:
+            - img [ref=e173]
+          - button "New Chat" [ref=e176] [cursor=pointer]:
+            - img [ref=e177]
+            - text: New Chat
+        - generic [ref=e178]:
+          - img [ref=e179]
+          - textbox [ref=e182]:
+            - /placeholder: Search chats
+        - generic [ref=e285]:
+          - img [ref=e286]
+          - text: No chats found.
+      - generic [ref=e185]:
+        - generic [ref=e187]:
+          - img [ref=e189]
+          - generic [ref=e192]:
+            - generic [ref=e193]:
+              - heading "AI Academic Advisor" [level=1] [ref=e194]
+              - img [ref=e195]
+            - generic [ref=e198]: New conversation
+        - generic [ref=e288]:
+          - img [ref=e289]
+          - text: Failed to fetch
+        - generic [ref=e200]:
+          - generic [ref=e291]:
+            - generic [ref=e294]:
+              - paragraph [ref=e295]: Show the AI program graph
+              - paragraph [ref=e296]:
+                - img [ref=e297]
+                - text: 09:40 PM
+            - img [ref=e301]
+          - generic [ref=e304]:
+            - img [ref=e306]
+            - generic [ref=e310]:
+              - generic [ref=e311]:
+                - paragraph [ref=e312]: Graph evidence loaded for the AI program.
+                - button "Open graph evidence" [ref=e313] [cursor=pointer]:
+                  - img [ref=e314]
+                  - text: Open graph evidence
+                - paragraph [ref=e319]:
+                  - img [ref=e320]
+                  - text: 09:40 PM
+              - button "Read message aloud" [ref=e323] [cursor=pointer]:
+                - img [ref=e324]
+        - generic [ref=e220]:
+          - textbox "Type a message..." [ref=e221]
+          - button "Start voice input" [ref=e222] [cursor=pointer]:
+            - img [ref=e223]
+          - button "Send" [disabled] [ref=e226]:
+            - img [ref=e227]
+            - text: Send
+      - generic [ref=e230]:
+        - separator "Resize graph panel" [ref=e231]:
+          - img [ref=e233]
+        - generic [ref=e241]:
+          - generic [ref=e242]:
+            - generic [ref=e244]:
+              - generic [ref=e245]:
+                - img [ref=e247]
+                - generic [ref=e255]:
+                  - generic [ref=e256]:
+                    - heading "Neo4j Graph Intelligence" [level=2] [ref=e257]
+                    - img [ref=e258]
+                  - paragraph [ref=e261]: Explainable academic entities, roles, pathways, and governance links
+              - generic [ref=e262]:
+                - generic [ref=e263]:
+                  - img [ref=e264]
+                  - text: 10 entities
+                - generic [ref=e268]: 10 relationships
+                - generic [ref=e328]: Cypher verified
+            - main [ref=e330]:
+              - generic [ref=e331]:
+                - generic [ref=e332]:
+                  - generic [ref=e333]: Search graph entities
+                  - generic [ref=e334]:
+                    - img [ref=e335]
+                    - textbox "Search graph entities" [ref=e338]:
+                      - /placeholder: Search professor, course, major...
+                - toolbar "Graph explorer controls" [ref=e339]:
+                  - generic [ref=e340]:
+                    - button "Compact graph panel" [ref=e341] [cursor=pointer]:
+                      - img [ref=e342]
+                    - button "Balanced graph panel" [pressed] [ref=e345] [cursor=pointer]:
+                      - img [ref=e346]
+                    - button "Expand graph panel" [ref=e349] [cursor=pointer]:
+                      - img [ref=e350]
+                  - generic [ref=e354]:
+                    - button "Zoom in" [ref=e355] [cursor=pointer]:
+                      - img [ref=e356]
+                    - button "Zoom out" [ref=e359] [cursor=pointer]:
+                      - img [ref=e360]
+                    - button "Fit graph" [ref=e363] [cursor=pointer]:
+                      - img [ref=e364]
+                    - button "Hide labels" [pressed] [ref=e369] [cursor=pointer]:
+                      - img [ref=e370]
+                  - generic [ref=e374]:
+                    - button "Pause layout physics" [pressed] [ref=e375] [cursor=pointer]:
+                      - img [ref=e376]
+                    - button "Reset graph layout" [ref=e377] [cursor=pointer]:
+                      - img [ref=e378]
+                  - generic [ref=e382]:
+                    - button "Show legend panel" [ref=e641] [cursor=pointer]:
+                      - img [ref=e384]
+                    - button "Show inspector panel" [ref=e642] [cursor=pointer]:
+                      - img [ref=e643]
+                    - button "Unpin inspector panel" [pressed] [ref=e390] [cursor=pointer]:
+                      - img [ref=e391]
+                    - button "Keep inspector visible in fullscreen" [pressed] [ref=e393] [cursor=pointer]:
+                      - img [ref=e394]
+                  - button "Exit fullscreen graph" [active] [pressed] [ref=e663] [cursor=pointer]:
+                    - img [ref=e664]
+              - img "Knowledge graph with 10 nodes and 10 relationships" [ref=e407]:
+                - generic: 10 visible entities / 10 links
+          - button "Close fullscreen graph backdrop" [ref=e669]
+          - button "Inspector" [ref=e646] [cursor=pointer]:
+            - img [ref=e647]
+            - text: Inspector

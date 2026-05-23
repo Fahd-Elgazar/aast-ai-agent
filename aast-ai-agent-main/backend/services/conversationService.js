@@ -9,6 +9,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export const MAX_CONTEXT_TURNS = Number(process.env.MAX_CONTEXT_TURNS || 12);
+const MAX_MEMORY_SUBJECTS = 5;
+const MAX_MEMORY_FIELD_CHARS = 140;
+const MAX_MEMORY_SUMMARY_CHARS = 220;
 
 const DATA_FILE = process.env.CONVERSATIONS_FILE ||
   path.resolve(__dirname, "../data/conversations.json");
@@ -140,6 +143,37 @@ export async function pushTurn(cid, convo, role, content) {
   persistSoon();
 
   return target;
+}
+
+export function getConversationMemory(cid) {
+  ensureLoaded();
+
+  const normalizedCid = normalizeConversationId(cid);
+  const convo = normalizedCid ? conversations.get(normalizedCid) : null;
+  return cloneMemory(convo?.conversationMemory);
+}
+
+export async function updateConversationMemoryFromTurn(cid, convo, turn = {}) {
+  ensureLoaded();
+
+  const normalizedCid = normalizeConversationId(cid);
+  if (!normalizedCid) throw new Error("Invalid conversation id");
+
+  const target = conversations.get(normalizedCid) || normalizeConversation(normalizedCid, convo);
+  if (!conversations.has(normalizedCid)) conversations.set(normalizedCid, target);
+
+  const current = normalizeConversationMemory(target.conversationMemory);
+  const update = buildLightweightMemoryUpdate(current, turn);
+  target.conversationMemory = normalizeConversationMemory({
+    ...current,
+    ...update
+  });
+
+  target.updatedAt = new Date().toISOString();
+  target.lastActive = Date.now();
+  persistSoon();
+
+  return cloneMemory(target.conversationMemory);
 }
 
 export async function updateSystemPrompt(cid, convo, content) {
@@ -324,7 +358,8 @@ function buildFreshConversation(cid) {
     messages: [
       normalizeMessage({ role: "system", content: SYSTEM_PROMPT }, now)
     ],
-    lastRoute: null
+    lastRoute: null,
+    conversationMemory: buildEmptyConversationMemory()
   };
 }
 
@@ -351,8 +386,314 @@ function normalizeConversation(cid, raw = {}) {
     lastActive: Number(raw.lastActive) || Date.parse(updatedAt) || Date.now(),
     pinned: Boolean(raw.pinned),
     messages,
-    lastRoute: raw.lastRoute || null
+    lastRoute: raw.lastRoute || null,
+    conversationMemory: normalizeConversationMemory(raw.conversationMemory)
   };
+}
+
+function buildEmptyConversationMemory() {
+  return {
+    lastTopic: null,
+    lastEntity: null,
+    lastIntent: null,
+    recentSubjects: [],
+    lastAssistantSummary: null
+  };
+}
+
+function normalizeConversationMemory(memory = {}) {
+  const raw = memory && typeof memory === "object" ? memory : {};
+  return {
+    lastTopic: normalizeMemoryText(raw.lastTopic),
+    lastEntity: normalizeMemoryEntity(raw.lastEntity),
+    lastIntent: normalizeMemoryText(raw.lastIntent),
+    recentSubjects: normalizeRecentSubjects(raw.recentSubjects),
+    lastAssistantSummary: normalizeMemoryText(raw.lastAssistantSummary, MAX_MEMORY_SUMMARY_CHARS)
+  };
+}
+
+function normalizeMemoryText(value, limit = MAX_MEMORY_FIELD_CHARS) {
+  if (typeof value !== "string") return null;
+  const text = value.replace(/\s+/g, " ").trim();
+  if (!text) return null;
+  return text.slice(0, limit);
+}
+
+function normalizeMemoryEntity(entity) {
+  if (!entity) return null;
+
+  if (typeof entity === "string") {
+    const value = normalizeMemoryText(entity);
+    return value ? { type: "entity", value, source: "legacy" } : null;
+  }
+
+  if (typeof entity !== "object") return null;
+
+  const value = normalizeMemoryText(entity.value || entity.name || entity.label);
+  if (!value) return null;
+
+  return {
+    type: normalizeMemoryText(entity.type || "entity", 40) || "entity",
+    value,
+    source: normalizeMemoryText(entity.source || "session", 40) || "session"
+  };
+}
+
+function normalizeRecentSubjects(subjects) {
+  if (!Array.isArray(subjects)) return [];
+
+  const seen = new Set();
+  const normalized = [];
+
+  for (const subject of subjects) {
+    const value = normalizeMemoryText(subject);
+    const key = value?.toLowerCase();
+    if (!value || seen.has(key)) continue;
+    seen.add(key);
+    normalized.push(value);
+    if (normalized.length >= MAX_MEMORY_SUBJECTS) break;
+  }
+
+  return normalized;
+}
+
+function cloneMemory(memory) {
+  return normalizeConversationMemory(memory);
+}
+
+function buildLightweightMemoryUpdate(currentMemory, turn = {}) {
+  const userQuery = normalizeMemoryText(turn.userQuery || turn.normalizedQuery || "", 260) || "";
+  const assistantAnswer = normalizeMemoryText(turn.assistantAnswer || "", MAX_MEMORY_SUMMARY_CHARS);
+  const topic = detectTopic(userQuery, turn.route);
+  const intent = normalizeMemoryText(turn.intent || turn.route || null, 80);
+  const evidenceTexts = collectVerifiedEvidenceTexts(turn);
+  const entity = extractEntityFromEvidence(evidenceTexts, userQuery) ||
+    extractEntityFromExplicitInputs(turn.entities, userQuery);
+  const subjects = mergeRecentSubjects(
+    [
+      ...extractSubjectsFromExplicitInputs(turn.entities),
+      ...extractSubjectsFromQuery(userQuery),
+      ...extractSubjectsFromEvidence(evidenceTexts)
+    ],
+    currentMemory.recentSubjects
+  );
+
+  return {
+    lastTopic: topic || currentMemory.lastTopic,
+    lastEntity: entity || currentMemory.lastEntity,
+    lastIntent: intent || currentMemory.lastIntent,
+    recentSubjects: subjects,
+    lastAssistantSummary: assistantAnswer || currentMemory.lastAssistantSummary
+  };
+}
+
+function detectTopic(query, route) {
+  const text = `${query || ""} ${route || ""}`.toLowerCase();
+  if (/\b(who teaches|teaches|teacher|instructor|professor|office|office hours)\b/.test(text)) return "teaching_staff";
+  if (/\b(prerequisite|prerequisites|requires|required|requirement|gpa|grade point)\b/.test(text)) return "requirements";
+  if (/\b(career|careers|job|jobs|role|roles|roadmap|pathway)\b/.test(text)) return "careers";
+  if (/\b(program|specialization|specialisation|major|track|curriculum|study plan|course|courses|subjects)\b/.test(text)) return "program";
+  if (/\b(tuition|fee|fees|scholarship|budget|cost)\b/.test(text)) return "fees";
+  if (/\b(policy|regulation|deadline|admission|transfer)\b/.test(text)) return "policy";
+  return normalizeMemoryText(route, 60);
+}
+
+function collectVerifiedEvidenceTexts(turn = {}) {
+  const texts = [];
+
+  const pushText = (value) => {
+    const text = normalizeMemoryText(value, 600);
+    if (text) texts.push(text);
+  };
+
+  const pushContextItem = (item) => {
+    if (!item) return;
+    if (typeof item === "string") return pushText(item);
+    if (typeof item !== "object") return;
+    pushText(item.evidence || item.text || item.content || item.answer || item.recommendation || item.career_path);
+  };
+
+  if (turn.faqContext?.answer) pushText(turn.faqContext.answer);
+
+  const kgContext = Array.isArray(turn.neo4jContext) ? turn.neo4jContext : [];
+  kgContext.forEach(pushContextItem);
+
+  const ragContext = Array.isArray(turn.ragContext) ? turn.ragContext : [];
+  ragContext.forEach(pushContextItem);
+
+  const decisionContext = Array.isArray(turn.decisionContext)
+    ? turn.decisionContext
+    : turn.decisionContext
+      ? [turn.decisionContext]
+      : [];
+  decisionContext.forEach(pushContextItem);
+
+  const usedFacts = Array.isArray(turn.usedFacts) ? turn.usedFacts : [];
+  usedFacts.forEach(pushText);
+
+  return texts;
+}
+
+function extractEntityFromEvidence(evidenceTexts, query) {
+  const queryText = String(query || "").toLowerCase();
+
+  for (const evidence of evidenceTexts) {
+    const triple = parseGraphTriple(evidence);
+    if (triple) {
+      const relation = triple.relation.toUpperCase();
+      if (relation === "TEACHES") {
+        return makeMemoryEntity("professor", triple.source, "verified_kg");
+      }
+      if (["WORKS_IN", "HAS_OFFICE", "OFFICE_IN", "LOCATED_IN", "HAS_DEPARTMENT", "BELONGS_TO_DEPARTMENT", "SPECIALIZES_IN", "HAS_SPECIALIZATION"].includes(relation)) {
+        return makeMemoryEntity("professor", triple.source, "verified_kg");
+      }
+      if (["HAS_PREREQUISITE", "REQUIRES", "PREREQUISITE_FOR"].includes(relation)) {
+        return makeMemoryEntity("course", triple.source, "verified_kg");
+      }
+      if (["HAS_COURSE", "BELONGS_TO", "PART_OF"].includes(relation)) {
+        return makeMemoryEntity("program", triple.source, "verified_kg");
+      }
+    }
+
+    const teaches = evidence.match(/^(.+?)\s+teaches\s+(.+?)(?:\.|$)/i);
+    if (teaches) return makeMemoryEntity("professor", teaches[1], "verified_kg");
+
+    const office = evidence.match(/^(.+?)\s+(?:office|office location|room)\s*[:is-]+\s*(.+)$/i);
+    if (office || /\b(his|her|their)\s+office\b/i.test(queryText)) {
+      const subject = office?.[1];
+      const entity = makeMemoryEntity("professor", subject, "verified_kg");
+      if (entity) return entity;
+    }
+
+    const recommended = evidence.match(/\bRecommended Major:\s*([^.;\n]+)/i);
+    if (recommended) return makeMemoryEntity("program", recommended[1], "decision_engine");
+  }
+
+  return null;
+}
+
+function extractEntityFromExplicitInputs(entities = [], query = "") {
+  const explicit = extractSubjectsFromExplicitInputs(entities)[0] ||
+    extractSubjectsFromQuery(query)[0];
+  if (!explicit) return null;
+
+  if (/\b(professor|dr\.?|doctor)\b/i.test(explicit)) {
+    return makeMemoryEntity("professor", explicit, "explicit_user");
+  }
+  if (/\b(course|nlp|natural language processing|[A-Z]{2,5}\s?\d{3,4})\b/i.test(explicit)) {
+    return makeMemoryEntity("course", explicit, "explicit_user");
+  }
+  if (/\b(program|specialization|specialisation|major|track|computer science|software engineering|artificial intelligence|ai)\b/i.test(explicit)) {
+    return makeMemoryEntity("program", explicit, "explicit_user");
+  }
+
+  return makeMemoryEntity("entity", explicit, "explicit_user");
+}
+
+function parseGraphTriple(text) {
+  const match = String(text || "").match(/\(([^()]+)\)\s*-+\s*\[\s*:?\s*([A-Za-z0-9_]+(?::[A-Za-z0-9_]+)?)\s*\]\s*-+>\s*\(([^()]+)\)/);
+  if (!match) return null;
+
+  return {
+    source: cleanGraphLabel(match[1]),
+    relation: match[2].split(":").pop(),
+    target: cleanGraphLabel(match[3])
+  };
+}
+
+function cleanGraphLabel(value) {
+  let text = String(value || "").trim();
+  const quoted = text.match(/"([^"]+)"/) || text.match(/'([^']+)'/);
+  if (quoted) return quoted[1].trim();
+  const property = text.match(/\b(?:name|title|code|id)\s*:\s*["']?([^"',}]+)["']?/i);
+  if (property) return property[1].trim();
+  if (text.includes(":")) text = text.split(":").pop();
+  return text.replace(/[{}]/g, "").replace(/\s+/g, " ").trim();
+}
+
+function makeMemoryEntity(type, value, source) {
+  const cleanValue = normalizeMemoryText(value);
+  if (!cleanValue) return null;
+  return {
+    type: normalizeMemoryText(type, 40) || "entity",
+    value: cleanValue,
+    source: normalizeMemoryText(source, 40) || "session"
+  };
+}
+
+function extractSubjectsFromExplicitInputs(entities = []) {
+  if (!Array.isArray(entities)) return [];
+  return entities.map(entity => normalizeMemoryText(entity)).filter(Boolean);
+}
+
+function extractSubjectsFromQuery(query = "") {
+  const text = String(query || "");
+  const subjects = [];
+
+  const add = (value) => {
+    const subject = normalizeMemoryText(value);
+    if (subject) subjects.push(subject);
+  };
+
+  const prereqMatch = text.match(/\b([A-Z]{2,5}|Computer Science|CS|Software Engineering|Artificial Intelligence|AI)\s+prerequisites?\b/i);
+  if (prereqMatch) add(`${prereqMatch[1].toUpperCase() === "CS" ? "CS" : prereqMatch[1]} prerequisites`);
+
+  const courseCodes = text.match(/\b[A-Z]{2,5}\s?\d{3,4}\b/g) || [];
+  courseCodes.forEach(add);
+
+  const knownSubjects = [
+    "Natural Language Processing",
+    "NLP",
+    "Artificial Intelligence",
+    "AI specialization",
+    "AI",
+    "Computer Science",
+    "CS",
+    "Software Engineering",
+    "Cybersecurity",
+    "Data Science",
+    "Computer Engineering"
+  ];
+
+  for (const subject of knownSubjects) {
+    const pattern = new RegExp(`\\b${escapeRegex(subject)}\\b`, "i");
+    if (pattern.test(text)) add(subject);
+  }
+
+  return subjects;
+}
+
+function extractSubjectsFromEvidence(evidenceTexts = []) {
+  const subjects = [];
+
+  for (const evidence of evidenceTexts) {
+    const triple = parseGraphTriple(evidence);
+    if (triple?.target) {
+      const relation = triple.relation.toUpperCase();
+      if (relation === "TEACHES") subjects.push(triple.target);
+      else if (["HAS_PREREQUISITE", "REQUIRES", "PREREQUISITE_FOR"].includes(relation)) subjects.push(triple.source);
+      else if (!["WORKS_IN", "HAS_OFFICE", "OFFICE_IN", "LOCATED_IN", "HAS_DEPARTMENT", "BELONGS_TO_DEPARTMENT"].includes(relation)) subjects.push(triple.target);
+    }
+
+    const teaches = evidence.match(/^(.+?)\s+teaches\s+(.+?)(?:\.|$)/i);
+    if (teaches) subjects.push(teaches[2]);
+
+    const recommended = evidence.match(/\bRecommended Major:\s*([^.;\n]+)/i);
+    if (recommended) subjects.push(recommended[1]);
+  }
+
+  return subjects.map(subject => normalizeMemoryText(subject)).filter(Boolean);
+}
+
+function mergeRecentSubjects(newSubjects, existingSubjects) {
+  return normalizeRecentSubjects([
+    ...newSubjects,
+    ...(Array.isArray(existingSubjects) ? existingSubjects : [])
+  ]);
+}
+
+function escapeRegex(value) {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 function normalizeMessage(message, fallbackDate) {

@@ -8,6 +8,7 @@
  */
 
 import { getSession } from "../db/neo4j.js";
+import fetch from "node-fetch";
 import ragService from "./ragService.js";
 import { searchFAQ } from "../faqService.js";
 import { getRecommendation, buildCareerRoadmap } from "./decisionService.js";
@@ -16,11 +17,33 @@ import { getOllamaRuntimeStatus } from "./ollamaService.js";
 
 const HEALTH_CACHE_TTL = 15000; // 15 seconds
 const MAX_STALE_HEALTH_MS = 60000; // 60 seconds
+const DECISION_API_URL = process.env.DECISION_API_URL || "http://127.0.0.1:8005";
+const DECISION_HEALTH_TIMEOUT_MS = Number(process.env.DECISION_HEALTH_TIMEOUT_MS || 1200);
+const RAG_HEALTH_PROBE_TIMEOUT_MS = Number(process.env.RAG_HEALTH_PROBE_TIMEOUT_MS || process.env.RAG_HEALTH_TIMEOUT_MS || 5000);
 
 let cachedHealth = {
     kg: false, rag: false, decision: false, career: false, faq: false, llm: false
 };
 let lastCheckTime = 0;
+
+export function getCachedSubsystemHealth({ optimistic = false } = {}) {
+    if (lastCheckTime > 0) {
+        return { ...cachedHealth };
+    }
+
+    if (optimistic) {
+        return {
+            kg: true,
+            rag: true,
+            decision: true,
+            career: true,
+            faq: true,
+            llm: true
+        };
+    }
+
+    return { ...cachedHealth };
+}
 
 export const timeoutWrapper = (promise, ms, fallback) => {
     let timer;
@@ -33,9 +56,31 @@ export const timeoutWrapper = (promise, ms, fallback) => {
     ]);
 };
 
-export async function checkSubsystemHealth() {
+async function checkDecisionApiHealth() {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), DECISION_HEALTH_TIMEOUT_MS);
+
+    try {
+        const response = await fetch(`${DECISION_API_URL}/health`, {
+            method: "GET",
+            signal: controller.signal
+        });
+        return response.ok;
+    } catch {
+        return false;
+    } finally {
+        clearTimeout(timer);
+    }
+}
+
+export async function checkSubsystemHealth(options = {}) {
+    const { fast = false, optimistic = false } = options || {};
     const now = Date.now();
     const age = now - lastCheckTime;
+
+    if (fast) {
+        return getCachedSubsystemHealth({ optimistic });
+    }
     
     if (age < HEALTH_CACHE_TTL) {
         return cachedHealth;
@@ -82,7 +127,7 @@ export async function checkSubsystemHealth() {
                     }
                     return true; 
                 })(),
-                2000, cachedHealth.rag
+                RAG_HEALTH_PROBE_TIMEOUT_MS, cachedHealth.rag
             ),
 
             // LLM Health
@@ -101,15 +146,15 @@ export async function checkSubsystemHealth() {
             // FAQ Health (Lightweight validation + data config check)
             timeoutWrapper(
                 (async () => {
-                    return typeof searchFAQ === 'function' && process.env.FAQ_DATA_PATH !== undefined;
+                    return typeof searchFAQ === 'function';
                 })(),
                 2000, cachedHealth.faq
             ),
 
-            // DECISION Health (Lightweight check)
+            // DECISION Health (actual API readiness, not just local function presence)
             timeoutWrapper(
                 (async () => {
-                    return typeof getRecommendation === 'function';
+                    return typeof getRecommendation === 'function' && await checkDecisionApiHealth();
                 })(),
                 2000, cachedHealth.decision
             ),

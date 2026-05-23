@@ -1,4 +1,4 @@
-import { Check, MoreHorizontal, PanelLeftClose, PanelLeftOpen, Pencil, Pin, Plus, Search, Trash2, X } from "lucide-react";
+import { Check, MessageSquare, MoreHorizontal, PanelLeftClose, PanelLeftOpen, Pencil, Pin, Plus, Search, Trash2, X } from "lucide-react";
 import { useMemo, useState } from "react";
 import type { FormEvent } from "react";
 import type { ConversationSummary } from "../types";
@@ -123,8 +123,8 @@ export default function ConversationHistorySidebar({
     return (
       <div
         key={conversation.cid}
-        className={`group relative flex min-h-10 items-center rounded-lg ${
-          isActive ? "bg-navy-700 text-white" : "text-slate-200 hover:bg-navy-800"
+        className={`group relative flex min-h-11 items-center rounded-xl transition ${
+          isActive ? "bg-white/10 text-white ring-1 ring-white/10" : "text-slate-200 hover:bg-white/10"
         }`}
       >
         {isEditing ? (
@@ -152,7 +152,7 @@ export default function ConversationHistorySidebar({
             >
               <span className="block truncate text-sm font-medium">{conversation.title || "New Chat"}</span>
               {conversation.preview && (
-                <span className="block truncate text-xs text-slate-400 group-hover:text-slate-300">
+                <span className={`block truncate text-xs ${isActive ? "text-slate-300" : "text-slate-400 group-hover:text-slate-300"}`}>
                   {conversation.preview}
                 </span>
               )}
@@ -161,7 +161,7 @@ export default function ConversationHistorySidebar({
             <button
               type="button"
               onClick={() => setMenuCid(menuCid === conversation.cid ? null : conversation.cid)}
-              className="mr-1 rounded p-1.5 text-slate-300 opacity-100 hover:bg-navy-700 md:opacity-0 md:group-hover:opacity-100"
+              className="mr-1 rounded-lg p-1.5 text-slate-300 opacity-100 hover:bg-white/10 md:opacity-0 md:group-hover:opacity-100"
               aria-label="Conversation options"
             >
               <MoreHorizontal size={16} />
@@ -170,14 +170,14 @@ export default function ConversationHistorySidebar({
         )}
 
         {menuCid === conversation.cid && !isEditing && (
-          <div className="absolute right-1 top-9 z-20 w-36 rounded-lg border border-slate-200 bg-white p-1 text-slate-700 shadow-xl">
+          <div className="absolute right-1 top-10 z-20 w-36 rounded-xl border border-slate-200 bg-white p-1 text-slate-700 shadow-xl">
             <button
               type="button"
               onClick={() => {
                 setMenuCid(null);
                 void onTogglePinConversation(conversation);
               }}
-              className="flex w-full items-center gap-2 rounded px-2 py-1.5 text-left text-sm hover:bg-slate-50"
+              className="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-sm hover:bg-slate-50"
             >
               <Pin size={14} />
               {conversation.pinned ? "Unpin" : "Pin"}
@@ -185,7 +185,7 @@ export default function ConversationHistorySidebar({
             <button
               type="button"
               onClick={() => startRename(conversation)}
-              className="flex w-full items-center gap-2 rounded px-2 py-1.5 text-left text-sm hover:bg-slate-50"
+              className="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-sm hover:bg-slate-50"
             >
               <Pencil size={14} />
               Rename
@@ -196,7 +196,7 @@ export default function ConversationHistorySidebar({
                 setMenuCid(null);
                 void onDeleteConversation(conversation);
               }}
-              className="flex w-full items-center gap-2 rounded px-2 py-1.5 text-left text-sm text-red-600 hover:bg-red-50"
+              className="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-sm text-red-600 hover:bg-red-50"
             >
               <Trash2 size={14} />
               Delete
@@ -223,15 +223,15 @@ export default function ConversationHistorySidebar({
 
   return (
     <aside
-      className={`flex h-full shrink-0 flex-col rounded-xl bg-navy-900 text-white shadow-lg transition-all ${
-        collapsed ? "w-[72px] p-3" : "w-[280px] p-4"
+      className={`flex h-full shrink-0 flex-col rounded-2xl border border-white/10 bg-navy-900 text-white shadow-xl shadow-navy-950/20 transition-all ${
+        collapsed ? "w-[76px] p-3" : "w-full p-4 md:w-[296px]"
       }`}
     >
       <div className="flex items-center gap-2">
         <button
           type="button"
           onClick={onToggleCollapsed}
-          className="flex h-10 w-10 items-center justify-center rounded-lg bg-navy-800 text-slate-200 hover:bg-navy-700"
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/10 text-slate-200 transition hover:bg-white/15 focus:outline-none focus:ring-2 focus:ring-gold-500/30"
           aria-label={collapsed ? "Expand chat history" : "Collapse chat history"}
         >
           {collapsed ? <PanelLeftOpen size={18} /> : <PanelLeftClose size={18} />}
@@ -241,7 +241,7 @@ export default function ConversationHistorySidebar({
           <button
             type="button"
             onClick={onNewChat}
-            className="flex h-10 flex-1 items-center justify-center gap-2 rounded-lg bg-navy-700 px-3 text-sm font-semibold hover:bg-navy-600"
+            className="flex h-10 flex-1 items-center justify-center gap-2 rounded-xl bg-gold-500 px-3 text-sm font-bold text-navy-950 shadow-lg shadow-navy-950/20 transition hover:-translate-y-0.5 hover:bg-gold-400 focus:outline-none focus:ring-2 focus:ring-gold-500/30"
           >
             <Plus size={16} />
             New Chat
@@ -253,14 +253,14 @@ export default function ConversationHistorySidebar({
         <button
           type="button"
           onClick={onNewChat}
-          className="mt-3 flex h-10 w-10 items-center justify-center rounded-lg bg-navy-800 text-slate-200 hover:bg-navy-700"
+          className="mt-3 flex h-10 w-10 items-center justify-center rounded-xl bg-gold-500 text-navy-950 hover:bg-gold-400"
           aria-label="New chat"
         >
           <Plus size={18} />
         </button>
       ) : (
         <>
-          <label className="mt-4 flex items-center gap-2 rounded-lg border border-navy-700 bg-navy-950 px-3 py-2 text-sm text-slate-300 focus-within:border-gold-500">
+          <label className="mt-4 flex items-center gap-2 rounded-xl border border-white/10 bg-navy-950/80 px-3 py-2 text-sm text-slate-300 transition focus-within:border-gold-500/70 focus-within:ring-2 focus-within:ring-gold-500/10">
             <Search size={16} />
             <input
               value={search}
@@ -278,7 +278,10 @@ export default function ConversationHistorySidebar({
             {renderGroup("previous7")}
             {renderGroup("older")}
             {!loading && conversations.length === 0 && (
-              <p className="px-2 text-sm text-slate-400">No chats found.</p>
+              <div className="rounded-xl border border-white/10 bg-white/5 p-3 text-sm text-slate-400">
+                <MessageSquare className="mb-2 h-4 w-4" aria-hidden="true" />
+                No chats found.
+              </div>
             )}
           </div>
         </>
