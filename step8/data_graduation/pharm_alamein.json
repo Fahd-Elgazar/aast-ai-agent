@@ -1,0 +1,326 @@
+{
+  "nodes": [
+    {
+      "label": "Campus",
+      "id": "CAMPUS_EL_ALAMEIN",
+      "properties": {
+        "campus_id": "EL_ALAMEIN",
+        "name": "El Alamein Campus",
+        "city": "New El Alamein City",
+        "governorate": "Matrouh",
+        "country": "Egypt",
+        "description": "Located at AASTMT El Alamein Campus within Egypt’s new smart educational and medical hub.",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "College",
+      "id": "EL_ALAMEIN_PHARM",
+      "properties": {
+        "college_id": "PHARM_ELALAMEIN",
+        "name": "College of Pharmacy",
+        "branch": "El Alamein",
+        "academic_level": "UNDERGRADUATE",
+        "parent_institution": "Arab Academy for Science, Technology and Maritime Transport",
+        "year_established": null,
+        "vision": "Achieve international leadership in smart pharmacy education and research, with a positive impact on the quality of life.",
+        "mission": "Provide world-class and intelligent pharmacy education, research, and sustainable professional development that enhances healthcare quality.",
+        "industry_and_international_relations": [
+          "Healthcare sector partners",
+          "Pharmaceutical organizations",
+          "AASTMT interdisciplinary colleges"
+        ],
+        "accreditation_national": [],
+        "accreditation_international": [],
+        "accreditation_future_direction": [
+          "Alignment with international pharmacy education standards"
+        ],
+        "qa_unit_exists": true,
+        "qa_description": "Adoption of continuous improvement culture through seminars, scientific conferences, and systematic development of academic and administrative staff.",
+        "dean_name": null,
+        "dean_role": "Dean of the College of Pharmacy – El Alamein Campus",
+        "education_model": "Smart and outcome-based pharmacy education",
+        "curriculum_development": "Continuously updated to reflect recent advances in pharmacy practice and healthcare",
+        "core_balance": [
+          "Solid foundation in pharmaceutical sciences",
+          "Advanced pharmacy practice and patient care",
+          "Clinical decision making"
+        ],
+        "interdisciplinary_courses": [
+          "Business and Quality Management",
+          "Health Informatics",
+          "Logistics and Supply Chain Management"
+        ],
+        "strategic_core_values_RACE": [
+          "Responsibility to Learners",
+          "Accountability",
+          "Continuous Improvement",
+          "Excellence"
+        ],
+        "strategic_objectives": [
+          "Excellence in providing high-quality pharmacy education",
+          "Supporting scientific research and innovation",
+          "Enhancing student services and academic support",
+          "Fulfilling social responsibility toward the community",
+          "Graduating pharmacists highly competitive in the labor market"
+        ],
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Degree",
+      "id": "EL_ALAMEIN_PHARM_PHARMD",
+      "properties": {
+        "degree_name": "Doctor of Pharmacy (PharmD)",
+        "level": "UNDERGRADUATE",
+        "study_duration_years": 5,
+        "focus": "Pharmaceutical sciences and pharmacy practice",
+        "objective": "Prepare competent pharmacists capable of delivering high-quality pharmaceutical care",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Program",
+      "id": "EL_ALAMEIN_PHARM_PHARMD_GENERAL",
+      "properties": {
+        "program_id": "PHARMD_GENERAL",
+        "name": "Doctor of Pharmacy (PharmD)",
+        "degree": "PharmD",
+        "discipline": "Pharmacy",
+        "study_duration_years": 5,
+        "focus": "Pharmaceutical sciences and pharmacy practice",
+        "objective": "Prepare competent pharmacists capable of delivering high-quality pharmaceutical care",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Degree",
+      "id": "EL_ALAMEIN_PHARM_PHARMD_CLINICAL",
+      "properties": {
+        "degree_name": "Doctor of Pharmacy (PharmD – Clinical Pharmacy)",
+        "level": "UNDERGRADUATE",
+        "study_duration_years": 5,
+        "focus": "Clinical pharmacy and patient-centered care",
+        "objective": "Prepare clinical pharmacists with advanced patient care and therapeutic decision-making skills",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Program",
+      "id": "EL_ALAMEIN_PHARM_PHARMD_CLINICAL",
+      "properties": {
+        "program_id": "PHARMD_CLINICAL",
+        "name": "Doctor of Pharmacy (PharmD – Clinical Pharmacy)",
+        "degree": "PharmD",
+        "discipline": "Pharmacy",
+        "study_duration_years": 5,
+        "focus": "Clinical pharmacy and patient-centered care",
+        "objective": "Prepare clinical pharmacists with advanced patient care and therapeutic decision-making skills",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Facility",
+      "id": "EL_ALAMEIN_PHARM_FAC_ADV_PHARM_LABS",
+      "properties": {
+        "name": "Advanced pharmaceutical laboratories",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Facility",
+      "id": "EL_ALAMEIN_PHARM_FAC_DIGITAL_RESOURCES",
+      "properties": {
+        "name": "Educational and digital learning resources",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Facility",
+      "id": "EL_ALAMEIN_PHARM_FAC_SMART_INFRA",
+      "properties": {
+        "name": "Modern infrastructure supporting smart pharmacy education",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "TrainingModel",
+      "id": "EL_ALAMEIN_PHARM_TRAININGMODEL_INTEGRATED",
+      "properties": {
+        "mandatory_training": true,
+        "industry_training": true,
+        "clinical_training": true,
+        "description": "Integrated practical and clinical training aligned with pharmacy practice, patient care, and healthcare system needs.",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "ResearchArea",
+      "id": "RESEARCHAREA_PHARMACY_EDUCATION",
+      "properties": {
+        "name": "Pharmacy education",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "ResearchArea",
+      "id": "RESEARCHAREA_CLINICAL_PHARMACY_PRACTICE",
+      "properties": {
+        "name": "Clinical pharmacy practice",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "ResearchArea",
+      "id": "RESEARCHAREA_HEALTHCARE_QUALITY_IMPROVEMENT",
+      "properties": {
+        "name": "Healthcare quality improvement",
+        "data_source_type": "official"
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "start_id": "CAMPUS_EL_ALAMEIN",
+      "relationship_type": "HOSTS",
+      "end_id": "EL_ALAMEIN_PHARM",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "EL_ALAMEIN_PHARM",
+      "relationship_type": "OFFERS",
+      "end_id": "EL_ALAMEIN_PHARM_PHARMD",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "EL_ALAMEIN_PHARM_PHARMD",
+      "relationship_type": "INCLUDES_PROGRAM",
+      "end_id": "EL_ALAMEIN_PHARM_PHARMD_GENERAL",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "EL_ALAMEIN_PHARM",
+      "relationship_type": "OFFERS",
+      "end_id": "EL_ALAMEIN_PHARM_PHARMD_CLINICAL",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "EL_ALAMEIN_PHARM_PHARMD_CLINICAL",
+      "relationship_type": "INCLUDES_PROGRAM",
+      "end_id": "EL_ALAMEIN_PHARM_PHARMD_CLINICAL",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "EL_ALAMEIN_PHARM",
+      "relationship_type": "HAS_FACILITY",
+      "end_id": "EL_ALAMEIN_PHARM_FAC_ADV_PHARM_LABS",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "EL_ALAMEIN_PHARM",
+      "relationship_type": "HAS_FACILITY",
+      "end_id": "EL_ALAMEIN_PHARM_FAC_DIGITAL_RESOURCES",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "EL_ALAMEIN_PHARM",
+      "relationship_type": "HAS_FACILITY",
+      "end_id": "EL_ALAMEIN_PHARM_FAC_SMART_INFRA",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "EL_ALAMEIN_PHARM_PHARMD_GENERAL",
+      "relationship_type": "REQUIRES_TRAINING",
+      "end_id": "EL_ALAMEIN_PHARM_TRAININGMODEL_INTEGRATED",
+      "properties": {
+        "origin": "training_and_practice",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "EL_ALAMEIN_PHARM_PHARMD_CLINICAL",
+      "relationship_type": "REQUIRES_TRAINING",
+      "end_id": "EL_ALAMEIN_PHARM_TRAININGMODEL_INTEGRATED",
+      "properties": {
+        "origin": "training_and_practice",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "EL_ALAMEIN_PHARM_PHARMD_GENERAL",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_PHARMACY_EDUCATION",
+      "properties": {
+        "origin": "research_and_innovation.research_focus",
+        "industry_projects": true,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "EL_ALAMEIN_PHARM_PHARMD_GENERAL",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_CLINICAL_PHARMACY_PRACTICE",
+      "properties": {
+        "origin": "research_and_innovation.research_focus",
+        "industry_projects": true,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "EL_ALAMEIN_PHARM_PHARMD_GENERAL",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_HEALTHCARE_QUALITY_IMPROVEMENT",
+      "properties": {
+        "origin": "research_and_innovation.research_focus",
+        "industry_projects": true,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "EL_ALAMEIN_PHARM_PHARMD_CLINICAL",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_PHARMACY_EDUCATION",
+      "properties": {
+        "origin": "research_and_innovation.research_focus",
+        "industry_projects": true,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "EL_ALAMEIN_PHARM_PHARMD_CLINICAL",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_CLINICAL_PHARMACY_PRACTICE",
+      "properties": {
+        "origin": "research_and_innovation.research_focus",
+        "industry_projects": true,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "EL_ALAMEIN_PHARM_PHARMD_CLINICAL",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_HEALTHCARE_QUALITY_IMPROVEMENT",
+      "properties": {
+        "origin": "research_and_innovation.research_focus",
+        "industry_projects": true,
+        "data_source_type": "official"
+      }
+    }
+  ]
+}

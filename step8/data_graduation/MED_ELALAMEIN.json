@@ -1,0 +1,267 @@
+{
+  "nodes": [
+    {
+      "label": "Campus",
+      "id": "CAMPUS_EL_ALAMEIN",
+      "properties": {
+        "campus_id": "EL_ALAMEIN",
+        "name": "El Alamein Campus",
+        "city": "New El Alamein City",
+        "governorate": "Matrouh",
+        "country": "Egypt",
+        "sea": "Mediterranean Sea",
+        "distance_from_alexandria_km": 106,
+        "distance_from_cairo_km": 240,
+        "description": "A modern open city designed as a hub for education, tourism, culture and government, hosting universities, hospitals, high-rise towers and cultural institutions.",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "College",
+      "id": "EL_ALAMEIN_MED",
+      "properties": {
+        "college_id": "MED_ELALAMEIN",
+        "name": "College of Medicine",
+        "branch": "El Alamein",
+        "academic_level": "UNDERGRADUATE",
+        "parent_institution": "Arab Academy for Science, Technology and Maritime Transport",
+        "year_established": null,
+        "vision": "Achievement of international eminence in graduating highly qualified, competent physicians with excellence in innovative research and learning abilities.",
+        "mission": [
+          "Offer nationally, regionally and internationally recognized undergraduate medical education",
+          "Promote compassionate, high-quality, patient-centered care",
+          "Graduate competent physicians capable of providing safe healthcare services",
+          "Promote lifelong learning and medical research skills"
+        ],
+        "qa_unit_exists": true,
+        "qa_description": "Continuous curriculum development, competency-based assessment, and technology-enhanced medical education.",
+        "industry_and_international_relations": [
+          "Ministry of Health – Egypt",
+          "University of Southampton (UK)",
+          "University of Central Lancashire (UCLan)",
+          "Modern University for Business & Science (Lebanon)"
+        ],
+        "dean_name": "Mohamed Hesham Abd Elmoneim Ali Hassan",
+        "dean_role": "Dean",
+        "vice_deans": [
+          {
+            "name": "Hoda Mahmoud Ahmed Khalifa",
+            "role": "Vice Dean for Student Affairs"
+          },
+          {
+            "name": "Mona Hamdy Hassan Mahmoud Ashry",
+            "role": "Vice Dean for Education"
+          }
+        ],
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Degree",
+      "id": "EL_ALAMEIN_MED_MBCHB",
+      "properties": {
+        "degree_name": "Bachelor of Medicine and Surgery (MBChB)",
+        "level": "UNDERGRADUATE",
+        "duration_academic_years": 5,
+        "clinical_training_years": 2,
+        "total_structure": "5 academic years + clerkship & internship",
+        "assessment": "Workplace-based and competency-based assessment",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Program",
+      "id": "EL_ALAMEIN_MED_MBCHB_PROGRAM",
+      "properties": {
+        "program_id": "MBCHB",
+        "name": "Bachelor of Medicine and Surgery (MBChB)",
+        "degree": "MBChB",
+        "discipline": "Medicine",
+        "duration_academic_years": 5,
+        "clinical_training_years": 2,
+        "assessment_model": "Workplace-based and competency-based assessment",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "TrainingModel",
+      "id": "EL_ALAMEIN_MED_TRAININGMODEL_CLINICAL",
+      "properties": {
+        "mandatory_training": true,
+        "industry_training": true,
+        "clinical_training": true,
+        "description": "Clinical placements in secondary and tertiary hospitals, clerkship phase, primary health care training at Ministry of Health family health units, 5-week primary care foundation course, and 8-week clinical attachment & career tester.",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Facility",
+      "id": "EL_ALAMEIN_MED_FAC_ANATOMY_CENTER",
+      "properties": {
+        "name": "Human Anatomy Resource Center",
+        "features": [
+          "Anatomical models",
+          "Plastinated human specimens",
+          "Technology-enhanced learning facilities"
+        ],
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Facility",
+      "id": "EL_ALAMEIN_MED_FAC_CLINICAL_SKILLS",
+      "properties": {
+        "name": "Clinical Skills Center",
+        "features": [
+          "Sequential clinical procedures training",
+          "Clinical assessment preparation"
+        ],
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Facility",
+      "id": "EL_ALAMEIN_MED_FAC_SIMULATION",
+      "properties": {
+        "name": "Simulation Center",
+        "features": [
+          "High-fidelity manikins",
+          "Team dynamics training",
+          "Immediate patient assessment scenarios"
+        ],
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "ResearchArea",
+      "id": "RESEARCHAREA_MEDICAL_SCIENCES",
+      "properties": {
+        "name": "Medical sciences",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "ResearchArea",
+      "id": "RESEARCHAREA_CLINICAL_PRACTICE",
+      "properties": {
+        "name": "Clinical practice",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "ResearchArea",
+      "id": "RESEARCHAREA_HEALTHCARE_SYSTEMS",
+      "properties": {
+        "name": "Healthcare systems",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "ResearchArea",
+      "id": "RESEARCHAREA_MEDICAL_EDUCATION_INNOVATION",
+      "properties": {
+        "name": "Medical education innovation",
+        "data_source_type": "official"
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "start_id": "CAMPUS_EL_ALAMEIN",
+      "relationship_type": "HOSTS",
+      "end_id": "EL_ALAMEIN_MED",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "EL_ALAMEIN_MED",
+      "relationship_type": "OFFERS",
+      "end_id": "EL_ALAMEIN_MED_MBCHB",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "EL_ALAMEIN_MED_MBCHB",
+      "relationship_type": "INCLUDES_PROGRAM",
+      "end_id": "EL_ALAMEIN_MED_MBCHB_PROGRAM",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "EL_ALAMEIN_MED_MBCHB_PROGRAM",
+      "relationship_type": "REQUIRES_TRAINING",
+      "end_id": "EL_ALAMEIN_MED_TRAININGMODEL_CLINICAL",
+      "properties": {
+        "origin": "training_and_practice",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "EL_ALAMEIN_MED",
+      "relationship_type": "HAS_FACILITY",
+      "end_id": "EL_ALAMEIN_MED_FAC_ANATOMY_CENTER",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "EL_ALAMEIN_MED",
+      "relationship_type": "HAS_FACILITY",
+      "end_id": "EL_ALAMEIN_MED_FAC_CLINICAL_SKILLS",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "EL_ALAMEIN_MED",
+      "relationship_type": "HAS_FACILITY",
+      "end_id": "EL_ALAMEIN_MED_FAC_SIMULATION",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "EL_ALAMEIN_MED_MBCHB_PROGRAM",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_MEDICAL_SCIENCES",
+      "properties": {
+        "origin": "research_and_innovation.research_focus",
+        "industry_projects": false,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "EL_ALAMEIN_MED_MBCHB_PROGRAM",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_CLINICAL_PRACTICE",
+      "properties": {
+        "origin": "research_and_innovation.research_focus",
+        "industry_projects": false,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "EL_ALAMEIN_MED_MBCHB_PROGRAM",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_HEALTHCARE_SYSTEMS",
+      "properties": {
+        "origin": "research_and_innovation.research_focus",
+        "industry_projects": false,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "EL_ALAMEIN_MED_MBCHB_PROGRAM",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_MEDICAL_EDUCATION_INNOVATION",
+      "properties": {
+        "origin": "research_and_innovation.research_focus",
+        "industry_projects": false,
+        "data_source_type": "official"
+      }
+    }
+  ]
+}

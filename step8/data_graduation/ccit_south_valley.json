@@ -1,0 +1,453 @@
+{
+  "nodes": [
+    {
+      "label": "Campus",
+      "id": "CAMPUS_EG_SOUTH_VALLEY",
+      "properties": {
+        "name": "South Valley Campus",
+        "city": "South Valley",
+        "country": "Egypt",
+        "branch": "South Valley",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "College",
+      "id": "COLLEGE_CCIT_SOUTH_VALLEY",
+      "properties": {
+        "college_id_raw": "CCIT_SOUTH_VALLEY",
+        "name": "College of Computing and Information Technology - South Valley",
+        "parent_institution": "Arab Academy for Science, Technology and Maritime Transport",
+        "year_established": 2001,
+        "raw_text": "Computing & Information Technology  South Valley\nCCIT provides opportunities for students to participate in summer training and exchange programs through international agreements made with top-ranked universities across the globe.\n\n \n\nInternational Center for Competencies & Business Development\n\nView summer programs in [Renewable Energy - Germany / India] and [Automotive Technology] for 2019\n\n \n\nSheridan College - Canada\n\nView summer programs in [Mechatronics] and Business] for 2019\n\n \n\nCalifornia Polytechnic State University - USA\n\nView summer [International workshops] for 2019\n\n \n\nUniversity of Oviedo - Spain\n\n \n\nUniversity of Central Lancashire (UCLan) - UK\n\nView summer academies in [Operation Research] and [Intelligent Machines] for 2019\n\n \n\nUniversity Technology Malaysia (UTM) - Malaysia\n\n \n\nUniversity of Northampton - UK\n\n \n\nTecnico Institute - Portugal\n\n \n\nColumbus State University - USA\n\rAccreditation\nAll Undergraduate and Graduate programs in the College of Computing and Information Technology are currently acknowledged by the Supreme Council of Egyptian Universities of Egypt.\nThe Computer Science program is accredited by the Computing Accreditation Commission of ABET, https://www.abet.orgVision and Mission\n \n\n \n\nCollege Vision\n\nCollege of Computing and Information Technology at Smart Village vision is to become a distinct prototype of the bridge between the higher education sector and the ICT industry on both the regional and the international levels.\n\nCollege Mission\n\n Provide a caliber graduate through theoretical and practical training, to provide suitable solutions to real-world problems.\nBecome a regional and an international leader in the scholarly research.\nProvide students the inspiration to become technological entrepreneurs through shaping the near future with intelligent ideas. ollege History\n \n\nThe Arab academy for science and technology and Maritime transport (AAST) is one of the leading educational establishments in the Middle East, and it always had a leading role providing the latest technology with the most up-to-date educational facilities and resources to insure that our teaching and research is kept at the leading edge. It includes many important fields of research highly needed in most areas of modern life. Therefore the academy has established the new College of Computing and information Technology(CCIT) specialized in Computer Science, Information Systems, Software Engineering, and meeting the needs of students with a wide background and experience in computing. However, the roots of the college extend back to 2001, when the computer Science department started to offer its program through the Computer Engineering Department. The new CCIT is located in Smart Campus. The CCIT is concerned in providing the latest of technologies and distinguished educational, training and research services, in order to support higher study courses that conform to the needs of computer usage in many important field of research. Since its establishment, the CCIT maintains sound relationships with a number of universities in USA, UK and Egypt for joint cooperation in both undergraduate studies and supervision of postgraduate studies and research worCollege Message\n \n\n \n\nThe College of Computing and Information Technology (CCIT) aims to develop a generation that could harness innovation with creativity. Through hands on the most recent programming design methodologies and facilities our students are inspired to discover innovative solution for any real problem.  \n\n \n\nMoreover, and since its establishment, the CCIT has built a number of beneficial relationships with several governmental and private companies those exist in the Egyptian market, to tackling the new trends required in the Information and Communication Technology (ICT) industry. Therefore, and through capacity building programs the CCIT provides, Multimedia and Graphics graduates are capable of acquiring numerous career opportunities and competing in several international competitions to become the next generation of entrepreneurs. \n\n \n\nCollege Vision\n\nCollege of Computing and Information Technology at South Valley Branch vision is to become a distinct prototype of the bridge between the higher education sector and the ICT industry on both the regional and the international levels.\n\nCollege Mission\n\n• Provide a caliber graduate through theoretical, and practical training, to provide suitable solutions to real-world problems.\n• Become a regional and an international leader in the scholarly research.\n• Provide students with the inspiration to become technological entrepreneurs through shaping the near future with intelligent ideaOverview\n \n\nThe Arab Academy for Science, Technology and Maritime Transport (AASTMT) is one of the leading educational establishments in the Middle East, and it has always had a leading role in providing the latest technology with the most up-to-date educational facilities and resources to ensure that our teaching and research is kept at the leading edge.\nThe evolution of computer technology and the increasing need of computer usage, has made the field of computing very essential field of study. Computer science encompasses many important fields of research that are highly needed in most areas of modern life. Therefore the Academy has established the new College of Computing and Information Technology (CCIT) specialized in Computer Science, Information Systems, Software Engineering, and meeting the needs of students with a wide background and experience in computing. The roots of the college extend back to 2001, when the Computer Science Department started to offer its program through the Computer Engineering Department",
+        "vision": "College of Computing and Information Technology at South Valley Branch vision is to become a distinct prototype of the bridge between the higher education sector and the ICT industry on both the regional and the international levels.",
+        "mission": "• Provide a caliber graduate through theoretical, and practical training, to provide suitable solutions to real-world problems.\n• Become a regional and an international leader in the scholarly research.\n• Provide students with the inspiration to become technological entrepreneurs through shaping the near future with intelligent idea",
+        "extra_sections": {
+          "College History": "The Arab academy for science and technology and Maritime transport (AAST) is one of the leading educational establishments in the Middle East, and it always had a leading role providing the latest technology with the most up-to-date educational facilities and resources to insure that our teaching and research is kept at the leading edge. It includes many important fields of research highly needed in most areas of modern life. Therefore the academy has established the new College of Computing and information Technology(CCIT) specialized in Computer Science, Information Systems, Software Engineering, and meeting the needs of students with a wide background and experience in computing. However, the roots of the college extend back to 2001, when the computer Science department started to offer its program through the Computer Engineering Department. The new CCIT is located in Smart Campus. The CCIT is concerned in providing the latest of technologies and distinguished educational, training and research services, in order to support higher study courses that conform to the needs of computer usage in many important field of research.",
+          "College Message": "The College of Computing and Information Technology (CCIT) aims to develop a generation that could harness innovation with creativity. Through hands on the most recent programming design methodologies and facilities our students are inspired to discover innovative solution for any real problem.\n\nMoreover, and since its establishment, the CCIT has built a number of beneficial relationships with several governmental and private companies those exist in the Egyptian market, to tackling the new trends required in the Information and Communication Technology (ICT) industry. Therefore, and through capacity building programs the CCIT provides, Multimedia and Graphics graduates are capable of acquiring numerous career opportunities and competing in several international competitions to become the next generation of entrepreneurs.",
+          "Overview": "The Arab Academy for Science, Technology and Maritime Transport (AASTMT) is one of the leading educational establishments in the Middle East, and it has always had a leading role in providing the latest technology with the most up-to-date educational facilities and resources to ensure that our teaching and research is kept at the leading edge.\nThe evolution of computer technology and the increasing need of computer usage, has made the field of computing very essential field of study. Computer science encompasses many important fields of research that are highly needed in most areas of modern life. Therefore the Academy has established the new College of Computing and Information Technology (CCIT) specialized in Computer Science, Information Systems, Software Engineering, and meeting the needs of students with a wide background and experience in computing. The roots of the college extend back to 2001, when the Computer Science Department started to offer its program through the Computer Engineering Department"
+        },
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Degree",
+      "id": "DEGREE_EG_SOUTH_VALLEY_CCIT_UNDERGRAD",
+      "properties": {
+        "level": "undergraduate",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Program",
+      "id": "CAMPUS_EG_SOUTH_VALLEY__COLLEGE_CCIT_SOUTH_VALLEY__PROGRAM_COMPUTER_SCIENCE",
+      "properties": {
+        "program_name": "Computer Science",
+        "program_level": "undergraduate",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Program",
+      "id": "CAMPUS_EG_SOUTH_VALLEY__COLLEGE_CCIT_SOUTH_VALLEY__PROGRAM_INFORMATION_SYSTEMS",
+      "properties": {
+        "program_name": "Information Systems",
+        "program_level": "undergraduate",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Program",
+      "id": "CAMPUS_EG_SOUTH_VALLEY__COLLEGE_CCIT_SOUTH_VALLEY__PROGRAM_SOFTWARE_ENGINEERING",
+      "properties": {
+        "program_name": "Software Engineering",
+        "program_level": "undergraduate",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Program",
+      "id": "CAMPUS_EG_SOUTH_VALLEY__COLLEGE_CCIT_SOUTH_VALLEY__PROGRAM_MULTIMEDIA_AND_GRAPHICS",
+      "properties": {
+        "program_name": "Multimedia and Graphics",
+        "program_level": "undergraduate",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Accreditation",
+      "id": "ACC_EG_SCHE",
+      "properties": {
+        "name": "Supreme Council of Egyptian Universities",
+        "scope": "national",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Accreditation",
+      "id": "ACC_INTL_ABET_CAC",
+      "properties": {
+        "name": "ABET Computing Accreditation Commission",
+        "scope": "international",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Facility",
+      "id": "FACILITY_SMART_CAMPUS",
+      "properties": {
+        "name": "Smart Campus",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Facility",
+      "id": "FACILITY_EDUCATIONAL_LABORATORIES",
+      "properties": {
+        "name": "Educational laboratories",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Facility",
+      "id": "FACILITY_TRAINING_AND_RESEARCH_SERVICES",
+      "properties": {
+        "name": "Training and research services",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "TrainingModel",
+      "id": "TRAININGMODEL_CCIT_SUMMER_EXCHANGE",
+      "properties": {
+        "name": "Summer training & exchange programs",
+        "mandatory": null,
+        "industry_training": true,
+        "sea_or_field_training": false,
+        "description": "CCIT provides opportunities for students to participate in summer training and exchange programs through international agreements made with top-ranked universities across the globe.",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "ResearchArea",
+      "id": "RESEARCHAREA_COMPUTER_SCIENCE",
+      "properties": {
+        "name": "Computer Science",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "ResearchArea",
+      "id": "RESEARCHAREA_INFORMATION_SYSTEMS",
+      "properties": {
+        "name": "Information Systems",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "ResearchArea",
+      "id": "RESEARCHAREA_SOFTWARE_ENGINEERING",
+      "properties": {
+        "name": "Software Engineering",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "ResearchArea",
+      "id": "RESEARCHAREA_MULTIMEDIA_AND_GRAPHICS",
+      "properties": {
+        "name": "Multimedia and Graphics",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "ResearchArea",
+      "id": "RESEARCHAREA_ICT_INDUSTRY_TRENDS",
+      "properties": {
+        "name": "ICT industry trends",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Specialization",
+      "id": "SPEC_CCIT_UNDERGRAD_COMPUTER_SCIENCE",
+      "properties": {
+        "name": "Computer Science",
+        "track_type": "program",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Specialization",
+      "id": "SPEC_CCIT_UNDERGRAD_INFORMATION_SYSTEMS",
+      "properties": {
+        "name": "Information Systems",
+        "track_type": "program",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Specialization",
+      "id": "SPEC_CCIT_UNDERGRAD_SOFTWARE_ENGINEERING",
+      "properties": {
+        "name": "Software Engineering",
+        "track_type": "program",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Specialization",
+      "id": "SPEC_CCIT_UNDERGRAD_MULTIMEDIA_AND_GRAPHICS",
+      "properties": {
+        "name": "Multimedia and Graphics",
+        "track_type": "program",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_TECHNOLOGICAL_ENTREPRENEUR",
+      "properties": {
+        "name": "Technological Entrepreneur",
+        "source_note": "Mentioned in college mission/message as desired outcome",
+        "data_source_type": "official"
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "start_id": "CAMPUS_EG_SOUTH_VALLEY",
+      "relationship_type": "HOSTS",
+      "end_id": "COLLEGE_CCIT_SOUTH_VALLEY",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "COLLEGE_CCIT_SOUTH_VALLEY",
+      "relationship_type": "OFFERS",
+      "end_id": "DEGREE_EG_SOUTH_VALLEY_CCIT_UNDERGRAD",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "COLLEGE_CCIT_SOUTH_VALLEY",
+      "relationship_type": "HAS_ACCREDITATION",
+      "end_id": "ACC_EG_SCHE",
+      "properties": {
+        "scope": "national",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "COLLEGE_CCIT_SOUTH_VALLEY",
+      "relationship_type": "HAS_ACCREDITATION",
+      "end_id": "ACC_INTL_ABET_CAC",
+      "properties": {
+        "scope": "international",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "COLLEGE_CCIT_SOUTH_VALLEY",
+      "relationship_type": "HAS_FACILITY",
+      "end_id": "FACILITY_SMART_CAMPUS",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "COLLEGE_CCIT_SOUTH_VALLEY",
+      "relationship_type": "HAS_FACILITY",
+      "end_id": "FACILITY_EDUCATIONAL_LABORATORIES",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "COLLEGE_CCIT_SOUTH_VALLEY",
+      "relationship_type": "HAS_FACILITY",
+      "end_id": "FACILITY_TRAINING_AND_RESEARCH_SERVICES",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "DEGREE_EG_SOUTH_VALLEY_CCIT_UNDERGRAD",
+      "relationship_type": "INCLUDES_PROGRAM",
+      "end_id": "CAMPUS_EG_SOUTH_VALLEY__COLLEGE_CCIT_SOUTH_VALLEY__PROGRAM_COMPUTER_SCIENCE",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "DEGREE_EG_SOUTH_VALLEY_CCIT_UNDERGRAD",
+      "relationship_type": "INCLUDES_PROGRAM",
+      "end_id": "CAMPUS_EG_SOUTH_VALLEY__COLLEGE_CCIT_SOUTH_VALLEY__PROGRAM_INFORMATION_SYSTEMS",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "DEGREE_EG_SOUTH_VALLEY_CCIT_UNDERGRAD",
+      "relationship_type": "INCLUDES_PROGRAM",
+      "end_id": "CAMPUS_EG_SOUTH_VALLEY__COLLEGE_CCIT_SOUTH_VALLEY__PROGRAM_SOFTWARE_ENGINEERING",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "DEGREE_EG_SOUTH_VALLEY_CCIT_UNDERGRAD",
+      "relationship_type": "INCLUDES_PROGRAM",
+      "end_id": "CAMPUS_EG_SOUTH_VALLEY__COLLEGE_CCIT_SOUTH_VALLEY__PROGRAM_MULTIMEDIA_AND_GRAPHICS",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "CAMPUS_EG_SOUTH_VALLEY__COLLEGE_CCIT_SOUTH_VALLEY__PROGRAM_COMPUTER_SCIENCE",
+      "relationship_type": "HAS_SPECIALIZATION",
+      "end_id": "SPEC_CCIT_UNDERGRAD_COMPUTER_SCIENCE",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "CAMPUS_EG_SOUTH_VALLEY__COLLEGE_CCIT_SOUTH_VALLEY__PROGRAM_INFORMATION_SYSTEMS",
+      "relationship_type": "HAS_SPECIALIZATION",
+      "end_id": "SPEC_CCIT_UNDERGRAD_INFORMATION_SYSTEMS",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "CAMPUS_EG_SOUTH_VALLEY__COLLEGE_CCIT_SOUTH_VALLEY__PROGRAM_SOFTWARE_ENGINEERING",
+      "relationship_type": "HAS_SPECIALIZATION",
+      "end_id": "SPEC_CCIT_UNDERGRAD_SOFTWARE_ENGINEERING",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "CAMPUS_EG_SOUTH_VALLEY__COLLEGE_CCIT_SOUTH_VALLEY__PROGRAM_MULTIMEDIA_AND_GRAPHICS",
+      "relationship_type": "HAS_SPECIALIZATION",
+      "end_id": "SPEC_CCIT_UNDERGRAD_MULTIMEDIA_AND_GRAPHICS",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "CAMPUS_EG_SOUTH_VALLEY__COLLEGE_CCIT_SOUTH_VALLEY__PROGRAM_COMPUTER_SCIENCE",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_COMPUTER_SCIENCE",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "CAMPUS_EG_SOUTH_VALLEY__COLLEGE_CCIT_SOUTH_VALLEY__PROGRAM_INFORMATION_SYSTEMS",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_INFORMATION_SYSTEMS",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "CAMPUS_EG_SOUTH_VALLEY__COLLEGE_CCIT_SOUTH_VALLEY__PROGRAM_SOFTWARE_ENGINEERING",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_SOFTWARE_ENGINEERING",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "CAMPUS_EG_SOUTH_VALLEY__COLLEGE_CCIT_SOUTH_VALLEY__PROGRAM_MULTIMEDIA_AND_GRAPHICS",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_MULTIMEDIA_AND_GRAPHICS",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "CAMPUS_EG_SOUTH_VALLEY__COLLEGE_CCIT_SOUTH_VALLEY__PROGRAM_COMPUTER_SCIENCE",
+      "relationship_type": "REQUIRES_TRAINING",
+      "end_id": "TRAININGMODEL_CCIT_SUMMER_EXCHANGE",
+      "properties": {
+        "mandatory": null,
+        "industry_training": true,
+        "sea_or_field_training": false,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "CAMPUS_EG_SOUTH_VALLEY__COLLEGE_CCIT_SOUTH_VALLEY__PROGRAM_INFORMATION_SYSTEMS",
+      "relationship_type": "REQUIRES_TRAINING",
+      "end_id": "TRAININGMODEL_CCIT_SUMMER_EXCHANGE",
+      "properties": {
+        "mandatory": null,
+        "industry_training": true,
+        "sea_or_field_training": false,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "CAMPUS_EG_SOUTH_VALLEY__COLLEGE_CCIT_SOUTH_VALLEY__PROGRAM_SOFTWARE_ENGINEERING",
+      "relationship_type": "REQUIRES_TRAINING",
+      "end_id": "TRAININGMODEL_CCIT_SUMMER_EXCHANGE",
+      "properties": {
+        "mandatory": null,
+        "industry_training": true,
+        "sea_or_field_training": false,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "CAMPUS_EG_SOUTH_VALLEY__COLLEGE_CCIT_SOUTH_VALLEY__PROGRAM_MULTIMEDIA_AND_GRAPHICS",
+      "relationship_type": "REQUIRES_TRAINING",
+      "end_id": "TRAININGMODEL_CCIT_SUMMER_EXCHANGE",
+      "properties": {
+        "mandatory": null,
+        "industry_training": true,
+        "sea_or_field_training": false,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "CAMPUS_EG_SOUTH_VALLEY__COLLEGE_CCIT_SOUTH_VALLEY__PROGRAM_COMPUTER_SCIENCE",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_TECHNOLOGICAL_ENTREPRENEUR",
+      "properties": {
+        "evidence": "mission_message_mentions_entrepreneurship",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "CAMPUS_EG_SOUTH_VALLEY__COLLEGE_CCIT_SOUTH_VALLEY__PROGRAM_INFORMATION_SYSTEMS",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_TECHNOLOGICAL_ENTREPRENEUR",
+      "properties": {
+        "evidence": "mission_message_mentions_entrepreneurship",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "CAMPUS_EG_SOUTH_VALLEY__COLLEGE_CCIT_SOUTH_VALLEY__PROGRAM_SOFTWARE_ENGINEERING",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_TECHNOLOGICAL_ENTREPRENEUR",
+      "properties": {
+        "evidence": "mission_message_mentions_entrepreneurship",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "CAMPUS_EG_SOUTH_VALLEY__COLLEGE_CCIT_SOUTH_VALLEY__PROGRAM_MULTIMEDIA_AND_GRAPHICS",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_TECHNOLOGICAL_ENTREPRENEUR",
+      "properties": {
+        "evidence": "mission_message_mentions_entrepreneurship",
+        "data_source_type": "official"
+      }
+    }
+  ]
+}

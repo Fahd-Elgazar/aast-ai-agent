@@ -1,0 +1,158 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AASTMT Online Training</title>
+    <base href="/OnlineTraining/" />
+    <link href="_content/Blazored.Toast/blazored-toast.css" rel="stylesheet" />
+    <script src="_content/BlazorInputFile/inputfile.js"></script>
+
+    <link href="aast-template/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="_content/Blazored.Modal/blazored-modal.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.css">
+
+    <link href="aast-template/css/aast.css" rel="stylesheet">
+    <link href="/OnlineTraining/aast-template/css/fonts.css" rel="stylesheet">
+    <link href="/OnlineTraining/aast-template/css/custom.css" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="/OnlineTraining/aast-template/img/icon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/OnlineTraining/aast-template/img/icon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/OnlineTraining/aast-template/img/icon/favicon-16x16.png">
+    <link rel="manifest" href="/OnlineTraining/aast-template/img/icon/site.webmanifest">
+    <link rel="mask-icon" href="/OnlineTraining/aast-template/img/icon/safari-pinned-tab.svg" color="#e8b656">
+    <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <link href="//cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="theme-color" content="#14275a">
+    <style>
+        #blazor-error-ui {
+            background: lightyellow;
+            bottom: 0;
+            box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+            display: none;
+            left: 0;
+            padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+
+            #blazor-error-ui .dismiss {
+                cursor: pointer;
+                position: absolute;
+                right: 0.75rem;
+                top: 0.5rem;
+            }
+    </style>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/OnlineTraining/Tags.css" />
+    <style>
+        .mySlides {
+            display: none;
+        }
+    </style>
+</head>
+<body id="page-top">
+
+
+    <app>
+        <!--Blazor:{"sequence":0,"type":"server","descriptor":"CfDJ8FT0RQcuYQVDnDuTPati2jQfyW1eAV63EMZwkR3hrFBplbLPSp5RmQ6rD932Sx516SxO6QBHQ\u002BRsUk0HH1jhdLFES1YzrtkWPu4j\u002BOe38eK99ASPstTbd8TueKbYe5l8W5g/8OoQVOnXd7G7CkoMq3yphkDzgEu8uqcSv5vEdBDdo30cDfshEhkoVTVW7o7eKW1qOy7ziuY4/dqhwLf4VnDbOry8Wiltyy1Tyztt7hRBo/7cwkb1o5BtQFi9GGZzrTBSemEShvZWYeOmA6U1B0J/1BJ9x0uvQx5WqXI5x0LTP9D7\u002B/Vidn3mTOwn18k/lhyx\u002BzwtKneCrhLpiecvO04="}-->
+    </app>
+
+    <div id="blazor-error-ui">
+        
+            An error has occurred. This application may no longer respond until reloaded.
+        
+        
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+    <script src="aast-template/vendor/jquery/jquery.min.js"></script>
+
+    <script src="js/Helpers.js"></script>
+    <script src="js/inputfile.js"></script>
+    <script src="js/uploadfile.js"></script>
+    <script src="js/sweetalert2@8.js"></script>
+
+    <script src="_framework/blazor.server.js"></script>
+    <!-- Bootstrap core JavaScript-->
+    <script src="aast-template/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="aast-template/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="aast-template/js/sb-admin-2.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="aast-template/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="aast-template/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="aast-template/js/demo/datatables-demo.js"></script>
+
+    <script src="_content/Blazored.Modal/blazored.modal.js"></script>
+    <script src="_content/ChartJs.Blazor/moment-with-locales.min.js" type="text/javascript" language="javascript"></script>
+
+    <!-- Reference the included ChartJs javascript file. -->
+    <script src="_content/ChartJs.Blazor/Chart.min.js" type="text/javascript" language="javascript"></script>
+
+    <!-- This is the glue between the C# code and the ChartJs charts -->
+    <script src="_content/ChartJs.Blazor/ChartJsBlazorInterop.js" type="text/javascript" language="javascript"></script>
+
+    <!-- Some styling -->
+    <link rel="stylesheet" href="_content/ChartJs.Blazor/ChartJSBlazor.css" />
+    <script src="_content/BlazorGoogleMaps/objectManager.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3SzWwZITAGQZ-TvJtbll_X3EYK_wFiiQ&v=3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.js"></script>
+    <script>
+        baguetteBox.run('.tz-gallery');
+    </script>
+    <script>
+        //$('.carousel').carousel({
+        //    interval: 1000
+        //})
+
+    </script>
+    <script src="_content/MW.Blazor.TagSelector/interop.js"></script>
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="_content/Blazored.TextEditor/quill-blot-formatter.min.js"></script>
+    <script src="_content/Blazored.TextEditor/Blazored-BlazorQuill.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+
+    <!-- This is the glue between Blazor and Chart.js -->
+    <script src="_content/ChartJs.Blazor.Fork/ChartJsBlazorInterop.js"></script>
+    <script>
+        window.goBack = {
+            historyGo(value) {
+                window.history.go(value);
+            }
+        };
+    </script>
+    <script>
+        var slideIndex = 1;
+        showDivs(slideIndex);
+
+        function plusDivs(n) {
+            showDivs(slideIndex += n);
+        }
+
+        function showDivs(n) {
+            var i;
+            var x = document.getElementsByClassName("mySlides");
+            if (n > x.length) {
+                slideIndex = 1
+            }
+            if (n < 1) {
+                slideIndex = x.length
+            }
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            x[slideIndex - 1].style.display = "block";
+        }
+    </script>
+</body>
+</html>

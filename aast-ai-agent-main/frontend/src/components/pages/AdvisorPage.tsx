@@ -491,9 +491,10 @@ const AdvisorPage = () => {
 
   const sidebarWidth = sidebarCollapsed ? 76 : 296;
   const graphMinWidth = graphPanelMode === "compact" ? 440 : graphPanelMode === "expanded" ? 660 : 540;
-  const layoutStyle: CSSProperties | undefined = isDesktopLayout
+  const graphPanelStyle: CSSProperties | undefined = isDesktopLayout
     ? {
-        gridTemplateColumns: `${sidebarWidth}px minmax(380px, 1fr) minmax(${graphMinWidth}px, ${graphPanelWidth}%)`,
+        width: `${graphPanelWidth}%`,
+        minWidth: graphMinWidth,
       }
     : undefined;
 
@@ -501,8 +502,7 @@ const AdvisorPage = () => {
     <div className="flex h-full min-h-0 w-full overflow-hidden bg-slate-100">
       <div
         ref={layoutRef}
-        style={layoutStyle}
-        className="grid h-full min-h-0 w-full grid-cols-1 gap-3 overflow-y-auto transition-[grid-template-columns] duration-300 ease-out xl:overflow-hidden"
+        className="flex h-full min-h-0 w-full flex-col gap-3 overflow-y-auto transition-none xl:flex-row xl:overflow-hidden"
       >
         <ConversationHistorySidebar
           conversations={conversations}
@@ -519,7 +519,7 @@ const AdvisorPage = () => {
           onDeleteConversation={handleDeleteConversation}
         />
 
-        <div className="flex min-h-[640px] min-w-0 flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl shadow-slate-900/10 xl:min-h-0">
+        <div className="flex min-h-[640px] min-w-0 flex-1 flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl shadow-slate-900/10 xl:min-h-0">
           <div className="border-b border-slate-200 bg-white px-4 py-3">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-navy-900 text-gold-300 shadow-lg shadow-navy-900/20">
@@ -546,7 +546,7 @@ const AdvisorPage = () => {
             </div>
           )}
 
-          <div className="custom-scrollbar flex-1 overflow-y-auto bg-slate-50/90 p-4">
+          <div className="custom-scrollbar flex-1 min-h-0 overflow-y-auto bg-slate-50/90 p-4">
             <div className="mx-auto flex max-w-3xl flex-col gap-4">
               {messages.map((message) => (
                 <ChatMessage key={message.id} message={message} />
@@ -606,7 +606,10 @@ const AdvisorPage = () => {
           </div>
         </div>
 
-        <div className="relative flex min-h-[720px] min-w-0 flex-col overflow-hidden rounded-2xl border border-slate-900 bg-slate-950 text-white shadow-2xl shadow-slate-950/20 transition-all duration-300 ease-out xl:min-h-0">
+        <div
+          style={graphPanelStyle}
+          className="relative flex min-h-[720px] min-w-0 shrink-0 flex-col overflow-hidden rounded-2xl border border-slate-900 bg-slate-950 text-white shadow-2xl shadow-slate-950/20 transition-[width] duration-300 ease-out xl:min-h-0"
+        >
           <div
             role="separator"
             aria-orientation="vertical"
@@ -619,7 +622,7 @@ const AdvisorPage = () => {
               <GripVertical className="h-4 w-4 text-white/60" aria-hidden="true" />
             </span>
           </div>
-          <div id="graph-section" className="flex min-h-0 flex-1 bg-slate-950 p-2">
+          <div id="graph-section" className="flex min-h-0 min-w-0 flex-1 bg-slate-950 p-2">
             <GraphVisualizer
               graphData={graph}
               isLoading={isLoading}

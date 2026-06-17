@@ -1,0 +1,1 @@
+[{"type": "request", "url": "https://aast.edu/en/colleges/coe/southValley/dept/contact-us.php", "method": "GET"}, {"type": "response", "url": "https://aast.edu/en/colleges/coe/southValley/dept/contact-us.php", "status": 500, "content_type": "text/html; charset=UTF-8", "sample": "\n"}]

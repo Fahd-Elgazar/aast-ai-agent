@@ -1,7 +1,8 @@
 import { Bot, Clock3, Network, UserRound, Volume2 } from "lucide-react";
 import DecisionCard from "./DecisionCard";
 import type { ChatMessage as ChatMessageType } from "../types";
-
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 interface ChatMessageProps {
   message: ChatMessageType;
 }
@@ -13,6 +14,16 @@ function formatMessageTime(timestamp: Date) {
     minute: "2-digit",
   });
 }
+
+const preprocessMarkdown = (text: string) => {
+  if (!text) return "";
+  let processed = text;
+  
+  // Format common syllabus structures that lack bullets (e.g., "Week 1: ...")
+  processed = processed.replace(/^(\s*)(Week \d+:|Module \d+:|Chapter \d+:|Topic \d+:|Unit \d+:)/gmi, '$1- **$2**');
+  
+  return processed;
+};
 
 const ChatMessage = ({ message }: ChatMessageProps) => {
   const isUser = message.role === "user";
@@ -55,9 +66,44 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
         ) : (
           <div className="flex items-start gap-3">
             <div className="min-w-0 flex-1">
-              <p className="whitespace-pre-wrap text-sm leading-6">
-                {message.text}
-              </p>
+              <div
+                className={`max-w-none break-words text-[15px] ${
+                  isUser ? "text-white" : "text-slate-800"
+                }`}
+              >
+                <ReactMarkdown 
+                  remarkPlugins={[remarkGfm]}
+                  components={{
+                    p: ({ children }) => <p className="mb-4 leading-relaxed last:mb-0">{children}</p>,
+                    ul: ({ children }) => <ul className="mb-4 list-disc space-y-1.5 pl-6 last:mb-0">{children}</ul>,
+                    ol: ({ children }) => <ol className="mb-4 list-decimal space-y-1.5 pl-6 last:mb-0">{children}</ol>,
+                    li: ({ children }) => <li className="leading-relaxed">{children}</li>,
+                    h1: ({ children }) => <h1 className="mb-4 mt-6 text-xl font-bold">{children}</h1>,
+                    h2: ({ children }) => <h2 className="mb-3 mt-5 text-lg font-bold">{children}</h2>,
+                    h3: ({ children }) => <h3 className="mb-3 mt-4 text-base font-bold">{children}</h3>,
+                    strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
+                    a: ({ children, href }) => (
+                      <a href={href} className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">
+                        {children}
+                      </a>
+                    ),
+                    code: ({ className, children }) => {
+                      const isInline = !className;
+                      return isInline ? (
+                        <code className={`rounded px-1.5 py-0.5 font-mono text-[13.5px] ${isUser ? 'bg-white/20' : 'bg-black/5'}`}>
+                          {children}
+                        </code>
+                      ) : (
+                        <code className="block w-full overflow-x-auto rounded-md bg-slate-800 p-4 font-mono text-[13.5px] text-slate-50">
+                          {children}
+                        </code>
+                      );
+                    }
+                  }}
+                >
+                  {preprocessMarkdown(message.text || "")}
+                </ReactMarkdown>
+              </div>
 
               {message.hasGraph && (
                 <button

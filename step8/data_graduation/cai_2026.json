@@ -1,0 +1,1979 @@
+{
+  "nodes": [
+    {
+      "label": "Campus",
+      "id": "CAMPUS_EG_EL_ALAMEIN",
+      "properties": {
+        "campus_id_raw": "EL_ALAMEIN",
+        "name": "El Alamein Campus",
+        "city": "New El Alamein City",
+        "country": "Egypt",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "College",
+      "id": "COLLEGE_CAI_EL_ALAMEIN",
+      "properties": {
+        "college_id_raw": "CAI_EL_ALAMEIN",
+        "name": "College of Artificial Intelligence",
+        "established_year": 2019,
+        "positioning": "First College of Artificial Intelligence in MENA",
+        "description": "Provides cutting-edge education, training, and research in Artificial Intelligence and Machine Learning to address future technological challenges.",
+        "administration": {
+          "dean": "Ali Ali Mohamed Fahmy",
+          "vice_dean": "Ahmed Abdelkhalik Ahmed Abouelfarag"
+        },
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Degree",
+      "id": "DEGREE_EG_EL_ALAMEIN_CAI_BSC_UNDERGRAD",
+      "properties": {
+        "degree_name": "Bachelor of Science",
+        "level": "undergraduate",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Accreditation",
+      "id": "ACC_EG_SCU",
+      "properties": {
+        "name": "Egyptian Supreme Council of Universities",
+        "scope": "national",
+        "data_source_type": "official"
+      }
+    },
+
+    {
+      "label": "Facility",
+      "id": "FACILITY_EL_ALAMEIN_ROBOTICS_LAB",
+      "properties": {
+        "name": "Robotics Lab",
+        "facility_type": "lab",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Facility",
+      "id": "FACILITY_EL_ALAMEIN_VIRTUAL_REALITY_LAB",
+      "properties": {
+        "name": "Virtual Reality Lab",
+        "facility_type": "lab",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Facility",
+      "id": "FACILITY_EL_ALAMEIN_IOT_LAB",
+      "properties": {
+        "name": "IoT Lab",
+        "facility_type": "lab",
+        "data_source_type": "official"
+      }
+    },
+
+    {
+      "label": "PartnerInstitution",
+      "id": "PARTNERINST_UAB",
+      "properties": {
+        "name": "Autònoma University of Barcelona",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "PartnerInstitution",
+      "id": "PARTNERINST_UCLAN",
+      "properties": {
+        "name": "University of Central Lancashire (UCLan)",
+        "data_source_type": "official"
+      }
+    },
+
+    {
+      "label": "Program",
+      "id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+      "properties": {
+        "program_id_raw": "INTELLIGENT_SYSTEMS",
+        "name": "Intelligent Systems",
+        "degree_abbrev": "BSc",
+        "discipline": "Artificial Intelligence",
+        "study_duration_years": 4,
+        "modeled_study_profile": {
+          "theoretical_intensity": 0.85,
+          "practical_intensity": 0.8,
+          "math_intensity": 0.9,
+          "programming_intensity": 0.9,
+          "self_learning_dependency": "high",
+          "data_source_type": "modeled"
+        },
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Program",
+      "id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_DATA_SCIENCE",
+      "properties": {
+        "program_id_raw": "DATA_SCIENCE",
+        "name": "Data Science",
+        "degree_abbrev": "BSc",
+        "discipline": "Data & Analytics",
+        "study_duration_years": 4,
+        "vision": "To become a leading hub for high-quality education, research, and community service in Data Science at national, regional, and international levels.",
+        "mission": "To prepare highly skilled professionals capable of leveraging data to drive insights, decisions, and innovation for sustainable development.",
+        "modeled_study_profile": {
+          "theoretical_intensity": 0.75,
+          "practical_intensity": 0.85,
+          "math_intensity": 0.8,
+          "programming_intensity": 0.75,
+          "self_learning_dependency": "medium_high",
+          "data_source_type": "modeled"
+        },
+        "data_source_type": "official"
+      }
+    },
+
+    {
+      "label": "Specialization",
+      "id": "SPEC_EL_ALAMEIN_INTELLIGENT_SYSTEMS",
+      "properties": {
+        "name": "Intelligent Systems",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Specialization",
+      "id": "SPEC_EL_ALAMEIN_DATA_SCIENCE",
+      "properties": {
+        "name": "Data Science",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Specialization",
+      "id": "SPEC_EL_ALAMEIN_ROBOTICS",
+      "properties": {
+        "name": "Robotics",
+        "data_source_type": "official"
+      }
+    },
+
+    {
+      "label": "Scholarship",
+      "id": "SCHOLARSHIP_EXCELLENCE_MIN_GPA_34",
+      "properties": {
+        "name": "Excellence Scholarship",
+        "min_gpa": 3.4,
+        "summer_applicable": false,
+        "transfer_students_allowed": false,
+        "data_source_type": "official"
+      }
+    },
+
+    {
+      "label": "Course",
+      "id": "COURSE_IN221",
+      "properties": {
+        "course_code": "IN221",
+        "name": "Machine Learning",
+        "credits": 3,
+        "difficulty": "high",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_IN311",
+      "properties": {
+        "course_code": "IN311",
+        "name": "Deep Learning",
+        "credits": 3,
+        "difficulty": "very_high",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_DS313",
+      "properties": {
+        "course_code": "DS313",
+        "name": "Data Mining",
+        "credits": 3,
+        "difficulty": "medium_high",
+        "data_source_type": "official"
+      }
+    },
+
+    {
+      "label": "Course",
+      "id": "COURSE_FUNDAMENTALS_OF_AI",
+      "properties": {
+        "name": "Fundamentals of AI",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_LINEAR_ALGEBRA",
+      "properties": {
+        "name": "Linear Algebra",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_FUNDAMENTALS_OF_DATA_SCIENCE",
+      "properties": {
+        "name": "Fundamentals of Data Science",
+        "data_source_type": "official"
+      }
+    },
+
+    {
+      "label": "Course",
+      "id": "COURSE_ESP_FOUNDATION",
+      "properties": { "name": "ESP Foundation", "data_source_type": "official" }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_FOUNDATION_MATHEMATICS",
+      "properties": { "name": "Foundation Mathematics", "data_source_type": "official" }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_INTRODUCTION_TO_COMPUTING",
+      "properties": { "name": "Introduction to Computing", "data_source_type": "official" }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_PROBLEM_SOLVING_AND_PROGRAMMING",
+      "properties": { "name": "Problem Solving & Programming", "data_source_type": "official" }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_DISCRETE_MATHEMATICS",
+      "properties": { "name": "Discrete Mathematics", "data_source_type": "official" }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_CALCULUS_I",
+      "properties": { "name": "Calculus I", "data_source_type": "official" }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_CALCULUS_II",
+      "properties": { "name": "Calculus II", "data_source_type": "official" }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_PROBABILITY_AND_STATISTICS",
+      "properties": { "name": "Probability & Statistics", "data_source_type": "official" }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_PHYSICS",
+      "properties": { "name": "Physics", "data_source_type": "official" }
+    },
+
+    {
+      "label": "Course",
+      "id": "COURSE_DEEP_LEARNING",
+      "properties": { "name": "Deep Learning", "data_source_type": "official" }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_COMPUTER_VISION",
+      "properties": { "name": "Computer Vision", "data_source_type": "official" }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_NATURAL_LANGUAGE_PROCESSING",
+      "properties": { "name": "Natural Language Processing", "data_source_type": "official" }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_IMAGE_PROCESSING_AND_PATTERN_RECOGNITION",
+      "properties": { "name": "Image Processing & Pattern Recognition", "data_source_type": "official" }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_OPTIMIZATION_TECHNIQUES",
+      "properties": { "name": "Optimization Techniques", "data_source_type": "official" }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_COMPUTING_ALGORITHMS",
+      "properties": { "name": "Computing Algorithms", "data_source_type": "official" }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_OPERATING_SYSTEMS",
+      "properties": { "name": "Operating Systems", "data_source_type": "official" }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_SOFTWARE_ENGINEERING",
+      "properties": { "name": "Software Engineering", "data_source_type": "official" }
+    },
+
+    {
+      "label": "Course",
+      "id": "COURSE_FUNDAMENTALS_OF_ROBOTICS",
+      "properties": { "name": "Fundamentals of Robotics", "data_source_type": "official" }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_REINFORCEMENT_LEARNING",
+      "properties": { "name": "Reinforcement Learning", "data_source_type": "official" }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_COGNITIVE_COMPUTING",
+      "properties": { "name": "Cognitive Computing", "data_source_type": "official" }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_LOCALIZATION_AND_PATH_PLANNING",
+      "properties": { "name": "Localization & Path Planning", "data_source_type": "official" }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_SWARM_INTELLIGENCE",
+      "properties": { "name": "Swarm Intelligence", "data_source_type": "official" }
+    },
+
+    {
+      "label": "Course",
+      "id": "COURSE_DATABASE_SYSTEMS_DESIGN",
+      "properties": { "name": "Database Systems Design", "data_source_type": "official" }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_STATISTICS_FOR_DATA_SCIENCE",
+      "properties": { "name": "Statistics for Data Science", "data_source_type": "official" }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_DATA_MINING",
+      "properties": { "name": "Data Mining", "data_source_type": "official" }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_ADVANCED_DATABASE",
+      "properties": { "name": "Advanced Database", "data_source_type": "official" }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_BIG_DATA_ANALYTICS",
+      "properties": { "name": "Big Data Analytics", "data_source_type": "official" }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_INFORMATION_RETRIEVAL_AND_SEARCH_ENGINES",
+      "properties": { "name": "Information Retrieval & Search Engines", "data_source_type": "official" }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_BUSINESS_PROCESS_MANAGEMENT",
+      "properties": { "name": "Business Process Management", "data_source_type": "official" }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_ETHICS_AND_GOVERNANCE_OF_AI",
+      "properties": { "name": "Ethics & Governance of AI", "data_source_type": "official" }
+    },
+
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_AI_ENGINEER",
+      "properties": { "name": "AI Engineer", "data_source_type": "official" }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_MACHINE_LEARNING_ENGINEER",
+      "properties": { "name": "Machine Learning Engineer", "data_source_type": "official" }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_ROBOTICS_ENGINEER",
+      "properties": { "name": "Robotics Engineer", "data_source_type": "official" }
+    },
+
+
+
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_RESEARCH_ENGINEER",
+      "properties": { "name": "Research Engineer", "data_source_type": "official" }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_DATA_SCIENTIST",
+      "properties": { "name": "Data Scientist", "data_source_type": "official" }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_DATA_ANALYST",
+      "properties": { "name": "Data Analyst", "data_source_type": "official" }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_BUSINESS_INTELLIGENCE_ENGINEER",
+      "properties": { "name": "Business Intelligence Engineer", "data_source_type": "official" }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_BIG_DATA_ENGINEER",
+      "properties": { "name": "Big Data Engineer", "data_source_type": "official" }
+    }
+  ],
+  "relationships": [
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN",
+      "relationship_type": "HOSTS",
+      "end_id": "COLLEGE_CAI_EL_ALAMEIN",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "COLLEGE_CAI_EL_ALAMEIN",
+      "relationship_type": "OFFERS",
+      "end_id": "DEGREE_EG_EL_ALAMEIN_CAI_BSC_UNDERGRAD",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "COLLEGE_CAI_EL_ALAMEIN",
+      "relationship_type": "HAS_ACCREDITATION",
+      "end_id": "ACC_EG_SCU",
+      "properties": { "scope": "national", "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "COLLEGE_CAI_EL_ALAMEIN",
+      "relationship_type": "HAS_FACILITY",
+      "end_id": "FACILITY_EL_ALAMEIN_ROBOTICS_LAB",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "COLLEGE_CAI_EL_ALAMEIN",
+      "relationship_type": "HAS_FACILITY",
+      "end_id": "FACILITY_EL_ALAMEIN_VIRTUAL_REALITY_LAB",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "COLLEGE_CAI_EL_ALAMEIN",
+      "relationship_type": "HAS_FACILITY",
+      "end_id": "FACILITY_EL_ALAMEIN_IOT_LAB",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "COLLEGE_CAI_EL_ALAMEIN",
+      "relationship_type": "HAS_PARTNER_INSTITUTION",
+      "end_id": "PARTNERINST_UAB",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "COLLEGE_CAI_EL_ALAMEIN",
+      "relationship_type": "HAS_PARTNER_INSTITUTION",
+      "end_id": "PARTNERINST_UCLAN",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "DEGREE_EG_EL_ALAMEIN_CAI_BSC_UNDERGRAD",
+      "relationship_type": "INCLUDES_PROGRAM",
+      "end_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "DEGREE_EG_EL_ALAMEIN_CAI_BSC_UNDERGRAD",
+      "relationship_type": "INCLUDES_PROGRAM",
+      "end_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_DATA_SCIENCE",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+      "relationship_type": "HAS_SPECIALIZATION",
+      "end_id": "SPEC_EL_ALAMEIN_INTELLIGENT_SYSTEMS",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_DATA_SCIENCE",
+      "relationship_type": "HAS_SPECIALIZATION",
+      "end_id": "SPEC_EL_ALAMEIN_DATA_SCIENCE",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+      "relationship_type": "HAS_SPECIALIZATION",
+      "end_id": "SPEC_EL_ALAMEIN_ROBOTICS",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+      "relationship_type": "HAS_SCHOLARSHIP",
+      "end_id": "SCHOLARSHIP_EXCELLENCE_MIN_GPA_34",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_DATA_SCIENCE",
+      "relationship_type": "HAS_SCHOLARSHIP",
+      "end_id": "SCHOLARSHIP_EXCELLENCE_MIN_GPA_34",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "COURSE_IN221",
+      "relationship_type": "HAS_PREREQUISITE",
+      "end_id": "COURSE_FUNDAMENTALS_OF_AI",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "COURSE_IN221",
+      "relationship_type": "HAS_PREREQUISITE",
+      "end_id": "COURSE_LINEAR_ALGEBRA",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "COURSE_IN311",
+      "relationship_type": "HAS_PREREQUISITE",
+      "end_id": "COURSE_IN221",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "COURSE_DS313",
+      "relationship_type": "HAS_PREREQUISITE",
+      "end_id": "COURSE_FUNDAMENTALS_OF_DATA_SCIENCE",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_ESP_FOUNDATION",
+      "properties": { "curriculum_bucket": "foundation", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_FOUNDATION_MATHEMATICS",
+      "properties": { "curriculum_bucket": "foundation", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_INTRODUCTION_TO_COMPUTING",
+      "properties": { "curriculum_bucket": "foundation", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_PROBLEM_SOLVING_AND_PROGRAMMING",
+      "properties": { "curriculum_bucket": "foundation", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_DISCRETE_MATHEMATICS",
+      "properties": { "curriculum_bucket": "foundation", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_CALCULUS_I",
+      "properties": { "curriculum_bucket": "foundation", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_CALCULUS_II",
+      "properties": { "curriculum_bucket": "foundation", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_LINEAR_ALGEBRA",
+      "properties": { "curriculum_bucket": "foundation", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_PROBABILITY_AND_STATISTICS",
+      "properties": { "curriculum_bucket": "foundation", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_PHYSICS",
+      "properties": { "curriculum_bucket": "foundation", "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_FUNDAMENTALS_OF_AI",
+      "properties": { "curriculum_bucket": "core", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_IN221",
+      "properties": { "curriculum_bucket": "core", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_DEEP_LEARNING",
+      "properties": { "curriculum_bucket": "core", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_COMPUTER_VISION",
+      "properties": { "curriculum_bucket": "core", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_NATURAL_LANGUAGE_PROCESSING",
+      "properties": { "curriculum_bucket": "core", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_IMAGE_PROCESSING_AND_PATTERN_RECOGNITION",
+      "properties": { "curriculum_bucket": "core", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_OPTIMIZATION_TECHNIQUES",
+      "properties": { "curriculum_bucket": "core", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_COMPUTING_ALGORITHMS",
+      "properties": { "curriculum_bucket": "core", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_OPERATING_SYSTEMS",
+      "properties": { "curriculum_bucket": "core", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_SOFTWARE_ENGINEERING",
+      "properties": { "curriculum_bucket": "core", "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "SPEC_EL_ALAMEIN_ROBOTICS",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_FUNDAMENTALS_OF_ROBOTICS",
+      "properties": { "curriculum_bucket": "specialization", "data_source_type": "official" }
+    },
+    {
+      "start_id": "SPEC_EL_ALAMEIN_ROBOTICS",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_REINFORCEMENT_LEARNING",
+      "properties": { "curriculum_bucket": "specialization", "data_source_type": "official" }
+    },
+    {
+      "start_id": "SPEC_EL_ALAMEIN_ROBOTICS",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_COGNITIVE_COMPUTING",
+      "properties": { "curriculum_bucket": "specialization", "data_source_type": "official" }
+    },
+    {
+      "start_id": "SPEC_EL_ALAMEIN_ROBOTICS",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_LOCALIZATION_AND_PATH_PLANNING",
+      "properties": { "curriculum_bucket": "specialization", "data_source_type": "official" }
+    },
+    {
+      "start_id": "SPEC_EL_ALAMEIN_ROBOTICS",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_SWARM_INTELLIGENCE",
+      "properties": { "curriculum_bucket": "specialization", "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_DATA_SCIENCE",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_DATABASE_SYSTEMS_DESIGN",
+      "properties": { "curriculum_bucket": "core", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_DATA_SCIENCE",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_FUNDAMENTALS_OF_DATA_SCIENCE",
+      "properties": { "curriculum_bucket": "core", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_DATA_SCIENCE",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_STATISTICS_FOR_DATA_SCIENCE",
+      "properties": { "curriculum_bucket": "core", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_DATA_SCIENCE",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_DATA_MINING",
+      "properties": { "curriculum_bucket": "core", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_DATA_SCIENCE",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_ADVANCED_DATABASE",
+      "properties": { "curriculum_bucket": "core", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_DATA_SCIENCE",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_BIG_DATA_ANALYTICS",
+      "properties": { "curriculum_bucket": "core", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_DATA_SCIENCE",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_INFORMATION_RETRIEVAL_AND_SEARCH_ENGINES",
+      "properties": { "curriculum_bucket": "core", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_DATA_SCIENCE",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_BUSINESS_PROCESS_MANAGEMENT",
+      "properties": { "curriculum_bucket": "core", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_DATA_SCIENCE",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_ETHICS_AND_GOVERNANCE_OF_AI",
+      "properties": { "curriculum_bucket": "core", "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_AI_ENGINEER",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_MACHINE_LEARNING_ENGINEER",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_ROBOTICS_ENGINEER",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_RESEARCH_ENGINEER",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_DATA_SCIENCE",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_DATA_SCIENTIST",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_DATA_SCIENCE",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_DATA_ANALYST",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_DATA_SCIENCE",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_BUSINESS_INTELLIGENCE_ENGINEER",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_DATA_SCIENCE",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_BIG_DATA_ENGINEER",
+      "properties": { "data_source_type": "official" }
+    }
+  ]
+},
+
+{
+  "nodes": [
+    {
+      "label": "Facility",
+      "id": "FACILITY_EL_ALAMEIN_BASIC_ELECTRONIC_LAB",
+      "properties": {
+        "name": "Basic Electronic Lab",
+        "facility_type": "lab",
+        "location_code": "03-307",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Facility",
+      "id": "FACILITY_EL_ALAMEIN_PHYSICS_LAB",
+      "properties": {
+        "name": "Physics Lab",
+        "facility_type": "lab",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Facility",
+      "id": "FACILITY_EL_ALAMEIN_GENERAL_PURPOSE_COMPUTERS_LAB",
+      "properties": {
+        "name": "General Purpose Computers Lab",
+        "facility_type": "lab",
+        "location_codes": [
+          "122",
+          "222",
+          "322"
+        ],
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Facility",
+      "id": "FACILITY_EL_ALAMEIN_UV_LAB",
+      "properties": {
+        "name": "UV (Un-Manned Vehicle)",
+        "facility_type": "lab",
+        "location_code": "009",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Facility",
+      "id": "FACILITY_EL_ALAMEIN_EMBEDDED_SYSTEMS_LAB",
+      "properties": {
+        "name": "Embedded Systems",
+        "facility_type": "lab",
+        "location_code": "307",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Facility",
+      "id": "FACILITY_EL_ALAMEIN_BASIC_IOT_LAB",
+      "properties": {
+        "name": "Basic IoT (Internet of Things)",
+        "facility_type": "lab",
+        "location_code": "307",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Facility",
+      "id": "FACILITY_EL_ALAMEIN_WORKSTATIONS_LAB",
+      "properties": {
+        "name": "Workstations Lab",
+        "facility_type": "lab",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "FacilityComponent",
+      "id": "COMPONENT_ROBOTICS_DOBOT_MAGICIAN",
+      "properties": {
+        "name": "Dobot Magician",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "FacilityComponent",
+      "id": "COMPONENT_ROBOTICS_GO_DRONE",
+      "properties": {
+        "name": "Go Drone Classroom",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "FacilityComponent",
+      "id": "COMPONENT_ROBOTICS_TEMI_ROBOT",
+      "properties": {
+        "name": "Temi Robot",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "FacilityComponent",
+      "id": "COMPONENT_ROBOTICS_YANSHEE_ROBOT",
+      "properties": {
+        "name": "Yanshee Robot",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "FacilityComponent",
+      "id": "COMPONENT_ROBOTICS_VR_RICOH_CAMERA",
+      "properties": {
+        "name": "VR Ricoh Camera",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "FacilityComponent",
+      "id": "COMPONENT_ROBOTICS_NAO_V6",
+      "properties": {
+        "name": "NAO v6 Humanoid Robot",
+        "data_source_type": "official"
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "start_id": "COLLEGE_CAI_EL_ALAMEIN",
+      "relationship_type": "HAS_FACILITY",
+      "end_id": "FACILITY_EL_ALAMEIN_BASIC_ELECTRONIC_LAB",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "COLLEGE_CAI_EL_ALAMEIN",
+      "relationship_type": "HAS_FACILITY",
+      "end_id": "FACILITY_EL_ALAMEIN_PHYSICS_LAB",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "COLLEGE_CAI_EL_ALAMEIN",
+      "relationship_type": "HAS_FACILITY",
+      "end_id": "FACILITY_EL_ALAMEIN_GENERAL_PURPOSE_COMPUTERS_LAB",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "COLLEGE_CAI_EL_ALAMEIN",
+      "relationship_type": "HAS_FACILITY",
+      "end_id": "FACILITY_EL_ALAMEIN_UV_LAB",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "COLLEGE_CAI_EL_ALAMEIN",
+      "relationship_type": "HAS_FACILITY",
+      "end_id": "FACILITY_EL_ALAMEIN_EMBEDDED_SYSTEMS_LAB",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "COLLEGE_CAI_EL_ALAMEIN",
+      "relationship_type": "HAS_FACILITY",
+      "end_id": "FACILITY_EL_ALAMEIN_BASIC_IOT_LAB",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "COLLEGE_CAI_EL_ALAMEIN",
+      "relationship_type": "HAS_FACILITY",
+      "end_id": "FACILITY_EL_ALAMEIN_WORKSTATIONS_LAB",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "FACILITY_EL_ALAMEIN_ROBOTICS_LAB",
+      "relationship_type": "CONTAINS_COMPONENT",
+      "end_id": "COMPONENT_ROBOTICS_DOBOT_MAGICIAN",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "FACILITY_EL_ALAMEIN_ROBOTICS_LAB",
+      "relationship_type": "CONTAINS_COMPONENT",
+      "end_id": "COMPONENT_ROBOTICS_GO_DRONE",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "FACILITY_EL_ALAMEIN_ROBOTICS_LAB",
+      "relationship_type": "CONTAINS_COMPONENT",
+      "end_id": "COMPONENT_ROBOTICS_TEMI_ROBOT",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "FACILITY_EL_ALAMEIN_ROBOTICS_LAB",
+      "relationship_type": "CONTAINS_COMPONENT",
+      "end_id": "COMPONENT_ROBOTICS_YANSHEE_ROBOT",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "FACILITY_EL_ALAMEIN_ROBOTICS_LAB",
+      "relationship_type": "CONTAINS_COMPONENT",
+      "end_id": "COMPONENT_ROBOTICS_VR_RICOH_CAMERA",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "FACILITY_EL_ALAMEIN_ROBOTICS_LAB",
+      "relationship_type": "CONTAINS_COMPONENT",
+      "end_id": "COMPONENT_ROBOTICS_NAO_V6",
+      "properties": {
+        "data_source_type": "official"
+      }
+    }
+  ]
+},
+
+
+
+
+{
+  "nodes": [
+    {
+      "label": "GradingPolicy",
+      "id": "POLICY_AAST_PASS_REQUIREMENTS",
+      "properties": {
+        "name": "Course Passing Criteria",
+        "min_total_score": 50,
+        "max_total_score": 100,
+        "min_final_exam_score": 12,
+        "max_final_exam_score": 40,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "GradingSystem",
+      "id": "GRADESYS_AAST_PRE_2023",
+      "properties": {
+        "name": "AAST Grading System (Pre-2023)",
+        "applicability": "Registration numbers before 2310-00000",
+        "excellent_range": [3.6, 4.0],
+        "very_good_range": [3.0, 3.6],
+        "good_range": [2.6, 3.0],
+        "pass_range": [2.0, 2.6],
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "GradingSystem",
+      "id": "GRADESYS_AAST_POST_2023",
+      "properties": {
+        "name": "AAST Grading System (From 2023)",
+        "applicability": "Registration numbers starting 2310-00000",
+        "excellent_range": [3.5, 4.0],
+        "very_good_range": [3.0, 3.5],
+        "good_range": [2.5, 3.0],
+        "pass_range": [2.0, 2.5],
+        "data_source_type": "official"
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "start_id": "COLLEGE_CAI_EL_ALAMEIN",
+      "relationship_type": "FOLLOWS_POLICY",
+      "end_id": "POLICY_AAST_PASS_REQUIREMENTS",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "COLLEGE_CAI_EL_ALAMEIN",
+      "relationship_type": "USES_GRADING_SYSTEM",
+      "end_id": "GRADESYS_AAST_PRE_2023",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "COLLEGE_CAI_EL_ALAMEIN",
+      "relationship_type": "USES_GRADING_SYSTEM",
+      "end_id": "GRADESYS_AAST_POST_2023",
+      "properties": {
+        "data_source_type": "official"
+      }
+    }
+  ]
+},
+
+
+
+{
+
+  "nodes": [
+
+    {
+
+      "label": "Professor",
+
+      "id": "PROF_OSAMA_BADAWY",
+
+      "properties": {
+
+        "name": "Osama Badawy",
+
+        "title": "Professor",
+
+        "data_source_type": "official"
+
+      }
+
+    },
+
+    {
+
+      "label": "Course",
+
+      "id": "COURSE_MOBILE_COMPUTING",
+
+      "properties": {
+
+        "name": "Mobile Computing",
+
+        "data_source_type": "official"
+
+      }
+
+    },
+
+    {
+
+      "label": "CourseSyllabus",
+
+      "id": "SYLLABUS_MOBILE_COMPUTING_2026",
+
+      "properties": {
+
+        "academic_year": 2026,
+
+        "schedule": [
+
+          { "week": 1, "topic": "Mobile AI Strategy Fundamentals", "date": "2026-02-11" },
+
+          { "week": 2, "topic": "Mobile app Concepts & architecture", "date": "2026-02-18" },
+
+          { "week": 3, "topic": "Mobile application Development Strategy", "date": "2026-02-25" },
+
+          { "week": 4, "topic": "AI-Specific UX Principles", "date": "2026-03-04" },
+
+          { "week": 5, "topic": "User Experience Design for Mobile App", "date": "2026-03-11" },
+
+          { "week": 6, "topic": "Mobile application Development", "date": "2026-03-18" },
+
+          { "week": 7, "topic": "7th Week Exam & Develop. Environment & Setup", "date": "2026-03-25" },
+
+          { "week": 8, "topic": "Integrating AI into Mobile Apps", "date": "2026-04-01" },
+
+          { "week": 9, "topic": "Advanced Mobile AI Features", "date": "2026-04-08" },
+
+          { "week": 10, "topic": "Full-Stack Mobile AI Development", "date": "2026-04-15" },
+
+          { "week": 11, "topic": "Testing Mobile AI Applications", "date": "2026-04-22" },
+
+          { "week": 12, "topic": "Comprehensive Testing Approaches", "date": "2026-04-29" },
+
+          { "week": 13, "topic": "Real-World Testing", "date": "2026-05-06" },
+
+          { "week": 14, "topic": "App Store Deployment", "date": "2026-05-13" },
+
+          { "week": 15, "topic": "Post-Launch Management", "date": "2026-05-20" }
+
+        ],
+
+        "data_source_type": "official"
+
+      }
+
+    }
+
+  ],
+
+  "relationships": [
+
+    {
+
+      "start_id": "PROF_OSAMA_BADAWY",
+
+      "relationship_type": "TEACHES",
+
+      "end_id": "COURSE_MOBILE_COMPUTING",
+
+      "properties": {
+
+        "data_source_type": "official"
+
+      }
+
+    },
+
+    {
+
+      "start_id": "COURSE_MOBILE_COMPUTING",
+
+      "relationship_type": "HAS_SYLLABUS",
+
+      "end_id": "SYLLABUS_MOBILE_COMPUTING_2026",
+
+      "properties": {
+
+        "data_source_type": "official"
+
+      }
+
+    },
+
+    {
+
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+
+      "relationship_type": "HAS_COURSE",
+
+      "end_id": "COURSE_MOBILE_COMPUTING",
+
+      "properties": {
+
+        "curriculum_bucket": "Genaral elective",
+
+        "data_source_type": "official"
+
+      }
+
+    }
+
+  ]
+
+},
+=========================
+
+
+
+
+{
+  "nodes": [
+    {
+      "label": "Professor",
+      "id": "PROF_YASSER_YOUSRY_HANFY",
+      "properties": {
+        "name": "Yasser Yousry Hanfy",
+        "title": "Assistant President of the Academy for Communications and Information Technology Affairs",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Professor",
+      "id": "PROF_AHMED_MOHAMED_MANSOUR_KHAMES_ELSHAER",
+      "properties": {
+        "name": "Ahmed Mohamed Mansour Khames Elshaer",
+        "title": "Head of Department",
+        "academic_rank": "Associate Professor",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Professor",
+      "id": "PROF_HANY_HANAFY_MAHMOUD_SAID",
+      "properties": {
+        "name": "Hany Hanafy Mahmoud Said",
+        "title": "Head of the Quality Unit",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "TeachingStaff",
+      "id": "STAFF_AYA_MOHAMED_HASSANE",
+      "properties": {
+        "name": "Aya Mohamed Abd Elhamied Mohamed Hassane",
+        "role": "Teaching Assistant",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "TeachingStaff",
+      "id": "STAFF_MAZEN_AZIZ_MOHAMED",
+      "properties": {
+        "name": "Mazen Aziz Ahmed Mohamed",
+        "role": "Teaching Assistant",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "TeachingStaff",
+      "id": "STAFF_NAGY_KHAIRAT_ABDELAAL",
+      "properties": {
+        "name": "Nagy Khairat Aly Hassan Abdelaal",
+        "role": "Assistant Lecturer",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "TeachingStaff",
+      "id": "STAFF_OSAMA_HESHAM_ABDULRAZEK",
+      "properties": {
+        "name": "Osama Hesham Alsayed Abdulrazek",
+        "role": "Assistant Lecturer",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "TeachingStaff",
+      "id": "STAFF_SALMA_MOHAMED_IBRAHIM",
+      "properties": {
+        "name": "Salma Mohamed Elsayed Mahmoud Ibrahim",
+        "role": "Teaching Assistant",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "SupportStaff",
+      "id": "STAFF_MAHMOUD_KHALED_ABO_ELMAATY",
+      "properties": {
+        "name": "Mahmoud Khaled Mahmoud Abo Elmaaty",
+        "role": "Engineer",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "SupportStaff",
+      "id": "STAFF_MOHAMED_ELSAYED_KASSEM",
+      "properties": {
+        "name": "Mohamed Elsayed Mohamed Ali Kassem",
+        "role": "Engineer",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "SupportStaff",
+      "id": "STAFF_NADA_ABDELMONEM_MOHAMED",
+      "properties": {
+        "name": "Nada Abd Elmonem Ahmed Mohamed",
+        "role": "Engineer",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "TeachingStaff",
+      "id": "STAFF_AHMED_METWALI",
+      "properties": {
+        "name": "Ahmed Metwali",
+        "role": "Assistant Lecturer",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "TeachingStaff",
+      "id": "STAFF_BELAL_SAMEH",
+      "properties": {
+        "name": "Belal Sameh",
+        "role": "Assistant Lecturer",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "TeachingStaff",
+      "id": "STAFF_HAYA_MEDHAT",
+      "properties": {
+        "name": "Haya Medhat",
+        "role": "Assistant Lecturer",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "TechnicalStaff",
+      "id": "STAFF_BELAL_ELSAYED_ABD_ELHAMID",
+      "properties": {
+        "name": "Belal Elsayed Ibrahim Abd Elhamid",
+        "role": "Robotics Lab Technician",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "TechnicalStaff",
+      "id": "STAFF_HUSSEN_AMIN_ATIA",
+      "properties": {
+        "name": "Hussen Amin Hussen Atia",
+        "role": "Laboratory Technician",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "TechnicalStaff",
+      "id": "STAFF_MOAMEN_MOHAMED_ALY",
+      "properties": {
+        "name": "Moamen Mohamed Ismael Aly",
+        "role": "Laboratory Technician",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "AdministrativeStaff",
+      "id": "STAFF_SHIMAA_FATHEY_HASSAN",
+      "properties": {
+        "name": "Shimaa Fathey Hassan",
+        "role": "Office Director of Dean",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "AdministrativeStaff",
+      "id": "STAFF_KARIM_YOUSRY_HABIB",
+      "properties": {
+        "name": "Karim Yousry Mohammed Aly Hassanein Habib",
+        "role": "Education Coordinator",
+        "data_source_type": "official"
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "start_id": "COLLEGE_CAI_EL_ALAMEIN",
+      "relationship_type": "HAS_ADMINISTRATION_MEMBER",
+      "end_id": "PROF_YASSER_YOUSRY_HANFY",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "COLLEGE_CAI_EL_ALAMEIN",
+      "relationship_type": "HAS_HEAD_OF_DEPARTMENT",
+      "end_id": "PROF_AHMED_MOHAMED_MANSOUR_KHAMES_ELSHAER",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "COLLEGE_CAI_EL_ALAMEIN",
+      "relationship_type": "HAS_UNIT_HEAD",
+      "end_id": "PROF_HANY_HANAFY_MAHMOUD_SAID",
+      "properties": { "unit": "Quality Unit", "data_source_type": "official" }
+    },
+    {
+      "start_id": "COLLEGE_CAI_EL_ALAMEIN",
+      "relationship_type": "HAS_STAFF",
+      "end_id": "STAFF_AYA_MOHAMED_HASSANE",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "FACILITY_EL_ALAMEIN_ROBOTICS_LAB",
+      "relationship_type": "ASSIGNED_TECHNICIAN",
+      "end_id": "STAFF_BELAL_ELSAYED_ABD_ELHAMID",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "COLLEGE_CAI_EL_ALAMEIN",
+      "relationship_type": "HAS_ADMINISTRATIVE_STAFF",
+      "end_id": "STAFF_SHIMAA_FATHEY_HASSAN",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "COLLEGE_CAI_EL_ALAMEIN",
+      "relationship_type": "HAS_ADMINISTRATIVE_STAFF",
+      "end_id": "STAFF_KARIM_YOUSRY_HABIB",
+      "properties": { "data_source_type": "official" }
+    }
+  ]
+},
+
+
+
+
+{
+  "nodes": [
+    {
+      "label": "Degree",
+      "id": "DEGREE_EG_EL_ALAMEIN_CAI_MSC_GRAD",
+      "properties": {
+        "degree_name": "Master of Science",
+        "level": "graduate",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Program",
+      "id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_MSC_AI",
+      "properties": {
+        "program_id_raw": "MSC_AI",
+        "name": "MSc in Artificial Intelligence",
+        "degree_abbrev": "MSc",
+        "discipline": "Artificial Intelligence",
+        "language": "English",
+        "description": "The Master of Science in Artificial Intelligence is designed to equip graduate students with both foundational and advanced knowledge in AI, preparing them for leadership roles in research, industry, and academia.",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_AIN7101",
+      "properties": {
+        "course_code": "AIN7101",
+        "name": "Machine Learning Fundamentals",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_AIN7201",
+      "properties": {
+        "course_code": "AIN7201",
+        "name": "Deep Learning",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_AIN7000",
+      "properties": {
+        "course_code": "AIN7000",
+        "name": "Master’s Research Thesis Part 1",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_AIN7001",
+      "properties": {
+        "course_code": "AIN7001",
+        "name": "Master’s Research Thesis Part 2",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_AIN7304",
+      "properties": {
+        "course_code": "AIN7304",
+        "name": "Artificial Intelligence in Pharma and Biotech",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_ADS7305",
+      "properties": {
+        "course_code": "ADS7305",
+        "name": "Deep Learning for Multimedia",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_AIN7301",
+      "properties": {
+        "course_code": "AIN7301",
+        "name": "Brain-Computer Interface",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_AIN7302",
+      "properties": {
+        "course_code": "AIN7302",
+        "name": "Artificial Intelligence in Games",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_AIN7303",
+      "properties": {
+        "course_code": "AIN7303",
+        "name": "Explainable AI",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_AIN7601",
+      "properties": {
+        "course_code": "AIN7601",
+        "name": "Advanced Techniques in Object Detection and Recognition",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_AIN7602",
+      "properties": {
+        "course_code": "AIN7602",
+        "name": "Digital Twins",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_ADS7603",
+      "properties": {
+        "course_code": "ADS7603",
+        "name": "Medical Imaging and Neural Networks",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_AIN7202",
+      "properties": {
+        "course_code": "AIN7202",
+        "name": "Advanced Deep Learning",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_AIN7102",
+      "properties": {
+        "course_code": "AIN7102",
+        "name": "Advanced Artificial Intelligence and Machine Learning",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_AIN7501",
+      "properties": {
+        "course_code": "AIN7501",
+        "name": "Mathematics for Artificial Intelligence",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_AIN7502",
+      "properties": {
+        "course_code": "AIN7502",
+        "name": "Cognitive Systems",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_ADS7503",
+      "properties": {
+        "course_code": "ADS7503",
+        "name": "Neuroscience",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_ADS7101",
+      "properties": {
+        "course_code": "ADS7101",
+        "name": "Advanced Natural Language Processing",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_ADS7102",
+      "properties": {
+        "course_code": "ADS7102",
+        "name": "Intelligent Information Retrieval and Data Analytics",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_ARB7104",
+      "properties": {
+        "course_code": "ARB7104",
+        "name": "Autonomous Systems",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_ARB7101",
+      "properties": {
+        "course_code": "ARB7101",
+        "name": "Robotics, Agents, Integration and Human Interaction",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_ARB7102",
+      "properties": {
+        "course_code": "ARB7102",
+        "name": "Medical and Healthcare Robotics",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_ARB7103",
+      "properties": {
+        "course_code": "ARB7103",
+        "name": "Smart City Services and Applications",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_AIN7401",
+      "properties": {
+        "course_code": "AIN7401",
+        "name": "Artificial Intelligence: Applications, Ethics, and Future",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_AIN7402",
+      "properties": {
+        "course_code": "AIN7402",
+        "name": "Advanced Topics in Artificial Intelligence I",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Course",
+      "id": "COURSE_AIN7403",
+      "properties": {
+        "course_code": "AIN7403",
+        "name": "Advanced Topics in Artificial Intelligence II",
+        "data_source_type": "official"
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "start_id": "COLLEGE_CAI_EL_ALAMEIN",
+      "relationship_type": "OFFERS",
+      "end_id": "DEGREE_EG_EL_ALAMEIN_CAI_MSC_GRAD",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "DEGREE_EG_EL_ALAMEIN_CAI_MSC_GRAD",
+      "relationship_type": "INCLUDES_PROGRAM",
+      "end_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_MSC_AI",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_MSC_AI",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_AIN7101",
+      "properties": { "curriculum_bucket": "term_1", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_MSC_AI",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_AIN7201",
+      "properties": { "curriculum_bucket": "term_1", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_MSC_AI",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_AIN7000",
+      "properties": { "curriculum_bucket": "term_4", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_MSC_AI",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_AIN7001",
+      "properties": { "curriculum_bucket": "term_4", "data_source_type": "official" }
+    },
+    {
+      "start_id": "COURSE_AIN7001",
+      "relationship_type": "HAS_PREREQUISITE",
+      "end_id": "COURSE_AIN7000",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_MSC_AI",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_AIN7304",
+      "properties": { "curriculum_bucket": "elective_applications", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_MSC_AI",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_ADS7305",
+      "properties": { "curriculum_bucket": "elective_applications", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_MSC_AI",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_AIN7301",
+      "properties": { "curriculum_bucket": "elective_applications", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_MSC_AI",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_AIN7302",
+      "properties": { "curriculum_bucket": "elective_applications", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_MSC_AI",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_AIN7303",
+      "properties": { "curriculum_bucket": "elective_applications", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_MSC_AI",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_AIN7601",
+      "properties": { "curriculum_bucket": "elective_vision", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_MSC_AI",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_AIN7602",
+      "properties": { "curriculum_bucket": "elective_vision", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_MSC_AI",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_ADS7603",
+      "properties": { "curriculum_bucket": "elective_vision", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_MSC_AI",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_AIN7202",
+      "properties": { "curriculum_bucket": "elective_core_dl", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_MSC_AI",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_AIN7102",
+      "properties": { "curriculum_bucket": "elective_core_dl", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_MSC_AI",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_AIN7501",
+      "properties": { "curriculum_bucket": "elective_foundational", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_MSC_AI",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_AIN7502",
+      "properties": { "curriculum_bucket": "elective_foundational", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_MSC_AI",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_ADS7503",
+      "properties": { "curriculum_bucket": "elective_foundational", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_MSC_AI",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_ADS7101",
+      "properties": { "curriculum_bucket": "elective_nlp", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_MSC_AI",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_ADS7102",
+      "properties": { "curriculum_bucket": "elective_nlp", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_MSC_AI",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_ARB7104",
+      "properties": { "curriculum_bucket": "elective_robotics", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_MSC_AI",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_ARB7101",
+      "properties": { "curriculum_bucket": "elective_robotics", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_MSC_AI",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_ARB7102",
+      "properties": { "curriculum_bucket": "elective_robotics", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_MSC_AI",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_ARB7103",
+      "properties": { "curriculum_bucket": "elective_robotics", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_MSC_AI",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_AIN7401",
+      "properties": { "curriculum_bucket": "elective_topics", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_MSC_AI",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_AIN7402",
+      "properties": { "curriculum_bucket": "elective_topics", "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_MSC_AI",
+      "relationship_type": "HAS_COURSE",
+      "end_id": "COURSE_AIN7403",
+      "properties": { "curriculum_bucket": "elective_topics", "data_source_type": "official" }
+    }
+  ]
+}9
+
+
+
+
+
+{
+      "start_id": "FACILITY_EL_ALAMEIN_ROBOTICS_LAB",
+      "relationship_type": "CONTAINS_COMPONENT",
+      "end_id": "COMPONENT_ROBOTICS_GO_DRONE",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "FACILITY_EL_ALAMEIN_ROBOTICS_LAB",
+      "relationship_type": "CONTAINS_COMPONENT",
+      "end_id": "COMPONENT_ROBOTICS_TEMI_ROBOT",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "FACILITY_EL_ALAMEIN_ROBOTICS_LAB",
+      "relationship_type": "CONTAINS_COMPONENT",
+      "end_id": "COMPONENT_ROBOTICS_YANSHEE_ROBOT",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "FACILITY_EL_ALAMEIN_ROBOTICS_LAB",
+      "relationship_type": "CONTAINS_COMPONENT",
+      "end_id": "COMPONENT_ROBOTICS_VR_RICOH_CAMERA",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "FACILITY_EL_ALAMEIN_ROBOTICS_LAB",
+      "relationship_type": "CONTAINS_COMPONENT",
+      "end_id": "COMPONENT_ROBOTICS_NAO_V6",
+      "properties": {
+        "data_source_type": "official"
+      }
+    }
+  ]
+},
+
+
+
+

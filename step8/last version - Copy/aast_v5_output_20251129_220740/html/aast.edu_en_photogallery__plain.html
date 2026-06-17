@@ -1,0 +1,2154 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- favicon tag -->
+<link rel="icon" 
+      type="image/png" 
+      href="http://www.aast.edu/en/myicon.png"/>
+ 
+ <!-- meta tags -->
+<meta name="distribution" content="global"/>
+
+<!-- robots -->
+<meta name="robots" content="all" />
+<meta name="allow-search" content="yes" /> 
+<meta http-equiv="imagetoolbar" content="false" />
+
+<!-- author -->
+<meta name="author" content="Website Design dept, Information and Documentation Center, Arab Academy for Science, Technology and Maritime Transport" />
+<meta name="copyright" content="Copyright (c) 2020 Arab Academy for Science Technology and Maritime Transport" />
+
+<title>Photogallery | Arab Academy for Science, Technology &amp; Maritime Transport</title>
+<!-- Keywords-->
+
+<meta name="keywords" content= "الاكاديمية العربية للعلوم والتكنولوجيا القاهرة,الاكاديميه البحريه ابو قير, الاكاديمية البحرية بالاسكندرية كورسات, الاكاديمية ميامى الاسكندرية, الاكاديمية البحرية في القرية الذكية,الأكاديمية الإمارات العربية المتحدة , العلمين, جنوب الوادى, اللاذقية, بورسعيد " />
+
+<!-- description-->
+<meta name="description" content="  تسعى الأكاديمية لاستكمال دورها في نشر التنمية في المجالات التعليمية من خلال مجموعة من الفروع داخل وخارج جمهورية مصر" />
+
+<!-- Viewport to make sure the website renders correctly on mobile devices -->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<link rel="canonical" href='http://aast.edu/en/photogallery/index.php' />
+<!--  Main layout files-->
+
+
+<!-- Stylesheets -->
+<link href="..\css\bootstrap.css" rel="stylesheet">
+<link href="..\css\style.css" rel="stylesheet">
+<!-- Responsive -->
+
+<link href="css\responsive.css" rel="stylesheet">
+<!--  -->
+ <!--   <link rel="stylesheet" href="css/ltr/style.css" />
+    <link rel="stylesheet" href="css/ltr/left.css" />
+    <link rel="stylesheet" href="css/ltr/right.css" />
+    <link rel="stylesheet" href="css/ltr/centered.css" />-->
+    
+		<link rel="stylesheet" href="slideshow/css/basic.css" type="text/css" />
+		<link rel="stylesheet" href="slideshow/css/galleriffic-4.css" type="text/css" />
+		    <script src="javascript/jquery.js" type="text/javascript"></script>
+
+		<script type="text/javascript" src="slideshow/js/jquery.galleriffic.js"></script>
+		<script type="text/javascript" src="slideshow/js/jquery.opacityrollover.js"></script>
+
+
+    
+    
+ 	<!-- Slider.com HEAD section -->
+ <!-- <link rel="stylesheet" type="text/css" href="../../slider/engine1/style.css" media="screen" />-->
+
+
+     <script language="javascript">
+function selectCat(){
+	var address = "";
+	address =  this.location.href.split('?')[0];
+	$('#gallery_cat_selector').change(function() {
+	   // or $(this).val()
+	 	window.location.href =address+"?cat_id="+$(this).val();
+	});
+}
+function changeLang(){
+	var address = "";
+	address =  this.location.href;
+	if(address.indexOf('/en/') > -1){
+		address = address.replace('/en/','/ar/');
+		address = address.replace('language=1','language=2');
+	}
+	else
+		if(address.indexOf('/ar/') > -1)
+		{
+			address = address.replace('/ar/','/en/');
+			address = address.replace('language=2','language=1');			
+		}
+	 window.location.href = address;	 
+}
+
+</script>
+<!-- Script for gallery-->
+
+<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				// We only want these styles applied when javascript is enabled
+				$('div.navigation').css({'width' : '370px', 'float' : 'right'});
+				$('div.content').css('display', 'block');
+
+				// Initially set opacity on thumbs and add
+				// additional styling for hover effect on thumbs
+				var onMouseOutOpacity = 0.67;
+				$('#thumbs ul.thumbs li').opacityrollover({
+					mouseOutOpacity:   onMouseOutOpacity,
+					mouseOverOpacity:  1.0,
+					fadeSpeed:         'fast',
+					exemptionSelector: '.selected'
+				});
+selectCat();
+				// Enable toggling of the caption
+				var captionOpacity = 0.0;
+				$('#captionToggle a').click(function(e) {
+					var link = $(this);
+					
+					var isOff = link.hasClass('off');
+					var removeClass = isOff ? 'off' : 'on';
+					var addClass = isOff ? 'on' : 'off';
+					var linkText = isOff ? 'Hide Caption' : 'Show Caption';
+					captionOpacity = isOff ? 0.8 : 0.0;
+
+					link.removeClass(removeClass).addClass(addClass).text(linkText).attr('title', linkText);
+					$('#caption span.image-caption').fadeTo(1000, captionOpacity);
+					
+					e.preventDefault();
+				});
+				
+				// Initialize Advanced Galleriffic Gallery
+				var gallery = $('#thumbs').galleriffic({
+					delay:                     2700,
+					numThumbs:                 12,
+					preloadAhead:              10,
+					enableTopPager:            true,
+					enableBottomPager:         true,
+					maxPagesToShow:            7,
+					imageContainerSel:         '#slideshow',
+					controlsContainerSel:      '#controls',
+					captionContainerSel:       '#caption',
+					loadingContainerSel:       '#loading',
+					renderSSControls:          true,
+					renderNavControls:         true,
+					playLinkText:              'Play Slideshow',
+					pauseLinkText:             'Pause Slideshow',
+					prevLinkText:              '&lsaquo; Previous Photo',
+					nextLinkText:              'Next Photo &rsaquo;',
+					nextPageLinkText:          'Next &rsaquo;',
+					prevPageLinkText:          '&lsaquo; Prev',
+					//enableHistory:             true,
+					autoStart:                 true,
+					syncTransitions:           true,
+					defaultTransitionDuration: 900,
+					onSlideChange:             function(prevIndex, nextIndex) {
+						// 'this' refers to the gallery, which is an extension of $('#thumbs')
+						this.find('ul.thumbs').children()
+							.eq(prevIndex).fadeTo('fast', onMouseOutOpacity).end()
+							.eq(nextIndex).fadeTo('fast', 1.0);
+					},
+					onTransitionOut:           function(slide, caption, isSync, callback) {
+						slide.fadeTo(this.getDefaultTransitionDuration(isSync), 0.0, callback);
+						caption.fadeTo(this.getDefaultTransitionDuration(isSync), 0.0);
+					},
+					onTransitionIn:            function(slide, caption, isSync) {
+						var duration = this.getDefaultTransitionDuration(isSync);
+						slide.fadeTo(duration, 1.0);
+						
+						// Position the caption at the bottom of the image and set its opacity
+						var slideImage = slide.find('img');
+						caption.width(slideImage.width())
+							.css({
+								'bottom' : Math.floor((slide.height() - slideImage.outerHeight()) / 2),
+								'left' : Math.floor((slide.width() - slideImage.width()) / 2) + slideImage.outerWidth() - slideImage.width()
+							})
+							.fadeTo(duration, captionOpacity);
+					},
+					onPageTransitionOut:       function(callback) {
+						this.fadeTo('fast', 0.0, callback);
+					},
+					onPageTransitionIn:        function() {
+						this.fadeTo('fast', 1.0);
+					},
+					onImageAdded:              function(imageData, $li) {
+						$li.opacityrollover({
+							mouseOutOpacity:   onMouseOutOpacity,
+							mouseOverOpacity:  1.0,
+							fadeSpeed:         'fast',
+							exemptionSelector: '.selected'
+						});
+					}
+				});
+
+				/**** Functions to support integration of galleriffic with the jquery.history plugin ****/
+
+				// PageLoad function
+				// This function is called when:
+				// 1. after calling $.historyInit();
+				// 2. after calling $.historyLoad();
+				// 3. after pushing "Go Back" button of a browser
+				function pageload(hash) {
+					// alert("pageload: " + hash);
+					// hash doesn't contain the first # character.
+					if(hash) {
+						$.galleriffic.gotoImage(hash);
+					} else {
+						gallery.gotoIndex(0);
+					}
+				}
+
+				// Initialize history plugin.
+				// The callback is called at once by present location.hash. 
+				$.historyInit(pageload, "advanced.html");
+
+				// set onlick event for buttons using the jQuery 1.3 live method
+				$("a[rel='history']").live('click', function() {
+					if (e.button != 0) return true;
+
+					var hash = this.href;
+					hash = hash.replace(/^.*#/, '');
+
+					// moves to a new page. 
+					// pageload is called at once. 
+					// hash don't contain "#", "?"
+					$.historyLoad(hash);
+
+					return false;
+				});
+
+				/****************************************************************************************/
+
+				/********************** Attach click event to the Add Image Link ************************/
+
+				$('#addImageLink').click(function(e) {
+					gallery.insertImage('<li>																							\
+							<a class="thumb" href="http://farm1.static.flickr.com/79/263120676_2518b40e5b.jpg" title="Dynamically Added Image">\
+								<img src="http://farm1.static.flickr.com/79/263120676_2518b40e5b_s.jpg" alt="Dynamically Added Image" />\
+							</a>																										\
+							<div class="caption">																						\
+																																\
+								<div class="image-title">Dynamically Added Image</div>													\
+								<div class="image-desc">																				\
+									<img src="http://farm1.static.flickr.com/38/buddyicons/77261001@N00.jpg" alt="ringydingydo" />		\
+									Photo taken by <a href="http://www.flickr.com/photos/ringydingydo/">ringydingydo</a>				\
+								</div>																									\
+							</div>																										\
+						</li>', 5);
+					
+					e.preventDefault();
+				});
+				
+				/****************************************************************************************/
+				
+				/***************** Attach click event to the Remove Image By Index Link *****************/
+				
+				$('#removeImageByIndexLink').click(function(e) {
+					if (!gallery.removeImageByIndex(5))
+						alert('There is no longer an image at position 5 to remove!');
+
+					e.preventDefault();
+				});
+				
+				/****************************************************************************************/
+
+				/***************** Attach click event to the Remove Image By Hash Link ******************/
+				
+				$('#removeImageByHashLink').click(function(e) {
+					if (!gallery.removeImageByHash('lizard'))
+						alert('The lizard image has already been removed!');
+
+					e.preventDefault();
+				});
+				
+				/****************************************************************************************/
+			});
+		</script>
+<style>
+
+footer .fa {   padding-top: 15px;}
+
+</style>
+</head>
+<body>
+<body class="blog-page-body">
+<div class="page-wrapper">
+ 	
+ 	
+    <!-- Main Header / Style One-->
+ 	
+  <!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>  </title>
+<!-- Stylesheets -->
+<link href="css\bootstrap.css" rel="stylesheet">
+<link href="css\style.css" rel="stylesheet">
+<!-- Responsive -->
+<!--<link rel="shortcut icon" href="images\favicon.ico" type="image/x-icon">
+<link rel="icon" href="images\favicon.ico" type="image/x-icon">-->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link href="css\responsive.css" rel="stylesheet">
+
+<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<!--[if lt IE 9]><script src="js/respond.js"></script><![endif]-->
+<style>
+	.auto-container {  max-width: 90%;}
+.navbar-nav > li {  float: none;}	
+.main-menu .navigation > li > a { font-size: 1.1em;}	
+</style>
+<!-- accessibility -->
+<script src='js/responsivevoice.js'></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+$('a').mouseenter(function() { // Attach this function to all mouseenter events for 'a' tags 
+  responsiveVoice.cancel(); // Cancel anything else that may currently be speaking
+  responsiveVoice.speak($(this).text()); // Speak the text contents of all nodes within the current 'a' tag
+});
+</script>
+
+<script> 
+function getSelectionText() {
+    var text = "";
+	
+    if (window.getSelection) {
+        text = window.getSelection().toString();
+    // for Internet Explorer 8 and below. For Blogger, you should use &amp;&amp; instead of &&.
+    } else if (document.selection && document.selection.type != "Control") { 
+        text = document.selection.createRange().text;
+    }
+    return text;
+}
+$(document).ready(function (){ // when the document has completed loading
+   $(document).mouseup(function (e){ // attach the mouseup event for all div and pre tags
+      setTimeout(function() { // When clicking on a highlighted area, the value stays highlighted until after the mouseup event, and would therefore stil be captured by getSelection. This micro-timeout solves the issue. 
+         responsiveVoice.cancel(); // stop anything currently being spoken
+         responsiveVoice.speak(getSelectionText(),"UK English Male"); //speak the text as returned by getSelectionText
+      }, 1);
+   });
+});
+
+</script>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NLPQVJH');</script>
+<!-- End Google Tag Manager -->
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-33891062-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-33891062-1');
+</script>
+
+<!-- INTERNATIONAL -->
+<link rel="alternate" href="https://aast.edu/en/" hreflang="x-default">
+<link rel="alternate" href="https://aast.edu/en/" hreflang="en">
+<link rel="alternate" href="https://aast.edu/ar/" hreflang="ar">
+<!-- <link rel="alternate" href="https://aast.edu/fr" hreflang="fr"> -->
+
+</head>
+
+<body class=""  mouseup='getSelectionText()'>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NLPQVJH"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div class="page-wrapper">
+ 	
+ 	
+   <!-- Main Header / Style One-->
+    <header class="main-header header-style-one">
+    	<!-- Header Top -->
+    	<div class="header-top">
+        	<div class="auto-container clearfix">
+            	<!-- Top Left -->
+            	<div class="top-left">
+                <ul class="clearfix">
+                    <!--<li><a href="mailto:admission@aast.edu"><span class="icon flaticon-letter-1"></span> admission@aast.edu</a></li>-->
+                   
+                      
+    <div id="feedback">
+  <div id="feedback-form" style='display:none;' class="col-xs-4 col-md-4 panel panel-default">
+
+  <!-- Accessibility Bar -->
+
+  <div id="jm-top-bar" >
+    <div id="jm-page-settings" class="pull-left" aria-hidden="true">
+      <ul class="nav menu">
+     <!--  <li class="access"> <i class="fa fa-wheelchair" aria-hidden="true"></i>  </li>-->
+        <li class="contrast">
+          <ul>
+           <!-- <li class="contrast-label"><span class="jm-separator">Contrast</span></li>-->
+            <li><a href="" rel="nofollow" class="jm-normal disabilities" data-value="" title="Enable Default mode.">
+            <span class="fa fa-sun-o" aria-hidden="true"></span><span class="sr-only"></span></a></li>
+
+            <li><a href="" rel="nofollow" class="jm-night  disabilities" data-value="night" title="Enable Night mode.">
+            <span class="fa fa-moon-o" aria-hidden="true"></span><span class="sr-only"></span></a></li>
+
+            <li><a href="" rel="nofollow" class="jm-highcontrast  disabilities" data-value="highcontrast" title="Set High Contrast Black White mode">
+            <span class="fa fa-eye" aria-hidden="true"></span><span class="sr-only"></span></a></li>
+
+            <li><a href="" rel="nofollow" class="jm-highcontrast2  disabilities" data-value="highcontrast2" title="Set High Contrast Black Yellow mode">
+            <span class="fa fa-eye" aria-hidden="true"></span><span class="sr-only"></span></a></li>
+
+            <li><a href="" rel="nofollow" class="jm-highcontrast3 disabilities" data-value="highcontrast3" title="Set High Contrast Yellow Black mode">
+            <span class="fa fa-eye" aria-hidden="true"></span><span class="sr-only"></span></a></li>
+
+          </ul>
+        </li>
+        <li class="resizer">
+          <ul>
+            <!--<li class="resizer-label"><span class="jm-separator">Font</span></li>-->
+            <li><a href="/joomla30/jm-university-wcag/en/?fontsize=70" rel="nofollow" class="jm-font-smaller" title="Smaller Font">
+                <span class="fa fa-minus-circle" aria-hidden="true"></span><span class="sr-only"></span></a></li>
+            <li><a href="/joomla30/jm-university-wcag/en/?fontsize=100" rel="nofollow" class="jm-font-normal" title="Default Font">
+                <span class="fa fa-font" aria-hidden="true"></span><span class="sr-only"></span></a></li>
+            <li><a href="/joomla30/jm-university-wcag/en/?fontsize=130" rel="nofollow" class="jm-font-larger" title="Larger Font">
+                <span class="fa fa-plus-circle" aria-hidden="true"></span><span class="sr-only"></span></a></li>
+          </ul>
+        </li>
+        <li class="resizer">
+          <ul>
+            <li class="resizer-label"><span class="jm-separator">Listen</span></li>
+            <li><a href="#" rel="nofollow" class="readPage-js" title="Read Page">
+                <i class="fa fa-volume-up" aria-hidden="true"></i><span class="sr-only">AASTMT Website </span></a></li>
+
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- End Accessibility Bar -->	
+  </div>
+  <div id="feedback-tab"><i class="fa fa-wheelchair" aria-hidden="true"></i>  </div>
+</div>                      
+ 
+<!-- End Feedback-->                        
+
+                    
+                        <li><a href="tel:19838"><i class="fa fa-phone" aria-hidden="true"></i>  19838</a></li>
+                
+					 <ul class="main-navigation-log">
+        
+              <li class="parentddl"><a class="parent-anchor" href="#"> <i class="fa fa-lock" aria-hidden="true"></i> Login</a>
+                <ul class="ddl-log">
+				<li class="child-ddl"><a class="child-anchor" href="https://studentportal.aast.edu/Login"  target="_blank">   Student</a> </li>
+                  <li class="child-ddl"><a class="child-anchor" href="https://staffportal.aast.edu/" target="_blank">  Staff</a></li>
+        
+                  
+                </ul>
+                </div>
+                
+                 <!-- Top Right -->
+                				
+				<div class="top-right">
+                	<ul class="clearfix">
+					 <li><a href="https://aast.edu/en/colleges/"> <i class="fa fa-graduation-cap" aria-hidden="true"></i> &nbsp;  Colleges</a></li>
+                    	<li><a href="https://aast.edu/en/students.php"> Students </a></li>
+                          <li> <a href="https://aast.edu/en/staff.php"> Faculty &amp; Staff</a></li>
+                          <li> <a href="https://aast.edu/en/alumni/" target="_blank"> Alumni </a></li>
+                          <li> <a href="https://aast.edu/en/visitors.php">  Visitors</a></li>
+                        <li><a class="search-box-btn" href="#"><span class="fa fa-search"></span></a></li>
+                    </ul>
+                </div>
+								<div class="top-right2">
+                	<ul class="clearfix">
+                    	<li><a href="https://aast.edu/ar/includes/functions/language_redirect.php?url=http://aast.edu/en/photogallery/"> AR </a></li>
+						<li> | </li>
+                          <li> <a class="active" > EN</a></li>
+                      </ul>
+                </div>
+                
+            </div>
+        </div><!-- Header Top End -->
+        
+    	<!--Header-Upper-->
+        
+        
+        <!--Header-Lower-->
+        <div class="header-lower">
+        	<div class="auto-container">
+            
+            <div class="pull-left logo-outer">
+                    	<div class="logo"><a href="https://aast.edu/"><img src="images\logo-2.png" alt="" title="AASTMT"></a></div>
+                    </div>
+                    
+            
+            <div class="pull-right upper-right clearfix">
+            	<div class="nav-outer">
+                    <!-- Main Menu -->
+                    <nav class="main-menu">
+                        <div class="navbar-header">
+                            <!-- Toggle Button -->    	
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            </button>
+                        </div>
+                        
+                        <div class="navbar-collapse collapse clearfix">
+                           <ul class="navigation clearfix">
+                                          <li ><a href="https://aast.edu/en/about/index.php">About </a>  </li>
+										  <li> <a class="blue" href="http://maritime.aast.edu" target="_blank"> <i class="fa fa-anchor" aria-hidden="true"></i>  Maritime </a> </li> 
+                                        
+                                        <li><a href="https://aast.edu/en/colleges/academics.php">Academics</a></li>
+                                        <li ><a href="https://aast.edu/en/admission/"  target="_blank">Admission</a>
+                                            
+                                        </li>
+                                        <li ><a href="https://aast.edu/en/research/" target="_blank">Research</a>
+                                           
+										</li>
+                                        <li><a href="https://aast.edu/en/media.php">Media &amp; News</a></li>
+                                          
+                             
+										<li><a href="https://aast.edu/en/services/">Services</a></li>
+                                        <li><a href="https://aast.edu/en/consultancy.php">Consultancy</a></li>
+                                        <li><a href="https://aast.edu/en/campuses/">Campuses</a></li>
+                                    
+                                    </ul>
+                        </div>
+                    </nav><!-- Main Menu End-->
+                
+                	<div class="btn-outer"><a href="https://aastmtic.aast.edu/onlineadmission/" target="_blank" class="theme-btn inq-btn"><span class="txt">Apply Now</span></a></div>
+                    
+                </div>
+                </div>
+            </div>
+        </div>
+    
+    </header>
+    <!--End Main Header -->  
+  
+    
+    <!--Page Title-->
+    <section class=".about-slider-area page-title" style="background-image:url(images/background/bg-page-title.jpg);">
+    	<div class="auto-container">
+        	<h1> AASTMT  <span class="theme_color">  Photogallery </span> </h1>
+                   </div>
+    </section>
+    
+    <!--Breadcrumb-->
+    <div class="theme-breadcrumb">
+    	<div class="auto-container">
+            <ol class="breadcrumb" style="margin-bottom: 5px;">
+              <li><a href="http://www.aast.edu/ar-2020/">Home</a></li>
+               <li class="active">AASTMT Photogallery   </li>
+            </ol>
+        </div>
+    </div>
+    
+
+
+ <section class="services-style-one padd-top-40">
+    	<div class="auto-container">
+            
+        	<div class="row clearfix">
+          	
+ <div id="container">
+           	
+
+<!--   <div id="archive"> <a href="http://www.aast.edu/en/photo-gallery-2014/" /> Previous Photo Gallery </a> </div>   -->  
+<select id="gallery_cat_selector">
+			<option selected="selected" value="1">general</option>
+			
+<option value="3">visits</option>
+		</select>
+				<!-- Start Advanced Gallery Html Containers -->
+				<div id="gallery" class="content">
+					<div id="controls" class="controls">
+
+
+
+
+				</div>
+					<div class="slideshow-container">
+						<div id="loading" class="loader"></div>
+						<div id="slideshow" class="slideshow"></div>
+						<div id="caption" class="caption-container"></div>
+					</div>
+					<div id="captionToggle">
+						<a href="#toggleCaption" class="off" title="Show Caption">Show Caption</a>
+					</div>
+				</div>
+				<div id="thumbs" class="navigation">
+				
+					<ul class="thumbs noscript" >
+                    <!-- 24-2-2014 new items -->
+                    							
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_94_1_01.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_94_1_01.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">Rally Egypt  Day2</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_95_1_02.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_95_1_02.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">Rally Egypt  Day2</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1412_1_211004130616_WhatsApp Image 2021-10-04 at 1.12.07 PM.jpeg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1412_1_211004130616_WhatsApp Image 2021-10-04 at 1.12.07 PM.jpeg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">H.E AASTMT President Participation in the Egyptian Judiciary Day Celebration on Saturday 2- 10- 2021, at Al-Manara Conference Center in the Fifth Settlement - New Cairo.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1413_1_211004130808_8dee969f-8426-4e73-8d79-d6838ae54d0c.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1413_1_211004130808_8dee969f-8426-4e73-8d79-d6838ae54d0c.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT "Smart Village Campus" Graduation Ceremony 2021 on Saturday 2- 10- 2021, at 8:00 pm, at Nile Ritz Carleton.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1414_1_211004130808_344030d3-1266-466c-a90a-addf2bf86bdf.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1414_1_211004130808_344030d3-1266-466c-a90a-addf2bf86bdf.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT "Smart Village Campus" Graduation Ceremony 2021 on Saturday 2- 10- 2021, at 8:00 pm, at Nile Ritz Carleton.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1415_1_211004130808_f12b14e5-12fc-4d36-b2ec-beab073a8f20.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1415_1_211004130808_f12b14e5-12fc-4d36-b2ec-beab073a8f20.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT "Smart Village Campus" Graduation Ceremony 2021 on Saturday 2- 10- 2021, at 8:00 pm, at Nile Ritz Carleton.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1416_1_211004130808_ff6240a2-8640-4f58-bfb5-46a5a05db2df.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1416_1_211004130808_ff6240a2-8640-4f58-bfb5-46a5a05db2df.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT "Smart Village Campus" Graduation Ceremony 2021 on Saturday 2- 10- 2021, at 8:00 pm, at Nile Ritz Carleton.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1417_1_211004131019_6d9d6a78-16f7-41b3-8310-dac6bad07204.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1417_1_211004131019_6d9d6a78-16f7-41b3-8310-dac6bad07204.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">H.E AASTMT President Participation in the "Egyptian-Russian Youth Forum" on Saturday 2- 10- 2021, in the presence of H.E Dr. Ashraf Sobhi - Egyptian Minister of Youth and Sports, H.E Mr. Georgy Borisenko - Russian Ambassador in Cairo, Assistant Ministers, Assistant Ministers of Foreign Affairs, Tourism and Communications, and a number of Senators and Representatives.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1418_1_211004131020_33ce76f0-4027-4c8a-bd0d-209ef31d8d08.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1418_1_211004131020_33ce76f0-4027-4c8a-bd0d-209ef31d8d08.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">H.E AASTMT President Participation in the "Egyptian-Russian Youth Forum" on Saturday 2- 10- 2021, in the presence of H.E Dr. Ashraf Sobhi - Egyptian Minister of Youth and Sports, H.E Mr. Georgy Borisenko - Russian Ambassador in Cairo, Assistant Ministers, Assistant Ministers of Foreign Affairs, Tourism and Communications, and a number of Senators and Representatives.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1419_1_211004131020_e5337020-cb2d-4431-956f-391d95ae5e5a.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1419_1_211004131020_e5337020-cb2d-4431-956f-391d95ae5e5a.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">H.E AASTMT President Participation in the "Egyptian-Russian Youth Forum" on Saturday 2- 10- 2021, in the presence of H.E Dr. Ashraf Sobhi - Egyptian Minister of Youth and Sports, H.E Mr. Georgy Borisenko - Russian Ambassador in Cairo, Assistant Ministers, Assistant Ministers of Foreign Affairs, Tourism and Communications, and a number of Senators and Representatives.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1420_1_211004131020_fed54359-aeb0-4609-872b-e2762a326840.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1420_1_211004131020_fed54359-aeb0-4609-872b-e2762a326840.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">H.E AASTMT President Participation in the "Egyptian-Russian Youth Forum" on Saturday 2- 10- 2021, in the presence of H.E Dr. Ashraf Sobhi - Egyptian Minister of Youth and Sports, H.E Mr. Georgy Borisenko - Russian Ambassador in Cairo, Assistant Ministers, Assistant Ministers of Foreign Affairs, Tourism and Communications, and a number of Senators and Representatives.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1421_1_211004131208_3ab60e9a-8fe3-4e53-ac42-560a2daee9ce.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1421_1_211004131208_3ab60e9a-8fe3-4e53-ac42-560a2daee9ce.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">H.E Prof. Dr. Ismail Abdel Ghafar Ismail Farag - AASTMT President and H.E Mr Mohamed Mohamed Abdallah - Ambassador of the Islamic Republic of Mauritania to the Arab Republic of Egypt, meeting on Thursday 30- 9- 2021, at AASTMT </div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1422_1_211004131208_6acc7f61-d6d6-421b-b479-41a0ee6d256e.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1422_1_211004131208_6acc7f61-d6d6-421b-b479-41a0ee6d256e.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">H.E Prof. Dr. Ismail Abdel Ghafar Ismail Farag - AASTMT President and H.E Mr Mohamed Mohamed Abdallah - Ambassador of the Islamic Republic of Mauritania to the Arab Republic of Egypt, meeting on Thursday 30- 9- 2021, at AASTMT </div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1423_1_211004131209_82e17e75-073b-472b-bf10-ff238f09440f.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1423_1_211004131209_82e17e75-073b-472b-bf10-ff238f09440f.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">H.E Prof. Dr. Ismail Abdel Ghafar Ismail Farag - AASTMT President and H.E Mr Mohamed Mohamed Abdallah - Ambassador of the Islamic Republic of Mauritania to the Arab Republic of Egypt, meeting on Thursday 30- 9- 2021, at AASTMT </div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1424_1_211004131209_86e78b8f-8179-4ce7-a818-132ceddb0ba1.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1424_1_211004131209_86e78b8f-8179-4ce7-a818-132ceddb0ba1.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">H.E Prof. Dr. Ismail Abdel Ghafar Ismail Farag - AASTMT President and H.E Mr Mohamed Mohamed Abdallah - Ambassador of the Islamic Republic of Mauritania to the Arab Republic of Egypt, meeting on Thursday 30- 9- 2021, at AASTMT </div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1425_1_211004131209_d2ffd0f2-fea9-47b3-a0da-ed65798027a8.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1425_1_211004131209_d2ffd0f2-fea9-47b3-a0da-ed65798027a8.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">H.E Prof. Dr. Ismail Abdel Ghafar Ismail Farag - AASTMT President and H.E Mr Mohamed Mohamed Abdallah - Ambassador of the Islamic Republic of Mauritania to the Arab Republic of Egypt, meeting on Thursday 30- 9- 2021, at AASTMT </div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1426_1_211004131243_3ab60e9a-8fe3-4e53-ac42-560a2daee9ce.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1426_1_211004131243_3ab60e9a-8fe3-4e53-ac42-560a2daee9ce.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">H.E Prof. Dr. Ismail Abdel Ghafar Ismail Farag - AASTMT President and H.E Mr Mohamed Mohamed Abdallah - Ambassador of the Islamic Republic of Mauritania to the Arab Republic of Egypt, meeting on Thursday 30- 9- 2021, at AASTMT </div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1427_1_211004131243_6acc7f61-d6d6-421b-b479-41a0ee6d256e.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1427_1_211004131243_6acc7f61-d6d6-421b-b479-41a0ee6d256e.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">H.E Prof. Dr. Ismail Abdel Ghafar Ismail Farag - AASTMT President and H.E Mr Mohamed Mohamed Abdallah - Ambassador of the Islamic Republic of Mauritania to the Arab Republic of Egypt, meeting on Thursday 30- 9- 2021, at AASTMT </div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1428_1_211004131243_82e17e75-073b-472b-bf10-ff238f09440f.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1428_1_211004131243_82e17e75-073b-472b-bf10-ff238f09440f.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">H.E Prof. Dr. Ismail Abdel Ghafar Ismail Farag - AASTMT President and H.E Mr Mohamed Mohamed Abdallah - Ambassador of the Islamic Republic of Mauritania to the Arab Republic of Egypt, meeting on Thursday 30- 9- 2021, at AASTMT </div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1429_1_211004131243_86e78b8f-8179-4ce7-a818-132ceddb0ba1.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1429_1_211004131243_86e78b8f-8179-4ce7-a818-132ceddb0ba1.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">H.E Prof. Dr. Ismail Abdel Ghafar Ismail Farag - AASTMT President and H.E Mr Mohamed Mohamed Abdallah - Ambassador of the Islamic Republic of Mauritania to the Arab Republic of Egypt, meeting on Thursday 30- 9- 2021, at AASTMT </div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1430_1_211004131243_d2ffd0f2-fea9-47b3-a0da-ed65798027a8.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1430_1_211004131243_d2ffd0f2-fea9-47b3-a0da-ed65798027a8.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">H.E Prof. Dr. Ismail Abdel Ghafar Ismail Farag - AASTMT President and H.E Mr Mohamed Mohamed Abdallah - Ambassador of the Islamic Republic of Mauritania to the Arab Republic of Egypt, meeting on Thursday 30- 9- 2021, at AASTMT </div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1431_1_211004131254_3ab60e9a-8fe3-4e53-ac42-560a2daee9ce.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1431_1_211004131254_3ab60e9a-8fe3-4e53-ac42-560a2daee9ce.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">H.E Prof. Dr. Ismail Abdel Ghafar Ismail Farag - AASTMT President and H.E Mr Mohamed Mohamed Abdallah - Ambassador of the Islamic Republic of Mauritania to the Arab Republic of Egypt, meeting on Thursday 30- 9- 2021, at AASTMT </div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1432_1_211004131254_6acc7f61-d6d6-421b-b479-41a0ee6d256e.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1432_1_211004131254_6acc7f61-d6d6-421b-b479-41a0ee6d256e.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">H.E Prof. Dr. Ismail Abdel Ghafar Ismail Farag - AASTMT President and H.E Mr Mohamed Mohamed Abdallah - Ambassador of the Islamic Republic of Mauritania to the Arab Republic of Egypt, meeting on Thursday 30- 9- 2021, at AASTMT </div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1433_1_211004131254_82e17e75-073b-472b-bf10-ff238f09440f.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1433_1_211004131254_82e17e75-073b-472b-bf10-ff238f09440f.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">H.E Prof. Dr. Ismail Abdel Ghafar Ismail Farag - AASTMT President and H.E Mr Mohamed Mohamed Abdallah - Ambassador of the Islamic Republic of Mauritania to the Arab Republic of Egypt, meeting on Thursday 30- 9- 2021, at AASTMT </div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1434_1_211004131254_86e78b8f-8179-4ce7-a818-132ceddb0ba1.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1434_1_211004131254_86e78b8f-8179-4ce7-a818-132ceddb0ba1.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">H.E Prof. Dr. Ismail Abdel Ghafar Ismail Farag - AASTMT President and H.E Mr Mohamed Mohamed Abdallah - Ambassador of the Islamic Republic of Mauritania to the Arab Republic of Egypt, meeting on Thursday 30- 9- 2021, at AASTMT </div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1435_1_211004131254_d2ffd0f2-fea9-47b3-a0da-ed65798027a8.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1435_1_211004131254_d2ffd0f2-fea9-47b3-a0da-ed65798027a8.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">H.E Prof. Dr. Ismail Abdel Ghafar Ismail Farag - AASTMT President and H.E Mr Mohamed Mohamed Abdallah - Ambassador of the Islamic Republic of Mauritania to the Arab Republic of Egypt, meeting on Thursday 30- 9- 2021, at AASTMT </div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1402_1_67.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1402_1_67.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">students</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_81_1_01.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_81_1_01.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">The College of Language and Communication (AASTMT) celebrated, Thursday, the graduation of a new batch of its students, Class Sep. 2020</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_103_1_03.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_103_1_03.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">World Walking Day</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_61_1_cod2.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_61_1_cod2.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">Advisory Board Faculty of Maritime Maritime Transport</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1297_1_15781660_1294584337269927_4498403590438538671_n.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1297_1_15781660_1294584337269927_4498403590438538671_n.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">\"World Fisheries Day\" Celebration At AASTMT AbuKir Campus on Wednesday 28- 12- 2016.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1303_1_15723784_1020452948101228_3019409750494767970_o.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1303_1_15723784_1020452948101228_3019409750494767970_o.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">\"World Fisheries Day\" Celebration At AASTMT AbuKir Campus on Wednesday 28- 12- 2016.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1230_1_14938228_1238398912888470_7572769432162418584_n.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1230_1_14938228_1238398912888470_7572769432162418584_n.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">The League of Arab States and AASTMT workshop on the development of an implementation plan to identify the mechanisms of establishing two joint private sector companies between the the Arab countries and South American countries, on 6 - 7 November 2016, at AASTMT AbuKir Campus â€“ Alexandria.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1215_1_13987558_923218351158022_3474336479693891159_o.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1215_1_13987558_923218351158022_3474336479693891159_o.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">Graduation Ceremony Of First Batch Of Port Said Campus \"College of International Transport and Logistics\" on Wednesday 17- 8- 2016.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_949_1_DSC_0279 (2).jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_949_1_DSC_0279 (2).jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT Dinner Reception for the International Conference â€œBioVisionAlexandria 2016 - (BVA)\" participants on Wednesday 13- 4- 2016, at AASTMT AbuKir Campus.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_950_1_Dsc_0355.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_950_1_Dsc_0355.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT Dinner Reception for the International Conference â€œBioVisionAlexandria 2016 - (BVA)\" participants on Wednesday 13- 4- 2016, at AASTMT AbuKir Campus.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_952_1_DSC_0343 (2).jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_952_1_DSC_0343 (2).jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT Dinner Reception for the International Conference â€œBioVisionAlexandria 2016 - (BVA)\" participants on Wednesday 13- 4- 2016, at AASTMT AbuKir Campus.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_955_1_Dsc_0352.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_955_1_Dsc_0352.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT Dinner Reception for the International Conference â€œBioVisionAlexandria 2016 - (BVA)\" participants on Wednesday 13- 4- 2016, at AASTMT AbuKir Campus.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_865_1_12898184_1068710999857263_4004932844944074765_o.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_865_1_12898184_1068710999857263_4004932844944074765_o.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT Graduation Ceremony of International Educational programs on Wednesday 23- 3- 2016, at Hilton Green Plaza â€“ Alexandria.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_848_1_unnamed (2).jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_848_1_unnamed (2).jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT Smart Village students of College of International Transport and Logistics celebration on the occasion of Mother Day, on Sunday 20- 3- 2016</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_826_1_01.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_826_1_01.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">The International Maritime Transport & Logistics Conference (MARLOG 5) that entitled \"Toward Smart Ports\", from 13 - 15 March 2016, at Hilton Green Plaza Hotel â€“ Alexandria.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_827_1_02.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_827_1_02.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">The International Maritime Transport & Logistics Conference (MARLOG 5) that entitled \"Toward Smart Ports\", from 13 - 15 March 2016, at Hilton Green Plaza Hotel â€“ Alexandria.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_828_1_03.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_828_1_03.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">The International Maritime Transport & Logistics Conference (MARLOG 5) that entitled \"Toward Smart Ports\", from 13 - 15 March 2016, at Hilton Green Plaza Hotel â€“ Alexandria.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_829_1_04.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_829_1_04.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">The International Maritime Transport & Logistics Conference (MARLOG 5) that entitled \"Toward Smart Ports\", from 13 - 15 March 2016, at Hilton Green Plaza Hotel â€“ Alexandria.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_830_1_05.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_830_1_05.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">The International Maritime Transport & Logistics Conference (MARLOG 5) that entitled \"Toward Smart Ports\", from 13 - 15 March 2016, at Hilton Green Plaza Hotel â€“ Alexandria.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_831_1_06.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_831_1_06.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">The International Maritime Transport & Logistics Conference (MARLOG 5) that entitled \"Toward Smart Ports\", from 13 - 15 March 2016, at Hilton Green Plaza Hotel â€“ Alexandria.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_832_1_07.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_832_1_07.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">The International Maritime Transport & Logistics Conference (MARLOG 5) that entitled \"Toward Smart Ports\", from 13 - 15 March 2016, at Hilton Green Plaza Hotel â€“ Alexandria.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_833_1_08.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_833_1_08.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">The International Maritime Transport & Logistics Conference (MARLOG 5) that entitled \"Toward Smart Ports\", from 13 - 15 March 2016, at Hilton Green Plaza Hotel â€“ Alexandria.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_834_1_09.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_834_1_09.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">The International Maritime Transport & Logistics Conference (MARLOG 5) that entitled \"Toward Smart Ports\", from 13 - 15 March 2016, at Hilton Green Plaza Hotel â€“ Alexandria.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_835_1_10.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_835_1_10.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">The International Maritime Transport & Logistics Conference (MARLOG 5) that entitled \"Toward Smart Ports\", from 13 - 15 March 2016, at Hilton Green Plaza Hotel â€“ Alexandria.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_836_1_11.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_836_1_11.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">The International Maritime Transport & Logistics Conference (MARLOG 5) that entitled \"Toward Smart Ports\", from 13 - 15 March 2016, at Hilton Green Plaza Hotel â€“ Alexandria.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_837_1_12.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_837_1_12.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">The International Maritime Transport & Logistics Conference (MARLOG 5) that entitled \"Toward Smart Ports\", from 13 - 15 March 2016, at Hilton Green Plaza Hotel â€“ Alexandria.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_838_1_13.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_838_1_13.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">The International Maritime Transport & Logistics Conference (MARLOG 5) that entitled \"Toward Smart Ports\", from 13 - 15 March 2016, at Hilton Green Plaza Hotel â€“ Alexandria.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_839_1_14.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_839_1_14.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">The International Maritime Transport & Logistics Conference (MARLOG 5) that entitled \"Toward Smart Ports\", from 13 - 15 March 2016, at Hilton Green Plaza Hotel â€“ Alexandria.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_733_1_nnn.JPG" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_733_1_nnn.JPG"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">Inauguration of AASTMT Smart Village Campus Exhibition of Architectural Engineering and Mechatronics Departments on Thursday 3- 3- 2016.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_734_1_image3.JPG" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_734_1_image3.JPG"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">Inauguration of AASTMT Smart Village Campus Exhibition of Architectural Engineering and Mechatronics Departments on Thursday 3- 3- 2016.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_735_1_image1.JPG" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_735_1_image1.JPG"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">Inauguration of AASTMT Smart Village Campus Exhibition of Architectural Engineering and Mechatronics Departments on Thursday 3- 3- 2016.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_736_1_image2.JPG" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_736_1_image2.JPG"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">Inauguration of AASTMT Smart Village Campus Exhibition of Architectural Engineering and Mechatronics Departments on Thursday 3- 3- 2016.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_722_1_12764575_812939705519221_6095132465705083863_o.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_722_1_12764575_812939705519221_6095132465705083863_o.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">The workshop of â€œLearning to lead Adaptivelyâ€ during 25 - 26 February 2015, at AASTMT AbuKir Campus â€“ Alexandri. </div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_732_1_12792236_812428388903686_269658363277704610_o.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_732_1_12792236_812428388903686_269658363277704610_o.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">The workshop of â€œLearning to lead Adaptivelyâ€ during 25 - 26 February 2015, at AASTMT AbuKir Campus â€“ Alexandri. </div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_694_1_12744175_1049004048494625_3280186901533734820_n.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_694_1_12744175_1049004048494625_3280186901533734820_n.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">H.E Prof. Dr. Ismail Abdel Ghafar Ismail - AASTMT President, H.E Dr. Ashra El-Shihy â€“ Egyptian Minister of Higher Education and Scientific Research and H.E Major General Magdy Hegazy - Governor of Aswan at AASTMT South Valley Campus (Aswan) to inspect the new on Monday 22- 2- 2016.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_695_1_12747542_1019580658102297_5248618332420222855_o.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_695_1_12747542_1019580658102297_5248618332420222855_o.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">H.E Prof. Dr. Ismail Abdel Ghafar Ismail - AASTMT President, H.E Dr. Ashra El-Shihy â€“ Egyptian Minister of Higher Education and Scientific Research and H.E Major General Magdy Hegazy - Governor of Aswan at AASTMT South Valley Campus (Aswan) to inspect the new on Monday 22- 2- 2016.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_698_1_3520_1049468091781554_1012515368795811657_n.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_698_1_3520_1049468091781554_1012515368795811657_n.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">The 33rd National Radio Science Conference (NRSC) at AASTMT South Valley Campus in Aswan, during the period from 22 - 25 February 2016.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_711_1_12733966_1049465001781863_223357424429989079_n.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_711_1_12733966_1049465001781863_223357424429989079_n.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">H.E Prof. Dr. Ismail Abdel Ghafar Ismail - AASTMT President, H.E Dr. Ashra El-Shihy â€“ Egyptian Minister of Higher Education and Scientific Research and H.E Major General Magdy Hegazy - Governor of Aswan at AASTMT South Valley Campus (Aswan) to inspect the new on Monday 22- 2- 2016.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_683_1_12742398_1048147451913618_4030981795884323767_n.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_683_1_12742398_1048147451913618_4030981795884323767_n.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">The workshop that entitled \"Quality In Portsâ€ on Saturday 21- 2- 2016, at Intercontinental Hotel - Jeddah.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_656_1_conference (2).jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_656_1_conference (2).jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">The Arab Youth Forum that entitled: â€œAn innovative approach to Green growth and job creation in the MENA regionâ€, during 31- 1- 2016 to 2- 2- 2016, at Alexandria (Bibliotheca Alexandrina).</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_655_1_120162443411259Ø§Ù„Ø£ÙƒØ§Ø¯ÙŠÙ…ÙŠØ©-Ø§Ù„Ø¹Ø±Ø¨ÙŠØ©-ØªØ³ØªÙ‚Ø¨Ù„-ÙˆÙØ¯-Ø¬Ø§Ù…Ø¹Ø©-Ø£ØªÙˆÙ†ÙˆÙ…Ø§-Ø§Ù„Ø¥Ø³Ø¨Ø§Ù†ÙŠØ©-(2).jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_655_1_120162443411259Ø§Ù„Ø£ÙƒØ§Ø¯ÙŠÙ…ÙŠØ©-Ø§Ù„Ø¹Ø±Ø¨ÙŠØ©-ØªØ³ØªÙ‚Ø¨Ù„-ÙˆÙØ¯-Ø¬Ø§Ù…Ø¹Ø©-Ø£ØªÙˆÙ†ÙˆÙ…Ø§-Ø§Ù„Ø¥Ø³Ø¨Ø§Ù†ÙŠØ©-(2).jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">Autonomous University of Barcelona Delegation at AASTMT College of Language and Communication in Cairo.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_627_1_12625629_10153219822100178_611236347_n.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_627_1_12625629_10153219822100178_611236347_n.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT new agreements with different World Universities as Cardiff Metropolitan, Aston, Brunel, and Staffordshire University on Wednesday 20- 1- 2016.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_634_1_12496206_1003214356405594_2435248496486213117_o.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_634_1_12496206_1003214356405594_2435248496486213117_o.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">China Satellite Navigation Office Delegation at AASTMT - AbuKir Campus â€“ Alexandria, on Friday 22- 1- 2016, to discuss the methods of cooperation and attend the graduation ceremony of AASTMT College of Maritime Transport and Technology - Batch No.84 of Basic studies students.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_595_1_12401767_783862805093578_1026740942563804475_o.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_595_1_12401767_783862805093578_1026740942563804475_o.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT Students Exhibition Of Colleges of Engineering - Computing â€“ Logistics in Alexandria on Thursday 14- 5- 2015.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_567_1_1933310_783340718479120_8261598724989949580_o.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_567_1_1933310_783340718479120_8261598724989949580_o.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">The ending of College of Maritime Transport and Technology â€œMaritime and Culturalâ€ Activities on Tuesday 29- 12- 2015. </div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_576_1_12377531_783336431812882_5997065969390437552_o.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_576_1_12377531_783336431812882_5997065969390437552_o.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">The ending of College of Maritime Transport and Technology â€œMaritime and Culturalâ€ Activities on Tuesday 29- 12- 2015. </div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_526_1_12321314_1006456242749406_5610225606215672016_n.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_526_1_12321314_1006456242749406_5610225606215672016_n.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">H.E Ambassador Dr. Hazem Fahmy - Secretary General of the Egyptian Agency of Partnership for Development (EAPD), at AASTMT AbuKir Campus in Alexandria, on Tuesday 8- 12- 2015.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_515_1_AW.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_515_1_AW.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT was honored as \"University Of The Year\" at the closing of the Global Entrepreneurship Week (GEW) on Monday 30- 11- 2015, at AASTMT Cairo Campus in Heliopolis.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_518_1_4.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_518_1_4.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">ENSTA Bretagne University and AASTMT Memorandum Of Understanding on Tuesday 1- 12- 2015, at ENSTA Bretagne, Brest, France.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_519_1_3.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_519_1_3.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">ENSTA Bretagne University and AASTMT Memorandum Of Understanding on Tuesday 1- 12- 2015, at ENSTA Bretagne, Brest, France.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_520_1_5.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_520_1_5.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">ENSTA Bretagne University and AASTMT Memorandum Of Understanding on Tuesday 1- 12- 2015, at ENSTA Bretagne, Brest, France.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_505_1_12308998_10156230026625117_1251804568_n.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_505_1_12308998_10156230026625117_1251804568_n.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">Graduation Ceremony of Professional Diploma in Ports Operation of AASTMT Alexandria International Transport & Logistics Institute \\\\\\\\\\\\\\\\</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_496_1_01.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_496_1_01.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT participation in The Martime Academic Conference & Expo 2015 - MARACAD during 9 â€“ 10 November, 2015, at Dubai World Trade Centre.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_497_1_02.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_497_1_02.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT participation in The Martime Academic Conference & Expo 2015 - MARACAD during 9 â€“ 10 November, 2015, at Dubai World Trade Centre.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_498_1_03.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_498_1_03.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT participation in The Martime Academic Conference & Expo 2015 - MARACAD during 9 â€“ 10 November, 2015, at Dubai World Trade Centre.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_469_1_01.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_469_1_01.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">Arab Transport Ministersâ€™ participation in the \\\\</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_454_1_01.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_454_1_01.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">British universities delegation for training At AASTMT on Thursday 22- 10- 2015, at AbuKir Campus - Alexandria, to sign a training agreement between GRIMBSY University and AASTMT.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_456_1_03.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_456_1_03.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">British universities delegation for training At AASTMT on Thursday 22- 10- 2015, at AbuKir Campus - Alexandria, to sign a training agreement between GRIMBSY University and AASTMT.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_460_1_Image4.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_460_1_Image4.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">H.E Mr. Tomas A. Guardia - Ambassador of Panama at AASTMT AbuKir Campus â€“ Alexandria, on Thursday 22- 10- 2015.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_411_1_12028862_971051229623241_6361829839189383032_o.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_411_1_12028862_971051229623241_6361829839189383032_o.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">Alexandria Graduate School Of Business Graduation Ceremony on Wednesday 9- 9- 2015, at 7:00 pm, at San Stefano Hall - Four Seasons Hotel - Alexandria.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_389_1_11996912_10153018967365178_2940268643434977870_n.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_389_1_11996912_10153018967365178_2940268643434977870_n.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">H.E AASTMT President at Dalian Maritime University ï¼ˆDMU), on Monday 14- 9- 2015, to sign a co-operational agreement, in the presence of DMU President, Vice President and Colleges Deans.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_388_1_AsyFH2X_fmktX4rzAGM_vXp2zpiUdAAo2-i1lzW9vpKN.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_388_1_AsyFH2X_fmktX4rzAGM_vXp2zpiUdAAo2-i1lzW9vpKN.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT participation in China-Arab States Expo 2015 that was held during 10 â€“ 13 September 2015, in the presence of many Arab and Egyptian dignitaries.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_390_1_01.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_390_1_01.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT Computer Engineering Department participation in the Egyptian Engineering Day \"EED 2015\" that was held during 31- 8- 2015 and 1- 9- 2015, at Al-Azhar Conference Center (ACC).</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_391_1_02.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_391_1_02.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT Computer Engineering Department participation in the Egyptian Engineering Day \"EED 2015\" that was held during 31- 8- 2015 and 1- 9- 2015, at Al-Azhar Conference Center (ACC).</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_108_1_02.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_108_1_02.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">Industrial Training Council (ITC) at AASTMT AbuKir Campus on Sunday 19- 4- 2015 to coordinate the preparation of AASTMT first Technical Education Forum.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_107_1_01.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_107_1_01.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">Industrial Training Council (ITC) at AASTMT AbuKir Campus on Sunday 19- 4- 2015 to coordinate the preparation of AASTMT first Technical Education Forum.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_106_1_03.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_106_1_03.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">Industrial Training Council (ITC) at AASTMT AbuKir Campus on Sunday 19- 4- 2015 to coordinate the preparation of AASTMT first Technical Education Forum.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_114_1_01.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_114_1_01.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">H.E Prof. Dr. Ismail Abdel Ghafar Ismail - AASTMT President visited Croatia during 19 - 21 April 2015, to sign a Co-operational Agreement between AASTMT and Zagreb University & the College of Marine Studies in Rica.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_109_1_01.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_109_1_01.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT AbuKir Campus in Alexandria Celebration with Orphanâ€™s Day on Friday 17- 4- 2015, with the participation of about 500 children.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_110_1_02.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_110_1_02.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT AbuKir Campus in Alexandria Celebration with Orphanâ€™s Day on Friday 17- 4- 2015, with the participation of about 500 children.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_111_1_03.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_111_1_03.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT AbuKir Campus in Alexandria Celebration with Orphanâ€™s Day on Friday 17- 4- 2015, with the participation of about 500 children.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_112_1_04.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_112_1_04.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT AbuKir Campus in Alexandria Celebration with Orphanâ€™s Day on Friday 17- 4- 2015, with the participation of about 500 children.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_113_1_05.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_113_1_05.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT AbuKir Campus in Alexandria Celebration with Orphanâ€™s Day on Friday 17- 4- 2015, with the participation of about 500 children.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_88_1_04.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_88_1_04.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">H.E Prof. Dr. Mohamed Yossef - Egyptain Minister of Technical Education and Training at AASTMT AbuKir Campus in Alexandria on Tuesday 7- 4- 2015.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_99_1_03.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_99_1_03.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">The Executive Council Members of the Holding Company for Maritime and Land Transport at AASTMT AbuKir Campus in Alexandria on Monday 6- 4- 2015.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_89_1_01.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_89_1_01.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">â€‹AASTMT President received a delegation from Alexandria Business Association (ABA) on Sunday 5- 4- 2015, at AASTMT AbuKir Campus.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_90_1_02.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_90_1_02.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">â€‹AASTMT President received a delegation from Alexandria Business Association (ABA) on Sunday 5- 4- 2015, at AASTMT AbuKir Campus.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_91_1_03.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_91_1_03.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">â€‹AASTMT President received a delegation from Alexandria Business Association (ABA) on Sunday 5- 4- 2015, at AASTMT AbuKir Campus.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_92_1_04.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_92_1_04.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">â€‹AASTMT President received a delegation from Alexandria Business Association (ABA) on Sunday 5- 4- 2015, at AASTMT AbuKir Campus.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_93_1_05o.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_93_1_05o.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">â€‹AASTMT President received a delegation from Alexandria Business Association (ABA) on Sunday 5- 4- 2015, at AASTMT AbuKir Campus.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_83_1_03.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_83_1_03.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">The event of RoboCupJunior Egypt 2015 on Friday and Saturday 3 - 4 April 2015, at AASTMT - AbuKir Campus â€“ Alexandria, with the participation of 160 students.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_79_1_01.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_79_1_01.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT and the Arab Science & Technology Competition that entitled â€œAl-Baz Initiative for Arab Capacities For Development and Innovationâ€, on Monday 30th March 2015.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_75_1_02.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_75_1_02.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">Starting of AASTMT International Maritime Transport & Logistics Conference (MARLOG 4) that entitled \"A Sustainable Development Perspective for Mega Projects\", from 29 â€“ 31 March 2015 at Hilton Green Plaza Hotel â€“ Alexandria. </div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_76_1_03.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_76_1_03.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">Starting of AASTMT International Maritime Transport & Logistics Conference (MARLOG 4) that entitled \"A Sustainable Development Perspective for Mega Projects\", from 29 â€“ 31 March 2015 at Hilton Green Plaza Hotel â€“ Alexandria. </div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_77_1_04.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_77_1_04.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">Starting of AASTMT International Maritime Transport & Logistics Conference (MARLOG 4) that entitled \"A Sustainable Development Perspective for Mega Projects\", from 29 â€“ 31 March 2015 at Hilton Green Plaza Hotel â€“ Alexandria.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_78_1_05.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_78_1_05.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">Starting of AASTMT International Maritime Transport & Logistics Conference (MARLOG 4) that entitled \"A Sustainable Development Perspective for Mega Projects\", from 29 â€“ 31 March 2015 at Hilton Green Plaza Hotel â€“ Alexandria.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_71_1_DSC_0190.JPG" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_71_1_DSC_0190.JPG"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">China\'\'s Beidou Navigation Satellite Delegation and the Chinese consul in Alexandria at AASTMT on Thursday 19- 3- 2015.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_73_1_DSC_0257.JPG" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_73_1_DSC_0257.JPG"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">China\'\'s Beidou Navigation Satellite Delegation and the Chinese consul in Alexandria at AASTMT on Thursday 19- 3- 2015.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_68_1_01.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_68_1_01.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">Graduation Ceremony of AASTMT Institute of International Transport and Logistics students on Monday 16- 3- 2015, at Four Seasons Hotel - Alexandria.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_69_1_02.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_69_1_02.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">Graduation Ceremony of AASTMT Institute of International Transport and Logistics students on Monday 16- 3- 2015, at Four Seasons Hotel - Alexandria.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_58_1_IMG-20150315-WA0000.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_58_1_IMG-20150315-WA0000.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT President Participation in the International Water Technology Conference (IWTC), during 12 â€“ 14 March 2015, in Sharm ElSheikh.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_59_1_IMG-20150315-WA0001.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_59_1_IMG-20150315-WA0001.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT President Participation in the International Water Technology Conference (IWTC), during 12 â€“ 14 March 2015, in Sharm ElSheikh.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_64_1_sob2.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_64_1_sob2.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT Cairo Campus College of Language and Communication session on Tuesday 10- 3- 2015 that entitled â€œLeague of generationâ€.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_65_1_sob3.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_65_1_sob3.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT Cairo Campus College of Language and Communication session on Tuesday 10- 3- 2015 that entitled â€œLeague of generationâ€.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_67_1_sobhy.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_67_1_sobhy.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT Cairo Campus College of Language and Communication session on Tuesday 10- 3- 2015 that entitled â€œLeague of generationâ€.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_55_1_01.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_55_1_01.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">Graduation Ceremony of AASTMT Cairo Colleges of â€œEngineering & Technologyâ€ and â€œComputing & Information Technologyâ€ on Monday 9- 3- 2015 , at the police academy conference Hall - New Cairo.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_47_1_02.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_47_1_02.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT honoring ceremony for athletes in Cairo in the presence of H.E AASTMT President, Sports suspension Superstars, Journalists and world Champions as well as AASTMT outstanding student athletes and various sports teams.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_42_1_01.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_42_1_01.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">Signing a joint co-operational agreement between AASTMT and the New & Renewable Energy Authority (NREA), on Sunday 8- 3- 2015.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_43_1_02.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_43_1_02.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">Signing a joint co-operational agreement between AASTMT and the New & Renewable Energy Authority (NREA), on Sunday 8- 3- 2015.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_46_1_dr.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_46_1_dr.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT honoring ceremony for athletes in Cairo in the presence of H.E AASTMT President, Sports suspension Superstars, Journalists and world Champions as well as AASTMT outstanding student athletes and various sports teams.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_49_1_04.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_49_1_04.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT honoring ceremony for athletes in Cairo in the presence of H.E AASTMT President, Sports suspension Superstars, Journalists and world Champions as well as AASTMT outstanding student athletes and various sports teams.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_39_1_01.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_39_1_01.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">Graduation Ceremony of AASTMT Alexandria Colleges of \\</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_41_1_03.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_41_1_03.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">Graduation Ceremony of AASTMT Alexandria Colleges of \\</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_36_1_01.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_36_1_01.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT Graduation Ceremony of Alexandria Branch Colleges of Maritime Transport & Technology, Management & Technology and International Transport & Logistics (February 2015), on Tuesday 3- 3- 2015, at 8:00 pm, at Al Zahra Hall - Hilton Green Plaza â€“ Alexandria.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_37_1_02.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_37_1_02.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT Graduation Ceremony of Alexandria Branch Colleges of Maritime Transport & Technology, Management & Technology and International Transport & Logistics (February 2015), on Tuesday 3- 3- 2015, at 8:00 pm, at Al Zahra Hall - Hilton Green Plaza â€“ Alexandria.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_38_1_03.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_38_1_03.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT Graduation Ceremony of Alexandria Branch Colleges of Maritime Transport & Technology, Management & Technology and International Transport & Logistics (February 2015), on Tuesday 3- 3- 2015, at 8:00 pm, at Al Zahra Hall - Hilton Green Plaza â€“ Alexandria.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_32_1_03.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_32_1_03.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT Practical Course â€œOn How To Apply Performance Measurement Indicators In The Arab Specialized Organizationsâ€, during the period from 1 â€“ 3 March 2015, at AASTMT Miami - Alexandria.</div>
+							</div>
+						</li>
+														
+						<li>
+													<a class="thumb" name="leaf" href="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_33_1_01.jpg" >
+								<img width="80" height="80" src="http://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_33_1_01.jpg"   />
+							</a>
+							<div class="caption">
+							<div class="image-desc">AASTMT President participation in the opening of WKF Premier League Competition that was held for the first time in Sharm ElSheikh - Egypt, during the period from 28- 2- 2015 to 1- 3-.2015.</div>
+							</div>
+						</li>
+							                   
+						    
+                        
+
+
+					</ul>
+				</div>
+
+        </div>
+        <!--content container:END-->
+        <div class="clear"></div>    
+        <!--Footer:Start -->
+        <!--Footer:END -->   
+    </div>
+</div>
+</div>
+</div>
+<!-- for accessibility-->
+<!-- <script src="js/pagesettings.js"></script> -->
+		<!-- for accessibility-->
+ <script type="text/javascript">
+  $('.disabilities').click(function(e){
+    e.preventDefault();
+
+    $("body").attr("class",$(this).attr('data-value'));
+
+    document.cookie = "disabilities="+$(this).attr('data-value');
+
+});
+  $(".jm-font-larger").click(function(e) {
+        e.preventDefault();
+
+    $("body").children().each(function() {
+
+      var size = parseInt($(this).css("font-size"));
+      if($(this).attr('default-font-size')==null){
+        $(this).attr('default-font-size',size);
+      }
+      size = size + 1 + "px";
+      $(this).css({
+        'font-size': size
+      });
+    });
+  });
+  $(".jm-font-smaller").click(function(e) {
+        e.preventDefault();
+
+    $("body").children().each(function() {
+      var size = parseInt($(this).css("font-size"));
+      if($(this).attr('default-font-size')==null){
+        $(this).attr('default-font-size',size);
+      }
+      size = size - 1 + "px";
+      $(this).css({
+        'font-size': size
+      });
+    });
+  });
+  $(".jm-font-normal").click(function(e) {
+        e.preventDefault();
+
+    $("body").children().each(function() {
+      var size = parseInt($(this).attr('default-font-size'));
+      if($(this).attr('default-font-size')!=null){
+        size = size  + "px";
+        $(this).css({
+          'font-size': size
+        });
+      }
+
+    });
+  });
+  
+</script>
+    
+
+ 
+ 
+ <!--Main Footer-->
+    <footer class="main-footer">
+        
+        <!--Footer Upper-->        
+        <div class="footer-upper" style="background-image:url(images/background/image-4.jpg);">
+            <div class="auto-container">
+                <div class="row clearfix">
+                    
+                    <!--Two 4th column-->
+                    <div class="col-md-6 col-sm-12 col-xs-12">
+                        <div class="row clearfix">
+                            <div class="col-lg-7 col-sm-6 col-xs-12 column">
+                                <div class="footer-widget about-widget">
+                                    <div class="logo">									
+									
+									<img src="images\logo-2.png" alt="">
+									</div>
+                                    <div class="text">
+                                        <p>AASTMT is providing many educational tracks in terms of high quality and diversity of service in order to harmonize with the dynamic development.					 
+										
+										</p>
+                                   
+                                    <div class="follow">Follow Us :</div>
+                                    <ul class="footer-social">
+                                <li><a href="https://www.facebook.com/pages/AAST/1463704063876547" target="_blank"><i class="fa fa-lg fa-facebook"> </i></a></li>
+                                <li><a href="https://twitter.com/AASTMTeg" target="_blank"><i class="fa fa-lg fa-twitter"></i></a></li>
+                                <li><a href="https://www.instagram.com/aast_arab.academy/" target="_blank"><i class="fa fa-lg fa-instagram"></i></a></li>
+                                <li><a href="https://www.linkedin.com/school/arab-academy-for-science-and-technology-and-maritime-transport/"><i class="fa fa-lg fa-linkedin"></i></a></li>
+								<li><a href="https://www.youtube.com/user/aastvideo/videos" target="_blank"><i class="fa fa-lg fa-youtube"></i></a></li>
+                            </ul>
+                                    
+                                </div> 
+                                </div>
+                            </div>
+                            
+                            <!--Footer Column-->
+                            <div class="col-lg-5 col-sm-6 col-xs-12 column">
+                                <div class="footer-widget links-widget">
+
+									<h3>Important Links</h3>
+                                    <div class="las_logo"> 
+									<a href="https://www.topuniversities.com/universities/arab-academy-science-technology-maritime-transport-aastmt" target="_blank"><img class="" src="images/footer/QS-STARS.png" alt="AASTMT QS 5Stars" title="AASTMT QS 5Stars"></a>
+
+<br> <br>
+             <a href="http://www.lasportal.org" target="_blank"><img class="" src="images/footer/arab_league.png" alt="arab-league" title="arab-league"> </a>
+            <a><img class="" src="images/footer/ain-logo.png" alt="AIN" title="AIN"></a>
+<!--  href="http://www.ainportal.org/ar/Pages/default.aspx" target="_blank" -->
+			</div>
+                                    
+                                </div>
+                            </div>
+                            
+                            
+                        </div>
+                    </div>
+                    <!--Two 4th column End-->
+                    
+                      <!--Two 4th column-->
+                    <div class="col-md-6 col-sm-12 col-xs-12">
+                        <div class="row clearfix"> 
+                        
+                        <!--Footer Column-->
+                            <div class="col-lg-6 col-sm-6 col-xs-12 column">
+                                 <div class="gallery-wideget footer-wideget">
+                            <h3>Photo Gallery </h3>
+                            <ul class="img-list clearfix">
+                                <li><a href="https://aast.edu/en/photogallery/"><figure><img src="images\footer\1.jpg" alt=""></figure></a></li>
+                                <li><a href="https://aast.edu/en/photogallery/"><figure><img src="images\footer\2.jpg" alt=""></figure></a></li>
+                                <li><a href="https://aast.edu/en/photogallery/" ><figure><img src="images\footer\3.jpg" alt=""></figure></a></li>
+                                <li><a href="https://aast.edu/en/photogallery/"><figure><img src="images\footer\4.jpg" alt=""></figure></a></li>
+                                <li><a href="https://aast.edu/en/photogallery/" ><figure><img src="images\footer\5.jpg" alt=""></figure></a></li>
+                                <li><a href="https://aast.edu/en/photogallery/"><figure><img src="images\footer\6.jpg" alt=""></figure></a></li>
+                            </ul>
+                        </div>
+                    </div><!--Two 4th column End-->
+                    
+                    
+                  
+                            <!--Footer Column-->
+                            <div class="col-lg-6 col-sm-6 col-xs-12 column">
+                                <div class="footer-widget links-widget">
+
+									<h3>quick Links</h3>
+                                    <ul>
+                                        <li><a href="https://aast.edu/en/careers.php" >Jobs and Vacancies</a></li>
+                                        <li><a href="https://www.aast.edu/en/csr/" target="_blank"> Corporate Social Responsibility</a></li>
+                                        <li><a href="https://aast.edu/en/contacts/maps.php" >Maps and Locations </a></li>
+                                        <li><a href="https://aastmtic2.aast.edu/certifications/certification.aspx" target="_blank"> Certificates Verification </a></li>
+										<li><a href="https://aast.edu/en/contacts/contact-us.php" target="_blank"> Contact Us </a></li>										
+
+                                    </ul>
+                                    
+                                </div>
+                            </div>
+
+
+							 <div class="col-lg-12 col-sm-6 col-xs-12"> <div class="pull-right">
+				   <div class="info-text" >
+ <a href="https://aast.edu/ar/policies/"> Policies and Terms of Use </a> 
+ | <a href="https://aast.edu/ar/policies/">  Copyright</a> | 
+				   <a href="https://aast.edu/ar/policies/social-media-policy.php">  Policies for Social Media Accounts</a>   </div>
+				   </div>
+
+				   </div>
+      
+                </div>
+                
+            </div>
+        </div>
+
+
+  </div>
+
+        </div>
+        </div>
+        <!--Footer Bottom-->
+        <div class="footer-bottom">
+            <div class="auto-container">
+                <div class="row clearfix">
+				 <div class="pull-left">
+                    <div class="copyright-text"> Copyright &copy; 2025  All Rights Reserved IDC - AASTMT </div>
+					</div>
+                   <div class="pull-right">
+				   <div class="info-text">     <a href="https://aast.edu/en/colleges/academics.php"> Academics </a> | <a href="https://aast.edu/en/colleges/">Colleges</a> | 
+				   <a href="https://aast.edu/en/colleges/education.php"> Training Continuing Education  </a> | <a href="https://aast.edu/en/centers.php"> Centers </a>  | <a href="https://aast.edu/en/institutes.php"> Institutes </a> |
+				   <a href="https://aast.edu/en/complexes.php"> Complexes  </a> | <a href="https://aast.edu/en/deaneries.php"> Deaneries  </a> | <a href="https://aast.edu/en/contacts/maps.php"> Maps & Locations </a>  </div>
+				   </div>
+                </div>
+            </div>
+        </div>
+        
+    </footer>
+    
+    
+</div>
+<!--End pagewrapper-->
+
+<!--Scroll to top-->
+<div class="scroll-to-top scroll-to-target" data-target=".main-header"><span class="icon fa fa-angle-up"></span></div>
+
+
+<!--Search Popup-->
+<div id="search-popup" class="search-popup">
+	<div class="close-search"><span class="fa fa-close"></span></div>
+	<div class="popup-inner">
+    
+    	<div class="search-form">
+        	<form method="get" action="" name="SearchForm" id="search">
+					<script async src="https://cse.google.com/cse.js?cx=011303405445987982477:a7wb0o0rgey"></script>
+					<!--<div class="gcse-search">
+					</div>-->
+                 <div class="form-group">	
+                	<fieldset>
+                        <input type="search" class="form-control" name="search" id="search" value="" placeholder="Enter Keyword" required>
+						<!--<input type="hidden" class="form-control" name="q" id="q" value="">-->
+                        <input type="radio" id="News"  name="status" value="news" /> News
+                        <input type="radio" id="People" name="status" value="people"  /> People
+		            	<!--<input type="radio" id="Events" name="status" value="events"  /> Events-->
+						<input type="radio" id="Pages" name="status" value="pages"  /> Pages
+			            <input type="radio" id="Web" name="status" value="web" checked="checked"/> Web
+                        <input type="submit" value="Search" class="theme-btn">
+                    </fieldset>
+                </div>
+            </form>
+        </div>
+        
+    </div>
+</div>
+
+<script src="js\jquery.js"></script> 
+<script src="js\bootstrap.min.js"></script>
+<script src="js\revolution.min.js"></script>
+<script src="js\jquery.fancybox.pack.js"></script>
+<script src="js\owl.js"></script>
+<!-- <script src="js\isotope.js"></script> 
+<script src="js\wow.js"></script>-->
+<script src="js\script.js"></script>
+<!-- <link href="js/bootstrap-table.css" rel="stylesheet" type="text/css" media="all"> -->
+<!--  -->
+<!-- <script src="js/jquery-1.10.2.min.js"></script> -->
+<!-- <script src="js/bootstrap-table.js"></script> -->
+
+<script src="lightbox/lightbox.min.js"></script> 
+
+<script>
+
+
+// scroll down	
+	$(document).ready(function(){
+  $("a").on('click', function(event) {
+    if (this.hash !== "") {
+      event.preventDefault();
+      var hash = this.hash;
+      $('html, body').animate({
+        scrollTop: $(hash).offset().top
+      }, 800, function(){
+        window.location.hash = hash;
+      });
+    } 
+  });
+});
+
+// counter
+$('.counter').each(function () {
+    $(this).prop('Counter',0).animate({
+        Counter: $(this).text()
+    }, {
+        duration: 4000,
+        easing: 'swing',
+        step: function (now) {
+            $(this).text(Math.ceil(now));
+        }
+    }); 
+});
+
+</script>
+
+
+
+<script>
+
+var radios = document.querySelector('input[name="status"]:checked').value;
+ console.log(radios);
+ 
+if(radios =="web"){
+ $("#search").attr("action", "/en/search/searchgoogle.php?q=&search=")
+}
+$(document).ready(function(){
+ $("input[name='status']").change(function(){
+ if($("#News").prop("checked") == true){
+      $("#search").attr("action", "/en/search/searchnews.php?search=&status=news")
+    }
+   else if($("#People").prop("checked") == true){
+      $("#search").attr("action", "/en/search/searchstaff.php?search=&status=people")
+    }
+   else if($("#Events").prop("checked") == true){
+      $("#search").attr("action", "/en/search/searchevents_new.php?search=&status=events")
+    }
+	else if($("#Web").prop("checked") == true){
+      $("#search").attr("action", "/en/search/searchgoogle.php?q=&search=&status=web")
+    }
+	  else if($("#Pages").prop("checked") == true){
+      $("#search").attr("action", "/en/search/searchall.php?search=&status=pages")
+    }
+    else {
+	 $("#search").attr("action", "/en/search/searchgoogle.php?q=&search=")
+		  
+    }
+   
+  });
+
+
+});       </script>
+
+
+
+</body>
+</html>
+<!-- <script type="text/javascript" src="../../js-bootstrap/footermenu.js"></script>
+<link href="../../css-bootstrap/footermenu.css" type="text/css" rel="stylesheet" />-->
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) <script src="js/jquery.min.js"></script>
+-->
+<!--<script src="../../js/bootstrap.min.js"></script>
+<script src="../../js/fitvid.js"></script>
+<script type="text/javascript" src="../../jquery-1.8.0.min.js"></script>	-->
+<!-- End footer -->
+
+
+ <style>
+    
+     </style>
+<!--Content:END -->
+   </body>
+</html>

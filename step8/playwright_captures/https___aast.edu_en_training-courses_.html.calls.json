@@ -1,0 +1,518 @@
+[
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/training-courses/",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/training-courses/css/fontawesome.min.css",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/training-courses/css/app.css",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/training-courses/css/style.css",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://platform-api.sharethis.com/js/sharethis.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/training-courses/img/logo.webp",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/training-courses/img/category/32.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/training-courses/img/category/11.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/training-courses/img/category/6.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/training-courses/img/category/28.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/getData/retreiveOnePICNew.php?img=18.png&module=2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/getData/retreiveOnePICNew.php?img=42.webp&module=2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/getData/retreiveOnePICNew.php?img=13.jpg&module=2.jpg",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/getData/retreiveOnePICNew.php?img=44.jpg&module=2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/getData/retreiveOnePICNew.php?img=16.jpg&module=2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/getData/retreiveOnePICNew.php?&img=22.jpg&module=2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/getData/retreiveOnePICNew.php?&img=21.jpg&module=2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/getData/retreiveOnePICNew.php?&img=19.jpg&module=2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/training-courses/img/training/UoL-LSE.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/training-courses/img/training/coventry-university-logo.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/training-courses/img/training/Northampton.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/main/img/partners/hull.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/main/img/partners/UCLan-new-logo-No-Back.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/main/img/partners/Autonoma.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/main/img/partners/renne-university-logo.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/main/img/partners/university-of-plymouth-vector-logo.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/ar/footer/img/arab_league.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/ar/footer/img/ain-logo.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/ar/footer/img/QS-STARS.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en/training-courses/",
+    "status": 200,
+    "content_type": "text/html; charset=UTF-8",
+    "sample": "\n\n\n<!DOCTYPE html>\n<html>\n<head>\n<meta charset=\"UTF-8\">\n    <title>Training Courses | AASTMT</title>\n    <meta name=\"description\" content=\"AASTMT is one of the specialized organizations of the League of Arab States. We are a regional educational organization devoted to providing an excellent education for Arab youth and researchers.\"/>\n    <meta name=\"keywords\" content=\"aast, arab academy, university, academy, college, egypt colleges, students, maritime, engineering, pharmacy, medicine, media, management, business, cairo, alexandria, aswan, portsaid, undergraduate, admission, alumni, majors, student accessibility, special needs\" >\n    <meta name=\"robots\" content=\"index\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <!-- plugins css -->\n    <!-- Main Stylesheet -->\n    <!------------start menu----->\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"css/fontawesome.min.css\">\n\t<link rel=\"stylesheet\" type=\"text/css\" href=\"css/app.css\">\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"css/style.css\">\n\n\t <link rel=\"stylesheet\" href=\"https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css\"> \n\t <style>\n.before-bg-bottom::before {\n  background-color:var(--section-bg-2);\n}\n.before-bg-bottom::before {\n  position: absolute;\n  content: \"\";\n  height: 70%;\n  left: 0;\n  width: 100%;\n  bottom: 0;\n}\n\t </style>\n\t <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5de96879890a5300125e3eb9&product=sop' async='async'></script>\n\t<link rel=\"alternate\" hreflang=\"en\" href=\"https://aast.edu/en\">\n\n\t  <!-- Schema Script  -->\n    <script type=\"application/ld+json\">\n        {\n                \"potentialAction\": {\n                \"@type\": \"SearchAction\",\n                \"target\": \"https://aast.edu/en/training-courses/trainingresults.php?csearch={search_term_string}\",\n                \"query-input\": \"required search=search_term_string\"\n            }\n        }\n    </script>\n</head>\n<body>\n    <!-- Body main wrapper start -->\n    <div class=\"body-wrapper\">\n        <!-- HEADER AREA START (header-5) -->\n       <div class=\"new-topbar\">\n        <!-- -->\n        <div class=\"auto-container\">\n            <div class=\"row row2\">\n                <div class=\"col-md-5 col-sm-12 col-xs-12\">\n                    <div class=\"ltn__top-bar-menu txt-991-center\">\n                        <ul>\n                            <li class=\"training-aast\"><a href=\"https://aast.edu/\"><span class=\"active-currency\"><i class=\"fa fa-university\" aria-hidden=\"true\" style=\"font-size: 1em;\"></i> AASTMT</span></a></li>\n                        </ul>\n                    </div>\n                </div>\n                <div class=\"  col-md-7 col-sm-12 col-xs-12\">\n                    <div class=\"text-right\">\n                        <div class=\"ltn__top-bar-menu  txt-768-center  txt-991-center \">\n                            <ul>\n                                <!-- today -->\n                                <li>\n                                    <div class=\"ltn__drop-menu ltn__currency-menu ltn__language-menu\">\n                                        <ul>\n                                            <li><a href=\"#\" class=\"dropdown-toggle\"><span class=\"active-currency\">Our Latest </span></a>\n                                                <ul>\n                                                    <li><a href=\"https://aast.edu/en/news/index.php?unit_id=1\"><i class=\"fa fa-angle-right\"></i> News</a></li>\n                                                    <li><a href=\"https://aast.edu/en/events/index.php?unit_id=482\"><i class=\"fa fa-angle-right\"></i> Events</a></li>\n                                                    <li><a href=\"https://aast.edu/en/gallery/index.php\"><i class=\"fa fa-angle-right\"></i> Media</a></li>\n                                                </ul>\n                                            </li>\n                                        </ul>\n                                    </div>\n                                    <!--  -->\n                                </li>\n                                <!--/.today  -->\n                                <!-- info for -->\n                                <li>\n                                    <!-- ltn__information-for -->\n                                    <div class=\"ltn__drop-menu ltn__currency-menu ltn__language-menu\">\n                                        <ul>\n                                            <li><a href=\"#\" class=\"dropdown-toggle\"><span class=\"active-currency\">Information for </span></a>\n                                                <ul>\n                                                    <li><a href=\"https://aast.edu/en/info-for/applicants/\"><i class=\"fa fa-angle-right\"></i> New Applicants</a></li>\n                                                    <li><a href=\"https://aast.edu/en/info-for/students\"><i class=\"fa fa-angle-right\"></i> Students</a></li>\n                                                      <li><a href=\"https://aast.edu/en/info-for/staff/\"><i class=\"fa fa-angle-right\"></i> Faculty &amp; Staff</a></li>\n                                                    <li><a href=\"https://aast.edu/en/alumni/\"><i class=\"fa fa-angle-right\"></i> Alumni</a></li>\n                                                    <li><a href=\"https://aast.edu/en/info-for/visitors/\"><i class=\"fa fa-angle-right\"></i> Visitors</a></li>\n                                                </ul>\n                                            </li>\n                                        </ul>\n                                    </div>\n                                </li>\n                               \n                             </ul>\n                            </div> </div></div> </div>\n            <!-- ltn__header-top-area end -->\n        </div>\n       <!-- -->\n       </div>\n        <!-- HEADER AREA END -->\n        <!--------------------Start Menu-page------>\n        <div class=\"ltn__header-middle-area ltn__header-sticky ltn__sticky-bg-white\">\n            <div class=\"container\">\n                <div class=\"headr-new-aas\">\n                    <div class=\"logo-img-aas\">\n                        <div class=\"site-logo-wrap\">\n                            <div class=\"site-logo\">\n                                <a class=\"hidden-mob link_data\" href=\"https://aast.edu/\"><img class=\"img_data\"  src=\"img/logo.webp\" alt=\"Logo\"></a>\n                                <a class=\"show-mob d-md-none link_data\" href=\"https://aast.edu/\"><img class=\"img_data\" src=\"img/logo.webp\" alt=\"Logo\"></a>\n                            </div>\n                            <a class=\"show-ipad-hidden-mob-hidden-desktop m-0 link_data btn btn-effect-1 btn-fushia-training apply\" href=\"tel:19838\" target=\"_blank\">\n                                <i class=\"fa fa-phone\" aria-hidden=\"true\"></i> 19838  </a>\n                        </div>\n                    </div>\n                    <div class=\"all-menu-new\">\n                        <div class=\"top-menu\">\n                            <div class=\"header-logo-title\">\n                                <h1 class=\"row_data\">AASMT Training Courses</h1>\n                            </div>\n                            <div class=\"menu-staff\">\n                                <div class=\"search-dropdown\">\n                                    <a class=\"btn btn-effect-1 btn-fushia-training apply link_data\" href=\"tel:19838\" target=\"_blank\">\n                                       <i class=\"fa fa-phone\" aria-hidden=\"true\"></i> 19838 </a>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"bottom-menu\"> </div>\n                    </div></div></div> </div>\n        <!--------------------End Menu-page------>\n    </div>\n    <section class=\"hero-banner hero-banner_v2 bg-img bg-cover\" data-bg-image=\"img/backgrounds/hero-banner-bg-1.jpg\" \n    style=\"background-image: url('img/backgrounds/hero-banner-bg-1.jpg'); background-repeat: no-repeat;\">\n        <div class=\"overlay\"></div>\n        <div class=\"container\">\n            <div class=\"banner-content\">\n                <h1 class=\"title mb-30 aos-init aos-animate\" data-aos=\"fade-up\" data-aos-delay=\"100\">\n                    Dive into a world <br> of learning & growth \n                </h1>\n                <p class=\"text color-dark aos-init aos-animate\" data-aos=\"fade-up\" data-aos-delay=\"100\">\n                    with our dynamic range of courses designed to elevate your skills and enhance your career\n                </p>\n                <div class=\"banner-filter-form mt-40 aos-init aos-animate\" data-aos=\"fade-up\" data-aos-delay=\"150\">\n                    <div class=\"form-wrapper bg-white border p-md-2 radius-md\">\n                        <form  method=\"get\" action=\"trainingresults.php\">\n                            <div class=\"row align-items-center\">\n                                <div class=\"col-md-8 col-sm-12\">\n                                    <div class=\"input-group\">\n\t\t\t\t\t\t\t\t\t                                        <label for=\"search\"><i class=\"fas fa-search\"></i></label>\n                                        <input type=\"text\" name=\"csearch\" id=\"csearch\" class=\"form-control\" placeholder=\"Search course\" value=\"\">\n\t\t\t\t\t\t\t\t\t\t                                        <div class=\"vr\"></div>\n                                    </div>\n                                </div>\n                                <div class=\"col-lg-4 col-md-4 col-sm-6\">\n                                    <button class=\"btn btn-lg btn-primary radius-sm w-100\" type=\"submit\" aria-label=\"Find Course\">Find Course</button>\n                                </div>\n                            </div>\n                        </form>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </section>\n    <!--    categories -->\n<section class=\"category-area category-area_v2 pt-100 pb-0\">\n    <div class=\"container\">\n        <div class=\"row\">\n\n            <div cla"
+  },
+  {
+    "type": "response",
+    "url": "https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css",
+    "status": 200,
+    "content_type": "text/css",
+    "sample": "/*!\n * Font Awesome Pro 6.5.2 by @fontawesome - https://fontawesome.com\n * License - https://fontawesome.com/license (Commercial License)\n * Copyright 2024 Fonticons, Inc.\n */\n.fa{font-family:var(--fa-style-family,\"Font Awesome 6 Pro\");font-weight:var(--fa-style,900)}.fa,.fa-brands,.fa-classic,.fa-duotone,.fa-light,.fa-regular,.fa-sharp,.fa-sharp-solid,.fa-solid,.fa-thin,.fab,.fad,.fal,.far,.fas,.fasl,.fasr,.fass,.fast,.fat{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;display:var(--fa-display,inline-block);font-style:normal;font-variant:normal;line-height:1;text-rendering:auto}.fa-classic,.fa-light,.fa-regular,.fa-solid,.fa-thin,.fal,.far,.fas,.fat{font-family:\"Font Awesome 6 Pro\"}.fa-brands,.fab{font-family:\"Font Awesome 6 Brands\"}.fa-classic.fa-duotone,.fa-duotone,.fad{font-family:\"Font Awesome 6 Duotone\"}.fa-sharp,.fasl,.fasr,.fass,.fast{font-family:\"Font Awesome 6 Sharp\"}.fa-sharp,.fass{font-weight:900}.fa-1x{font-size:1em}.fa-2x{font-size:2em}.fa-3x{font-size:3em}.fa-4x{font-size:4em}.fa-5x{font-size:5em}.fa-6x{font-size:6em}.fa-7x{font-size:7em}.fa-8x{font-size:8em}.fa-9x{font-size:9em}.fa-10x{font-size:10em}.fa-2xs{font-size:.625em;line-height:.1em;vertical-align:.225em}.fa-xs{font-size:.75em;line-height:.08333em;vertical-align:.125em}.fa-sm{font-size:.875em;line-height:.07143em;vertical-align:.05357em}.fa-lg{font-size:1.25em;line-height:.05em;vertical-align:-.075em}.fa-xl{font-size:1.5em;line-height:.04167em;vertical-align:-.125em}.fa-2xl{font-size:2em;line-height:.03125em;vertical-align:-.1875em}.fa-fw{text-align:center;width:1.25em}.fa-ul{list-style-type:none;margin-left:var(--fa-li-margin,2.5em);padding-left:0}.fa-ul>li{position:relative}.fa-li{left:calc(var(--fa-li-width, 2em)*-1);position:absolute;text-align:center;width:var(--fa-li-width,2em);line-height:inherit}.fa-border{border-radius:var(--fa-border-radius,.1em);border:var(--fa-border-width,.08em) var(--fa-border-style,solid) var(--fa-border-color,#eee);padding:var(--fa-border-padding,.2em .25em .15em)}.fa-pull-left{float:left;margin-right:var(--fa-pull-margin,.3em)}.fa-pull-right{float:right;margin-left:var(--fa-pull-margin,.3em)}.fa-beat{-webkit-animation-name:fa-beat;animation-name:fa-beat;-webkit-animation-delay:var(--fa-animation-delay,0s);animation-delay:var(--fa-animation-delay,0s);-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal);-webkit-animation-duration:var(--fa-animation-duration,1s);animation-duration:var(--fa-animation-duration,1s);-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,ease-in-out);animation-timing-function:var(--fa-animation-timing,ease-in-out)}.fa-bounce{-webkit-animation-name:fa-bounce;animation-name:fa-bounce;-webkit-animation-delay:var(--fa-animation-delay,0s);animation-delay:var(--fa-animation-delay,0s);-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal);-webkit-animation-duration:var(--fa-animation-duration,1s);animation-duration:var(--fa-animation-duration,1s);-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,cubic-bezier(.28,.84,.42,1));animation-timing-function:var(--fa-animation-timing,cubic-bezier(.28,.84,.42,1))}.fa-fade{-webkit-animation-name:fa-fade;animation-name:fa-fade;-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,cubic-bezier(.4,0,.6,1));animation-timing-function:var(--fa-animation-timing,cubic-bezier(.4,0,.6,1))}.fa-beat-fade,.fa-fade{-webkit-animation-delay:var(--fa-animation-delay,0s);animation-delay:var(--fa-animation-delay,0s);-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal);-webkit-animation-duration:var(--fa-animation-duration,1s);animation-duration:var(--fa-animation-duration,1s)}.fa-beat-fade{-webkit-animation-name:fa-beat-fade;animation-name:fa-beat-fade;-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,cubic-bezier(.4,0,.6,1));animation-timing-function:var(--fa-animation-timing,cubic-bezier(.4,0,.6,1))}.fa-flip{-webkit-animation-name:fa-flip;animation-name:fa-flip;-webkit-animation-delay:var(--fa-animation-delay,0s);animation-delay:var(--fa-animation-delay,0s);-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal);-webkit-animation-duration:var(--fa-animation-duration,1s);animation-duration:var(--fa-animation-duration,1s);-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,ease-in-out);animation-timing-function:var(--fa-animation-timing,ease-in-out)}.fa-shake{-webkit-animation-name:fa-shake;animation-name:fa-shake;-webkit-animation-duration:var(--fa-animation-duration,1s);animation-duration:var(--fa-animation-duration,1s);-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,linear);animation-timing-function:var(--fa-animation-timing,linear)}.fa-shake,.fa-spin{-webkit-animation-delay:var(--fa-animation-delay,0s);animation-delay:var(--fa-animation-delay,0s);-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal)}.fa-spin{-webkit-animation-name:fa-spin;animation-name:fa-spin;-webkit-animation-duration:var(--fa-animation-duration,2s);animation-duration:var(--fa-animation-duration,2s);-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,linear);animation-timing-function:var(--fa-animation-timing,linear)}.fa-spin-reverse{--fa-animation-direction:reverse}.fa-pulse,.fa-spin-pulse{-webkit-animation-name:fa-spin;animation-name:fa-spin;-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal);-webkit-animation-duration:var(--fa-animation-duration,1s);animation-duration:var(--fa-animation-duration,1s);-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,steps(8));animation-timing-function:var(--fa-animation-timing,steps(8))}@media (prefers-reduced-motion:reduce){.fa-beat,.fa-beat-fade,.fa-bounce,.fa-fade,.fa-flip,.fa-pulse,.fa-shake,.fa-spin,.fa-spin-pulse{-webkit-animation-delay:-1ms;animation-delay:-1ms;-webkit-animation-duration:1ms;animation-duration:1ms;-webkit-animation-iteration-count:1;animation-iteration-count:1;-webkit-transition-delay:0s;transition-delay:0s;-webkit-transition-duration:0s;transition-duration:0s}}@-webkit-keyframes fa-beat{0%,90%{-webkit-transform:scale(1);transform:scale(1)}45%{-webkit-transform:scale(var(--fa-beat-scale,1.25));transform:scale(var(--fa-beat-scale,1.25))}}@keyframes fa-beat{0%,90%{-webkit-transform:scale(1);transform:scale(1)}45%{-webkit-transform:scale(var(--fa-beat-scale,1.25));transform:scale(var(--fa-beat-scale,1.25))}}@-webkit-keyframes fa-bounce{0%{-webkit-transform:scale(1) translateY(0);transform:scale(1) translateY(0)}10%{-webkit-transform:scale(var(--fa-bounce-start-scale-x,1.1),var(--fa-bounce-start-scale-y,.9)) translateY(0);transform:scale(var(--fa-bounce-start-scale-x,1.1),var(--fa-bounce-start-scale-y,.9)) translateY(0)}30%{-webkit-transform:scale(var(--fa-bounce-jump-scale-x,.9),var(--fa-bounce-jump-scale-y,1.1)) translateY(var(--fa-bounce-height,-.5em));transform:scale(var(--fa-bounce-jump-scale-x,.9),var(--fa-bounce-jump-scale-y,1.1)) translateY(var(--fa-bounce-height,-.5em))}50%{-webkit-transform:scale(var(--fa-bounce-land-scale-x,1.05),var(--fa-bounce-land-scale-y,.95)) translateY(0);transform:scale(var(--fa-bounce-land-scale-x,1.05),var(--fa-bounce-land-scale-y,.95)) translateY(0)}57%{-webkit-transform:scale(1) translateY(var(--fa-bounce-rebound,-.125em));transform:scale(1) translateY(var(--fa-bounce-rebound,-.125em))}64%{-webkit-transform:scale(1) translateY(0);transform:scale(1) translateY(0)}to{-webkit-transform:scale(1) translateY(0);transform:scale(1) translateY(0)}}@keyframes fa-bounce{0%{-webkit-transform:scale(1) translateY(0);transform:scale(1) translateY(0)}10%{-webkit-transform:scale(var(--fa-bounce-start-scale-x,1.1),var(--fa-bounce-start-scale-y,.9)) translateY(0);transform:scale(var(--fa-bounce-start-scale-x,1.1),var(--fa-bounce-start-scale-y,.9)) translateY(0)}30%{-webkit-transform:scale(var(--fa-bounce-jump-scale-x,.9),var(--fa-bounce-jump-scale-y,1.1)) translateY(var(--fa-bounce-height,-.5em));transform:scale(var(--fa-bounce-jump-scale-x,.9),var(--fa-bounce-jump-scale-y,1.1)) translateY(var(--fa-bounce-height,-.5em))}50%{-webkit-transform:scale(var(--fa-bounce-land-scale-x,1.05),var(--fa-bounce-land-scale-y,.95)) translateY(0);transform:scale(var(--fa-bounce-land-scale-x,1.05),var(--fa-bounce-land-scale-y,.95)) translateY(0)}57%{-webkit-transform:scale(1) translateY(var(--fa-bounce-rebound,-.125em));transform:scale(1) translateY(var(--fa-bounce-rebound,-.125em))}64%{-webkit-transform:scale(1) translateY(0);transform:scale(1) translateY(0)}to{-w"
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/training-courses/img/backgrounds/hero-banner-bg-1.jpg",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://site-assets.fontawesome.com/releases/v6.5.2/webfonts/fa-solid-900.woff2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://site-assets.fontawesome.com/releases/v6.5.2/webfonts/fa-brands-400.woff2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://buttons-config.sharethis.com/js/5de96879890a5300125e3eb9.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "response",
+    "url": "https://site-assets.fontawesome.com/releases/v6.5.2/webfonts/fa-brands-400.woff2",
+    "status": 200,
+    "content_type": "font/woff2",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://site-assets.fontawesome.com/releases/v6.5.2/webfonts/fa-solid-900.woff2",
+    "status": 200,
+    "content_type": "font/woff2",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en/training-courses/css/fontawesome.min.css",
+    "status": 200,
+    "content_type": "text/css",
+    "sample": "/*!\n * Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com\n * License - https://fontawesome.com/license (Commercial License)\n * Copyright 2022 Fonticons, Inc.\n */\n.fa{font-family:var(--fa-style-family,\"Font Awesome 6 Pro\");font-weight:var(--fa-style,900)}.fa,.fa-brands,.fa-classic,.fa-duotone,.fa-light,.fa-regular,.fa-sharp,.fa-sharp-solid,.fa-solid,.fa-thin,.fab,.fad,.fal,.far,.fas,.fass,.fat{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;display:var(--fa-display,inline-block);font-style:normal;font-variant:normal;line-height:1;text-rendering:auto}.fa-classic,.fa-light,.fa-regular,.fa-solid,.fa-thin,.fal,.far,.fas,.fat{font-family:\"Font Awesome 6 Pro\"}.fa-brands,.fab{font-family:\"Font Awesome 6 Brands\"}.fa-classic.fa-duotone,.fa-duotone,.fad{font-family:\"Font Awesome 6 Duotone\"}.fa-sharp,.fass{font-family:\"Font Awesome 6 Sharp\";font-weight:900}.fa-1x{font-size:1em}.fa-2x{font-size:2em}.fa-3x{font-size:3em}.fa-4x{font-size:4em}.fa-5x{font-size:5em}.fa-6x{font-size:6em}.fa-7x{font-size:7em}.fa-8x{font-size:8em}.fa-9x{font-size:9em}.fa-10x{font-size:10em}.fa-2xs{font-size:.625em;line-height:.1em;vertical-align:.225em}.fa-xs{font-size:.75em;line-height:.08333em;vertical-align:.125em}.fa-sm{font-size:.875em;line-height:.07143em;vertical-align:.05357em}.fa-lg{font-size:1.25em;line-height:.05em;vertical-align:-.075em}.fa-xl{font-size:1.5em;line-height:.04167em;vertical-align:-.125em}.fa-2xl{font-size:2em;line-height:.03125em;vertical-align:-.1875em}.fa-fw{text-align:center;width:1.25em}.fa-ul{list-style-type:none;margin-left:var(--fa-li-margin,2.5em);padding-left:0}.fa-ul>li{position:relative}.fa-li{left:calc(var(--fa-li-width, 2em)*-1);position:absolute;text-align:center;width:var(--fa-li-width,2em);line-height:inherit}.fa-border{border-radius:var(--fa-border-radius,.1em);border:var(--fa-border-width,.08em) var(--fa-border-style,solid) var(--fa-border-color,#eee);padding:var(--fa-border-padding,.2em .25em .15em)}.fa-pull-left{float:left;margin-right:var(--fa-pull-margin,.3em)}.fa-pull-right{float:right;margin-left:var(--fa-pull-margin,.3em)}.fa-beat{-webkit-animation-name:fa-beat;animation-name:fa-beat;-webkit-animation-delay:var(--fa-animation-delay,0s);animation-delay:var(--fa-animation-delay,0s);-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal);-webkit-animation-duration:var(--fa-animation-duration,1s);animation-duration:var(--fa-animation-duration,1s);-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,ease-in-out);animation-timing-function:var(--fa-animation-timing,ease-in-out)}.fa-bounce{-webkit-animation-name:fa-bounce;animation-name:fa-bounce;-webkit-animation-delay:var(--fa-animation-delay,0s);animation-delay:var(--fa-animation-delay,0s);-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal);-webkit-animation-duration:var(--fa-animation-duration,1s);animation-duration:var(--fa-animation-duration,1s);-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,cubic-bezier(.28,.84,.42,1));animation-timing-function:var(--fa-animation-timing,cubic-bezier(.28,.84,.42,1))}.fa-fade{-webkit-animation-name:fa-fade;animation-name:fa-fade;-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,cubic-bezier(.4,0,.6,1));animation-timing-function:var(--fa-animation-timing,cubic-bezier(.4,0,.6,1))}.fa-beat-fade,.fa-fade{-webkit-animation-delay:var(--fa-animation-delay,0s);animation-delay:var(--fa-animation-delay,0s);-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal);-webkit-animation-duration:var(--fa-animation-duration,1s);animation-duration:var(--fa-animation-duration,1s)}.fa-beat-fade{-webkit-animation-name:fa-beat-fade;animation-name:fa-beat-fade;-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,cubic-bezier(.4,0,.6,1));animation-timing-function:var(--fa-animation-timing,cubic-bezier(.4,0,.6,1))}.fa-flip{-webkit-animation-name:fa-flip;animation-name:fa-flip;-webkit-animation-delay:var(--fa-animation-delay,0s);animation-delay:var(--fa-animation-delay,0s);-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal);-webkit-animation-duration:var(--fa-animation-duration,1s);animation-duration:var(--fa-animation-duration,1s);-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,ease-in-out);animation-timing-function:var(--fa-animation-timing,ease-in-out)}.fa-shake{-webkit-animation-name:fa-shake;animation-name:fa-shake;-webkit-animation-duration:var(--fa-animation-duration,1s);animation-duration:var(--fa-animation-duration,1s);-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,linear);animation-timing-function:var(--fa-animation-timing,linear)}.fa-shake,.fa-spin{-webkit-animation-delay:var(--fa-animation-delay,0s);animation-delay:var(--fa-animation-delay,0s);-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal)}.fa-spin{-webkit-animation-name:fa-spin;animation-name:fa-spin;-webkit-animation-duration:var(--fa-animation-duration,2s);animation-duration:var(--fa-animation-duration,2s);-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,linear);animation-timing-function:var(--fa-animation-timing,linear)}.fa-spin-reverse{--fa-animation-direction:reverse}.fa-pulse,.fa-spin-pulse{-webkit-animation-name:fa-spin;animation-name:fa-spin;-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal);-webkit-animation-duration:var(--fa-animation-duration,1s);animation-duration:var(--fa-animation-duration,1s);-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,steps(8));animation-timing-function:var(--fa-animation-timing,steps(8))}@media (prefers-reduced-motion:reduce){.fa-beat,.fa-beat-fade,.fa-bounce,.fa-fade,.fa-flip,.fa-pulse,.fa-shake,.fa-spin,.fa-spin-pulse{-webkit-animation-delay:-1ms;animation-delay:-1ms;-webkit-animation-duration:1ms;animation-duration:1ms;-webkit-animation-iteration-count:1;animation-iteration-count:1;transition-delay:0s;transition-duration:0s}}@-webkit-keyframes fa-beat{0%,90%{-webkit-transform:scale(1);transform:scale(1)}45%{-webkit-transform:scale(var(--fa-beat-scale,1.25));transform:scale(var(--fa-beat-scale,1.25))}}@keyframes fa-beat{0%,90%{-webkit-transform:scale(1);transform:scale(1)}45%{-webkit-transform:scale(var(--fa-beat-scale,1.25));transform:scale(var(--fa-beat-scale,1.25))}}@-webkit-keyframes fa-bounce{0%{-webkit-transform:scale(1) translateY(0);transform:scale(1) translateY(0)}10%{-webkit-transform:scale(var(--fa-bounce-start-scale-x,1.1),var(--fa-bounce-start-scale-y,.9)) translateY(0);transform:scale(var(--fa-bounce-start-scale-x,1.1),var(--fa-bounce-start-scale-y,.9)) translateY(0)}30%{-webkit-transform:scale(var(--fa-bounce-jump-scale-x,.9),var(--fa-bounce-jump-scale-y,1.1)) translateY(var(--fa-bounce-height,-.5em));transform:scale(var(--fa-bounce-jump-scale-x,.9),var(--fa-bounce-jump-scale-y,1.1)) translateY(var(--fa-bounce-height,-.5em))}50%{-webkit-transform:scale(var(--fa-bounce-land-scale-x,1.05),var(--fa-bounce-land-scale-y,.95)) translateY(0);transform:scale(var(--fa-bounce-land-scale-x,1.05),var(--fa-bounce-land-scale-y,.95)) translateY(0)}57%{-webkit-transform:scale(1) translateY(var(--fa-bounce-rebound,-.125em));transform:scale(1) translateY(var(--fa-bounce-rebound,-.125em))}64%{-webkit-transform:scale(1) translateY(0);transform:scale(1) translateY(0)}to{-webkit-transform:scale(1) translateY(0);transform:scale(1) translateY(0)}}@keyframes fa-bounce{0%{-webkit-transform:scale(1) translateY(0);transform:scale(1) translateY(0)}10%{-webkit-transform:scale(var(--fa-bounce-start-scale-x,1.1),var(--fa-bounce-start-scale-y,.9)) translateY(0);transform:scale(var(--fa-bounce-start-scale-x,1.1),var(--fa-bounce-start-scale-y,.9)) translateY(0)}30%{-webkit-transform:scale(var(--fa-bounce-jump-scale-x,.9),var(--fa-bounce-jump-scale-y,1.1)) translateY(var(--fa-bounce-height,-.5em));transform:scale(var(--fa-bounce-jump-scale-x,.9),var(--fa-bounce-jump-scale-y,1.1)) translateY(var(--fa-bounce-height,-.5em))}50%{-webkit-transform:scale(var(--fa-bounce-land-scale-x,1.05),var(--fa-bounce-land-scale-y,.95)) translateY(0);transform:scale(var(--fa-bounce-land-scale-x,1.05),var(--fa-bounce-land-scale-y,.95)) translateY(0)}57%{-webkit-transform:scale(1) translateY(var(--fa-bounce-rebound,-.125em));transform:scale(1) translateY(var(--fa-bounce-rebound,-.125em))}64%{-webkit-transform:scale(1) translateY(0);transform:scale(1) translateY(0)}to{-webkit-transform:scale(1) translateY(0);transform:scale(1) translateY(0)}}@-webkit-keyframes fa-fade{50%{opacity"
+  },
+  {
+    "type": "response",
+    "url": "https://platform-api.sharethis.com/js/sharethis.js",
+    "status": 200,
+    "content_type": "text/javascript; charset=utf-8",
+    "sample": "if (!Date.now) {\n  Date.now = function now() {\n    return new Date().getTime();\n  };\n}\n\n(function(funcName, baseObj) {\n  \"use strict\";\n\n  // The public function name defaults to window.docReady\n  // but you can modify the last line of this function to pass in a different object or method name\n  // if you want to put them in a different namespace and those will be used instead of \n  // window.docReady(...)\n  funcName = funcName || \"docReady\";\n  baseObj = baseObj || window;\n  var readyList = [];\n  var readyFired = false;\n  var readyEventHandlersInstalled = false;\n  \n  // call this when the document is ready\n  // this function protects itself against being called more than once\n  function ready() {\n    if (!readyFired) {\n\n      // this must be set to true before we start calling callbacks\n      readyFired = true;\n      for (var i = 0; i < readyList.length; i++) {\n\n        // if a callback here happens to add new ready handlers,\n        // the docReady() function will see that it already fired\n        // and will schedule the callback to run right after\n        // this event loop finishes so all handlers will still execute\n        // in order and no new ones will be added to the readyList\n        // while we are processing the list\n        readyList[i].fn.call(window, readyList[i].ctx);\n      }\n\n      // allow any closures held by these functions to free\n      readyList = [];\n    }\n  }\n  \n  function readyStateChange() {\n    if ( document.readyState === \"complete\" ) {\n      ready();\n    }\n  }\n  \n  // This is the one public interface\n  // docReady(fn, context);\n  // the context argument is optional - if present, it will be passed\n  // as an argument to the callback\n  baseObj[funcName] = function(callback, context) {\n    if (typeof callback !== \"function\") {\n      throw new TypeError(\"callback for docReady(fn) must be a function\");\n    }\n\n    // if ready has already fired, then just schedule the callback\n    // to fire asynchronously, but right away\n    if (readyFired) {\n      setTimeout(function() {callback(context);}, 1);\n      return;\n    } else {\n\n      // add the function and context to the list\n      readyList.push({fn: callback, ctx: context});\n    }\n\n    // if document already ready to go, schedule the ready function to run\n    // IE only safe when readyState is \"complete\", others safe when readyState is \"interactive\"\n    if (document.readyState === \"complete\" || (!document.attachEvent && document.readyState === \"interactive\")) {\n      setTimeout(ready, 1);\n    } else if (!readyEventHandlersInstalled) {\n\n      // otherwise if we don't have event handlers installed, install them\n      if (document.addEventListener) {\n\n        // first choice is DOMContentLoaded event\n        document.addEventListener(\"DOMContentLoaded\", ready, false);\n\n        // backup is window load event\n        window.addEventListener(\"load\", ready, false);\n      } else {\n\n        // must be IE\n        document.attachEvent(\"onreadystatechange\", readyStateChange);\n        window.attachEvent(\"onload\", ready);\n      }\n      readyEventHandlersInstalled = true;\n    }\n  }\n})(\"__sharethis__docReady\", window);\n\n// Document.querySelectorAll method\n// http://ajaxian.com/archives/creating-a-queryselector-for-ie-that-runs-at-native-speed\n// Needed for: IE7-\nif (!document.querySelectorAll) {\n  document.querySelectorAll = function(selectors) {\n    var style = document.createElement('style'), elements = [], element;\n    document.documentElement.firstChild.appendChild(style);\n    document._qsa = [];\n\n    style.styleSheet.cssText = selectors + '{x-qsa:expression(document._qsa && document._qsa.push(this))}';\n    window.scrollBy(0, 0);\n    style.parentNode.removeChild(style);\n\n    while (document._qsa.length) {\n      element = document._qsa.shift();\n      element.style.removeAttribute('x-qsa');\n      elements.push(element);\n    }\n    document._qsa = null;\n    return elements;\n  };\n}\n\n// Document.querySelector method\n// Needed for: IE7-\nif (!document.querySelector) {\n\tdocument.querySelector = function(selectors) {\n\t\tvar elements = document.querySelectorAll(selectors);\n\t\treturn (elements.length) ? elements[0] : null;\n\t};\n}\n\nif (!Array.isArray) {\n  Array.isArray = function(arg) {\n    return Object.prototype.toString.call(arg) === '[object Array]';\n  };\n}\n\nArray.prototype.indexOf || (Array.prototype.indexOf = function(d, e) {\n  var a;\n  if (null == this) throw new TypeError('\"this\" is null or not defined');\n  var c = Object(this);\n  var b = c.length >>> 0;\n  if (0 === b) return -1;\n  a = +e || 0;\n  Infinity === Math.abs(a) && (a = 0);\n  if (a >= b) return -1;\n  for (a = Math.max(0 <= a ? a : b - Math.abs(a), 0); a < b;) {\n    if (a in c && c[a] === d) return a;\n    a++;\n  }\n  return -1\n});\n\n(function() {\n  var st,\n    indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };\n\n  if (window.__sharethis__ == null) {\n    window.__sharethis__ = {\n      v: '6.0.0'\n    };\n  }\n\n  st = window.__sharethis__;\n\n  st.METRICS = \"https://platform-metrics-api.sharethis.com\";\n\n  st.API = \"https://platform-api.sharethis.com\";\n\n  st.SECOND = 1000;\n\n  st.MINUTE = 60 * st.SECOND;\n\n  st.HOUR = 60 * st.MINUTE;\n\n  st.DAY = 24 * st.HOUR;\n\n  st.WEEK = 7 * st.DAY;\n\n  st.BORDER_BOX = \"-moz-box-sizing: border-box;\\n-webkit-box-sizing: border-box;\\nbox-sizing: border-box;\";\n\n  st.BORDER_RADIUS = function(radius) {\n    return \"-moz-border-radius: \" + (st.px(radius)) + \";\\n-webkit-border-radius: \" + (st.px(radius)) + \";\\nborder-radius: \" + (st.px(radius)) + \";\";\n  };\n\n  st.BOX_SHADOW = function(value) {\n    return \"-moz-box-shadow: \" + value + \";\\n-webkit-box-shadow: \" + value + \";\\nbox-shadow: \" + value + \";\";\n  };\n\n  st.FLEX = \"-moz-flex: 1;\\n-ms-flex: 1;\\n-webkit-flex: 1;\\nflex: 1;\";\n\n  st.FONT_FAMILY = \"font-family: \\\"Helvetica Neue\\\", Verdana, Helvetica, Arial, sans-serif;\";\n\n  st.TRANSFORM = function(value) {\n    return \"-ms-transform: \" + value + \";\\n-webkit-transform: \" + value + \";\\ntransform: \" + value + \";\";\n  };\n\n  st.TRANSITION = function(properties, duration) {\n    var i, len, property, value;\n    if (properties == null) {\n      properties = ['all'];\n    }\n    if (duration == null) {\n      duration = '0.2s';\n    }\n    value = [];\n    for (i = 0, len = properties.length; i < len; i++) {\n      property = properties[i];\n      value.push(property + \" \" + duration + \" ease-in\");\n    }\n    value = value.join(', ');\n    return \"-moz-transition: \" + value + \"; -ms-transition: \" + value + \"; -o-transition: \" + value + \"; -webkit-transition: \" + value + \"; transition: \" + value + \";\";\n  };\n\n  st._uid = 0;\n\n  st.uid = function() {\n    return ++st._uid;\n  };\n\n  st.cache = {};\n\n  st.get = function(key) {\n    return st.cache[key];\n  };\n\n  st.set = function(key, val) {\n    return st.cache[key] = val;\n  };\n\n  st.has = function(key) {\n    return st.cache[key] != null;\n  };\n\n  st.addClass = function($el, names) {\n    var current, i, len, name;\n    current = ($el.className || '').split(' ');\n    if (typeof names === 'string') {\n      names = [names];\n    }\n    for (i = 0, len = names.length; i < len; i++) {\n      name = names[i];\n      if ((name != null) && indexOf.call(current, name) < 0) {\n        current.push(name);\n      }\n    }\n    return $el.className = current.join(' ');\n  };\n\n  st.addEventListener = function($el, event, callback) {\n    if (!($el && event && callback)) {\n      return;\n    }\n    if ($el.addEventListener) {\n      return $el.addEventListener(event, callback, false);\n    } else if ($el.attachEvent) {\n      return $el.attachEvent(\"on\" + event, callback);\n    } else {\n      return $el[\"on\" + event] = callback;\n    }\n  };\n\n  st.capitalize = function(str) {\n    return \"\" + (str.charAt(0).toUpperCase()) + (str.substring(1).toLowerCase());\n  };\n\n  st.copy = function() {\n    var selection;\n    selection = typeof window.getSelection === \"function\" ? window.getSelection() : void 0;\n    if (!selection || selection.isCollapsed) {\n      return;\n    }\n    selection = selection.toString();\n    if (selection.length > 500) {\n      selection = selection.slice(0, 497) + \"...\";\n    }\n    if (selection.length > 0) {\n      return st.log({\n        copy_text: selection,\n        destinations: \"copy\",\n        event: 'share',\n        url: st.href\n      });\n    }\n  };\n\n  st.close = function($el) {\n    st.removeClass(document.body, 'st-body-no-scroll');\n    if (!$el) {\n      return;\n    }\n    st.addClass($el, 'st-hidden');\n    return setTimeout((function() {\n      return st.remove($el);\n    }), 200);\n  };\n\n  st.css = function(css) {\n    var head, s;\n    head = document.getElementsByTagName('head')[0];\n    s = document.createElement('style');\n    s.setAttribute('type', 'text/css');\n    if (s.styleSheet) {\n      s.styleSheet.cssText = css;\n    } else {\n      s.appendChild(document.createTextNode(css));\n    }\n    return head.appendChild(s);\n  };\n\n  st.ecommerce = function() {\n    var ecommerce, has_ldjson, has_og, has_price;\n    has_ldjson = st.meta[\"@type\"] === \"Product\";\n    has_og = st.meta[\"og:type\"] === \"product\";\n    has_price = st.getMeta(['og:price:amount', 'price', 'product:price:amount']);\n    if (has_ldjson || has_og || has_price) {\n      ecommerce = JSON.stringify(st.omit({\n        availability: st.getMeta([\"og:availability\", \"product:availability\", \"availability\"]),\n        brand: st.getMeta([\"brand\", \"og:site_name\"]),\n        category: st.getMeta([\"category\"]),\n        currency: st.getMeta([\"og:price:currency\", \"product:price:currency\", \"priceCurrency\"]),\n        description: st.getMeta([\"og:description\", \"twitter:description\", \"description\"]),\n        image: st.getMeta([\"og:image:secure_url\", \"og:image\", \"twitter:image\"]),\n        mpn: st.getMeta([\"mpn\"]),\n        name: st.getMeta([\"og:title\", \"twitter:title\", \"name\"]),\n        price: st.getMeta([\"og:price:amount\", \"product:price:amount\", \"price\"]),\n        rating: st.getMeta([\"og:rating\", \"ratingValue\"]),\n        reviews: st.getMeta([\"reviewCount\", \"rat"
+  },
+  {
+    "type": "request",
+    "url": "https://l.sharethis.com/pview?event=pview&hostname=aast.edu&location=%2Fen%2Ftraining-courses%2F&product=sop&url=https%3A%2F%2Faast.edu%2Fen%2Ftraining-courses%2F&source=sharethis.js&fcmp=false&fcmpv2=false&has_segmentio=false&title=Training%20Courses%20%7C%20AASTMT&cms=unknown&publisher=5de96879890a5300125e3eb9&sop=true&version=st_sop.js&lang=en&description=AASTMT%20is%20one%20of%20the%20specialized%20organizations%20of%20the%20League%20of%20Arab%20States.%20We%20are%20a%20regional%20educational%20organization%20devoted%20to%20providing%20an%20excellent%20education%20for%20Arab%20youth%20and%20researchers.&ua=%22HeadlessChrome%22%3Bv%3D%22141%22%2C%20%22Not%3FA_Brand%22%3Bv%3D%228%22%2C%20%22Chromium%22%3Bv%3D%22141%22&ua_mobile=false&ua_platform=Windows&ua_full_version_list=%22HeadlessChrome%22%3Bv%3D%22141.0.7390.37%22%2C%20%22Not%3FA_Brand%22%3Bv%3D%228.0.0.0%22%2C%20%22Chromium%22%3Bv%3D%22141.0.7390.37%22&ua_platform_version=19.0.0&uuid=a142e21f-8856-4e8f-9bcc-870aa0b5aa8d",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en/training-courses/css/style.css",
+    "status": 200,
+    "content_type": "text/css",
+    "sample": "* {padding: 0;margin: 0;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;-o-box-sizing: border-box }.disabled {display: none!important }.owl-item {display: inline-block;vertical-align: text-top }button,form,input,select,textarea {border: 0;background: 0;outline: 0 }.text-center {text-align: center }.text-left {text-align: left }.text-right {text-align: right }.before:before {content: '';position: absolute;width: 100%;height: 100%;top: 0;right: 0;z-index: 5 }.after:after {content: '';position: absolute;width: 100%;height: 100%;top: 0;right: 0;z-index: 5 }flex-center,.flex-center {display: flex;flex-wrap: wrap;justify-content: center }flex-start,.flex-start {display: flex;flex-wrap: wrap;justify-content: flex-start }.align-center {align-items: center }.flex-end {display: flex;flex-wrap: wrap;justify-content: flex-end;align-items: center;flex-direction: row-reverse;}.flex-1 {flex: 1 }pull-right {float: right;display: block }pull-left {float: left;display: block }.hide {display: none }img {max-width: 100%;font-size: 0;height: auto;position: relative }.list-unstyled {list-style: none }.clearfix:after {content: '';display: block;clear: both }a {color: inherit;text-decoration: none }container {display: block;margin: auto }.w-100 {min-width: 100% }.col-1 {width: calc((1 / 12) * 100%) }.col-2 {width: calc((2 / 12) * 100%) }\r\n.col-3 {width: calc((3 / 12) * 100%) }.col-4 {width: calc((4 / 12) * 100%) }.col-5 {width: calc((5 / 12) * 100%) }.col-6 {width: calc((6 / 12) * 100%) }.col-7 {width: calc((7 / 12) * 100%) }.col-8 {width: calc((8 / 12) * 100%) }.col-9 {width: calc((9 / 12) * 100%) }.col-10 {width: calc((10 / 12) * 100%) }.col-11 {width: calc((11/ 12) * 100%) }.col-12 {width: calc((12/ 12) * 100%) }@media(min-width: 1025px) {.hide-pc {display:none }}@media(max-width: 1199px) {.col-lg-1 {width:calc((1 / 12) * 100%);min-width: calc((1 / 12) * 100%) }.col-lg-2 {width: calc((2 / 12) * 100%);min-width: calc((2 / 12) * 100%) }.col-lg-3 {width: calc((3 / 12) * 100%);min-width: calc((3 / 12) * 100%) }.col-lg-4 {width: calc((4 / 12) * 100%);min-width: calc((4 / 12) * 100%) }.col-lg-5 {width: calc((5 / 12) * 100%);min-width: calc((5 / 12) * 100%) }.col-lg-6 {width: calc((6 / 12) * 100%);min-width: calc((6 / 12) * 100%) }.col-lg-7 {width: calc((7 / 12) * 100%);min-width: calc((7 / 12) * 100%) }.col-lg-8 {width: calc((8 / 12) * 100%);min-width: calc((8 / 12) * 100%) }.col-lg-9 {width: calc((9 / 12) * 100%);min-width: calc((9 / 12) * 100%) }.col-lg-10 {width: calc((10 / 12) * 100%);min-width: calc((10 / 12) * 100%) }.col-lg-11 {width: calc((11 / 12) * 100%);min-width: calc((11 / 12) * 100%) }.col-lg-12 {width: 100%;min-width: 100% }}@media(max-width: 991px) {.col-md-1 {width:calc((1 / 12) * 100%);min-width: calc((1 / 12) * 100%) }.col-md-2 {width: calc((2 / 12) * 100%);min-width: calc((2 / 12) * 100%) }.col-md-3 {width: calc((3 / 12) * 100%);min-width: calc((3 / 12) * 100%) }.col-md-4 {width: calc((4 / 12) * 100%);min-width: calc((4 / 12) * 100%) }.col-md-5 {width: calc((5 / 12) * 100%);min-width: calc((5 / 12) * 100%) }.col-md-6 {width: calc((6 / 12) * 100%);min-width: calc((6 / 12) * 100%) }.col-md-7 {width: calc((7 / 12) * 100%);min-width: calc((7 / 12) * 100%) }.col-md-8 {width: calc((8 / 12) * 100%);min-width: calc((8 / 12) * 100%) }.col-md-9 {width: calc((9 / 12) * 100%);min-width: calc((9 / 12) * 100%) }.col-md-10 {width: calc((10 / 12) * 100%);min-width: calc((10 / 12) * 100%) }.col-md-11 {width: calc((11 / 12) * 100%);min-width: calc((11 / 12) * 100%) }.col-md-12 {width: 100%;min-width: 100% }}@media(max-width: 767px) {.hide-mobile {display:none!important }.col-sm-1 {width: calc((1 / 12) * 100%);min-width: calc((1 / 12) * 100%) }.col-sm-2 {width: calc((2 / 12) * 100%);min-width: calc((2 / 12) * 100%) }.col-sm-3 {width: calc((3 / 12) * 100%);min-width: calc((3 / 12) * 100%) }.col-sm-4 {width: calc((4 / 12) * 100%);min-width: calc((4 / 12) * 100%) }.col-sm-5 {width: calc((5 / 12) * 100%);min-width: calc((5 / 12) * 100%) }.col-sm-6 {width: calc((6 / 12) * 100%);min-width: calc((6 / 12) * 100%) }.col-sm-7 {width: calc((7 / 12) * 100%);min-width: calc((7 / 12) * 100%) }.col-sm-8 {width: calc((8 / 12) * 100%);min-width: calc((8 / 12) * 100%) }.col-sm-9 {width: calc((9 / 12) * 100%);min-width: calc((9 / 12) * 100%) }.col-sm-10 {width: calc((10 / 12) * 100%);min-width: calc((10 / 12) * 100%) }.col-sm-11 {width: calc((11 / 12) * 100%);min-width: calc((11 / 12) * 100%) }.col-sm-12 {width: 100%;min-width: 100% }}@media(max-width: 450px) {.col-xs-1 {width:calc((1 / 12) * 100%);min-width: calc((1 / 12) * 100%) }.col-xs-2 {width: calc((2 / 12) * 100%);min-width: calc((2 / 12) * 100%) }.col-xs-3 {width: calc((3 / 12) * 100%);min-width: calc((3 / 12) * 100%) }.col-xs-4 {width: calc((4 / 12) * 100%);min-width: calc((4 / 12) * 100%) }.col-xs-5 {width: calc((5 / 12) * 100%);min-width: calc((5 / 12) * 100%) }.col-xs-6 {width: calc((6 / 12) * 100%);min-width: calc((6 / 12) * 100%) }.col-xs-7 {width: calc((7 / 12) * 100%);min-width: calc((7 / 12) * 100%) }.col-xs-8 {width: calc((8 / 12) * 100%);min-width: calc((8 / 12) * 100%) }.col-xs-9 {width: calc((9 / 12) * 100%);min-width: calc((9 / 12) * 100%) }.col-xs-10 {width: calc((10 / 12) * 100%);min-width: calc((10 / 12) * 100%) }.col-xs-11 {width: calc((11 / 12) * 100%);min-width: calc((11 / 12) * 100%) }.col-xs-12 {width: 100%;min-width: 100% }}.pull-right {float: right;}.pull-left {float: left;}@charset \"UTF-8\";:root {--bs-blue: #0d6efd;--bs-indigo: #6610f2;--bs-purple: #6f42c1;--bs-pink: #d63384;--bs-red: #dc3545;--bs-orange: #fd7e14;--bs-yellow: #ffc107;--bs-green: #198754;--bs-teal: #20c997;--bs-cyan: #0dcaf0;--bs-white: #fff;--bs-gray: #6c757d;--bs-gray-dark: #343a40;--bs-primary: #0d6efd;--bs-secondary: #6c757d;--bs-success: #198754;--bs-info: #0dcaf0;--bs-warning: #ffc107;--bs-danger: #dc3545;--bs-light: #f8f9fa;--bs-dark: #212529;--bs-font-sans-serif: system-ui, -apple-system, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Liberation Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\";--bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace;--bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0)) }*, ::after, ::before {box-sizing: border-box }@media (prefers-reduced-motion:no-preference) {:root {scroll-behavior: smooth }}body {margin: 0;font-family: var(--bs-font-sans-serif);font-size: 1em;font-weight: 400;line-height: 1.5;color: #212529;background-color: #fff;-webkit-text-size-adjust: 100%;-webkit-tap-highlight-color: transparent }hr {margin: 1rem 0;color: inherit;background-color: currentColor;border: 0;opacity: .25 }hr:not([size]) {height: 1px }.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {margin-top: 0;margin-bottom: .5rem;font-weight: 700;line-height: 1.2 }.h1, h1 {font-size: calc(1.375rem + 1.5vw) }@media (min-width: 1200px) {.h1, h1 {font-size: 2.5rem }}.h2, h2 {font-size: calc(1.325rem + .9vw) }@media (min-width: 1200px) {.h2, h2 {font-size: 2.4em }}.h3, h3 {font-size: calc(1.3rem + .6vw) }@media (min-width: 1200px) {.h3, h3 {font-size: 1.75rem }}.h4, h4 {font-size: calc(1.275rem + .3vw) }@media (min-width: 1200px) {.h4, h4 {font-size: 1.5rem }}.h5, h5 {font-size: 1.25rem }.h6, h6 {font-size: 1rem }p {margin-top: 0;}abbr[data-bs-original-title], abbr[title] {-webkit-text-decoration: underline dotted;text-decoration: underline dotted;cursor: help;-webkit-text-decoration-skip-ink: none;text-decoration-skip-ink: none }address {margin-bottom: 1rem;font-style: normal;line-height: inherit }ol, ul {padding-left: 2rem }dl, ol, ul {margin-top: 0;}ol ol, ol ul, ul ol, ul ul {margin-bottom: 0 }dt {font-weight: 700 }dd {margin-bottom: .5rem;margin-left: 0 }blockquote {margin: 0 0 1rem }b, strong {font-weight: bolder }.small, small {font-size: .875em }.mark, mark {padding: .2em;background-color: #fcf8e3 }sub, sup {position: relative;font-size: .75em;line-height: 0;vertical-align: baseline }sub {bottom: -.25em }sup {top: -.5em }a {text-decoration: underline }a:not([href]):not([class]), a:not([href]):not([class]):hover {color: inherit;text-decoration: none }code, kbd, pre, samp {font-family: var(--bs-font-monospace);font-size: 1em;direction: ltr;unicode-bidi: bidi-override }pre {display: block;margin-top: 0;margin-bottom: 1rem;overflow: auto;font-size: .875em }pre code {font-size: inherit;color: inherit;word-break: normal }code {font-size: .875em;color: #d63384;word-wrap: break-word }a > code {color: inherit }kbd {padding: .2rem .4rem;font-size: .875em;color: #fff;background-color: #212529;border-radius: .2rem }kbd kbd {padding: 0;font-size: 1em;font-weight: 700 }figure {margin: 0 0 1rem }img, svg {vertical-align: middle }table {caption-side: bottom;border-collapse: collapse }caption {padding-top: .5rem;padding-bottom: .5rem;color: #6c757d;text-align: left }th {text-align: inherit;text-align: -webkit-match-parent }tbody, td, tfoot, th, thead, tr {border-color: inherit;border-style: solid;border-width: 0 }label {display: inline-block }button {border-radius: 0 }button:focus:not(:focus-visible) {outline: 0 }button, input, optgroup, select, textarea {margin: 0;font-family: inherit;font-size: inherit;line-height: inherit }button, select {text-transform: none }[role=button] {cursor: pointer }select {word-wrap: normal;font-size: 12pt;padding: 0.5em;}select:disabled {opacity: 1 }[list]::-webkit-calendar-picker-indicator {display: none }[type=button], [type=reset], [type=submit], button {-webkit-appearance: button }[type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled), button:not(:disabled) {cursor: pointer }::-moz-focus-inner {padding: 0;border-style: none }textarea {resize: vertical }fieldset {min-width: 0;padding: 0;margin: 0;border: 0 }legend {float: left;width: 100%;padding: 0;margin-bottom: .5rem;font-size: calc(1.275rem + .3vw);line-height: inherit }@media (min-width: 1200px) {legend {font-size: 1.5rem }}le"
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en/training-courses/img/logo.webp",
+    "status": 200,
+    "content_type": "",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en/training-courses/img/backgrounds/hero-banner-bg-1.jpg",
+    "status": 200,
+    "content_type": "image/jpeg",
+    "sample": null
+  },
+  {
+    "type": "request",
+    "url": "https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&family=Poppins:wght@400;500;600;700;800;900&display=swap",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en/training-courses/img/category/32.png",
+    "status": 200,
+    "content_type": "image/png",
+    "sample": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/training-courses/fonts/Nunito-Sans-Font/NunitoSans-Regular.ttf",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t1R-s.woff2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/training-courses/fonts/Poppins/Poppins-SemiBold.ttf",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLCz7Z1xlFQ.woff2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://fonts.gstatic.com/s/poppins/v24/pxiEyp8kv8JHgFVrJJfecg.woff2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/training-courses/fonts/Nunito-Sans-Font/NunitoSans-SemiBold.ttf",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/training-courses/fonts/Nunito-Sans-Font/NunitoSans-Bold.ttf",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://site-assets.fontawesome.com/releases/v6.5.2/webfonts/fa-regular-400.woff2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en/training-courses/css/app.css",
+    "status": 200,
+    "content_type": "text/css",
+    "sample": "@import url(\"https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&family=Poppins:wght@400;500;600;700;800;900&display=swap\");\n:root {\n  --color-primary: #ff5a3c;\n  --color-secondary: #061b49;\n  --color-textSecondary: #ff5b5c;\n  --color-tertiary: #f8b81f;\n  --color-dark: #111212;\n  --color-heading: #181818;\n  --dark-color-heading: #fff;\n  --color-border: #e5e5e5;\n  --dark-color-border: #282f3a;\n  --color-body: gray;\n  --gradient-primary: linear-gradient(-90deg, #31b978 0%, #1ab69d 100%);\n  --bg-color: #eaf0f2;\n  --dark-bg-color: #020b17;\n  --cta-color-bg: #f0f4f5;\n  --color-bg-body: #fff;\n  --dark-color-bg-body: #111822;\n  --bg-color-2: #1c242f;\n  --color-white: #fff;\n  --color-black: #000;\n  --footer-text: #181818;\n  --dark-footer-text: gray;\n  --edu-btn-color: #fff;\n  --color-title: #bababa;\n  --color-lighten01: #f0f4f5;\n  --color-lighten02: #edf5f8;\n  --color-lighten03: #f5f1eb;\n  --color-lighten04: #f7f5f2;\n  --color-extra01: #0ecd73;\n  --color-extra02: #8e56ff;\n  --color-extra03: #f92596;\n  --color-extra04: #5866eb;\n  --color-extra05: #f8941f;\n  --color-extra06: #39c0fa;\n  --color-extra07: #da04f8;\n  --color-extra08: #4664e4;\n  --color-extra09: #525151;\n  --color-extra10: #404040;\n  --color-extra11: #22272e;\n  --color-success: #3eb75e;\n  --color-danger: #ff0003;\n  --color-warning: #ff8f3c;\n  --color-info: #1ba2db;\n  --color-placeholder: gray;\n  --color-facebook: #1877f2;\n  --color-twitter: #1da1f2;\n  --color-youtube: #cd201f;\n  --color-linkedin: #0a66c2;\n  --color-pinterest: #e60022;\n  --color-instagram: #c231a1;\n  --color-vimeo: #00adef;\n  --color-twitch: #6441a3;\n  --color-discord: #7289da;\n  --border-width: 2px;\n  --radius-small: 4px;\n  --radius: 10px;\n  --radius-big: 16px;\n  --p-light: 300;\n  --p-regular: 400;\n  --p-medium: 500;\n  --p-semi-bold: 600;\n  --p-bold: 700;\n  --p-extra-bold: 800;\n  --shadow-darker: 0 10px 50px 0 rgba(26, 46, 85, 0.1);\n  --shadow-darker2: 0 20px 50px 0 rgba(26, 46, 85, 0.1);\n  --shadow-dark: 0 10px 30px 0 rgba(20, 36, 66, 0.15);\n  --shadow-darkest: 0 10px 30px 0 rgba(0, 0, 0, 0.05);\n  --shadow-darker3: 0 4px 50px 0 rgba(0, 0, 0, 0.1);\n  --shadow-darker4: 0 20px 70px 0 rgba(15, 107, 92, 0.2);\n  --transition: 0.3s;\n  --transition-2: 0.5s;\n  --transition-transform: transform 0.65s cubic-bezier(0.23, 1, 0.32, 1);\n  --font-primary: \"Poppins\", sans-serif;\n  --font-secondary: \"Nunito sans\", sans-serif;\n  --font-icomoon: \"icomoon\";\n  --font-size-b1: 15px;\n  --font-size-b2: 13px;\n  --line-height-b1: 1.73;\n  --line-height-b2: 1.85;\n  --h1: 50px;\n  --h2: 36px;\n  --h3: 28px;\n  --h4: 20px;\n  --h5: 18px;\n  --h6: 16px;\n  --h1-lineHeight: 1.2;\n  --h2-lineHeight: 1.39;\n  --h3-lineHeight: 1.43;\n  --h4-lineHeight: 1.4;\n  --h5-lineHeight: 1.45;\n  --h6-lineHeight: 1.62;\n}\n\n.container-custom,\n.container-custom-1520 {\n  width: 100%;\n  margin-left: auto;\n  margin-right: auto;\n  padding-right: 15px;\n  padding-left: 15px;\n}\n\n.container-custom {\n  max-width: 1710px;\n}\n\n.container-custom-1520 {\n  max-width: 1520px;\n}\n\n@media only screen and (max-width: 767px) {\n  .container,\n  .container-fluid,\n  .container-lg,\n  .container-md,\n  .container-sm,\n  .container-xl,\n  .container-xxl,\n  .container-custom,\n  .container-custom-1520 {\n    padding-right: 15px;\n    padding-left: 15px;\n  }\n}\n\n@media only screen and (min-width: 1200px) {\n  .container {\n    max-width: 95%;\n  }\n}\n\n.shape-group,\n.edu-breadcrumb-area .edu-breadcrumb,\n.edu-breadcrumb-area .course-meta,\n.edu-breadcrumb-area .shape-group,\n.edu-course-widget.widget-course-summery .content .course-item,\n.edu-pagination,\n.about-image-gallery .shape-group li,\n.about-content .features-list,\n.about-style-1 .shape-group,\n.about-style-2 .shape-group,\n.about-style-3 .about-image-gallery .shape-group,\n.about-style-3 .shape-group,\n.about-style-5 .shape-group,\n.cta-banner-2 .shape-group,\n.cta-banner-3 .shape-group,\n.edu-cta-banner .shape-group,\n.edu-cta-box .shape-group,\n.contact-me .thumbnail .shape-group,\n.contact-us-info .address-list,\n.contact-form-area .shape-group,\n.contact-form.form-style-2 .shape-group,\n.edu-course .content .course-meta,\n.edu-course .hover-content-aside .content .course-feature ul,\n.course-layout-five-tooltip-content .content .course-meta,\n.course-layout-five-tooltip-content .content .course-feature ul,\n.course-area-3 .shape-group,\n.course-area-7 .shape-group,\n.edu-sorting-area .sorting-right .layout-switcher .switcher-btn,\n.course-details-content .entry-content .course-meta,\n.course-curriculam .course-lesson ul,\n.edu-event .content .event-meta,\n.edu-event-list .content .event-meta,\n.edu-event-area .shape-group,\n.event-details .details-content .event-meta,\n.edu-faq-content .shape-group,\n.edu-faq-gallery .shape-group,\n.faq-style-4 .faq-thumbnail .shape-group,\n.hero-banner .banner-content .shape-group,\n.hero-banner .banner-thumbnail .shape-group,\n.hero-banner.hero-style-2 .banner-gallery .shape-group,\n.hero-banner.hero-style-3 .shape-group,\n.hero-banner.hero-style-4 .shape-group,\n.hero-banner.hero-style-5 .shape-group,\n.hero-banner.hero-style-6 .shape-group,\n.hero-banner.hero-style-7 .shape-group,\n.pricing-table .pricing-body .list-item,\n.privacy-policy ul,\n.product-details-area .content .product-feature,\n.edu-product .inner > .thumbnail .product-hover-info ul,\n.account-page-area .shape-group,\n.pv-elementor-area .elementor-thumbnail .shape-group li,\n.pv-shop-area .shop-thumbnail .shop-thumbnail-images .shape-group li,\n.pv-inner-page-area .shape-group li,\n.pv-zoom-demo-area .zoom-thumbnail .shape-group li,\n.pv-cta-area .shape-group li,\n.team-share-info,\n.team-area-3 .shape-group,\n.team-area-4 .shape-group,\n.team-area-5 .shape-group,\n.team-area-6 .shape-group,\n.team-details-content .main-info .team-meta,\n.team-details-content .contact-info ul,\n.video-gallery .shape-group,\n.error-page-area > .shape-group,\n.edu-error .thumbnail .shape-group,\n.coming-soon-page-area .shape-group,\n.header-top .header-info,\n.header-action,\n.edu-footer .information-list,\n.blog-meta,\n.edu-blog-area .shape-group,\n.edu-blog-widget.widget-categories .category-list {\n  padding: 0;\n  margin: 0;\n  list-style: none;\n}\n\n.mainmenu-nav .mainmenu li.has-droupdown .submenu li a {\n  -webkit-transition: var(--transition);\n  transition: var(--transition);\n}\n\n.bgImagePosition,\n.bg-image {\n  background-repeat: no-repeat;\n  background-size: cover;\n  background-position: center center;\n}\n\n.bg-image_fixed {\n  background-attachment: fixed !important;\n}\n\n.bg-image--1 {\n  background-image: url(../images/bg/bg-image-1.png);\n}\n\n.bg-image--2 {\n  background-image: url(../images/bg/bg-image-2.jpg);\n}\n\n.bg-image--9 {\n  background-image: url(../images/bg/bg-image-9.png);\n}\n\n.bg-image--14 {\n  background-image: url(../images/bg/bg-image-14.jpg);\n}\n\n.bg-image--17 {\n  background-image: url(../images/bg/bg-image-17.webp);\n}\n\n.bg-image--19 {\n  background-image: url(../images/bg/bg-image-19.webp);\n}\n\n.bg-image--21 {\n  background-image: url(../images/bg/bg-image-21.webp);\n}\n\n.row--0 {\n  margin-left: 0;\n  margin-right: 0;\n}\n\n.row--0 > [class*=\"col\"] {\n  padding-left: 0;\n  padding-right: 0;\n}\n\n.row--5 {\n  margin-left: -5px;\n  margin-right: -5px;\n}\n\n.row--5 > [class*=\"col\"] {\n  padding-left: 5px;\n  padding-right: 5px;\n}\n\n.row--10 {\n  margin-left: -10px;\n  margin-right: -10px;\n}\n\n.row--10 > [class*=\"col\"] {\n  padding-left: 10px;\n  padding-right: 10px;\n}\n\n.row--15 {\n  margin-left: -15px;\n  margin-right: -15px;\n}\n\n.row--15 > [class*=\"col\"] {\n  padding-left: 15px;\n  padding-right: 15px;\n}\n\n.row--20 {\n  margin-left: -20px;\n  margin-right: -20px;\n}\n\n@media only screen and (min-width: 1200px) and (max-width: 1599px) {\n  .row--20 {\n    margin-left: -15px;\n    margin-right: -15px;\n  }\n}\n\n@media only screen and (min-width: 992px) and (max-width: 1199px) {\n  .row--20 {\n    margin-left: -15px;\n    margin-right: -15px;\n  }\n}\n\n@media only screen and (min-width: 768px) and (max-width: 991px) {\n  .row--20 {\n    margin-left: -15px;\n    margin-right: -15px;\n  }\n}\n\n@media only screen and (max-width: 767px) {\n  .row--20 {\n    margin-left: -15px !important;\n    margin-right: -15px !important;\n  }\n}\n\n.row--20 > [class*=\"col\"],\n.row--20 > [class*=\"col-\"] {\n  padding-left: 20px;\n  padding-right: 20px;\n}\n\n@media only screen and (min-width: 1200px) and (max-width: 1599px) {\n  .row--20 > [class*=\"col\"],\n  .row--20 > [class*=\"col-\"] {\n    padding-left: 15px;\n    padding-right: 15px;\n  }\n}\n\n@media only screen and (min-width: 992px) and (max-width: 1199px) {\n  .row--20 > [class*=\"col\"],\n  .row--20 > [class*=\"col-\"] {\n    padding-left: 15px;\n    padding-right: 15px;\n  }\n}\n\n@media only screen and (min-width: 768px) and (max-width: 991px) {\n  .row--20 > [class*=\"col\"],\n  .row--20 > [class*=\"col-\"] {\n    padding-left: 15px !important;\n    padding-right: 15px !important;\n  }\n}\n\n@media only screen and (max-width: 767px) {\n  .row--20 > [class*=\"col\"],\n  .row--20 > [class*=\"col-\"] {\n    padding-left: 15px !important;\n    padding-right: 15px !important;\n  }\n}\n\n.row--25 {\n  margin-left: -25px;\n  margin-right: -25px;\n}\n\n@media only screen and (min-width: 1200px) and (max-width: 1599px) {\n  .row--25 {\n    margin-left: -15px;\n    margin-right: -15px;\n  }\n}\n\n@media only screen and (min-width: 992px) and (max-width: 1199px) {\n  .row--25 {\n    margin-left: -15px;\n    margin-right: -15px;\n  }\n}\n\n@media only screen and (min-width: 768px) and (max-width: 991px) {\n  .row--25 {\n    margin-left: -15px;\n    margin-right: -15px;\n  }\n}\n\n@media only screen and (max-width: 767px) {\n  .row--25 {\n    margin-left: -15px !important;\n    margin-right: -15px !important;\n  }\n}\n\n.row--25 > [class*=\"col\"],\n.row--25 > [class*=\"col-\"] {\n  padding-left: 25px;\n  padding-right: 25px;\n}\n\n@media only screen and (min-width: 1200px) and (max-width: 1599px) {\n  .row--25 > [class*=\"col\"],\n  .row--25 > [class*=\"col-\"] {\n    padding-left: 15px;\n    padding-right: 15px;\n  }\n}\n\n@media only screen and (min-width: 992px) and (max-width: 1199px) {\n  .row--25 > [class*=\"col\"],\n  .row--25 > [class*=\"col-\"] {\n    padding-left: 15px;\n    padding-right: 15px;\n  }\n}\n\n@media only "
+  },
+  {
+    "type": "response",
+    "url": "https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&family=Poppins:wght@400;500;600;700;800;900&display=swap",
+    "status": 200,
+    "content_type": "text/css; charset=utf-8",
+    "sample": "/* cyrillic-ext */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 300;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t4R-tCKQ.woff2) format('woff2');\n  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;\n}\n/* cyrillic */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 300;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7txR-tCKQ.woff2) format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}\n/* vietnamese */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 300;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t6R-tCKQ.woff2) format('woff2');\n  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;\n}\n/* latin-ext */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 300;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t7R-tCKQ.woff2) format('woff2');\n  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;\n}\n/* latin */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 300;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t1R-s.woff2) format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n/* cyrillic-ext */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 400;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t4R-tCKQ.woff2) format('woff2');\n  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;\n}\n/* cyrillic */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 400;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7txR-tCKQ.woff2) format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}\n/* vietnamese */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 400;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t6R-tCKQ.woff2) format('woff2');\n  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;\n}\n/* latin-ext */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 400;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t7R-tCKQ.woff2) format('woff2');\n  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;\n}\n/* latin */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 400;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t1R-s.woff2) format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n/* cyrillic-ext */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 600;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t4R-tCKQ.woff2) format('woff2');\n  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;\n}\n/* cyrillic */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 600;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7txR-tCKQ.woff2) format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}\n/* vietnamese */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 600;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t6R-tCKQ.woff2) format('woff2');\n  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;\n}\n/* latin-ext */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 600;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t7R-tCKQ.woff2) format('woff2');\n  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;\n}\n/* latin */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 600;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t1R-s.woff2) format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n/* cyrillic-ext */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 700;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t4R-tCKQ.woff2) format('woff2');\n  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;\n}\n/* cyrillic */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 700;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7txR-tCKQ.woff2) format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}\n/* vietnamese */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 700;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t6R-tCKQ.woff2) format('woff2');\n  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;\n}\n/* latin-ext */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 700;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t7R-tCKQ.woff2) format('woff2');\n  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;\n}\n/* latin */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 700;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t1R-s.woff2) format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n/* devanagari */\n@font-face {\n  font-family: 'Poppins';\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/poppins/v24/pxiEyp8kv8JHgFVrJJbecmNE.woff2) format('woff2');\n  unicode-range: U+0900-097F, U+1CD0-1CF9, U+200C-200D, U+20A8, U+20B9, U+20F0, U+25CC, U+A830-A839, U+A8E0-A8FF, U+11B00-11B09;\n}\n/* latin-ext */\n@font-face {\n  font-family: 'Poppins';\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/poppins/v24/pxiEyp8kv8JHgFVrJJnecmNE.woff2) format('woff2');\n  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;\n}\n/* latin */\n@font-face {\n  font-family: 'Poppins';\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(https"
+  },
+  {
+    "type": "response",
+    "url": "https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t1R-s.woff2",
+    "status": 200,
+    "content_type": "font/woff2",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLCz7Z1xlFQ.woff2",
+    "status": 200,
+    "content_type": "font/woff2",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://fonts.gstatic.com/s/poppins/v24/pxiEyp8kv8JHgFVrJJfecg.woff2",
+    "status": 200,
+    "content_type": "font/woff2",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://site-assets.fontawesome.com/releases/v6.5.2/webfonts/fa-regular-400.woff2",
+    "status": 200,
+    "content_type": "font/woff2",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en/training-courses/img/category/11.png",
+    "status": 200,
+    "content_type": "image/png",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en/training-courses/img/category/6.png",
+    "status": 200,
+    "content_type": "image/png",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://l.sharethis.com/pview?event=pview&hostname=aast.edu&location=%2Fen%2Ftraining-courses%2F&product=sop&url=https%3A%2F%2Faast.edu%2Fen%2Ftraining-courses%2F&source=sharethis.js&fcmp=false&fcmpv2=false&has_segmentio=false&title=Training%20Courses%20%7C%20AASTMT&cms=unknown&publisher=5de96879890a5300125e3eb9&sop=true&version=st_sop.js&lang=en&description=AASTMT%20is%20one%20of%20the%20specialized%20organizations%20of%20the%20League%20of%20Arab%20States.%20We%20are%20a%20regional%20educational%20organization%20devoted%20to%20providing%20an%20excellent%20education%20for%20Arab%20youth%20and%20researchers.&ua=%22HeadlessChrome%22%3Bv%3D%22141%22%2C%20%22Not%3FA_Brand%22%3Bv%3D%228%22%2C%20%22Chromium%22%3Bv%3D%22141%22&ua_mobile=false&ua_platform=Windows&ua_full_version_list=%22HeadlessChrome%22%3Bv%3D%22141.0.7390.37%22%2C%20%22Not%3FA_Brand%22%3Bv%3D%228.0.0.0%22%2C%20%22Chromium%22%3Bv%3D%22141.0.7390.37%22&ua_platform_version=19.0.0&uuid=a142e21f-8856-4e8f-9bcc-870aa0b5aa8d",
+    "status": 204,
+    "content_type": "",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://buttons-config.sharethis.com/js/5de96879890a5300125e3eb9.js",
+    "status": 200,
+    "content_type": "text/javascript",
+    "sample": "window.__sharethis__.init({\"ts\":1705359887291,\"analytics\":{\"enabled\":true,\"ts\":1705359887263,\"updated_at\":\"2024-01-15T23:04:47.263Z\"},\"inline-share-buttons\":{\"alignment\":\"center\",\"color\":\"social\",\"enabled\":true,\"font_size\":12,\"has_spacing\":true,\"labels\":\"cta\",\"language\":\"en\",\"min_count\":10,\"networks\":[\"facebook\",\"twitter\",\"pinterest\",\"email\",\"sms\",\"sharethis\"],\"num_networks\":6,\"padding\":10,\"radius\":4,\"show_total\":true,\"size\":32,\"size_label\":\"small\",\"spacing\":8,\"use_native_counts\":true,\"token\":\"eb4c820161f6ead8054c94e14c144900\",\"ts\":1575577764414,\"updated_at\":1575577764414}});"
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en/training-courses/fonts/Nunito-Sans-Font/NunitoSans-Regular.ttf",
+    "status": 200,
+    "content_type": "font/ttf",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en/training-courses/fonts/Poppins/Poppins-SemiBold.ttf",
+    "status": 200,
+    "content_type": "font/ttf",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en/training-courses/fonts/Nunito-Sans-Font/NunitoSans-SemiBold.ttf",
+    "status": 200,
+    "content_type": "font/ttf",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en/training-courses/fonts/Nunito-Sans-Font/NunitoSans-Bold.ttf",
+    "status": 200,
+    "content_type": "font/ttf",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en/training-courses/img/category/28.png",
+    "status": 200,
+    "content_type": "image/png",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/getData/retreiveOnePICNew.php?img=18.png&module=2",
+    "status": 200,
+    "content_type": "image/png",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/getData/retreiveOnePICNew.php?img=42.webp&module=2",
+    "status": 200,
+    "content_type": "image/webp",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/getData/retreiveOnePICNew.php?&img=22.jpg&module=2",
+    "status": 200,
+    "content_type": "image/jpeg",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/getData/retreiveOnePICNew.php?img=13.jpg&module=2.jpg",
+    "status": 200,
+    "content_type": "image/jpeg",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/getData/retreiveOnePICNew.php?&img=19.jpg&module=2",
+    "status": 200,
+    "content_type": "image/jpeg",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en/training-courses/img/training/coventry-university-logo.png",
+    "status": 200,
+    "content_type": "image/png",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/getData/retreiveOnePICNew.php?img=44.jpg&module=2",
+    "status": 200,
+    "content_type": "image/jpeg",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en/training-courses/img/training/Northampton.png",
+    "status": 200,
+    "content_type": "image/png",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/ar/footer/img/ain-logo.png",
+    "status": 200,
+    "content_type": "image/png",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/ar/footer/img/QS-STARS.png",
+    "status": 200,
+    "content_type": "image/png",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/ar/footer/img/arab_league.png",
+    "status": 200,
+    "content_type": "image/png",
+    "sample": null
+  }
+]

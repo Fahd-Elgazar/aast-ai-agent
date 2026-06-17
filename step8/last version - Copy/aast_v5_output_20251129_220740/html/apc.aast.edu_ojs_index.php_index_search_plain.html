@@ -1,0 +1,551 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Search</title>
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta name="generator" content="Open Journal Systems 2.4.4.1" />
+	
+		<link rel="stylesheet" href="https://apc.aast.edu/ojs/lib/pkp/styles/pkp.css" type="text/css" />
+	<link rel="stylesheet" href="https://apc.aast.edu/ojs/lib/pkp/styles/common.css" type="text/css" />
+	<link rel="stylesheet" href="https://apc.aast.edu/ojs/styles/common.css" type="text/css" />
+	<link rel="stylesheet" href="https://apc.aast.edu/ojs/styles/compiled.css" type="text/css" />
+
+	<!-- Base Jquery -->
+	<script type="text/javascript" src="//www.google.com/jsapi"></script>
+		<script type="text/javascript">
+			<!--
+			// Provide a local fallback if the CDN cannot be reached
+			if (typeof google == 'undefined') {
+				document.write(unescape("%3Cscript src='https://apc.aast.edu/ojs/lib/pkp/js/lib/jquery/jquery.min.js' type='text/javascript'%3E%3C/script%3E"));
+				document.write(unescape("%3Cscript src='https://apc.aast.edu/ojs/lib/pkp/js/lib/jquery/plugins/jqueryUi.min.js' type='text/javascript'%3E%3C/script%3E"));
+			} else {
+				google.load("jquery", "1.4.4");
+				google.load("jqueryui", "1.8.6");
+			}
+			// -->
+		</script>
+	
+	
+	
+	<link rel="stylesheet" href="https://apc.aast.edu/ojs/styles/sidebar.css" type="text/css" />		<link rel="stylesheet" href="https://apc.aast.edu/ojs/styles/rightSidebar.css" type="text/css" />	
+			<link rel="stylesheet" href="https://apc.aast.edu/ojs/plugins/blocks/languageToggle/styles/languageToggle.css" type="text/css" />
+	
+	<!-- Default global locale keys for JavaScript -->
+	
+<script type="text/javascript">
+	jQuery.pkp = jQuery.pkp || { };
+	jQuery.pkp.locale = { };
+			
+				jQuery.pkp.locale.search_noKeywordError = 'You must enter at least one search keyword.';
+	</script>
+	<!-- Compiled scripts -->
+			
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/lib/jquery/plugins/jquery.tag-it.js"></script>
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/lib/jquery/plugins/jquery.cookie.js"></script>
+
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/functions/fontController.js"></script>
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/functions/general.js"></script>
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/functions/jqueryValidatorI18n.js"></script>
+
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/classes/Helper.js"></script>
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/classes/ObjectProxy.js"></script>
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/classes/Handler.js"></script>
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/classes/linkAction/LinkActionRequest.js"></script>
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/classes/features/Feature.js"></script>
+
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/controllers/SiteHandler.js"></script><!-- Included only for namespace definition -->
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/controllers/UrlInDivHandler.js"></script>
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/controllers/AutocompleteHandler.js"></script>
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/controllers/ExtrasOnDemandHandler.js"></script>
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/controllers/form/FormHandler.js"></script>
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/controllers/form/AjaxFormHandler.js"></script>
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/controllers/form/ClientFormHandler.js"></script>
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/controllers/grid/GridHandler.js"></script>
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/controllers/linkAction/LinkActionHandler.js"></script>
+
+<script type="text/javascript" src="https://apc.aast.edu/ojs/js/pages/search/SearchFormHandler.js"></script>
+<script type="text/javascript" src="https://apc.aast.edu/ojs/js/statistics/ReportGeneratorFormHandler.js"></script>
+<script type="text/javascript" src="https://apc.aast.edu/ojs/plugins/generic/lucene/js/LuceneAutocompleteHandler.js"></script>
+
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/lib/jquery/plugins/jquery.pkp.js"></script>	
+	<!-- Form validation -->
+	<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/lib/jquery/plugins/validate/jquery.validate.js"></script>
+	<script type="text/javascript">
+		<!--
+		// initialise plugins
+		
+		$(function(){
+			jqueryValidatorI18n("https://apc.aast.edu/ojs", "en_US"); // include the appropriate validation localization
+			
+			$(".tagit").live('click', function() {
+				$(this).find('input').focus();
+			});
+		});
+		// -->
+		
+	</script>
+
+		
+</head>
+<body id="pkp-navigation-search">
+<div id="container">
+
+<div id="header">
+<div id="headerTitle">
+<h1>
+	<img src="https://apc.aast.edu/ojs/public/site/pageHeaderTitleImage_en_US.png" width="1280" height="233" alt="Page Header" />
+</h1>
+</div>
+</div>
+
+<div id="body">
+
+	<div id="sidebar">
+							<div id="rightSidebar">
+				<div class="block" id="sidebarDevelopedBy">
+	<a class="blockTitle" href="https://pkp.sfu.ca/ojs/" id="developedBy">Open Journal Systems</a>
+</div><div class="block" id="sidebarHelp">
+	<a class="blockTitle" href="javascript:openHelp('https://apc.aast.edu/ojs/index.php/index/help/view/user/topic/000005')">Journal Help</a>
+</div><div class="block" id="sidebarUser">
+			<span class="blockTitle">User</span>
+	
+						<form method="post" action="https://apc.aast.edu/ojs/index.php/index/login/signIn">
+				<table>
+					<tr>
+						<td><label for="sidebar-username">Username</label></td>
+						<td><input type="text" id="sidebar-username" name="username" value="" size="12" maxlength="32" class="textField" /></td>
+					</tr>
+					<tr>
+						<td><label for="sidebar-password">Password</label></td>
+						<td><input type="password" id="sidebar-password" name="password" value="" size="12" maxlength="32" class="textField" /></td>
+					</tr>
+					<tr>
+						<td colspan="2"><input type="checkbox" id="remember" name="remember" value="1" /> <label for="remember">Remember me</label></td>
+					</tr>
+					<tr>
+						<td colspan="2"><input type="submit" value="Login" class="button" /></td>
+					</tr>
+				</table>
+			</form>
+			</div> 
+<div class="block" id="sidebarNavigation">
+	<span class="blockTitle">Journal Content</span>
+
+	<form id="simpleSearchForm" method="post" action="https://apc.aast.edu/ojs/index.php/index/search/search">
+		<table id="simpleSearchInput">
+			<tr>
+				<td>
+													<label for="simpleQuery">Search <br />
+					<input type="text" id="simpleQuery" name="simpleQuery" size="15" maxlength="255" value="" class="textField" /></label>
+								</td>
+			</tr>
+			<tr>
+				<td><label for="searchField">
+				Search Scope
+				<br />
+				<select id="searchField" name="searchField" size="1" class="selectMenu">
+					<option label="All" value="query">All</option>
+<option label="Authors" value="authors">Authors</option>
+<option label="Title" value="title">Title</option>
+<option label="Abstract" value="abstract">Abstract</option>
+<option label="Index terms" value="indexTerms">Index terms</option>
+<option label="Full Text" value="galleyFullText">Full Text</option>
+
+				</select></label>
+				</td>
+			</tr>
+			<tr>
+				<td><input type="submit" value="Search" class="button" /></td>
+			</tr>
+		</table>
+	</form>
+
+	<br />
+
+	</div>
+
+<!-- Add javascript required for font sizer -->
+<script type="text/javascript">
+	<!--
+	$(function(){
+		fontSize("#sizer", "body", 9, 16, 32, "/ojs"); // Initialize the font sizer
+	});
+	// -->
+</script>
+
+<div class="block" id="sidebarFontSize" style="margin-bottom: 4px;">
+	<span class="blockTitle">Font Size</span>
+	<div id="sizer"></div>
+</div>
+<br />
+			</div>
+			</div>
+
+<div id="main">
+<div id="navbar">
+	<ul class="menu">
+		<li id="home"><a href="https://apc.aast.edu/ojs/index.php/index/index">Home</a></li>
+		<li id="about"><a href="https://apc.aast.edu/ojs/index.php/index/about">About</a></li>
+
+					<li id="login"><a href="https://apc.aast.edu/ojs/index.php/index/login">Login</a></li>
+							<li id="register"><a href="https://apc.aast.edu/ojs/index.php/index/user/register">Register</a></li>
+												<li id="search"><a href="https://apc.aast.edu/ojs/index.php/index/search">Search</a></li>
+		
+		
+				
+
+			</ul>
+</div>
+
+<div id="breadcrumb">
+	<a href="https://apc.aast.edu/ojs/index.php/index/index">Home</a> &gt;
+			<a href="https://apc.aast.edu/ojs/index.php/index/search" class="current">Search</a></div>
+
+<h2>Search</h2>
+
+
+<div id="content">
+
+
+
+<div id="search">
+	<script type="text/javascript">
+		$(function() {
+			// Attach the form handler.
+			$('#searchForm').pkpHandler('$.pkp.pages.search.SearchFormHandler');
+		});
+	</script>
+	<form method="post" id="searchForm" action="https://apc.aast.edu/ojs/index.php/index/search/search">
+		<table class="data">
+			<tr valign="top">
+				<td class="label"><label for="query">Search for</label></td>
+				<td class="value">
+																<input type="text" id="query" name="query" size="40" maxlength="255" value="" class="textField" />
+										&nbsp;
+					<input type="submit" value="Search" class="button defaultButton" />
+				</td>
+			</tr>
+							<tr valign="top">
+					<td class="label"><label for="searchJournal">Within</label></td>
+					<td class="value"><select name="searchJournal" id="searchJournal" class="selectMenu"><option label="All Journals" value="">All Journals</option>
+<option label="Renewable Energy and Sustainable Development" value="3">Renewable Energy and Sustainable Development</option>
+<option label="International Business Logistics" value="9">International Business Logistics</option>
+<option label="Advances in Computing and Engineering" value="10">Advances in Computing and Engineering</option>
+<option label="Advances in Medical, Pharmaceutical and Dental Research" value="11">Advances in Medical, Pharmaceutical and Dental Research</option>
+<option label="Insights into Language, Culture and Communication" value="12">Insights into Language, Culture and Communication</option>
+<option label="Maritime Research and Technology" value="8">Maritime Research and Technology</option>
+<option label="Multidisciplinary Adaptive Climate Insights" value="14">Multidisciplinary Adaptive Climate Insights</option>
+<option label="Robotics : Integration, Manufacturing and Control" value="15">Robotics : Integration, Manufacturing and Control</option>
+<option label="Horizons in Architecture and Urban Studies" value="16">Horizons in Architecture and Urban Studies</option>
+<option label="International Maritime Transport and Logistic Journal" value="13">International Maritime Transport and Logistic Journal</option>
+</select></td>
+				</tr>
+								</table>
+		<br/>
+								<script type="text/javascript">
+	// Initialise JS handler.
+	$(function() {
+		$('#emptyFilters').pkpHandler(
+			'$.pkp.controllers.ExtrasOnDemandHandler');
+	});
+</script>
+	<div id="emptyFilters" class="pkp_controllers_extrasOnDemand">
+	<div class="toggleExtras">
+		<span class="ui-icon"></span>
+		<span class="toggleExtras-inactive">Additional Search Options (click to show)
+					</span>
+		<span class="toggleExtras-active">Additional Search Options (click to hide)
+					</span>
+	</div>
+	<div style="clear:both;"></div>
+	<div class="extrasContainer">
+						<table class="data">
+											<tr valign="top">
+							<td colspan="2" class="label"><h4>Search categories</h4></td>
+						</tr>
+								<tr>
+		<td class="label">
+			<label for="authors">Authors</label>
+		</td>
+		<td class="value">
+																<input type="text" name="authors" id="authors" size="40" maxlength="255" value="" class="textField">
+												</td>
+	</tr>
+								<tr>
+		<td class="label">
+			<label for="title">Title</label>
+		</td>
+		<td class="value">
+																<input type="text" name="title" id="title" size="40" maxlength="255" value="" class="textField">
+												</td>
+	</tr>
+								<tr>
+		<td class="label">
+			<label for="abstract">Abstract</label>
+		</td>
+		<td class="value">
+																<input type="text" name="abstract" id="abstract" size="40" maxlength="255" value="" class="textField">
+												</td>
+	</tr>
+								<tr>
+		<td class="label">
+			<label for="galleyFullText">Full Text</label>
+		</td>
+		<td class="value">
+																<input type="text" name="galleyFullText" id="galleyFullText" size="40" maxlength="255" value="" class="textField">
+												</td>
+	</tr>
+								<tr>
+		<td class="label">
+			<label for="suppFiles">Supplementary File(s)</label>
+		</td>
+		<td class="value">
+																<input type="text" name="suppFiles" id="suppFiles" size="40" maxlength="255" value="" class="textField">
+												</td>
+	</tr>
+																<tr valign="top">
+							<td colspan="2" class="formSubLabel"><h4>Publication Date</h4></td>
+						</tr>
+								<tr>
+		<td class="label">
+			<label for="dateFrom">From</label>
+		</td>
+		<td class="value">
+							<select name="dateFromMonth" class="selectMenu">
+<option label="" value="" selected="selected"></option>
+<option label="January" value="01">January</option>
+<option label="February" value="02">February</option>
+<option label="March" value="03">March</option>
+<option label="April" value="04">April</option>
+<option label="May" value="05">May</option>
+<option label="June" value="06">June</option>
+<option label="July" value="07">July</option>
+<option label="August" value="08">August</option>
+<option label="September" value="09">September</option>
+<option label="October" value="10">October</option>
+<option label="November" value="11">November</option>
+<option label="December" value="12">December</option>
+</select>
+<select name="dateFromDay" class="selectMenu">
+<option label="" value="" selected="selected"></option>
+<option label="01" value="1">01</option>
+<option label="02" value="2">02</option>
+<option label="03" value="3">03</option>
+<option label="04" value="4">04</option>
+<option label="05" value="5">05</option>
+<option label="06" value="6">06</option>
+<option label="07" value="7">07</option>
+<option label="08" value="8">08</option>
+<option label="09" value="9">09</option>
+<option label="10" value="10">10</option>
+<option label="11" value="11">11</option>
+<option label="12" value="12">12</option>
+<option label="13" value="13">13</option>
+<option label="14" value="14">14</option>
+<option label="15" value="15">15</option>
+<option label="16" value="16">16</option>
+<option label="17" value="17">17</option>
+<option label="18" value="18">18</option>
+<option label="19" value="19">19</option>
+<option label="20" value="20">20</option>
+<option label="21" value="21">21</option>
+<option label="22" value="22">22</option>
+<option label="23" value="23">23</option>
+<option label="24" value="24">24</option>
+<option label="25" value="25">25</option>
+<option label="26" value="26">26</option>
+<option label="27" value="27">27</option>
+<option label="28" value="28">28</option>
+<option label="29" value="29">29</option>
+<option label="30" value="30">30</option>
+<option label="31" value="31">31</option>
+</select>
+<select name="dateFromYear" class="selectMenu">
+<option label="" value="" selected="selected"></option>
+<option label="2015" value="2015">2015</option>
+<option label="2016" value="2016">2016</option>
+<option label="2017" value="2017">2017</option>
+<option label="2018" value="2018">2018</option>
+<option label="2019" value="2019">2019</option>
+<option label="2020" value="2020">2020</option>
+<option label="2021" value="2021">2021</option>
+<option label="2022" value="2022">2022</option>
+<option label="2023" value="2023">2023</option>
+<option label="2024" value="2024">2024</option>
+<option label="2025" value="2025">2025</option>
+</select>
+												</td>
+	</tr>
+								<tr>
+		<td class="label">
+			<label for="dateTo">Until</label>
+		</td>
+		<td class="value">
+							<select name="dateToMonth" class="selectMenu">
+<option label="" value="" selected="selected"></option>
+<option label="January" value="01">January</option>
+<option label="February" value="02">February</option>
+<option label="March" value="03">March</option>
+<option label="April" value="04">April</option>
+<option label="May" value="05">May</option>
+<option label="June" value="06">June</option>
+<option label="July" value="07">July</option>
+<option label="August" value="08">August</option>
+<option label="September" value="09">September</option>
+<option label="October" value="10">October</option>
+<option label="November" value="11">November</option>
+<option label="December" value="12">December</option>
+</select>
+<select name="dateToDay" class="selectMenu">
+<option label="" value="" selected="selected"></option>
+<option label="01" value="1">01</option>
+<option label="02" value="2">02</option>
+<option label="03" value="3">03</option>
+<option label="04" value="4">04</option>
+<option label="05" value="5">05</option>
+<option label="06" value="6">06</option>
+<option label="07" value="7">07</option>
+<option label="08" value="8">08</option>
+<option label="09" value="9">09</option>
+<option label="10" value="10">10</option>
+<option label="11" value="11">11</option>
+<option label="12" value="12">12</option>
+<option label="13" value="13">13</option>
+<option label="14" value="14">14</option>
+<option label="15" value="15">15</option>
+<option label="16" value="16">16</option>
+<option label="17" value="17">17</option>
+<option label="18" value="18">18</option>
+<option label="19" value="19">19</option>
+<option label="20" value="20">20</option>
+<option label="21" value="21">21</option>
+<option label="22" value="22">22</option>
+<option label="23" value="23">23</option>
+<option label="24" value="24">24</option>
+<option label="25" value="25">25</option>
+<option label="26" value="26">26</option>
+<option label="27" value="27">27</option>
+<option label="28" value="28">28</option>
+<option label="29" value="29">29</option>
+<option label="30" value="30">30</option>
+<option label="31" value="31">31</option>
+</select>
+<select name="dateToYear" class="selectMenu">
+<option label="" value="" selected="selected"></option>
+<option label="2015" value="2015">2015</option>
+<option label="2016" value="2016">2016</option>
+<option label="2017" value="2017">2017</option>
+<option label="2018" value="2018">2018</option>
+<option label="2019" value="2019">2019</option>
+<option label="2020" value="2020">2020</option>
+<option label="2021" value="2021">2021</option>
+<option label="2022" value="2022">2022</option>
+<option label="2023" value="2023">2023</option>
+<option label="2024" value="2024">2024</option>
+<option label="2025" value="2025">2025</option>
+</select>
+									<input type="hidden" name="dateToHour" value="23" />
+					<input type="hidden" name="dateToMinute" value="59" />
+					<input type="hidden" name="dateToSecond" value="59" />
+												</td>
+	</tr>
+																<tr valign="top">
+							<td colspan="2" class="label"><h4>Index terms</h4></td>
+						</tr>
+								<tr>
+		<td class="label">
+			<label for="discipline">Discipline(s)</label>
+		</td>
+		<td class="value">
+																<input type="text" name="discipline" id="discipline" size="40" maxlength="255" value="" class="textField">
+												</td>
+	</tr>
+								<tr>
+		<td class="label">
+			<label for="subject">Keyword(s)</label>
+		</td>
+		<td class="value">
+																<input type="text" name="subject" id="subject" size="40" maxlength="255" value="" class="textField">
+												</td>
+	</tr>
+								<tr>
+		<td class="label">
+			<label for="type">Type (method/approach)</label>
+		</td>
+		<td class="value">
+																<input type="text" name="type" id="type" size="40" maxlength="255" value="" class="textField">
+												</td>
+	</tr>
+								<tr>
+		<td class="label">
+			<label for="coverage">Coverage</label>
+		</td>
+		<td class="value">
+																<input type="text" name="coverage" id="coverage" size="40" maxlength="255" value="" class="textField">
+												</td>
+	</tr>
+								<tr>
+		<td class="label">
+			<label for="indexTerms">All index term fields</label>
+		</td>
+		<td class="value">
+																<input type="text" name="indexTerms" id="indexTerms" size="40" maxlength="255" value="" class="textField">
+												</td>
+	</tr>
+									</table>
+				<p><input type="submit" value="Search" class="button defaultButton" /></p>
+			
+	</div>
+</div>
+<div style="clear:both"></div>			</form>
+</div>
+<br />
+
+
+
+	
+<div id="results">
+	<table width="100%" class="listing">
+		<tr><td colspan="4" class="headseparator">&nbsp;</td></tr>
+		<tr class="heading" valign="bottom">
+			<td width="20%">Journal</td>			<td width="20%">Issue</td>
+			<td width="60%" colspan="2">Title</td>
+		</tr>
+		<tr><td colspan="4" class="headseparator">&nbsp;</td></tr>
+
+							<tr>
+				<td colspan="4" class="nodata">
+											No Results
+									</td>
+			</tr>
+			<tr><td colspan="4" class="endseparator">&nbsp;</td></tr>
+			</table>
+
+		<p>
+					Search tips: <ul>
+<li>Search terms are case-insensitive</li>
+<li>Common words are ignored</li>
+<li>By default only articles containing <em>all</em> terms in the query are returned (i.e., <em>AND</em> is implied)</li>
+<li>Combine multiple words with <em>OR</em> to find articles containing either term; e.g., <em>education OR research</em></li>
+<li>Use parentheses to create more complex queries; e.g., <em>archive ((journal OR conference) NOT theses)</em></li>
+<li>Search for an exact phrase by putting it in quotes; e.g., <em>"open access publishing"</em></li>
+<li>Exclude a word by prefixing it with <strong>-</strong> or <em>NOT</em>; e.g. <em>online -politics</em> or <em>online NOT politics</em></li>
+<li>Use <strong>*</strong> in a term as a wildcard to match any sequence of characters; e.g., <em>soci* morality</em> would match documents containing "sociological" or "societal"</li>
+</ul>
+			</p>
+</div>
+
+
+</div><!-- content -->
+</div><!-- main -->
+</div><!-- body -->
+
+
+
+</div><!-- container -->
+</body>
+</html>

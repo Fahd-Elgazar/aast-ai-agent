@@ -1,0 +1,262 @@
+{
+  "nodes": [
+    {
+      "label": "Campus",
+      "id": "CAMPUS_SMART_VILLAGE",
+      "properties": {
+        "campus_id": "SMART_VILLAGE",
+        "name": "Smart Village",
+        "city": "Smart Village",
+        "country": "Egypt",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "College",
+      "id": "SMART_VILLAGE_CLC",
+      "properties": {
+        "college_id": "CLC_SMART_VILLAGE",
+        "name": "College of Language and Communication",
+        "parent_institution": "Arab Academy for Science, Technology and Maritime Transport",
+        "vision": "To be a leading academic hub in language and communication studies, fostering innovation, research excellence, and global engagement.",
+        "mission": "To equip students with educational and training programs that meet international standards and prepare outstanding graduates for a constantly changing workplace.",
+        "positioning": "Academic hub in language, media, translation, and intercultural communication with international exposure.",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Accreditation",
+      "id": "SMART_VILLAGE_CLC_ACC_MOHE",
+      "properties": {
+        "name": "Ministry of Higher Education",
+        "scope": "NATIONAL",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "PartnerOrganization",
+      "id": "SMART_VILLAGE_CLC_PARTNER_INTL_UNIVERSITIES",
+      "properties": {
+        "name": "International University Partners (MOUs)",
+        "collaboration_type": "Student Exchange / Overseas Study",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Facility",
+      "id": "SMART_VILLAGE_CLC_FACILITY_SMART_PREMISES",
+      "properties": {
+        "name": "State-of-the-art Smart Premises",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Facility",
+      "id": "SMART_VILLAGE_CLC_FACILITY_MODERN_ENVIRONMENT",
+      "properties": {
+        "name": "Modern Educational and Academic Environment",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "ResearchArea",
+      "id": "RESEARCHAREA_LANGUAGE_STUDIES",
+      "properties": {
+        "name": "Language Studies",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "ResearchArea",
+      "id": "RESEARCHAREA_MEDIA_COMMUNICATION",
+      "properties": {
+        "name": "Media and Communication",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "ResearchArea",
+      "id": "RESEARCHAREA_TRANSLATION_INTERPRETATION",
+      "properties": {
+        "name": "Translation and Interpretation",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "ResearchArea",
+      "id": "RESEARCHAREA_INTERCULTURAL_COMMUNICATION",
+      "properties": {
+        "name": "Intercultural Communication",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_TEACHER",
+      "properties": {
+        "name": "Teacher",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_TRANSLATOR",
+      "properties": {
+        "name": "Translator / Interpreter",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_JOURNALIST",
+      "properties": {
+        "name": "Journalist",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_PUBLIC_RELATIONS",
+      "properties": {
+        "name": "Public Relations Specialist",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_ADVERTISING_SPECIALIST",
+      "properties": {
+        "name": "Advertising Specialist",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_SCRIPT_WRITER",
+      "properties": {
+        "name": "Script Writer",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_FILM_DOCUMENTARY_MAKER",
+      "properties": {
+        "name": "Film and Documentary Maker",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_PHOTOGRAPHER",
+      "properties": {
+        "name": "Photographer",
+        "data_source_type": "official"
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "start_id": "CAMPUS_SMART_VILLAGE",
+      "relationship_type": "HOSTS",
+      "end_id": "SMART_VILLAGE_CLC",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SMART_VILLAGE_CLC",
+      "relationship_type": "HAS_ACCREDITATION",
+      "end_id": "SMART_VILLAGE_CLC_ACC_MOHE",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SMART_VILLAGE_CLC",
+      "relationship_type": "HAS_PARTNER",
+      "end_id": "SMART_VILLAGE_CLC_PARTNER_INTL_UNIVERSITIES",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SMART_VILLAGE_CLC",
+      "relationship_type": "HAS_FACILITY",
+      "end_id": "SMART_VILLAGE_CLC_FACILITY_SMART_PREMISES",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SMART_VILLAGE_CLC",
+      "relationship_type": "HAS_FACILITY",
+      "end_id": "SMART_VILLAGE_CLC_FACILITY_MODERN_ENVIRONMENT",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SMART_VILLAGE_CLC",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_LANGUAGE_STUDIES",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SMART_VILLAGE_CLC",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_MEDIA_COMMUNICATION",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SMART_VILLAGE_CLC",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_TRANSLATION_INTERPRETATION",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SMART_VILLAGE_CLC",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_INTERCULTURAL_COMMUNICATION",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SMART_VILLAGE_CLC",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_TEACHER",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SMART_VILLAGE_CLC",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_TRANSLATOR",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SMART_VILLAGE_CLC",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_JOURNALIST",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SMART_VILLAGE_CLC",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_PUBLIC_RELATIONS",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SMART_VILLAGE_CLC",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_ADVERTISING_SPECIALIST",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SMART_VILLAGE_CLC",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_SCRIPT_WRITER",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SMART_VILLAGE_CLC",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_FILM_DOCUMENTARY_MAKER",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SMART_VILLAGE_CLC",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_PHOTOGRAPHER",
+      "properties": { "data_source_type": "official" }
+    }
+  ]
+}

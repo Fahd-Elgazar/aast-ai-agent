@@ -1,0 +1,591 @@
+{
+  "nodes": [
+    {
+      "label": "College",
+      "id": "COLLEGE_AAST_ENG",
+      "properties": {
+        "college_id_raw": "ENG",
+        "name": "College of Engineering",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "College",
+      "id": "COLLEGE_AAST_PHARM",
+      "properties": {
+        "college_id_raw": "PHARM",
+        "name": "College of Pharmacy",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "College",
+      "id": "COLLEGE_AAST_CCIT",
+      "properties": {
+        "college_id_raw": "CCIT",
+        "name": "College of Computing and Information Technology",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "College",
+      "id": "COLLEGE_AAST_MED",
+      "properties": {
+        "college_id_raw": "MED",
+        "name": "College of Medicine",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "College",
+      "id": "COLLEGE_AAST_CAI",
+      "properties": {
+        "college_id_raw": "CAI",
+        "name": "School of Artificial Intelligence",
+        "data_source_type": "official"
+      }
+    },
+
+    {
+      "label": "AcademicYear",
+      "id": "ACADEMIC_YEAR_2025_2026",
+      "properties": {
+        "value": "2025/2026",
+        "data_source_type": "official"
+      }
+    },
+
+    {
+      "label": "TuitionFee",
+      "id": "TUITIONFEE_AAST_ENG_2025_2026_A",
+      "properties": {
+        "amount": 5210,
+        "currency": "USD",
+        "category": "A",
+        "academic_year": "2025/2026",
+        "billing_cycle": "per_semester",
+        "per_semester": true,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "TuitionFee",
+      "id": "TUITIONFEE_AAST_ENG_2025_2026_B",
+      "properties": {
+        "amount": 6110,
+        "currency": "USD",
+        "category": "B",
+        "academic_year": "2025/2026",
+        "billing_cycle": "per_semester",
+        "per_semester": true,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "TuitionFee",
+      "id": "TUITIONFEE_AAST_ENG_2025_2026_C",
+      "properties": {
+        "amount": 6830,
+        "currency": "USD",
+        "category": "C",
+        "academic_year": "2025/2026",
+        "billing_cycle": "per_semester",
+        "per_semester": true,
+        "data_source_type": "official"
+      }
+    },
+
+    {
+      "label": "TuitionFee",
+      "id": "TUITIONFEE_AAST_PHARM_2025_2026_A",
+      "properties": {
+        "amount": 5850,
+        "currency": "USD",
+        "category": "A",
+        "academic_year": "2025/2026",
+        "billing_cycle": "per_semester",
+        "per_semester": true,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "TuitionFee",
+      "id": "TUITIONFEE_AAST_PHARM_2025_2026_B",
+      "properties": {
+        "amount": 6850,
+        "currency": "USD",
+        "category": "B",
+        "academic_year": "2025/2026",
+        "billing_cycle": "per_semester",
+        "per_semester": true,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "TuitionFee",
+      "id": "TUITIONFEE_AAST_PHARM_2025_2026_C",
+      "properties": {
+        "amount": 7250,
+        "currency": "USD",
+        "category": "C",
+        "academic_year": "2025/2026",
+        "billing_cycle": "per_semester",
+        "per_semester": true,
+        "data_source_type": "official"
+      }
+    },
+
+    {
+      "label": "TuitionFee",
+      "id": "TUITIONFEE_AAST_CCIT_2025_2026_A",
+      "properties": {
+        "amount": 5060,
+        "currency": "USD",
+        "category": "A",
+        "academic_year": "2025/2026",
+        "billing_cycle": "per_semester",
+        "per_semester": true,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "TuitionFee",
+      "id": "TUITIONFEE_AAST_CCIT_2025_2026_B",
+      "properties": {
+        "amount": 5960,
+        "currency": "USD",
+        "category": "B",
+        "academic_year": "2025/2026",
+        "billing_cycle": "per_semester",
+        "per_semester": true,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "TuitionFee",
+      "id": "TUITIONFEE_AAST_CCIT_2025_2026_C",
+      "properties": {
+        "amount": 6320,
+        "currency": "USD",
+        "category": "C",
+        "academic_year": "2025/2026",
+        "billing_cycle": "per_semester",
+        "per_semester": true,
+        "data_source_type": "official"
+      }
+    },
+
+    {
+      "label": "TuitionFee",
+      "id": "TUITIONFEE_AAST_MED_2025_2026_A",
+      "properties": {
+        "amount": 8750,
+        "currency": "USD",
+        "category": "A",
+        "academic_year": "2025/2026",
+        "billing_cycle": "per_semester",
+        "per_semester": true,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "TuitionFee",
+      "id": "TUITIONFEE_AAST_MED_2025_2026_B",
+      "properties": {
+        "amount": 9020,
+        "currency": "USD",
+        "category": "B",
+        "academic_year": "2025/2026",
+        "billing_cycle": "per_semester",
+        "per_semester": true,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "TuitionFee",
+      "id": "TUITIONFEE_AAST_MED_2025_2026_C",
+      "properties": {
+        "amount": 9470,
+        "currency": "USD",
+        "category": "C",
+        "academic_year": "2025/2026",
+        "billing_cycle": "per_semester",
+        "per_semester": true,
+        "data_source_type": "official"
+      }
+    },
+
+    {
+      "label": "TuitionFee",
+      "id": "TUITIONFEE_AAST_CAI_2025_2026_A",
+      "properties": {
+        "amount": 5660,
+        "currency": "USD",
+        "category": "A",
+        "academic_year": "2025/2026",
+        "billing_cycle": "per_semester",
+        "per_semester": true,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "TuitionFee",
+      "id": "TUITIONFEE_AAST_CAI_2025_2026_B",
+      "properties": {
+        "amount": 6305,
+        "currency": "USD",
+        "category": "B",
+        "academic_year": "2025/2026",
+        "billing_cycle": "per_semester",
+        "per_semester": true,
+        "data_source_type": "official"
+      }
+    },
+
+    {
+      "label": "TierDefinition",
+      "id": "TIERDEF_AAST_2025_2026_A",
+      "properties": {
+        "tier": "A",
+        "definition": "Top academic tier (highest admission scores / competitive entry)",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "TierDefinition",
+      "id": "TIERDEF_AAST_2025_2026_B",
+      "properties": {
+        "tier": "B",
+        "definition": "Mid academic tier",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "TierDefinition",
+      "id": "TIERDEF_AAST_2025_2026_C",
+      "properties": {
+        "tier": "C",
+        "definition": "Base academic tier",
+        "data_source_type": "official"
+      }
+    },
+
+    {
+      "label": "Scholarship",
+      "id": "SCHOLARSHIP_GENERAL_GRANTS",
+      "properties": {
+        "name": "General Grants and Scholarships",
+        "types": ["Full", "Partial"],
+        "eligible_categories": [
+          "High achievers in Egyptian High School",
+          "Children of Arab League employees",
+          "Children of Ministry of Foreign Affairs employees",
+          "Children of Armed Forces personnel",
+          "Children of Police personnel",
+          "Children of Academy alumni",
+          "Siblings of current students or alumni"
+        ],
+        "data_source_type": "official"
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "start_id": "COLLEGE_AAST_ENG",
+      "relationship_type": "HAS_TUITION_FEE",
+      "end_id": "TUITIONFEE_AAST_ENG_2025_2026_A",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "COLLEGE_AAST_ENG",
+      "relationship_type": "HAS_TUITION_FEE",
+      "end_id": "TUITIONFEE_AAST_ENG_2025_2026_B",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "COLLEGE_AAST_ENG",
+      "relationship_type": "HAS_TUITION_FEE",
+      "end_id": "TUITIONFEE_AAST_ENG_2025_2026_C",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "COLLEGE_AAST_PHARM",
+      "relationship_type": "HAS_TUITION_FEE",
+      "end_id": "TUITIONFEE_AAST_PHARM_2025_2026_A",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "COLLEGE_AAST_PHARM",
+      "relationship_type": "HAS_TUITION_FEE",
+      "end_id": "TUITIONFEE_AAST_PHARM_2025_2026_B",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "COLLEGE_AAST_PHARM",
+      "relationship_type": "HAS_TUITION_FEE",
+      "end_id": "TUITIONFEE_AAST_PHARM_2025_2026_C",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "COLLEGE_AAST_CCIT",
+      "relationship_type": "HAS_TUITION_FEE",
+      "end_id": "TUITIONFEE_AAST_CCIT_2025_2026_A",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "COLLEGE_AAST_CCIT",
+      "relationship_type": "HAS_TUITION_FEE",
+      "end_id": "TUITIONFEE_AAST_CCIT_2025_2026_B",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "COLLEGE_AAST_CCIT",
+      "relationship_type": "HAS_TUITION_FEE",
+      "end_id": "TUITIONFEE_AAST_CCIT_2025_2026_C",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "COLLEGE_AAST_MED",
+      "relationship_type": "HAS_TUITION_FEE",
+      "end_id": "TUITIONFEE_AAST_MED_2025_2026_A",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "COLLEGE_AAST_MED",
+      "relationship_type": "HAS_TUITION_FEE",
+      "end_id": "TUITIONFEE_AAST_MED_2025_2026_B",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "COLLEGE_AAST_MED",
+      "relationship_type": "HAS_TUITION_FEE",
+      "end_id": "TUITIONFEE_AAST_MED_2025_2026_C",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "COLLEGE_AAST_CAI",
+      "relationship_type": "HAS_TUITION_FEE",
+      "end_id": "TUITIONFEE_AAST_CAI_2025_2026_A",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "COLLEGE_AAST_CAI",
+      "relationship_type": "HAS_TUITION_FEE",
+      "end_id": "TUITIONFEE_AAST_CAI_2025_2026_B",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "TUITIONFEE_AAST_ENG_2025_2026_A",
+      "relationship_type": "USES_TIER_DEFINITION",
+      "end_id": "TIERDEF_AAST_2025_2026_A",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "TUITIONFEE_AAST_ENG_2025_2026_B",
+      "relationship_type": "USES_TIER_DEFINITION",
+      "end_id": "TIERDEF_AAST_2025_2026_B",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "TUITIONFEE_AAST_ENG_2025_2026_C",
+      "relationship_type": "USES_TIER_DEFINITION",
+      "end_id": "TIERDEF_AAST_2025_2026_C",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "TUITIONFEE_AAST_PHARM_2025_2026_A",
+      "relationship_type": "USES_TIER_DEFINITION",
+      "end_id": "TIERDEF_AAST_2025_2026_A",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "TUITIONFEE_AAST_PHARM_2025_2026_B",
+      "relationship_type": "USES_TIER_DEFINITION",
+      "end_id": "TIERDEF_AAST_2025_2026_B",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "TUITIONFEE_AAST_PHARM_2025_2026_C",
+      "relationship_type": "USES_TIER_DEFINITION",
+      "end_id": "TIERDEF_AAST_2025_2026_C",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "TUITIONFEE_AAST_CCIT_2025_2026_A",
+      "relationship_type": "USES_TIER_DEFINITION",
+      "end_id": "TIERDEF_AAST_2025_2026_A",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "TUITIONFEE_AAST_CCIT_2025_2026_B",
+      "relationship_type": "USES_TIER_DEFINITION",
+      "end_id": "TIERDEF_AAST_2025_2026_B",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "TUITIONFEE_AAST_CCIT_2025_2026_C",
+      "relationship_type": "USES_TIER_DEFINITION",
+      "end_id": "TIERDEF_AAST_2025_2026_C",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "TUITIONFEE_AAST_MED_2025_2026_A",
+      "relationship_type": "USES_TIER_DEFINITION",
+      "end_id": "TIERDEF_AAST_2025_2026_A",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "TUITIONFEE_AAST_MED_2025_2026_B",
+      "relationship_type": "USES_TIER_DEFINITION",
+      "end_id": "TIERDEF_AAST_2025_2026_B",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "TUITIONFEE_AAST_MED_2025_2026_C",
+      "relationship_type": "USES_TIER_DEFINITION",
+      "end_id": "TIERDEF_AAST_2025_2026_C",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "TUITIONFEE_AAST_CAI_2025_2026_A",
+      "relationship_type": "USES_TIER_DEFINITION",
+      "end_id": "TIERDEF_AAST_2025_2026_A",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "TUITIONFEE_AAST_CAI_2025_2026_B",
+      "relationship_type": "USES_TIER_DEFINITION",
+      "end_id": "TIERDEF_AAST_2025_2026_B",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "COLLEGE_AAST_ENG",
+      "relationship_type": "HAS_SCHOLARSHIP",
+      "end_id": "SCHOLARSHIP_GENERAL_GRANTS",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "COLLEGE_AAST_PHARM",
+      "relationship_type": "HAS_SCHOLARSHIP",
+      "end_id": "SCHOLARSHIP_GENERAL_GRANTS",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "COLLEGE_AAST_CCIT",
+      "relationship_type": "HAS_SCHOLARSHIP",
+      "end_id": "SCHOLARSHIP_GENERAL_GRANTS",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "COLLEGE_AAST_MED",
+      "relationship_type": "HAS_SCHOLARSHIP",
+      "end_id": "SCHOLARSHIP_GENERAL_GRANTS",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "COLLEGE_AAST_CAI",
+      "relationship_type": "HAS_SCHOLARSHIP",
+      "end_id": "SCHOLARSHIP_GENERAL_GRANTS",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "TUITIONFEE_AAST_ENG_2025_2026_A",
+      "relationship_type": "APPLIES_TO_ACADEMIC_YEAR",
+      "end_id": "ACADEMIC_YEAR_2025_2026",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "TUITIONFEE_AAST_ENG_2025_2026_B",
+      "relationship_type": "APPLIES_TO_ACADEMIC_YEAR",
+      "end_id": "ACADEMIC_YEAR_2025_2026",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "TUITIONFEE_AAST_ENG_2025_2026_C",
+      "relationship_type": "APPLIES_TO_ACADEMIC_YEAR",
+      "end_id": "ACADEMIC_YEAR_2025_2026",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "TUITIONFEE_AAST_PHARM_2025_2026_A",
+      "relationship_type": "APPLIES_TO_ACADEMIC_YEAR",
+      "end_id": "ACADEMIC_YEAR_2025_2026",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "TUITIONFEE_AAST_PHARM_2025_2026_B",
+      "relationship_type": "APPLIES_TO_ACADEMIC_YEAR",
+      "end_id": "ACADEMIC_YEAR_2025_2026",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "TUITIONFEE_AAST_PHARM_2025_2026_C",
+      "relationship_type": "APPLIES_TO_ACADEMIC_YEAR",
+      "end_id": "ACADEMIC_YEAR_2025_2026",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "TUITIONFEE_AAST_CCIT_2025_2026_A",
+      "relationship_type": "APPLIES_TO_ACADEMIC_YEAR",
+      "end_id": "ACADEMIC_YEAR_2025_2026",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "TUITIONFEE_AAST_CCIT_2025_2026_B",
+      "relationship_type": "APPLIES_TO_ACADEMIC_YEAR",
+      "end_id": "ACADEMIC_YEAR_2025_2026",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "TUITIONFEE_AAST_CCIT_2025_2026_C",
+      "relationship_type": "APPLIES_TO_ACADEMIC_YEAR",
+      "end_id": "ACADEMIC_YEAR_2025_2026",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "TUITIONFEE_AAST_MED_2025_2026_A",
+      "relationship_type": "APPLIES_TO_ACADEMIC_YEAR",
+      "end_id": "ACADEMIC_YEAR_2025_2026",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "TUITIONFEE_AAST_MED_2025_2026_B",
+      "relationship_type": "APPLIES_TO_ACADEMIC_YEAR",
+      "end_id": "ACADEMIC_YEAR_2025_2026",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "TUITIONFEE_AAST_MED_2025_2026_C",
+      "relationship_type": "APPLIES_TO_ACADEMIC_YEAR",
+      "end_id": "ACADEMIC_YEAR_2025_2026",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "TUITIONFEE_AAST_CAI_2025_2026_A",
+      "relationship_type": "APPLIES_TO_ACADEMIC_YEAR",
+      "end_id": "ACADEMIC_YEAR_2025_2026",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "TUITIONFEE_AAST_CAI_2025_2026_B",
+      "relationship_type": "APPLIES_TO_ACADEMIC_YEAR",
+      "end_id": "ACADEMIC_YEAR_2025_2026",
+      "properties": { "data_source_type": "official" }
+    }
+  ]
+}

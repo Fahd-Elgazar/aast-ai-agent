@@ -1,0 +1,466 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head id="Head1"><title>
+	 صفحة طلب الالتحاق بدراسات البكالوريوس بالأكاديمية العربية للعلوم والتكنولوجيا والنقل البحري 
+</title><link href="CSS/page-format.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+     <!--
+     body {
+	 margin-left: 0px;
+	 margin-top: 0px;
+	 margin-right: 0px;
+	 margin-bottom: 0px;
+     }
+        .auto-style1 {
+            LIST-STYLE: square url(/en/images/css-images/b2.gif) outside;
+            FONT-WEIGHT: bold;
+            FONT-SIZE: 11px;
+            COLOR: #333333;
+            FONT-STYLE: normal;
+            FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+            TEXT-ALIGN: center;
+            FONT-VARIANT: normal;
+            TEXT-DECORATION: none;
+            width: 122px;
+            height: 23px;
+        }
+        .auto-style2 {
+            width: 199px;
+            height: 23px;
+        }
+        -->
+     </style>
+    <script language="javascript" type="text/javascript">
+    
+    
+//function pop() { 
+//var W1 = window.open('aastmt/aastmt_promo.html','Popup1',"toolbar=no,status=no,location=yes, Menu bar=no, minimize = no, Maximize = no, directories=no,menubar=no,scrollbars=yes,resizable=yes,width=1010,height=580"); 
+//}
+//-------------------------------------------------------------------------
+g = location.search.substring(1, location.search.length) 
+
+var my_array = new Array(10);
+for (i = 0; i <= 100; i++)
+    {
+    my_array[i] = 0;
+    }  
+
+//=======================================================================================    
+function maximizeWindow()
+{
+    pop();
+    if (window.screen) {
+        this.moveTo(0, 0);
+        this.resizeTo(screen.availWidth,screen.availHeight)
+    }
+  
+}
+//=======================================================================================    
+
+function getSum(rr,vv)
+{
+my_array[rr]=parseInt(vv);
+var sum=0
+for(dd=1;dd<=g;dd++)
+   {
+   sum = sum + my_array[dd]
+   }
+document.form1.txt_total.value=sum
+}
+
+//=======================================================================================
+function z(t)
+{
+location.href="شاشة الإدخال الرئيسية.aspx?"+t
+}
+//=======================================================================================
+function isNumber(v,idd)
+{
+var Npattren=/(^\d+$)|(^\d+\.\d+$)/ //regular expression defining a 5 digit number
+if (v.search(Npattren)==-1) //if match failed
+{
+        alert("إدخال خاطيء! هذا الحقل لابد أن يكون أرقاما موجبة فقط \n"+
+              "Wrong Input! This Field Should contains positive number only");
+         eval("document.form1."+idd+".value=''");
+         eval("document.form1."+idd+".focus()");
+         eval("document.form1."+idd+".select()");
+         event.returnValue = false;
+         }
+  
+}
+//=======================================================================================
+function isCharacters(v,idd)
+{
+var Npattren=/(^[a-zA-Z]+$)|(^\d*[a-zA-Z]+\d*)|([^\d]\X*[^\d])/ //regular expression defining a 5 digit number
+if (v.search(Npattren)==-1) //if match failed
+{
+        alert("إدخال خاطيء! هذا الحقل لا يمكن أن يكون أرقاما فقط ! \n"+
+              "Wrong Input! This Field Should not be numbers only !");
+         eval("document.form1."+idd+".value=''");
+         eval("document.form1."+idd+".focus()");
+         eval("document.form1."+idd+".select()");
+         event.returnValue = false;
+         }
+  
+}
+//=======================================================================================
+function isEmail(v,idd)
+{
+var Npattren=/(^[a-z|A-Z|_|.]+\d*@[a-z|A-Z|_]+\d*\.[a-z|A-Z]+$)/ //regular expression defining a 5 digit number
+if (v.search(Npattren)==-1) //if match failed
+{
+        alert("إدخال خاطيء! هذا الحقل لا يمكن أن بريدا إلكترونيا ! \n"+
+              "Wrong Input! This Field Should  be Email only !");
+         eval("document.form1."+idd+".value=''");
+         eval("document.form1."+idd+".focus()");
+         eval("document.form1."+idd+".select()");
+         event.returnValue = false;
+         }
+  
+}
+//=======================================================================================
+
+function IsNumber_(v,idd)
+{
+  j=1
+  i=0
+  notNumber=0
+  for(k=0;k<v.length;k++)
+  {
+    if(isNaN(parseInt(v.substring(v.length-j,v.length-i))))
+     {
+      notNumber=1
+     }
+     j++
+     i++
+  }
+  if(notNumber==1)
+  {
+  alert("إدخال خاطيء! هذا الحقل لابد أن يكون أرقاما فقط \n"+
+        "Wrong Input! This Field Should contains number only");
+         eval("document.form1."+idd+".value=''");
+         
+         eval("document.form1."+idd+".focus()");
+         eval("document.form1."+idd+".select()");
+         event.returnValue = false;
+         
+        // document.getElementById('idd').focus();
+        // document.getElementById('idd').select();
+         
+         
+      //document.getElementById('idd').value='';
+  }
+}
+//=======================================================================================
+function EmptyToZero(no)
+{
+if(no == '')no=0;
+if(isNaN(no))no=0;
+return (no);
+}
+//=======================================================================================
+function Summ(no1,no2,total)
+{
+document.getElementById(total).value = EmptyToZero(parseInt(document.getElementById(no1).value)) + EmptyToZero(parseInt(document.getElementById(no2).value))
+
+document.getElementById('hid_total').value=document.getElementById(total).value
+}
+//=======================================================================================
+function SuB(no1,no2,total)
+{
+document.getElementById(total).value = EmptyToZero(parseInt(document.getElementById(no2).value)) - EmptyToZero(parseInt(document.getElementById(no1).value))
+}
+//=======================================================================================
+
+function getDate()
+{
+  var d, s = "",m;
+  
+  
+  d = new Date();
+  s += d.getDate() + " ";
+  switch (d.getMonth())
+  {
+  case 0:  m="يناير";break
+  case 1:  m="فبراير";break
+  case 2:  m="مارس";break
+  case 3:  m="أبريل";break
+  case 4:  m="مايو";break
+  case 5:  m="يونية";break
+  case 6:  m="يوليو";break
+  case 7:  m="أغسطس";break
+  case 8:  m="سبتمبر";break
+  case 9:  m="أكتوبر";break
+  case 10: m="نوفمبر";break
+  case 11: m="ديسمبر";break
+  }
+  s += (m) + " ";
+  s += d.getYear();
+  document.form1.txt_chequeDate.value=s
+}
+//=======================================================================================
+function chkEmptyFields()
+{
+
+if(document.form1.txt_guardianName.value == "") {alert("لا بد من كتابة إسم ولي الأمر\n It is necessary to fill Guardian Name Field !");}
+if(document.form1.txt_guardianOccupation.value == ""){alert("لابد من كتابة وظيفة ولي الأمر\n It is necessary to fill Guardian Occupation Field !");}
+if(document.form1.txt_guardianAddress.value == ""){alert("لابد من كتابة عنوان ولي الأمر\n It is necessary to fill Guardian Address Field !");}
+//if(document.form1.txt_guardianZip.value == ""){alert("لابد من كتابة الرمز البريدي لولي الأمر\n It is necessary to fill Guardian Zip Field !");}
+if(document.form1.txt_guardianTel.value == ""){alert("لابد من كتابة  هاتف ولي الأمر\n It is necessary to fill Guardian Tel. Field !");}
+//if(document.form1.txt_guardianEmail.value == ""){alert("لابد من كتابة البريد الإلكتروني لولي الأمر\n It is necessary to fill Guardian E-mail Field !");}
+if(document.form1.txt_guardianMobile.value == ""){alert("لابد من كتابة موبيل ولي الأمر\n It is necessary to fill Guardian Mobile Field !");}
+//if(document.form1.txt_guardianFax.value == ""){alert("لابد من كتابة فاكس ولي الأمر\n It is necessary to fill Guardian Fax Field !");}
+
+if(document.form1.txt_studentAddress.value == ""){alert("لابد من كتابة عنوان الطالب\n It is necessary to fill Student Address Field !");}
+//if(document.form1.txt_guardianZip.value == ""){alert("لابد من كتابة الرمز البريدي للطالب\n It is necessary to fill Student Zip Field !");}
+if(document.form1.txt_studentTel.value == ""){alert("لابد من كتابة  هاتف الطالب\n It is necessary to fill Student Tel. Field !");}
+if(document.form1.txt_studentEmail.value == ""){alert("لابد من كتابة البريد الإلكتروني للطالب\n It is necessary to fill Student E-mail Field !");}
+if(document.form1.txt_studentMobile.value == ""){alert("لابد من كتابة موبيل الطالب\n It is necessary to fill Student Mobile Field !");}
+//if(document.form1.txt_guardianFax.value == ""){alert("لابد من كتابة فاكس الطالب\n It is necessary to fill Student Fax Field !");}
+
+}
+//=======================================================================================
+function okMsg()
+{
+alert("تمت إضافة بيانات الشيك بنجاح . أدخل بيانات شيك آخر أو رجوع لخيارات أخرى ..")
+}
+
+//=======================================================================================
+function calcPercentage(percentage,mark,outOf)
+{
+if(document.getElementById(outOf).value == 0 )
+{
+alert("لا يمكن أن تكون النهاية العظمى صفرا");
+document.getElementById(outOf).value="أدخل النهاية العظمى..."
+}
+
+else 
+  {
+   if(!isNaN(document.getElementById(outOf).value))
+   
+   {
+    if (parseFloat(document.getElementById(outOf).value) < parseFloat(document.getElementById(mark).value))
+    {
+    alert("لا يمكن أن تكون النهاية العظمى أصغر من مجموع الدرجات");
+    //document.getElementById(outOf).value="أدخل النهاية العظمى..."
+    //document.getElementById(mark).value="أدخل مجموع الدرجات..."
+    document.getElementById(mark).select();
+    }
+    else
+    {
+    no=document.getElementById(mark).value/document.getElementById(outOf).value*100;
+    x=no.toPrecision(4);
+    document.getElementById(percentage).value=x;
+    }
+   }
+  }
+}
+//=======================================================================================
+function noPostBack(sNewFormAction)
+{
+    document.forms[0].action = sNewFormAction;
+    document.forms[0].__VIEWSTATE.name = 'NOVIEWSTATE';
+}
+//=======================================================================================
+function onlyNumbers(evt)
+{
+	var e = event || evt; // for trans-browser compatibility
+	var charCode = e.which || e.keyCode;
+
+        if (charCode > 31 && (charCode < 48 || charCode > 57) )  
+            return false;
+
+
+         return true;
+
+
+}
+//=======================================================================================
+
+</script>
+
+</head>
+<body bgcolor="#DFD0B7" onLoad="maximizeWindow()">
+    <form name="form1" method="post" action="default.aspx" id="form1">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwULLTExMjc4NTIzOThkGAEFHl9fQ29udHJvbHNSZXF1aXJlUG9zdEJhY2tLZXlfXxYCBQ1idG5fSW1nc3VibWl0BRlsZ19Mb2dpbiRMb2dpbkltYWdlQnV0dG9uFpdA4UJt0rUM9nSiUAUXNcHwSwA=" />
+
+<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="A67850C9" />
+<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEWBwKAuMmtDgLj+oToAwKTvqupBQKukI7pDQKF3b2XAwLlo4jJAQLv6uZX6UhHWdpmR5oAB+czQA1vK7bfhbc=" />
+    
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+              <td bgcolor="#001A37">&nbsp;</td>
+              <td width="661" height="61"><img src="images_new/aast-header.gif" alt="aastmt" width="661" height="61" /></td>
+              <td width="293" bgcolor="#001E3D">&nbsp;</td>
+              <td bgcolor="#001E3D">&nbsp;</td>
+            </tr>
+          </table></td>
+        </tr>
+        <tr>
+          <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+              <td background="images_new/ext-slice.gif">&nbsp;</td>
+              <td width="483" height="227"><img src="images_new/online-header.jpg" alt="online" width="483" height="277" /></td>
+              <td width="472" height="227"><img src="images_new/image.jpg" alt="image" width="472" height="277" /></td>
+              <td background="images_new/ext-slice.gif">&nbsp;</td>
+            </tr>
+          </table></td>
+        </tr>
+        <tr>
+          <td>
+          
+          <table width="100%" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+              <td bgcolor="#dfd0b7" valign="top">&nbsp;</td>
+              <td width="483" valign="top" bgcolor="#dfd0b7">
+                <table width="80%" border="0">
+  <tr>
+      	<td style="width: 438px"><img src="images_new/aaaaaa.gif" alt="new applicant" width="434" height="44" /></td>
+  </tr>
+  <tr>
+    <td align="left" class="en-text-body" style="width: 438px">To access online admission application form, enter your email address below
+        and you will receive your user name and password via email.&nbsp;
+        <br />
+        &nbsp;
+    </td>
+  </tr>
+  <tr>
+    <td dir="rtl" align="right" class="ar-text-body" style="width: 438px">للدخول على طلبات الإلتحاق برجاء إدخال البريد الإلكتروني والموبايل الخاص بك ثم الضغط
+        على <SPAN class="en-text-body">submit</SPAN> وسوف يقوم النظام تلقائياً بإرسال رقم الطلب وكلمة المرور لبريدك الإلكتروني.</td>
+  </tr>
+  <tr>
+    <td style="height: 35px; width: 438px;">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0" style="height: 70px">
+          <tr>
+              <td align="center" bgcolor="#d6c3a3" class="ar-field-title" colspan="3" dir="rtl">
+                  &nbsp;<span id="lbl_done" style="display:inline-block;text-align: center"><font color="#A82601" size="3"></font></span></td>
+          </tr>
+       <tr>
+         <td bgcolor="#D6C3A3" dir="ltr" align="left" class="en-field-title" style="height: 23px; width: 122px;"  >
+             &nbsp;&nbsp;
+            Email Address:</td>
+         <td bgcolor="#D6C3A3" align="center" style="height: 23px; width: 199px;" ><input name="txt_studentEmail" type="text" id="txt_studentEmail" class="en-field-text" onchange="isEmail(txt_studentEmail.value,txt_studentEmail.id)" style="width: 203px" />
+         </td>
+         <td bgcolor="#D6C3A3" dir="rtl" align="right" class="ar-field-title" style="height: 23px" >
+             &nbsp;&nbsp; البريد الإلكتروني:</td>
+       </tr>
+       <tr>
+         <td bgcolor="#D6C3A3" dir="ltr" align="left" class="auto-style1"  >
+             Mobile:</td>
+         <td bgcolor="#D6C3A3" align="center" class="auto-style2" >                    
+             
+                          <input name="txt_studentMobile" type="text" id="txt_studentMobile" onkeypress="return onlyNumbers();" onchange="IsNumber_(txt_studentMobile.value,txt_studentMobile.id)" style="text-align: right; width: 203px;" class="en-field-text" />
+
+
+             
+</td>
+         <td bgcolor="#D6C3A3" dir="rtl" align="left" class="auto-style1" style="font-size: medium" >
+             الموبايل:</td>
+       </tr>
+       <tr>
+         <td bgcolor="#D6C3A3" dir="ltr" align="left" class="en-field-title" style="width: 122px"  ></td>
+         <td bgcolor="#D6C3A3" align="center" style="width: 199px" >
+             <input type="image" name="btn_Imgsubmit" id="btn_Imgsubmit" tabindex="2" src="images_new/submit.gif" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;btn_Imgsubmit&quot;, &quot;&quot;, true, &quot;save&quot;, &quot;&quot;, false, false))" border="0" /></td>
+         <td bgcolor="#D6C3A3" dir="rtl" align="right" class="ar-field-title" ></td>
+       </tr>
+       <tr>
+         
+         <td bgcolor="#D6C3A3" colspan="3" align="center" >
+            <a href='http://www.aast.edu/ar/admission/' target="_blank" style=" color: #3f2d0a;
+    font-weight: bold;">لمعرفة المزيد من المعلومات عن الفروع والكليات برجاء الضغط هنا</a>
+                    </td>
+         
+       </tr>
+      </table>
+      
+        
+            
+      </td>
+  </tr>
+                    <tr>
+                        <td style="width: 438px; height: 23px" align="center">
+                         <table width="80%">
+                          <tr>
+                           <td><a id="HyperLink2" class="bani_txt" href="track_app.aspx" style="display:inline-block;float: left; text-align: center;">Track Application</a></td>
+                           <td align="left"><a id="HyperLink3" class="ar-bani_txt" href="track_app.aspx" style="display:inline-block;float: right; text-align: right;">متابعة الطلب</a></td>
+                          </tr>
+                         </table>
+                        </td>
+                    </tr>
+</table>
+              </td>
+              <td width="472" bgcolor="#dfd0b7" valign="top">
+                 <table width="100%" border="0">
+  <tr>
+    <td><img src="images_new/bbbbbbb.gif" alt="fill" width="440" height="79" /></td>
+  </tr>
+  <tr>
+    <td class="ar-text-body" align="center">
+        من فضلك أدخل رقم الطلب وكلمة المرور الخاصة بك</td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0">
+      <tr>
+        <td>&nbsp;</td>
+        <td dir="rtl" align="center">
+          <table class="css/tables.css" cellspacing="0" cellpadding="20" bordercolor="White" border="0" id="lg_Login" bgcolor="#D6C3A3" style="right: 0px; top: 6px;">
+	<tr>
+		<td><table cellpadding="0" border="0" height="23" width="374">
+			<tr>
+				<td align="right"><font face="Arial" color="#785F39" size="3"><b><label for="lg_Login_UserName">رقم الطلب              (Application ID)</label></b></font></td><td><font face="Arial" color="#785F39" size="3"><b><input name="lg_Login$UserName" type="text" id="lg_Login_UserName" tabindex="1" />&nbsp;</b></font></td>
+			</tr><tr>
+				<td align="right"><font face="Arial" color="#785F39" size="3"><b><label for="lg_Login_Password">كلمة المرور            (Password)</label></b></font></td><td><font face="Arial" color="#785F39" size="3"><b><input name="lg_Login$Password" type="password" id="lg_Login_Password" tabindex="1" />&nbsp;</b></font></td>
+			</tr><tr>
+				<td align="right" colspan="2"><font face="Arial" color="#785F39" size="3"><b><input type="image" name="lg_Login$LoginImageButton" id="lg_Login_LoginImageButton" tabindex="1" src="images_new/login.gif" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;lg_Login$LoginImageButton&quot;, &quot;&quot;, true, &quot;lg_Login&quot;, &quot;&quot;, false, false))" border="0" /></b></font></td>
+			</tr>
+		</table></td>
+	</tr>
+</table>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td colspan="3" valign="top" align="center">
+           <table width="80%">
+           <tr>
+            <td align="left" dir="ltr" style="float:left;"> <a id="HyperLink4" class="bani_txt" href="forgot_pass.aspx" style="display:inline-block;float: left; text-align: left;">Forget your ID/Password</a></td>
+            <td align="center"> <a id="HyperLink1" class="ar-bani_txt" href="forgot_pass.aspx" style="display:inline-block;float: right;">نسيت بيانات الدخول</a></td>
+           </tr>
+           </table>
+        </td>
+      </tr>
+    </table>
+        </td>
+  </tr>
+</table>
+              </td>
+              <td bgcolor="#dfd0b7" valign="top">&nbsp;</td>
+            </tr>
+          </table>
+      </td>
+      </tr>
+   <tr>
+          <td align="center" hight="38" >
+          <table width="100%" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+              <td background="images_new/footer-slice.gif">&nbsp;</td>
+              <td width="955" background="images_new/footer-slice.gif" hight="38">&nbsp;</td>
+              <td background="images_new/footer-slice.gif">&nbsp;</td>
+            </tr>
+            <tr>
+            <td colspan="3" bgcolor="#a79372">
+             <span id="lbl_Msg" style="display:inline-block;"><font color="Red" size="5"></font></span>
+            </td>
+            </tr>
+          </table>
+                   </td>
+        </tr>
+      </table>
+    </form>
+</body>
+</html>

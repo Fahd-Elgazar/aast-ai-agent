@@ -1,0 +1,1928 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>AASTMT Academic Research Papers</title>
+<link rel="canonical" href='https://aast.edu/pheed/academic-research/search_home.php?search=55' />
+<!-- Viewport to make sure the website renders correctly on mobile devices -->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+
+<!-- css to change orientation on iPad landscape and desktop -->
+
+
+
+
+ <!-- important for the menu to work--> 
+
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<!-- end important for the menu to work--> 
+
+<!-- Viewport to make sure the website renders correctly on mobile devices -->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+
+
+<!--
+<link href="css/eduLayout.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" media="screen and (min-width: 1024px)" href="css/Layout.css" type="text/css">
+
+  <link rel="stylesheet" media="screen and (max-width: 768px)" href="css/Layout-smart.css" />	-->	
+
+ <!-- search files --> 
+<link rel="stylesheet" media="screen and (min-width: 768px)" href="css/search_widget.css" type="text/css" />
+<link rel="stylesheet" media="screen and (max-width: 769px) " href="css/search_widget-smart.css" type="text/css"/>
+<script type="text/jscript" src="../../en/js-bootstrap/search_widget.js"></script>
+
+ 	<!-- Mega Menu Style, you kinda really need Bootstrap in order for this to work -->
+	<link href="css/mega-menu.css" rel="stylesheet">
+	<!-- Mega Menu w/Responsive, unload this if you don't want it to be responsive (which kinda defeats the purpose) -->
+	<link href="css/mega-menu-responsive.css" rel="stylesheet">
+	   
+
+	<!-- FontAwesome, served by CDN -->
+	<link href="../../en/css/font-awesome.min.css" rel="stylesheet">
+     <link rel="stylesheet" href="../../en/css/fonts.css">
+
+	<!-- Main Theme Style -->
+  <link href="../../en/css/style.css" type="text/css" rel="stylesheet" />
+
+ 
+<script src="js/modernizr.custom.js"></script>
+
+<!--  research files-->
+<link rel="stylesheet" media="screen and (min-width: 1024px)" href="css/research-paper.css" type="text/css" />
+<link rel="stylesheet" media="screen and (min-width: 1024px)" href="css/grey.css" type="text/css" />
+<link rel="stylesheet" media="screen and (min-width: 1024px)" href="css/research-style.css" type="text/css" />
+    <!-- css to change orientation on smart phones -->
+    <link rel="stylesheet" media="screen and (max-width: 768px)" href="css/research-paper-smart.css" type="text/css" />
+	<link rel="stylesheet" media="screen and (max-width: 768px)" href="css/grey-smart.css" type="text/css" />
+	<link rel="stylesheet" media="screen and (max-width: 768px)" href="css/research-style-smart.css" type="text/css" />
+
+
+	
+    <link href="stylesheets/screen.css" type="text/css" rel="stylesheet" media="screen,projection" />
+<!--[if lt IE 7]>
+<link href="stylesheets/screen-ie6.css" type="text/css" rel="stylesheet" media="screen,projection" />
+<![endif]-->
+<!--<script type='text/javascript' src='../../en/js/menu.js'></script>-->
+<script type="text/javascript" src="scripts/jquery.js"></script>
+<script type="text/javascript" src="scripts/jquery-ui-accordion.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#accordion').accordion()({
+			collapsible: true
+		});
+	});
+</script>
+<script language="JavaScript" type="text/javascript"> 
+
+
+function showUser(str)
+{
+if (str=="")
+  {
+  document.getElementById("txtHint").innerHTML="";
+  return;
+  } 
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("txtHint").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","getuser9.php?q="+str,true);
+xmlhttp.send();
+}
+
+
+function showyear(str)
+{
+	//alert(str);
+if (str=="")
+  {
+  document.getElementById("txtHint").innerHTML="";
+  return;
+  } 
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("featured1").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","getuser9.php?q="+str,true);
+xmlhttp.send();
+}
+</script>
+<script language="javascript" type="text/javascript">
+<!--
+function popitup(url) {
+	newwindow=window.open(url,'name','height=600,width=955,resizable=yes,scrollbars=yes');
+	if (window.focus) {newwindow.focus()}
+	return false;
+}
+
+// -->
+</script>
+
+
+
+
+
+<link rel="stylesheet" href="css/style.css">
+    <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js'></script>
+    <script src="js/organictabs.jquery.js"></script>
+    <script>
+        $(function() {
+    
+            $("#example-one").organicTabs();
+            
+            $("#example-two").organicTabs({
+                "speed": 200
+            });
+    
+        });
+    </script>
+</head>
+
+
+<BODY onload="showUser(55555)">
+<link rel="stylesheet" href="../../template/en/main/css\font-icons.css">
+    <!-- plugins css -->
+    <link rel="stylesheet" href="../../template/en/main/css\plugins.css">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="../../template/en/main/css\style.css">
+
+    <!-- admission-find-->
+    <link rel="stylesheet" href="../../template/en/main/css/upper-sec.css">
+    <link rel="stylesheet" href="../../template/en/main/css/mklb.css"/>
+    <link rel="stylesheet" href="../../template/en/admission/css/admission.css"/>
+
+    <!-- slider-50yrs-files -->
+    <script src="../../template/50yrs-slider/js/jquery.js"></script>
+    <link href="../../template/50yrs-slider/css/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css">
+    <link href="../../template/50yrs-slider/css/global.css" rel="stylesheet" type="text/css">
+    <link href="../../template/50yrs-slider/css/fix.css" rel="stylesheet" type="text/css">
+    <link href="../../template/50yrs-slider/css/slick.css" rel="stylesheet" type="text/css">
+
+    <!-- rev-slider -->
+    <link href="../../template/en/main/css/rev-slider.css" rel="stylesheet" media="screen">
+    <!-- Responsive css -->
+    <link rel="stylesheet" href="../../template/en/main/css/animate.min.css">
+    <link rel="stylesheet" href="../../template/en/main/css\owl.css">
+    <!------------menu----->
+
+<!--    <link rel="stylesheet" href="../template/en/main/css/main-menu.css"/>-->
+<!--    <link rel="stylesheet" href="../template/en/main/css/top-bar.css"/>-->
+<!---->
+<!--    <link rel="stylesheet" href="../template/en/main/css/animate.css">-->
+    <link rel="stylesheet" href="../../template/en/main/css/popup-search.css">
+
+    <link rel="stylesheet" href="../../template/en/topbar/css\plugins.css">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="../../template/en/topbar/css\style.css">
+
+    <!--    <link rel="stylesheet" href="../template/en/topbar/css/top-bar.css">-->
+    <!------------start menu----->
+    <link rel="stylesheet" href="../../template/en/topbar/css/main-menu.css"/>
+    <link rel="stylesheet" href="../../template/en/topbar/css/animate.css">
+
+    <script type="text/javascript">
+        // window.addEventListener("resize", function() {
+        //     "use strict";
+        //     window.location.reload();
+        // });
+        document.addEventListener("DOMContentLoaded", function () {
+            // make it as accordion for smaller screens
+            if (window.innerWidth < 768) {
+                document.querySelectorAll('.sidebar .nav-link').forEach(function (element) {
+                    element.addEventListener('click', function (e) {
+                        let nextEl = element.nextElementSibling;
+                        let parentEl = element.parentElement;
+                        let allSubmenus_array = parentEl.querySelectorAll('.submenu');
+                        if (nextEl && nextEl.classList.contains('submenu')) {
+                            e.preventDefault();
+                            if (nextEl.style.display == 'block') {
+                                nextEl.style.display = 'none';
+                            } else {
+                                nextEl.style.display = 'block';
+                            }
+                        }
+                    });
+                })
+            }
+            // end if innerWidth
+        });
+        // DOMContentLoaded  end
+
+    </script>
+
+    <script type='text/javascript'
+            src='https://platform-api.sharethis.com/js/sharethis.js#property=63ac4499caf2ee001a714b34&product=sop'
+            async='async'></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var editable_elements = document.querySelectorAll("[contenteditable=true]");
+        for (var i = 0; i < editable_elements.length; i++) {
+            editable_elements[i].setAttribute("contenteditable", false);
+        }
+    });
+
+</script>
+<style>
+
+</style>
+ <header class="ltn__header-area ltn__header-5 ltn__header-transparent--- gradient-color-4---">
+            <div class="ltn__header-top-area ">
+                <div class="auto-container">
+                    <div class="row row2">
+                        <div class="col-md-5 col-sm-12 col-xs-12">
+                            <div class="ltn__top-bar-menu txt-991-center">
+                                <ul>
+                                    <li> <a href="tel:19838"><i class="fa fa-phone" aria-hidden="true"></i> 19838</a></li>
+
+                                    <li>
+                                        <!-- ltn__language-menu -->
+                                        <div class="ltn__drop-menu ltn__currency-menu ltn__language-menu">
+                                            <ul>
+                                                <li><a href="#" class=""><span class="active-currency"><i class="fa fa-unlock-alt" aria-hidden="true"></i> Login</span></a>
+                                                    <ul>
+                                                        <li><a href="https://studentportal.aast.edu/Login"><i class="fa fa-angle-right"></i> Students</a></li>
+                                                        <li><a href="https://staffportal.aast.edu/"><i class="fa fa-angle-right"></i> Staff</a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <!--  -->
+                                    <li>
+                                        <!-- ltn__language-menu -->
+                                        <div class="ltn__drop-menu ltn__currency-menu ltn__language-menu">
+                                            <ul>
+
+                                                <li><a href="#" class="dropdown-toggle"><i class="fa fa-globe"></i> <span class="active-currency">En</span></a>
+                                                     <ul> <li><a href='https://aast.edu/en/includes/functions/language_redirect.php?url=http%3A%2F%2Faast.edu%2Fpheed%2Facademic-research%2Fsearch_home.php%26lnselect%3D2'>Ar <img src='https://aast.edu/template/ar.png' class='flag'></a></li></ul>                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="  col-md-5 col-sm-12 col-xs-12">
+                            <div class="text-right">
+                                <div class="ltn__top-bar-menu  txt-768-center  txt-991-center ">
+                                    <ul>
+                                        <!-- today -->
+                                        <li>
+                                            <div class="ltn__drop-menu ltn__currency-menu ltn__language-menu">
+                                                <ul>
+												 <li><a href="https://aast.edu/"><span class="active-currency"><i class="fa fa-university" aria-hidden="true" style="font-size: 1em;"></i> AASTMT</span></a></li>
+                                                    <li><a href="#" class="dropdown-toggle"><span class="active-currency">Our Latest </span></a>
+                                                        <ul>
+                                                            <li><a href="https://aast.edu/en/news/index.php?unit_id=1"><i class="fa fa-angle-right"></i> News</a></li>
+                                                            <li><a href="https://aast.edu/en/events/index.php?unit_id=482"><i class="fa fa-angle-right"></i> Events</a></li>
+                                                            <li><a href="https://aast.edu/en/gallery/index.php"><i class="fa fa-angle-right"></i> Media</a></li>
+<!--                                                           <li><a href="https://aast.edu/"><span class="active-currency"><i class="fa fa-university" aria-hidden="true" style="font-size: 1em;"></i> AASTMT</span></a></li> -->
+                                                        </ul>
+                                                    </li>
+                                                </ul> 
+                                            </div>
+                                            <!--  -->
+                                        </li>
+                                        <!--/.today  -->
+
+
+                                        <!-- info for -->
+                                        <li>
+                                            <!-- ltn__information-for -->
+                                            <div class="ltn__drop-menu ltn__currency-menu ltn__language-menu">
+                                                <ul>
+                                                    <li><a href="#" class="dropdown-toggle"><span class="active-currency">Information for </span></a>
+                                                        <ul>
+                                                         <li><a href="https://aast.edu/en/info-for/applicants/"><i class="fa fa-angle-right"></i> New Applicants</a></li>
+                                                            <li><a href="https://aast.edu/en/info-for/students"><i class="fa fa-angle-right"></i> Students</a></li>
+															  <li><a href="https://aast.edu/en/info-for/staff/"><i class="fa fa-angle-right"></i> Faculty & Staff</a></li>
+                                                            <li><a href="https://aast.edu/en/alumni/"><i class="fa fa-angle-right"></i> Alumni</a></li>
+															  <li><a href="https://aast.edu/en/info-for/visitors/"><i class="fa fa-angle-right"></i> Visitors</a></li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <!--  -->
+                                        </li>
+                                        <!-- search -->
+                                        <li><a class="search-box-btn" href="#"><span class="fa fa-search"></span> search</a></li>
+                                        <!-- /.search -->
+
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="  col-md-3 col-sm-12 col-xs-12 mobile">
+                            <a class="aast-mobile" href="https://aast.edu"><img src="https://aast.edu/template/en/topbar//img/main-menu/logo-2.png" /></a>
+                        </div>
+                        <!-- Burger navigation -->
+                        <!-- Burger navigation -->
+                        <div class="  col-md-2 col-sm-12 ">
+                            <nav class="nav--mobile"> <span class="open--menu">
+                                    <span class="hamburger__line"></span> <span class="hamburger__line"></span> <span class="hamburger__line"></span> </span><span id="Menu">Menu</span><span class="close">Close</span> </nav>
+                            <!--  Mobile Overlay -->
+                            <div class="mobile--overlay">
+                                <div id="Overlay"></div>
+                                <div class="mobile--overlay_content"> <a href="https://aast.edu/en/"><img src="https://aast.edu/template/en/topbar/img/main-menu/logo-2.png" class="logoOverlay" /></a>
+                                    <nav class="sidebar py-2 mb-4">
+                                        <!-------Mobile Menu------->
+                                        <ul class="nav flex-column" id="NavMobile">
+                                            <!---Start About----->
+                                            <li class="nav-item hasBranch"> <a class="nav-link" href="#"> About
+                                                </a><i class="ic"></i>
+                                                <ul class="submenu dropdown-menu ">
+                                                    <li class=" child levelTwo "><a class="nav-link" href="#">About AASTMT </a>
+                                                        <p>We believe that Sustainable excellence in education and research,
+                                                            development, and innovation are our way of attaining leadership
+                                                            among universities and educational institutions in the Arab
+                                                            world.</p>
+                                                        <div class="branch">
+                                                            <ul class="submenu dropdown-menu"><span class="reverse" onclick="funReturn()"></span>
+                                                                <h3 class="level3_Title"></h3>
+
+                                                                <li class="levelThree"><a class="nav-link" href="https://aast.edu/en/about/contenttemp.php?page_id=1000100031">Vision,
+                                                                        Mission & Values</a>
+
+
+                                                                </li>
+                                                                <li class="levelThree"><a class="nav-link" href="https://aast.edu/en/about/pdf/AASTMT-Strategic-Plan-2021-2026.pdf" target="_blank">AASTMT
+                                                                        Strategic Plan 2021-2026</a>
+
+
+                                                                </li>
+                                                                <li class="levelThree"><a class="nav-link" href="https://aast.edu/en/about/contenttemp.php?page_id=1000100020">History &
+                                                                        Landmarks</a>
+
+
+                                                                </li>
+                                                                <li class="levelThree"><a class="nav-link" href="https://aast.edu/en/about/contenttemp.php?page_id=1000100025">Services
+                                                                        Offered to Arab Countries</a>
+
+
+                                                                </li>
+                                                                <li class="levelThree"><a class="nav-link" href="https://aast.edu/en/success-stories/">Success
+                                                                        Stories</a>
+
+
+                                                                </li>
+                                                                <li class="levelThree"><a class="nav-link" href="https://aast.edu/en/testimonials/">Testimonials</a>
+                                                                    <div class="row img-level3">
+                                                                        <div class="col-md-3  col-xs-12">
+
+                                                                            <figure>
+                                                                                <a href="http://www.lasportal.org/Pages/Welcome.aspx" target="_blank"> <img src="https://aast.edu/template/en/topbar/img/main-menu/arab_league.png" /></a>
+
+                                                                            </figure>
+
+                                                                            <!-- <a href="#">test AASTMT img</a> -->
+                                                                        </div>
+                                                                        <div class="col-md-3  col-xs-12">
+
+                                                                            <figure>
+                                                                                <a href="http://arabsainportal.org/ar" target="_blank"><img src="https://aast.edu/template/en/topbar/img/main-menu/ain-logo.png" /></a>
+
+                                                                            </figure>
+
+                                                                            <!-- <a href="#">test AASTMT img</a> -->
+                                                                        </div>
+
+                                                                        <div class="col-md-3  col-xs-12">
+
+                                                                            <figure>
+                                                                                <a href="https://www.topuniversities.com/universities/arab-academy-science-technology-maritime-transport-aastmt" target="_blank"> <img class="qs-stars" src="https://aast.edu/template/en/topbar/img/main-menu/qs.jpg" /></a>
+
+                                                                            </figure>
+
+                                                                            <!-- <a href="#">test AASTMT img</a> -->
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+
+                                                    <li class="levelTwo"><a class="nav-link" href="https://aast.edu/en/presidency/">Presidency </a></li>
+                                                    <!-- <li class="levelTwo"><a class="nav-link" href="#">Offices & Administration </a></li> -->
+                                                    <li class="levelTwo"><a class="nav-link" href="https://aast.edu/en/sdg/">Sustainable AASTMT </a></li>
+                                                    <!-- <li class="levelTwo"><a class="nav-link" href="#">Rankings </a></li> -->
+                                                    <!-- <li class="levelTwo"><a class="nav-link" href="#">Facts & Numbers </a></li> -->
+                                                </ul>
+                                            </li>
+                                            <!---End About----->
+                                            <!---Start Maritime----->
+                                            <li class="nav-item "> <a class="nav-link" href="https://aast.edu/en/maritime/"> Maritime </a> </li>
+                                            <!---End Maritime----->
+                                            <!---Start Admission----->
+                                            <li class="nav-item "> <a class="nav-link" href="#"> Admission
+                                                </a><i class="ic"></i>
+                                                <ul class="submenu dropdown-menu wow fadeIn">
+                                                    <li class="levelTwo"><a class="nav-link" href="https://aastmtic.aast.edu/admission/application/ui/"> Apply now
+                                                        </a>
+                                                    </li>
+                                                    <li class="levelTwo"><a class="nav-link" href="https://aast.edu/en/admission/">Admission Website </a>
+
+                                                    </li>
+                                                    <li class="levelTwo"><a class="nav-link" href="https://aast.edu/en/admission/contenttempsub.php?unit_id=546&page_id=54600011">Udergraduate Admission </a>
+
+                                                    </li>
+                                                    <li class="levelTwo"><a class="nav-link" href="https://aastmtic2.aast.edu/PG_admission/">Postgraduate Online Admission </a>
+
+                                                    </li>
+                                                    <li class="levelTwo"><a class="nav-link" href="https://aast.edu/en/new-applicants/media/AAST-International-Degrees-2021-Final.pdf" target="_blank">International Programs </a>
+
+                                                    </li>
+                                                    <li class="levelTwo"><a class="nav-link" href="https://aast.edu/en/admission/contenttempsub.php?unit_id=551&page_id=55100001">Tuition and Fees </a>
+
+                                                    </li>
+                                                    <li class="levelTwo"><a class="nav-link" href="https://aast.edu/en/admission/contenttempsub.php?unit_id=551&page_id=55100002">Scholarships and Discounts </a>
+
+                                                    </li>
+                                                    <li class="levelTwo"><a class="nav-link" href="https://aast.edu/en/idc_apps/reg_paths.php">Online Registration </a>
+
+                                                </ul>
+                                            </li>
+                                            <!---End Admission----->
+                                            <!---Start Academics----->
+                                            <li class="nav-item "> <a class="nav-link" href="#"> Academics
+                                                </a><i class="ic"></i>
+                                                <ul class="submenu dropdown-menu wow fadeIn">
+                                                    <li class="levelTwo"><a class="nav-link" href="https://aast.edu/en/colleges/"> Colleges
+                                                        </a>
+
+                                                    </li>
+                                                    <li class="levelTwo"><a class="nav-link" href="https://aast.edu/en/programs-courses/results.php?area_study_id=0&search="> Find
+                                                            your Program
+                                                        </a>
+
+                                                    </li>
+                                                    <li class="levelTwo"><a class="nav-link" href="https://aast.edu/en/vice/edu-affairs/"> Education and
+                                                            Student Affairs
+                                                        </a>
+
+                                                    </li>
+                                                    <li class="levelTwo"><a class="nav-link" href="https://aast.edu/en/colleges/undergraduate.php"> Undergraduate Studies
+                                                        </a>
+
+                                                    </li>
+                                                    <li class="levelTwo"><a class="nav-link" href="https://aast.edu/en/colleges/postgraduate.php"> Postgarduate Studies
+                                                        </a>
+
+                                                    </li>
+                                                    <li class="levelTwo"><a class="nav-link" href="http://iep.aast.edu/en/home" target="_blank"> The Academy School
+                                                        </a>
+
+                                                    </li>
+                                                    <li class="levelTwo"><a class="nav-link" href="https://aast.edu/en/centers/aicc/contenttemp.php?page_id=42400002" target="_blank"> Student Exchange Programs
+                                                        </a>
+
+                                                    </li>
+                                                    <li class="levelTwo"><a class="nav-link" href="https://aast.edu/en/sites/library/"> AASTMT Libraries
+                                                        </a>
+
+                                                    </li>
+                                                    <li class="levelTwo"><a class="nav-link" href="http://openaccess.aast.edu/" target="_blank">Online Access to Digital Resources
+                                                        </a>
+
+                                                    </li>
+
+                                                </ul>
+                                            </li>
+                                            <!---End Academics----->
+                                            <!---Start students----->
+                                            <li class="nav-item hasBranch"> <a class="nav-link" href="#"> Students
+                                                </a><i class="ic"></i>
+                                                <ul class="submenu dropdown-menu ">
+                                                    <li class="levelTwo"><a class="nav-link" href="https://aast.edu/en/aastlife/">Life at AASTMT </a></li>
+                                                    <li class=" child levelTwo"><a class="nav-link" href="#">Student Affairs </a>
+                                                        <!--
+                                                        <p>We believe that Sustainable excellence in education and research,
+                                                            development, and innovation are our way of attaining leadership
+                                                            among universities and educational institutions in the Arab
+                                                            world.</p>
+-->
+                                                        <div class="branch">
+                                                            <ul class="submenu dropdown-menu"><span class="reverse" onclick="funReturn()"></span>
+                                                                <h3 class="level3_Title"></h3>
+
+                                                                <li class="levelThree"><a class="nav-link" href="https://aast.edu/en/student-affairs/alex/">Alexandria</a>
+
+
+                                                                </li>
+                                                                <li class="levelThree"><a class="nav-link" href="https://aast.edu/en/student-affairs/smartvillage/">Smart Village</a>
+
+
+                                                                </li>
+                                                                <li class="levelThree"><a class="nav-link" href="https://aast.edu/en/student-affairs/elalamein/">Elalamein</a>
+
+
+                                                                </li>
+                                                                <li class="levelThree"><a class="nav-link" href="https://aast.edu/en/student-affairs/heliopolis/">Heliopolis</a>
+
+
+                                                                </li>
+
+
+
+                                                            </ul>
+
+                                                        </div>
+                                                    </li>
+                                                    <li class="levelTwo"><a class="nav-link" href="https://aast.edu/en/info-for/new-applicants/">Prospective Students </a></li>
+                                                    <li class="levelTwo"><a class="nav-link" href="https://aast.edu/en/info-for/students/">AASTMT Students </a></li>
+                                                    <li class="levelTwo"><a class="nav-link" href="https://aast.edu/en/idc_apps/reg_paths.php">Online Registeration </a></li>
+                                                </ul>
+                                            </li>
+                                            <!----End students----->
+                                            <!---Start Research----->
+                                            <li class="nav-item "> <a class="nav-link" href="https://aast.edu/en/research/"> Research </a> </li>
+                                            <!---End Research----->
+                                            <!---Start Training----->
+                                            <li class="nav-item hasBranch">
+                                                <a class="nav-link" href="#"> Training
+                                                </a><i class="ic"></i>
+                                                <ul class="submenu dropdown-menu wow fadeIn">
+                                                    <li class="levelTwo"><a class="nav-link" href="#"> Training & Community Service Affairs
+                                                        </a>
+                                                        <p>Connects the AASTMT and its students with the broader community. It involves volunteering and engagement in various projects and activities aimed at addressing societal needs.</p>
+                                                    </li>
+                                                    <li class="levelTwo"><a class="nav-link" href="http://ctcs.aast.edu/en/home">Central Unit of Training & Consulting Services</a>
+
+                                                    </li>
+                                                    <li class=" child levelTwo"><a class="nav-link" href="#">Practical Training </a>
+
+                                                        <div class="branch">
+                                                            <ul class="submenu dropdown-menu"><span class="reverse" onclick="funReturn()"></span>
+                                                                <h3 class="level3_Title"></h3>
+
+                                                                <li class="levelThree"><a class="nav-link" href="https://aast.edu/en/colleges/practical-training/">Practical Training Website</a>
+
+
+                                                                </li>
+                                                                <li class="levelThree"><a class="nav-link" href="https://aast.edu/en/colleges/practical-training/all-ach.php">International Training</a>
+                                                                </li>
+                                                                <li class="levelThree"><a class="nav-link" href="https://aast.edu/en/colleges/practical-training/local-achievments.php">Local Training</a>
+                                                                </li>
+
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+
+                                                    <li class=" child levelTwo"><a class="nav-link" href="#">Community Service and Continuing Education </a>
+
+                                                        <div class="branch">
+                                                            <ul class="submenu dropdown-menu"><span class="reverse" onclick="funReturn()"></span>
+                                                                <h3 class="level3_Title"></h3>
+
+                                                                <li class="levelThree"><a class="nav-link" href="https://aast.edu/en/deaneries/csp/alex/">Alexandria</a>
+
+
+                                                                </li>
+                                                                <li class="levelThree"><a class="nav-link" href="https://aast.edu/en/deaneries/csp/cairo/">Cairo</a>
+                                                                </li>
+
+
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <!---End Training----->
+                                            <!-- consultancy -->
+                                            <li class="nav-item hasBranch"> <a class="nav-link" href="#"> Consultancy
+                                                </a><i class="ic"></i>
+                                                <ul class="submenu dropdown-menu">
+                                                    <li class=" child levelTwo"><a class="nav-link" href="#">Productivity and Quality Institute </a>
+                                                        <p>with economic challenges & sustained economic growth quality has become an urgent need </p>
+                                                        <div class="branch">
+                                                            <ul class="submenu dropdown-menu"><span class="reverse" onclick="funReturn()"></span>
+                                                                <h3 class="level3_Title"></h3>
+
+                                                                <li class="levelThree"><a class="nav-link" href="https://aast.edu/en/institutes/pqi/contenttemp_item.php?unit_item=342&page_id=34200001">Alexandria</a>
+                                                                </li>
+                                                                <li class="levelThree"><a class="nav-link" href="https://aast.edu/en/institutes/pqi-cairo/contenttemp_item.php?unit_item=461&page_id=46100001">Cairo</a>
+                                                                </li>
+
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                    <li class="levelTwo"><a class="nav-link" href="https://aast.edu/en/centers/mrcc/">Maritime Research and Consultation center</a>
+                                                        <p>MRCC was established in the AASTMT to serve the maritime transport
+                                                            sector in Egypt and Arab countries. </p>
+                                                    </li>
+
+                                                    <li class="levelTwo"><a class="nav-link" href="https://aast.edu/en/institutes/rmsi/">Regional Maritime Security Institute </a>
+                                                        <p>The RMSI was established at AASTMT to implement the international
+                                                            requirements. </p>
+                                                    </li>
+                                                    <li class="levelTwo"><a class="nav-link" href="https://aast.edu/en/complexes/imo/">International Maritime Organization </a>
+                                                        <p>Consultancy Services through Arab Maritime Accident Investigation
+                                                            Consultative Center - AMAIC </p>
+                                                    </li>
+
+                                                </ul>
+                                            </li>
+                                            <!--End consultancy  -->
+
+                                        </ul>
+                                        <div id="level3">
+
+                                        </div>
+                                    </nav>
+
+
+                                    <ul class="quickLinks2">
+
+                                        <li><span>Quick Links</span><i class="fa-solid fa-angle-right"></i></li>
+                                        <li><a href="https://aast.edu/en/colleges/" target="_blank">Colleges </a></li>
+                                        <li><a href="https://aast.edu/en/campuses/">Campuses </a></li>
+                                        <li><a href="https://aast.edu/en/aastlife/">Life @ AASTMT </a></li>
+                                        <li><a href="https://aast.edu/en/centers.php">Centers </a></li>
+                                        <li><a href="https://aast.edu/en/institutes.php">Institutes </a></li>
+                                        <li><a href="https://aast.edu/en/complexes.php">Complexes </a></li>
+                                        <li><a href="https://aast.edu/en/deaneries.php">Deaneries </a></li>
+
+
+                                        <li><a href="https://aast.edu/en/contacts/">Contact Us </a></li>
+                                        <li><a href="https://aast.edu/en/sitemap/">Sitemap </a></li>
+
+                                    </ul>
+                                </div>
+                                <!--  -->
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- ltn__header-top-area end -->
+                </div>
+                <!-- ltn__header-top-area end -->
+                <!--50yrs-slider-->
+            </div>
+        </header>
+
+<script type="text/javascript">
+        window.addEventListener("resize", function() {
+            "use strict";
+            //window.location.reload();
+        });
+        document.addEventListener("DOMContentLoaded", function() {
+            // make it as accordion for smaller screens
+            if (window.innerWidth < 768) {
+                document.querySelectorAll('.sidebar .nav-link').forEach(function(element) {
+                    element.addEventListener('click', function(e) {
+                        let nextEl = element.nextElementSibling;
+                        let parentEl = element.parentElement;
+                        let allSubmenus_array = parentEl.querySelectorAll('.submenu');
+                        if (nextEl && nextEl.classList.contains('submenu')) {
+                            e.preventDefault();
+                            if (nextEl.style.display == 'block') {
+                                nextEl.style.display = 'none';
+                            } else {
+                                nextEl.style.display = 'block';
+                            }
+                        }
+                    });
+                })
+            }
+            // end if innerWidth
+        });
+        // DOMContentLoaded  end
+
+    </script>
+
+<script>
+        function funReturn() {
+            $("#level3").css("display", "none");
+            $("#NavMobile").css("display", "block");
+            $("ul.quickLinks2").removeClass("absolute");
+            $("ul.quickLinks2").addClass("inherit");
+        }
+
+    </script>
+
+<div id="search_main">
+<DIV class="extraBox boxMain">
+<h1> AASTMT Academic Research Papers </h1>
+<p class="description-search"> Search our collection of AASTMT faculty research papers, the topics include Management, Computer Science, Artificial Intelligence, Bio Medical Engineering, Tourism, Maritime Transport and more.  
+</p>
+</div>
+<div class="extraBox box3rd">
+
+<H1>Quick Search</H1>
+<FORM id=frmSearchResults onsubmit="return frmSearchResults_Validator(this)" 
+method=post name=frmSearchResults action='search_home.php?search=55&aa=1'>
+<OL class=boxFormElement>
+  <LI><LABEL for=z>Keyword</LABEL><INPUT id="z" class="boxFormField" type="text" 
+  name="z" value="">
+ </LI>
+ <LI>
+ <Input type = 'Radio'  Name ='type1' value= '4' >All
+<Input type = 'Radio'   Name ='type1' value= '1' >Title
+<Input type = 'Radio'  Name ='type1' value= '2' >Abstract
+			
+	</LI>		
+  <LI><INPUT class="goButton" type="submit" value="Search"></LI></OL>
+
+  </FORM>
+  </DIV>
+<DIV class="extraBox box2nd">
+<FORM id="frmFacultySearch" onsubmit="return frmFacultySearch_Validator(this)" 
+method="post" name="frmFacultySearch" action="search_home.php?search=7&aa=2&yr=2021">
+<INPUT id="p" value="1" type="hidden" name="p"> 
+<INPUT id="w" value="1" type="hidden" name="w"> 
+<INPUT id="u" value="1" type="hidden" name="u">
+<INPUT id="g" value="1" type="hidden" name="g">
+
+
+<H2>Search within results</H2>
+
+<OL class=boxFormElement>
+  <LI><LABEL for="selFacname">Search by College/Department name</LABEL> 
+
+ <select class="Selectform"  id="c" size="1" name="c"  onchange="showUser(this.value)">
+		<OPTION selected value="">-- Please select --</OPTION> 
+ 
+
+  
+
+	  		
+  
+
+	  	  <option value="440">
+	 440-  Finance and accounting	  </option>
+  		
+  
+
+	  	  <option value="387">
+	 387- AAST Admission	  </option>
+  		
+  
+
+	  	  <option value="386">
+	 386- AASTMT Alumni	  </option>
+  		
+  
+
+	  	  <option value="1000">
+	 1000- AASTMT Practical Training	  </option>
+  		
+  
+
+	  	  <option value="10065">
+	 10065- Accounting	  </option>
+  		
+  
+
+	  	  <option value="546">
+	 546- Admission	  </option>
+  		
+  
+
+	  	  <option value="388">
+	 388- African Affairs	  </option>
+  		
+  
+
+	  	  <option value="513">
+	 513- Alumni	  </option>
+  		
+  
+
+	  	  <option value="1">
+	 1- Arab Academy for Science, Technology and Maritime Transport	  </option>
+  		
+  
+
+	  	  <option value="545">
+	 545- Arab institute for leadership development	  </option>
+  		
+  
+
+	  	  <option value="420">
+	 420- Architectural Engineering & Environmental Design	  </option>
+  		
+  
+
+	  	  <option value="46">
+	 46- Architectural Engineering & Environmental Design	  </option>
+  		
+  
+
+	  	  <option value="644">
+	 644- Architectural Engineering and Environmental Design	  </option>
+  		
+  
+
+	  	  <option value="347">
+	 347- Architectural Engineering-cairo	  </option>
+  		
+  
+
+	  	  <option value="585">
+	 585- Architecture and Environmental	  </option>
+  		
+  
+
+	  	  <option value="634">
+	 634- Architecture Engineering	  </option>
+  		
+  
+
+	  	  <option value="8">
+	 8- Art and Design	  </option>
+  		
+  
+
+	  	  <option value="636">
+	 636- B-Tech of Marine Engineering	  </option>
+  		
+  
+
+	  	  <option value="348">
+	 348- Basic & Applied Sciences-cairo	  </option>
+  		
+  
+
+	  	  <option value="55">
+	 55- Basic and Applied Science Engineering	  </option>
+  		
+  
+
+	  	  <option value="1222">
+	 1222- Basic and Applied Science Engineering 	  </option>
+  		
+  
+
+	  	  <option value="645">
+	 645- Basic and Applied sciences	  </option>
+  		
+  
+
+	  	  <option value="423">
+	 423- Basic and Applied Sciences	  </option>
+  		
+  
+
+	  	  <option value="603">
+	 603- Basic Applied Sciences - El Alamein	  </option>
+  		
+  
+
+	  	  <option value="47">
+	 47- Basic Nautical Studies Departement	  </option>
+  		
+  
+
+	  	  <option value="442">
+	 442- Business Information System	  </option>
+  		
+  
+
+	  	  <option value="401">
+	 401- Business Information System -Heliopolis	  </option>
+  		
+  
+
+	  	  <option value="373">
+	 373- Business Information System (Dokki Campus)	  </option>
+  		
+  
+
+	  	  <option value="232">
+	 232- Business Information Systems	  </option>
+  		
+  
+
+	  	  <option value="456">
+	 456- center for graduates of maritime affairs	  </option>
+  		
+  
+
+	  	  <option value="9">
+	 9- centers	  </option>
+  		
+  
+
+	  	  <option value="10091">
+	 10091- Central Lab for Pharmaceutical Analysis	  </option>
+  		
+  
+
+	  	  <option value="654">
+	 654- Centralized Department for Certificates & Secured Documents	  </option>
+  		
+  
+
+	  	  <option value="14">
+	 14- Chemical and Petrochemical Engineering	  </option>
+  		
+  
+
+	  	  <option value="4">
+	 4- College of  Computing & Information Technology	  </option>
+  		
+  
+
+	  	  <option value="530">
+	 530- College Of  Computing & Information Technology	  </option>
+  		
+  
+
+	  	  <option value="627">
+	 627- College of Archeology & Cultural Heritage	  </option>
+  		
+  
+
+	  	  <option value="32">
+	 32- College of Art and Design	  </option>
+  		
+  
+
+	  	  <option value="655">
+	 655- College of Artificial Intelligence	  </option>
+  		
+  
+
+	  	  <option value="606">
+	 606- College of Dentistry	  </option>
+  		
+  
+
+	  	  <option value="3">
+	 3- College of Engineering & Technology	  </option>
+  		
+  
+
+	  	  <option value="464">
+	 464- College Of Engineering & Technology	  </option>
+  		
+  
+
+	  	  <option value="419">
+	 419- College of Engineering & Technology	  </option>
+  		
+  
+
+	  	  <option value="474">
+	 474- College Of Engineering & Technology	  </option>
+  		
+  
+
+	  	  <option value="629">
+	 629- College Of Engineering & Technology	  </option>
+  		
+  
+
+	  	  <option value="491">
+	 491- College of Fisheries and Aquaculture Technology	  </option>
+  		
+  
+
+	  	  <option value="153">
+	 153- College of International Transport and Logistics 	  </option>
+  		
+  
+
+	  	  <option value="466">
+	 466- College of International Transport and Logistics 	  </option>
+  		
+  
+
+	  	  <option value="615">
+	 615- College of International Transport and Logistics 	  </option>
+  		
+  
+
+	  	  <option value="432">
+	 432- College of International Transport and Logistics 	  </option>
+  		
+  
+
+	  	  <option value="632">
+	 632- College of International Transport and Logistics	  </option>
+  		
+  
+
+	  	  <option value="501">
+	 501- College of International Transport and Logistics	  </option>
+  		
+  
+
+	  	  <option value="362">
+	 362- College of International Transport and Logistics	  </option>
+  		
+  
+
+	  	  <option value="527">
+	 527- College of Language and Communication	  </option>
+  		
+  
+
+	  	  <option value="531">
+	 531- College of Language and Communication	  </option>
+  		
+  
+
+	  	  <option value="381">
+	 381- College of Language and Communication 	  </option>
+  		
+  
+
+	  	  <option value="389">
+	 389- College of Language Studies	  </option>
+  		
+  
+
+	  	  <option value="581">
+	 581- College of Law	  </option>
+  		
+  
+
+	  	  <option value="436">
+	 436- College of Management	  </option>
+  		
+  
+
+	  	  <option value="616">
+	 616- College of Management & Technology	  </option>
+  		
+  
+
+	  	  <option value="366">
+	 366- College of Management & Technology	  </option>
+  		
+  
+
+	  	  <option value="631">
+	 631- College of Management & Technology	  </option>
+  		
+  
+
+	  	  <option value="500">
+	 500- College of Management & Technology	  </option>
+  		
+  
+
+	  	  <option value="385">
+	 385- College of Management & Technology	  </option>
+  		
+  
+
+	  	  <option value="6">
+	 6- College of Management and Technology	  </option>
+  		
+  
+
+	  	  <option value="5">
+	 5- College of Maritime Transport and Technology	  </option>
+  		
+  
+
+	  	  <option value="1011">
+	 1011- College of Medicine	  </option>
+  		
+  
+
+	  	  <option value="617">
+	 617- College of Pharmacy	  </option>
+  		
+  
+
+	  	  <option value="532">
+	 532- College of Pharmacy	  </option>
+  		
+  
+
+	  	  <option value="10020">
+	 10020- College Test	  </option>
+  		
+  
+
+	  	  <option value="213">
+	 213- Communication and Computing Systems	  </option>
+  		
+  
+
+	  	  <option value="65">
+	 65- Computer Engineering	  </option>
+  		
+  
+
+	  	  <option value="421">
+	 421- Computer Engineering	  </option>
+  		
+  
+
+	  	  <option value="633">
+	 633- Computer Engineering	  </option>
+  		
+  
+
+	  	  <option value="349">
+	 349- Computer Engineering-cairo	  </option>
+  		
+  
+
+	  	  <option value="1267">
+	 1267- Computer Graphics and Multimedia	  </option>
+  		
+  
+
+	  	  <option value="10003">
+	 10003- Computer Science	  </option>
+  		
+  
+
+	  	  <option value="30">
+	 30- Computer Services Center	  </option>
+  		
+  
+
+	  	  <option value="475">
+	 475- Computing & Information Technology	  </option>
+  		
+  
+
+	  	  <option value="345">
+	 345- Computing & Information Technology	  </option>
+  		
+  
+
+	  	  <option value="62">
+	 62- Construction & Building Engineering	  </option>
+  		
+  
+
+	  	  <option value="434">
+	 434- Construction & Building Engineering	  </option>
+  		
+  
+
+	  	  <option value="586">
+	 586- Construction & Building Engineering	  </option>
+  		
+  
+
+	  	  <option value="499">
+	 499- Construction & Building Engineering - Aswan	  </option>
+  		
+  
+
+	  	  <option value="350">
+	 350- Construction & Building Engineering-cairo	  </option>
+  		
+  
+
+	  	  <option value="342">
+	 342- Consultation Services	  </option>
+  		
+  
+
+	  	  <option value="565">
+	 565- Deanery of Cardiff Met 	  </option>
+  		
+  
+
+	  	  <option value="234">
+	 234- Deanery of Postgraduate Studies	  </option>
+  		
+  
+
+	  	  <option value="390">
+	 390- Education and Student Affairs	  </option>
+  		
+  
+
+	  	  <option value="601">
+	 601- El Alamein Campus	  </option>
+  		
+  
+
+	  	  <option value="45">
+	 45- Electrical & Control Engineering	  </option>
+  		
+  
+
+	  	  <option value="529">
+	 529- Electrical Energy Engineering	  </option>
+  		
+  
+
+	  	  <option value="351">
+	 351- Electrical Engineering-cairo	  </option>
+  		
+  
+
+	  	  <option value="422">
+	 422- Electronics & Communication Engineering	  </option>
+  		
+  
+
+	  	  <option value="352">
+	 352- Electronics & Communication Engineering-cairo	  </option>
+  		
+  
+
+	  	  <option value="66">
+	 66- Electronics & Communications Engineering	  </option>
+  		
+  
+
+	  	  <option value="647">
+	 647- Electronics and Communications	  </option>
+  		
+  
+
+	  	  <option value="994">
+	 994- Energy & Petroleum Logistics Management	  </option>
+  		
+  
+
+	  	  <option value="74">
+	 74- Engineering Postgraduate Studies	  </option>
+  		
+  
+
+	  	  <option value="482">
+	 482- Entrepreneurship Center	  </option>
+  		
+  
+
+	  	  <option value="212">
+	 212- Environment Protection and Crisis Management Center	  </option>
+  		
+  
+
+	  	  <option value="651">
+	 651- Finance	  </option>
+  		
+  
+
+	  	  <option value="157">
+	 157- Finance and accounting	  </option>
+  		
+  
+
+	  	  <option value="402">
+	 402- Finance and accounting -Heliopolis	  </option>
+  		
+  
+
+	  	  <option value="370">
+	 370- Finance and accounting (Dokki Campus)	  </option>
+  		
+  
+
+	  	  <option value="7">
+	 7- Graduate School of Business	  </option>
+  		
+  
+
+	  	  <option value="354">
+	 354- Graduate School of Business	  </option>
+  		
+  
+
+	  	  <option value="1003">
+	 1003- Graduate School of Business	  </option>
+  		
+  
+
+	  	  <option value="233">
+	 233- Hotel & Tourism	  </option>
+  		
+  
+
+	  	  <option value="10044">
+	 10044- Humanities	  </option>
+  		
+  
+
+	  	  <option value="10023">
+	 10023- Humanities	  </option>
+  		
+  
+
+	  	  <option value="67">
+	 67- Industrial & Management Engineering	  </option>
+  		
+  
+
+	  	  <option value="91">
+	 91- Industry Service Center	  </option>
+  		
+  
+
+	  	  <option value="407">
+	 407- Industry Service Complex	  </option>
+  		
+  
+
+	  	  <option value="409">
+	 409- Information and Documentation Center	  </option>
+  		
+  
+
+	  	  <option value="1266">
+	 1266- Information Systems	  </option>
+  		
+  
+
+	  	  <option value="391">
+	 391- Institute of Maritime Upgrading Studies	  </option>
+  		
+  
+
+	  	  <option value="210">
+	 210- Integrated Simulators Complex	  </option>
+  		
+  
+
+	  	  <option value="523">
+	 523- International Examination Center	  </option>
+  		
+  
+
+	  	  <option value="414">
+	 414- International Maritime Organization Compound	  </option>
+  		
+  
+
+	  	  <option value="1268">
+	 1268- International Trade Logistics Management 	  </option>
+  		
+  
+
+	  	  <option value="995">
+	 995- International Trade Logistics Management	  </option>
+  		
+  
+
+	  	  <option value="237">
+	 237- International Transport and logistics institute	  </option>
+  		
+  
+
+	  	  <option value="406">
+	 406- International transport and Logistics Institute	  </option>
+  		
+  
+
+	  	  <option value="152">
+	 152- La section francophone programme de management	  </option>
+  		
+  
+
+	  	  <option value="10026">
+	 10026- Language and Translation	  </option>
+  		
+  
+
+	  	  <option value="10027">
+	 10027- Languages	  </option>
+  		
+  
+
+	  	  <option value="16">
+	 16- Libraries and Information Services 	  </option>
+  		
+  
+
+	  	  <option value="665">
+	 665- Local Training - CLC Smart	  </option>
+  		
+  
+
+	  	  <option value="669">
+	 669- Local Training - COE Smart	  </option>
+  		
+  
+
+	  	  <option value="667">
+	 667- Local Training - Management Smart	  </option>
+  		
+  
+
+	  	  <option value="993">
+	 993- Logistics and Supply Chain Management	  </option>
+  		
+  
+
+	  	  <option value="10033">
+	 10033- Logistics of International Trade	  </option>
+  		
+  
+
+	  	  <option value="598">
+	 598- Marine & Offshore Training Center	  </option>
+  		
+  
+
+	  	  <option value="48">
+	 48- Marine and Offshore Engineering	  </option>
+  		
+  
+
+	  	  <option value="49">
+	 49- Marine Engineering Technology Department	  </option>
+  		
+  
+
+	  	  <option value="408">
+	 408- Marine hotel center	  </option>
+  		
+  
+
+	  	  <option value="211">
+	 211- Marine Simulator System	  </option>
+  		
+  
+
+	  	  <option value="51">
+	 51- Maritime Diving	  </option>
+  		
+  
+
+	  	  <option value="519">
+	 519- Maritime Education & Training	  </option>
+  		
+  
+
+	  	  <option value="470">
+	 470- Maritime Examination Center	  </option>
+  		
+  
+
+	  	  <option value="393">
+	 393- Maritime Graduates Affairs Center	  </option>
+  		
+  
+
+	  	  <option value="52">
+	 52- Maritime Meteorology	  </option>
+  		
+  
+
+	  	  <option value="481">
+	 481- Maritime Postgraduate Studies Institute	  </option>
+  		
+  
+
+	  	  <option value="69">
+	 69- Maritime Safety Institute	  </option>
+  		
+  
+
+	  	  <option value="397">
+	 397- Maritime transport technology department	  </option>
+  		
+  
+
+	  	  <option value="650">
+	 650- Marketing	  </option>
+  		
+  
+
+	  	  <option value="437">
+	 437- Marketing	  </option>
+  		
+  
+
+	  	  <option value="367">
+	 367- Marketing (Dokki Campus)	  </option>
+  		
+  
+
+	  	  <option value="77">
+	 77- Marketing and international Business	  </option>
+  		
+  
+
+	  	  <option value="400">
+	 400- Marketing and international Business -Heliopolis 	  </option>
+  		
+  
+
+	  	  <option value="353">
+	 353- Mechanical  Engineering-cairo	  </option>
+  		
+  
+
+	  	  <option value="648">
+	 648- Mechanical Engineering	  </option>
+  		
+  
+
+	  	  <option value="610">
+	 610- Mechanical Engineering	  </option>
+  		
+  
+
+	  	  <option value="435">
+	 435- Mechanical Engineering	  </option>
+  		
+  
+
+	  	  <option value="10058">
+	 10058- Mechanical Engineering	  </option>
+  		
+  
+
+	  	  <option value="53">
+	 53- Mechanical Engineering	  </option>
+  		
+  
+
+	  	  <option value="10008">
+	 10008- Media	  </option>
+  		
+  
+
+	  	  <option value="10024">
+	 10024- Media	  </option>
+  		
+  
+
+	  	  <option value="231">
+	 231- Media Management	  </option>
+  		
+  
+
+	  	  <option value="235">
+	 235- Medical Services	  </option>
+  		
+  
+
+	  	  <option value="214">
+	 214- Natural Gas and Petrochemicals Simulator System	  </option>
+  		
+  
+
+	  	  <option value="635">
+	 635- Nautical Engineering	  </option>
+  		
+  
+
+	  	  <option value="447">
+	 447- Offshore Dynamic Positioning Systems	  </option>
+  		
+  
+
+	  	  <option value="12">
+	 12- Oil and Gas Engineering	  </option>
+  		
+  
+
+	  	  <option value="566">
+	 566- Political Science	  </option>
+  		
+  
+
+	  	  <option value="451">
+	 451- Port Said Campus	  </option>
+  		
+  
+
+	  	  <option value="33">
+	 33- Port Training Institute	  </option>
+  		
+  
+
+	  	  <option value="34">
+	 34- Productivity & Quality Institute	  </option>
+  		
+  
+
+	  	  <option value="457">
+	 457- Productivity & Quality Institute-cairo	  </option>
+  		
+  
+
+	  	  <option value="484">
+	 484- Protocol and Public Relations	  </option>
+  		
+  
+
+	  	  <option value="445">
+	 445- Quality Assurance and Accreditation Center	  </option>
+  		
+  
+
+	  	  <option value="411">
+	 411- Regional informatics Center	  </option>
+  		
+  
+
+	  	  <option value="472">
+	 472- Regional Maritime Security Institute (RMSI)	  </option>
+  		
+  
+
+	  	  <option value="473">
+	 473- Scientific Research & Innovation	  </option>
+  		
+  
+
+	  	  <option value="239">
+	 239- Sea Training Institute	  </option>
+  		
+  
+
+	  	  <option value="114">
+	 114- simulator_crisis	  </option>
+  		
+  
+
+	  	  <option value="458">
+	 458- Smart Village Campus	  </option>
+  		
+  
+
+	  	  <option value="10002">
+	 10002- Software Engineering	  </option>
+  		
+  
+
+	  	  <option value="450">
+	 450- South Valley Campus	  </option>
+  		
+  
+
+	  	  <option value="427">
+	 427- Special Courses Program	  </option>
+  		
+  
+
+	  	  <option value="480">
+	 480- Sports Services	  </option>
+  		
+  
+
+	  	  <option value="559">
+	 559- Student Affairs	  </option>
+  		
+  
+
+	  	  <option value="656">
+	 656- Student Affairs	  </option>
+  		
+  
+
+	  	  <option value="486">
+	 486- Student Affairs	  </option>
+  		
+  
+
+	  	  <option value="452">
+	 452- Syria Admin	  </option>
+  		
+  
+
+	  	  <option value="90">
+	 90- Technical and Vocational Institute	  </option>
+  		
+  
+
+	  	  <option value="660">
+	 660- test660	  </option>
+  		
+  
+
+	  	  <option value="661">
+	 661- test661	  </option>
+  		
+  
+
+	  	  <option value="413">
+	 413- The Maritime Research and Consultation Center	  </option>
+  		
+  
+
+	  	  <option value="428">
+	 428- The Quality Assurance Unit	  </option>
+  		
+  
+
+	  	  <option value="343">
+	 343- Training Services	  </option>
+  		
+  
+
+	  	  <option value="564">
+	 564- Training, Community Service and Environmental Development
+	  </option>
+  		
+  
+
+	  	  <option value="1260">
+	 1260- Transport Logistics Management	  </option>
+  		
+  
+
+	  	  <option value="678">
+	 678- unit8	  </option>
+  		
+  
+
+	  	  <option value="238">
+	 238- Upgrading Studies	  </option>
+  		
+  
+
+	  	  <option value="569">
+	 569- Yaghting Training Program	  </option>
+  		
+  
+
+	</select>
+
+  </LI>
+
+<div id="txtHint">
+
+
+<LI>
+<b>Staff will be listed here.</b> 
+<br>
+
+<b>Subject area will be listed here.</b> 
+<br>
+
+<b>Year will be listed here.</b> 
+<br>
+<b>Research type will be listed here.</b> 
+<br>
+
+
+</LI>
+</div>
+
+
+
+  <LI><LABEL for="k">Keyword in results</LABEL> <INPUT id="z" class="boxFormField" maxLength="50" type="text" name="z"> </LI>
+  <LI><INPUT class="goButton" type="submit"  value="Search"></LI>
+  <LI class="last">
+  <P class="last">
+
+</P></LI>
+</OL></FORM>
+
+</DIV>
+  
+</div>
+
+ <script src="https://aast.edu/template/sharer.js"></script>
+<style>
+    .footer-logos {
+        list-style-type: none;
+        display: block ruby;
+    }
+
+footer {
+  display: block;
+  clear: both !important;
+}
+  </style> 
+</div></div>
+
+</div>
+
+</section>
+<footer id="footer" class="footer">
+    <div class="container-xl">
+        <div class="row justify-content-between" data-ix="fade-in-on-scroll">
+
+            <div class="col-md-4 col-sm-12 col-xs-12 footer-widget footer-about wow fadeInUp2  animated"
+                 data-wow-delay=".1s"
+                 style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp2;">
+                <h3 class="widget-title mt-10">Explore The Academy </h3>
+                <ul class="list-arrow">
+ <li><a href="https://aast.edu/en/about/" class="link_data">About AASTMT</a></li>
+                    <li><a href="https://aast.edu/en/maritime/" class="link_data">Maritime </a></li>
+                    <li><a href="https://aast.edu/en/admission" class="link_data">Admission</a></li>
+                    <!-- <li><a href="#" class="link_data">Training </a></li> -->
+                    <li><a href="https://aast.edu/en/campuses/" class="link_data">Campuses</a></li>
+                    <!-- <li><a href="https://aast.edu/en/consultancy.php" class="link_data">Consultancy</a></li> -->
+                      <li><a href="https://aast.edu/en/aastlife/index.php#students" class="link_data">Student Affairs</a></li>
+                    <li><a href="https://aast.edu/en/services/" class="link_data">Services</a></li>
+                </ul>
+
+
+                <!--        <img src="../template/en/main/img/arab_league.png" alt="">
+<img src="../template/en/main/img/ain-logo.png" alt=""> -->
+
+            </div>
+            <!-- About us end -->
+
+
+            <div class="col-md-4 col-sm-12 col-xs-12 footer-widget wow fadeInUp2  animated" data-wow-delay=".3s"
+                 style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp2;">
+                <h3 class="widget-title mt-10"> Academics </h3>
+                <!--/ Popular Links-->
+                <ul class="list-arrow">
+				    <li><a href="https://aast.edu/en/vice/edu-affairs/" class="link_data">Education </a></li>
+                    <li><a href="https://aast.edu/en/colleges/" class="link_data">Colleges </a></li>
+					   <li><a href="https://aast.edu/en/centers/aaisc/" class="link_data"> Arab Academy International Study Center </a></li> 
+                    <!-- <li><a href="#" class="link_data"> Accreditation </a></li> -->
+                    <li><a href="https://aast.edu/en/deaneries/" class="link_data">Deaneries</a></li>
+                    <li><a href="https://aast.edu/en/institutes/" class="link_data">Institutes</a></li>
+                    <li><a href="https://aast.edu/en/centers/" class="link_data">Centers</a></li>
+                    <li><a href="https://aast.edu/en/complexes/" class="link_data">Complexes</a></li>
+                
+                    <li><a class="link_data" href="https://aastmtic2.aast.edu/certifications/certification.aspx"
+                           target="_blank"> Certificates Verification </a></li>
+                </ul>
+                <ul class="footer-logos">
+                    <li><img src="https://aast.edu/template/ar/footer/img/arab_league.png"/></li>
+                    <li><img src="https://aast.edu/template/ar/footer/img/ain-logo.png"/></li>
+                    <li><img src="https://aast.edu/template/ar/footer/img/QS-STARS.png"/></li>
+
+
+                </ul>
+
+            </div>
+
+            <div class="col-md-4 col-sm-12 col-xs-12 footer-widget wow fadeInUp2  animated" data-wow-delay=".5s"
+                 style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInUp2;">
+                <h3 class="widget-title"> Get In Touch</h3>
+                <ul class="list-arrow">
+                    <li><a class="link_data" href="https://aast.edu/en/contacts/contact-us.php"> Contact Us </a>
+                    </li>
+                    <li><a class="link_data" href="https://aast.edu/en/contacts/maps.php"> Maps and Locations
+                        </a></li>
+                    <li><a href="http://360.aast.edu/lang_menu/menu.html" class="link_data"> Virtual Tour</a></li>
+                    <li><a class="link_data" href="https://hr.aast.edu/jobs/"> Jobs and Vacancies</a></li>
+                    <!-- <li><a href="#" class="link_data"> FAQ</a></li> -->
+                </ul>
+
+                <!-- Footer social end -->
+            </div>
+
+
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="footer-social">
+                    <h3 class="widget-title">Stay Connected</h3>
+                    <ul class="footer-social">
+                                            </ul>
+
+                </div>
+            </div>
+        </div>
+
+        <!--/ Content row end -->
+        <!--Search Popup-->
+        <div id="search-popup" class="search-popup">
+            <div class="close-search"><span class="fa fa-close"></span></div>
+            <div class="popup-inner">
+
+                <div class="search-form">
+                    <form method="get" action="" name="SearchForm" id="search">
+                        <!--	<script async src="https://cse.google.com/cse.js?cx=011303405445987982477:a7wb0o0rgey"></script>
+                            <div class="gcse-search">
+                            </div>-->
+                        <div class="form-group">
+                            <fieldset>
+                                <input type="search" class="form-control" name="search" id="search" value=""
+                                       placeholder="Enter Keyword" required>
+                                <!--<input type="hidden" class="form-control" name="q" id="q" value="">-->
+                                <label><input type="radio" id="News" name="status" value="news"/>
+                                    News</label>
+                                <label><input type="radio" id="People" name="status" value="people"/> People</label>
+                                <!--<input type="radio" id="Events" name="status" value="events"  /> Events-->
+                                <label><input type="radio" id="Pages" name="status" value="pages"/>
+                                    Pages</label>
+                                <label><input type="radio" id="Web" name="status" value="web" checked="checked"/>
+                                    Web</label>
+                                <input type="submit" value="Search" class="theme-btn">
+                            </fieldset>
+                        </div>
+                    </form>
+                    

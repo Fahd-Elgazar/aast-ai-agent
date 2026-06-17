@@ -1,9 +1,16 @@
 import { useState, useRef, useEffect } from 'react';
 import CollegeCard from '../components/CollegeCard';
 import VoiceRecorder from '../components/VoiceRecorder';
-import { Send, Bot, User, Loader2 } from 'lucide-react';
+import { Send, Bot, User, Loader2, Sparkles } from 'lucide-react';
 import { askAgent } from '../../services/agentService';
 import type { AgentDecisionResponse, DecisionLike, RecommendationCardData } from '../../types';
+
+const SUGGESTED_PROMPTS = [
+  "Recommend the best AI specialization",
+  "Compare AI vs Cybersecurity",
+  "Which major fits my GPA?",
+  "Career roadmap for NLP engineer"
+];
 
 type Message = {
   id: string;
@@ -68,16 +75,17 @@ export default function ChatPage() {
     scrollToBottom();
   }, [messages, isTyping]);
 
-  const handleSend = async () => {
-    if (!input.trim()) return;
+  const handleSend = async (overrideInput?: string) => {
+    const textToSend = typeof overrideInput === 'string' ? overrideInput : input;
+    if (!textToSend.trim()) return;
 
-    const userMsg: Message = { id: Date.now().toString(), role: 'user', content: input };
+    const userMsg: Message = { id: Date.now().toString(), role: 'user', content: textToSend };
     setMessages(prev => [...prev, userMsg]);
     setInput("");
     setIsTyping(true);
 
     try {
-      const response = (await askAgent(input)) as AgentDecisionResponse;
+      const response = (await askAgent(textToSend)) as AgentDecisionResponse;
 
       const replyMsg: Message = {
         id: (Date.now() + 1).toString(),
@@ -99,77 +107,118 @@ export default function ChatPage() {
     }
   };
 
+  const isInitialState = messages.length === 1 && messages[0].id === 'init';
+
   return (
-    <div className="h-full w-full bg-slate-50 flex flex-col relative">
-      <div className="flex-1 overflow-y-auto w-full p-4 md:p-8">
-        <div className="max-w-4xl mx-auto flex flex-col gap-6 pb-20">
+    <div className="h-full w-full min-h-0 bg-slate-50 flex flex-col relative">
+      <div className="flex-1 min-h-0 overflow-y-auto w-full p-4 md:p-8">
+        <div className="max-w-4xl mx-auto flex flex-col gap-6 pb-6">
 
-          {messages.map((msg) => (
-            <div key={msg.id} className={`flex gap-4 w-full ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-
-              {msg.role === 'assistant' && (
-                <div className="w-10 h-10 rounded-full bg-aast-navy text-aast-gold flex items-center justify-center shrink-0 shadow-sm mt-1">
-                  <Bot size={20} />
-                </div>
-              )}
-
-              <div className={`max-w-[85%] flex flex-col gap-3 ${msg.role === 'user' ? 'items-end' : 'items-start'}`}>
-                <div className={`px-5 py-3.5 rounded-2xl shadow-sm leading-relaxed text-[15px] ${msg.role === 'user'
-                  ? 'bg-aast-navy text-white rounded-tr-sm'
-                  : 'bg-white border text-slate-700 border-slate-200 rounded-tl-sm'
-                  }`}>
-                  {msg.content}
-                </div>
-
-                {msg.recommendations && msg.recommendations.length > 0 && (
-                  <div className="flex flex-wrap gap-4 mt-2 w-full">
-                    {msg.recommendations.map((rec, idx) => (
-                      <div key={idx} className="w-[340px] max-w-full">
-                        <CollegeCard
-                          programName={rec.program_name}
-                          collegeName={rec.college_name}
-                          matchScore={rec.score}
-                          matchType={rec.match_type}
-                          confidence={rec.confidence_level}
-                          fee={rec.estimated_semester_fee}
-                          currency={rec.currency}
-                          feeMode={rec.fee_mode}
-                          affordability={rec.affordability_label}
-                          scoreBreakdown={rec.score_breakdown}
-                          warnings={rec.warnings || []}
-                        />
+          {isInitialState ? (
+            <div className="flex flex-col items-center justify-center h-full min-h-[50vh] text-center px-4 mt-8">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-aast-navy to-slate-800 text-aast-gold flex items-center justify-center shadow-2xl mb-6 relative">
+                <Bot size={32} />
+                <Sparkles size={16} className="absolute -top-2 -right-2 text-gold-400 animate-pulse" />
+              </div>
+              <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4 tracking-tight">
+                UniPortal AI Assistant
+              </h1>
+              <p className="text-slate-500 max-w-md mx-auto mb-10 leading-relaxed text-base">
+                {messages[0].content}
+              </p>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-2xl">
+                {SUGGESTED_PROMPTS.map((prompt, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => handleSend(prompt)}
+                    className="flex text-left p-4 rounded-xl border border-slate-200/60 bg-white shadow-sm hover:shadow-md hover:border-aast-navy/30 transition-all duration-200 group items-start gap-3"
+                  >
+                    <div className="mt-0.5 text-slate-400 group-hover:text-aast-navy transition-colors">
+                      <Sparkles size={18} />
+                    </div>
+                    <span className="text-sm text-slate-600 group-hover:text-slate-900 font-medium leading-snug">
+                      {prompt}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <>
+              {messages.map((msg) => (
+                <div key={msg.id} className="flex gap-4 md:gap-6 w-full group">
+                  <div className="shrink-0 mt-1">
+                    {msg.role === 'assistant' ? (
+                      <div className="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-aast-navy text-aast-gold flex items-center justify-center shadow-sm">
+                        <Bot size={20} />
                       </div>
-                    ))}
+                    ) : (
+                      <div className="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-slate-200 text-slate-500 flex items-center justify-center shadow-sm">
+                        <User size={20} />
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
 
-              {msg.role === 'user' && (
-                <div className="w-10 h-10 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center shrink-0 shadow-sm mt-1">
-                  <User size={20} />
+                  <div className="flex-1 min-w-0 flex flex-col gap-2 pt-1">
+                    <div className="font-semibold text-sm text-slate-900">
+                      {msg.role === 'assistant' ? 'AAST AI Agent' : 'You'}
+                    </div>
+                    
+                    <div className="leading-relaxed text-[15px] text-slate-800 whitespace-pre-wrap break-words">
+                      {msg.content}
+                    </div>
+
+                    {msg.recommendations && msg.recommendations.length > 0 && (
+                      <div className="flex flex-wrap gap-4 mt-3 w-full">
+                        {msg.recommendations.map((rec, idx) => (
+                          <div key={idx} className="w-[340px] max-w-full">
+                            <CollegeCard
+                              programName={rec.program_name}
+                              collegeName={rec.college_name}
+                              matchScore={rec.score}
+                              matchType={rec.match_type}
+                              confidence={rec.confidence_level}
+                              fee={rec.estimated_semester_fee}
+                              currency={rec.currency}
+                              feeMode={rec.fee_mode}
+                              affordability={rec.affordability_label}
+                              scoreBreakdown={rec.score_breakdown}
+                              warnings={rec.warnings || []}
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+
+              {isTyping && (
+                <div className="flex gap-4 md:gap-6 w-full group">
+                  <div className="shrink-0 mt-1">
+                    <div className="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-aast-navy text-aast-gold flex items-center justify-center shadow-sm">
+                      <Bot size={20} />
+                    </div>
+                  </div>
+                  <div className="flex-1 min-w-0 flex flex-col gap-2 pt-1">
+                    <div className="font-semibold text-sm text-slate-900">AAST AI Agent</div>
+                    <div className="flex items-center gap-2 text-slate-500 mt-1">
+                      <Loader2 className="animate-spin text-aast-navy" size={18} />
+                      <span className="text-sm font-medium">Agent is thinking...</span>
+                    </div>
+                  </div>
                 </div>
               )}
-            </div>
-          ))}
-
-          {isTyping && (
-            <div className="flex gap-4 w-full justify-start">
-              <div className="w-10 h-10 rounded-full bg-aast-navy text-aast-gold flex items-center justify-center shrink-0 shadow-sm mt-1">
-                <Bot size={20} />
-              </div>
-              <div className="px-5 py-4 bg-white border border-slate-200 rounded-2xl rounded-tl-sm shadow-sm flex items-center gap-2">
-                <Loader2 className="animate-spin text-aast-navy" size={18} />
-                <span className="text-sm text-slate-500 font-medium">Agent is thinking...</span>
-              </div>
-            </div>
+            </>
           )}
 
           <div ref={messagesEndRef} />
         </div>
       </div>
 
-      <div className="flex-none p-4 md:p-6 bg-white border-t border-slate-200 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.05)] absolute bottom-0 left-0 right-0">
-        <div className="max-w-4xl mx-auto flex gap-3 relative items-center">
+      <div className="flex-none p-4 md:px-8 md:pb-8 md:pt-4 bg-gradient-to-t from-slate-50 via-slate-50 to-transparent">
+        <div className="max-w-3xl mx-auto flex gap-3 relative items-center bg-white p-2 rounded-full shadow-lg border border-slate-200/60 focus-within:ring-2 focus-within:ring-aast-navy/20 focus-within:border-aast-navy transition-all">
           <VoiceRecorder
             onResponseFetched={(reply, recs, transcribedText) => {
               const newMessages: Message[] = [];
@@ -207,20 +256,20 @@ export default function ChatPage() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-              className="w-full bg-slate-50 border border-slate-200 rounded-full pl-6 pr-14 py-4 md:py-3.5 text-slate-800 shadow-inner focus:outline-none focus:ring-2 focus:ring-aast-navy/50 focus:border-aast-navy focus:bg-white transition-all"
-              placeholder="Type your message to the AI Assistant..."
+              className="w-full bg-transparent border-none outline-none pl-4 pr-14 py-3 text-slate-800 placeholder:text-slate-400 text-[15px]"
+              placeholder="Ask anything about majors, careers, or universities..."
             />
             <button
-              onClick={handleSend}
+              onClick={() => handleSend()}
               disabled={!input.trim() || isTyping}
-              className="absolute right-2 top-0 bottom-0 aspect-square my-1.5 h-[calc(100%-12px)] bg-aast-navy text-white rounded-full flex items-center justify-center hover:bg-aast-blue transition-colors disabled:opacity-50 disabled:hover:bg-aast-navy"
+              className="absolute right-1 top-1 bottom-1 aspect-square bg-aast-navy text-white rounded-full flex items-center justify-center hover:bg-aast-blue transition-colors disabled:opacity-50 disabled:hover:bg-aast-navy"
             >
               <Send size={18} className="translate-x-0.5" />
             </button>
           </div>
         </div>
-        <p className="text-center text-xs text-slate-400 mt-3 font-medium">
-          AAST AI Agent can dynamically filter recommendations based on your chat context.
+        <p className="text-center text-[11px] text-slate-400 mt-4 font-medium px-4">
+          AAST AI Agent can dynamically filter recommendations based on your chat context. Information provided is for guidance purposes.
         </p>
       </div>
     </div>

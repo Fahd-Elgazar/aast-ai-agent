@@ -1,0 +1,458 @@
+{
+  "nodes": [
+    {
+      "label": "Campus",
+      "id": "CAMPUS_SOUTH_VALLEY",
+      "properties": {
+        "campus_id": "SOUTH_VALLEY",
+        "name": "South Valley Campus",
+        "city": "Aswan",
+        "country": "Egypt",
+        "description": "AASTMT’s Upper Egypt campus serving the South Valley region with a focus on business education, community development, and regional economic growth.",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "College",
+      "id": "SOUTH_VALLEY_CMT",
+      "properties": {
+        "college_id": "CMT_SOUTH_VALLEY",
+        "name": "College of Management & Technology – South Valley",
+        "parent_institution": "Arab Academy for Science, Technology and Maritime Transport",
+        "positioning": "Regional business college focused on high-quality undergraduate education, ethical standards, applied research, and serving the South Valley community.",
+        "vision": "To be one of the most privileged business management colleges in Egypt and the Middle East, and to be recognized as a premier business college in higher education and applied research serving industry and society locally and globally.",
+        "mission": "To provide high-quality business education and training using modern teaching methodologies and technologies, uphold strong ethical standards, support community development in South Valley, and prepare graduates to compete effectively in regional and global business environments.",
+        "values": [
+          "Ethical conduct",
+          "Community responsibility",
+          "Educational excellence",
+          "Human capital development",
+          "Sustainable growth"
+        ],
+        "international_exposure": {
+          "exchange_programs": false,
+          "language_tracks": ["English"],
+          "international_accreditation_dependency": "LOW"
+        },
+        "student_life": {
+          "campus_life_intensity": "MEDIUM",
+          "community_engagement": "VERY_HIGH",
+          "extracurricular_activity_level": "MEDIUM"
+        },
+        "career_outcomes_summary": {
+          "employment_sectors": [
+            "Local and regional businesses",
+            "Banks and financial institutions",
+            "Public sector organizations",
+            "SMEs",
+            "Community development projects"
+          ],
+          "employability_level": "MEDIUM_HIGH"
+        },
+        "qa_unit_exists": false,
+        "qa_status": "inferred",
+        "qa_note": "Quality assurance practices follow AASTMT standards; formal unit not explicitly stated.",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Degree",
+      "id": "SOUTH_VALLEY_CMT_BSC",
+      "properties": {
+        "degree_name": "Bachelor of Science",
+        "level": "UNDERGRADUATE",
+        "study_duration_years": 4,
+        "total_semesters": 8,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Program",
+      "id": "SOUTH_VALLEY_CMT_FIN",
+      "properties": {
+        "program_id": "FIN",
+        "name": "Finance",
+        "focus": "Financial management, banking, and corporate finance",
+        "industry_alignment": "HIGH",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Program",
+      "id": "SOUTH_VALLEY_CMT_ACC",
+      "properties": {
+        "program_id": "ACC",
+        "name": "Accounting",
+        "focus": "Financial accounting, auditing, and managerial accounting",
+        "industry_alignment": "HIGH",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Program",
+      "id": "SOUTH_VALLEY_CMT_MKT",
+      "properties": {
+        "program_id": "MKT",
+        "name": "Marketing",
+        "focus": "Marketing principles, consumer behavior, and market analysis",
+        "industry_alignment": "MEDIUM_HIGH",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Program",
+      "id": "SOUTH_VALLEY_CMT_BIS",
+      "properties": {
+        "program_id": "BIS",
+        "name": "Business Information Systems",
+        "focus": "Business systems, information management, and digital tools",
+        "industry_alignment": "MEDIUM_HIGH",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Specialization",
+      "id": "SPEC_FINANCE",
+      "properties": {
+        "name": "Finance",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Specialization",
+      "id": "SPEC_ACCOUNTING",
+      "properties": {
+        "name": "Accounting",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Specialization",
+      "id": "SPEC_MARKETING",
+      "properties": {
+        "name": "Marketing",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Specialization",
+      "id": "SPEC_BUSINESS_INFORMATION_SYSTEMS",
+      "properties": {
+        "name": "Business Information Systems",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "TrainingModel",
+      "id": "SOUTH_VALLEY_CMT_TRAININGMODEL_APPLIED",
+      "properties": {
+        "mandatory_training": false,
+        "industry_training": "LIMITED",
+        "training_model": [
+          "Applied coursework",
+          "Graduation project",
+          "Community-oriented case studies"
+        ],
+        "industry_alignment": "MEDIUM",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "ResearchArea",
+      "id": "RESEARCHAREA_SUSTAINABLE_DEVELOPMENT_ARAB_REGION",
+      "properties": {
+        "name": "Sustainable development in the Arab region",
+        "community_research_orientation": "HIGH",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "ResearchArea",
+      "id": "RESEARCHAREA_ENV_SOC_ECON_DEVELOPMENT",
+      "properties": {
+        "name": "Environmental, social, and economic development",
+        "community_research_orientation": "HIGH",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "ResearchArea",
+      "id": "RESEARCHAREA_APPLIED_BUSINESS_RESEARCH",
+      "properties": {
+        "name": "Applied business research",
+        "community_research_orientation": "HIGH",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Facility",
+      "id": "SOUTH_VALLEY_CMT_FAC_CLASSROOMS",
+      "properties": {
+        "name": "Teaching classrooms",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Facility",
+      "id": "SOUTH_VALLEY_CMT_FAC_COMPUTER_LABS",
+      "properties": {
+        "name": "Computer labs",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Facility",
+      "id": "SOUTH_VALLEY_CMT_FAC_STUDENT_SERVICES",
+      "properties": {
+        "name": "Student service facilities",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_ACCOUNTANT",
+      "properties": {
+        "name": "Accountant",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_FINANCE_OFFICER",
+      "properties": {
+        "name": "Finance Officer",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_MARKETING_EXECUTIVE",
+      "properties": {
+        "name": "Marketing Executive",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_BUSINESS_ADMINISTRATOR",
+      "properties": {
+        "name": "Business Administrator",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_MIS_ASSISTANT",
+      "properties": {
+        "name": "MIS Assistant",
+        "data_source_type": "official"
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "start_id": "CAMPUS_SOUTH_VALLEY",
+      "relationship_type": "HOSTS",
+      "end_id": "SOUTH_VALLEY_CMT",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CMT",
+      "relationship_type": "OFFERS",
+      "end_id": "SOUTH_VALLEY_CMT_BSC",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CMT_BSC",
+      "relationship_type": "INCLUDES_PROGRAM",
+      "end_id": "SOUTH_VALLEY_CMT_FIN",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CMT_BSC",
+      "relationship_type": "INCLUDES_PROGRAM",
+      "end_id": "SOUTH_VALLEY_CMT_ACC",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CMT_BSC",
+      "relationship_type": "INCLUDES_PROGRAM",
+      "end_id": "SOUTH_VALLEY_CMT_MKT",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CMT_BSC",
+      "relationship_type": "INCLUDES_PROGRAM",
+      "end_id": "SOUTH_VALLEY_CMT_BIS",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CMT_FIN",
+      "relationship_type": "HAS_SPECIALIZATION",
+      "end_id": "SPEC_FINANCE",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CMT_ACC",
+      "relationship_type": "HAS_SPECIALIZATION",
+      "end_id": "SPEC_ACCOUNTING",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CMT_MKT",
+      "relationship_type": "HAS_SPECIALIZATION",
+      "end_id": "SPEC_MARKETING",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CMT_BIS",
+      "relationship_type": "HAS_SPECIALIZATION",
+      "end_id": "SPEC_BUSINESS_INFORMATION_SYSTEMS",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CMT_FIN",
+      "relationship_type": "REQUIRES_TRAINING",
+      "end_id": "SOUTH_VALLEY_CMT_TRAININGMODEL_APPLIED",
+      "properties": { "origin": "training_and_practice", "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CMT_ACC",
+      "relationship_type": "REQUIRES_TRAINING",
+      "end_id": "SOUTH_VALLEY_CMT_TRAININGMODEL_APPLIED",
+      "properties": { "origin": "training_and_practice", "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CMT_MKT",
+      "relationship_type": "REQUIRES_TRAINING",
+      "end_id": "SOUTH_VALLEY_CMT_TRAININGMODEL_APPLIED",
+      "properties": { "origin": "training_and_practice", "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CMT_BIS",
+      "relationship_type": "REQUIRES_TRAINING",
+      "end_id": "SOUTH_VALLEY_CMT_TRAININGMODEL_APPLIED",
+      "properties": { "origin": "training_and_practice", "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CMT",
+      "relationship_type": "HAS_FACILITY",
+      "end_id": "SOUTH_VALLEY_CMT_FAC_CLASSROOMS",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CMT",
+      "relationship_type": "HAS_FACILITY",
+      "end_id": "SOUTH_VALLEY_CMT_FAC_COMPUTER_LABS",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CMT",
+      "relationship_type": "HAS_FACILITY",
+      "end_id": "SOUTH_VALLEY_CMT_FAC_STUDENT_SERVICES",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CMT_FIN",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_SUSTAINABLE_DEVELOPMENT_ARAB_REGION",
+      "properties": { "industry_projects": false, "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CMT_FIN",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_ENV_SOC_ECON_DEVELOPMENT",
+      "properties": { "industry_projects": false, "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CMT_FIN",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_APPLIED_BUSINESS_RESEARCH",
+      "properties": { "industry_projects": false, "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CMT_ACC",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_SUSTAINABLE_DEVELOPMENT_ARAB_REGION",
+      "properties": { "industry_projects": false, "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CMT_ACC",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_ENV_SOC_ECON_DEVELOPMENT",
+      "properties": { "industry_projects": false, "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CMT_ACC",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_APPLIED_BUSINESS_RESEARCH",
+      "properties": { "industry_projects": false, "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CMT_MKT",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_SUSTAINABLE_DEVELOPMENT_ARAB_REGION",
+      "properties": { "industry_projects": false, "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CMT_MKT",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_ENV_SOC_ECON_DEVELOPMENT",
+      "properties": { "industry_projects": false, "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CMT_MKT",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_APPLIED_BUSINESS_RESEARCH",
+      "properties": { "industry_projects": false, "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CMT_BIS",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_SUSTAINABLE_DEVELOPMENT_ARAB_REGION",
+      "properties": { "industry_projects": false, "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CMT_BIS",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_ENV_SOC_ECON_DEVELOPMENT",
+      "properties": { "industry_projects": false, "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CMT_BIS",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_APPLIED_BUSINESS_RESEARCH",
+      "properties": { "industry_projects": false, "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CMT_FIN",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_FINANCE_OFFICER",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CMT_ACC",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_ACCOUNTANT",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CMT_MKT",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_MARKETING_EXECUTIVE",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CMT_FIN",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_BUSINESS_ADMINISTRATOR",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CMT_BIS",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_MIS_ASSISTANT",
+      "properties": { "data_source_type": "official" }
+    }
+  ]
+}

@@ -1,0 +1,554 @@
+{
+  "nodes": [
+    {
+      "label": "Campus",
+      "id": "CAMPUS_EG_SMART_VILLAGE",
+      "properties": {
+        "campus_id_raw": "SMART_VILLAGE",
+        "name": "Smart Village Campus",
+        "city": "6 October City",
+        "country": "Egypt",
+        "address": "Smart Village - B 2401 - 6 October - Egypt",
+        "po_box": "12577 - Smart Village",
+        "description": "Modern AASTMT campus located in Smart Village, Egypt’s leading ICT and technology hub.",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "College",
+      "id": "COLLEGE_CCIT_SMART_VILLAGE",
+      "properties": {
+        "college_id_raw": "CCIT_SMART_VILLAGE",
+        "name": "College of Computing and Information Technology",
+        "abbreviation": "CCIT",
+        "parent_institution": "Arab Academy for Science, Technology and Maritime Transport",
+        "vision": "To be a leading educational and training hub and a pioneer in state-of-the-art scientific research in computing, forging strong ties with the computing industry at national, regional, and international levels.",
+        "mission": "To graduate calibers with solid theoretical background and practical skills, promote innovation and scientific research, and deliver high-quality training and consultation services aligned with professional and ethical standards.",
+        "industry_alignment_strength": "very_high",
+        "faculty_profile": {
+          "industry_experts": true,
+          "international_exposure": true,
+          "policy_contributors": true
+        },
+        "quality_assurance": {
+          "qa_unit_exists": true,
+          "description": "Quality assurance aligned with AASTMT standards and continuous program evaluation."
+        },
+        "international_mobility": {
+          "exchange_programs": true,
+          "erasmus_plus": true,
+          "partner_universities": [
+            "Universitat Autònoma de Barcelona",
+            "University of Valladolid",
+            "University of Salamanca",
+            "University of Northampton"
+          ]
+        },
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Degree",
+      "id": "DEGREE_EG_SMART_VILLAGE_CCIT_BSC_UNDERGRAD",
+      "properties": {
+        "degree_name": "Bachelor of Science",
+        "level": "undergraduate",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Accreditation",
+      "id": "ACC_EG_SCU",
+      "properties": {
+        "name": "Supreme Council of Egyptian Universities (SCU)",
+        "scope": "national",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "TrainingModel",
+      "id": "TRAININGMODEL_CCIT_SMART_VILLAGE_INDUSTRY_EXPOSURE",
+      "properties": {
+        "mandatory_training": true,
+        "industry_internships": true,
+        "international_training": true,
+        "typical_partners": [
+          "IBM",
+          "Microsoft",
+          "Huawei",
+          "Dell Technologies",
+          "Orange",
+          "Vodafone",
+          "ITI",
+          "EG-CERT",
+          "NTRA",
+          "BARQ Systems",
+          "Valeo",
+          "Ejada Systems"
+        ],
+        "skills_covered": [
+          "AI & Machine Learning",
+          "Cybersecurity & SOC Operations",
+          "DevOps & Cloud",
+          "Data Science & Analytics",
+          "Software Engineering",
+          "Automation & RPA",
+          "Networking & Infrastructure",
+          "Soft Skills & Professional Development"
+        ],
+        "data_source_type": "official"
+      }
+    },
+
+    {
+      "label": "Program",
+      "id": "CAMPUS_EG_SMART_VILLAGE__COLLEGE_CCIT_SMART_VILLAGE__PROGRAM_COMPUTER_SCIENCE",
+      "properties": {
+        "program_id_raw": "COMPUTER_SCIENCE",
+        "name": "Computer Science",
+        "degree_abbrev": "BSc",
+        "discipline": "Computing",
+        "study_duration_years": 4,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Program",
+      "id": "CAMPUS_EG_SMART_VILLAGE__COLLEGE_CCIT_SMART_VILLAGE__PROGRAM_SOFTWARE_ENGINEERING",
+      "properties": {
+        "program_id_raw": "SOFTWARE_ENGINEERING",
+        "name": "Software Engineering",
+        "degree_abbrev": "BSc",
+        "discipline": "Software Engineering",
+        "study_duration_years": 4,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Program",
+      "id": "CAMPUS_EG_SMART_VILLAGE__COLLEGE_CCIT_SMART_VILLAGE__PROGRAM_ARTIFICIAL_INTELLIGENCE",
+      "properties": {
+        "program_id_raw": "ARTIFICIAL_INTELLIGENCE",
+        "name": "Artificial Intelligence",
+        "degree_abbrev": "BSc",
+        "discipline": "Artificial Intelligence",
+        "study_duration_years": 4,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Program",
+      "id": "CAMPUS_EG_SMART_VILLAGE__COLLEGE_CCIT_SMART_VILLAGE__PROGRAM_CYBERSECURITY",
+      "properties": {
+        "program_id_raw": "CYBERSECURITY",
+        "name": "Cybersecurity",
+        "degree_abbrev": "BSc",
+        "discipline": "Cybersecurity",
+        "study_duration_years": 4,
+        "data_source_type": "official"
+      }
+    },
+
+    {
+      "label": "StudyProfile",
+      "id": "STUDYPROFILE__CAMPUS_EG_SMART_VILLAGE__COLLEGE_CCIT_SMART_VILLAGE__PROGRAM_COMPUTER_SCIENCE",
+      "properties": {
+        "theoretical_intensity": 0.85,
+        "practical_intensity": 0.75,
+        "math_intensity": 0.8,
+        "programming_intensity": 0.9,
+        "self_learning_dependency": "high",
+        "data_source_type": "modeled"
+      }
+    },
+    {
+      "label": "StudyProfile",
+      "id": "STUDYPROFILE__CAMPUS_EG_SMART_VILLAGE__COLLEGE_CCIT_SMART_VILLAGE__PROGRAM_SOFTWARE_ENGINEERING",
+      "properties": {
+        "theoretical_intensity": 0.7,
+        "practical_intensity": 0.9,
+        "math_intensity": 0.65,
+        "programming_intensity": 0.9,
+        "self_learning_dependency": "medium_high",
+        "data_source_type": "modeled"
+      }
+    },
+    {
+      "label": "StudyProfile",
+      "id": "STUDYPROFILE__CAMPUS_EG_SMART_VILLAGE__COLLEGE_CCIT_SMART_VILLAGE__PROGRAM_ARTIFICIAL_INTELLIGENCE",
+      "properties": {
+        "theoretical_intensity": 0.9,
+        "practical_intensity": 0.8,
+        "math_intensity": 0.9,
+        "programming_intensity": 0.9,
+        "self_learning_dependency": "very_high",
+        "data_source_type": "modeled"
+      }
+    },
+    {
+      "label": "StudyProfile",
+      "id": "STUDYPROFILE__CAMPUS_EG_SMART_VILLAGE__COLLEGE_CCIT_SMART_VILLAGE__PROGRAM_CYBERSECURITY",
+      "properties": {
+        "theoretical_intensity": 0.75,
+        "practical_intensity": 0.85,
+        "math_intensity": 0.6,
+        "programming_intensity": 0.75,
+        "self_learning_dependency": "high",
+        "data_source_type": "modeled"
+      }
+    },
+
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_SOFTWARE_DEVELOPER",
+      "properties": {
+        "name": "Software Developer",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_BACKEND_ENGINEER",
+      "properties": {
+        "name": "Backend Engineer",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_SYSTEMS_ENGINEER",
+      "properties": {
+        "name": "Systems Engineer",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_RESEARCH_ASSISTANT",
+      "properties": {
+        "name": "Research Assistant",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_SOFTWARE_ENGINEER",
+      "properties": {
+        "name": "Software Engineer",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_FULL_STACK_DEVELOPER",
+      "properties": {
+        "name": "Full Stack Developer",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_DEVOPS_ENGINEER",
+      "properties": {
+        "name": "DevOps Engineer",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_QA_ENGINEER",
+      "properties": {
+        "name": "QA Engineer",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_AI_ENGINEER",
+      "properties": {
+        "name": "AI Engineer",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_MACHINE_LEARNING_ENGINEER",
+      "properties": {
+        "name": "Machine Learning Engineer",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_DATA_SCIENTIST",
+      "properties": {
+        "name": "Data Scientist",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_RESEARCH_ENGINEER",
+      "properties": {
+        "name": "Research Engineer",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_CYBERSECURITY_ANALYST",
+      "properties": {
+        "name": "Cybersecurity Analyst",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_SOC_ENGINEER",
+      "properties": {
+        "name": "SOC Engineer",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_PENETRATION_TESTER",
+      "properties": {
+        "name": "Penetration Tester",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_SECURITY_CONSULTANT",
+      "properties": {
+        "name": "Security Consultant",
+        "data_source_type": "official"
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "start_id": "CAMPUS_EG_SMART_VILLAGE",
+      "relationship_type": "HOSTS",
+      "end_id": "COLLEGE_CCIT_SMART_VILLAGE",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "COLLEGE_CCIT_SMART_VILLAGE",
+      "relationship_type": "OFFERS",
+      "end_id": "DEGREE_EG_SMART_VILLAGE_CCIT_BSC_UNDERGRAD",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "COLLEGE_CCIT_SMART_VILLAGE",
+      "relationship_type": "HAS_ACCREDITATION",
+      "end_id": "ACC_EG_SCU",
+      "properties": {
+        "scope": "national",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "DEGREE_EG_SMART_VILLAGE_CCIT_BSC_UNDERGRAD",
+      "relationship_type": "INCLUDES_PROGRAM",
+      "end_id": "CAMPUS_EG_SMART_VILLAGE__COLLEGE_CCIT_SMART_VILLAGE__PROGRAM_COMPUTER_SCIENCE",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "DEGREE_EG_SMART_VILLAGE_CCIT_BSC_UNDERGRAD",
+      "relationship_type": "INCLUDES_PROGRAM",
+      "end_id": "CAMPUS_EG_SMART_VILLAGE__COLLEGE_CCIT_SMART_VILLAGE__PROGRAM_SOFTWARE_ENGINEERING",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "DEGREE_EG_SMART_VILLAGE_CCIT_BSC_UNDERGRAD",
+      "relationship_type": "INCLUDES_PROGRAM",
+      "end_id": "CAMPUS_EG_SMART_VILLAGE__COLLEGE_CCIT_SMART_VILLAGE__PROGRAM_ARTIFICIAL_INTELLIGENCE",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "DEGREE_EG_SMART_VILLAGE_CCIT_BSC_UNDERGRAD",
+      "relationship_type": "INCLUDES_PROGRAM",
+      "end_id": "CAMPUS_EG_SMART_VILLAGE__COLLEGE_CCIT_SMART_VILLAGE__PROGRAM_CYBERSECURITY",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+
+    {
+      "start_id": "CAMPUS_EG_SMART_VILLAGE__COLLEGE_CCIT_SMART_VILLAGE__PROGRAM_COMPUTER_SCIENCE",
+      "relationship_type": "REQUIRES_TRAINING",
+      "end_id": "TRAININGMODEL_CCIT_SMART_VILLAGE_INDUSTRY_EXPOSURE",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "CAMPUS_EG_SMART_VILLAGE__COLLEGE_CCIT_SMART_VILLAGE__PROGRAM_SOFTWARE_ENGINEERING",
+      "relationship_type": "REQUIRES_TRAINING",
+      "end_id": "TRAININGMODEL_CCIT_SMART_VILLAGE_INDUSTRY_EXPOSURE",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "CAMPUS_EG_SMART_VILLAGE__COLLEGE_CCIT_SMART_VILLAGE__PROGRAM_ARTIFICIAL_INTELLIGENCE",
+      "relationship_type": "REQUIRES_TRAINING",
+      "end_id": "TRAININGMODEL_CCIT_SMART_VILLAGE_INDUSTRY_EXPOSURE",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "CAMPUS_EG_SMART_VILLAGE__COLLEGE_CCIT_SMART_VILLAGE__PROGRAM_CYBERSECURITY",
+      "relationship_type": "REQUIRES_TRAINING",
+      "end_id": "TRAININGMODEL_CCIT_SMART_VILLAGE_INDUSTRY_EXPOSURE",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+
+    {
+      "start_id": "CAMPUS_EG_SMART_VILLAGE__COLLEGE_CCIT_SMART_VILLAGE__PROGRAM_COMPUTER_SCIENCE",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_SOFTWARE_DEVELOPER",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "CAMPUS_EG_SMART_VILLAGE__COLLEGE_CCIT_SMART_VILLAGE__PROGRAM_COMPUTER_SCIENCE",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_BACKEND_ENGINEER",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "CAMPUS_EG_SMART_VILLAGE__COLLEGE_CCIT_SMART_VILLAGE__PROGRAM_COMPUTER_SCIENCE",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_SYSTEMS_ENGINEER",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "CAMPUS_EG_SMART_VILLAGE__COLLEGE_CCIT_SMART_VILLAGE__PROGRAM_COMPUTER_SCIENCE",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_RESEARCH_ASSISTANT",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+
+    {
+      "start_id": "CAMPUS_EG_SMART_VILLAGE__COLLEGE_CCIT_SMART_VILLAGE__PROGRAM_SOFTWARE_ENGINEERING",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_SOFTWARE_ENGINEER",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "CAMPUS_EG_SMART_VILLAGE__COLLEGE_CCIT_SMART_VILLAGE__PROGRAM_SOFTWARE_ENGINEERING",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_FULL_STACK_DEVELOPER",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "CAMPUS_EG_SMART_VILLAGE__COLLEGE_CCIT_SMART_VILLAGE__PROGRAM_SOFTWARE_ENGINEERING",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_DEVOPS_ENGINEER",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "CAMPUS_EG_SMART_VILLAGE__COLLEGE_CCIT_SMART_VILLAGE__PROGRAM_SOFTWARE_ENGINEERING",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_QA_ENGINEER",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+
+    {
+      "start_id": "CAMPUS_EG_SMART_VILLAGE__COLLEGE_CCIT_SMART_VILLAGE__PROGRAM_ARTIFICIAL_INTELLIGENCE",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_AI_ENGINEER",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "CAMPUS_EG_SMART_VILLAGE__COLLEGE_CCIT_SMART_VILLAGE__PROGRAM_ARTIFICIAL_INTELLIGENCE",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_MACHINE_LEARNING_ENGINEER",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "CAMPUS_EG_SMART_VILLAGE__COLLEGE_CCIT_SMART_VILLAGE__PROGRAM_ARTIFICIAL_INTELLIGENCE",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_DATA_SCIENTIST",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "CAMPUS_EG_SMART_VILLAGE__COLLEGE_CCIT_SMART_VILLAGE__PROGRAM_ARTIFICIAL_INTELLIGENCE",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_RESEARCH_ENGINEER",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+
+    {
+      "start_id": "CAMPUS_EG_SMART_VILLAGE__COLLEGE_CCIT_SMART_VILLAGE__PROGRAM_CYBERSECURITY",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_CYBERSECURITY_ANALYST",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "CAMPUS_EG_SMART_VILLAGE__COLLEGE_CCIT_SMART_VILLAGE__PROGRAM_CYBERSECURITY",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_SOC_ENGINEER",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "CAMPUS_EG_SMART_VILLAGE__COLLEGE_CCIT_SMART_VILLAGE__PROGRAM_CYBERSECURITY",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_PENETRATION_TESTER",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "CAMPUS_EG_SMART_VILLAGE__COLLEGE_CCIT_SMART_VILLAGE__PROGRAM_CYBERSECURITY",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_SECURITY_CONSULTANT",
+      "properties": {
+        "data_source_type": "official"
+      }
+    }
+  ]
+}

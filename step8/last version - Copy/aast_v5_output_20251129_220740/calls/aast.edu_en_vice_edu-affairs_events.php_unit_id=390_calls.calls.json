@@ -1,0 +1,1 @@
+[{"type": "request", "url": "https://aast.edu/en/vice/edu-affairs/events.php?unit_id=390", "method": "GET"}, {"type": "response", "url": "https://aast.edu/en/vice/edu-affairs/events.php?unit_id=390", "status": 500, "content_type": "text/html; charset=UTF-8", "sample": "\n\n\n\n<!doctype html>\n<html class=\"no-js\" lang=\"en\">\n\n<head>\n    \n\t "}]

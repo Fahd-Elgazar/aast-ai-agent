@@ -1,0 +1,282 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="canonical" href='http://aast.edu/en/sites/clinic/clinic.php' />
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>clinic Medical Services Department - AASTMT</title>
+<link href="css/templatemo_style.css" rel="stylesheet" type="text/css" />
+<!-- Include For Sliding Script -->
+<script type="text/javascript" src="js/jquery-1.2.6.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-personalized-1.5.2.packed.js"></script>
+<link href="css/sliding.css" rel="stylesheet" type="text/css" />
+<link rel='stylesheet' type='text/css' href='css/dept_menu.css'/>
+<script type='text/javascript' src='js/dept_menu.js'></script>
+<script type="text/javascript" src="js/changeLang.js"></script>
+<!-- Include For Sliding Script -->
+<style type="text/css">
+<!--
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+-->
+</style>
+<script type="text/javascript">
+
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+//-->
+</script>
+<!-- Start Sliding Script -->
+<script type="text/javascript">
+
+/*** 
+    Simple jQuery Slideshow Script
+    Released by Jon Raasch (jonraasch.com) under FreeBSD license: free to use or modify, not responsible for anything, etc.  Please link out to me if you like it :)
+***/
+
+function slideSwitch() {
+    var $active = $('#slideshow IMG.active');
+
+    if ( $active.length == 0 ) $active = $('#slideshow IMG:last');
+
+    // use this to pull the images in the order they appear in the markup
+   var $next =  $active.next().length ? $active.next()
+      : $('#slideshow IMG:first');
+
+    // uncomment the 3 lines below to pull the images in random order
+    
+   // var $sibs  = $active.siblings();
+  // var rndNum = Math.floor(Math.random() * $sibs.length );
+  // var $next  = $( $sibs[ rndNum ] );
+
+
+    $active.addClass('last-active');
+
+    $next.css({opacity: 0.0})
+        .addClass('active')
+        .animate({opacity: 1.0}, 1000, function() {
+            $active.removeClass('active last-active');
+        });
+}
+
+$(function() {
+    setInterval( "slideSwitch()", 3000 );
+});
+
+</script>
+<!-- End Sliding Script -->
+</head>
+<body onLoad="MM_preloadImages('images/photo-over.jpg','images/video-over.jpg')">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td rowspan="2" bgcolor="#FFFFFF"  background="images/side-slice.jpg"> </td>
+    <td width="921" height="95"><img src="images/header-1.jpg" width="921" height="98" border="0" usemap="#Map" /></td>
+    <td rowspan="2" bgcolor="#FFFFFF"  background="images/side-slice.jpg"> </td>
+  </tr>
+  <tr>
+    <td width="921"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><div id="slideshow"> 
+          <img src="images/header-11.jpg" alt="Slideshow Image 1" class="active" /> 
+         
+          <img src="images/header-13.jpg" alt="Slideshow Image 3" /> 
+          <img src="images/header-14.jpg" alt="Slideshow Image 4" /> 
+          <img src="images/header-15.jpg" alt="Slideshow Image 5" /> 
+          <img src="images/header-16.jpg" alt="Slideshow Image 6" />
+          <img src="images/header-17.jpg" alt="Slideshow Image 7" />
+          <img src="images/header-18.jpg" alt="Slideshow Image 8" />
+		  <img src="images/header-19.jpg" alt="Slideshow Image 9" /> 				  
+          </div></td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr>
+    <td bgcolor="#F0F0F0"> </td>
+    <td width="921" bgcolor="#e9e6c3"><div>
+        <!-- menu start here -->
+            <div id="templatemo_left_col">
+          <div class="templatemo_section">
+            <!-- Start side menu -->
+            <ul id="qm0" class="qmmc">
+              <!-- about menu -->
+              <li><a class="qmparent" href="index.php">Home</a></li>
+              <li><a class="qmparent" href="javascript:void(0)">About</a>
+                <ul>
+                  <li><a class="qmparent" href="clinic.php?p=23500001">Overview</a> </li>
+                  <li><a class="qmparent" href="clinic.php?p=23500004">Vision</a></li>
+                  <li><a class="qmparent" href="clinic.php?p=23500003">Mission</a></li>
+                  <li><a class="qmparent" href="clinic.php?p=23500005">Philosophy</a></li>
+                  
+                </ul>
+                <!-- academics menu -->
+              <li><a href="https://clinic.aast.edu" target="_blank" class="qmparent">Clinic Reservation</a></li>
+              <li><a class=" qmparent" href="clinic.php?p=23500006">Awareness Information</a></li>
+              <!-- research menu -->
+              <li><a class=" qmparent" href="javascript:void(0)">Clinic Facilities</a>
+                <ul>
+                  <li><a class="qmparent" href="clinic.php?p=23500013">Departments</a></li>
+                  <li><a class="qmparent" href="clinic.php?p=23500002">Pharmacy</a></li>
+                  <li><a class="qmparent" href="clinic.php?p=23500007">Medical Laboratory</a> </li>
+                  <li><a class="qmparent" href="clinic.php?p=23500008">Ambulances</a></li>
+                  <li><a class="qmparent" href="clinic.php?p=23500009">Reception and Waiting Areas</a></li>
+                </ul>
+              </li>
+              <!-- staff menu -->
+              <li><a class="qmparent" href="javascript:void(0)">Partnerships</a>
+                <ul>
+                  <li><a  href="clinic.php?p=23500010">Hospitals</a></li>
+                  <li><a  href="clinic.php?p=23500012">Pharmacies </a></li>
+                  <li><a  href="clinic.php?p=23500011">Docotrs </a></li>
+                </ul>
+              </li>
+              <!-- services menu -->
+              <li><a class=" qmparent" href="#">Clinic Staff</a>
+                <ul>
+                  <li><a class="qmparent" href="clinic.php?disp_unit=235&admin=2&language_id=1">Doctors</a></li>
+                  <li><a class="qmparent" href="clinic.php?disp_unit=235&admin=1&language_id=1">Administration</a></li>
+                </ul>
+              </li>
+              <!-- facilities menu -->
+              <li><a class=" qmparent" href="clinic.php?p=23500014">Contact us</a></li>
+             
+              
+              <!-- News menu -->
+              <li><a class=" qmparent" href="news.php">News & Events</a>
+               
+            </ul>
+            <!-- End side menu -->
+            <script type="text/javascript">qm_create(0,false,0,400,'all',false,false,false,false);</script>
+          </div>
+          <div class="templatemo_section"><a href="clinic_photogallery.php" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image11','','images/photo-over.jpg',1)"><img src="images/photo.jpg" name="Image11" width="230" height="70" border="0" id="Image11" /></a></div>
+          <div class="templatemo_section"> <a href="view_media.php?unit_id=235&media_id=1&media_type_id=2&serial=0" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image12','','images/video-over.jpg',1)"><img src="images/video.jpg" name="Image12" width="230" height="70" border="0" id="Image12" /></a>
+            <center>
+            </center>
+          </div>
+          <div class="templatemo_section"> <a href="clinic.php?p=feedback" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image13','','images/feedback-over.jpg',1)"><img src="images/feedback.jpg" name="Image13" width="230" height="70" border="0" id="Image13" /></a>
+            <center>
+            </center>
+          </div>
+        </div>        <!-- Menu End here -->
+        <!-- End Of Left -->
+        <div id="templatemo_right_col">
+          <div class="templatemo_post_area">
+            <!-- <h1>About Our Medical Services</h1> -->
+            <!-- <p>About Our Medical Services CONTENT</p> -->
+            <div id='content'><h3>Awareness Information</h3><p>Monthly medical bulletins have be
+<script src="js/tiny_mce/themes/advanced/langs/en.js" type="text/javascript"></script>
+<script src="js/tiny_mce/themes/advanced/langs/en.js" type="text/javascript"></script>
+en issued on a regular basis to educate and increase medical awareness of students and staff. These contain some information of the various prevalent diseases. These publications will also be issued through the website of the Academy.</p>
+<p><a href="http://www.aastmt.org/h1n1/index.html" target="_blank">For information about swine flu and actions taken by the AASTMT against it</a></p>
+<h4>Awareness Info for :</h4>
+<table border="0" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<ul type="disc">
+<li><a href="pdf/Awareness1.pdf" target="_blank">H1N1</a></li>
+<li><a href="pdf/Awareness2.pdf" target="_blank">Typhoid Fever</a></li>
+<li><a href="pdf/Awareness3.pdf" target="_blank">Diabetes Mellitus</a></li>
+<li><a href="pdf/Awareness4.pdf" target="_blank">Nasal Seasonal Allergy</a></li>
+<li><a href="pdf/Awareness5.pdf" target="_blank">Osteoarthritis</a></li>
+<li><a href="pdf/Awareness6.pdf" target="_blank">Glaucoma</a></li>
+<li><a href="http://www.aast.edu/CMS/pdf/Awareness7.pdf">Vertigo</a></li>
+<li><a href="pdf/Awareness8.pdf">Bronchial Asthma</a></li>
+<li><a href="pdf/Awareness9.pdf" target="_blank">Dental implant</a></li>
+</ul>
+</td>
+<td>
+<ul type="disc">
+<li><a href="pdf/Awareness10.pdf" target="_blank">Hepatitis ( C )</a></li>
+<li><a href="pdf/Awareness11.pdf" target="_blank">Hepatitis ( B )</a></li>
+<li><a href="pdf/Awareness12.pdf" target="_blank">Head ache</a></li>
+<li><a href="pdf/Awareness13.pdf" target="_blank">Fasting</a></li>
+<li><a href="pdf/Awareness14.pdf" target="_blank">Anxiety &amp; Stress disorders</a></li>
+<li><a href="pdf/Awareness15.pdf" target="_blank">HIV</a></li>
+<li><a href="pdf/Awareness16.pdf" target="_blank">viral conjunctivitis</a></li>
+<li><a href="pdf/Awareness17.pdf" target="_blank">How you protect the hearing</a></li>
+<li><a href="pdf/Awareness18.pdf" target="_blank">Health hazards of smoking</a></li>
+<li><a href="pdf/Awareness19.pdf" target="_blank">Cholesterol</a></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table></div>          </div>
+        </div>
+        <!-- End Of Right -->
+        <div class="cleaner"></div>
+        <div class="cleaner"></div>
+      </div></td>
+    <td bgcolor="#F0F0F0"> </td>
+  </tr>
+  <tr>
+    <td bgcolor="#F0F0F0"> </td>
+    <td><div id="templatemo_content_area">
+        <div id="templatemo_footer">
+          <p><br />
+            Copyright © 2010 - IDC - Arab Academy for Science, Technology &amp; Maritime Transport</p>
+          <p><br />
+          </p>
+        </div>
+      </div></td>
+    <td bgcolor="#F0F0F0"> </td>
+  </tr>
+</table>
+<map name="Map" id="Map">
+  <area shape="rect" coords="40,9,58,29" href="../../index.php" target="_self" />
+  <area shape="rect" coords="666,5,894,97" href="../../index.php" target="_self" />
+  <area shape="rect" coords="192,9,229,30" href="#" onClick="changeLang();" />
+  <area shape="rect" coords="87,10,116,29" href="clinic.php?p=23500014"/>
+</map>
+</body>
+</html>

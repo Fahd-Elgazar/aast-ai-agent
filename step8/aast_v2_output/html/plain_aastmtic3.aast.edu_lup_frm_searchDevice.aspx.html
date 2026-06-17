@@ -1,0 +1,775 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head><title>
+	Lab Utilization Program
+</title><link href="CSS/temp-layout.css" rel="stylesheet" type="text/css" /><link href="CSS/table_elements.css" rel="stylesheet" type="text/css" /><link href="css/facilities-layout.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="scripts/adjustLayout.js"></script>
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><link href="css/table_elements.css" rel="stylesheet" type="text/css" />
+
+
+<script type="text/javascript" src="Scripts/adjustLayout.js"></script>
+	<script type="text/javascript" src="Scripts/JScript.js"></script>		
+	<script type="text/javascript" language="javascript">    
+       var previousRowindex = -1;
+       var previousClass;
+       var win;       
+</script>       
+<style type="text/css">
+body {
+	background-color: #6EB4C3;
+}
+    .auto-style1 {
+        width: 950px;
+        border: 0px solid #000;
+        background: #ccf;
+    }
+</style>
+
+
+<script type="text/javascript">
+function matchHeight()
+{
+	var divs,contDivs,maxHeight,divHeight,d;
+	//get all <div> elements in the document
+	bannerDivHeight = 0;
+	menuDivHeight = 0;
+	footerDivHeight = 0;
+	if(document.getElementById('footerDiv'))
+	{
+		d = document.getElementById('footerDiv');			
+		if(d.offsetHeight)
+			footerDivHeight=d.offsetHeight;
+		else if(d.style.pixelHeight)
+			footerDivHeight=d.style.pixelHeight;
+	}
+		
+	if(document.getElementById('bannerDiv'))
+	{
+		d = document.getElementById('bannerDiv');				
+		if(d.offsetHeight)
+			bannerDivHeight=d.offsetHeight;
+		else if(d.style.pixelHeight)
+			bannerDivHeight=d.style.pixelHeight;
+	}	
+	
+	if(document.getElementById('menuDiv'))
+	{
+		d = document.getElementById('menuDiv');	
+		if(d.offsetHeight)
+			menuDivHeight=d.offsetHeight;
+		else if(d.style.pixelHeight)
+			menuDivHeight=d.style.pixelHeight;
+	}
+	
+	var screenHeight = document.body.clientHeight;	
+	var excludedHeight = bannerDivHeight + menuDivHeight + footerDivHeight;
+	maxHeight = screenHeight - excludedHeight;
+	
+	divs=document.getElementsByTagName('div');
+	contDivs=[];
+	
+	// iterate over all <div> elements in the document
+	for(var i=0;i<divs.length;i++)
+	{
+		// make collection with <div> elements with class attribute 'container'
+		if(/\bcontainer\b/.test(divs[i].className))
+		{		
+			d=divs[i];
+			contDivs[contDivs.length]=d;
+			// determine height for <div> element
+			if(d.offsetHeight)
+				 divHeight=d.offsetHeight;
+			else if(d.style.pixelHeight)
+				 divHeight=d.style.pixelHeight;
+			// calculate maximum height
+			maxHeight=Math.max(maxHeight,divHeight);
+		}
+	}	
+	// assign maximum height value to all of container <div> elements
+	for(var i=0;i<contDivs.length;i++)
+	  contDivs[i].style.height=maxHeight;
+	  
+	//if(maxHeight < 600)
+	//    maxHeight = 600;	
+	    
+	//adjust body container height 
+	if(document.getElementById('bodyContainer'))
+	{	
+		d = document.getElementById('bodyContainer');	
+		d.style.height = maxHeight;		
+	}	
+}
+</script> 
+
+
+<script type="text/javascript">
+//$(document).ready(function(){
+//$('#tabs div').hide();
+//$('#tabs div:first').show();
+//$('#tabs ul li:first').addClass('active');
+//$('#tabs ul li a').click(function(){ 
+//$('#tabs ul li').removeClass('active');
+//$(this).parent().addClass('active'); 
+//var currentTab = $(this).attr('href'); 
+//$('#tabs div').hide();
+//$(currentTab).show();
+//return false;
+//});
+//});
+</script>
+</head>
+<body>
+    
+    <div>
+
+       
+        <center >
+            <!-- Header Start -->
+            <div >
+                <img src="images_new/UploadHeader.jpg" style="width: 960px"  />
+            </div>
+         
+            <!-- Header End -->
+        </center>
+        <!-- Body Start -->
+        <center>
+            <div id="bodyContainer">
+                
+                <div id="content" class="auto-style1">
+                      
+    
+    <form name="aspnetForm" method="post" action="frm_searchDevice.aspx" id="aspnetForm" enctype="multipart/form-data" width="99%">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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" />
+
+<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="CC1E471C" />
+<input type="hidden" name="__VIEWSTATEENCRYPTED" id="__VIEWSTATEENCRYPTED" value="" />
+<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="STvQEq8g7GP5lbGP81FNdDmRrb57LIlv/ixHMM4SsZLkhq7KQTtt2ci1E6SjQ1AnvGgm9Y1wnW8dk9LNBb1gSFeiDW3rurt1bJ6WO6iQnEsauzH+lhPp1Q74un+uMADxQtLuIsZNTOtFxa7C3STTqHTPCDsOt43gqcko/58psC2IbPoPUYLkHEZYNgLD2/2WdiXIyv58wC4RMSH5othyURKAubUaSHiZ0jvReOUlu426ouaU2Ff973fs6JhFrM2HV4Q6jMmg1hcV/bNnm6Ip8BLs+1dH3NxFv1QLvVyZtMiKiKGNiHBegoDmnhAxdxPBxnM7VFY+JOURL2MIEQ+PhA1vYeI14cR15fH5STgROdeKHmeiXYCOHWQa0O8V5THKmIdUt5v4Db406ul3XRpt36xC8sQH9u9tkdbVeaEjiI8IbCgiolAAiKfBc9YeiuydqvcjcrDX0hm1sy2GfdFcSyIiK7Fnmqh6elBbrr1S/ZK//2M6Bj4PjaKy8BCGaO30R2t9DciJvF/npwKLnLptmkFIaeA=" />
+<div id="maincontents" >
+<link href="CSS/page-format.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="css/screen.css" type="text/css" media="screen" title="default" />
+<div                 style="font-size: x-large; font-weight: 700; color: #369BB8;" >
+                Lab Device Information
+        
+</div>
+ <div class="msg_lable">
+ <span id="ctl00_ContentPlaceHolder1_lblFeedback"><font color="Red"></font></span>  
+   </div>
+    
+   <div id="ctl00_ContentPlaceHolder1_pnl_all" style="margin-right: 83">
+	
+
+ 
+ 
+   
+    <table border="0" cellpadding="0" cellspacing="0" align="center" 
+        style="width: 102%; margin-left: 0px" >
+      
+        <tr>
+            <td dir="rtl">
+                <span id="ctl00_ContentPlaceHolder1_lbl_err_msg" style="display:inline-block;text-align:center"><b><font color="Red"></font></b></span>
+            </td>
+        </tr>
+        
+        <tr>
+            <td align="center">
+            <table style="width: 100%" >
+                            <tr>
+                                <td style="text-align: right;" class="style1">
+                                    &nbsp;</td>
+                                <td style="text-align: right; width: 1691px;" class="style1">
+                                    &nbsp;</td>
+                                <td style="width: 1183px; text-align: center;" align="right">
+                                    &nbsp;</td>
+                                <td style="width: 794px" align="left" rowspan="7">
+                                </td>
+                               
+                            </tr>
+                                                       
+                            <tr>
+                                <td align="left" class="style7" style="height: 32px">
+                                    </td>
+                               
+                                <td align="left"  class="style8" colspan="2" bgcolor="#f9eed9" 
+                                    style="height: 32px">
+                                    <span class="dropcap">D</span><span style="color: #FF0000">evice Information Search</span></td>
+                               
+                            </tr>
+                                                       
+                            <tr>
+    <td align="left" class="style2">
+        &nbsp;</td>
+    <td align="left" class="style2" style="width: 1691px">
+        &nbsp;</td>
+    <td style="height: 19px" align="center">
+                          
+        &nbsp;</td>
+ 
+  <tr>
+    <td align="left" class="style3">&nbsp;</td>
+    <td align="left" class="style3" style="width: 1691px">Device Name:</td>
+    <td align="center">
+
+      <input name="ctl00$ContentPlaceHolder1$txt_S_deviceName" type="text" id="ctl00_ContentPlaceHolder1_txt_S_deviceName" style="width: 300px; " class="textarea" tabindex="7" /></td>
+    
+  </tr>
+                                                       
+                             <tr>
+    <td align="left" class="style3">&nbsp;</td>
+    <td align="left" class="style3" style="width: 1691px">Campus: </td>
+    <td align="center" >
+     <select name="ctl00$ContentPlaceHolder1$ddl_camp_en" id="ctl00_ContentPlaceHolder1_ddl_camp_en" class="textarea" style="direction: ltr">
+		<option selected="selected" value="0">--Select--</option>
+		<option value="1">الاسكندرية</option>
+		<option value="2">مصر الجديدة</option>
+		<option value="3">الدقى</option>
+		<option value="4">جنوب الوادى</option>
+		<option value="6">بورسعيد</option>
+		<option value="7">القرية الذكية</option>
+		<option value="8">العلمين</option>
+
+	</select>
+   </td>
+    
+  </tr>
+                                <tr>
+                                    <td align="left" class="style3">&nbsp;</td>
+                                    <td align="left" class="style3" style="width: 1691px">College : </td>
+                                    <td align="center"> <select name="ctl00$ContentPlaceHolder1$ddl_fac_en" id="ctl00_ContentPlaceHolder1_ddl_fac_en" class="textarea" style="direction: ltr">
+		<option selected="selected" value="0">--Select--</option>
+
+	</select>
+
+                                    </td>
+                                </tr>
+
+  <tr>
+    <td align="left" class="style3">&nbsp;</td>
+    <td align="left" class="style3" style="width: 1691px"> Department :  </td>
+    <td align="center">
+    <select name="ctl00$ContentPlaceHolder1$ddl_dep_en" id="ctl00_ContentPlaceHolder1_ddl_dep_en" class="textarea" style="direction: ltr">
+		<option selected="selected" value="0">--Select--</option>
+
+	</select></td>
+       
+      </td>
+    
+  </tr>
+                    <tr>
+                        <td align="left" class="style3">
+                            &nbsp;</td>
+                        <td align="left" class="style3" style="width: 1691px">
+                            <span class="style9">Device Theme(s) \Track(s):*</span></td>
+                        <td align="center">
+                            &nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;
+                            <br>
+                            <table style="width: 652px">
+                                <tr>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_1_Aerospace_Engineering" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_1_Aerospace_Engineering" /><label for="ctl00_ContentPlaceHolder1_ChkBox_1_Aerospace_Engineering">Aerospace Engineering</label>
+                                    </td>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_2_Agricultural_Sciences" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_2_Agricultural_Sciences" /><label for="ctl00_ContentPlaceHolder1_ChkBox_2_Agricultural_Sciences">Agricultural Sciences</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_3_Architectural_Engineering_and_Environmental_Design" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_3_Architectural_Engineering_and_Environmental_Design" /><label for="ctl00_ContentPlaceHolder1_ChkBox_3_Architectural_Engineering_and_Environmental_Design">Architectural Engineering and Environmental Design</label>
+                                    </td>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_4_ArtsHumanitiesInterdisciplinary" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_4_ArtsHumanitiesInterdisciplinary" /><label for="ctl00_ContentPlaceHolder1_ChkBox_4_ArtsHumanitiesInterdisciplinary">Arts & Humanities Interdisciplinary</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_5_Basic_and_Fundamental_Science" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_5_Basic_and_Fundamental_Science" /><label for="ctl00_ContentPlaceHolder1_ChkBox_5_Basic_and_Fundamental_Science">Basic and Fundamental Science</label>
+                                    </td>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_6_BiologyBiochemistry" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_6_BiologyBiochemistry" /><label for="ctl00_ContentPlaceHolder1_ChkBox_6_BiologyBiochemistry">Biology & Biochemistry</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_7_Biomedical_Engineering" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_7_Biomedical_Engineering" /><label for="ctl00_ContentPlaceHolder1_ChkBox_7_Biomedical_Engineering">Biomedical Engineering</label>
+                                    </td>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_8_Chemical_and_Petrochemical_Engineering" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_8_Chemical_and_Petrochemical_Engineering" /><label for="ctl00_ContentPlaceHolder1_ChkBox_8_Chemical_and_Petrochemical_Engineering">Chemical and Petrochemical Engineering</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left; height: 22px;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_9_Chemistry" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_9_Chemistry" /><label for="ctl00_ContentPlaceHolder1_ChkBox_9_Chemistry">Chemistry</label>
+                                    </td>
+                                    <td style="text-align: left; height: 22px;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_10_Clinical_Medicine" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_10_Clinical_Medicine" /><label for="ctl00_ContentPlaceHolder1_ChkBox_10_Clinical_Medicine">Clinical Medicine</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_11_Computer_Science" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_11_Computer_Science" /><label for="ctl00_ContentPlaceHolder1_ChkBox_11_Computer_Science">Computer Science</label>
+                                    </td>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_12_Computer_Engineering" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_12_Computer_Engineering" /><label for="ctl00_ContentPlaceHolder1_ChkBox_12_Computer_Engineering">Computer Engineering</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_13_Construction_and_Building_Engineering" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_13_Construction_and_Building_Engineering" /><label for="ctl00_ContentPlaceHolder1_ChkBox_13_Construction_and_Building_Engineering">Construction and Building Engineering</label>
+                                    </td>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_14_Dental_Sciences" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_14_Dental_Sciences" /><label for="ctl00_ContentPlaceHolder1_ChkBox_14_Dental_Sciences">Dental Sciences</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_15_EconomicsBusiness" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_15_EconomicsBusiness" /><label for="ctl00_ContentPlaceHolder1_ChkBox_15_EconomicsBusiness">Economics & Business</label>
+                                    </td>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_16_Electrical_and_Energy_Engineering" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_16_Electrical_and_Energy_Engineering" /><label for="ctl00_ContentPlaceHolder1_ChkBox_16_Electrical_and_Energy_Engineering">Electrical and Energy Engineering</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_17_Electronics_and_Communications_Engineering" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_17_Electronics_and_Communications_Engineering" /><label for="ctl00_ContentPlaceHolder1_ChkBox_17_Electronics_and_Communications_Engineering">Electronics and Communications Engineering</label>
+                                    </td>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_18_Energy" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_18_Energy" /><label for="ctl00_ContentPlaceHolder1_ChkBox_18_Energy">Energy</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_19_EnvironmentEcology" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_19_EnvironmentEcology" /><label for="ctl00_ContentPlaceHolder1_ChkBox_19_EnvironmentEcology">Environment/Ecology</label>
+                                    </td>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_20_Geosciences" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_20_Geosciences" /><label for="ctl00_ContentPlaceHolder1_ChkBox_20_Geosciences">Geosciences</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_21_HistoryArchaeology" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_21_HistoryArchaeology" /><label for="ctl00_ContentPlaceHolder1_ChkBox_21_HistoryArchaeology">History & Archaeology</label>
+                                    </td>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_22_Industrial_and_Management_Engineering" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_22_Industrial_and_Management_Engineering" /><label for="ctl00_ContentPlaceHolder1_ChkBox_22_Industrial_and_Management_Engineering">Industrial and Management Engineering</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_23_LiteratureLanguage" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_23_LiteratureLanguage" /><label for="ctl00_ContentPlaceHolder1_ChkBox_23_LiteratureLanguage">Literature & Language</label>
+                                    </td>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_24_Marine_Science_and_Applications" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_24_Marine_Science_and_Applications" /><label for="ctl00_ContentPlaceHolder1_ChkBox_24_Marine_Science_and_Applications">Marine Science and Applications</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_25_Materials_Science" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_25_Materials_Science" /><label for="ctl00_ContentPlaceHolder1_ChkBox_25_Materials_Science">Materials Science</label>
+                                    </td>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_26_Mathematics" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_26_Mathematics" /><label for="ctl00_ContentPlaceHolder1_ChkBox_26_Mathematics">Mathematics</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_27_Mechanical_Mechatronics_Engineering" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_27_Mechanical_Mechatronics_Engineering" /><label for="ctl00_ContentPlaceHolder1_ChkBox_27_Mechanical_Mechatronics_Engineering">Mechanical Engineering / Mechatronics Engineering</label>
+                                    </td>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_28_Medical_Sciences" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_28_Medical_Sciences" /><label for="ctl00_ContentPlaceHolder1_ChkBox_28_Medical_Sciences">Medical Sciences</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_29_Nano_Science_and_Nano_Technology" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_29_Nano_Science_and_Nano_Technology" /><label for="ctl00_ContentPlaceHolder1_ChkBox_29_Nano_Science_and_Nano_Technology">Nanoscience & Nanotechnology</label>
+                                    </td>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_30_Neuroscience_Behavioral_Science" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_30_Neuroscience_Behavioral_Science" /><label for="ctl00_ContentPlaceHolder1_ChkBox_30_Neuroscience_Behavioral_Science">Neuroscience & Behavioral Science</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_31_Nursing" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_31_Nursing" /><label for="ctl00_ContentPlaceHolder1_ChkBox_31_Nursing">Nursing</label>
+                                    </td>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_32_Pharmaceutical_Sciences" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_32_Pharmaceutical_Sciences" /><label for="ctl00_ContentPlaceHolder1_ChkBox_32_Pharmaceutical_Sciences">Pharmaceutical Sciences</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_33_Philosophy_Religion" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_33_Philosophy_Religion" /><label for="ctl00_ContentPlaceHolder1_ChkBox_33_Philosophy_Religion">Philosophy & Religion</label>
+                                    </td>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_34_Physics" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_34_Physics" /><label for="ctl00_ContentPlaceHolder1_ChkBox_34_Physics">Physics</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_35_Public_Health" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_35_Public_Health" /><label for="ctl00_ContentPlaceHolder1_ChkBox_35_Public_Health">Public Health</label>
+                                    </td>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_36_Plant_Animal_Science" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_36_Plant_Animal_Science" /><label for="ctl00_ContentPlaceHolder1_ChkBox_36_Plant_Animal_Science">Plant & Animal Science</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_37_Psychiatry_Psychology" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_37_Psychiatry_Psychology" /><label for="ctl00_ContentPlaceHolder1_ChkBox_37_Psychiatry_Psychology">Psychiatry/Psychology</label>
+                                    </td>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_38_Social_Sciences_Humanities_Interdisciplinary" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_38_Social_Sciences_Humanities_Interdisciplinary" /><label for="ctl00_ContentPlaceHolder1_ChkBox_38_Social_Sciences_Humanities_Interdisciplinary">Social Sciences & Humanities Interdisciplinary</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_39_Sociology" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_39_Sociology" /><label for="ctl00_ContentPlaceHolder1_ChkBox_39_Sociology">Sociology</label>
+                                    </td>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_40_Sports_Science" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_40_Sports_Science" /><label for="ctl00_ContentPlaceHolder1_ChkBox_40_Sports_Science">Sports Science</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_41_Transportation" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_41_Transportation" /><label for="ctl00_ContentPlaceHolder1_ChkBox_41_Transportation">Transportation</label>
+                                    </td>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_42_Veterinary_Sciences" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_42_Veterinary_Sciences" /><label for="ctl00_ContentPlaceHolder1_ChkBox_42_Veterinary_Sciences">Veterinary Sciences</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_43_Visual_Performing_Arts" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_43_Visual_Performing_Arts" /><label for="ctl00_ContentPlaceHolder1_ChkBox_43_Visual_Performing_Arts">Visual & Performing Arts</label>
+                                    </td>
+                                    <td style="text-align: left;">
+                                        <input id="ctl00_ContentPlaceHolder1_ChkBox_44_Water_Resources_Management" type="checkbox" name="ctl00$ContentPlaceHolder1$ChkBox_44_Water_Resources_Management" /><label for="ctl00_ContentPlaceHolder1_ChkBox_44_Water_Resources_Management">Water Resources Management</label>
+                                    </td>
+                                </tr>
+                            </table>
+                           
+                           
+                        </td>
+                    </tr>
+        <tr>
+                                <td align="left" class="style3">
+                                    &nbsp;</td>
+                                <td align="left" class="style3" style="width: 1691px">
+                                    &nbsp;</td>
+                                <td align="center">
+                                    
+                                     <input type="image" name="ctl00$ContentPlaceHolder1$ImageButton1" id="ctl00_ContentPlaceHolder1_ImageButton1" src="images/search.png" border="0" />
+                                   </td>
+                            </tr>
+                                                       
+                                <tr>
+                                    <td align="left" class="style3">
+                                        &nbsp;</td>
+                                    <td align="left" class="style3" style="width: 1691px">
+                                        &nbsp;</td>
+                                    <td align="center">
+                                        &nbsp;</td>
+                                </tr>
+                                <tr>
+    <td align="left" class="style6" style="height: 30px"></td>
+    
+    <td align="left" class="style8" colspan="2"bgcolor="#f9eed9" style="height: 30px">
+                                    <span class="dropcap">D</span><span style="color: #FF3300">evices Search Results List:</span></td>
+    
+  </tr>      
+                                                       
+  <tr>
+    <td align="left" class="style3">&nbsp;</td>
+    <td align="left" class="style3" style="width: 1691px">&nbsp;</td>
+    <td align="center">
+                    <span id="ctl00_ContentPlaceHolder1_lbl_serchMsg"><font color="Red"></font></span>
+      </td>
+    
+  </tr>
+                                                       
+                                <tr>
+                                    <td align="left" class="style3">&nbsp;</td>
+                                            <td align="left" class="style3" colspan="2">
+                            <div>
+
+	</div>
+                        </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" class="style3">&nbsp;</td>
+                                    <td align="left" class="style3" style="width: 1691px">&nbsp;</td>
+                                    <td align="center">&nbsp;</td>
+                                </tr>
+                                                                                     
+                                <tr>
+    <td align="left" class="style6" style="height: 30px"></td>
+    
+    <td align="left" class="style8" colspan="2"bgcolor="#f9eed9" style="height: 30px">
+                                    <span class="dropcap">D</span><span style="color: #FF3300">evice Details:</span></td>
+    
+  </tr>      
+                                                       
+  <tr>
+    <td align="left" class="style3">&nbsp;</td>
+    <td align="left" class="style3" style="width: 1691px">&nbsp;</td>
+    <td style="text-align: left">
+                    &nbsp;</td>
+    
+  </tr>
+                                <tr bgcolor="#D6EEEE">
+                                    <td align="left" class="style3">&nbsp;</td>
+                                    <td align="left" class="style3" style="width: 1691px">Device Title:</td>
+                                    <td style="text-align: left">
+                                        <span id="ctl00_ContentPlaceHolder1_lbl_deviceTitle"></span>
+                                    </td>
+        </tr>
+                                <tr>
+                                    <td align="left" class="style3">&nbsp;</td>
+                                    <td align="left" class="style3" style="width: 1691px">Device Abstract:</td>
+                                    <td style="text-align: left">
+                                        <span id="ctl00_ContentPlaceHolder1_lbl_deviceAbstract"></span>
+                                    </td>
+        </tr>
+        <tr  bgcolor="#D6EEEE">
+                                    <td align="left" class="style3">&nbsp;</td>
+                                    <td align="left" class="style3" style="width: 1691px">Device Themes:</td>
+                                    <td style="text-align: left">
+                                        <span id="ctl00_ContentPlaceHolder1_lbl_deviceThemes"></span>
+                                    </td>
+        </tr>
+        <tr>
+                                    <td align="left" class="style3">&nbsp;</td>
+                                    <td align="left" class="style3" style="width: 1691px">Device Room Number:</td>
+                                    <td style="text-align: left">
+                                        <span id="ctl00_ContentPlaceHolder1_lbl_deviceRoomNo"></span>
+                                    </td>
+        </tr>
+        <tr  bgcolor="#D6EEEE">
+                                    <td align="left" class="style3" style="height: 18px"></td>
+                                    <td align="left" class="style3" style="width: 1691px; height: 18px;">Count of Devices:</td>
+                                    <td style="text-align: left; height: 18px;">
+                                        <span id="ctl00_ContentPlaceHolder1_lbl_deviceCount"></span>
+                                    </td>
+        </tr>
+        <tr >
+                                    <td align="left" class="style3">&nbsp;</td>
+                                    <td align="left" class="style3" style="width: 1691px">Device File Link 1:</td>
+                                    <td style="text-align: left">
+                                        
+                                    </td>
+        </tr>
+        <tr  bgcolor="#D6EEEE">
+                                    <td align="left" class="style3">&nbsp;</td>
+                                    <td align="left" class="style3" style="width: 1691px">Device File Link 2:</td>
+                                    <td style="text-align: left">
+                                        
+                                    </td>
+        </tr>
+        <tr>
+            <td align="left" class="style3">&nbsp;</td>
+            <td align="left" class="style3" style="width: 1691px">&nbsp;</td>
+            <td align="center">&nbsp;</td>
+        </tr>
+         <tr >
+                                <td align="left" class="style7" style="height: 32px">
+                                    </td>
+                               
+                                <td align="left"  class="style8" colspan="2" bgcolor="#f9eed9" 
+                                    style="height: 32px">
+                                    <span class="dropcap">L</span><span style="color: #FF0000">ab Responsible Administrator 
+                                    Information:</span></td>
+                               
+                            </tr>
+                                                       
+                                <tr>
+                                    <td style="text-align: left">&nbsp;</td>
+        </tr>
+        <tr bgcolor="#D6EEEE">
+            <td align="left" class="style3">&nbsp;</td>
+            <td align="left" class="style3" style="width: 1691px">Title:</td>
+            <td style="text-align: left">
+                <span id="ctl00_ContentPlaceHolder1_lbl_adminTitle"></span>
+            </td>
+        </tr>
+        <tr>
+            <td align="left" class="style3">&nbsp;</td>
+            <td align="left" class="style3" style="width: 1691px">Name:</td>
+            <td style="text-align: left"><span id="ctl00_ContentPlaceHolder1_lbl_adminName"></span></td>
+        </tr>
+        <tr bgcolor="#D6EEEE">
+            <td align="left" class="style3">&nbsp;</td>
+            <td align="left" class="style3" style="width: 1691px">Campus:</td>
+            <td style="text-align: left"><span id="ctl00_ContentPlaceHolder1_lbl_adminCampus"></span></td>
+        </tr>
+        <tr>
+            <td align="left" class="style3">&nbsp;</td>
+            <td align="left" class="style3" style="width: 1691px">College:</td>
+            <td style="text-align: left"><span id="ctl00_ContentPlaceHolder1_lbl_adminCollege"></span></td>
+        </tr>
+        <tr bgcolor="#D6EEEE">
+            <td align="left" class="style3">&nbsp;</td>
+            <td align="left" class="style3" style="width: 1691px">Department:</td>
+            <td style="text-align: left"><span id="ctl00_ContentPlaceHolder1_lbl_adminDepartment"></span></td>
+        </tr>
+        <tr>
+            <td align="left" class="style3">&nbsp;</td>
+            <td align="left" class="style3" style="width: 1691px">Building:</td>
+            <td style="text-align: left"><span id="ctl00_ContentPlaceHolder1_lbl_adminBuilding"></span></td>
+        </tr>
+        <tr bgcolor="#D6EEEE">
+            <td align="left" class="style3">&nbsp;</td>
+            <td align="left" class="style3" style="width: 1691px">Floor:</td>
+            <td style="text-align: left"><span id="ctl00_ContentPlaceHolder1_lbl_adminFloor"></span></td>
+        </tr>
+        <tr>
+            <td align="left" class="style3">&nbsp;</td>
+            <td align="left" class="style3" style="width: 1691px">Office Room Number:</td>
+            <td style="text-align: left"><span id="ctl00_ContentPlaceHolder1_lbl_adminOfficeRoomNo"></span></td>
+        </tr>
+        <tr bgcolor="#D6EEEE">
+            <td align="left" class="style3">&nbsp;</td>
+            <td align="left" class="style3" style="width: 1691px">Mobile / Office Phone:</td>
+            <td style="text-align: left"><span id="ctl00_ContentPlaceHolder1_lbl_adminMobileOfficePhone"></span></td>
+        </tr>
+        <tr>
+            <td align="left" class="style3">&nbsp;</td>
+            <td align="left" class="style3" style="width: 1691px">Email:</td>
+            <td style="text-align: left"><span id="ctl00_ContentPlaceHolder1_lbl_adminEmail"></span></td>
+        </tr>
+         <tr bgcolor="#D6EEEE">
+             <td align="left" class="style3">&nbsp;</td>
+             <td align="left" class="style3" style="width: 1691px">&nbsp;</td>
+             <td style="text-align: left">&nbsp;</td>
+        </tr>
+         <tr>
+                                <td align="left" class="style7" style="height: 32px">
+                                    </td>
+                               
+                                <td align="left"  class="style8" colspan="2" bgcolor="#f9eed9" 
+                                    style="height: 32px">
+                                    <span class="dropcap">D</span><span style="color: #FF0000">evice Co-Administrators 
+                                    Information:</span></td>
+                               
+                            </tr>
+                    <tr>
+                        <td align="left" class="style3">
+                            &nbsp;
+                        </td>
+                        <td align="left" class="style3">
+                            &nbsp;
+                        </td>
+                        <td align="center">
+                           </td>
+                    </tr>
+        <tr>
+            <td align="left" class="style3">&nbsp;</td>
+            
+            <td align="center" colspan = "2">
+                <div>
+
+	</div>
+            </td>
+        </tr>
+        <tr>
+            <td align="left" class="style3">&nbsp;</td>
+            <td align="left" class="style3" style="width: 1691px">&nbsp;</td>
+            <td align="center">&nbsp;</td>
+        </tr>
+        <tr>
+            <td align="left" class="style3">&nbsp;</td>
+            <td align="left" class="style3" style="width: 1691px">&nbsp;</td>
+            <td align="center">&nbsp;</td>
+        </tr>
+        <tr>
+            <td align="left" class="style3">&nbsp;</td>
+            <td align="left" class="style3" style="width: 1691px">&nbsp;</td>
+            <td align="center">&nbsp;</td>
+        </tr>
+        <tr>
+            <td align="left" class="style3">&nbsp;</td>
+            <td align="left" class="style3" style="width: 1691px">&nbsp;</td>
+            <td align="center">&nbsp;</td>
+        </tr>
+        <tr>
+            <td align="left" class="style3">&nbsp;</td>
+            <td align="left" class="style3" style="width: 1691px">&nbsp;</td>
+            <td align="center">&nbsp;</td>
+        </tr>
+                                <tr>
+                                    <td align="left" class="style3">&nbsp;</td>
+                                    <td align="left" class="style3" style="width: 1691px">&nbsp;</td>
+                                    <td align="center">&nbsp;</td>
+                                </tr>
+                                
+                                                       
+                            </table>
+            </td>
+        </tr>
+        <tr>
+            <td align="center">&nbsp;</td>
+       </tr>
+        <tr>
+            <td dir="rtl">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+                </td>
+        </tr>
+ </table>    
+
+ 
+</div>
+        
+</div>
+<script type="text/javascript" language="javascript">
+
+
+function PrintThisPage(sTitle) 
+{ 
+   var sOption="toolbar=yes,location=no,directories=yes,menubar=yes,"; 
+       sOption+="scrollbars=yes,width=550,height=200,left=100,top=25"; 
+
+   var sWinHTML = document.getElementById('ctl00_ContentPlaceHolder1_pnlView').innerHTML; 
+   
+   var winprint=window.open("","",sOption); 
+       winprint.document.open(); 
+       winprint.document.write('<html><body dir="rtl">' + sTitle + '<br />'); 
+       winprint.document.write(sWinHTML);          
+       winprint.document.write('</body></html>'); 
+       winprint.document.close(); 
+       winprint.focus(); 
+    }
+
+   
+
+</script>
+    </form>
+    
+
+                </div>
+                
+                <br />
+                <br />
+                
+                </center>
+        <!-- Body End -->
+        <!-- Footer Start -->
+        <center>
+           
+        </center>
+        <!-- Footer Start -->
+
+        <script language="javascript" type="text/javascript">
+//execute function when page loads
+window.onload=function()
+{
+	if(document.getElementsByTagName)
+		matchHeight();		
+		
+}
+        </script>
+
+        <br />
+        <br />
+        <br />
+        &nbsp;</div>
+
+</body>
+</html>

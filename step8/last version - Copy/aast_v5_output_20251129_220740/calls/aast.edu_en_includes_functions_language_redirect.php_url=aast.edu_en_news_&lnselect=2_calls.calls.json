@@ -1,0 +1,1 @@
+[{"type": "request", "url": "https://aast.edu/en/includes/functions/language_redirect.php?url=https://aast.edu/en/news/&lnselect=2", "method": "GET"}, {"type": "response", "url": "https://aast.edu/en/includes/functions/language_redirect.php?url=https://aast.edu/en/news/&lnselect=2", "status": 302, "content_type": "text/html; charset=UTF-8", "sample": null}]

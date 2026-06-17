@@ -1,0 +1,167 @@
+{
+  "nodes": [
+    {
+      "id": "aastmt",
+      "label": "University",
+      "properties": {
+        "name": "Arab Academy for Science, Technology and Maritime Transport"
+      }
+    },
+
+    { "id": "alexandria", "label": "Campus", "properties": { "name": "Alexandria" } },
+    { "id": "abukir", "label": "Campus", "properties": { "name": "AbuKir" } },
+    { "id": "heliopolis", "label": "Campus", "properties": { "name": "Heliopolis" } },
+    { "id": "smart_village", "label": "Campus", "properties": { "name": "Smart Village" } },
+    { "id": "dokki", "label": "Campus", "properties": { "name": "Dokki" } },
+    { "id": "port_said", "label": "Campus", "properties": { "name": "Port Said" } },
+    { "id": "el_alamein", "label": "Campus", "properties": { "name": "El Alamein" } },
+    { "id": "south_valley", "label": "Campus", "properties": { "name": "South Valley" } },
+    { "id": "miami", "label": "Campus", "properties": { "name": "Miami" } },
+    { "id": "janaklees", "label": "Campus", "properties": { "name": "Janaklees" } },
+    { "id": "latakia", "label": "Campus", "properties": { "name": "Latakia" } },
+
+    { "id": "college_mtt", "label": "College", "properties": { "name": "Maritime Transport & Technology" } },
+    { "id": "college_eng", "label": "College", "properties": { "name": "Engineering & Technology" } },
+    { "id": "college_mng", "label": "College", "properties": { "name": "Management & Technology" } },
+    { "id": "college_itl", "label": "College", "properties": { "name": "International Transport & Logistics" } },
+    { "id": "college_ccit", "label": "College", "properties": { "name": "Computing & Information Technology" } },
+    { "id": "aast_cai", "label": "College", "properties": { "name": "College of Artificial Intelligence" } },
+    { "id": "college_med", "label": "College", "properties": { "name": "College of Medicine" } },
+    { "id": "college_den", "label": "College", "properties": { "name": "College of Dentistry" } },
+    { "id": "college_pharm", "label": "College", "properties": { "name": "College of Pharmacy" } },
+    { "id": "college_fish", "label": "College", "properties": { "name": "College of Fisheries and Aquaculture Technology" } },
+    { "id": "college_lang", "label": "College", "properties": { "name": "College of Language & Communication" } },
+    { "id": "college_law", "label": "College", "properties": { "name": "College of Law" } },
+    { "id": "college_arch", "label": "College", "properties": { "name": "College of Archaeology & Cultural Heritage" } },
+    { "id": "college_pt", "label": "College", "properties": { "name": "College of Physical Therapy" } },
+    { "id": "college_gsb", "label": "College", "properties": { "name": "Graduate School of Business" } },
+
+    {
+      "id": "degree_bachelor",
+      "label": "Degree",
+      "properties": {
+        "name": "Bachelor",
+        "level": "Undergraduate",
+        "entity_type": "Degree"
+      }
+    },
+    {
+      "id": "degree_master",
+      "label": "Degree",
+      "properties": {
+        "name": "Master",
+        "level": "Postgraduate",
+        "entity_type": "Degree"
+      }
+    },
+    {
+      "id": "degree_diploma",
+      "label": "Degree",
+      "properties": {
+        "name": "Diploma",
+        "entity_type": "Degree"
+      }
+    },
+    {
+      "id": "degree_doctorate",
+      "label": "Degree",
+      "properties": {
+        "name": "Doctorate",
+        "level": "Postgraduate",
+        "entity_type": "Degree"
+      }
+    },
+
+    {
+      "id": "program_cs",
+      "label": "Program",
+      "properties": {
+        "name": "Computer Science",
+        "entity_type": "Program"
+      }
+    },
+    {
+      "id": "program_se",
+      "label": "Program",
+      "properties": {
+        "name": "Software Engineering",
+        "entity_type": "Program"
+      }
+    },
+    {
+      "id": "program_ai",
+      "label": "Program",
+      "properties": {
+        "name": "Artificial Intelligence",
+        "entity_type": "Program"
+      }
+    },
+    {
+      "id": "program_ds",
+      "label": "Program",
+      "properties": {
+        "name": "Data Science",
+        "entity_type": "Program"
+      }
+    },
+    {
+      "id": "program_mbbch",
+      "label": "Program",
+      "properties": {
+        "name": "MBChB",
+        "entity_type": "Program"
+      }
+    },
+    {
+      "id": "program_pharmd",
+      "label": "Program",
+      "properties": {
+        "name": "PharmD",
+        "entity_type": "Program"
+      }
+    }
+  ],
+  "relationships": [
+    { "type": "HAS_CAMPUS", "from": "aastmt", "to": "alexandria", "properties": {} },
+    { "type": "HAS_CAMPUS", "from": "aastmt", "to": "abukir", "properties": {} },
+    { "type": "HAS_CAMPUS", "from": "aastmt", "to": "heliopolis", "properties": {} },
+    { "type": "HAS_CAMPUS", "from": "aastmt", "to": "smart_village", "properties": {} },
+    { "type": "HAS_CAMPUS", "from": "aastmt", "to": "dokki", "properties": {} },
+    { "type": "HAS_CAMPUS", "from": "aastmt", "to": "port_said", "properties": {} },
+    { "type": "HAS_CAMPUS", "from": "aastmt", "to": "el_alamein", "properties": {} },
+    { "type": "HAS_CAMPUS", "from": "aastmt", "to": "south_valley", "properties": {} },
+    { "type": "HAS_CAMPUS", "from": "aastmt", "to": "miami", "properties": {} },
+    { "type": "HAS_CAMPUS", "from": "aastmt", "to": "janaklees", "properties": {} },
+    { "type": "HAS_CAMPUS", "from": "aastmt", "to": "latakia", "properties": {} },
+
+    { "type": "HAS_COLLEGE", "from": "aastmt", "to": "college_mtt", "properties": {} },
+    { "type": "HAS_COLLEGE", "from": "aastmt", "to": "college_eng", "properties": {} },
+    { "type": "HAS_COLLEGE", "from": "aastmt", "to": "college_mng", "properties": {} },
+    { "type": "HAS_COLLEGE", "from": "aastmt", "to": "college_itl", "properties": {} },
+    { "type": "HAS_COLLEGE", "from": "aastmt", "to": "college_ccit", "properties": {} },
+    { "type": "HAS_COLLEGE", "from": "aastmt", "to": "aast_cai", "properties": {} },
+    { "type": "HAS_COLLEGE", "from": "aastmt", "to": "college_med", "properties": {} },
+    { "type": "HAS_COLLEGE", "from": "aastmt", "to": "college_den", "properties": {} },
+    { "type": "HAS_COLLEGE", "from": "aastmt", "to": "college_pharm", "properties": {} },
+    { "type": "HAS_COLLEGE", "from": "aastmt", "to": "college_fish", "properties": {} },
+    { "type": "HAS_COLLEGE", "from": "aastmt", "to": "college_lang", "properties": {} },
+    { "type": "HAS_COLLEGE", "from": "aastmt", "to": "college_law", "properties": {} },
+    { "type": "HAS_COLLEGE", "from": "aastmt", "to": "college_arch", "properties": {} },
+    { "type": "HAS_COLLEGE", "from": "aastmt", "to": "college_pt", "properties": {} },
+    { "type": "HAS_COLLEGE", "from": "aastmt", "to": "college_gsb", "properties": {} },
+
+    { "type": "OFFERS_PROGRAM", "from": "college_ccit", "to": "program_cs", "properties": {} },
+    { "type": "OFFERS_PROGRAM", "from": "college_ccit", "to": "program_se", "properties": {} },
+    { "type": "OFFERS_PROGRAM", "from": "aast_cai", "to": "program_ai", "properties": {} },
+    { "type": "OFFERS_PROGRAM", "from": "aast_cai", "to": "program_ds", "properties": {} },
+    { "type": "OFFERS_PROGRAM", "from": "college_med", "to": "program_mbbch", "properties": {} },
+    { "type": "OFFERS_PROGRAM", "from": "college_pharm", "to": "program_pharmd", "properties": {} },
+
+    { "type": "HAS_DEGREE", "from": "program_cs", "to": "degree_bachelor", "properties": {} },
+    { "type": "HAS_DEGREE", "from": "program_se", "to": "degree_bachelor", "properties": {} },
+    { "type": "HAS_DEGREE", "from": "program_ai", "to": "degree_bachelor", "properties": {} },
+    { "type": "HAS_DEGREE", "from": "program_ds", "to": "degree_bachelor", "properties": {} },
+    { "type": "HAS_DEGREE", "from": "program_mbbch", "to": "degree_bachelor", "properties": {} },
+    { "type": "HAS_DEGREE", "from": "program_pharmd", "to": "degree_bachelor", "properties": {} }
+  ]
+}

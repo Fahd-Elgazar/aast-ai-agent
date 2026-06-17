@@ -1,0 +1,619 @@
+{
+  "nodes": [
+    {
+      "label": "Campus",
+      "id": "CAMPUS_EG_ABU_QIR",
+      "properties": {
+        "campus_id_raw": "ABU_QIR",
+        "name": "Abu Qir Campus",
+        "city": "Alexandria",
+        "country": "Egypt",
+        "description": "Main AASTMT campus in Alexandria; large, self-contained campus with full student facilities.",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "College",
+      "id": "COLLEGE_CCIT_ABU_QIR",
+      "properties": {
+        "college_id_raw": "CCIT_ABUKIR",
+        "name": "College of Computing and Information Technology",
+        "abbreviation": "CCIT",
+        "established_year": 2003,
+        "parent_institution": "Arab Academy for Science, Technology and Maritime Transport",
+        "vision": "To be a leading educational and training hub and a pioneer in state-of-the-art scientific research in computing fields, with strong sustainable ties to industry.",
+        "mission": "To graduate calibers with strong theoretical foundations and practical skills, enabling innovation, research contribution, professional excellence, ethical values, and community service.",
+        "international_partners": [
+          "Autònoma University of Barcelona",
+          "Japanese University of Science and Technology",
+          "University of Technology in Borg El Arab"
+        ],
+        "industry_partners": [
+          "AiTB",
+          "eSpace",
+          "Digital Hub",
+          "Mega Trust",
+          "Olive Recycling Solutions",
+          "Egyptian Environmental Affairs Agency"
+        ],
+        "administration": {
+          "dean": "Ayman Adel Abdelhamid Ibrahim",
+          "vice_deans": {
+            "training_and_community_service": "Mohamed Abdelazim Shaheen Mohamed Elgamel",
+            "education_and_student_affairs": "Mohamed Hamed Kholif",
+            "postgraduate_and_research": "Walid Mohamed Rabae Abdel Moaz"
+          }
+        },
+        "quality_assurance": {
+          "qa_unit_exists": true,
+          "description": "QA unit oversees academic standards, continuous improvement, feedback cycles, and alignment with AASTMT strategic plans."
+        },
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Degree",
+      "id": "DEGREE_EG_ABU_QIR_CCIT_BSC_UNDERGRAD",
+      "properties": {
+        "degree_name": "Bachelor of Science",
+        "level": "undergraduate",
+        "data_source_type": "official"
+      }
+    },
+
+    {
+      "label": "Accreditation",
+      "id": "ACC_EG_SCHE",
+      "properties": {
+        "name": "Supreme Council of Egyptian Universities",
+        "scope": "national",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Accreditation",
+      "id": "ACC_INTL_ABET_CAC",
+      "properties": {
+        "name": "ABET – Computing Accreditation Commission (CAC)",
+        "scope": "international",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Accreditation",
+      "id": "ACC_INTL_ABET_EAC",
+      "properties": {
+        "name": "ABET – Engineering Accreditation Commission (EAC)",
+        "scope": "international",
+        "data_source_type": "official"
+      }
+    },
+
+    {
+      "label": "Program",
+      "id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_COMPUTER_SCIENCE",
+      "properties": {
+        "program_id_raw": "COMPUTER_SCIENCE",
+        "name": "Computer Science",
+        "degree_abbrev": "BSc",
+        "discipline": "Computing",
+        "study_duration_years": 4,
+        "focus_areas": [
+          "Strong theoretical foundations",
+          "Problem solving",
+          "Adaptation to emerging technologies",
+          "Teamwork",
+          "Project management",
+          "Communication skills"
+        ],
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Program",
+      "id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_INFORMATION_SYSTEMS",
+      "properties": {
+        "program_id_raw": "INFORMATION_SYSTEMS",
+        "name": "Information Systems",
+        "degree_abbrev": "BSc",
+        "discipline": "Information Systems",
+        "study_duration_years": 4,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Program",
+      "id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_SOFTWARE_ENGINEERING",
+      "properties": {
+        "program_id_raw": "SOFTWARE_ENGINEERING",
+        "name": "Software Engineering",
+        "degree_abbrev": "BSc",
+        "discipline": "Software Engineering",
+        "study_duration_years": 4,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Program",
+      "id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_CYBERSECURITY",
+      "properties": {
+        "program_id_raw": "CYBERSECURITY",
+        "name": "Cybersecurity",
+        "degree_abbrev": "BSc",
+        "discipline": "Cybersecurity",
+        "study_duration_years": 4,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Program",
+      "id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_ARTIFICIAL_INTELLIGENCE",
+      "properties": {
+        "program_id_raw": "ARTIFICIAL_INTELLIGENCE",
+        "name": "Artificial Intelligence",
+        "degree_abbrev": "BSc",
+        "discipline": "Artificial Intelligence",
+        "study_duration_years": 4,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Program",
+      "id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_MULTIMEDIA_GRAPHICS",
+      "properties": {
+        "program_id_raw": "MULTIMEDIA_GRAPHICS",
+        "name": "Multimedia and Computer Graphics",
+        "degree_abbrev": "BSc",
+        "discipline": "Multimedia & Graphics",
+        "study_duration_years": 4,
+        "data_source_type": "official"
+      }
+    },
+
+    {
+      "label": "Specialization",
+      "id": "SPEC_CCIT_ABU_QIR_COMPUTER_SCIENCE",
+      "properties": {
+        "name": "Computer Science",
+        "track_type": "program",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Specialization",
+      "id": "SPEC_CCIT_ABU_QIR_INFORMATION_SYSTEMS",
+      "properties": {
+        "name": "Information Systems",
+        "track_type": "program",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Specialization",
+      "id": "SPEC_CCIT_ABU_QIR_SOFTWARE_ENGINEERING",
+      "properties": {
+        "name": "Software Engineering",
+        "track_type": "program",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Specialization",
+      "id": "SPEC_CCIT_ABU_QIR_CYBERSECURITY",
+      "properties": {
+        "name": "Cybersecurity",
+        "track_type": "program",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Specialization",
+      "id": "SPEC_CCIT_ABU_QIR_ARTIFICIAL_INTELLIGENCE",
+      "properties": {
+        "name": "Artificial Intelligence",
+        "track_type": "program",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Specialization",
+      "id": "SPEC_CCIT_ABU_QIR_MULTIMEDIA_GRAPHICS",
+      "properties": {
+        "name": "Multimedia and Computer Graphics",
+        "track_type": "program",
+        "data_source_type": "official"
+      }
+    },
+
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_SOFTWARE_DEVELOPER",
+      "properties": { "name": "Software Developer", "data_source_type": "official" }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_BACKEND_ENGINEER",
+      "properties": { "name": "Backend Engineer", "data_source_type": "official" }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_SYSTEMS_ENGINEER",
+      "properties": { "name": "Systems Engineer", "data_source_type": "official" }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_RESEARCH_ASSISTANT",
+      "properties": { "name": "Research Assistant", "data_source_type": "official" }
+    },
+
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_BUSINESS_ANALYST",
+      "properties": { "name": "Business Analyst", "data_source_type": "official" }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_SYSTEMS_ANALYST",
+      "properties": { "name": "Systems Analyst", "data_source_type": "official" }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_IT_CONSULTANT",
+      "properties": { "name": "IT Consultant", "data_source_type": "official" }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_ERP_SPECIALIST",
+      "properties": { "name": "ERP Specialist", "data_source_type": "official" }
+    },
+
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_SOFTWARE_ENGINEER",
+      "properties": { "name": "Software Engineer", "data_source_type": "official" }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_DEVOPS_ENGINEER",
+      "properties": { "name": "DevOps Engineer", "data_source_type": "official" }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_FULL_STACK_DEVELOPER",
+      "properties": { "name": "Full Stack Developer", "data_source_type": "official" }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_QA_ENGINEER",
+      "properties": { "name": "QA Engineer", "data_source_type": "official" }
+    },
+
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_CYBERSECURITY_ANALYST",
+      "properties": { "name": "Cybersecurity Analyst", "data_source_type": "official" }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_SOC_ENGINEER",
+      "properties": { "name": "SOC Engineer", "data_source_type": "official" }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_PENETRATION_TESTER",
+      "properties": { "name": "Penetration Tester", "data_source_type": "official" }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_SECURITY_CONSULTANT",
+      "properties": { "name": "Security Consultant", "data_source_type": "official" }
+    },
+
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_AI_ENGINEER",
+      "properties": { "name": "AI Engineer", "data_source_type": "official" }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_MACHINE_LEARNING_ENGINEER",
+      "properties": { "name": "Machine Learning Engineer", "data_source_type": "official" }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_DATA_SCIENTIST",
+      "properties": { "name": "Data Scientist", "data_source_type": "official" }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_RESEARCH_ENGINEER",
+      "properties": { "name": "Research Engineer", "data_source_type": "official" }
+    },
+
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_UI_UX_DESIGNER",
+      "properties": { "name": "UI/UX Designer", "data_source_type": "official" }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_GAME_ARTIST",
+      "properties": { "name": "Game Artist", "data_source_type": "official" }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_MULTIMEDIA_DEVELOPER",
+      "properties": { "name": "Multimedia Developer", "data_source_type": "official" }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_3D_ARTIST",
+      "properties": { "name": "3D Artist", "data_source_type": "official" }
+    }
+  ],
+  "relationships": [
+    {
+      "start_id": "CAMPUS_EG_ABU_QIR",
+      "relationship_type": "HOSTS",
+      "end_id": "COLLEGE_CCIT_ABU_QIR",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "COLLEGE_CCIT_ABU_QIR",
+      "relationship_type": "OFFERS",
+      "end_id": "DEGREE_EG_ABU_QIR_CCIT_BSC_UNDERGRAD",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "COLLEGE_CCIT_ABU_QIR",
+      "relationship_type": "HAS_ACCREDITATION",
+      "end_id": "ACC_EG_SCHE",
+      "properties": { "scope": "national", "data_source_type": "official" }
+    },
+    {
+      "start_id": "COLLEGE_CCIT_ABU_QIR",
+      "relationship_type": "HAS_ACCREDITATION",
+      "end_id": "ACC_INTL_ABET_CAC",
+      "properties": {
+        "scope": "international",
+        "data_source_type": "official",
+        "applies_to_programs": ["Computer Science", "Information Systems"]
+      }
+    },
+    {
+      "start_id": "COLLEGE_CCIT_ABU_QIR",
+      "relationship_type": "HAS_ACCREDITATION",
+      "end_id": "ACC_INTL_ABET_EAC",
+      "properties": {
+        "scope": "international",
+        "data_source_type": "official",
+        "applies_to_programs": ["Software Engineering"]
+      }
+    },
+
+    {
+      "start_id": "DEGREE_EG_ABU_QIR_CCIT_BSC_UNDERGRAD",
+      "relationship_type": "INCLUDES_PROGRAM",
+      "end_id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_COMPUTER_SCIENCE",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "DEGREE_EG_ABU_QIR_CCIT_BSC_UNDERGRAD",
+      "relationship_type": "INCLUDES_PROGRAM",
+      "end_id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_INFORMATION_SYSTEMS",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "DEGREE_EG_ABU_QIR_CCIT_BSC_UNDERGRAD",
+      "relationship_type": "INCLUDES_PROGRAM",
+      "end_id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_SOFTWARE_ENGINEERING",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "DEGREE_EG_ABU_QIR_CCIT_BSC_UNDERGRAD",
+      "relationship_type": "INCLUDES_PROGRAM",
+      "end_id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_CYBERSECURITY",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "DEGREE_EG_ABU_QIR_CCIT_BSC_UNDERGRAD",
+      "relationship_type": "INCLUDES_PROGRAM",
+      "end_id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_ARTIFICIAL_INTELLIGENCE",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "DEGREE_EG_ABU_QIR_CCIT_BSC_UNDERGRAD",
+      "relationship_type": "INCLUDES_PROGRAM",
+      "end_id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_MULTIMEDIA_GRAPHICS",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_COMPUTER_SCIENCE",
+      "relationship_type": "HAS_SPECIALIZATION",
+      "end_id": "SPEC_CCIT_ABU_QIR_COMPUTER_SCIENCE",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_INFORMATION_SYSTEMS",
+      "relationship_type": "HAS_SPECIALIZATION",
+      "end_id": "SPEC_CCIT_ABU_QIR_INFORMATION_SYSTEMS",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_SOFTWARE_ENGINEERING",
+      "relationship_type": "HAS_SPECIALIZATION",
+      "end_id": "SPEC_CCIT_ABU_QIR_SOFTWARE_ENGINEERING",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_CYBERSECURITY",
+      "relationship_type": "HAS_SPECIALIZATION",
+      "end_id": "SPEC_CCIT_ABU_QIR_CYBERSECURITY",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_ARTIFICIAL_INTELLIGENCE",
+      "relationship_type": "HAS_SPECIALIZATION",
+      "end_id": "SPEC_CCIT_ABU_QIR_ARTIFICIAL_INTELLIGENCE",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_MULTIMEDIA_GRAPHICS",
+      "relationship_type": "HAS_SPECIALIZATION",
+      "end_id": "SPEC_CCIT_ABU_QIR_MULTIMEDIA_GRAPHICS",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_COMPUTER_SCIENCE",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_SOFTWARE_DEVELOPER",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_COMPUTER_SCIENCE",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_BACKEND_ENGINEER",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_COMPUTER_SCIENCE",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_SYSTEMS_ENGINEER",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_COMPUTER_SCIENCE",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_RESEARCH_ASSISTANT",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_INFORMATION_SYSTEMS",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_BUSINESS_ANALYST",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_INFORMATION_SYSTEMS",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_SYSTEMS_ANALYST",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_INFORMATION_SYSTEMS",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_IT_CONSULTANT",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_INFORMATION_SYSTEMS",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_ERP_SPECIALIST",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_SOFTWARE_ENGINEERING",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_SOFTWARE_ENGINEER",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_SOFTWARE_ENGINEERING",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_DEVOPS_ENGINEER",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_SOFTWARE_ENGINEERING",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_FULL_STACK_DEVELOPER",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_SOFTWARE_ENGINEERING",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_QA_ENGINEER",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_CYBERSECURITY",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_CYBERSECURITY_ANALYST",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_CYBERSECURITY",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_SOC_ENGINEER",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_CYBERSECURITY",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_PENETRATION_TESTER",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_CYBERSECURITY",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_SECURITY_CONSULTANT",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_ARTIFICIAL_INTELLIGENCE",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_AI_ENGINEER",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_ARTIFICIAL_INTELLIGENCE",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_MACHINE_LEARNING_ENGINEER",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_ARTIFICIAL_INTELLIGENCE",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_DATA_SCIENTIST",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_ARTIFICIAL_INTELLIGENCE",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_RESEARCH_ENGINEER",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_MULTIMEDIA_GRAPHICS",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_UI_UX_DESIGNER",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_MULTIMEDIA_GRAPHICS",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_GAME_ARTIST",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_MULTIMEDIA_GRAPHICS",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_MULTIMEDIA_DEVELOPER",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "CAMPUS_EG_ABU_QIR__COLLEGE_CCIT_ABU_QIR__PROGRAM_MULTIMEDIA_GRAPHICS",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_3D_ARTIST",
+      "properties": { "data_source_type": "official" }
+    }
+  ]
+}

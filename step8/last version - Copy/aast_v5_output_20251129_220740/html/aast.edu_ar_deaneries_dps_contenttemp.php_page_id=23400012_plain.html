@@ -1,0 +1,253 @@
+
+<!-- ///////// SDG from COE old///////////// -->
+
+	        			
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>DEANERY OF POSTGRADUATE STUDIES</title>
+<link rel='stylesheet' type='text/css' href='css/dps_menu.css'/>
+<script type='text/javascript' src='js/dps_menu.js'></script>
+
+<link href="css/layout.css" rel="stylesheet" type="text/css" />
+<link href="css/tabs.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.3.1.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {	
+
+
+  //Get all the LI from the #tabMenu UL
+  $('#tabMenu > li').click(function(){
+        
+    //remove the selected class from all LI    
+    $('#tabMenu > li').removeClass('selected');
+    
+    //Reassign the LI
+    $(this).addClass('selected');
+    
+    //Hide all the DIV in .boxBody
+    $('.boxBody div').slideUp('1500');
+    
+    //Look for the right DIV in boxBody according to the Navigation UL index, therefore, the arrangement is very important.
+    $('.boxBody div:eq(' + $('#tabMenu > li').index(this) + ')').slideDown('1500');
+    
+  }).mouseover(function() {
+
+    //Add and remove class, Personally I dont think this is the right way to do it, anyone please suggest    
+    $(this).addClass('mouseover');
+    $(this).removeClass('mouseout');   
+    
+  }).mouseout(function() {
+    
+    //Add and remove class
+    $(this).addClass('mouseout');
+    $(this).removeClass('mouseover');    
+    
+  });
+
+  //Mouseover with animate Effect for services menu list
+  $('.boxBody #services li').mouseover(function() {
+
+    //Change background color and animate the padding
+    $(this).css('backgroundColor','#888');
+    $(this).children().animate({paddingLeft:"20px"}, {queue:false, duration:300});
+  }).mouseout(function() {
+    
+    //Change background color and animate the padding
+    $(this).css('backgroundColor','');
+    $(this).children().animate({paddingLeft:"0"}, {queue:false, duration:300});
+  });  
+	
+  //Mouseover effect for facilities, services, Famous facilities and Random facilities menu list.
+  $('.boxBody li').click(function(){
+    window.location = $(this).find("a").attr("href");
+  }).mouseover(function() {
+    $(this).css('backgroundColor','#e8f4f8');
+  }).mouseout(function() {
+    $(this).css('backgroundColor','');
+  });  	
+	
+});
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+</script>
+<script language="javascript"> 
+function changeLang(){
+	var address = "";
+	address =  this.location.href;
+	if(address.indexOf('/en/') > -1){
+		address = address.replace('/en/','/ar/');
+	}else
+		if(address.indexOf('/ar/') > -1)
+		{
+			address = address.replace('/ar/','/en/');
+		}
+	 window.location.href = address;
+}
+</script>
+<link href="css/news.css" rel="stylesheet" type="text/css">
+
+<link href="css/STD.css" rel="stylesheet" type="text/css">
+</head>
+
+<body onLoad="MM_preloadImages('images/moodle_over.jpg','images/regulations_over.jpg')">
+<table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="ext" bgcolor="#a1a982">&nbsp;</td>
+    <td align="left" valign="top"  width="923" height="100%">
+    <table width="923"  border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td>
+    <div id="header">
+    <div id="nav"> <img src="images/nav.png" width="195" height="37" border="0" usemap="#Map" /></div>
+    </div>
+    </td>
+    </tr>
+  <tr>
+    <td>
+    <table width="923" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+      <td align="left" valign="top" id="side_links">
+        
+        <table width="95%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+   <!-- here tabs-->
+   <td>
+ <div class="box">
+<ul id="tabMenu"><br>
+  <li class="services selected"></li>
+  <li class="facilities"></li>
+</ul>
+<div class="boxTop"></div>
+
+<div class="boxBody">
+  
+  
+   <div id="services" class="show">
+    <ul>
+      <li><a href="https://newmail.aast.edu/" target="_blank">البريد الإلكتروني لإعضاء هيئة التدريس </a></li>
+      <li> <a href="http://lms.aast.edu/" target="_blank">نظام التعليم الإلكتروني "Moodle"</a></li>
+      <li><a href="https://clinic.aast.edu/" target="_blank">حجز العيادة</a></li>
+      <li class="last"><a href="http://213.212.237.250/vacations/LoginPage.aspx" target="_blank">طلب الأجازات</a></li>
+      </ul>
+  </div>
+  
+  <div id="facilities">
+   
+  <ul>
+      <li><a href="dps.php?p=23400015">المكتبات</a></li>
+      <li class="last"><a href="http://www.aast.edu/en/facilities/index.html" target="_blank">تسهيلات الأكاديمية</a></li>
+      </ul>
+  </div>
+
+</div>
+
+<div class="boxBottom"></div>
+
+</div>
+
+
+   </td>
+  </tr>
+  <tr>
+    <td>
+<div id="calendar" dir="rtl">
+  <a class='more' href='calendar.php?unit_id=234'>المزيد </a>
+
+ </div>
+</td>
+  </tr>
+  <!-- Survey -->
+    <tr>
+    <td>
+    <div id="survey">	
+	
+
+	<img src="images/survey.png" width="265" height="62">
+
+<iframe src="survey/survpage.php?QuestionID=1" allowtransparency="true" 
+frameborder="0" width="250" height="370" scrolling="no"  dir="rtl"></iframe>
+
+      </div>
+      </td>
+  </tr>
+  
+  <tr>
+    <td><div id="regulations"> <a href="pdf/regulations.pdf" target="_blank" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image6','','images/regulations_over.jpg',1)"><img src="images/regulations.jpg" name="Image6" width="257" height="90" border="0"></a></div></td>
+  </tr>
+  <tr>
+    <td><div id="moodle"><a href="http://lms.aast.edu/" target="_blank" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image5','','images/moodle_over.jpg',1)"><img src="images/moodle.jpg" name="Image5" width="257" height="96" border="0"></a></div></td>
+  </tr>
+</table>
+        </td>
+        <td align="right" valign="top"><!-- menu-->
+<div id="menu">
+
+    <ul id="qm0" class="qmmc">
+<li><A    HREF ='index.php' target= ''>الصفحة الرئيسية</A></li><li><a class='#' href='javascript:void(0)'>عن العمادة</a><ul><li><A   HREF ='contenttemp.php?page_id=23400001'>عن الأكاديمية </A></li><li><A   HREF ='contenttemp.php?page_id=23400019'>الدرجات الممنوحة</A></li><li><A   HREF ='contenttemp.php?page_id=23400002'>الرؤية و الرسالة</A></li><li><A    HREF ='pdf/council.pdf' target= ''>المجلس الأعلى لشئون الدراسات العليا</A></li><li><A   HREF ='contenttemp.php?page_id=23400019'>خريطة الموقع</A></li><li><A   HREF ='contenttemp.php?page_id=23400021'>الموظفين</A></li></ul></li><li><a class='#' href='javascript:void(0)'>الدرجات الممنوحة</a><ul><li><A   HREF ='contenttemp.php?page_id=23400005'>نظام التقييم</A></li><li><A   HREF ='contenttemp.php?page_id=23400011'>اللوائح الأكاديمية</A></li><li><A   HREF ='contenttemp.php?page_id=23400006'>النزاهة الأكاديمية</A></li><li><A   HREF ='contenttemp.php?page_id=23400010'>نماذج</A></li></ul></li><li><a class='#' href='javascript:void(0)'>القبول و التسجيل</a><ul><li><A   HREF ='contenttemp.php?page_id=23400003'>المتطلبات العامة للقبول</A></li><li><A   HREF ='contenttemp.php?page_id=23400004'>التسجيل</A></li><li><A   HREF ='contenttemp.php?page_id=23400007'>االرسوم الدراسية</A></li></ul></li><li><A  HREF ='contenttemp.php?page_id=23400023'>وظائف شاغرة </A></li><li><A  HREF ='contenttemp.php?page_id=23400015'>الاتصال بنا</A></li><li class="qmclear">&nbsp;</li>
+</ul>
+
+
+<!-- Create Menu Settings: (Menu ID, Is Vertical, Show Timer, Hide Timer, On Click ('all' or 'lev2'), Right to Left , Horizontal Subs, Flush Left, Flush Top) -->
+<script type="text/javascript">qm_create(0,false,0,700,false,true,true,true,false);</script>
+     
+        </div>        <div id="content">
+
+ <link rel="canonical" href='http://aast.edu/ar/deaneries/dps/Deanery of Post Graduate Studies' />
+
+<h3>الدبلوم</h3><p><H4> كلية الدراسات العليا فى الإدارة         <EM> </EM><A href="https://www.aast.edu/data/pheeduploads/cms_files/234/GDM-Brochure.pdf">لمزيد من المعلومات</A></H4><UL><LI>دبلوم التسويق <LI>دبلوم الاستثمار <LI>دبلوم الأسواق الدولية <LI>دبلوم شئون الأفراد <LI>دبلوم إدارة سلاسل الإمداد <LI>دبلوم ادارة المشروعات <LI>دبلوم الإدارة البيئية <LI>دبلوم الحد من الكوارث وإدارة الأزمات <LI>دبلوم إدارة الأعمال الدولية <LI>دبلوم إدارة تكنولوجيا المعلومات </LI></UL><H4>(ج) كلية النقل البحري والتكنولوجيا </H4><UL><LI>دبلوم المساحة الهيدروغرافية <LI>دبلوم تشغيل القوافل والسلامة البحرية <LI>دبلوم حماية البيئة البحرية <LI>دبلوم المساحة البحرية <LI>دبلوم الملاحة المتقدمة </LI></UL><H4>(د) كلية الحاسبات وتكنولوجيا المعلومات</H4><UL><LI>دبلوم علوم الحاسب <LI>دبلوم تكنولوجيا المعلومات </LI></UL><H4>(هـ) معهد النقل الدولي واللوجستيات </H4><UL><LI>دبلوم الشحن (FIATA) (باللغة الإنجليزية) <LI>دبلوم النقل الدولي واللوجستيات (باللغة الإنجليزية) <LI>دبلوم النقل والتأمين البحري <LI>دبلوم قانون النقل والتحكيم التجاري الدولي (باللغة العربية) </LI></UL><H4>(ح ) معهد الإنتاجية والجودة</H4><UL><LI>دبلوم الجودة الإدارية </LI></UL><H5>(خ ) معهد الدراسات اللغوية (ILS) </H5><p>لقد أدركت الأكاديمية مع التزامها بتوفير نوعية متميزة من التعليم أهمية إتاحة برامج للدراسات العليا في معهد الدراسات اللغوية (ILS ) كجزء من الخدمات على نطاق واسع فى الأكاديمية تعمل لخدمة المجتمع الأكاديمي بالأكاديمية.<BR>ويقدم معهد الدراسات اللغوية (ILS )  برامج متميزة يمنح على أساسها درجات مختلفة مثل الشهادات المهنية والدبلومات والماجستير، ويركز على احتياجات طلاب الدراسات العليا، ويقوم بتزويدهم بفرصة لتطوير أفكارهم واهتماماتهم و المشاركة في التفكير النقدي وخطط التطوير الوظيفي. وبالإضافة إلى ذلك فأنه يمكن للطلاب أن يكونوا جزءا من مجتمع البحوث في مجال تخصصهم  وفي داخل المجتمع الأكاديمي والمهني بوجه عام.<BR>برامج الدراسات العليا الممنوحة بالمعهد هي كالتالي:</EM></p><UL><LI> دبلوم أكاديمي في اللغويات التطبيقية <LI>دبلوم في اللغويات التطبيقيه. <LI> دبلوم لتدريس اللغه العربيه لغير الناطقين. </LI></UL><p> </p>         		</p>		</p>		</p>		</p>		</p>		</p><h5>Share This Page</h5>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5a00f75b0445cb0a"></script><!-- Go to www.addthis.com/dashboard to customize your tools -->
+        <div class="addthis_inline_share_toolbox"></div>
+    </div>
+	
+	
+	<br>
+
+
+
+        <div></div>
+        </td>
+        
+      </tr>
+    </table>
+    </td>
+    </tr>
+  <tr>
+    <td class="footer">
+&#1580;&#1605;&#1610;&#1593; &#1581;&#1602;&#1608;&#1602; &#1575;&#1604;&#1606;&#1588;&#1585; &#1605;&#1581;&#1601;&#1608;&#1592;&#1577; &ndash; &#1605;&#1585;&#1603;&#1586; &#1575;&#1604;&#1605;&#1593;&#1604;&#1608;&#1605;&#1575;&#1578; &#1608; &#1575;&#1604;&#1578;&#1608;&#1579;&#1610;&#1602;&ndash;2010- &#1575;&#1604;&#1571;&#1603;&#1575;&#1583;&#1610;&#1605;&#1610;&#1577; &#1575;&#1604;&#1593;&#1585;&#1576;&#1610;&#1577; &#1604;&#1604;&#1593;&#1604;&#1608;&#1605; &#1608; &#1575;&#1604;&#1578;&#1603;&#1606;&#1608;&#1604;&#1608;&#1580;&#1610;&#1575; &#1608; &#1575;&#1604;&#1606;&#1602;&#1604; &#1575;&#1604;&#1576;&#1581;&#1585;&#1610;
+</td>
+    </tr>
+</table>
+
+    
+    </td>
+    <td class="ext"  bgcolor="#a1a982">&nbsp;</td>
+  </tr>
+</table>
+
+<map name="Map">
+  <area shape="rect" coords="9,6,45,31" href="#" onclick="changeLang();">
+    <area shape="rect" coords="160,7,198,27" href="../../index.php" />
+</map>
+</body>
+</html>

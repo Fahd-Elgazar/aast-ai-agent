@@ -1,0 +1,488 @@
+{
+  "nodes": [
+    {
+      "label": "Campus",
+      "id": "CAMPUS_PORT_SAID",
+      "properties": {
+        "campus_id": "PORT_SAID",
+        "name": "Port Said Campus",
+        "city": "Port Said",
+        "country": "Egypt",
+        "description": "Strategic coastal campus adjacent to the Suez Canal, focused on international transport, ports, logistics, and trade-related education.",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "College",
+      "id": "PORT_SAID_CITL",
+      "properties": {
+        "college_id": "CITL_PORT_SAID",
+        "name": "College of International Transport and Logistics – Port Said",
+        "parent_institution": "Arab Academy for Science, Technology and Maritime Transport",
+        "positioning": "Flagship logistics and transport education hub with strong alignment to maritime trade, ports, and national logistics mega-projects.",
+        "vision": "To strengthen higher education leadership in the Middle East and Africa as a center of expertise in international transportation and logistics.",
+        "mission": "To provide an integrated educational, training, and research environment aligned with international quality standards, emphasizing applied logistics, modern technologies, and industry-linked learning to produce graduates capable of supporting sustainable development.",
+        "quality_assurance": {
+          "qa_unit_exists": true,
+          "description": "Quality assurance aligned with NAQAAE standards and AACSB international benchmarks."
+        },
+        "strategic_goals": {
+          "education": "Enhance student learning outcomes and labor market readiness",
+          "research": "Expand applied and collaborative research projects",
+          "internationalization": "Strengthen global partnerships and international exposure",
+          "social_responsibility": "Support sustainable development goals economically, socially, and environmentally"
+        },
+        "core_values": [
+          "Alignment",
+          "Leadership",
+          "Excellence and Sustainability",
+          "Dignity",
+          "Respect",
+          "Accountability",
+          "Knowledge and Digital Transformation"
+        ],
+        "student_support": {
+          "academic_guidance": true,
+          "career_orientation": true,
+          "training_opportunities": true,
+          "student_affairs_unit": true
+        },
+        "career_outcomes_summary": {
+          "employment_sectors": [
+            "Ports and port authorities",
+            "Shipping lines",
+            "Freight forwarding companies",
+            "Logistics service providers",
+            "Supply chain departments",
+            "Energy and petroleum companies",
+            "Trade and customs authorities"
+          ],
+          "international_employability": "HIGH",
+          "career_growth_potential": "HIGH"
+        },
+        "training_geographic_advantage": "Direct exposure to ports, maritime trade routes, and Suez Canal logistics ecosystem",
+        "regional_role": "Acts as a consulting and expertise hub for logistics and transport sectors in Egypt and the Arab region",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Accreditation",
+      "id": "PORT_SAID_CITL_ACC_NAQAAE",
+      "properties": {
+        "name": "National Authority for Quality Assurance and Accreditation of Education (NAQAAE)",
+        "scope": "NATIONAL",
+        "accreditation_type": "BODY",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Accreditation",
+      "id": "PORT_SAID_CITL_ACC_SCU",
+      "properties": {
+        "name": "Supreme Council of Egyptian Universities (SCU)",
+        "scope": "NATIONAL",
+        "accreditation_type": "BODY",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Accreditation",
+      "id": "PORT_SAID_CITL_ACC_AACSB",
+      "properties": {
+        "name": "Association to Advance Collegiate Schools of Business (AACSB)",
+        "scope": "INTERNATIONAL",
+        "accreditation_type": "ACCREDITATION",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Accreditation",
+      "id": "PORT_SAID_CITL_ACC_AARU",
+      "properties": {
+        "name": "Association of Arab Universities",
+        "scope": "INTERNATIONAL",
+        "accreditation_type": "MEMBERSHIP",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Accreditation",
+      "id": "PORT_SAID_CITL_ACC_IFU",
+      "properties": {
+        "name": "International Federation of Universities",
+        "scope": "INTERNATIONAL",
+        "accreditation_type": "MEMBERSHIP",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Degree",
+      "id": "PORT_SAID_CITL_BSC_TLITM",
+      "properties": {
+        "degree_name": "B.Sc. in Trade Logistics and International Transport Management",
+        "level": "UNDERGRADUATE",
+        "study_duration_years": 4,
+        "total_semesters": 8,
+        "language_tracks": [
+          "Arabic",
+          "English"
+        ],
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Program",
+      "id": "PORT_SAID_CITL_LOGISTICS_INTL_TRADE",
+      "properties": {
+        "program_id": "LOGISTICS_INTL_TRADE",
+        "name": "Logistics and International Trade Management",
+        "focus": "International trade operations, customs, freight forwarding, trade logistics",
+        "industry_alignment": "VERY_HIGH",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Program",
+      "id": "PORT_SAID_CITL_TRANSPORT_LOGISTICS",
+      "properties": {
+        "program_id": "TRANSPORT_LOGISTICS",
+        "name": "Transport Logistics Management",
+        "focus": "Ports, maritime transport, multimodal transport, transport economics",
+        "industry_alignment": "VERY_HIGH",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Program",
+      "id": "PORT_SAID_CITL_SUPPLY_CHAIN",
+      "properties": {
+        "program_id": "SUPPLY_CHAIN",
+        "name": "Logistics and Supply Chain Management",
+        "focus": "Supply chain integration, inventory, procurement, distribution systems",
+        "industry_alignment": "HIGH",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Program",
+      "id": "PORT_SAID_CITL_ENERGY_LOGISTICS",
+      "properties": {
+        "program_id": "ENERGY_LOGISTICS",
+        "name": "Petroleum and Energy Logistics Management",
+        "focus": "Energy supply chains, petroleum logistics, hazardous cargo transport",
+        "industry_alignment": "HIGH",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "TrainingModel",
+      "id": "PORT_SAID_CITL_TRAININGMODEL_APPLIED_FIELD_CONSULTING",
+      "properties": {
+        "mandatory_training": true,
+        "industry_training": true,
+        "training_methods": [
+          "Applied coursework",
+          "Industry-linked projects",
+          "Professional consulting exposure",
+          "Field-oriented learning"
+        ],
+        "geographic_advantage": "Direct exposure to ports, maritime trade routes, and Suez Canal logistics ecosystem",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "ResearchArea",
+      "id": "RESEARCHAREA_INTERNATIONAL_TRANSPORT_MANAGEMENT",
+      "properties": {
+        "name": "International transport management",
+        "industry_projects": true,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "ResearchArea",
+      "id": "RESEARCHAREA_LOGISTICS_SYSTEMS",
+      "properties": {
+        "name": "Logistics systems",
+        "industry_projects": true,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "ResearchArea",
+      "id": "RESEARCHAREA_SUPPLY_CHAIN_MANAGEMENT",
+      "properties": {
+        "name": "Supply chain management",
+        "industry_projects": true,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "ResearchArea",
+      "id": "RESEARCHAREA_TRADE_ECONOMICS_LAW",
+      "properties": {
+        "name": "Trade-related economics and law",
+        "industry_projects": true,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_TRANSPORT_OPERATIONS_OFFICER",
+      "properties": {
+        "name": "Transport Operations Officer",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_LOGISTICS_ANALYST",
+      "properties": {
+        "name": "Logistics Analyst",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_PORT_OPERATIONS_COORDINATOR",
+      "properties": {
+        "name": "Port Operations Coordinator",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_SUPPLY_CHAIN_COORDINATOR",
+      "properties": {
+        "name": "Supply Chain Coordinator",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "CareerRole",
+      "id": "CAREERROLE_TRADE_LOGISTICS_EXECUTIVE",
+      "properties": {
+        "name": "Trade Logistics Executive",
+        "data_source_type": "official"
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "start_id": "CAMPUS_PORT_SAID",
+      "relationship_type": "HOSTS",
+      "end_id": "PORT_SAID_CITL",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "PORT_SAID_CITL",
+      "relationship_type": "HAS_ACCREDITATION",
+      "end_id": "PORT_SAID_CITL_ACC_NAQAAE",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "PORT_SAID_CITL",
+      "relationship_type": "HAS_ACCREDITATION",
+      "end_id": "PORT_SAID_CITL_ACC_SCU",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "PORT_SAID_CITL",
+      "relationship_type": "HAS_ACCREDITATION",
+      "end_id": "PORT_SAID_CITL_ACC_AACSB",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "PORT_SAID_CITL",
+      "relationship_type": "HAS_ACCREDITATION",
+      "end_id": "PORT_SAID_CITL_ACC_AARU",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "PORT_SAID_CITL",
+      "relationship_type": "HAS_ACCREDITATION",
+      "end_id": "PORT_SAID_CITL_ACC_IFU",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "PORT_SAID_CITL",
+      "relationship_type": "OFFERS",
+      "end_id": "PORT_SAID_CITL_BSC_TLITM",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "PORT_SAID_CITL_BSC_TLITM",
+      "relationship_type": "INCLUDES_PROGRAM",
+      "end_id": "PORT_SAID_CITL_LOGISTICS_INTL_TRADE",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "PORT_SAID_CITL_BSC_TLITM",
+      "relationship_type": "INCLUDES_PROGRAM",
+      "end_id": "PORT_SAID_CITL_TRANSPORT_LOGISTICS",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "PORT_SAID_CITL_BSC_TLITM",
+      "relationship_type": "INCLUDES_PROGRAM",
+      "end_id": "PORT_SAID_CITL_SUPPLY_CHAIN",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "PORT_SAID_CITL_BSC_TLITM",
+      "relationship_type": "INCLUDES_PROGRAM",
+      "end_id": "PORT_SAID_CITL_ENERGY_LOGISTICS",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "PORT_SAID_CITL_LOGISTICS_INTL_TRADE",
+      "relationship_type": "REQUIRES_TRAINING",
+      "end_id": "PORT_SAID_CITL_TRAININGMODEL_APPLIED_FIELD_CONSULTING",
+      "properties": { "origin": "training_and_industry", "data_source_type": "official" }
+    },
+    {
+      "start_id": "PORT_SAID_CITL_TRANSPORT_LOGISTICS",
+      "relationship_type": "REQUIRES_TRAINING",
+      "end_id": "PORT_SAID_CITL_TRAININGMODEL_APPLIED_FIELD_CONSULTING",
+      "properties": { "origin": "training_and_industry", "data_source_type": "official" }
+    },
+    {
+      "start_id": "PORT_SAID_CITL_SUPPLY_CHAIN",
+      "relationship_type": "REQUIRES_TRAINING",
+      "end_id": "PORT_SAID_CITL_TRAININGMODEL_APPLIED_FIELD_CONSULTING",
+      "properties": { "origin": "training_and_industry", "data_source_type": "official" }
+    },
+    {
+      "start_id": "PORT_SAID_CITL_ENERGY_LOGISTICS",
+      "relationship_type": "REQUIRES_TRAINING",
+      "end_id": "PORT_SAID_CITL_TRAININGMODEL_APPLIED_FIELD_CONSULTING",
+      "properties": { "origin": "training_and_industry", "data_source_type": "official" }
+    },
+    {
+      "start_id": "PORT_SAID_CITL_LOGISTICS_INTL_TRADE",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_INTERNATIONAL_TRANSPORT_MANAGEMENT",
+      "properties": { "industry_projects": true, "data_source_type": "official" }
+    },
+    {
+      "start_id": "PORT_SAID_CITL_LOGISTICS_INTL_TRADE",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_LOGISTICS_SYSTEMS",
+      "properties": { "industry_projects": true, "data_source_type": "official" }
+    },
+    {
+      "start_id": "PORT_SAID_CITL_LOGISTICS_INTL_TRADE",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_SUPPLY_CHAIN_MANAGEMENT",
+      "properties": { "industry_projects": true, "data_source_type": "official" }
+    },
+    {
+      "start_id": "PORT_SAID_CITL_LOGISTICS_INTL_TRADE",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_TRADE_ECONOMICS_LAW",
+      "properties": { "industry_projects": true, "data_source_type": "official" }
+    },
+    {
+      "start_id": "PORT_SAID_CITL_TRANSPORT_LOGISTICS",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_INTERNATIONAL_TRANSPORT_MANAGEMENT",
+      "properties": { "industry_projects": true, "data_source_type": "official" }
+    },
+    {
+      "start_id": "PORT_SAID_CITL_TRANSPORT_LOGISTICS",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_LOGISTICS_SYSTEMS",
+      "properties": { "industry_projects": true, "data_source_type": "official" }
+    },
+    {
+      "start_id": "PORT_SAID_CITL_TRANSPORT_LOGISTICS",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_SUPPLY_CHAIN_MANAGEMENT",
+      "properties": { "industry_projects": true, "data_source_type": "official" }
+    },
+    {
+      "start_id": "PORT_SAID_CITL_TRANSPORT_LOGISTICS",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_TRADE_ECONOMICS_LAW",
+      "properties": { "industry_projects": true, "data_source_type": "official" }
+    },
+    {
+      "start_id": "PORT_SAID_CITL_SUPPLY_CHAIN",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_INTERNATIONAL_TRANSPORT_MANAGEMENT",
+      "properties": { "industry_projects": true, "data_source_type": "official" }
+    },
+    {
+      "start_id": "PORT_SAID_CITL_SUPPLY_CHAIN",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_LOGISTICS_SYSTEMS",
+      "properties": { "industry_projects": true, "data_source_type": "official" }
+    },
+    {
+      "start_id": "PORT_SAID_CITL_SUPPLY_CHAIN",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_SUPPLY_CHAIN_MANAGEMENT",
+      "properties": { "industry_projects": true, "data_source_type": "official" }
+    },
+    {
+      "start_id": "PORT_SAID_CITL_SUPPLY_CHAIN",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_TRADE_ECONOMICS_LAW",
+      "properties": { "industry_projects": true, "data_source_type": "official" }
+    },
+    {
+      "start_id": "PORT_SAID_CITL_ENERGY_LOGISTICS",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_INTERNATIONAL_TRANSPORT_MANAGEMENT",
+      "properties": { "industry_projects": true, "data_source_type": "official" }
+    },
+    {
+      "start_id": "PORT_SAID_CITL_ENERGY_LOGISTICS",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_LOGISTICS_SYSTEMS",
+      "properties": { "industry_projects": true, "data_source_type": "official" }
+    },
+    {
+      "start_id": "PORT_SAID_CITL_ENERGY_LOGISTICS",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_SUPPLY_CHAIN_MANAGEMENT",
+      "properties": { "industry_projects": true, "data_source_type": "official" }
+    },
+    {
+      "start_id": "PORT_SAID_CITL_ENERGY_LOGISTICS",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_TRADE_ECONOMICS_LAW",
+      "properties": { "industry_projects": true, "data_source_type": "official" }
+    },
+    {
+      "start_id": "PORT_SAID_CITL_LOGISTICS_INTL_TRADE",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_TRADE_LOGISTICS_EXECUTIVE",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "PORT_SAID_CITL_TRANSPORT_LOGISTICS",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_PORT_OPERATIONS_COORDINATOR",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "PORT_SAID_CITL_SUPPLY_CHAIN",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_SUPPLY_CHAIN_COORDINATOR",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "PORT_SAID_CITL_SUPPLY_CHAIN",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_LOGISTICS_ANALYST",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "PORT_SAID_CITL_TRANSPORT_LOGISTICS",
+      "relationship_type": "LEADS_TO",
+      "end_id": "CAREERROLE_TRANSPORT_OPERATIONS_OFFICER",
+      "properties": { "data_source_type": "official" }
+    }
+  ]
+}

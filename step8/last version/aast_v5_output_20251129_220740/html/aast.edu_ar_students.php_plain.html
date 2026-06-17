@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- meta Tags -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title> طلاب الأكاديمية </title>
+<link rel="canonical" href='http://aast.edu/ar/students.php' />
+<meta name="distribution" content="global" />
+<!-- robots -->
+<meta name="robots" content="all" />
+<meta name="allow-search" content="yes" />
+<meta http-equiv="imagetoolbar" content="false" />
+<!-- author -->
+<meta name="author" content="قسم تصميم المواقع الإلكترونية, مركز المعلومات والتوثيق, الأكاديمية العربية للعلوم والتكنولوجيا والنقل البحرى" />
+<meta name="copyright" content="جميع حقوق النشر محفوظة 2020 © مركز المعلومات و التوثيق - الأكاديمية العربية للعلوم و التكنولوجيا و النقل البحري" />
+<!-- Viewport to make sure the website renders correctly on mobile devices -->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=0" />
+<!-- Keywords-->
+<meta name="keywords" content= "الأكاديمية العربية, الطلبة, النقل البحرى, التعاون الدولى, التسجيل, القبول, الكليات, شئون الطلبة, البرامج, الكورسات, التدريب, قصص النجاح, الدراسات الجامعية, الخريجين, مصر " />
+<!-- description-->
+<meta name="description" content="مسئوليتنا تحفيز الطلاب على التفكير بشكل إبداعي وفي نطاق يتجاوز مجرد النجاح بتقدير مرتفع في الدراسة" />
+<!--/. meta Tags -->
+
+
+<!-- Stylesheets -->
+<link href="css\bootstrap.css" rel="stylesheet">
+<link href="css\style.css" rel="stylesheet">
+<!-- Responsive -->
+<!--<link rel="shortcut icon" href="images\favicon.ico" type="image/x-icon">
+<link rel="icon" href="images\favicon.ico" type="image/x-icon">-->
+
+<link href="css\staff.css" rel="stylesheet">
+<link href="css\responsive.css" rel="stylesheet">
+<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<!--[if lt IE 9]><script src="js/respond.js"></script><![endif]-->
+<style>
+.single-project .upper-part .info-box{
+	position:absolute;
+	left:0px;
+	top:0px;
+	width:100%;
+	height:100%;
+	max-width:750px;
+	padding:50px 60px 20px;
+	color:#ffffff;
+	background:#E8A63A;	
+}
+
+#section2 {   padding-top: 0;}
+
+.single-project .upper-part .info-box:before{
+	content:'';
+	position:absolute;
+	right:-35px;
+	top:0px;
+	width:0px;
+	height:100%;
+	/* background:#082547; */
+	-webkit-transform:skewX(-10deg);
+	-ms-transform:skewX(-10deg);
+	-o-transform:skewX(-10deg);
+	-moz-transform:skewX(-10deg);
+	transform:skewX(-10deg);
+	z-index:1;		
+}
+.single-project .upper-part {
+    position: relative;
+    margin-bottom: 30px;
+}
+.video-gallery .overlay-gallery .icon-holder .icon a img {
+    width: auto;
+    transform: scale(1);
+    transition: all 0.5s ease 0s;
+    padding-top: 5%;
+    padding-left: 40%;
+}
+.single-project .upper-part .main-image img {
+    display: block;
+    width: 100%;
+}
+
+.single-project .upper-part .info-box {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    max-width: 850px;}
+	.single-project .upper-part .main-image {
+    position: relative;
+    margin-left: 850px;
+}
+@media(max-width:1366px) {
+.single-project .upper-part .main-image {
+    position: relative;
+    margin-left: 800px;
+}
+}
+.single-project h2 {
+    color: #fff !important;
+    text-align: right;
+}
+.service-section .service-content .content-text {  padding: 0px 0px 0px 10px !important;}
+</style>
+
+<!-- accessibility -->
+<script src='https://code.responsivevoice.org/responsivevoice.js'></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+$('a').mouseenter(function() { // Attach this function to all mouseenter events for 'a' tags 
+  responsiveVoice.cancel(); // Cancel anything else that may currently be speaking
+  responsiveVoice.speak($(this).text()); // Speak the text contents of all nodes within the current 'a' tag
+});
+</script>
+
+<script> 
+function getSelectionText() {
+    var text = "";
+	
+    if (window.getSelection) {
+        text = window.getSelection().toString();
+    // for Internet Explorer 8 and below. For Blogger, you should use &amp;&amp; instead of &&.
+    } else if (document.selection && document.selection.type != "Control") { 
+        text = document.selection.createRange().text;
+    }
+    return text;
+}
+$(document).ready(function (){ // when the document has completed loading
+   $(document).mouseup(function (e){ // attach the mouseup event for all div and pre tags
+      setTimeout(function() { // When clicking on a highlighted area, the value stays highlighted until after the mouseup event, and would therefore stil be captured by getSelection. This micro-timeout solves the issue. 
+         responsiveVoice.cancel(); // stop anything currently being spoken
+         responsiveVoice.speak(getSelectionText(),"Arabic Female"); //speak the text as returned by getSelectionText
+      }, 1);
+   });
+});
+
+</script>
+
+</head>
+
+<body class="blog-page-body">
+<div class="page-wrapper">
+ 	
+ 	
+       
+
+   <!--Main Slider-->
+    <section class="hero students">
+    <div class="container text-center">
+      <div class="col-md-12">
+     
+     <div class="sec-title text-center" style="margin-bottom: 40px;"> 
+                    <h2 class="pt-60">  طلاب <span class="theme_color">  الأكاديمية </span></h2>
+                   
+                </div> 
+                
+
+          <div class="btn-outer">
+                    <a href="https://studentportal.aast.edu/Login" target="_blank" class="lgn-btn">
+                        <span class="txt"><i class="fa fa-lock" aria-hidden="true"></i> &nbsp; بوابة الطالب </span></a>
+                    </div>
+
+      
+       
+      </div>
+    </div>
+
+  </section>
+  
+  <section class="default-intro-section" >
+    	<div class="auto-container">
+        	<div class="row clearfix">
+                <div class="col-md-11 col-sm-12 col-xs-12 pull-right">
+                	<!--Content Box-->
+                	<div class="content-box home">
+                    	<div class="row clearfix">
+                        	
+                              <div class="col-md-3 col-sm-12 "><div class="text-right padd-top-20"><a href="https://aast.edu/en/idc_apps/reg_paths.php" class="theme-btn btn-style-four" target="_blank"> <i class="fa fa-check" aria-hidden="true"></i> &nbsp;  التسجيل عبر الإنترنت </a></div></div>
+                              
+                              <div class="col-md-3 col-sm-12 ">
+                             <div class="btn-outer">
+         
+                    </div><div class="text-right padd-top-20"><a href="https://aastmtic2.aast.edu/QNB/Tution.aspx" class="theme-btn btn-style-four" target="_blank"> <i class="fa fa-credit-card" aria-hidden="true"></i> &nbsp;   السداد الالكترونى  </a></div></div>
+                  
+                  <div class="col-md-3 col-sm-12 ">
+                             <div class="text-right padd-top-20"><a href="https://portal.microsoftonline.com/" class="theme-btn btn-style-four" target="_blank"> <i class="fa fa-envelope" aria-hidden="true"></i> &nbsp;  البريد الألكتروني للطلبة  </a></div></div>
+
+							 <div class="col-md-3 col-sm-12 "><div class="text-right padd-top-20"><a href="https://aastmtic.aast.edu/studentemail/" class="theme-btn btn-style-four" target="_blank"> <i class="fa fa-envelope" aria-hidden="true"></i> &nbsp;
+                                  انشاء بريد جديد  </a></div></div>
+
+                             
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+
+ <!-- discover title -->
+   
+<!--<section class="tz-introduce-univesity">
+   
+               
+        <div class="tz-introduce-content">
+            
+            <div class="sec-title text-center padd-bott-10">
+            	<h2>مرحبا بكم <span class="theme_color">   في الأكاديمية</span></h2>
+                <div class="text"> أهلا ومرحبا بطلابنا في الأكاديمية  حيث ستجد مزيج من التعلم وتكوين الصداقات والعمل الجماعي لإكتشاف وتحقيق كامل إمكاناتك  </div>
+            </div>
+        </div>
+    </section>
+-->
+    
+    
+<section class="about-section student">
+        <div class="container">
+            
+            <div class="bottom-content">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12 about-column">
+                        <div class="single-item">
+                            <div class="icon-box">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+
+</div>
+                            <div class="title"><a href="https://www.aast.edu/en/colleges/student_inst/" target="_blank">   اختبار تحديد المستوى كامبريدج  </a></div>
+                            <div class="text"><p> اختبار كامبريدج للغة الإنجليزية (CEPT) عبر الإنترنت لتحديد مستوى اللغة الإنجليزية العامة.</p></div>
+                        </div>
+                        
+                        <div class="single-item">
+                            <div class="icon-box"><i class="fa fa-graduation-cap" aria-hidden="true"></i>
+</div>
+							<div class="title"><a href="https://www.aast.edu/ar/affairs/student-affairs/index.php"> شئون الطلاب </a> </div>
+                            <div class="text"><p> نحن نهدف إلى تطوير كيان تعليمي وأكاديمي متكامل يخدم جميع الطلاب. </p></div>
+                        </div>
+                        
+                        
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 about-column">
+                    <div class="single-item">
+                            <div class="icon-box"><i class="fa fa-file-text" aria-hidden="true"></i></div>
+                            <div class="title"> <a href="https://aastmtic2.aast.edu/tansik/" target="_blank">  نتيجة القبول بالأكاديمية  </a> </div>
+                            <div class="text"><p> نتائج اختبار تحديد المستوى والقبول للمتقدمين الجدد </p></div>
+                        </div>
+                        
+                        <div class="single-item">
+                            <div class="icon-box"><i class="fa fa-globe" aria-hidden="true"></i>
+</div>
+                            <div class="title"><a href="https://www.aast.edu/ar/centers/AfricanAffairs/" target="_blank"> الطلبة الدوليين </a></div>
+                            <div class="text"><p> تم تأسيس قطاع الشؤون الأفريقية والآسيوية كقطاع تنفيذي يستهدف الإرتقاء بالمستوى العلمى والبحثى في إفريقيا. </p></div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>    
+<!-- why-aast -->
+<section class="single-project no-padd-top">
+    	<div class="">
+            
+            <!--Upper Main Part-->
+            <div class="upper-part">
+            	<!--Upper Image Section-->
+                <div class="upper-box">
+                	<figure class="main-image">
+                    <!-- video -->
+                    <div class="video-gallery">
+                         <img src="images/students/why-aast.jpg" alt="Why AASTMT">
+                        <div class="overlay-gallery">
+                            <div class="icon-holder">
+                                <div class="icon">
+								<a href="https://www.youtube.com/watch?v=WT8soBeNDQ4" data-lightbox="" alt="Why AASTMT" title="Why AASTMT">
+								<img src="images\home\play-btn.png" alt="Play Button"></a>
+                                </div>
+                           <!--/.video  -->
+                    <!-- <img src="images\resource\why-aast.jpg" alt="AASTMT" title="AASTMT"> -->
+							</div>
+                   </div>
+                   </div>
+                    </figure>
+                    <div class="info-box">
+                    	<div class=""></div>
+                      <div class="sec-title text-left">
+                    <h2>  لماذا    الأكاديمية العربية ؟  </h2>
+                   
+                </div>
+                <div class="row details-content">
+    
+    <div class="post-item col-md-6 col-sm-6 col-xs-12">
+                            <div class="inner-box clearfix wow fadeInRight animated animated animated animated" data-wow-delay="300ms" data-wow-duration="1500ms" style="visibility: visible; animation-duration: 1500ms; animation-delay: 300ms; animation-name: fadeInRight;">
+                                
+                                <div class="text-content text-content_w">
+                                    <h3><a href="https://www.aast.edu/ar/maritime/" target="_blank"> <i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i> القطاع البحرى  </a></h3>
+                                 
+                                </div>
+                            </div>
+                        </div>                    
+    
+    <div class="post-item col-md-6 col-sm-6 col-xs-12">
+                            <div class="inner-box clearfix wow fadeInRight animated animated animated animated" data-wow-delay="300ms" data-wow-duration="1500ms" style="visibility: visible; animation-duration: 1500ms; animation-delay: 300ms; animation-name: fadeInRight;">
+                                
+                                <div class="text-content text-content_w">
+                                    <h3><a href="colleges/academics.php" >
+                                    <i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i> برامج متنوعة </a></h3>
+                                 
+                                </div>
+                            </div>
+                        </div>    
+    
+    <div class="post-item col-md-6 col-sm-6 col-xs-12">
+                            <div class="inner-box clearfix wow fadeInRight animated animated animated animated" data-wow-delay="300ms" data-wow-duration="1500ms" style="visibility: visible; animation-duration: 1500ms; animation-delay: 300ms; animation-name: fadeInRight;">
+                                
+                                <div class="text-content text-content_w">
+                                    <h3><a href="https://www.aast.edu/ar/colleges/practical-training/" > <i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i> التدريب العملى </a></h3>
+                                 
+                                </div>
+                            </div>
+                        </div>                    
+    
+    <div class="post-item col-md-6 col-sm-6 col-xs-12">
+                            <div class="inner-box clearfix wow fadeInRight animated animated animated animated" data-wow-delay="300ms" data-wow-duration="1500ms" style="visibility: visible; animation-duration: 1500ms; animation-delay: 300ms; animation-name: fadeInRight;">
+                                
+                                <div class="text-content text-content_w">
+                                    <h3><a href="https://aast.edu/pheed/academic_staff/academic_staff/list_staff.php" target="_blank">
+                                    <i class="fa fa-check-square-o fa-1x-o fa-1x" aria-hidden="true"></i> الأساتذة وأعضاء هيئة التدريس </a></h3>
+                                 
+                                </div>
+                            </div>
+                        </div>    
+                        
+    
+    <div class="post-item col-md-6 col-sm-6 col-xs-12">
+                            <div class="inner-box clearfix wow fadeInRight animated animated animated animated" data-wow-delay="300ms" data-wow-duration="1500ms" style="visibility: visible; animation-duration: 1500ms; animation-delay: 300ms; animation-name: fadeInRight;">
+                                
+                                <div class="text-content text-content_w">
+                                    <h3><a href="libraries.php"> <i class="fa fa-check-square-o fa-1x-o fa-1x" aria-hidden="true"></i> 11+ مكتبات علمية </a></h3>
+                                 
+                                </div>
+                            </div>
+                        </div>                    
+                        <div class="post-item col-md-6 col-sm-6 col-xs-12">
+                                <div class="inner-box clearfix wow fadeInRight animated animated animated animated" data-wow-delay="300ms" data-wow-duration="1500ms" style="visibility: visible; animation-duration: 1500ms; animation-delay: 300ms; animation-name: fadeInRight;">
+                                    
+                                    <div class="text-content text-content_w">
+                                        <h3><a href="https://www.aast.edu/en/sites/iacu/contenttemp.php?page_id=42400001" target="_blank">
+                                        <i class="fa fa-check-square-o fa-1x-o fa-1x" aria-hidden="true"></i> 51+ تعاونات دولية </a></h3>
+                                     
+                                    </div>
+                                </div>
+                            </div> 
+    <div class="post-item col-md-6 col-sm-6 col-xs-12">
+                            <div class="inner-box clearfix wow fadeInRight animated animated animated animated" data-wow-delay="300ms" data-wow-duration="1500ms" style="visibility: visible; animation-duration: 1500ms; animation-delay: 300ms; animation-name: fadeInRight;">
+                                
+                                <div class="text-content text-content_w">
+                                    <h3><a href="campuses/" target="_blank">
+                                    <i class="fa fa-check-square-o fa-1x-o fa-1x" aria-hidden="true"></i> 8+ مقرات </a></h3>
+                                 
+                                </div>
+                            </div>
+                        </div>    
+    
+ 
+                         
+                            <div class="post-item col-md-6 col-sm-6 col-xs-12">
+                                    <div class="inner-box clearfix wow fadeInRight animated animated animated animated" data-wow-delay="300ms" data-wow-duration="1500ms" style="visibility: visible; animation-duration: 1500ms; animation-delay: 300ms; animation-name: fadeInRight;">
+                                        
+                                        <div class="text-content text-content_w">
+                                            <h3><a href="https://aast.edu/en/centers/Entrepreneurship/" target="_blank">
+                                            <i class="fa fa-check-square-o fa-1x-o fa-1x" aria-hidden="true"></i> ريادة الأعمال  </a></h3>
+                                         
+                                        </div>
+                                    </div>
+                                </div> 
+    
+    </div>
+                    </div>
+                </div>
+                
+              
+                
+       
+       </div>     
+                    
+        </div>
+        
+    </section>
+
+<!--  -->
+<section class="latest-work">
+    	<div class="auto-container">
+        	<!--Section Title-->
+            <div class="sec-title text-center">
+            	<h2>الحياة<span class="theme_color"> بالأكاديمية </span></h2>
+                <div class="text"> الحياة الجامعية هي ذلك الجزء من حياتك الذي ستسترجع ذكرياتك فيه. </div>
+            </div>
+        </div>
+        
+    	<div class="carousel-outer">
+        	<ul class="work-carousel">
+            <!--Slide Item-->
+                <li class="slide-item">
+                	<div class="default-work-column">
+                <div class="inner-box">
+                    <figure class="image-box"><img src="images\gallery\trip.jpg" alt=""></figure>
+                   
+                    <div class="caption-layer">
+                        <div class="upper">
+                            <h3><a href="https://aast.edu/ar/affairs/student-affairs/social-activity-alexandria/contenttemp.php?page_id=50400007"> الرحلات  </a></h3>
+                                    <div class="category"><a href="https://aast.edu/ar/affairs/student-affairs/social-activity-alexandria/contenttemp.php?page_id=50400007"> رحلات ترفيهية وعلمية </a></div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+                </li>
+                
+            
+            	<!--Slide Item-->
+                <li class="slide-item">
+                	<div class="default-work-column">
+                    	<div class="inner-box">
+                        	<figure class="image-box"><img src="images\gallery\competition.jpg" alt=""></figure>
+                           
+                            <div class="caption-layer">
+                            	<div class="upper">
+                                	<h3><a href="https://aast.edu/en/centers/ric/">  المسابقات   </a></h3>
+                                    <div class="category"><a href="https://aast.edu/en/centers/ric/"> مسابقات الطلاب الدولية </a></div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                
+                
+                <!--Slide Item-->
+                <li class="slide-item">
+                	<div class="default-work-column">
+                    	<div class="inner-box">
+                        	<figure class="image-box"><img src="images\gallery\workshop.jpg" alt=""></figure>
+                           
+                            <div class="caption-layer">
+                            	<div class="upper">
+                                	<h3><a > الندوات وورش العمل  </a></h3>
+                                    <div class="category"><a > مجموعة متنوعة من الندوات وورش العمل</a></div>
+                                </div>
+                               
+                            </div>
+                        </div>
+
+                    </div>
+                </li>
+                
+                              
+                <!--Slide Item-->
+                <li class="slide-item">
+                	<div class="default-work-column">
+                    	<div class="inner-box">
+                        	<figure class="image-box"><img src="images\gallery\concerts.jpg" alt=""></figure>
+                            
+                            <div class="caption-layer">
+                            	<div class="upper">
+                                	<h3><a >  حفلات موسيقية وغنائية </a></h3>
+                                    <div class="category"><a >   مجموعة متنوعة من الحفلات لفنانين مشهورين  </a></div>
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                
+                               
+                <!--Slide Item-->
+                <li class="slide-item">
+                	<div class="default-work-column">
+                    	<div class="inner-box">
+                        	<figure class="image-box"><img src="images\gallery\cultural.jpg" alt=""></figure>
+                            <div class="caption-layer">
+                            	<div class="upper">
+                                	<h3><a > الأنشطة الثقافية </a></h3>
+                                    <div class="category"><a > مجموعة متنوعة من الأنشطة الثقافية والترفيهية</a></div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </li>
+               
+                <!--Slide Item-->
+                <li class="slide-item">
+                	<div class="default-work-column">
+                    	<div class="inner-box">
+                        	<figure class="image-box"><img src="images\gallery\act.jpg" alt=""></figure>
+                            <div class="caption-layer">
+                            	<div class="upper">
+                                	<h3><a >   الورش التمثيلية   </a></h3>
+                                    <div class="category"><a >   فرصة لاستكشاف مواهب الطلاب </a></div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                  
+            </ul>
+        </div>
+        
+        <div class="text-center"><a href="life.php" class="more-link"> للمزيد </a></div>
+        
+    </section>
+    <!-- Academics Section-->
+
+    <section class="video-section parallax overlay-black search-course-area faculty"  style="margin-top:5em;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        
+                        <div class="container">
+    <div class="row justify-content-between align-items-center">
+    <div class="col-lg-11 col-md-6 students">
+    
+    <div class="sec-title text-right">
+                        <h2 class="pt-60"> روابط <span class="theme_color"> سريعة </span></h2>
+                        <!--<div class="text">Claritas est etiam processus dynamicus, qui sequitur <br>mutationem consuetudium lectorum.</div>-->
+                    </div>
+                    
+    <div class="row details-content">
+    
+    <div class="post-item col-md-4 col-sm-6 col-xs-12">
+                            <div class="inner-box clearfix wow fadeInRight animated" data-wow-delay="300ms" data-wow-duration="1500ms" style="visibility: visible; animation-duration: 1500ms; animation-delay: 300ms; animation-name: fadeInRight;">
+                                
+                                <div class="text-content">
+                                    <h3><a href="https://aastmtic.aast.edu/onlineadmission/" target="_blank"> <i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i> القبول عبر الإنترنت  </a></h3>
+                                 
+                                </div>
+                            </div>
+                        </div>                    
+    
+<!--    <div class="post-item col-md-4 col-sm-6 col-xs-12">
+                            <div class="inner-box clearfix wow fadeInRight animated" data-wow-delay="300ms" data-wow-duration="1500ms" style="visibility: visible; animation-duration: 1500ms; animation-delay: 300ms; animation-name: fadeInRight;">
+                                
+                                <div class="text-content">
+                                    <h3><a href="https://aast.edu/en/idc_apps/reg_paths.php" target="_blank">
+                                    <i class="fa fa-check-square" aria-hidden="true"></i> التسجيل  عبر الإنترنت </a></h3>
+                                 
+                                </div>
+                            </div>
+                        </div> -->   
+    
+    <div class="post-item col-md-4 col-sm-6 col-xs-12">
+                            <div class="inner-box clearfix wow fadeInRight animated" data-wow-delay="300ms" data-wow-duration="1500ms" style="visibility: visible; animation-duration: 1500ms; animation-delay: 300ms; animation-name: fadeInRight;">
+                                
+                                <div class="text-content">
+                                    <h3><a href="https://aast.edu/ar/success_stories/" target="_blank"> <i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i>  قصص نجاح </a></h3>
+                                 
+                                </div>
+                            </div>
+                        </div>                    
+    
+    <div class="post-item col-md-4 col-sm-6 col-xs-12">
+                            <div class="inner-box clearfix wow fadeInRight animated" data-wow-delay="300ms" data-wow-duration="1500ms" style="visibility: visible; animation-duration: 1500ms; animation-delay: 300ms; animation-name: fadeInRight;">
+                                
+                                <div class="text-content">
+                                    <h3><a href="https://aast.edu/en/students/yearbook/" target="_blank">
+                                    <i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i> الكتيب السنوي </a></h3>
+                                 
+                                </div>
+                            </div>
+                        </div>    
+                        
+    
+    <div class="post-item col-md-4 col-sm-6 col-xs-12">
+                            <div class="inner-box clearfix wow fadeInRight animated" data-wow-delay="300ms" data-wow-duration="1500ms" style="visibility: visible; animation-duration: 1500ms; animation-delay: 300ms; animation-name: fadeInRight;">
+                                
+                                <div class="text-content">
+                                    <h3><a href="contacts/maps.php" target="_blank"> <i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i> الخرائط والمواقع </a></h3>
+                                 
+                                </div>
+                            </div>
+                        </div>                    
+                        <div class="post-item col-md-4 col-sm-6 col-xs-12">
+                                <div class="inner-box clearfix wow fadeInRight animated" data-wow-delay="300ms" data-wow-duration="1500ms" style="visibility: visible; animation-duration: 1500ms; animation-delay: 300ms; animation-name: fadeInRight;">
+                                    
+                                    <div class="text-content">
+                                        <h3><a href="services/" target="_blank">
+                                        <i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i> الخدمات والمرافق </a></h3>
+                                     
+                                    </div>
+                                </div>
+                            </div> 
+    <!-- <div class="post-item col-md-4 col-sm-6 col-xs-12">
+                            <div class="inner-box clearfix wow fadeInRight animated" data-wow-delay="300ms" data-wow-duration="1500ms" style="visibility: visible; animation-duration: 1500ms; animation-delay: 300ms; animation-name: fadeInRight;">
+                                
+                                <div class="text-content">
+                                    <h3><a href="#" target="_blank">
+                                    <i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i> الموارد الأكاديمية </a></h3>
+                                 
+                                </div>
+                            </div>
+                        </div>     -->
+    
+ 
+                        <div class="post-item col-md-4 col-sm-6 col-xs-12">
+                                <div class="inner-box clearfix wow fadeInRight animated" data-wow-delay="300ms" data-wow-duration="1500ms" style="visibility: visible; animation-duration: 1500ms; animation-delay: 300ms; animation-name: fadeInRight;">
+                                    
+                                    <div class="text-content">
+                                        <h3><a href="https://aast.edu/ar/testimonials/students.php" target="_blank">
+                                        <i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i> إشادة الطلاب </a></h3>
+                                     
+                                    </div>
+                                </div>
+                            </div> 
+                            <div class="post-item col-md-4 col-sm-6 col-xs-12">
+                                    <div class="inner-box clearfix wow fadeInRight animated" data-wow-delay="300ms" data-wow-duration="1500ms" style="visibility: visible; animation-duration: 1500ms; animation-delay: 300ms; animation-name: fadeInRight;">
+                                        
+                                        <div class="text-content">
+                                            <h3><a href="libraries.php" >
+                                            <i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i> المكتبات  </a></h3>
+                                         
+                                        </div>
+                                    </div>
+                                </div> 
+    
+    </div>
+    </div>
+    
+    </div>
+    </div>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+    
+        <!-- discover title -->
+   
+<section class="tz-introduce-univesity">
+   
+               
+        <div class="tz-introduce-content">
+            
+            <div class="sec-title text-center">
+            	<h2> طلاب <span class="theme_color"> الأكاديمية </span></h2>
+                <div class="text"> اكتشف مرافق وخدمات هامة لطلاب الأكاديمية. </div>
+            </div>
+        </div>
+    </section>
+            
+       
+    <!-- tabs Section-->
+
+<section class="service-section">        
+        <div class="container">  
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 service-column">
+                    <div class="tab-content-area">
+                        <ul class="nav nav-pills nav-justified">
+                            <li class="active"><a data-toggle="pill" href="#menu1"> الخدمات </a></li>
+                            <li><a data-toggle="pill" href="#menu2"> التدريب العملي   </a></li>
+                            <li ><a data-toggle="pill" href="#menu3"> الموارد الأكاديمية  </a></li>
+                           <li><a data-toggle="pill" href="#menu4"> قصص النجاح </a></li>
+                            <li><a data-toggle="pill" href="#menu5">  مركز التطوير المهني  </a></li>
+                        </ul>
+                      
+                        <div class="tab-content">
+                            <div id="menu1" class="tab-pane fade in active">
+                                <div class="service-content">
+                                    <div class="service-title">الخـــدمات بالأكاديـــــمية</div>
+                                    <div class="content-text">
+                                        <!-- <div class="img-box"><figure><img src="images\service\1.png" alt=""></figure></div> -->
+                                        <p>تهدف سياسة الأكاديمية إلى تزويد طلابها بجميع الخدمات ووسائل الراحة بالإضافة إلى رفع مستوى أداء هذه الخدمات بما يتماشى مع التقدم الذي تشهده الأكاديمية في الوقت الحالي.</p>
+                                    </div>
+                                    <ul class="list-content">
+                                        <li><a href="https://aast.edu/ar/sites/clinic/">الخدمات الطبية</a></li>
+										<li>الخدمات البنكية</li>
+                                        <li><a href="https://www.aast.edu/ar/services/transportation.php" target="_blank"> وسـائـل المواصــلات </a></li>
+                                        <li> <a href="https://aast.edu/en/student-affairs/student-accommodation.php" target="_blank"> سكـــــن الطـلبـــة </a></li>
+										<li> <a href="https://aast.edu/en/student-affairs/outdoor-workshops.php" target="_blank"> ورش عمل ومعارض فنية </a> </li>
+										<li><a href="services/"> والعديد من الخدمات الأخري </a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div id="menu2" class="tab-pane fade">
+                                <div class="service-content">
+                                    <div class="service-title"> التدريب العملى للطلاب </div>
+                                    <div class="content-text">
+                                        <!-- <div class="img-box"><figure><img src="images\service\1.png" alt=""></figure></div> -->
+                                        <p>إيماناً من الأكاديمية العربية للعلوم والتكنولوجيا والنقل البحرى بأهمية التدريب العملى الميدانى للطلاب وما يحققه من صقل لمهاراتهم وتأهيلهم للعمل مباشرة دون الحاجة إلى دورات تدريبية متخصصة وزيادة قدرتهم على التواصل والعمل الجماعى، فإن الأكاديمية توفر فرص للتدريب العملى الميدانى داخل وخارج البلاد ولا تألو جهداً فى سبيل الإرتقاء بالتدريب وتقويمه المستمر ليتواكب مع مستجدات التكنولوجيا والتطوير ولضمان تحقيق التدريب لأهدافه المرجوة ثم تنميط التدريب ووضع المعايير والضوابط المحققة لضمان جودة التدريب.  </p>
+                                    </div>
+                                    <ul class="list-content">
+                                    
+                                        <li><a href="https://aast.edu/ar/colleges/practical-training/">المزيد عن التدريب العملى للطلاب</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div id="menu3" class="tab-pane fade">
+                                <div class="service-content">
+                                    <div class="service-title"> الموارد الأكاديمية </div>
+                                    <div class="content-text">
+                                        <!-- <div class="img-box"><figure><img src="images\service\1.png" alt=""></figure></div> -->
+                                        <p>توفر الأكاديمية العربية لطلابها الكثير من الموارد المختلفة والمتنوعة للوصول إليهم إلى الحد الأقصى من الإستفاده العلمية والعملية . </p>
+                                    </div>
+                                    <ul class="list-content">
+                                        <li><a >التدريب العملى</a></li>
+                                        <li>المنح العلمية </li>
+                                        <li><a href="libraries.php">المكتبات</a></li>
+                                        <li><a >الدرجات العلمية المتنوعة</a></li>
+                                        <li>مركز التطوير المهني</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div id="menu4" class="tab-pane fade">
+                                    <div class="service-content">
+                                        <div class="service-title"> قصص نجاح </div>
+                                        <div class="content-text">
+                                            <!-- <div class="img-box"><figure><img src="images\service\1.png" alt=""></figure></div> -->
+                                            <p> قصص عن الطلاب والموظفين الذين يرتقون إلى تحقيق إنجاز رائع، حيث نوفر لطلابنا التعليم والخبرة لاكتشاف المجال الذي يهتمون به ويريدون التفوق فيه</p>
+                                        </div>
+                                        <ul class="list-content">
+                                            <li><a href="success_stories/"> قصص النجاح</a></li>
+                                            <li> <a href="success_stories/awards.php">المسابقات والجوائز</a></li>
+											 <li> <a href="success_stories/graduates-success-stories.php">  قصص نجاح الخريجين </a></li>
+                                            
+                                            
+                                        </ul>
+                                    </div>
+                                </div>
+                     
+                            <div id="menu5" class="tab-pane fade">
+                                <div class="service-content">
+                                    <div class="service-title">  مركز التطوير المهني  </div>
+                                    <div class="content-text">
+                                        <!-- <div class="img-box"><figure><img src="images\service\1.png" alt=""></figure></div> -->
+                                        <p>  مركز التطوير المهني (CDC) سيساعدك في الحصول على المعلومات والمهارات اللازمة للانتقال من الحياة الجامعية إلى عالم العمل كما يمكّنك من تحقيق أهدافك واتخاذ القرارات المهنية الصحيحة</p>
+                                    </div>
+                                    <!-- <ul class="list-content">
+                                        <li>Academic Success</li>
+                                        <li> Competitions Awards</li>
+                                        
+                                    </ul> -->
+                                </div>
+                            </div>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Life at AAST - Latest Work-->
+    
+  
+    <!--Sponsors Section-->
+    <section class="sponsors-section">
+    	<div class="auto-container">
+        <div class="sec-title text-center">
+            	<h2>  الإتفاقيات   <span class="theme_color">   و التعاون الدولي </span>  </h2>
+                <div class="text"> الإتفاقيات و التعاون الدولي للمرحلة الجامعية والدراسات العليا   </div>
+            </div>
+        	<!--Sponsors Carousel-->
+            <div class="sponsors-outer">
+                <!--Sponsors Carousel-->
+                <ul class="sponsors-carousel">
+                    <li class="slide-item"><figure class="image-box"><a href="#"><img src="images\clients\1.png" alt=""></a></figure></li>
+                    <li class="slide-item"><figure class="image-box"><a href="#"><img src="images\clients\2.png" alt=""></a></figure></li>
+                    <li class="slide-item"><figure class="image-box"><a href="#"><img src="images\clients\3.png" alt=""></a></figure></li>
+                    <li class="slide-item"><figure class="image-box"><a href="#"><img src="images\clients\4.png" alt=""></a></figure></li>
+                    <li class="slide-item"><figure class="image-box"><a href="#"><img src="images\clients\5.png" alt=""></a></figure></li>
+                    <li class="slide-item"><figure class="image-box"><a href="#"><img src="images\clients\6.png" alt=""></a></figure></li>
+                </ul>
+            </div>
+            
+            <div class="text-center padd-top-20"><a href="https://www.aast.edu/en/sites/iacu/contenttemp.php?page_id=42400001" class="theme-btn btn-style-two more-link"> المزيد <i class="fa fa-arrow-left" aria-hidden="true"></i> </a> </div>
+            <br>
+        </div>
+    </section>        
+       

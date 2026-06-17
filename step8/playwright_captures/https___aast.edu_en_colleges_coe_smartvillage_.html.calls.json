@@ -1,0 +1,1016 @@
+[
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/colleges/coe/smartvillage/",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://www.googletagmanager.com/gtag/js?id=",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/colleges-all/css/style.css",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/institutes-/css/fontawesome.min.css",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/colleges-all/css/allStyle.css",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/colleges/css/popup-search.css",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/topbar/css/plugins.css",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/topbar/css/style.css",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/topbar/css/main-menu.css",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/topbar/css/animate.css",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/colleges-all/css/menue.css",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/colleges-all/css/responsive-colleges.css",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/colleges-all/css/mklb.css",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/ar.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/topbar//img/main-menu/logo-2.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/topbar/img/main-menu/logo-2.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/topbar/img/main-menu/arab_league.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/topbar/img/main-menu/ain-logo.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/topbar/img/main-menu/qs.jpg",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/colleges-all/img/logo-blue03.webp",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/colleges-all/img/logo-blue.webp",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://www.aast.edu/mainpage-imgs/419/img/Front%20Entrance.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://www.aast.edu/mainpage-imgs/419/img/0.jpg",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://www.aast.edu/mainpage-imgs/419/img/8.jpg",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://www.aast.edu/mainpage-imgs/419/img/2.jpg",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://www.aast.edu/mainpage-imgs/419/img/6.jpg",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://www.aast.edu/mainpage-imgs/419/img/7.jpg",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/mainpage-imgs/0/img/icons/international-prog.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/mainpage-imgs/0/img/icons/training.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/mainpage-imgs/0/img/icons/services.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/mainpage-imgs/0/img/icons/course.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/mainpage-imgs/0/img/icons/activities.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/getData/retreiveOnePICNew.php?unit=419&img=164856.webp&mod=2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/getData/retreiveOnePICNew.php?unit=419&img=164000.webp&mod=2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/getData/retreiveOnePICNew.php?unit=419&img=163990.webp&mod=2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/getData/retreiveOnePICNew.php?unit=419&img=145663.webp&mod=2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/getData/retreiveOnePICNew.php?unit=419&img=145656.webp&mod=2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/getData/retreiveOnePICNew.php?unit=419&img=144338.webp&mod=2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/getData/retreiveOnePICNew.php?unit=419&img=145653.webp&mod=2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/getData/retreiveOnePICNew.php?unit=419&img=145149.webp&mod=2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "response",
+    "url": "https://www.googletagmanager.com/gtag/js?id=",
+    "status": 200,
+    "content_type": "application/javascript; charset=UTF-8",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/ar.png",
+    "status": 200,
+    "content_type": "image/png",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/topbar//img/main-menu/logo-2.png",
+    "status": 200,
+    "content_type": "image/png",
+    "sample": null
+  },
+  {
+    "type": "request",
+    "url": "https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&family=Poppins:wght@400;500;600;700;800;900&display=swap",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/topbar/img/main-menu/logo-2.png",
+    "status": 200,
+    "content_type": "image/png",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/topbar/img/main-menu/arab_league.png",
+    "status": 200,
+    "content_type": "image/png",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/topbar/img/main-menu/ain-logo.png",
+    "status": 200,
+    "content_type": "image/png",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/topbar/img/main-menu/qs.jpg",
+    "status": 200,
+    "content_type": "image/jpeg",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/colleges/css/popup-search.css",
+    "status": 200,
+    "content_type": "text/css",
+    "sample": "/* Start Search Popup */\n.search-popup {\n    position: fixed;\n    font-family: 'Roboto', sans-serif;\n    left: 0px;\n    top: -100%;\n    width: 100%;\n    height: 100%;\n    background: #041a33cc;\n    z-index: 9999;\n    visibility: hidden;\n    opacity: 0;\n    overflow: auto;\n    transition: all 700ms ease;\n    -moz-transition: all 700ms ease;\n    -webkit-transition: all 700ms ease;\n    -ms-transition: all 700ms ease;\n    -o-transition: all 700ms ease;\n}\n\n.search-popup.popup-visible {\n    top: 0;\n    visibility: visible;\n    opacity: 1;\n}\n\n.search-popup .close-search {\n    position: absolute;\n    right: 15px;\n    top: 10px;\n    font-size: 24px !important;\n    color: #ffffff;\n    cursor: pointer;\n    z-index: 5;\n}\n\n.search-popup .close-search .fa {\n    font-size: 24px !important;\n}\n\n.search-popup .close-search:hover {\n    opacity: 0.70;\n}\n\n.search-popup .search-form {\n    position: relative;\n    padding: 0px 15px 50px;\n    padding-top: 130px;\n    max-width: 1024px;\n    margin: 0 auto;\n}\n\n.search-popup .search-form fieldset {\n    position: relative;\n    border: none;\n    -webkit-border-radius: 12px;\n    -ms-border-radius: 12px;\n    -o-border-radius: 12px;\n    -moz-border-radius: 12px;\n    border-radius: 12px;\n}\n\n.search-popup .search-form fieldset input[type=\"search\"], .search-popup .search-form fieldset input[type=\"text\"] {\n    position: relative;\n    height: 70px;\n    padding: 20px 220px 20px 30px;\n    background: #ffffff;\n    line-height: 30px;\n    font-size: 24px;\n    color: #233145;\n    -webkit-border-radius: 7px;\n    -ms-border-radius: 7px;\n    -o-border-radius: 7px;\n    -moz-border-radius: 7px;\n    border-radius: 7px;\n}\n\n.search-popup .search-form fieldset input[type=\"submit\"] {\n    position: absolute;\n    display: block;\n    right: 0px;\n    top: 0px;\n    text-align: center;\n    width: 220px;\n    height: 70px;\n    padding: 20px 10px 20px 10px;\n    color: #ffffff !important;\n    background: #dda930;\n    line-height: 30px;\n    font-size: 20px;\n    text-transform: uppercase;\n    -moz-border-radius: 0px 7px 7px 0px;\n    -ms-border-radius: 0px 7px 7px 0px;\n    -o-border-radius: 0px 7px 7px 0px;\n    -webkit-border-radius: 0px 7px 7px 0px;\n    border-radius: 0px 7px 7px 0px;\n    border-color: transparent;\n}\n\n.search-popup .search-form fieldset input[type=\"submit\"]:hover {\n    background: #dd9330;\n}\n\n.search-popup h3 {\n    font-family: 'Roboto', sans-serif;\n    font-size: 24px;\n    color: #ffffff;\n    margin-bottom: 20px;\n    text-align: center;\n}\n\n.search-popup .recent-searches {\n    font-size: 16px;\n    color: #ffffff;\n    text-align: center;\n}\n\n.search-popup .recent-searches li {\n    display: inline-block;\n    margin: 0px 10px 10px 0px;\n}\n\n.search-popup .recent-searches li a {\n    display: block;\n    line-height: 24px;\n    border: 1px solid #ffffff;\n    padding: 7px 15px;\n    color: #ffffff;\n    border-radius: 3px;\n}\n\n.search-popup .recent-searches li a:hover {\n    color: #dda930;\n    border-color: #dda930;\n}\n\n.form-group fieldset input[type=\"radio\"] {\n    padding: 5px;\n    margin: 15px;\n    font-size: 1.1em;\n    color: #fff !important;\n}\n#News {\n    display: block;\n  }\n  #People {\n    display: block;\n  }\n  #Pages {\n    display: block;\n  }\n  #Web {\n    display: block;\n  }\n  .form-group fieldset label {\n    color: #fff;\n    cursor: pointer;\n    text-decoration: none;\n    display: ruby;\n\tdirection: ltr;\n  text-align: left;\n  float: left;\n  }\n  label:hover, a:hover, .link:hover {\n    color: #fff;\n   /* text-decoration: underline;*/\n  }\n  .search-popup .search-form fieldset input[type=\"submit\"] {\n    top: 30px;\n      \n}\n\n/* EndSearch Popup */"
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/colleges-all/css/allStyle.css",
+    "status": 200,
+    "content_type": "text/css",
+    "sample": "/* Start Testimonisals  */\n\nbody {font-family: var(--ltn__body-font); font-weight: 400; color: #103040; } :root{--color:#061b4a; --fuchsia:#e82f51; --orange:#ffa500; --blue:#132b61; --grey-1:#e7ebf0; --white:#fff; --ltn__heading-font:'Poppins',sans-serif; --ltn__body-font:'Nunito Sans',sans-serif } h1,h2,h3,h4{/*text-transform:capitalize */} h1{font-size:2em } h2{font-size:36px } h3{font-size:1.5em } p,span#Menu{font-size:18px } h4{font-size:20px; font-weight:500; } .container{width:90%; margin:auto } .block-info h3,.btn,.esteemed-title h2,.student-title h2,h1,h2,h3,h4{font-family:var(--ltn__heading-font) } .about-carousel{margin-top:50px ; overflow:hidden } *{padding:0;margin:0;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-o-box-sizing:border-box}.disabled{display:none!important}.owl-item{display:inline-block;vertical-align:text-top}button,form,input,select,textarea{border:0;background:0;outline:0}.text-center{text-align:center}.text-left{text-align:left}.text-right{text-align:right}.before:before{content:'';position:absolute;width:100%;height:100%;top:0;right:0;z-index:5}.after:after{content:'';position:absolute;width:100%;height:100%;top:0;right:0;z-index:5}flex-center,.flex-center{display:flex;flex-wrap:wrap;justify-content:center}flex-start,.flex-start{display:flex;flex-wrap:wrap;justify-content:flex-start}.align-center{align-items:center}.flex-end{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;flex-direction: row-reverse;}.flex-1{flex:1}pull-right{float:right;display:block}pull-left{float:left;display:block}.hide{display:none}img{max-width:100%;/* width: 100%; */font-size:0;height: auto;position:relative}.list-unstyled{list-style:none}.clearfix:after{content:'';display:block;clear:both}a{color:inherit;text-decoration:none}container{display:block;margin:auto}.w-100{min-width:100%}.col-1{width:calc((1 / 12) * 100%)}.col-2{width:calc((2 / 12) * 100%)}.col-3{width:calc((3 / 12) * 100%)}.col-4{width:calc((4 / 12) * 100%)}.col-5{width:calc((5 / 12) * 100%)}.col-6{width:calc((6 / 12) * 100%)}.col-7{width:calc((7 / 12) * 100%)}.col-8{width:calc((8 / 12) * 100%)}.col-9{width:calc((9 / 12) * 100%)}.col-10{width:calc((10 / 12) * 100%)}.col-11{width:calc((11/ 12) * 100%)}\n/*.col-12{width:calc((12/ 12) * 100%)}*/@media(min-width:1025px){.hide-pc{display:none}}@media(max-width:1199px){.col-lg-1{width:calc((1 / 12) * 100%);min-width:calc((1 / 12) * 100%)}.col-lg-2{width:calc((2 / 12) * 100%);min-width:calc((2 / 12) * 100%)}.col-lg-3{width:calc((3 / 12) * 100%);min-width:calc((3 / 12) * 100%)}.col-lg-4{width:calc((4 / 12) * 100%);min-width:calc((4 / 12) * 100%)}.col-lg-5{width:calc((5 / 12) * 100%);min-width:calc((5 / 12) * 100%)}.col-lg-6{width:calc((6 / 12) * 100%);min-width:calc((6 / 12) * 100%)}.col-lg-7{width:calc((7 / 12) * 100%);min-width:calc((7 / 12) * 100%)}.col-lg-8{width:calc((8 / 12) * 100%);min-width:calc((8 / 12) * 100%)}.col-lg-9{width:calc((9 / 12) * 100%);min-width:calc((9 / 12) * 100%)}.col-lg-10{width:calc((10 / 12) * 100%);min-width:calc((10 / 12) * 100%)}.col-lg-11{width:calc((11 / 12) * 100%);min-width:calc((11 / 12) * 100%)}.col-lg-12{width:100%;min-width:100%}}@media(max-width:991px){.col-md-1{width:calc((1 / 12) * 100%);min-width:calc((1 / 12) * 100%)}.col-md-2{width:calc((2 / 12) * 100%);min-width:calc((2 / 12) * 100%)}.col-md-3{width:calc((3 / 12) * 100%);min-width:calc((3 / 12) * 100%)}.col-md-4{width:calc((4 / 12) * 100%);min-width:calc((4 / 12) * 100%)}.col-md-5{width:calc((5 / 12) * 100%);min-width:calc((5 / 12) * 100%)}.col-md-6{width:calc((6 / 12) * 100%);min-width:calc((6 / 12) * 100%)}.col-md-7{width:calc((7 / 12) * 100%);min-width:calc((7 / 12) * 100%)}.col-md-8{width:calc((8 / 12) * 100%);min-width:calc((8 / 12) * 100%)}.col-md-9{width:calc((9 / 12) * 100%);min-width:calc((9 / 12) * 100%)}.col-md-10{width:calc((10 / 12) * 100%);min-width:calc((10 / 12) * 100%)}.col-md-11{width:calc((11 / 12) * 100%);min-width:calc((11 / 12) * 100%)}.col-md-12{width:100%;min-width:100%}}@media(max-width:767px){.hide-mobile{display:none!important}.col-sm-1{width:calc((1 / 12) * 100%);min-width:calc((1 / 12) * 100%)}.col-sm-2{width:calc((2 / 12) * 100%);min-width:calc((2 / 12) * 100%)}.col-sm-3{width:calc((3 / 12) * 100%);min-width:calc((3 / 12) * 100%)}.col-sm-4{width:calc((4 / 12) * 100%);min-width:calc((4 / 12) * 100%)}.col-sm-5{width:calc((5 / 12) * 100%);min-width:calc((5 / 12) * 100%)}.col-sm-6{width:calc((6 / 12) * 100%);min-width:calc((6 / 12) * 100%)}.col-sm-7{width:calc((7 / 12) * 100%);min-width:calc((7 / 12) * 100%)}.col-sm-8{width:calc((8 / 12) * 100%);min-width:calc((8 / 12) * 100%)}.col-sm-9{width:calc((9 / 12) * 100%);min-width:calc((9 / 12) * 100%)}.col-sm-10{width:calc((10 / 12) * 100%);min-width:calc((10 / 12) * 100%)}.col-sm-11{width:calc((11 / 12) * 100%);min-width:calc((11 / 12) * 100%)}.col-sm-12{width:100%;min-width:100%}}@media(max-width:450px){.col-xs-1{width:calc((1 / 12) * 100%);min-width:calc((1 / 12) * 100%)}.col-xs-2{width:calc((2 / 12) * 100%);min-width:calc((2 / 12) * 100%)}.col-xs-3{width:calc((3 / 12) * 100%);min-width:calc((3 / 12) * 100%)}.col-xs-4{width:calc((4 / 12) * 100%);min-width:calc((4 / 12) * 100%)}.col-xs-5{width:calc((5 / 12) * 100%);min-width:calc((5 / 12) * 100%)}.col-xs-6{width:calc((6 / 12) * 100%);min-width:calc((6 / 12) * 100%)}.col-xs-7{width:calc((7 / 12) * 100%);min-width:calc((7 / 12) * 100%)}.col-xs-8{width:calc((8 / 12) * 100%);min-width:calc((8 / 12) * 100%)}.col-xs-9{width:calc((9 / 12) * 100%);min-width:calc((9 / 12) * 100%)}.col-xs-10{width:calc((10 / 12) * 100%);min-width:calc((10 / 12) * 100%)}.col-xs-11{width:calc((11 / 12) * 100%);min-width:calc((11 / 12) * 100%)}.col-xs-12{width:100%;min-width:100%}} .pull-right{float: right;} .pull-left{float: left;} .about-box h2, .video-content h2 {text-transform: capitalize; } .more-videos{display:inline-block; background:linear-gradient(115deg,#ff5a3c 0,#e22180 100%); margin-top:2em; font-size:1.3em; color:#fff; position:relative; border-radius:4px } section.about{padding:75px 10px } .about-box p{margin:15px 0; color:#698391 } a.about-link{padding:15px 30px; color:#fff } .about-slider h4{color:#4a5357 } .about-box{margin-right:30px } .about-images{position:relative; z-index:999 } .ab-image img{width:100%; height:100%; display:block; border-radius:50% } .ab-image.active{border:2px solid #f07c67; border-radius:50% } .ab-image:first-child{width:140px; top:-2em; border-radius:50%; padding:4px; position:absolute; right:40px } .ab-image:nth-child(2){width:200px; margin-top:100px; padding:4px; position:relative; } .ab-image:nth-child(3){width:120px; position:absolute; right:40px; padding:5px } .active .cir1{position:absolute; width:40px; height:40px; right:20px; bottom:-50px; border-radius:50% } .active .cir2{position:absolute; width:20px; height:20px; right:-5px; bottom:-63px; border-radius:50% } .btn-effect-1:after,.btn-effect-2:after{background:var(--white); width:0%; height:100%; top:0 } .about-carousel{margin-top:50px } .about-slider h2{margin-top:13px } p.para{margin-bottom:20px; color:#686868 } button.owl-dot{display:inline-block; width:30px; height:5px; background:#bfbfbf; margin-right:5px; cursor:pointer } .about .owl-dots{margin-top:20px; justify-content:flex-start } button.owl-dot.active{background:#000 } .ab-image:nth-child(2) .cir1{bottom: 70px; right: -60px; } .ab-image:nth-child(2) .cir2{bottom: 60px; right: -80px; } .ab-image:nth-child(3) .cir1{bottom:129px; right:14px } \n.ab-image:nth-child(3) .cir2{bottom: 108px; right: -61px; } @media (max-width:1199px){.container{width:100%; padding:0 10px } h2.video-title {font-size:33px } section.testim-section.testim-section-2 .flex-between {margin:0 15px } .fix-margin {margin: 0 -10px 0 0; } section.student-blog.details .container{margin-left: 0; } section.intro .container{padding:0 } body,html{overflow-x:hidden } .st-image{flex:1 } .st-image h3,.st-image:after{display:none } .img{min-width:calc(100% / 6 - 21px); flex:1 } .testim-title{max-width:100% } section.student-blog.details .block-info {padding:20px 0 } .widget.ltn__social-media-widget {position:static } .widget.ltn__social-media-widget ul {display:flex; margin-left: 15px; } } @media (max-width:767px){.student-title{width:100%; margin-top:60px } .footer-box h2{font-size:30px } .col-6.col-md-12.testimonial{padding-top:0 } .about-box h2{font-size:2.1em } .about-images{display:none } section.about{padding:35px 10px } .image-video i{width:70px; height:70px; font-size:40px } .ab-image:nth-child(3) .cir1{right:0; bottom:-60px } .ab-image:nth-child(2) .cir2{bottom:79px; right:0 } .student-intro-2 .student-title{margin-top:0 } .testim-section-2 .testim-left-box h3{font-size:27px } section.testim-blog.testim-section-2 [class*=pull-],section.testim-section [class*=pull-]{width:100%; text-align:center } .testim-left-box{margin-bottom:20px; text-align:left; max-width:100% } .sh{margin:5px 0 } section.student-intro.testimonial-section{background-size:contain; background-repeat:no-repeat; padding-top: 190px; padding-bottom: 20px; } .qtitle{margin:0 } .testim-image{width:50px; height:50px } .read-more.details,.student-p{width:100% } .item-info h2{font-size:18px } .item p{font-size:16px } h2.video-title{max-width:200px; font-size:1.25em; position: relative; top: -60px; } .form-search{width:calc(100%)!important; margin:20px 0; height:60px; position:static } .form-search input{width:calc(100% - 60px) } .form-search button{width:60px; font-size:20px } .img{flex:1; min-width:calc(25% - 5px) } .testim-box{margin: 10px 0; } .about-slider h4{margin-top:50px } .image-video{margin-right:0 } .video-content{margin-bottom:20px; max-width:100% } .video-content h2{font-size:31px } .video-container iframe{width:100%; height:250px } footer .pull-left,footer .pull-right{width:100%; text-align:center; margin-bottom:5px } .search-icon{position:absolute; left:0 } .logo{flex:1; text-align:center } .logo img{width:auto } } @media (max-width:1250px){.ltn__top-bar-menu>ul>li{font-size:12px }"
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/colleges-all/img/logo-blue03.webp",
+    "status": 200,
+    "content_type": "",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/topbar/css/main-menu.css",
+    "status": 200,
+    "content_type": "text/css",
+    "sample": "/****************************************************************************************************\ntop-bar.css\n***********************************************************************************************/\n.row2 {\n    background-color: #132b61;\n    border: none;\n    padding: 4px 17px;\n}\n\n.ltn__header-top-area .auto-container {\n    width: 94%;\n    display: block;\n    float: none;\n    margin: auto;\n}\n\n.ltn__drop-menu > ul > li:hover > a {\n    color: #fff;\n}\n\n.ltn__top-bar-menu > ul > li > i,\n.ltn__top-bar-menu > ul > li > a > i {\n    margin-right: 3px;\n    color: var(--ltn__secondary-color);\n}\n\n.ltn__top-bar-menu .ltn__currency-menu .active-currency {\n    font-size: 14px;\n    font-weight: 700;\n}\n\n.ltn__top-bar-menu > ul {\n    padding: 0;\n    margin: 0;\n}\n\n.ltn__top-bar-menu > ul > li > i,\n.ltn__top-bar-menu > ul > li > a > i {\n    margin-right: 3px;\n    color: #f9b702;\n    font-size: 0.85em;\n    font-weight: normal;\n}\n\n.ltn__top-bar-menu > ul > li {\n    list-style: none;\n    display: inline-block;\n    margin: 0 15px 0 0;\n    font-size: 14px;\n    font-weight: 700;\n}\n\n.ltn__drop-menu ul li:hover > ul {\n    top: 100%;\n    opacity: 1;\n    visibility: visible;\n}\n\n.ltn__currency-menu ul li ul {\n    min-width: max-content !important;\n}\n\n.ltn__drop-menu ul li ul li a {\n    color: inherit;\n    font-weight: 500;\n    font-size: 15px;\n}\n\n.ltn__drop-menu ul li ul {\n    position: absolute;\n    min-width: 150px;\n    right: 0;\n    background-color: #fff;\n    z-index: 999;\n    -webkit-box-shadow: var(--ltn__box-shadow-4);\n    box-shadow: var(--ltn__box-shadow-4);\n    border-top: 1px solid #ececec;\n    top: 130%;\n    padding: 7px 0;\n    margin: 0;\n    -webkit-transition: opacity .2s ease .1s, visibility .2s ease .1s, top .2s ease .1s;\n    -o-transition: opacity .2s ease .1s, visibility .2s ease .1s, top .2s ease .1s;\n    transition: opacity .2s ease .1s, visibility .2s ease .1s, top .2s ease .1s;\n    opacity: 0;\n    visibility: hidden;\n}\n\n.ltn__drop-menu {\n    display: inline-block;\n    text-align: left;\n}\n\n.ltn__drop-menu ul {\n    margin-bottom: 0;\n}\n\n.ltn__drop-menu ul li ul li {\n    display: block;\n    padding: 0px 0.5em;\n    font-size: 16px;\n    color: var(--ltn__paragraph-color);\n    font-weight: 500;\n}\n\n.ltn__top-bar-menu > ul > li:last-child {\n    margin-right: 0;\n}\n\nimg.flag {\n    width: 18px;\n    display: inline-block;\n    padding-left: 2px;\n}\n\n.ltn__drop-menu ul li i {\n    font-size: 0.7em;\n    font-weight: 500;\n    color: #ffc107;\n}\n\n.ltn__header-area {\n    z-index: 9999;\n    position: relative;\n    color: #fff;\n    background: #fff;\n}\n\n.ltn__header-top-area {\n    border-bottom: 1px solid;\n    border-color: var(--border-color-3);\n\tbackground: #132b61;\n}\n\n.ltn__header-top-area .ltn__social-media ul li {\n    font-size: 14px;\n    margin: 0 10px 0 0;\n}\n\n.top-area-color-white {\n    background-color: #fff;\n}\n\n.top-area-color-white p,\n.top-area-color-white a,\n.top-area-color-white li,\n.top-area-color-white .welcome p,\n.top-area-color-white .welcome a,\n.top-area-color-white .ltn__drop-menu > ul > li > a,\n.top-area-color-white .ltn__drop-menu > ul > li:hover > a {\n    color: var(--white);\n}\n\n.ltn__header-top-area .row {\n    -webkit-box-align: center;\n    -ms-flex-align: center;\n    align-items: center;\n}\n\n.ltn__language-menu .dropdown-toggle::before {\n    /*content: \"\\e939\";*/\n    font-size: 12px;\n    position: absolute;\n    top: 55%;\n    right: -9px;\n    -webkit-transform: translateY(-50%);\n    -ms-transform: translateY(-50%);\n    -moz-transform: translateY(-50%);\n    -o-transform: translateY(-50%);\n    transform: translateY(-50%);\n    /*font-family: 'icomoon';*/\n\tfont-family: \"Font Awesome 5 free\";\n    content: \"\\f078\";\n    color: #f9b702;\n\t}\n\n/******************************max-1250px**********************/\n\n@media (max-width: 1250px) {\n    .ltn__top-bar-menu > ul > li {\n        font-size: 12px;\n    }\n\n    ol,\n    ul {\n        padding-left: 1rem;\n    }\n\n    .ltn__header-top-area .auto-container {\n        width: 98%;\n    }\n}\n\n\n/******************************max-991px**********************/\n\n@media (max-width: 991px) {\n    .txt-991-center {\n        text-align: center;\n    }\n\n    .ltn__drop-menu ul {\n        margin-bottom: 0;\n        padding-left: 0 !important;\n    }\n\n    .ltn__top-bar-menu > ul > li {\n        font-size: 11px;\n        display: contents;\n    }\n\n    .ltn__drop-menu.ltn__currency-menu.ltn__language-menu ul {\n        padding-left: 0;\n    }\n\n    .ltn__drop-menu ul li ul li a {\n        font-size: 13px;\n    }\n\n    .ltn__drop-menu ul li i {\n        font-size: 0.5em;\n    }\n\n    .col-md-4,\n    .col-md-5 {\n        width: 100% !important;\n    }\n\n    .ltn__header-top-area .auto-container {\n        width: 100%\n    }\n}\n\n\n/******************************max-768px**********************/\n\n@media (max-width: 768px) {\n    .row2 .col-md-2 {\n        width: 100%;\n    }\n\n    li.DeskTopLogo {\n        display: none !important;\n    }\n\n    a.aast-mobile {\n        display: block;\n        width: 100%;\n        display: contents;\n    }\n\n    a.aast-mobile img {\n        display: block;\n        width: 60%;\n        float: left;\n        margin: 0 0 0 25px;\n    }\n\n    .ltn__header-top-area {\n\n        text-align: center;\n    }\n\n    .ltn__header-top-area .ltn__social-media ul li {\n        font-size: 12px;\n        margin: 0 5px 0 0;\n    }\n\n    .ltn__top-bar-menu .ltn__currency-menu .active-currency,\n    .ltn__top-bar-menu > ul > li {\n        font-size: 12px;\n    }\n\n    .ltn__drop-menu > ul > li {\n        position: inherit;\n    }\n\n    .ltn__drop-menu > ul > li > a {\n        height: 20px;\n        line-height: 20px;\n    }\n\n    .ltn__drop-menu ul li ul {\n        left: 50%;\n        right: 50%;\n        -webkit-transform: translateX(-50%);\n        -ms-transform: translateX(-50%);\n        transform: translateX(-50%);\n    }\n\n    .top-bar-right {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n        justify-content: space-between;\n    }\n\n    .site-logo {\n        min-width: 100px;\n    }\n}\n\n\n/******************************max-576px**********************/\n\n@media (max-width:576px) {\n    .col-sm-8 {\n        width: 70%;\n    }\n\n    .col-sm-6 {\n        width: 50%;\n    }\n\n    .col-sm-12 {\n        width: 100%;\n    }\n\n    .top-bar-right {\n        width: fit-content;\n    }\n\n    #menuToggle {\n        padding: 0.6em 0.2em 0.4em;\n        border-radius: 5px;\n    }\n\n    .aast-logo {\n        width: 50%;\n        left: 0%;\n        top: 2em;\n    }\n\n    .ltn__header-top-area {\n        background-color: #132b61;\n    }\n\n    .top-bar-right {\n        margin-top: 5em;\n    }\n\n    .ltn__top-bar-menu > ul > li {\n        margin: 0;\n    }\n\n    .col-sm-12 {\n        width: 100% !important;\n        padding: 10px;\n    }\n}\n\n/****************************************************************************************************\n    main-menu.css\n**********************************************************************************************/\nbody.body--lock {\n    overflow-y: hidden !important;\n}\n\n.absolute {\n    position: absolute;\n}\n\n.inherit {\n    position: inherit;\n}\n\n.float-right {\n    float: right;\n}\n\n.mobile--overlay_content {\n    font-family: 'Nunito Sans', sans-serif;\n}\n\n.mobile--overlay_content > ul li,\n.mobile--overlay_content > ol li {\n    margin-top: 0;\n}\n\n#NavMobile li {\n    margin-top: 0 !important;\n}\n\n#NavMobile a.nav-link {\n    padding: 0 !important;\n}\n\nspan.open--menu {\n    cursor: pointer;\n}\n\ndiv#Overlay:after {\n    background: #04152e82;\n    width: 100%;\n    content: '';\n    height: 100%;\n    position: absolute;\n    right: 0;\n}\n\na.aast-mobile img {\n    opacity: 0;\n}\n\n/****************Start hamburger__line****************/\n.hamburger__line {\n    background: #f6ba42;\n    height: 0.25rem;\n    width: 1.7rem;\n    display: block;\n    margin: 4px auto 0;\n    transition: all 0.2s;\n    z-index: 3;\n}\n\n.hamburger__line-active {\n    background: white;\n    position: inherit;\n    z-index: 999999999;\n}\n\n.hamburger__line-active:nth-child(1) {\n    transform: rotate(45deg);\n    position: relative;\n}\n\n.hamburger__line-active:nth-child(2) {\n    display: none;\n}\n\n.hamburger__line-active:nth-child(3) {\n    transform: rotate(-45deg);\n    top: -10px;\n    position: relative;\n}\n\n/****************End hamburger__line****************/\n/****************Start Quick links****************/\nul.quickLinks2 {\n    display: inline-flex;\n    color: #fff;\n    background: #060f2f;\n    position: absolute;\n    z-index: 99999;\n    bottom: 0%;\n    border-top: 1px solid #ffffff6b;\n    width: 100%;\n    padding: 20px 10px;\n    height: 90px;\n    left: 0;\n    margin-bottom: 0;\n    margin-top: revert;\n    line-height: 50px;\n}\n\nul.quickLinks2 li {\n    padding-left: 23px;\n}\n\n.quickLinks2 span {\n    color: #9fa2a6;\n    font-size: 23px;\n    font-weight: bold;\n}\n\n.quickLink2 {\n    display: inline;\n}\n\n.quickLinks2 li {\n    display: table-cell;\n    padding-left: 33px;\n}\n\n.quickLinks2 li a {\n    font-size: 20px;\n    color: #fdc236;\n    text-decoration: none;\n}\n\n.quickLinks2 i {\n    padding-left: 15px;\n}\n\n/*******************End Quick Links**************/\n#NavMobile {\n    display: block;\n    width: 26%;\n    overflow-y: scroll;\n    height: 70%;\n}\n\n#NavMobile .nav {\n    display: flow-root;\n    padding-left: 0;\n    margin-bottom: 0;\n    list-style: none;\n}\n\n#NavMobile a.nav-link {\n    padding: 0;\n    display: inline-block;\n}\n\n.mobile--overlay {\n    height: 0%;\n    width: 100%;\n    position: fixed;\n    z-index: 999;\n    right: 0;\n    top: 0;\n    overflow-y: hidden;\n    opacity: 1;\n    background: #0a1336;\n\n}\n\nh3.level3_Title {\n    font-weight: 600;\n    color: #fff;\n}\n\n.section-bg-6 {\n    background-color: #132b61;\n}\n\ndiv#level3 h4,\n#level3 h5 {\n    color: #ffc107;\n    font-size: 16px;\n}\n\ndiv#Overlay {\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    z-index: -1;\n    /*    background: #000a40;*/\n    background-size: cover !important;\n    background: url(\"../img/main-menu/t12.webp\");\n    transition: all 0.45s ease-in-out;\n    -w"
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/colleges-all/css/menue.css",
+    "status": 200,
+    "content_type": "text/css",
+    "sample": "\n\n/* Start Menu Page */\n\n\n/* 2. Base Typography\n------------------------------------------------------------------------------*/\n\na {\n    text-decoration: none;\n  }\n  \n  /* main container */\n  #wrapper-menu-aast {\n    width: 100%;\n    display: flex;\n    min-height: 100%;\n    position: relative;\n    flex-wrap: wrap;\n    background-color: #fff;\n    justify-content: space-between;\n    align-content: space-between;\n    -webkit-transform: translateX(0);\n    transform: translateX(0);\n    transition: -webkit-transform 800ms cubic-bezier(0.68, -0.55, 0.265, 1.55);\n    transition: transform 800ms cubic-bezier(0.68, -0.55, 0.265, 1.55);\n    transition: transform 800ms cubic-bezier(0.68, -0.55, 0.265, 1.55),\n      -webkit-transform 800ms cubic-bezier(0.68, -0.55, 0.265, 1.55);\n  }\n  .main-container-aasta {\n    width: 100%;\n    position: relative;\n  }\n  /* header */\n  .main-header {\n    width: 100%;\n    height: auto;\n  }\n  h3 {\n    font-size: 1.5em;\n  }\n  /* responsive nav for small devices */\n  \n  /* hamburger-aasta menu */\n  .hamburger-aasta {\n    padding: 0;\n    margin: 0;\n    height: 25px;\n    width: 25px;\n    text-align: center;\n    background-color: transparent;\n  }\n  .hamburger-aasta:not(.close) {\n    position: absolute;\n    top: 10px;\n    right: 20px;\n    z-index: 999;\n    border: 0;\n    display: none;\n    width: auto;\n    height: auto;\n    border: 1px solid #a4a3a3;\n    border-radius: 2px;\n    padding: 14px;\n    direction: rtl;\n    min-width: 50px;\n    min-height: 50px;\n  }\n  .hamburger-aasta:hover,\n  .hamburger-aasta:focus {\n    background-color: transparent;\n    outline: none;\n  }\n  .hamburger-aasta .line {\n    width: 50px;\n    height: 4px;\n    background-color: #3c3c3b;\n    display: block;\n    margin: 10px 0;\n    transition: all 0.4s ease-in;\n    right: 0;\n    position: revert;\n  }\n  .hamburger-aasta:hover {\n    cursor: pointer;\n  }\n  .hamburger-aasta.close {\n    padding: 10px;\n  }\n  .hamburger-aasta.close .wrap {\n    position: relative;\n    width: 30px;\n    height: 30px;\n    display: block;\n  }\n  .hamburger-aasta.close .line {\n    margin: 0;\n    width: 100%;\n    position: absolute;\n    top: calc(50% - 2px);\n    transform: rotate(45deg);\n    background-color: #000;\n  }\n  .hamburger-aasta.close .line:last-child {\n    transform: rotate(-45deg);\n  }\n  .hamburger-aasta.is-active .line:nth-child(1) {\n    transform: rotate(45deg);\n    position: absolute;\n    left: 0;\n    top: 5px;\n  }\n  .hamburger-aasta.is-active .line:nth-child(2) {\n    opacity: 0;\n    visibility: hidden;\n    position: absolute;\n    transition: none;\n  }\n  .hamburger-aasta.is-active .line:nth-child(3) {\n    transform: rotate(-45deg);\n    position: absolute;\n    left: 0;\n    top: 5px;\n  }\n  #menu-aast {\n    position: fixed;\n    top: 0;\n    left: 0;\n    bottom: 0;\n    width: 100%;\n    height: 100%;\n    background-color: #f1f1f1;\n    max-width: 99%;\n    transition: all 0.3s ease-in-out;\n    z-index: 999;\n    -webkit-transform: translateX(-150%);\n    transform: translateX(-150%);\n    transition: -webkit-transform 500ms cubic-bezier(0.68, -0.55, 0.265, 1.55);\n    transition: transform 500ms cubic-bezier(0.68, -0.55, 0.265, 1.55);\n    transition: transform 500ms cubic-bezier(0.68, -0.55, 0.265, 1.55),\n      -webkit-transform 500ms cubic-bezier(0.68, -0.55, 0.265, 1.55);\n    transition-delay: 0.2s;\n    overflow-x: hidden;\n    overflow-y: auto;\n  }\n  \n  #mobilenav-aast .nav-logo {\n    padding: 15px;\n  }\n  #mobilenav-aast ul,\n  #mobilenav-aast li {\n    padding: 0;\n    margin: 0;\n    list-style: none;\n    transition: 0;\n    position: relative;\n  }\n  #mobilenav-aast .caret {\n    display: block;\n    width: 36px;\n    position: absolute;\n    top: 1px;\n    right: 20px;\n    cursor: pointer;\n    background-color: #132b61;\n  }\n  #mobilenav-aast .caret:not(.trigger-caret) {\n    pointer-events: none;\n  }\n  #mobilenav-aast .caret:after {\n    content: \"\";\n    border: 2px solid #fff;\n    border-bottom: 0;\n    border-left: 0;\n    transform: rotate(45deg);\n    display: block;\n    position: absolute;\n    height: 15px;\n    width: 15px;\n    top: 15px;\n    left: 8px;\n  }\n  #mobilenav-aast ul a {\n    display: block;\n    padding: 10px 15px;\n    cursor: pointer;\n    z-index: 2;\n    font-size: 16px;\n    text-decoration: none;\n    color: #fff;\n    background: #132b61;\n    border-bottom: 1px solid #fff;\n    transition: none;\n  }\n  #mobilenav-aast ul a:hover {\n    background: #132b61;\n  }\n  #mobilenav-aast .has-sub > a {\n    padding-right: 40px;\n  }\n  #mobilenav-aast li li a {\n    font-size: 14px;\n    text-decoration: none;\n    color: #dddddd;\n    background: #132b61;\n  }\n  #mobilenav-aast .nav-backdrop {\n    position: fixed;\n    height: 100%;\n    width: 100%;\n    background: rgba(0, 0, 0, 0.8);\n    z-index: -1;\n    opacity: 0;\n    visibility: hidden;\n    transition: all 0.5s ease-in;\n  }\n  #mobilenav-aast .menu-outer {\n    padding-bottom: 60px;\n    overflow: hidden;\n    overflow-y: auto;\n    /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */\n    max-height: 100%;\n  }\n  /* #wrapper.nav_is_visible {\n    -webkit-transform: translateX(300px);\n    transform: translateX(300px);\n  } */\n  \n  /* slide menu */\n  #mobilenav-aast .slide-menu {\n    background-color: #f1f1f1;\n    position: fixed;\n    top: 0;\n    right: -100%;\n    width: 100%;\n    min-height: 100%;\n    height: 100%;\n    background-color: #f1f1f1;\n    transition: all 0.5s ease;\n    z-index: 0;\n    -webkit-transform: translateX(150%);\n    transform: translateX(150%);\n    overflow: hidden;\n  }\n  #mobilenav-aast .slide-menu.sub-open {\n    -webkit-transform: translateX(0);\n    transform: translateX(0);\n    opacity: 1;\n    z-index: 9;\n    visibility: visible;\n    right: 0;\n  }\n  #mobilenav-aast .slide-menu .submenu-header {\n    padding: 10px 15px;\n    min-height: 45px;\n    background-color: #ededed;\n    color: #3c3c3b;\n    padding-left: 50px;\n    border-bottom: 1px solid #fff;\n    position: relative;\n    cursor: pointer;\n    text-align: center;\n  }\n  #mobilenav-aast .slide-menu .submenu-header:before {\n    content: \"\";\n    border: 2px solid #3c3c3b;\n    border-bottom: 0;\n    border-left: 0;\n    transform: rotate(-135deg);\n    display: block;\n    position: absolute;\n    height: 15px;\n    width: 15px;\n    top: 15px;\n    left: 20px;\n  }\n  \n  /*--------- home page ------------*/\n  /* banner part */\n  \n  /*-------HEADER-------*/\n  /* nav */\n  .main-container-aasta .navigation {\n    width: 100%;\n    height: auto;\n    position: relative;\n    background-color: #ffffff;\n  }\n  .main-container-aasta .navigation ul {\n    padding: 0;\n    margin: 0;\n    list-style: none;\n    gap: 0;\n    z-index: 9999999;\n   /* width: 80%;*/\n  }\n  .main-container-aasta .navigationul li {\n    padding: 0;\n    margin: 0;\n    list-style: none;\n  }\n  .nav-aast > ul {\n    display: flex;\n    margin: 0;\n    justify-content: left;\n  }\n  .nav-aast > ul > li {\n    position: relative;\n    margin: 0;\n    list-style: none;\n    transition: background-color 0s ease;\n    padding: 0 5px;\n    border-radius: 3px;\n  }\n  .nav-aast ul li:last-child {\n    margin-right: 0;\n  }\n  .nav-aast > ul > li > a {\n    font-size: 16px;\n    color: #393939;\n    text-transform: capitalize;\n    font-weight: 700;\n    padding: 10px 15px 10px 0;\n    display: block;\n    transition: background-color 0.5s ease;\n  }\n  .nav-aast > ul > li.active,\n  .nav-aast > ul > li:hover {\n    color: #322348;\n    /* transition: background-color 0s ease; */\n    /* background-color: #003480; */\n  }\n  .nav-aast > ul > li:hover > a {\n    color: #ff5722;\n    text-decoration: none;\n    /* color: #fff; */\n  }\n  .nav-aast > ul > li > a:hover,\n  .nav-aast > ul > li.active > a {\n    color: #f44336 !important;\n    text-decoration: none;\n  }\n  \n  /* drop-down */\n  .nav-aast ul li ul {\n    position: absolute;\n    top: calc(100%);\n    left: 0;\n    margin: 0;\n    min-width: 200px;\n    z-index: 4;\n    opacity: 0;\n    pointer-events: none;\n    visibility: hidden;\n    transition: 0.3s;\n    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;\n   white-space: nowrap;\n  }\n  .nav-aast ul li ul li {\n    position: relative;\n    display: flex;\n    padding: 0;\n    margin-bottom: 0;\n  }\n  .nav-aast ul li ul li:last-child > a {\n    border-bottom: none;\n  }\n  .nav-aast ul li ul ul {\n    position: absolute;\n    left: 0px;\n    top: 100%;\n    left: 100%;\n    top: 0;\n  }\n  .nav-aast ul li ul li a {\n    padding: 8px 24px 6px 5px;\n    width: 100%;\n    display: block;\n    font-size: 16px;\n    background-color: #f9f9f9;\n    color: #2b2b2b;\n    border: none;\n    border-bottom: 1px solid #fff;\n    text-transform: capitalize;\n    font-weight: 700;\n    transition: background-color 0.5s ease;\n    overflow: hidden;\n    transition: all 0.3s ease;\n  }\n  .nav-aast ul li:hover > ul {\n    margin-top: 0;\n    visibility: visible;\n    opacity: 1;\n    pointer-events: auto;\n    -moz-animation: fadeInDown 0.3s ease-in;\n    -webkit-animation: fadeInDown 0.3s ease-in;\n    animation: fadeInDown 0.3s ease-in;\n    /* z-index: 99999; */\n  }\n  .nav-aast ul li ul li:hover > ul {\n    top: 0;\n    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;\n    left: 100%;\n    right: auto;\n  }\n  .nav-aast ul li ul li:hover > a {\n    background-color: #f8f8f8;\n    color: #1e1d1d;\n    text-decoration: none;\n    transition: all 0.3s ease;\n  }\n  @keyframes fadeInDown {\n    0% {\n      opacity: 0;\n      -webkit-transform: translateY(-20px);\n      -ms-transform: translateY(-20px);\n      transform: translateY(-20px);\n    }\n    100% {\n      opacity: 1;\n      -webkit-transform: translateY(0);\n      -ms-transform: translateY(0);\n      transform: translateY(0);\n    }\n  }\n  \n  /* @keyframes fadeInLeft {\n    0% {\n      opacity: 0;\n      -webkit-transform: translateX(-20px);\n      -ms-transform: translateX(-20px);\n      transform: translateX(-20px);\n    }\n  \n    100% {\n      opacity: 1;\n      -webkit-transform: translateX(0);\n      -ms-transform: translateX(0);\n      transform: translateX(0);\n    }\n  } */\n  \n  .hide-desktop {\n    display: none;\n  }\n  .nav-aast > ul > li > a:after {\n    content: \"\";\n    position: absolute;\n    wid"
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/topbar/css/plugins.css",
+    "status": 200,
+    "content_type": "text/css",
+    "sample": "/* ===================================================\n>>> TABLE OF CONTENTS:\n======================================================\n1. Bootstrap v4.1.3\n2. Slick slider \n3. Animate css\n4. Lightcase\n5. Nice Select JS\n6. jQuery UI\n\n\n=================================================== */\n\n\n/*---------------------------------------------------------------\n  1. Bootstrap v5.0.2\n---------------------------------------------------------------*/\n\n@charset \"UTF-8\";\n\n/*!\n * Bootstrap v5.0.2 (https://getbootstrap.com/)\n * Copyright 2011-2021 The Bootstrap Authors\n * Copyright 2011-2021 Twitter, Inc.\n * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)\n */\n\n:root {\n    --bs-blue: #0d6efd;\n    --bs-indigo: #6610f2;\n    --bs-purple: #6f42c1;\n    --bs-pink: #d63384;\n    --bs-red: #dc3545;\n    --bs-orange: #fd7e14;\n    --bs-yellow: #ffc107;\n    --bs-green: #198754;\n    --bs-teal: #20c997;\n    --bs-cyan: #0dcaf0;\n    --bs-white: #fff;\n    --bs-gray: #6c757d;\n    --bs-gray-dark: #343a40;\n    --bs-primary: #0d6efd;\n    --bs-secondary: #6c757d;\n    --bs-success: #198754;\n    --bs-info: #0dcaf0;\n    --bs-warning: #ffc107;\n    --bs-danger: #dc3545;\n    --bs-light: #f8f9fa;\n    --bs-dark: #212529;\n    --bs-font-sans-serif: system-ui, -apple-system, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Liberation Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\";\n    --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace;\n    --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0))\n}\n\n*,\n::after,\n::before {\n    box-sizing: border-box\n}\n\n@media (prefers-reduced-motion:no-preference) {\n    :root {\n        scroll-behavior: smooth\n    }\n}\n\nbody {\n    margin: 0;\n    font-family: var(--bs-font-sans-serif);\n    font-size: 1em;\n    /*iman*/\n    font-weight: 400;\n    line-height: 1.5;\n    color: #212529;\n    background-color: #fff;\n    -webkit-text-size-adjust: 100%;\n    -webkit-tap-highlight-color: transparent\n}\n\nhr {\n    margin: 1rem 0;\n    color: inherit;\n    background-color: currentColor;\n    border: 0;\n    opacity: .25\n}\n\nhr:not([size]) {\n    height: 1px\n}\n\n.h1,\n.h2,\n.h3,\n.h4,\n.h5,\n.h6,\nh1,\nh2,\nh3,\nh4,\nh5,\nh6 {\n    margin-top: 0;\n    margin-bottom: .5rem;\n    font-weight: 500;\n    line-height: 1.2\n}\n\n.h1,\nh1 {\n    font-size: calc(1.375rem + 1.5vw)\n}\n\n@media (min-width:1200px) {\n\n    .h1,\n    h1 {\n        font-size: 2.5rem\n    }\n}\n\n.h2,\nh2 {\n    font-size: calc(1.325rem + .9vw)\n}\n\n@media (min-width:1200px) {\n\n    .h2,\n    h2 {\n        font-size: 2rem\n    }\n}\n\n.h3,\nh3 {\n    font-size: calc(1.3rem + .6vw)\n}\n\n@media (min-width:1200px) {\n\n    .h3,\n    h3 {\n        font-size: 1.75rem\n    }\n}\n\n.h4,\nh4 {\n    font-size: calc(1.275rem + .3vw)\n}\n\n@media (min-width:1200px) {\n\n    .h4,\n    h4 {\n        font-size: 1.5rem\n    }\n}\n\n.h5,\nh5 {\n    font-size: 1.25rem\n}\n\n.h6,\nh6 {\n    font-size: 1rem\n}\n\np {\n    margin-top: 0;\n    margin-bottom: 1rem\n}\n\nabbr[data-bs-original-title],\nabbr[title] {\n    -webkit-text-decoration: underline dotted;\n    text-decoration: underline dotted;\n    cursor: help;\n    -webkit-text-decoration-skip-ink: none;\n    text-decoration-skip-ink: none\n}\n\naddress {\n    margin-bottom: 1rem;\n    font-style: normal;\n    line-height: inherit\n}\n\nol,\nul {\n    padding-left: 0rem\n}\n\ndl,\nol,\nul {\n    margin-top: 0;\n    margin-bottom: 1rem\n}\n\nol ol,\nol ul,\nul ol,\nul ul {\n    margin-bottom: 0\n}\n\ndt {\n    font-weight: 700\n}\n\ndd {\n    margin-bottom: .5rem;\n    margin-left: 0\n}\n\nblockquote {\n    margin: 0 0 1rem\n}\n\nb,\nstrong {\n    font-weight: bolder\n}\n\n.small,\nsmall {\n    font-size: .875em\n}\n\n.mark,\nmark {\n    padding: .2em;\n    background-color: #fcf8e3\n}\n\nsub,\nsup {\n    position: relative;\n    font-size: .75em;\n    line-height: 0;\n    vertical-align: baseline\n}\n\nsub {\n    bottom: -.25em\n}\n\nsup {\n    top: -.5em\n}\n\na {\n    color: #0d6efd;\n    text-decoration: underline\n}\n\na:hover {\n    color: #0a58ca\n}\n\na:not([href]):not([class]),\na:not([href]):not([class]):hover {\n    color: inherit;\n    text-decoration: none\n}\n\ncode,\nkbd,\npre,\nsamp {\n    font-family: var(--bs-font-monospace);\n    font-size: 1em;\n    direction: ltr;\n    unicode-bidi: bidi-override\n}\n\npre {\n    display: block;\n    margin-top: 0;\n    margin-bottom: 1rem;\n    overflow: auto;\n    font-size: .875em\n}\n\npre code {\n    font-size: inherit;\n    color: inherit;\n    word-break: normal\n}\n\ncode {\n    font-size: .875em;\n    color: #d63384;\n    word-wrap: break-word\n}\n\na > code {\n    color: inherit\n}\n\nkbd {\n    padding: .2rem .4rem;\n    font-size: .875em;\n    color: #fff;\n    background-color: #212529;\n    border-radius: .2rem\n}\n\nkbd kbd {\n    padding: 0;\n    font-size: 1em;\n    font-weight: 700\n}\n\nfigure {\n    margin: 0 0 1rem\n}\n\nimg,\nsvg {\n    vertical-align: middle\n}\n\ntable {\n    caption-side: bottom;\n    border-collapse: collapse\n}\n\ncaption {\n    padding-top: .5rem;\n    padding-bottom: .5rem;\n    color: #6c757d;\n    text-align: left\n}\n\nth {\n    text-align: inherit;\n    text-align: -webkit-match-parent\n}\n\ntbody,\ntd,\ntfoot,\nth,\nthead,\ntr {\n    border-color: inherit;\n    border-style: solid;\n    border-width: 0\n}\n\nlabel {\n    display: inline-block\n}\n\nbutton {\n    border-radius: 0\n}\n\nbutton:focus:not(:focus-visible) {\n    outline: 0\n}\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n    margin: 0;\n    font-family: inherit;\n    font-size: inherit;\n    line-height: inherit\n}\n\nbutton,\nselect {\n    text-transform: none\n}\n\n[role=button] {\n    cursor: pointer\n}\n\nselect {\n    word-wrap: normal;\n    font-size: 13pt;\n    padding: 0.5em;\n    /*iman*/\n}\n\nselect:disabled {\n    opacity: 1\n}\n\n[list]::-webkit-calendar-picker-indicator {\n    display: none\n}\n\n[type=button],\n[type=reset],\n[type=submit],\nbutton {\n    -webkit-appearance: button\n}\n\n[type=button]:not(:disabled),\n[type=reset]:not(:disabled),\n[type=submit]:not(:disabled),\nbutton:not(:disabled) {\n    cursor: pointer\n}\n\n::-moz-focus-inner {\n    padding: 0;\n    border-style: none\n}\n\ntextarea {\n    resize: vertical\n}\n\nfieldset {\n    min-width: 0;\n    padding: 0;\n    margin: 0;\n    border: 0\n}\n\nlegend {\n    float: left;\n    width: 100%;\n    padding: 0;\n    margin-bottom: .5rem;\n    font-size: calc(1.275rem + .3vw);\n    line-height: inherit\n}\n\n@media (min-width:1200px) {\n    legend {\n        font-size: 1.5rem\n    }\n}\n\nlegend + * {\n    clear: left\n}\n\n::-webkit-datetime-edit-day-field,\n::-webkit-datetime-edit-fields-wrapper,\n::-webkit-datetime-edit-hour-field,\n::-webkit-datetime-edit-minute,\n::-webkit-datetime-edit-month-field,\n::-webkit-datetime-edit-text,\n::-webkit-datetime-edit-year-field {\n    padding: 0\n}\n\n::-webkit-inner-spin-button {\n    height: auto\n}\n\n[type=search] {\n    outline-offset: -2px;\n    -webkit-appearance: textfield\n}\n\n::-webkit-search-decoration {\n    -webkit-appearance: none\n}\n\n::-webkit-color-swatch-wrapper {\n    padding: 0\n}\n\n::file-selector-button {\n    font: inherit\n}\n\n::-webkit-file-upload-button {\n    font: inherit;\n    -webkit-appearance: button\n}\n\noutput {\n    display: inline-block\n}\n\niframe {\n    border: 0\n}\n\nsummary {\n    display: list-item;\n    cursor: pointer\n}\n\nprogress {\n    vertical-align: baseline\n}\n\n[hidden] {\n    display: none !important\n}\n\n.lead {\n    font-size: 1.25rem;\n    font-weight: 300\n}\n\n.display-1 {\n    font-size: calc(1.625rem + 4.5vw);\n    font-weight: 300;\n    line-height: 1.2\n}\n\n@media (min-width:1200px) {\n    .display-1 {\n        font-size: 5rem\n    }\n}\n\n.display-2 {\n    font-size: calc(1.575rem + 3.9vw);\n    font-weight: 300;\n    line-height: 1.2\n}\n\n@media (min-width:1200px) {\n    .display-2 {\n        font-size: 4.5rem\n    }\n}\n\n.display-3 {\n    font-size: calc(1.525rem + 3.3vw);\n    font-weight: 300;\n    line-height: 1.2\n}\n\n@media (min-width:1200px) {\n    .display-3 {\n        font-size: 4rem\n    }\n}\n\n.display-4 {\n    font-size: calc(1.475rem + 2.7vw);\n    font-weight: 300;\n    line-height: 1.2\n}\n\n@media (min-width:1200px) {\n    .display-4 {\n        font-size: 3.5rem\n    }\n}\n\n.display-5 {\n    font-size: calc(1.425rem + 2.1vw);\n    font-weight: 300;\n    line-height: 1.2\n}\n\n@media (min-width:1200px) {\n    .display-5 {\n        font-size: 3rem\n    }\n}\n\n.display-6 {\n    font-size: calc(1.375rem + 1.5vw);\n    font-weight: 300;\n    line-height: 1.2\n}\n\n@media (min-width:1200px) {\n    .display-6 {\n        font-size: 2.5rem\n    }\n}\n\n.list-unstyled {\n    padding-left: 0;\n    list-style: none\n}\n\n.list-inline {\n    padding-left: 0;\n    list-style: none\n}\n\n.list-inline-item {\n    display: inline-block\n}\n\n.list-inline-item:not(:last-child) {\n    margin-right: .5rem\n}\n\n.initialism {\n    font-size: .875em;\n    text-transform: uppercase\n}\n\n.blockquote {\n    margin-bottom: 1rem;\n    font-size: 1.25rem\n}\n\n.blockquote > :last-child {\n    margin-bottom: 0\n}\n\n.blockquote-footer {\n    margin-top: -1rem;\n    margin-bottom: 1rem;\n    font-size: .875em;\n    color: #6c757d\n}\n\n.blockquote-footer::before {\n    content: \"— \"\n}\n\n.img-fluid {\n    max-width: 100%;\n    height: auto\n}\n\n.img-thumbnail {\n    padding: .25rem;\n    background-color: #fff;\n    border: 1px solid #dee2e6;\n    border-radius: .25rem;\n    max-width: 100%;\n    height: auto\n}\n\n.figure {\n    display: inline-block\n}\n\n.figure-img {\n    margin-bottom: .5rem;\n    line-height: 1\n}\n\n.figure-caption {\n    font-size: .875em;\n    color: #6c757d\n}\n\n.container,\n.container-fluid,\n.container-lg,\n.container-md,\n.container-sm,\n.container-xl,\n.container-xxl {\n    width: 100%;\n    padding-right: var(--bs-gutter-x, .75rem);\n    padding-left: var(--bs-gutter-x, .75rem);\n    margin-right: auto;\n    margin-left: auto\n}\n\n@media (min-width:576px) {\n\n    .container,\n    .container-sm {\n        max-width: 540px\n    }\n}\n\n@media (min-width:768px) {\n\n    .container,\n    .container-md,\n    .container-sm {\n        max-width: 720px\n    }\n}\n\n@media (min-width:992px) {\n\n    .container,\n    .container-lg,\n    .container-md,\n    .container-sm {\n        max-width: 960px\n    }\n}\n\n@media (min-width:1200px) {\n\n    .container,\n    .container-lg,\n    .container"
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/colleges-all/img/logo-blue.webp",
+    "status": 200,
+    "content_type": "",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/colleges-all/css/responsive-colleges.css",
+    "status": 200,
+    "content_type": "text/css",
+    "sample": "@media(max-width:821px){\r\n    .footer-social{\r\n        margin-top: 0 !important;\r\n        padding-bottom: 0 !important;\r\n        float: none !important;\r\n        margin-right: 0 !important;\r\n    }\r\n}\r\n\r\n@media(max-width: 600px){\r\n    .main-container-aasta .navigation{\r\n        overflow: scroll ;\r\n    }\r\n    .slide .slide-content .container{\r\n        width: 96% !important;\r\n    }\r\n    .slide-content .image-title h2{\r\n        font-size: 1.2em !important;\r\n    }\r\n    .slide-content p {\r\n        font-size: 1em !important;\r\n        line-height: 1.6em !important;\r\n    }\r\n    .slider__nav a.slide__prev, .slider__nav a.slide__next{\r\n        height: 50px!important;\r\n        width: 15px!important;\r\n    }\r\n    .slide__prev:after,\r\n    .slide__next:after{\r\n        font-size: 18px !important; \r\n    }\r\n    .section-title, .block-contents .section-title h2, .call h2, .call h3{\r\n        font-size: 1.2em!important;\r\n    }\r\n    .step-the-way .content-left h3{\r\n        width: 100% !important ;\r\n        font-size: 1.2em !important ;\r\n    }\r\n    .footer-social{\r\n        margin-top: 0 !important;\r\n        padding-bottom: 0 !important;\r\n        float: none !important;\r\n        margin-right: 0 !important;\r\n    }\r\n}\r\n\r\n\r\n@media(max-width: 400px){\r\n    .slider-step-the-way .item .box .title{\r\n        font-size: 1.1em !important;\r\n    }\r\n\r\n    .col-sm-6.col-lg-3{\r\n        width: 100% !important;\r\n    }\r\n    .ltn__feature-info h4{\r\n        text-align: center !important;\r\n    }\r\n    .footer .widget-title, ul.list-arrow{\r\n        padding-left: 0 !important;\r\n    }\r\n    .footer-logos{\r\n        display: flex !important;\r\n        flex-wrap: wrap !important;\r\n    }\r\n}"
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/colleges-all/css/mklb.css",
+    "status": 200,
+    "content_type": "text/css",
+    "sample": "#mkLightboxContainer {\n    position: fixed;\n    left: 0;\n    top: 0;\n    min-height: 100vh;\n    min-width: 100vw;\n    height: 100vh;\n    width: 100vw;\n    overflow: hidden;\n    box-sizing: border-box;\n    z-index: 999999;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n\n#mkLightboxContainer > * {\n    z-index: 99;\n}\n\n#overlay {\n    position: absolute;\n    left: 0;\n    top: 0;\n    height: 100vh;\n    width: 100%;\n    overflow: hidden;\n    box-sizing: border-box;\n    background: rgba(0,0,0,.85);\n    z-index: 0;\n}\n.parent .popup-video {}\n#mkLightboxContainer #mklbInner {\n    position: relative;\n    height: 100vh;\n    transition: all .4s ease-in-out;\n    margin-left: 0;\n}\n\nsection.imageContainer {\n    margin: 0;\n    padding: 1em;\n    box-sizing: border-box;\n    border: none;\n    height: 100vh;\n    width: 100vw;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    float: left;\n}\n\n#mkLightboxContainer img,\n#mkLightboxContainer video {\n    background: #fff;\n    box-shadow: 0 0 30px #222;\n    max-height: 85vh;\n    min-width: auto;\n    max-width: 75vw;\n    width: auto;\n    height: auto;\n}\n\n#mkLightboxContainer #yt-video {\n    width: 75vw;\n    height: 42.1875vw; /* 75*9/16 */\n}\n\n.mklbItem:hover {\n    cursor: pointer;\n   \n}\n\n#closeIconContainer {\n    width: 25px;\n    height: 25px;\n    position: fixed;\n    top: 15px;\n    right: 15px;\n    transition: transform .2s linear;\n}\n\n#closeIconContainer:hover {\n    cursor: pointer;\n    transform: rotate(90deg);\n}\n\n#closeIconContainer svg,\n#prev svg,\n#next svg,\n#stopGallery svg, \n#playGallery svg{\n    fill: white;\n}\n\n#prevContainer,\n#nextContainer {\n    position: fixed;\n    left: 0;\n    top: 0;\n    height: 100vh;\n    padding: 10px 5px 10px 5px;\n    box-sizing: border-box;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    transition: all .2s ease-in;\n}\n\n#nextContainer {\n    left: auto;\n    right: 0;\n}\n\n#prevContainer:hover,\n#nextContainer:hover {\n    cursor: pointer;\n    background: rgba(0,0,0,0.25);\n}\n\n#prev,\n#next {\n    width: 35px;\n    height: 35px;\n}\n\n.grid {\n    display: grid;\n    align-content: flex-start;\n    grid-gap: 1em;\n}\n\n.grid-3 {\n    grid-template-columns: repeat(3, 1fr);\n}\n\n.grid-4 {\n    grid-template-columns: repeat(4, 1fr);\n}\n\n.grid figure {\n    width: 100%;\n    margin: 0;\n}\n\n.grid img {\n    width: 100%;\n}\n\n#controlContainer {\n    position: absolute;\n    top: 1em;\n    left: .5em;\n    display: flex;\n}\n\n#controlContainer > div {\n    width: 2em;\n}\n\n#controlContainer > div:hover {\n    cursor: pointer;\n}\n\n#controlContainer #stopGallery,\n#controlContainer.stop #playGallery{\n    opacity: 0.5;\n}\n\n#controlContainer.stop #stopGallery,\n#controlContainer #playGallery{\n    opacity: 1\n}\n\n@media screen and (max-width: 768px){\n    .grid-2-sm {\n        grid-template-columns: 1fr 1fr;\n    }\n}\n\n@media screen and (max-width: 450px){\n    .grid-12-xs {\n        grid-template-columns: 1fr;\n    }\n}\n\n.grid.grid-3.grid-2-sm.grid-12-xs {\n  margin-bottom: 3em;\n}"
+  },
+  {
+    "type": "response",
+    "url": "https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css",
+    "status": 200,
+    "content_type": "text/css",
+    "sample": "/*!\n * Font Awesome Pro 6.5.2 by @fontawesome - https://fontawesome.com\n * License - https://fontawesome.com/license (Commercial License)\n * Copyright 2024 Fonticons, Inc.\n */\n.fa{font-family:var(--fa-style-family,\"Font Awesome 6 Pro\");font-weight:var(--fa-style,900)}.fa,.fa-brands,.fa-classic,.fa-duotone,.fa-light,.fa-regular,.fa-sharp,.fa-sharp-solid,.fa-solid,.fa-thin,.fab,.fad,.fal,.far,.fas,.fasl,.fasr,.fass,.fast,.fat{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;display:var(--fa-display,inline-block);font-style:normal;font-variant:normal;line-height:1;text-rendering:auto}.fa-classic,.fa-light,.fa-regular,.fa-solid,.fa-thin,.fal,.far,.fas,.fat{font-family:\"Font Awesome 6 Pro\"}.fa-brands,.fab{font-family:\"Font Awesome 6 Brands\"}.fa-classic.fa-duotone,.fa-duotone,.fad{font-family:\"Font Awesome 6 Duotone\"}.fa-sharp,.fasl,.fasr,.fass,.fast{font-family:\"Font Awesome 6 Sharp\"}.fa-sharp,.fass{font-weight:900}.fa-1x{font-size:1em}.fa-2x{font-size:2em}.fa-3x{font-size:3em}.fa-4x{font-size:4em}.fa-5x{font-size:5em}.fa-6x{font-size:6em}.fa-7x{font-size:7em}.fa-8x{font-size:8em}.fa-9x{font-size:9em}.fa-10x{font-size:10em}.fa-2xs{font-size:.625em;line-height:.1em;vertical-align:.225em}.fa-xs{font-size:.75em;line-height:.08333em;vertical-align:.125em}.fa-sm{font-size:.875em;line-height:.07143em;vertical-align:.05357em}.fa-lg{font-size:1.25em;line-height:.05em;vertical-align:-.075em}.fa-xl{font-size:1.5em;line-height:.04167em;vertical-align:-.125em}.fa-2xl{font-size:2em;line-height:.03125em;vertical-align:-.1875em}.fa-fw{text-align:center;width:1.25em}.fa-ul{list-style-type:none;margin-left:var(--fa-li-margin,2.5em);padding-left:0}.fa-ul>li{position:relative}.fa-li{left:calc(var(--fa-li-width, 2em)*-1);position:absolute;text-align:center;width:var(--fa-li-width,2em);line-height:inherit}.fa-border{border-radius:var(--fa-border-radius,.1em);border:var(--fa-border-width,.08em) var(--fa-border-style,solid) var(--fa-border-color,#eee);padding:var(--fa-border-padding,.2em .25em .15em)}.fa-pull-left{float:left;margin-right:var(--fa-pull-margin,.3em)}.fa-pull-right{float:right;margin-left:var(--fa-pull-margin,.3em)}.fa-beat{-webkit-animation-name:fa-beat;animation-name:fa-beat;-webkit-animation-delay:var(--fa-animation-delay,0s);animation-delay:var(--fa-animation-delay,0s);-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal);-webkit-animation-duration:var(--fa-animation-duration,1s);animation-duration:var(--fa-animation-duration,1s);-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,ease-in-out);animation-timing-function:var(--fa-animation-timing,ease-in-out)}.fa-bounce{-webkit-animation-name:fa-bounce;animation-name:fa-bounce;-webkit-animation-delay:var(--fa-animation-delay,0s);animation-delay:var(--fa-animation-delay,0s);-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal);-webkit-animation-duration:var(--fa-animation-duration,1s);animation-duration:var(--fa-animation-duration,1s);-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,cubic-bezier(.28,.84,.42,1));animation-timing-function:var(--fa-animation-timing,cubic-bezier(.28,.84,.42,1))}.fa-fade{-webkit-animation-name:fa-fade;animation-name:fa-fade;-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,cubic-bezier(.4,0,.6,1));animation-timing-function:var(--fa-animation-timing,cubic-bezier(.4,0,.6,1))}.fa-beat-fade,.fa-fade{-webkit-animation-delay:var(--fa-animation-delay,0s);animation-delay:var(--fa-animation-delay,0s);-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal);-webkit-animation-duration:var(--fa-animation-duration,1s);animation-duration:var(--fa-animation-duration,1s)}.fa-beat-fade{-webkit-animation-name:fa-beat-fade;animation-name:fa-beat-fade;-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,cubic-bezier(.4,0,.6,1));animation-timing-function:var(--fa-animation-timing,cubic-bezier(.4,0,.6,1))}.fa-flip{-webkit-animation-name:fa-flip;animation-name:fa-flip;-webkit-animation-delay:var(--fa-animation-delay,0s);animation-delay:var(--fa-animation-delay,0s);-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal);-webkit-animation-duration:var(--fa-animation-duration,1s);animation-duration:var(--fa-animation-duration,1s);-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,ease-in-out);animation-timing-function:var(--fa-animation-timing,ease-in-out)}.fa-shake{-webkit-animation-name:fa-shake;animation-name:fa-shake;-webkit-animation-duration:var(--fa-animation-duration,1s);animation-duration:var(--fa-animation-duration,1s);-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,linear);animation-timing-function:var(--fa-animation-timing,linear)}.fa-shake,.fa-spin{-webkit-animation-delay:var(--fa-animation-delay,0s);animation-delay:var(--fa-animation-delay,0s);-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal)}.fa-spin{-webkit-animation-name:fa-spin;animation-name:fa-spin;-webkit-animation-duration:var(--fa-animation-duration,2s);animation-duration:var(--fa-animation-duration,2s);-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,linear);animation-timing-function:var(--fa-animation-timing,linear)}.fa-spin-reverse{--fa-animation-direction:reverse}.fa-pulse,.fa-spin-pulse{-webkit-animation-name:fa-spin;animation-name:fa-spin;-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal);-webkit-animation-duration:var(--fa-animation-duration,1s);animation-duration:var(--fa-animation-duration,1s);-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,steps(8));animation-timing-function:var(--fa-animation-timing,steps(8))}@media (prefers-reduced-motion:reduce){.fa-beat,.fa-beat-fade,.fa-bounce,.fa-fade,.fa-flip,.fa-pulse,.fa-shake,.fa-spin,.fa-spin-pulse{-webkit-animation-delay:-1ms;animation-delay:-1ms;-webkit-animation-duration:1ms;animation-duration:1ms;-webkit-animation-iteration-count:1;animation-iteration-count:1;-webkit-transition-delay:0s;transition-delay:0s;-webkit-transition-duration:0s;transition-duration:0s}}@-webkit-keyframes fa-beat{0%,90%{-webkit-transform:scale(1);transform:scale(1)}45%{-webkit-transform:scale(var(--fa-beat-scale,1.25));transform:scale(var(--fa-beat-scale,1.25))}}@keyframes fa-beat{0%,90%{-webkit-transform:scale(1);transform:scale(1)}45%{-webkit-transform:scale(var(--fa-beat-scale,1.25));transform:scale(var(--fa-beat-scale,1.25))}}@-webkit-keyframes fa-bounce{0%{-webkit-transform:scale(1) translateY(0);transform:scale(1) translateY(0)}10%{-webkit-transform:scale(var(--fa-bounce-start-scale-x,1.1),var(--fa-bounce-start-scale-y,.9)) translateY(0);transform:scale(var(--fa-bounce-start-scale-x,1.1),var(--fa-bounce-start-scale-y,.9)) translateY(0)}30%{-webkit-transform:scale(var(--fa-bounce-jump-scale-x,.9),var(--fa-bounce-jump-scale-y,1.1)) translateY(var(--fa-bounce-height,-.5em));transform:scale(var(--fa-bounce-jump-scale-x,.9),var(--fa-bounce-jump-scale-y,1.1)) translateY(var(--fa-bounce-height,-.5em))}50%{-webkit-transform:scale(var(--fa-bounce-land-scale-x,1.05),var(--fa-bounce-land-scale-y,.95)) translateY(0);transform:scale(var(--fa-bounce-land-scale-x,1.05),var(--fa-bounce-land-scale-y,.95)) translateY(0)}57%{-webkit-transform:scale(1) translateY(var(--fa-bounce-rebound,-.125em));transform:scale(1) translateY(var(--fa-bounce-rebound,-.125em))}64%{-webkit-transform:scale(1) translateY(0);transform:scale(1) translateY(0)}to{-webkit-transform:scale(1) translateY(0);transform:scale(1) translateY(0)}}@keyframes fa-bounce{0%{-webkit-transform:scale(1) translateY(0);transform:scale(1) translateY(0)}10%{-webkit-transform:scale(var(--fa-bounce-start-scale-x,1.1),var(--fa-bounce-start-scale-y,.9)) translateY(0);transform:scale(var(--fa-bounce-start-scale-x,1.1),var(--fa-bounce-start-scale-y,.9)) translateY(0)}30%{-webkit-transform:scale(var(--fa-bounce-jump-scale-x,.9),var(--fa-bounce-jump-scale-y,1.1)) translateY(var(--fa-bounce-height,-.5em));transform:scale(var(--fa-bounce-jump-scale-x,.9),var(--fa-bounce-jump-scale-y,1.1)) translateY(var(--fa-bounce-height,-.5em))}50%{-webkit-transform:scale(var(--fa-bounce-land-scale-x,1.05),var(--fa-bounce-land-scale-y,.95)) translateY(0);transform:scale(var(--fa-bounce-land-scale-x,1.05),var(--fa-bounce-land-scale-y,.95)) translateY(0)}57%{-webkit-transform:scale(1) translateY(var(--fa-bounce-rebound,-.125em));transform:scale(1) translateY(var(--fa-bounce-rebound,-.125em))}64%{-webkit-transform:scale(1) translateY(0);transform:scale(1) translateY(0)}to{-w"
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/institutes-/css/fontawesome.min.css",
+    "status": 200,
+    "content_type": "text/css",
+    "sample": "/*!\n * Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com\n * License - https://fontawesome.com/license (Commercial License)\n * Copyright 2022 Fonticons, Inc.\n */\n.fa{font-family:var(--fa-style-family,\"Font Awesome 6 Pro\");font-weight:var(--fa-style,900)}.fa,.fa-brands,.fa-classic,.fa-duotone,.fa-light,.fa-regular,.fa-sharp,.fa-sharp-solid,.fa-solid,.fa-thin,.fab,.fad,.fal,.far,.fas,.fass,.fat{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;display:var(--fa-display,inline-block);font-style:normal;font-variant:normal;line-height:1;text-rendering:auto}.fa-classic,.fa-light,.fa-regular,.fa-solid,.fa-thin,.fal,.far,.fas,.fat{font-family:\"Font Awesome 6 Pro\"}.fa-brands,.fab{font-family:\"Font Awesome 6 Brands\"}.fa-classic.fa-duotone,.fa-duotone,.fad{font-family:\"Font Awesome 6 Duotone\"}.fa-sharp,.fass{font-family:\"Font Awesome 6 Sharp\";font-weight:900}.fa-1x{font-size:1em}.fa-2x{font-size:2em}.fa-3x{font-size:3em}.fa-4x{font-size:4em}.fa-5x{font-size:5em}.fa-6x{font-size:6em}.fa-7x{font-size:7em}.fa-8x{font-size:8em}.fa-9x{font-size:9em}.fa-10x{font-size:10em}.fa-2xs{font-size:.625em;line-height:.1em;vertical-align:.225em}.fa-xs{font-size:.75em;line-height:.08333em;vertical-align:.125em}.fa-sm{font-size:.875em;line-height:.07143em;vertical-align:.05357em}.fa-lg{font-size:1.25em;line-height:.05em;vertical-align:-.075em}.fa-xl{font-size:1.5em;line-height:.04167em;vertical-align:-.125em}.fa-2xl{font-size:2em;line-height:.03125em;vertical-align:-.1875em}.fa-fw{text-align:center;width:1.25em}.fa-ul{list-style-type:none;margin-left:var(--fa-li-margin,2.5em);padding-left:0}.fa-ul>li{position:relative}.fa-li{left:calc(var(--fa-li-width, 2em)*-1);position:absolute;text-align:center;width:var(--fa-li-width,2em);line-height:inherit}.fa-border{border-radius:var(--fa-border-radius,.1em);border:var(--fa-border-width,.08em) var(--fa-border-style,solid) var(--fa-border-color,#eee);padding:var(--fa-border-padding,.2em .25em .15em)}.fa-pull-left{float:left;margin-right:var(--fa-pull-margin,.3em)}.fa-pull-right{float:right;margin-left:var(--fa-pull-margin,.3em)}.fa-beat{-webkit-animation-name:fa-beat;animation-name:fa-beat;-webkit-animation-delay:var(--fa-animation-delay,0s);animation-delay:var(--fa-animation-delay,0s);-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal);-webkit-animation-duration:var(--fa-animation-duration,1s);animation-duration:var(--fa-animation-duration,1s);-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,ease-in-out);animation-timing-function:var(--fa-animation-timing,ease-in-out)}.fa-bounce{-webkit-animation-name:fa-bounce;animation-name:fa-bounce;-webkit-animation-delay:var(--fa-animation-delay,0s);animation-delay:var(--fa-animation-delay,0s);-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal);-webkit-animation-duration:var(--fa-animation-duration,1s);animation-duration:var(--fa-animation-duration,1s);-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,cubic-bezier(.28,.84,.42,1));animation-timing-function:var(--fa-animation-timing,cubic-bezier(.28,.84,.42,1))}.fa-fade{-webkit-animation-name:fa-fade;animation-name:fa-fade;-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,cubic-bezier(.4,0,.6,1));animation-timing-function:var(--fa-animation-timing,cubic-bezier(.4,0,.6,1))}.fa-beat-fade,.fa-fade{-webkit-animation-delay:var(--fa-animation-delay,0s);animation-delay:var(--fa-animation-delay,0s);-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal);-webkit-animation-duration:var(--fa-animation-duration,1s);animation-duration:var(--fa-animation-duration,1s)}.fa-beat-fade{-webkit-animation-name:fa-beat-fade;animation-name:fa-beat-fade;-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,cubic-bezier(.4,0,.6,1));animation-timing-function:var(--fa-animation-timing,cubic-bezier(.4,0,.6,1))}.fa-flip{-webkit-animation-name:fa-flip;animation-name:fa-flip;-webkit-animation-delay:var(--fa-animation-delay,0s);animation-delay:var(--fa-animation-delay,0s);-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal);-webkit-animation-duration:var(--fa-animation-duration,1s);animation-duration:var(--fa-animation-duration,1s);-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,ease-in-out);animation-timing-function:var(--fa-animation-timing,ease-in-out)}.fa-shake{-webkit-animation-name:fa-shake;animation-name:fa-shake;-webkit-animation-duration:var(--fa-animation-duration,1s);animation-duration:var(--fa-animation-duration,1s);-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,linear);animation-timing-function:var(--fa-animation-timing,linear)}.fa-shake,.fa-spin{-webkit-animation-delay:var(--fa-animation-delay,0s);animation-delay:var(--fa-animation-delay,0s);-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal)}.fa-spin{-webkit-animation-name:fa-spin;animation-name:fa-spin;-webkit-animation-duration:var(--fa-animation-duration,2s);animation-duration:var(--fa-animation-duration,2s);-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,linear);animation-timing-function:var(--fa-animation-timing,linear)}.fa-spin-reverse{--fa-animation-direction:reverse}.fa-pulse,.fa-spin-pulse{-webkit-animation-name:fa-spin;animation-name:fa-spin;-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal);-webkit-animation-duration:var(--fa-animation-duration,1s);animation-duration:var(--fa-animation-duration,1s);-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,steps(8));animation-timing-function:var(--fa-animation-timing,steps(8))}@media (prefers-reduced-motion:reduce){.fa-beat,.fa-beat-fade,.fa-bounce,.fa-fade,.fa-flip,.fa-pulse,.fa-shake,.fa-spin,.fa-spin-pulse{-webkit-animation-delay:-1ms;animation-delay:-1ms;-webkit-animation-duration:1ms;animation-duration:1ms;-webkit-animation-iteration-count:1;animation-iteration-count:1;transition-delay:0s;transition-duration:0s}}@-webkit-keyframes fa-beat{0%,90%{-webkit-transform:scale(1);transform:scale(1)}45%{-webkit-transform:scale(var(--fa-beat-scale,1.25));transform:scale(var(--fa-beat-scale,1.25))}}@keyframes fa-beat{0%,90%{-webkit-transform:scale(1);transform:scale(1)}45%{-webkit-transform:scale(var(--fa-beat-scale,1.25));transform:scale(var(--fa-beat-scale,1.25))}}@-webkit-keyframes fa-bounce{0%{-webkit-transform:scale(1) translateY(0);transform:scale(1) translateY(0)}10%{-webkit-transform:scale(var(--fa-bounce-start-scale-x,1.1),var(--fa-bounce-start-scale-y,.9)) translateY(0);transform:scale(var(--fa-bounce-start-scale-x,1.1),var(--fa-bounce-start-scale-y,.9)) translateY(0)}30%{-webkit-transform:scale(var(--fa-bounce-jump-scale-x,.9),var(--fa-bounce-jump-scale-y,1.1)) translateY(var(--fa-bounce-height,-.5em));transform:scale(var(--fa-bounce-jump-scale-x,.9),var(--fa-bounce-jump-scale-y,1.1)) translateY(var(--fa-bounce-height,-.5em))}50%{-webkit-transform:scale(var(--fa-bounce-land-scale-x,1.05),var(--fa-bounce-land-scale-y,.95)) translateY(0);transform:scale(var(--fa-bounce-land-scale-x,1.05),var(--fa-bounce-land-scale-y,.95)) translateY(0)}57%{-webkit-transform:scale(1) translateY(var(--fa-bounce-rebound,-.125em));transform:scale(1) translateY(var(--fa-bounce-rebound,-.125em))}64%{-webkit-transform:scale(1) translateY(0);transform:scale(1) translateY(0)}to{-webkit-transform:scale(1) translateY(0);transform:scale(1) translateY(0)}}@keyframes fa-bounce{0%{-webkit-transform:scale(1) translateY(0);transform:scale(1) translateY(0)}10%{-webkit-transform:scale(var(--fa-bounce-start-scale-x,1.1),var(--fa-bounce-start-scale-y,.9)) translateY(0);transform:scale(var(--fa-bounce-start-scale-x,1.1),var(--fa-bounce-start-scale-y,.9)) translateY(0)}30%{-webkit-transform:scale(var(--fa-bounce-jump-scale-x,.9),var(--fa-bounce-jump-scale-y,1.1)) translateY(var(--fa-bounce-height,-.5em));transform:scale(var(--fa-bounce-jump-scale-x,.9),var(--fa-bounce-jump-scale-y,1.1)) translateY(var(--fa-bounce-height,-.5em))}50%{-webkit-transform:scale(var(--fa-bounce-land-scale-x,1.05),var(--fa-bounce-land-scale-y,.95)) translateY(0);transform:scale(var(--fa-bounce-land-scale-x,1.05),var(--fa-bounce-land-scale-y,.95)) translateY(0)}57%{-webkit-transform:scale(1) translateY(var(--fa-bounce-rebound,-.125em));transform:scale(1) translateY(var(--fa-bounce-rebound,-.125em))}64%{-webkit-transform:scale(1) translateY(0);transform:scale(1) translateY(0)}to{-webkit-transform:scale(1) translateY(0);transform:scale(1) translateY(0)}}@-webkit-keyframes fa-fade{50%{opacity"
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/topbar/css/style.css",
+    "status": 200,
+    "content_type": "text/css",
+    "sample": "/* Single side border-radius  */\n/* BORDER RADIUS */\n/* user select */\n/* box sizing  */\n/* placeholder */\n/* transition  */\n/* transform */\n/* rotate */\n/* scale */\n/* translate */\n/* translate rotate */\n/* skew */\n/* ============================================================\n>>> TABLE OF CONTENTS:\n===============================================================\n# Google fonts\n# Gutter Code \n# Normalize\n# Typography\n# Custom Class\n# input and button type focus outline disable\n# Form input box\n# Text meant only for screen readers.\n# Transition\n\n# Accessibility\n# Globals\n\n# Alignments\n# Clearings\n# Posts and pages\n# Captions\n# Galleries\n# Unit test\n# ScrollUp\n# Owl Carousel \n# Slick Slider\n# Background Overlay\n# Scrollbar\n# Padding Top\n# Padding Bottom\n# Margin Top\n# Margin Bottom\n# Custom margin Padding\n\n============================================================= */\n/* -------------------------------------\n    Google fonts\n------------------------------------- */\n/* @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Rajdhani:wght@400;500;600;700&display=swap'); */\n/*\nfont-family: 'Open Sans', sans-serif;\nfont-family: 'Rajdhani', sans-serif;\n*/\n/* @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&family=Titillium+Web:wght@400;600;700;900&display=swap'); */\n/*\nfont-family: 'Nunito Sans', sans-serif;\nfont-family: 'Titillium Web', sans-serif;\n*/\n@import url(\"https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&family=Poppins:wght@400;500;600;700;800;900&display=swap\");\n\n/*\nfont-family: 'Nunito Sans', sans-serif;\nfont-family: 'Poppins', sans-serif;\n*/\n/* ====================================================\n    Gutter Code \n==================================================== */\n.container,\n.container-fluid {\n    padding-right: 15px;\n    padding-left: 15px;\n}\n\n.row {\n    margin-left: -15px;\n    margin-right: -15px;\n}\n\n.col,\n.col-1,\n.col-10,\n.col-11,\n.col-12,\n.col-2,\n.col-3,\n.col-4,\n.col-5,\n.col-6,\n.col-7,\n.col-8,\n.col-9,\n.col-auto,\n.col-lg,\n.col-lg-1,\n.col-lg-10,\n.col-lg-11,\n.col-lg-12,\n.col-lg-2,\n.col-lg-3,\n.col-lg-4,\n.col-lg-5,\n.col-lg-6,\n.col-lg-7,\n.col-lg-8,\n.col-lg-9,\n.col-lg-auto,\n.col-md,\n.col-md-1,\n.col-md-10,\n.col-md-11,\n.col-md-12,\n.col-md-2,\n.col-md-3,\n.col-md-4,\n.col-md-5,\n.col-md-6,\n.col-md-7,\n.col-md-8,\n.col-md-9,\n.col-md-auto,\n.col-sm,\n.col-sm-1,\n.col-sm-10,\n.col-sm-11,\n.col-sm-12,\n.col-sm-2,\n.col-sm-3,\n.col-sm-4,\n.col-sm-5,\n.col-sm-6,\n.col-sm-7,\n.col-sm-8,\n.col-sm-9,\n.col-sm-auto,\n.col-xl,\n.col-xl-1,\n.col-xl-10,\n.col-xl-11,\n.col-xl-12,\n.col-xl-2,\n.col-xl-3,\n.col-xl-4,\n.col-xl-5,\n.col-xl-6,\n.col-xl-7,\n.col-xl-8,\n.col-xl-9,\n.col-xl-auto {\n    padding-right: 15px;\n    padding-left: 15px;\n    position: relative;\n}\n\n.ltn__no-gutter > [class*='col-'] {\n    /* No padding only for child columns */\n    padding-right: 0;\n    padding-left: 0;\n}\n\n.ltn__no-gutter-all [class*='col-'] {\n    /* No padding for every columns */\n    padding-right: 0;\n    padding-left: 0;\n}\n\n@media (min-width: 992px) {\n\n    /* Modify this based on column def */\n    .ltn__custom-gutter {\n        margin-left: -0px;\n        margin-right: -0px;\n    }\n\n    .ltn__custom-gutter > [class*='col-'] {\n        padding-right: 0px;\n        padding-left: 0px;\n    }\n\n    .ltn__custom-gutter-all .row {\n        margin-left: -15px;\n        margin-right: -15px;\n    }\n\n    .ltn__custom-gutter-all .row [class*='col-'] {\n        padding-right: 15px;\n        padding-left: 15px;\n    }\n}\n\n@media (max-width: 991px) {\n\n    /* Modify this based on column def */\n    .ltn__custom-gutter {\n        margin-left: -15px;\n        margin-right: -15px;\n    }\n\n    .ltn__custom-gutter > [class*='col-'] {\n        padding-right: 15px;\n        padding-left: 15px;\n    }\n\n    .ltn__custom-gutter-all {\n        margin-left: -15px;\n        margin-right: -15px;\n    }\n\n    .ltn__custom-gutter-all [class*='col-'] {\n        padding-right: 15px;\n        padding-left: 15px;\n    }\n}\n\n@media (max-width: 767px) {\n\n    /* Modify this based on column def */\n    .ltn__product-gutter .row {\n        margin-left: -8px;\n        margin-right: -8px;\n    }\n\n    .ltn__product-gutter [class*='col-'] {\n        padding-right: 8px;\n        padding-left: 8px;\n    }\n}\n\n\n/* ----------------------------------------------------\n    Normalize    0B2C3D\n---------------------------------------------------- */\n:root {\n    --ltn__primary-color: #000000;\n    --ltn__primary-color-2: #041113;\n    /* Darken */\n    --ltn__primary-color-3: #133236;\n    /* Lighten */\n    --ltn__secondary-color: #FF5A3C;\n    --ltn__secondary-color-2: #cb3421;\n    /* Darken */\n    --ltn__secondary-color-3: #fb412a;\n    /* Lighten */\n    --ltn__heading-color: #071c1f;\n    --ltn__paragraph-color: #5C727D;\n    --ltn__heading-font: 'Poppins', sans-serif;\n    --ltn__body-font: 'Nunito Sans', sans-serif;\n    /* Footer ACD2D8 8CB2B2  */\n    --ltn__color-1: #8cb2b2;\n    --ltn__color-2: #ACD2D8;\n    --ltn__color-3: #A3BCC0;\n    --ltn__color-4: #84A2A6;\n    --ltn__color-5: #5C727D;\n    --ltn__color-6: #F5DFDC;\n    /* Gradient Colors */\n    --gradient-color-1: linear-gradient(90deg, rgba(242, 139, 194, 1) 0%, rgba(216, 177, 242, 1) 50%);\n    --gradient-color-2: linear-gradient(to top, rgba(7, 28, 31, 0) 0%, rgba(7, 28, 31, 1) 90%);\n    --gradient-color-3: linear-gradient(to bottom, rgba(7, 28, 31, 0) 0%, rgba(7, 28, 31, 1) 90%);\n    --gradient-color-4: linear-gradient(to top, rgba(242, 246, 247, 0) 0%, rgba(242, 246, 247, 1) 90%);\n    --gradient-color-5: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 70%);\n    /* Background Colors ( 1, 2, 3, 4, 5 )  */\n    --section-bg-1: #F2F6F7;\n    /* White */\n    --section-bg-2: #132E6B;\n    /* Black */\n    --section-bg-5: #FFF2F0;\n    /* White */\n    --section-bg-6: #132E6B;\n    /* Black */\n    --section-bg-7: #282b38;\n    /* Black */\n    /* Border Colors */\n    --border-color-1: #e5eaee;\n    /* White */\n    --border-color-2: #1e2021;\n    /* Black */\n    --border-color-3: #5C617F;\n    /* Black */\n    --border-color-4: #eb6954;\n    /* Red */\n    --border-color-5: #bc3928;\n    /* Red */\n    --border-color-6: #103034;\n    /* Black */\n    --border-color-7: #d1dae0;\n    /* White */\n    --border-color-8: #f6f6f6;\n    /* White */\n    --border-color-9: #e4ecf2;\n    /* White */\n    --border-color-10: #ebeeee;\n    /* White */\n    --border-color-11: #ededed;\n    /* White */\n    --border-color-12: #e1e6ff;\n    /* White */\n    --border-color-13: #f1f8ff;\n    /* White */\n    /* Box Shadow Colors */\n    --ltn__box-shadow-1: 0 16px 32px 0 rgba(7, 28, 31, 0.1);\n    --ltn__box-shadow-2: 0 0 4px rgba(0, 0, 0, 0.1);\n    /* like border */\n    --ltn__box-shadow-3: 0 1px 6px 0 rgba(32, 33, 36, .28);\n    /* like border GGL */\n    --ltn__box-shadow-4: 0 5px 20px 0 rgba(23, 44, 82, 0.1);\n    --ltn__box-shadow-5: 0 8px 16px 0 rgba(93, 93, 93, 0.1);\n    --ltn__box-shadow-6: 0 0 25px 2px rgba(93, 93, 93, 0.2);\n    --ltn__box-shadow-7: 0 0 10px 0px rgba(93, 93, 93, 0.2);\n    /* Common Colors */\n    --black: #000000;\n    --black-2: #22355B;\n    --white: #fff;\n    --white-2: #F2F6F7;\n    --white-3: #e8edee;\n    --white-4: #e6ecf0;\n    --white-5: #f0f4f7;\n    --white-6: #f1f1f1;\n    --white-7: #F7F7F7;\n    --white-8: #FAFAFA;\n    --white-9: #F2F7FA;\n    --white-10: #EDEDED;\n    --red: #FF0000;\n    --red-2: #f34f3f;\n    --red-3: #DB483B;\n    --silver: #C0C0C0;\n    --gray: #808080;\n    --maroon: #800000;\n    --yellow: #f6ba42;\n    --olive: #808000;\n    --lime: #00FF00;\n    --green: #77C720;\n    --green-2: #008000;\n    --aqua: #00FFFF;\n    --teal: #008080;\n    --blue: #2553a8;\n    --navy: #000080;\n    --fuchsia: #E82F51;\n    --purple: #800080;\n    --pink: #FFC0CB;\n    --nude: #ebc8b2;\n    --orange: #ffa500;\n    --ratings: #FFB800;\n    /* social media colors */\n    --facebook: #365493;\n    --twitter: #3CF;\n    --linkedin: #0077B5;\n    --pinterest: #c8232c;\n    --dribbble: #ea4c89;\n    --behance: #131418;\n    --google-plus: #dd4b39;\n    --instagram: #e4405f;\n    --vk: #3b5998;\n    --wechat: #7bb32e;\n    --youtube: #CB2027;\n    --email: #F89A1E;\n}\n\n/* -------------------------------------\n    Typography\n------------------------------------- */\nhtml {\n    -webkit-text-size-adjust: 100%;\n    -ms-text-size-adjust: 100%;\n    font-family: var(--ltn__body-font);\n}\n\n* {\n    -webkit-box-sizing: border-box;\n    box-sizing: border-box;\n    outline: none;\n    -moz-osx-font-smoothing: grayscale;\n    /* Firefox */\n    -webkit-font-smoothing: antialiased;\n    /* WebKit  */\n}\n\nbody {\n    color: var(--ltn__paragraph-color);\n    font-weight: 400;\n    font-style: normal;\n    font-size: 16px;\n    font-family: var(--ltn__body-font);\n    line-height: 1.8;\n    margin: 0 auto;\n    overflow-x: hidden;\n}\n\nh1,\n.h1 {\n    font-size: 36px;\n    line-height: 1.2;\n}\n\nh2,\n.h2 {\n    font-size: 35px;\n}\n\nh3,\n.h3 {\n    font-size: 26px;\n}\n\nh4,\n.h4 {\n    font-size: 19px;\n}\n\nh5,\n.h5 {\n    font-size: 18px;\n}\n\nh6,\n.h6 {\n    font-size: 17px;\n}\n\nh1,\nh2,\nh3,\nh4,\nh5,\nh6,\n.h1,\n.h2,\n.h3,\n.h4,\n.h5,\n.h6 {\n    color: var(--ltn__heading-color);\n    clear: both;\n    font-family: var(--ltn__heading-font);\n    font-weight: 700;\n    line-height: 1.3;\n    margin-bottom: 15px;\n}\n\np {\n    color: var(--ltn__paragraph-color);\n    margin-bottom: 1.5em;\n    /*text-align: justify;\n    -webkit-hyphens: auto;\n  -moz-hyphens: auto;\n  -ms-hyphens: auto;\n  hyphens: auto;*/\n}\n\na {\n    color: inherit;\n    text-decoration: none;\n    color: var(--ltn__paragraph-color);\n    -webkit-transition: all 0.3s ease 0s;\n    -o-transition: all 0.3s ease 0s;\n    transition: all 0.3s ease 0s;\n}\n\na,\na:hover,\na:focus,\na:active {\n    text-decoration: none;\n    outline: none;\n    color: inherit;\n}\n\na:hover {\n    color: var(--ltn__secondary-color);\n}\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n    font-family: var(--ltn__body-font);\n}\n\npre,\ncode,\nkbd,\ntt,\nvar,\nsamp {\n    font-family: var(--ltn__body-font);\n}\n\npre {\n    word-break: break-word;\n}\n\na i {\n    padding: 0 2px;\n}\n\nimg {\n    max-width: 100%;\n}\n\nul li,\nol li {\n    mar"
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/topbar/css/animate.css",
+    "status": 200,
+    "content_type": "text/css",
+    "sample": "\n\n\n\n\n\n<!DOCTYPE html>\n<html lang=\"en\" data-color-mode=\"auto\" data-light-theme=\"light\" data-dark-theme=\"dark\" >\n  <head>\n    <meta charset=\"utf-8\">\n  <link rel=\"dns-prefetch\" href=\"https://github.githubassets.com\">\n  <link rel=\"dns-prefetch\" href=\"https://avatars.githubusercontent.com\">\n  <link rel=\"dns-prefetch\" href=\"https://github-cloud.s3.amazonaws.com\">\n  <link rel=\"dns-prefetch\" href=\"https://user-images.githubusercontent.com/\">\n  <link rel=\"preconnect\" href=\"https://github.githubassets.com\" crossorigin>\n  <link rel=\"preconnect\" href=\"https://avatars.githubusercontent.com\">\n\n\n\n  <link crossorigin=\"anonymous\" media=\"all\" integrity=\"sha512-IVVa++hW3DBYJnNsmMMiUwt96BJ1mjUpGNDRWeui5BY1iA04E58M5NujgomnZU9R9DB+H99IlE7a+9b5XlO25g==\" rel=\"stylesheet\" href=\"https://github.githubassets.com/assets/light-21555afbe856.css\" /><link crossorigin=\"anonymous\" media=\"all\" integrity=\"sha512-1KkMNn8M/al/dtzBLupRwkIOgnA9MWkm8oxS+solP87jByEvY/g4BmoxLihRogKcX1obPnf4Yp7dI0ZTWO+ljg==\" rel=\"stylesheet\" href=\"https://github.githubassets.com/assets/dark-d4a90c367f0c.css\" /><link data-color-theme=\"dark_dimmed\" crossorigin=\"anonymous\" media=\"all\" integrity=\"sha512-cZa7DZqvMBwD236uzEunO/G1dvw8/QftyT2UtLWKQFEy0z0eq0R5WPwqVME+3NSZG1YaLJAaIqtU+m0zWf/6SQ==\" rel=\"stylesheet\" data-href=\"https://github.githubassets.com/assets/dark_dimmed-7196bb0d9aaf.css\" /><link data-color-theme=\"dark_high_contrast\" crossorigin=\"anonymous\" media=\"all\" integrity=\"sha512-WVoKqJ4y1nLsdNH4RkRT5qrM9+n9RFe1RHSiTnQkBf5TSZkJEc9GpLpTIS7T15EQaUQBJ8BwmKvwFPVqfpTEIQ==\" rel=\"stylesheet\" data-href=\"https://github.githubassets.com/assets/dark_high_contrast-595a0aa89e32.css\" /><link data-color-theme=\"dark_colorblind\" crossorigin=\"anonymous\" media=\"all\" integrity=\"sha512-XpAMBMSRZ6RTXgepS8LjKiOeNK3BilRbv8qEiA/M3m+Q4GoqxtHedOI5BAZRikCzfBL4KWYvVzYZSZ8Gp/UnUg==\" rel=\"stylesheet\" data-href=\"https://github.githubassets.com/assets/dark_colorblind-5e900c04c491.css\" /><link data-color-theme=\"light_colorblind\" crossorigin=\"anonymous\" media=\"all\" integrity=\"sha512-3HF2HZ4LgEIQm77yOzoeR20CX1n2cUQlcywscqF4s+5iplolajiHV7E5ranBwkX65jN9TNciHEVSYebQ+8xxEw==\" rel=\"stylesheet\" data-href=\"https://github.githubassets.com/assets/light_colorblind-dc71761d9e0b.css\" /><link data-color-theme=\"light_high_contrast\" crossorigin=\"anonymous\" media=\"all\" integrity=\"sha512-+J8j3T0kbK9/sL3zbkCfPtgYcRD4qQfRbT6xnfOrOTjvz4zhr0M7AXPuE642PpaxGhHs1t77cTtieW9hI2K6Gw==\" rel=\"stylesheet\" data-href=\"https://github.githubassets.com/assets/light_high_contrast-f89f23dd3d24.css\" /><link data-color-theme=\"light_tritanopia\" crossorigin=\"anonymous\" media=\"all\" integrity=\"sha512-AQeAx5wHQAXNf0DmkvVlHYwA3f6BkxunWTI0GGaRN57GqD+H9tW8RKIKlopLS0qGaC54seFsPc601GDlqIuuHg==\" rel=\"stylesheet\" data-href=\"https://github.githubassets.com/assets/light_tritanopia-010780c79c07.css\" /><link data-color-theme=\"dark_tritanopia\" crossorigin=\"anonymous\" media=\"all\" integrity=\"sha512-+u5pmgAE0T03d/yI6Ha0NWwz6Pk0W6S6WEfIt8veDVdK8NTjcMbZmQB9XUCkDlrBoAKkABva8HuGJ+SzEpV1Uw==\" rel=\"stylesheet\" data-href=\"https://github.githubassets.com/assets/dark_tritanopia-faee699a0004.css\" />\n    <link crossorigin=\"anonymous\" media=\"all\" integrity=\"sha512-UaC13TxG23hAbfH8gKhoyj9nsc+0Fhd0RkAi3o7p/WBYXY2FTFBNQDSP3fDUTnL8e2u3oXdh70fE6C9KBS9Xgw==\" rel=\"stylesheet\" href=\"https://github.githubassets.com/assets/frameworks-51a0b5dd3c46.css\" />\n    <link crossorigin=\"anonymous\" media=\"all\" integrity=\"sha512-u032SbATUumDO5cLHkFDVo2SWdvbjf6o2qnwwfkM/OOSVDeATpuoQYMLm+EsC7y73833htTGIHGDforOzpAzBw==\" rel=\"stylesheet\" href=\"https://github.githubassets.com/assets/behaviors-bb4df649b013.css\" />\n  <link crossorigin=\"anonymous\" media=\"all\" integrity=\"sha512-ESch6EtEItiZ3yjosg1iwDUoMla+QlVHS4CZzdjKmZBf2/npwNCf2Mx39KBJCE2ZMNtum7x4UkiSGAfuOvshsg==\" rel=\"stylesheet\" href=\"https://github.githubassets.com/assets/blob-112721e84b44.css\" />\n<link crossorigin=\"anonymous\" media=\"all\" integrity=\"sha512-/PVFZquIyT/6NDd8VDE1oDsfk4FkSl7Wup0zNWsX8OC9akUtDVdza1j3xwMpVCbkj96zt/uigtxv7X1QxNXVqQ==\" rel=\"stylesheet\" href=\"https://github.githubassets.com/assets/github-fcf54566ab88.css\" />\n\n    <meta name=\"optimizely-datafile\" content=\"{&quot;groups&quot;: [], &quot;environmentKey&quot;: &quot;production&quot;, &quot;rollouts&quot;: [], &quot;typedAudiences&quot;: [], &quot;projectId&quot;: &quot;16737760170&quot;, &quot;variables&quot;: [], &quot;featureFlags&quot;: [], &quot;experiments&quot;: [{&quot;status&quot;: &quot;Running&quot;, &quot;audienceIds&quot;: [], &quot;variations&quot;: [{&quot;variables&quot;: [], &quot;id&quot;: &quot;20667381018&quot;, &quot;key&quot;: &quot;control&quot;}, {&quot;variables&quot;: [], &quot;id&quot;: &quot;20680930759&quot;, &quot;key&quot;: &quot;treatment&quot;}], &quot;id&quot;: &quot;20652570897&quot;, &quot;key&quot;: &quot;project_genesis&quot;, &quot;layerId&quot;: &quot;20672300363&quot;, &quot;trafficAllocation&quot;: [{&quot;entityId&quot;: &quot;20667381018&quot;, &quot;endOfRange&quot;: 5000}, {&quot;entityId&quot;: &quot;20680930759&quot;, &quot;endOfRange&quot;: 10000}], &quot;forcedVariations&quot;: {&quot;83356e17066d336d1803024138ecb683&quot;: &quot;treatment&quot;, &quot;18e31c8a9b2271332466133162a4aa0d&quot;: &quot;treatment&quot;, &quot;10f8ab3fbc5ebe989a36a05f79d48f32&quot;: &quot;treatment&quot;, &quot;1686089f6d540cd2deeaec60ee43ecf7&quot;: &quot;treatment&quot;}}, {&quot;status&quot;: &quot;Running&quot;, &quot;audienceIds&quot;: [], &quot;variations&quot;: [{&quot;variables&quot;: [], &quot;id&quot;: &quot;21440190065&quot;, &quot;key&quot;: &quot;control_b&quot;}, {&quot;variables&quot;: [], &quot;id&quot;: &quot;21439580309&quot;, &quot;key&quot;: &quot;treatment_d&quot;}], &quot;id&quot;: &quot;21435481980&quot;, &quot;key&quot;: &quot;_260_contact_sales_redesign&quot;, &quot;layerId&quot;: &quot;21431681200&quot;, &quot;trafficAllocation&quot;: [{&quot;entityId&quot;: &quot;21440190065&quot;, &quot;endOfRange&quot;: 5000}, {&quot;entityId&quot;: &quot;21440190065&quot;, &quot;endOfRange&quot;: 10000}], &quot;forcedVariations&quot;: {}}, {&quot;status&quot;: &quot;Running&quot;, &quot;audienceIds&quot;: [], &quot;variations&quot;: [{&quot;variables&quot;: [], &quot;id&quot;: &quot;21427950901&quot;, &quot;key&quot;: &quot;control&quot;}, {&quot;variables&quot;: [], &quot;id&quot;: &quot;21429710665&quot;, &quot;key&quot;: &quot;beginner&quot;}, {&quot;variables&quot;: [], &quot;id&quot;: &quot;21437291543&quot;, &quot;key&quot;: &quot;upstart&quot;}], &quot;id&quot;: &quot;21445030708&quot;, &quot;key&quot;: &quot;_259_zero_user_dashboard&quot;, &quot;layerId&quot;: &quot;21434011841&quot;, &quot;trafficAllocation&quot;: [{&quot;entityId&quot;: &quot;21427950901&quot;, &quot;endOfRange&quot;: 3334}, {&quot;entityId&quot;: &quot;21427950901&quot;, &quot;endOfRange&quot;: 5000}, {&quot;entityId&quot;: &quot;21427950901&quot;, &quot;endOfRange&quot;: 8333}, {&quot;entityId&quot;: &quot;21427950901&quot;, &quot;endOfRange&quot;: 10000}], &quot;forcedVariations&quot;: {&quot;3c64268131793aa297119a343c19e345&quot;: &quot;beginner&quot;, &quot;95b24126db31ea8693c0fe5ea9f53b65&quot;: &quot;beginner&quot;, &quot;086e2abe64e9101112af53b95d2d90b9&quot;: &quot;upstart&quot;, &quot;bae688df9d297afac98e2d254e912ada&quot;: &quot;control&quot;, &quot;6c2cfda7c41396fcc31a4db759a42b94&quot;: &quot;beginner&quot;, &quot;16ed2b4ff7de02663b7c606309695916&quot;: &quot;control&quot;, &quot;1971768911.1635962195&quot;: &quot;beginner&quot;, &quot;830bf802470ec6c9c5800c99d8e57445&quot;: &quot;beginner&quot;}}], &quot;version&quot;: &quot;4&quot;, &quot;audiences&quot;: [{&quot;conditions&quot;: &quot;[\\&quot;or\\&quot;, {\\&quot;match\\&quot;: \\&quot;exact\\&quot;, \\&quot;name\\&quot;: \\&quot;$opt_dummy_attribute\\&quot;, \\&quot;type\\&quot;: \\&quot;custom_attribute\\&quot;, \\&quot;value\\&quot;: \\&quot;$opt_dummy_value\\&quot;}]&quot;, &quot;id&quot;: &quot;$opt_dummy_audience&quot;, &quot;name&quot;: &quot;Optimizely-Generated Audience for Backwards Compatibility&quot;}], &quot;anonymizeIP&quot;: true, &quot;sdkKey&quot;: &quot;WTc6awnGuYDdG98CYRban&quot;, &quot;attributes&quot;: [{&quot;id&quot;: &quot;16822470375&quot;, &quot;key&quot;: &quot;user_id&quot;}, {&quot;id&quot;: &quot;17143601254&quot;, &quot;key&quot;: &quot;spammy&quot;}, {&quot;id&quot;: &quot;18175660309&quot;, &quot;key&quot;: &quot;organization_plan&quot;}, {&quot;id&quot;: &quot;18813001570&quot;, &quot;key&quot;: &quot;is_logged_in&quot;}, {&quot;id&quot;: &quot;19073851829&quot;, &quot;key&quot;: &quot;geo&quot;}, {&quot;id&quot;: &quot;20175462351&quot;, &quot;key&quot;: &quot;requestedCurrency&quot;}, {&quot;id&quot;: &quot;20785470195&quot;, &quot;key&quot;: &quot;country_code&quot;}], &quot;botFiltering&quot;: false, &quot;accountId&quot;: &quot;16737760170&quot;, &quot;events&quot;: [{&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;17911811441&quot;, &quot;key&quot;: &quot;hydro_click.dashboard.teacher_toolbox_cta&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18124116703&quot;, &quot;key&quot;: &quot;submit.organizations.complete_sign_up&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18145892387&quot;, &quot;key&quot;: &quot;no_metric.tracked_outside_of_optimizely&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18178755568&quot;, &quot;key&quot;: &quot;click.org_onboarding_checklist.add_repo&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18180553241&quot;, &quot;key&quot;: &quot;submit.repository_imports.create&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18186103728&quot;, &quot;key&quot;: &quot;click.help.learn_more_about_repository_creation&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18188530140&quot;, &quot;key&quot;: &quot;test_event&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18191963644&quot;, &quot;key&quot;: &quot;click.empty_org_repo_cta.transfer_repository&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18195612788&quot;, &quot;key&quot;: &quot;click.em"
+  },
+  {
+    "type": "response",
+    "url": "https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&family=Poppins:wght@400;500;600;700;800;900&display=swap",
+    "status": 200,
+    "content_type": "text/css; charset=utf-8",
+    "sample": "/* cyrillic-ext */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 300;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t4R-tCKQ.woff2) format('woff2');\n  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;\n}\n/* cyrillic */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 300;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7txR-tCKQ.woff2) format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}\n/* vietnamese */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 300;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t6R-tCKQ.woff2) format('woff2');\n  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;\n}\n/* latin-ext */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 300;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t7R-tCKQ.woff2) format('woff2');\n  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;\n}\n/* latin */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 300;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t1R-s.woff2) format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n/* cyrillic-ext */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 400;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t4R-tCKQ.woff2) format('woff2');\n  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;\n}\n/* cyrillic */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 400;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7txR-tCKQ.woff2) format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}\n/* vietnamese */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 400;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t6R-tCKQ.woff2) format('woff2');\n  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;\n}\n/* latin-ext */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 400;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t7R-tCKQ.woff2) format('woff2');\n  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;\n}\n/* latin */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 400;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t1R-s.woff2) format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n/* cyrillic-ext */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 600;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t4R-tCKQ.woff2) format('woff2');\n  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;\n}\n/* cyrillic */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 600;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7txR-tCKQ.woff2) format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}\n/* vietnamese */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 600;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t6R-tCKQ.woff2) format('woff2');\n  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;\n}\n/* latin-ext */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 600;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t7R-tCKQ.woff2) format('woff2');\n  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;\n}\n/* latin */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 600;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t1R-s.woff2) format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n/* cyrillic-ext */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 700;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t4R-tCKQ.woff2) format('woff2');\n  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;\n}\n/* cyrillic */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 700;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7txR-tCKQ.woff2) format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}\n/* vietnamese */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 700;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t6R-tCKQ.woff2) format('woff2');\n  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;\n}\n/* latin-ext */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 700;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t7R-tCKQ.woff2) format('woff2');\n  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;\n}\n/* latin */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 700;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t1R-s.woff2) format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n/* devanagari */\n@font-face {\n  font-family: 'Poppins';\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/poppins/v24/pxiEyp8kv8JHgFVrJJbecmNE.woff2) format('woff2');\n  unicode-range: U+0900-097F, U+1CD0-1CF9, U+200C-200D, U+20A8, U+20B9, U+20F0, U+25CC, U+A830-A839, U+A8E0-A8FF, U+11B00-11B09;\n}\n/* latin-ext */\n@font-face {\n  font-family: 'Poppins';\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/poppins/v24/pxiEyp8kv8JHgFVrJJnecmNE.woff2) format('woff2');\n  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;\n}\n/* latin */\n@font-face {\n  font-family: 'Poppins';\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(https"
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/mainpage-imgs/0/img/icons/sdg.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/mainpage-imgs/0/img/icons/college.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/mainpage-imgs/0/img/icons/testimonial.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/mainpage-imgs/0/img/icons/success.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/sharer.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/ar/footer/img/arab_league.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/ar/footer/img/ain-logo.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/ar/footer/img/QS-STARS.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://cdn.jsdelivr.net/npm/sharer.js@latest/sharer.min.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/colleges/addition-scripts.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/main/js/rocket-loader.min.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/topbar/js/jquery2-2.min.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/topbar/js/scripts.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/topbar/js/wow.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/colleges-all/js/video_open.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/colleges-all/js/allScript.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/colleges-all/js/slider-native.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/colleges-all/css/style.css",
+    "status": 200,
+    "content_type": "text/css",
+    "sample": "/* Start Fonts */\r\n\r\n/* ===================================================\r\n>>> TABLE OF CONTENTS:\r\n======================================================\r\n  1. Font Awesome \r\n  2. Flat Icon\r\n  3. Iconmoon Icon\r\n\r\n \r\n=================================================== */\r\n\r\n/*---------------------------------------------------------------\r\n  1. Font Awesome 6 Icon\r\n---------------------------------------------------------------*/\r\n/*!\r\n * Font Awesome Free 6.0.0 by @fontawesome - https://fontawesome.com\r\n * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)\r\n * Copyright 2022 Fonticons, Inc.\r\n */\r\n .fa{font-family:var(--fa-style-family,\"Font Awesome 6 Free\");font-weight:var(--fa-style,900)}.fa,.fa-brands,.fa-duotone,.fa-light,.fa-regular,.fa-solid,.fa-thin,.fab,.fad,.fal,.far,.fas,.fat{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;display:var(--fa-display,inline-block);font-style:normal;font-variant:normal;line-height:1;text-rendering:auto}.fa-1x{font-size:1em}.fa-2x{font-size:2em}.fa-3x{font-size:3em}.fa-4x{font-size:4em}.fa-5x{font-size:5em}.fa-6x{font-size:6em}.fa-7x{font-size:7em}.fa-8x{font-size:8em}.fa-9x{font-size:9em}.fa-10x{font-size:10em}.fa-2xs{font-size:.625em;line-height:.1em;vertical-align:.225em}.fa-xs{font-size:.75em;line-height:.08333em;vertical-align:.125em}.fa-sm{font-size:.875em;line-height:.07143em;vertical-align:.05357em}.fa-lg{font-size:1.25em;line-height:.05em;vertical-align:-.075em}.fa-xl{font-size:1.5em;line-height:.04167em;vertical-align:-.125em}.fa-2xl{font-size:2em;line-height:.03125em;vertical-align:-.1875em}.fa-fw{text-align:center;width:1.25em}.fa-ul{list-style-type:none;margin-left:var(--fa-li-margin,2.5em);padding-left:0}.fa-ul>li{position:relative}.fa-li{left:calc(var(--fa-li-width, 2em)*-1);position:absolute;text-align:center;width:var(--fa-li-width,2em);line-height:inherit}.fa-border{border-radius:var(--fa-border-radius,.1em);border:var(--fa-border-width,.08em) var(--fa-border-style,solid) var(--fa-border-color,#eee);padding:var(--fa-border-padding,.2em .25em .15em)}.fa-pull-left{float:left;margin-right:var(--fa-pull-margin,.3em)}.fa-pull-right{float:right;margin-left:var(--fa-pull-margin,.3em)}.fa-beat{-webkit-animation-name:fa-beat;animation-name:fa-beat;-webkit-animation-delay:var(--fa-animation-delay,0);animation-delay:var(--fa-animation-delay,0);-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal);-webkit-animation-duration:var(--fa-animation-duration,1s);animation-duration:var(--fa-animation-duration,1s);-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,ease-in-out);animation-timing-function:var(--fa-animation-timing,ease-in-out)}.fa-bounce{-webkit-animation-name:fa-bounce;animation-name:fa-bounce;-webkit-animation-delay:var(--fa-animation-delay,0);animation-delay:var(--fa-animation-delay,0);-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal);-webkit-animation-duration:var(--fa-animation-duration,1s);animation-duration:var(--fa-animation-duration,1s);-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,cubic-bezier(.28,.84,.42,1));animation-timing-function:var(--fa-animation-timing,cubic-bezier(.28,.84,.42,1))}.fa-fade{-webkit-animation-name:fa-fade;animation-name:fa-fade;-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,cubic-bezier(.4,0,.6,1));animation-timing-function:var(--fa-animation-timing,cubic-bezier(.4,0,.6,1))}.fa-beat-fade,.fa-fade{-webkit-animation-delay:var(--fa-animation-delay,0);animation-delay:var(--fa-animation-delay,0);-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal);-webkit-animation-duration:var(--fa-animation-duration,1s);animation-duration:var(--fa-animation-duration,1s)}.fa-beat-fade{-webkit-animation-name:fa-beat-fade;animation-name:fa-beat-fade;-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,cubic-bezier(.4,0,.6,1));animation-timing-function:var(--fa-animation-timing,cubic-bezier(.4,0,.6,1))}.fa-flip{-webkit-animation-name:fa-flip;animation-name:fa-flip;-webkit-animation-delay:var(--fa-animation-delay,0);animation-delay:var(--fa-animation-delay,0);-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal);-webkit-animation-duration:var(--fa-animation-duration,1s);animation-duration:var(--fa-animation-duration,1s);-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,ease-in-out);animation-timing-function:var(--fa-animation-timing,ease-in-out)}.fa-shake{-webkit-animation-name:fa-shake;animation-name:fa-shake;-webkit-animation-duration:var(--fa-animation-duration,1s);animation-duration:var(--fa-animation-duration,1s);-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,linear);animation-timing-function:var(--fa-animation-timing,linear)}.fa-shake,.fa-spin{-webkit-animation-delay:var(--fa-animation-delay,0);animation-delay:var(--fa-animation-delay,0);-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal)}.fa-spin{-webkit-animation-name:fa-spin;animation-name:fa-spin;-webkit-animation-duration:var(--fa-animation-duration,2s);animation-duration:var(--fa-animation-duration,2s);-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,linear);animation-timing-function:var(--fa-animation-timing,linear)}.fa-spin-reverse{--fa-animation-direction:reverse}.fa-pulse,.fa-spin-pulse{-webkit-animation-name:fa-spin;animation-name:fa-spin;-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal);-webkit-animation-duration:var(--fa-animation-duration,1s);animation-duration:var(--fa-animation-duration,1s);-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,steps(8));animation-timing-function:var(--fa-animation-timing,steps(8))}@media (prefers-reduced-motion:reduce){.fa-beat,.fa-beat-fade,.fa-bounce,.fa-fade,.fa-flip,.fa-pulse,.fa-shake,.fa-spin,.fa-spin-pulse{-webkit-animation-delay:-1ms;animation-delay:-1ms;-webkit-animation-duration:1ms;animation-duration:1ms;-webkit-animation-iteration-count:1;animation-iteration-count:1;transition-delay:0s;transition-duration:0s}}@-webkit-keyframes fa-beat{0%,90%{-webkit-transform:scale(1);transform:scale(1)}45%{-webkit-transform:scale(var(--fa-beat-scale,1.25));transform:scale(var(--fa-beat-scale,1.25))}}@keyframes fa-beat{0%,90%{-webkit-transform:scale(1);transform:scale(1)}45%{-webkit-transform:scale(var(--fa-beat-scale,1.25));transform:scale(var(--fa-beat-scale,1.25))}}@-webkit-keyframes fa-bounce{0%{-webkit-transform:scale(1) translateY(0);transform:scale(1) translateY(0)}10%{-webkit-transform:scale(var(--fa-bounce-start-scale-x,1.1),var(--fa-bounce-start-scale-y,.9)) translateY(0);transform:scale(var(--fa-bounce-start-scale-x,1.1),var(--fa-bounce-start-scale-y,.9)) translateY(0)}30%{-webkit-transform:scale(var(--fa-bounce-jump-scale-x,.9),var(--fa-bounce-jump-scale-y,1.1)) translateY(var(--fa-bounce-height,-.5em));transform:scale(var(--fa-bounce-jump-scale-x,.9),var(--fa-bounce-jump-scale-y,1.1)) translateY(var(--fa-bounce-height,-.5em))}50%{-webkit-transform:scale(var(--fa-bounce-land-scale-x,1.05),var(--fa-bounce-land-scale-y,.95)) translateY(0);transform:scale(var(--fa-bounce-land-scale-x,1.05),var(--fa-bounce-land-scale-y,.95)) translateY(0)}57%{-webkit-transform:scale(1) translateY(var(--fa-bounce-rebound,-.125em));transform:scale(1) translateY(var(--fa-bounce-rebound,-.125em))}64%{-webkit-transform:scale(1) translateY(0);transform:scale(1) translateY(0)}to{-webkit-transform:scale(1) translateY(0);transform:scale(1) translateY(0)}}@keyframes fa-bounce{0%{-webkit-transform:scale(1) translateY(0);transform:scale(1) translateY(0)}10%{-webkit-transform:scale(var(--fa-bounce-start-scale-x,1.1),var(--fa-bounce-start-scale-y,.9)) translateY(0);transform:scale(var(--fa-bounce-start-scale-x,1.1),var(--fa-bounce-start-scale-y,.9)) translateY(0)}30%{-webkit-transform:scale(var(--fa-bounce-jump-scale-x,.9),var(--fa-bounce-jump-scale-y,1.1)) translateY(var(--fa-bounce-height,-.5em));transform:scale(var(--fa-bounce-jump-scale-x,.9),var(--fa-bounce-jump-scale-y,1.1)) translateY(var(--fa-bounce-height,-.5em))}50%{-webkit-transform:scale(var(--fa-bounce-land-scale-x,1.05),var(--fa-bounce-land-scale-y,.95)) translateY(0);transform:scale(var(--fa-bounce-land-scale-x,1.05),var(--fa-bounce-land-scale-y,.95)) translateY(0)}57%{-webkit-transform:scale(1) translateY(var(--fa-bounce-rebound,-.125em));transform:scale(1) translateY(var(--fa-bounce-rebound,-.125em))}64%{-webkit-transform:scale(1) translateY(0);transform:scale(1) "
+  },
+  {
+    "type": "request",
+    "url": "https://salesiq.zoho.com/widget",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://connect.facebook.net/en_US/fbevents.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/mainpage-imgs/0/img/icons/international-prog.png",
+    "status": 200,
+    "content_type": "image/png",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/mainpage-imgs/0/img/icons/training.png",
+    "status": 200,
+    "content_type": "image/png",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/mainpage-imgs/0/img/icons/services.png",
+    "status": 200,
+    "content_type": "image/png",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/mainpage-imgs/0/img/icons/course.png",
+    "status": 200,
+    "content_type": "image/png",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/mainpage-imgs/0/img/icons/activities.png",
+    "status": 200,
+    "content_type": "image/png",
+    "sample": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/topbar/img/main-menu/t12.webp",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://site-assets.fontawesome.com/releases/v6.5.2/webfonts/fa-regular-400.woff2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t1R-s.woff2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/colleges-all/webfonts/fa-solid-900.woff2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://site-assets.fontawesome.com/releases/v6.5.2/webfonts/fa-solid-900.woff2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/topbar/img/main-menu/t12.webp",
+    "status": 200,
+    "content_type": "",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/sharer.js",
+    "status": 200,
+    "content_type": "application/javascript",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://cdn.jsdelivr.net/npm/sharer.js@latest/sharer.min.js",
+    "status": 200,
+    "content_type": "application/javascript; charset=utf-8",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en/colleges/addition-scripts.js",
+    "status": 200,
+    "content_type": "application/javascript",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/main/js/rocket-loader.min.js",
+    "status": 200,
+    "content_type": "application/javascript",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/colleges-all/js/video_open.js",
+    "status": 200,
+    "content_type": "application/javascript",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/colleges-all/js/slider-native.js",
+    "status": 200,
+    "content_type": "application/javascript",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/topbar/js/wow.js",
+    "status": 200,
+    "content_type": "application/javascript",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/topbar/js/scripts.js",
+    "status": 200,
+    "content_type": "application/javascript",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/topbar/js/jquery2-2.min.js",
+    "status": 200,
+    "content_type": "application/javascript",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://connect.facebook.net/en_US/fbevents.js",
+    "status": 200,
+    "content_type": "application/x-javascript; charset=utf-8",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/colleges-all/js/allScript.js",
+    "status": 200,
+    "content_type": "application/javascript",
+    "sample": null
+  },
+  {
+    "type": "request",
+    "url": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLEj6Z1xlFQ.woff2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://site-assets.fontawesome.com/releases/v6.5.2/webfonts/fa-brands-400.woff2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLCz7Z1xlFQ.woff2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://fonts.gstatic.com/s/poppins/v24/pxiEyp8kv8JHgFVrJJfecg.woff2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLGT9Z1xlFQ.woff2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "response",
+    "url": "https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t1R-s.woff2",
+    "status": 200,
+    "content_type": "font/woff2",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/colleges-all/webfonts/fa-solid-900.woff2",
+    "status": 200,
+    "content_type": "font/woff2",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://site-assets.fontawesome.com/releases/v6.5.2/webfonts/fa-regular-400.woff2",
+    "status": 200,
+    "content_type": "font/woff2",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://site-assets.fontawesome.com/releases/v6.5.2/webfonts/fa-solid-900.woff2",
+    "status": 200,
+    "content_type": "font/woff2",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLEj6Z1xlFQ.woff2",
+    "status": 200,
+    "content_type": "font/woff2",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://site-assets.fontawesome.com/releases/v6.5.2/webfonts/fa-brands-400.woff2",
+    "status": 200,
+    "content_type": "font/woff2",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLCz7Z1xlFQ.woff2",
+    "status": 200,
+    "content_type": "font/woff2",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://fonts.gstatic.com/s/poppins/v24/pxiEyp8kv8JHgFVrJJfecg.woff2",
+    "status": 200,
+    "content_type": "font/woff2",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLGT9Z1xlFQ.woff2",
+    "status": 200,
+    "content_type": "font/woff2",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://www.aast.edu/mainpage-imgs/419/img/0.jpg",
+    "status": 200,
+    "content_type": "image/jpeg",
+    "sample": null
+  },
+  {
+    "type": "request",
+    "url": "https://cdn.userway.org/widget.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "response",
+    "url": "https://cdn.userway.org/widget.js",
+    "status": 200,
+    "content_type": "application/javascript",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/getData/retreiveOnePICNew.php?unit=419&img=164856.webp&mod=2",
+    "status": 200,
+    "content_type": "image/webp",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://www.aast.edu/mainpage-imgs/419/img/Front%20Entrance.png",
+    "status": 200,
+    "content_type": "image/png",
+    "sample": null
+  },
+  {
+    "type": "request",
+    "url": "https://connect.facebook.net/signals/config/139431910221475?v=2.9.242&r=stable&domain=aast.edu&hme=db9908e5ed1726a41bdcb93671634d1da820805416d5d2ea894e38123b1576dd&ex_m=89%2C148%2C128%2C18%2C65%2C66%2C121%2C61%2C41%2C122%2C70%2C60%2C135%2C78%2C13%2C88%2C26%2C116%2C108%2C68%2C71%2C115%2C132%2C97%2C137%2C7%2C3%2C4%2C6%2C5%2C2%2C79%2C87%2C138%2C215%2C159%2C55%2C217%2C218%2C48%2C174%2C25%2C67%2C223%2C222%2C162%2C28%2C54%2C8%2C57%2C83%2C84%2C85%2C90%2C112%2C27%2C24%2C114%2C111%2C110%2C129%2C69%2C131%2C130%2C43%2C53%2C105%2C12%2C134%2C38%2C204%2C206%2C169%2C21%2C22%2C23%2C15%2C16%2C37%2C33%2C35%2C34%2C74%2C80%2C82%2C95%2C120%2C123%2C39%2C96%2C19%2C17%2C101%2C62%2C31%2C125%2C124%2C126%2C117%2C20%2C30%2C52%2C94%2C133%2C63%2C14%2C127%2C29%2C184%2C155%2C278%2C202%2C146%2C187%2C180%2C156%2C92%2C113%2C73%2C103%2C47%2C40%2C102%2C107%2C51%2C58%2C42%2C98%2C46%2C49%2C45%2C86%2C136%2C0%2C106%2C11%2C104%2C9%2C1%2C50%2C81%2C56%2C59%2C100%2C77%2C76%2C44%2C109%2C118%2C75%2C72%2C64%2C99%2C91%2C36%2C119%2C32%2C93%2C10%2C139",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "response",
+    "url": "https://connect.facebook.net/signals/config/139431910221475?v=2.9.242&r=stable&domain=aast.edu&hme=db9908e5ed1726a41bdcb93671634d1da820805416d5d2ea894e38123b1576dd&ex_m=89%2C148%2C128%2C18%2C65%2C66%2C121%2C61%2C41%2C122%2C70%2C60%2C135%2C78%2C13%2C88%2C26%2C116%2C108%2C68%2C71%2C115%2C132%2C97%2C137%2C7%2C3%2C4%2C6%2C5%2C2%2C79%2C87%2C138%2C215%2C159%2C55%2C217%2C218%2C48%2C174%2C25%2C67%2C223%2C222%2C162%2C28%2C54%2C8%2C57%2C83%2C84%2C85%2C90%2C112%2C27%2C24%2C114%2C111%2C110%2C129%2C69%2C131%2C130%2C43%2C53%2C105%2C12%2C134%2C38%2C204%2C206%2C169%2C21%2C22%2C23%2C15%2C16%2C37%2C33%2C35%2C34%2C74%2C80%2C82%2C95%2C120%2C123%2C39%2C96%2C19%2C17%2C101%2C62%2C31%2C125%2C124%2C126%2C117%2C20%2C30%2C52%2C94%2C133%2C63%2C14%2C127%2C29%2C184%2C155%2C278%2C202%2C146%2C187%2C180%2C156%2C92%2C113%2C73%2C103%2C47%2C40%2C102%2C107%2C51%2C58%2C42%2C98%2C46%2C49%2C45%2C86%2C136%2C0%2C106%2C11%2C104%2C9%2C1%2C50%2C81%2C56%2C59%2C100%2C77%2C76%2C44%2C109%2C118%2C75%2C72%2C64%2C99%2C91%2C36%2C119%2C32%2C93%2C10%2C139",
+    "status": 200,
+    "content_type": "application/x-javascript; charset=utf-8",
+    "sample": null
+  },
+  {
+    "type": "request",
+    "url": "https://www.facebook.com/tr/?id=139431910221475&ev=PageView&dl=https%3A%2F%2Faast.edu%2Fen%2Fcolleges%2Fcoe%2Fsmartvillage%2F&rl=&if=false&ts=1763511206647&sw=1280&sh=720&v=2.9.242&r=stable&ec=0&o=4254&fbp=fb.1.1763510661634.546314588296484096&cs_est=true&ler=empty&bfs[b]=1&pmd[title]=College%20of%20Engineering%20%26%20Technology-Smart%20Village%20%7C%20AASTMT&pmd[description]=AASTMT%20is%20one%20of%20the%20specialized%20organizations%20of%20the%20League%20of%20Arab%20States.%20We%20are%20a%20regional%20educational%20organization%20located%20in%20Egypt%20devoted%20to%20providing%20an%20excellent%20education%20for%20Arab%20youth%20and%20researchers.&pmd[keywords]=aast%2C%20arab%20academy%2C%20university%2C%20academy%2C%20college%2C%20Egypt%20colleges%2C%20students%2C%20maritime%2C%20engineering%2C%20pharmacy%2C%20medicine%2C%20media%2C%20management%2C%20business%2C%20cairo%2C%20alexandria%2C%20aswan%2C%20portsaid%2C%20undergraduate%2C%20admission%2C%20alumni%2C%20majors%2C%20student%20accessibility%2C%20special%20needs%20&plt=960.5999999940395&it=1763511206627&coo=false&expv2[0]=pl0&expv2[1]=el3&expv2[2]=bc1&expv2[3]=mr2&rqm=GET",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "response",
+    "url": "https://www.aast.edu/mainpage-imgs/419/img/8.jpg",
+    "status": 200,
+    "content_type": "image/jpeg",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://www.aast.edu/mainpage-imgs/419/img/6.jpg",
+    "status": 200,
+    "content_type": "image/jpeg",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/getData/retreiveOnePICNew.php?unit=419&img=164000.webp&mod=2",
+    "status": 200,
+    "content_type": "image/webp",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://www.aast.edu/mainpage-imgs/419/img/2.jpg",
+    "status": 200,
+    "content_type": "image/jpeg",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/getData/retreiveOnePICNew.php?unit=419&img=163990.webp&mod=2",
+    "status": 200,
+    "content_type": "image/webp",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/getData/retreiveOnePICNew.php?unit=419&img=145656.webp&mod=2",
+    "status": 200,
+    "content_type": "image/webp",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/getData/retreiveOnePICNew.php?unit=419&img=145663.webp&mod=2",
+    "status": 200,
+    "content_type": "image/webp",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en/colleges/coe/smartvillage/",
+    "status": 200,
+    "content_type": "text/html; charset=UTF-8",
+    "sample": "\n<!doctype html>\n<html class=\"no-js\" lang=\"en\">\n<head>\n\n    <meta charset='utf-8'><meta http-equiv='x-ua-compatible' content='ie=edge'><meta name='viewport' content='width=device-width, initial-scale=1.0'><link rel=\"icon\" type=\"image/x-icon\" href=\"https://aast.edu/template/favicon.ico\"/><title>College of Engineering & Technology-Smart Village | AASTMT</title><meta name='author' content='Website Design dept, Information and Documentation Center, Arab Academy for Science, Technology and Maritime Transport' /><meta name='copyright' content='Copyright (c) 2025Arab Academy for Science Technology and Maritime Transport' /><meta name='robots' content='index' /><meta name='allow-search' content='yes' /><meta http-equiv='imagetoolbar' content='false' /><script> window.dataLayer = window.dataLayer || [];     function gtag(){dataLayer.push(arguments);}     gtag('js', new Date());gtag('config', '');</script><script async src='https://www.googletagmanager.com/gtag/js?id='></script><link rel='canonical' href='https://aast.edu/en/colleges/coe/smartvillage/'/><meta name='description' content='AASTMT is one of the specialized organizations of the League of Arab States. We are a regional educational organization located in Egypt devoted to providing an excellent education for Arab youth and researchers.'/><meta name='keywords' content='aast, arab academy, university, academy, college, Egypt colleges, students, maritime, engineering, pharmacy, medicine, media, management, business, cairo, alexandria, aswan, portsaid, undergraduate, admission, alumni, majors, student accessibility, special needs '/><link rel='alternate' hreflang='en' href='https://aast.edu/en/colleges/coe/smartvillage/'>\n    <!-- Main Stylesheet -->\n<link rel='stylesheet'href='../../../../template/en/colleges-all/css/style.css'/><link rel=\"stylesheet\" href=\"https://aast.edu/template/en/institutes-/css/fontawesome.min.css\">\n<link rel=\"stylesheet\" href=\"../../../../template/en/colleges-all/css/allStyle.css\">\n\n<link rel=\"stylesheet\" href=\"../../../../template/en/colleges/css/popup-search.css\">\n\n<link rel=\"stylesheet\" href=\"../../../../template/en/topbar/css/plugins.css\">\n<!-- Main Stylesheet -->\n<link rel=\"stylesheet\" href=\"../../../../template/en/topbar/css/style.css\">\n\n<!--<link rel=\"stylesheet\" href=\"../../../../template/en/topbar/css/top-bar.css\">-->\n<!------------start menu----->\n<link rel=\"stylesheet\" href=\"../../../../template/en/topbar/css/main-menu.css\" />\n<link rel=\"stylesheet\" href=\"../../../../template/en/topbar/css/animate.css\">\n\n<link rel=\"stylesheet\" href=\"../../../../template/en/colleges-all/css/menue.css\">\n<link rel=\"stylesheet\" href=\"../../../../template/en/colleges-all/css/responsive-colleges.css\">\n<link rel=\"stylesheet\" href=\"../../../../template/en/colleges-all/css/mklb.css\">\n<!-- Top Bar -->\n<script type=\"text/javascript\">\n    // window.addEventListener(\"resize\", function() {\n    //     \"use strict\";\n    //     window.location.reload();\n    // });\n    document.addEventListener(\"DOMContentLoaded\", function() {\n        // make it as accordion for smaller screens\n        if (window.innerWidth < 768) {\n            document.querySelectorAll('.sidebar .nav-link').forEach(function(element) {\n                element.addEventListener('click', function(e) {\n                    let nextEl = element.nextElementSibling;\n                    let parentEl = element.parentElement;\n                    let allSubmenus_array = parentEl.querySelectorAll('.submenu');\n                    if (nextEl && nextEl.classList.contains('submenu')) {\n                        e.preventDefault();\n                        if (nextEl.style.display == 'block') {\n                            nextEl.style.display = 'none';\n                        } else {\n                            nextEl.style.display = 'block';\n                        }\n                    }\n                });\n            })\n        }\n        // end if innerWidth\n    });\n    // DOMContentLoaded  end\n\n</script>\n\n\n\n</head>\n\n<body>\n<!-- Body main wrapper start -->\n<div class=\"body-wrapper\">\n\n    <header class=\"ltn__header-area ltn__header-5 ltn__header-transparent--- gradient-color-4---\">\n        <script>\n    document.addEventListener(\"DOMContentLoaded\", function() {\n        var editable_elements = document.querySelectorAll(\"[contenteditable=true]\");\n        for (var i = 0; i < editable_elements.length; i++) {\n            editable_elements[i].setAttribute(\"contenteditable\", false);\n        }\n    });\n\n</script>\n<script type=\"text/javascript\" id=\"zsiqchat\">var $zoho=$zoho || {};$zoho.salesiq = $zoho.salesiq || {widgetcode: \"be75dc65916736ef4d8e6bed223f7171613267f7632ea1d4c4880f901dc96e8e\", values:{},ready:function(){}};var d=document;s=d.createElement(\"script\");s.type=\"text/javascript\";s.id=\"zsiqscript\";s.defer=true;s.src=\"https://salesiq.zoho.com/widget\";t=d.getElementsByTagName(\"script\")[0];t.parentNode.insertBefore(s,t);</script>\n\n  <!-- icons font-awsome-->\n    <link rel=\"stylesheet\" href=\"https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css\">\n\n\n <header class=\"ltn__header-area ltn__header-5 ltn__header-transparent--- gradient-color-4---\">\n            <div class=\"ltn__header-top-area \">\n                <div class=\"auto-container\">\n                    <div class=\"row row2\">\n                        <div class=\"col-md-5 col-sm-12 col-xs-12\">\n                            <div class=\"ltn__top-bar-menu txt-991-center\">\n                                <ul>\n                                    <li> <a href=\"tel:19838\"><i class=\"fa fa-phone\" aria-hidden=\"true\"></i> 19838</a></li>\n\n                                    <li>\n                                        <!-- ltn__language-menu -->\n                                        <div class=\"ltn__drop-menu ltn__currency-menu ltn__language-menu\">\n                                            <ul>\n                                                <li><a href=\"#\" class=\"\"><span class=\"active-currency\"><i class=\"fa fa-unlock-alt\" aria-hidden=\"true\"></i> Login</span></a>\n                                                    <ul>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<li><a href=\"https://aastmtic.aast.edu/admission/application/ui/\"><i class=\"fa fa-angle-right\"></i> New Applicants </a></li>\n                                                        <li><a href=\"https://studentportal.aast.edu/Login\"><i class=\"fa fa-angle-right\"></i> Students</a></li>\n                                                        <li><a href=\"https://staffportal.aast.edu/\"><i class=\"fa fa-angle-right\"></i> Staff</a></li>\n                                                    </ul>\n                                                </li>\n                                            </ul>\n                                        </div>\n                                    </li>\n                                    <!--  -->\n                                    <li>\n                                        <!-- ltn__language-menu -->\n                                        <div class=\"ltn__drop-menu ltn__currency-menu ltn__language-menu\">\n                                            <ul>\n\n                                                <li><a href=\"#\" class=\"dropdown-toggle\"><i class=\"fa fa-globe\"></i> <span class=\"active-currency\">En</span></a>\n                                                     <ul> <li><a href='https://aast.edu/en/includes/functions/language_redirect.php?url=https%3A%2F%2Faast.edu%2Fen%2Fcolleges%2Fcoe%2Fsmartvillage%2F%26lnselect%3D2'>Ar <img src='https://aast.edu/template/ar.png' class='flag'></a></li></ul>                                                </li>\n                                            </ul>\n                                        </div>\n                                    </li>\n                                </ul>\n                            </div>\n                        </div>\n                        <div class=\"  col-md-5 col-sm-12 col-xs-12\">\n                            <div class=\"text-right\">\n                                <div class=\"ltn__top-bar-menu  txt-768-center  txt-991-center \">\n                                    <ul>\n                                        <!-- today -->\n                                        <li>\n                                            <div class=\"ltn__drop-menu ltn__currency-menu ltn__language-menu\">\n                                                <ul>\n\t\t\t\t\t\t\t\t\t\t\t\t <li><a href=\"https://aast.edu/\"><span class=\"active-currency\"><i class=\"fa fa-university\" aria-hidden=\"true\" style=\"font-size: 1em;\"></i> AASTMT</span></a></li>\n                                                    <li><a href=\"#\" class=\"dropdown-toggle\"><span class=\"active-currency\">Our Latest </span></a>\n                                                        <ul>\n                                                            <li><a href=\"https://aast.edu/en/news/index.php?unit_id=1\"><i class=\"fa fa-angle-right\"></i> News</a></li>\n                                                            <li><a href=\"https://aast.edu/en/events/index.php?unit_id=482\"><i class=\"fa fa-angle-right\"></i> Events</a></li>\n                                                            <li><a href=\"https://aast.edu/en/gallery/index.php\"><i class=\"fa fa-angle-right\"></i> Media</a></li>\n<!--                                                           <li><a href=\"https://aast.edu/\"><span class=\"active-currency\"><i class=\"fa fa-university\" aria-hidden=\"true\" style=\"font-size: 1em;\"></i> AASTMT</span></a></li> -->\n                                                        </ul>\n                                                    </li>\n                                                </ul> \n                                            </div>\n                                            <!--  -->\n                                        </li>\n                                        <!--/.today  -->\n\n\n                                        <!-- info for -->\n                                        <li>\n                                            <!-- lt"
+  },
+  {
+    "type": "response",
+    "url": "https://www.facebook.com/tr/?id=139431910221475&ev=PageView&dl=https%3A%2F%2Faast.edu%2Fen%2Fcolleges%2Fcoe%2Fsmartvillage%2F&rl=&if=false&ts=1763511206647&sw=1280&sh=720&v=2.9.242&r=stable&ec=0&o=4254&fbp=fb.1.1763510661634.546314588296484096&cs_est=true&ler=empty&bfs[b]=1&pmd[title]=College%20of%20Engineering%20%26%20Technology-Smart%20Village%20%7C%20AASTMT&pmd[description]=AASTMT%20is%20one%20of%20the%20specialized%20organizations%20of%20the%20League%20of%20Arab%20States.%20We%20are%20a%20regional%20educational%20organization%20located%20in%20Egypt%20devoted%20to%20providing%20an%20excellent%20education%20for%20Arab%20youth%20and%20researchers.&pmd[keywords]=aast%2C%20arab%20academy%2C%20university%2C%20academy%2C%20college%2C%20Egypt%20colleges%2C%20students%2C%20maritime%2C%20engineering%2C%20pharmacy%2C%20medicine%2C%20media%2C%20management%2C%20business%2C%20cairo%2C%20alexandria%2C%20aswan%2C%20portsaid%2C%20undergraduate%2C%20admission%2C%20alumni%2C%20majors%2C%20student%20accessibility%2C%20special%20needs%20&plt=960.5999999940395&it=1763511206627&coo=false&expv2[0]=pl0&expv2[1]=el3&expv2[2]=bc1&expv2[3]=mr2&rqm=GET",
+    "status": 200,
+    "content_type": "text/plain",
+    "sample": ""
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/getData/retreiveOnePICNew.php?unit=419&img=144338.webp&mod=2",
+    "status": 404,
+    "content_type": "text/html; charset=UTF-8",
+    "sample": "The file does not exist"
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/getData/retreiveOnePICNew.php?unit=419&img=145653.webp&mod=2",
+    "status": 200,
+    "content_type": "image/webp",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/getData/retreiveOnePICNew.php?unit=419&img=145149.webp&mod=2",
+    "status": 200,
+    "content_type": "image/webp",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/mainpage-imgs/0/img/icons/sdg.png",
+    "status": 200,
+    "content_type": "image/png",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/mainpage-imgs/0/img/icons/college.png",
+    "status": 200,
+    "content_type": "image/png",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/mainpage-imgs/0/img/icons/testimonial.png",
+    "status": 200,
+    "content_type": "image/png",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/mainpage-imgs/0/img/icons/success.png",
+    "status": 200,
+    "content_type": "image/png",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/ar/footer/img/arab_league.png",
+    "status": 200,
+    "content_type": "image/png",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/ar/footer/img/ain-logo.png",
+    "status": 200,
+    "content_type": "image/png",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/ar/footer/img/QS-STARS.png",
+    "status": 200,
+    "content_type": "image/png",
+    "sample": null
+  },
+  {
+    "type": "request",
+    "url": "https://salesiq.zohopublic.com/visitor/v2/channels/website?widgetcode=be75dc65916736ef4d8e6bed223f7171613267f7632ea1d4c4880f901dc96e8e&internal_channel_req=true&last_modified_time=1723967008528&version=V26&browser_language=en&current_domain=https%3A%2F%2Faast.edu&pagetitle=College%20of%20Engineering%20%26%20Technology-Smart%20Village%20%7C%20AASTMT",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "response",
+    "url": "https://salesiq.zoho.com/widget",
+    "status": 200,
+    "content_type": "text/javascript;charset=UTF-8",
+    "sample": "window._STATICURLS=[\"js.zohocdn.com\",\"css.zohocdn.com\",\"https://us4-files.zohopublic.com\",\"salesiq.zohopublic.com\",\"salesiq.zoho.com\",\"salesiq.zohopublic.com\"];NEW_STATIC_URLS=[[\"https://js.zohocdn.com/salesiq/RESOURCE_BUNDLES/embedcw/js/embed.bWGb91tKGQY_sUQAXfd3Gao2Xkp_U2AG-ERiDg-3Eq-sdZnzflCBDwYTuuNUtfld.js\",\"https://js.zohocdn.com/salesiq/RESOURCE_BUNDLES/embedcw/js/embed~common.8q-eTEitMIrUkXzwN5rIQO1bKGk0cmnVidqkHu6irjKa0Anuwzw2UNcgfErkVxN8.js\",\"https://js.zohocdn.com/salesiq/RESOURCE_BUNDLES/embedcw/js/chunk-vendors.Ve1NyBkYEsNvV0W9Xf2WQKYPWIR4ht03som15Q-_V2gGwEoxLeb3QMUmwQpZinOL.js\",\"https://js.zohocdn.com/salesiq/RESOURCE_BUNDLES/embedcw/js/embed~rtl.N5vpZhvjeI1a6tgAWFWdEL5sYPwNTfH50kvdjannyOt0ws-pU5xId5J1LcQ0cycD.js\"],[\"https://js.zohocdn.com/salesiq/RESOURCE_BUNDLES/embedcw/js/embed~modern.G4eA78-mkOAoljgrmfx1GHqS_b9-GMoyIWjc6caeuazS7SmyxKpg6-6B2nkzmctV.js\",\"https://js.zohocdn.com/salesiq/RESOURCE_BUNDLES/embedcw/js/embed~common~modern.Aj3TWA8k0aNRR4nxvw0MhUlJZyPxG247-iIWZwUWC0I7-sx9-jMyk7PrdkCwMrUX.js\",\"https://js.zohocdn.com/salesiq/RESOURCE_BUNDLES/embedcw/js/chunk-vendors~modern.ehTgdSWFikbfj-ysZe3XB2UJqHbYqjtlA-YvYRmDDQ3Post80Rx0t9_iSnaRDkJs.js\",\"https://js.zohocdn.com/salesiq/RESOURCE_BUNDLES/embedcw/js/embed~modern~rtl.KmflyiBPlLOFMzQFdO_qA0-5ZpDcDMoU3ReQW-n6dI_8BREXAywPheqIS-y-JxnM.js\"],[\"https://css.zohocdn.com/salesiq/RESOURCE_BUNDLES/embedcw/css/embed.EVUk_aRQ0if4Ip14j8AcWyt3VPyAAIO4_eXvms2KPETDFzdPkVoQ-ToovASb2-8P.css\",\"https://css.zohocdn.com/salesiq/RESOURCE_BUNDLES/embedcw/css/embed~rtl.eegUkzbJNA3RDuODz8kMM89Q0CQSYJ0cwB613D8ghMOEqzrLoMEe-K6hqCyrA3ps.css\"],[\"https://css.zohocdn.com/salesiq/RESOURCE_BUNDLES/embedcw/css/embed~common.XrBcQRsfNVeBRrSFP0El_YabUhknIPUMSkFxVn9f_KletI3GPLQ9uPxZTotKdUnj.css\",\"https://css.zohocdn.com/salesiq/RESOURCE_BUNDLES/embedcw/css/embed~common~rtl.TN8arRCOLjLi-ZMd8bfLwJhr0rhy2C23e17N2LRXn7cgn7RFMl36UVJOdBH4mAV8.css\"]];_STATIC_URL='https://static.zohocdn.com';_NEW_MEDIARTC_URLS=[\"https://js.zohocdn.com/salesiq/js/embedmedia-rtc-new_ahldkw-30yxFSSVP_P3WPA7gfNxKxtk-Ic8_DmtQlqSGTYc3nZcdPIelqJYPgE_X_.js\",\"https://js.zohocdn.com/salesiq/thirdparty/js/jquery.min.js\"];var $ZSIQLSDB=$ZSIQLSDB||function(){var t=function(t){try{return window[t].setItem(\"test\",\"1\"),window[t].removeItem(\"test\"),!!window[t]}catch(t){return!1}},e=t(\"sessionStorage\"),o=t(\"localStorage\");return{set:function(e,o,i){if($ZSIQLSDB.isLocalStorageAvail())try{this.storeInLocalStorage(e,o,i)}catch(t){$ZSIQCookie.set(e,$ZSIQLSDB.toString(o),i)}else $ZSIQCookie.set(e,$ZSIQLSDB.toString(o),i)},storeInLocalStorage:function(t,e,o){var i=JSON.parse(localStorage.getItem(\"siqlsdb\")||\"{}\");o&&(e.ttl=o,e.time=(new Date).getTime()),e=$ZSIQLSDB.toString(e),i[t]=e,localStorage.setItem(\"siqlsdb\",JSON.stringify(i))},isLocalStorageAvail:function(){return o},get:function(t){return $ZSIQLSDB.isLocalStorageAvail()&&$ZSIQLSDB.getFromLocalStorage(t)||$ZSIQUtil.parseToJSON($ZSIQCookie.get(t))},isSessionStorageAvail:function(){return e},storeInSession:function(t,e){if(!this.isSessionStorageAvail())return!1;var o=$ZSIQUtil.parseToJSON(sessionStorage.getItem(\"utsdb\")||\"{}\");return window._ZSIQ_RESET_ESSENTIAL&&(o=$ZSIQUtil.parseToJSON(o)),o[t]=e,sessionStorage.setItem(\"utsdb\",JSON.stringify(o)),!0},getFromSession:function(t){if(this.isSessionStorageAvail())return $ZSIQUtil.parseToJSON(sessionStorage.getItem(\"utsdb\")||\"{}\")[t]},getFromLocalStorage:function(e){var o=$ZSIQUtil.parseToJSON(localStorage.getItem(\"siqlsdb\")||\"{}\")[e];if(!o)return null;if(\"ZLDPERSONALIZE\"===e)return o;try{if((o=$ZSIQUtil.parseToJSON(o)).ttl&&o.ttl+o.time<(new Date).getTime())return $ZSIQLSDB.remove(e),null}catch(t){LSDebugger.postDebugInfo(\"Value: \"+o+\"Key\"+e,null,null,!0)}return o},remove:function(e,t){var o=t&&$zohosq._domain;if($ZSIQLSDB.isLocalStorageAvail()&&!o)try{var i=$ZSIQUtil.parseToJSON(localStorage.getItem(\"siqlsdb\")||\"{}\");i[e]&&delete i[e],localStorage.setItem(\"siqlsdb\",JSON.stringify(i))}catch(t){$ZSIQCookie.remove(e)}else $ZSIQCookie.remove(e,$zohosq._domain)},removeAllFAQValuesFromSession:function(t){if(this.isSessionStorageAvail())try{var e=JSON.parse(sessionStorage.getItem(\"utsdb\")||\"{}\");for(var t in e)e.hasOwnProperty(t)&&(t.startsWith(\"article_\")||t.startsWith(\"faq_\"))&&delete e[t];sessionStorage.setItem(\"utsdb\",JSON.stringify(e))}catch(t){}},removeSessionStore:function(t){if(this.isSessionStorageAvail())try{var e=JSON.parse(sessionStorage.getItem(\"utsdb\")||\"{}\");e[t]&&(delete e[t],sessionStorage.setItem(\"utsdb\",JSON.stringify(e)))}catch(t){}},toString:function(e){if(!e)return e;if(\"string\"==typeof e)return e;try{return t=e,Object.toJSON?Object.toJSON(t):JSON.stringify(t)}catch(t){var o,i=[];for(var r in e)o=e[r].replace('\"','\\\\\"'),i.push('\"'+r+'\":\"'+o+'\"');return\"{\"+i+\"}\"}var t},removeAllStorage:function(){for(var t=document.cookie.split(\"; \"),e=$ZSIQUtil.getkeylist(),o=0;o<t.length;o++)for(var i=0;i<e.length;i++)if(-1!=t[o].search(new RegExp(e[i],\"i\"))){$ZSIQCookie.remove(t[o]);break}if(this.isSessionStorageAvail()&&sessionStorage.setItem(\"utsdb\",\"{}\"),this.isLocalStorageAvail()){var r=\"{}\";localStorage.setItem(\"siqlsdb\",r),localStorage.setItem(\"utsdb\",r),localStorage.setItem(\"siq_embed\",r)}$ZSIQWidget&&delete $ZSIQWidget.avuid},setCookie:function(t,e,o){$zohosq._domain?$ZSIQCookie.set(t,$ZSIQLSDB.toString(e),o,!0,$zohosq._domain):this.set(t,e,o)}}}();var $ZSIQCookie=$ZSIQCookie||{get:function(e){var o=e;e+=\"=\";var i=document.cookie.indexOf(e),t=\"\";-1!=i&&-1!=(t=document.cookie.substr(i+e.length)).indexOf(\";\")&&(t=t.substring(0,t.indexOf(\";\")));var n=decodeURIComponent(t);return n||$ZSIQLSDB.getFromSession(o)||n},set:function(e,o,i,t,n){if($ZSIQNotifyCookie.isCookieAllowed(e)){var r=new Date;return null!=i&&\"\"!=i||(i=18e4),r.setTime(r.getTime()+i),e+=\"= \"+encodeURIComponent(o)+\";expires= \"+r.toGMTString()+\";\",t&&(e+=\"path=/;\"),e=n?e+\"domain=\"+n+\";\":e,e+=$ZSIQUtil.getSecureCookieKey(e),e=$ZSIQUtil.setSameSiteCookie(e),document.cookie=e,!0}$ZSIQLSDB.storeInSession(e,o)},remove:function(e,o){if($ZSIQNotifyCookie.isCookieAllowed(e)){var i=new Date;if(i.setTime(i.getTime()-1),o){var t=e+\"=;expires=\"+i.toGMTString()+\";\";t+=\"path=/;\",document.cookie=t+\"domain=\"+o+\";Secure;SameSite=None\"}else document.cookie=e+\"=;expires=\"+i.toGMTString()+\";\"}else $ZSIQLSDB.removeSessionStore(e)}};var IframeHandler=function(){var a=function(){return window._IS_REVAMP};function r(){return $ZSIQUtil.getIframe()}function o(){return r().$Support||{}}function c(e){var t=$zoho.salesiq.clientactions[e.clientaction_name];t&&t(e)}function d(e){$ZSIQUTSAction.rechattrigger=!0,$ZSIQUTSAction.handle(e)}function s(e){document.querySelector('[data-id=\"zsiqembed\"]').classList[e?\"add\":\"remove\"](\"attach-preview\")}function u(e){var t=$ZSIQChat.getWidgetData();t.embedobj.annonid=e,$ZSIQUtil.storeDetails(t)}function e(e){var t,n,i,a,o=e.data;try{t=\"string\"==typeof o?JSON.parse(o):o}catch(e){}t&&\"zsiqcwframe\"===t.src&&(e.source===r()&&(n=t,i=$ZSIQChatWindow,(a={cwdrag:i.handleDrag,upcwdragpos:i.cacheChatDivPosition,minimizecw:i.minimizeChatWindow,updateannonid:u,jsapicb:$ZSIQWidget.handleCallBacks,opencw:i.openChatWindow,closetriggerloading:i.RemoveLoadingForTrigger,togglecwdimension:function(e){i.expandChatWindowDimension(e.expand)},getzvvalue:function(){g($zv)},block:function(){var e=function(e){var t=document.querySelector(e);t&&t.remove()};e(\".siq_media\"),e(\".siqembed\"),e('[data-id=\"zsalesiq\"]')},umsgcount:$ZSIQWidgetUI.updateCount,clientaction:c,triggerreopen:d,openfilepreview:s,blinkTitle:$ZSIQUtil.blinkTitle,stopTitleBlink:$ZSIQUtil.stopBlinking,onload:function(){$ZSIQChatWindow.handleRevampLoad()},setLSDB:function(e){var t=$ZSIQChat.getWidgetData().embedobj.einfo.embedid;$ZSIQLSDB.set(\"ZLD\"+t+e.key,e.value)},updateCustomEvent:function(e){$ZSIQUTS.notifyCustomEvent(e)},handleTriggerReopen:function(){l(\"triggerapi\",!0)}})[n.action]&&a[n.action](n.data)))}function l(e,t){var n=r();n&&n.postMessage&&n.postMessage(JSON.stringify({src:\"zsiqfloat\",action:e,data:t}))}function g(e,t){if(a())return l(\"jsapi\",e);o().handleApiData(e,t)}return{updateJsApiValue:g,updatePreview:function(e,t){l(\"preview\",{data:e,type:t})},sendPostMessage:l,handleRevampLoad:function(){l(\"jsapi\",$zv)},getTriggerCookie:function(){return a()?\"\":o().getTriggerCookie()},incrementUnreadCount:function(){!a()&&o().incrementUnreadCount()},handleTrigger:function(e,t){a()?l(\"trigger\",t):o().Util.handleTriggers(e,t)},addMessageListener:function(){window.addEventListener(\"message\",e)},updateUVID:function(e){if(a())return l(\"uvid\",e);o().setUVID(e)},handleBotTrigger:function(e){if(a())return l(\"bottrigger\",e);o().Util.handleBotTriggers(e)},handleBotMessage:function(e){if(a())return l(\"botmessage\",e)},getLsId:function(){return a()?o().getLsId():o().EmbedObj.livelsid},handleProActiveChat:function(e){var t=o();if(a()){if(t.isChatExist&&t.isChatExist()||!e.msg)return;var n=$ZSIQChatWindow;function i(){l(\"proactivechat\",e)}return r()?i():n.constructIframe(!1,function(){n.openChatWindow(),i()})}return t.Util.handleTrackChat(e)},loadExternalFiles:function(){if(!a()){var e=o();e.Util&&e.Util.loadExternalFiles()}},clearAPIValues:function(){a()&&l(\"resetVisitorInfo\"),$ZSIQUtil.clearApiValues()},chatwindowReload:function(){if(a())return l(\"chatwindowReload\");o().reload()},isCallOnline:function(){return o().EmbedObj.call_status}}}();try{if(!window.$zoho){var $zoho=window.$zoho||{};$zoho.salesiq=$zoho.salesiq||{values:{},widgetcode:document.currentScript.src.split(\"widgetcode=\")[1]}}_ZSIQ=window._ZSIQ||{JSAPI:{}},$ZSIQAnalytics={},$ZSIQAutopick={},_ZSIQ.isagentschat||($zohosq=$zoho.livedesk||$zoho.salesiq,$zohosq._callbacks={},$zcb=$zohosq._callbacks,$zv=$zohosq.values,$zlm={},$zlch={},$zla=\"handleAnalyticEvents\",$zohosq.utsvalues=$zohosq.utsvalues||{},$ZSIQ_UTSinitialized=null);var getSalutationWithoutDot=function(t){return\".\"===t.charAt(t.length-1)?t.slice(0,-1):t},_getVisitorValue=function(t){return t&&t.trim()};$zohosq._invoke=function(t,e){for(var o in e&&e.attenderemail&&delete e.attenderemail,$ZSIQAnalytics)if("
+  },
+  {
+    "type": "response",
+    "url": "https://www.aast.edu/mainpage-imgs/419/img/7.jpg",
+    "status": 200,
+    "content_type": "image/jpeg",
+    "sample": null
+  },
+  {
+    "type": "request",
+    "url": "https://css.zohocdn.com/salesiq/styles/floatbutton1_bHMUH6QRyg-y4UwolhbfAFrRqOHGBNpYjKZlHLLG8Alb3uIpXyqEzmZexzeC6CuU_.css",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://js.zohocdn.com/salesiq/js/floatbutton1_lnNxO4nEmO-wlT4cHniB6JUyFNUwxXbQYUmdw8aPh8ofbPXQEHJ1B63KCfHE4-26_.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "response",
+    "url": "https://salesiq.zohopublic.com/visitor/v2/channels/website?widgetcode=be75dc65916736ef4d8e6bed223f7171613267f7632ea1d4c4880f901dc96e8e&internal_channel_req=true&last_modified_time=1723967008528&version=V26&browser_language=en&current_domain=https%3A%2F%2Faast.edu&pagetitle=College%20of%20Engineering%20%26%20Technology-Smart%20Village%20%7C%20AASTMT",
+    "status": 200,
+    "content_type": "application/json;charset=UTF-8",
+    "sample": "{\"url\":\"/visitor/v2/channels/website\",\"object\":\"channels\",\"data\":{\"RTL_supported_language\":false,\"resource\":{\"use_chat_departments\":true,\"departments\":[{\"729077000000002018\":\"AAST\"}]},\"portal_config\":{\"sendemailforipblockto\":\"true\",\"convSummaryWordsCount\":\"500\",\"isiossdkaccessed\":\"false\",\"deptmappingmigrated\":\"true\",\"trackportalcreation\":\"crmplus\",\"mychats\":\"false\",\"voicenotes\":\"false\",\"smartsuggestionresponse\":\"false\",\"chattranscript\":\"Automated\",\"audiocall\":\"false\",\"longlastingcookiettl\":\"1\",\"screensharing\":\"false\",\"ss_vendor\":\"0\",\"isvisitoreventapi\":\"false\",\"emailtranscripts\":\"true\",\"weeklystats\":\"true\",\"frommailconfig\":\"2\",\"convSummaryModules\":\"chats,calls\",\"gtpolicyurl\":\"\",\"isandroidsdkaccessed\":\"false\",\"isvisitorsessionapi\":\"false\",\"templatemailconfig\":\"0\",\"translate\":\"1\",\"resEvaluationTone\":\"Informative\",\"convSummaryMinMessages\":\"10\",\"aiconvsummaryVendor\":\"openai\",\"dailystatics\":\"false\",\"channelInfoMessages\":\"enabled\",\"verifyemail\":false,\"convSummaryTone\":\"Informative\",\"trackingprivacystatement\":\"\",\"gtprivacyconfig\":\"1\",\"ss_z_responsegen_engine\":\"1\",\"aiCallSummaryModel\":\"gpt-3.5-turbo\",\"companylogoupdated\":\"true\",\"aibotskipwelcome\":\"false\",\"isgdprenabled\":\"false\",\"predictmessage\":\"true\",\"mapsgoogleapikey\":\"\",\"airespevaluationVendor\":\"openai\",\"chatcookiepolicyurl\":\"\",\"inactiveperiod\":\"30\",\"chatprivacyconfig\":\"0\",\"filetransfer\":\"true\",\"ss_z_model\":\"0\",\"ss_o_model\":\"0\",\"pushpage\":\"true\",\"is_approval_needed\":\"false\",\"id\":\"781561031\",\"categorynamesmigrated\":\"true\",\"cookiepolicyurl\":\"\",\"semailsignature\":\"0\",\"aiconvsummaryModel\":\"gpt-3.5-turbo\",\"skipwelcome\":\"false\",\"aiconvsummary\":\"0\",\"inactivetrackingperiod\":\"60\",\"gt_consent_approver\":\"\",\"idleasoffline\":\"false\",\"aitagging\":\"0\",\"siqscreensharing\":\"false\",\"ss_o_engine\":\"2\",\"name\":\"aast1794\",\"faqrevampmigrated\":\"true\",\"maxconcurrentchat\":\"5\",\"isvisitorinfoapi\":\"false\",\"translatortype\":\"2\",\"excludebottraffic\":\"false\",\"fromname\":\"AAST\",\"ss_z_responsegen_status\":\"disabled\",\"airespevaluation\":\"false\",\"visitorfeedback\":\"false\",\"Code Embedded\":\"true\",\"smartsuggestions\":\"false\",\"showtyping\":\"true\",\"onboard\":{},\"approval_duration\":\"0\",\"trackingprivacyconfig\":\"0\",\"isappsenabled\":\"true\",\"smartsuggestionengine\":\"0\",\"offbusymsg\":\"false\",\"ispasswordprotected\":\"false\",\"aitaggingModel\":\"gpt-3.5-turbo\",\"profileenrichment\":\"true\",\"ss_z_engine\":\"0\",\"sys.mig\":\"v2\",\"mapstype\":\"0\",\"istrackdnt\":\"false\",\"chatbar\":\"0\",\"isipmasking\":\"false\",\"ccemailaddr\":\"false\",\"isdowngradedtofreeplan\":\"false\",\"aitaggingVendor\":\"openai\",\"sendtranasemail\":\"false\",\"aiCallSummaryVendor\":\"zia\",\"airespevaluationModel\":\"gpt-3.5-turbo\"},\"zmap\":{\"css_url\":\"https://css.zohocdn.com/salesiq/thirdparty/styles/mapboxgl/mapbox-gl.css\",\"api_url\":\"https://js.zohocdn.com/salesiq/thirdparty/js/mapboxgl/mapbox-gl.js\",\"api_key\":\"73f269cc3db5c26abb9a6b58b33e7452\",\"static_url\":\"https://maps.zoho.com/\"},\"license_info\":{\"filesharing\":true,\"conversationallowed\":true,\"issiqscreenshare\":true,\"audiocall\":true,\"planid\":30,\"creditmask\":true,\"faqallowed\":true,\"assistallowed\":true},\"upload_download_server\":{\"event_based_url\":true,\"upload_server\":\"https://us4-files.zohopublic.com\",\"download_server\":\"https://us4-files.zohopublic.com\",\"enabled\":true,\"ud_revamp\":true,\"siq_ud_servicename\":\"SalesIQ\"},\"unique_name\":\"aast\",\"static_urls\":{\"resource_file\":\"https://js.zohocdn.com/salesiq/js/resource/embed/resource_LWvyVdIEKJJtcrT5ZHrnao-xgxfQVKUiskQ8zcqWtvgVOylnFao9vfFiJ_4zHclt_.js\",\"css_server\":\"https://css.zohostatic.com/salesiq/16_Nov_2025_01_ZohoOne_https\",\"ace_editor\":\"https://js.zohocdn.com/salesiq/thirdparty/js/aceeditor\",\"js_server\":\"https://js.zohostatic.com/salesiq/16_Nov_2025_01_ZohoOne_https\",\"css_js_mapping\":\"{\\\"/styles/embedtheme7.css\\\":\\\"v6QkYvH4wJDGQ5xGRUBhlKOmFZXNPQNq9idd0tOtS6xtekcRy-6ve0NZM-R9lZez\\\",\\\"/js/floatbutton9.js\\\":\\\"j0wTmbWsqrNzgwOuGRgw79rND9M3hg_jfXGp7vz36DUANqWKncS09GEE-k9vLD-3\\\",\\\"/js/siqchatwindow6.js\\\":\\\"0Goy4uaQ0x1LkdF00t6VWtg3L25oYV1zjPH5m6YuetmRa4JqekJ-MMrsK7U-AjCs\\\",\\\"/styles/buttontheme6.css\\\":\\\"uyfrM26RpuufbOfc6i832uA3TOt2ho7gaQXJGMkfIMQNIAc1DM44AZTv4J2q90U5\\\",\\\"/FLOAT_CSS_55/styles/floatbutton5.css\\\":\\\"QSByYBuQtzuajT5RggY0ZwdzFqaqj0hh9bIBwiClDC6pJ045HFpXZASiWiiA2PNh\\\",\\\"/styles/floatbutton7.css\\\":\\\"DdDuzr-vy39zUGqyRjjTKx_QipcXncLobWQsdKX4qpjyrNvGcH_RqTsRz83KLZE1\\\",\\\"/BUTT_CSS_38/styles/buttontheme7.css\\\":\\\"a7ka0ftj72h4uSviUsSntAFzlr7mAcGwKzli_FsoQn-o-i1gXNGhj9V7_YOxHPV3\\\",\\\"/styles/floatbuttonpreview.css\\\":\\\"znXjtvyoPhQ8AlvZRam-vilNpBA0BTaKrwN7aceTMH4RNbK4tnomhBUtmEMcLj9h\\\",\\\"/js/floatbutton5.js\\\":\\\"RNB0ghFDEsKeEP25jH9BrhqyH4nlC_qLx3IoUy7CdGe_U3bJiNupKbJxJebQpg80\\\",\\\"/styles/embedtheme6.css\\\":\\\"OCnDrzpFjxoI94zaZAYC4cwfD-y6jXU-glG-Ev59RKXe5MK5S3-Z1AYfL8VRFitc\\\",\\\"/styles/buttontheme7.css\\\":\\\"kaWBnrm5i63aYmkP3OOUQnMZ3alS4crvD6yxqR2STI-zBOT5U9EDm_OSquXgsPX2\\\",\\\"/js/floatbutton1.js\\\":\\\"lnNxO4nEmO-wlT4cHniB6JUyFNUwxXbQYUmdw8aPh8ofbPXQEHJ1B63KCfHE4-26\\\",\\\"/FLOAT_CSS_55/styles/floatbutton6.css\\\":\\\"iuPzTqa351vfReUBluhYLKqPSQgGDVuvJWs0esx4HSFNRQVQ_sRMKmqiO5CiwhPs\\\",\\\"/styles/floatbutton6.css\\\":\\\"iuPzTqa351vfReUBluhYLKqPSQgGDVuvJWs0esx4HSFNRQVQ_sRMKmqiO5CiwhPs\\\",\\\"/BUTT_CSS_38/styles/buttontheme10.css\\\":\\\"e01xd_y9GrVeOtZQFvwtJNVeT6aqE12nrq2xwBb4A-uwwqc2ksOI6cXMSJ7EGVS9\\\",\\\"/styles/buttontheme5.css\\\":\\\"-CNJruVKbNWNYjCsOOCZtI27B026z01yR0txJuwOnOl8sc2AXtNriSyBOtup4yIG\\\",\\\"/FLOAT_CSS_55/styles/floatbuttonpostload.css\\\":\\\"NrmmNuxaAoaI2b0x4ujV2WEaO0HyAtABYLgIGtLN0aCT41tGGd29CPCQHPPWfSAF\\\",\\\"/FLOAT_CSS_55/styles/floatbuttonpreview.css\\\":\\\"01PpA0CvM6b1DLsx_Woz8__7jBUjdR8-Y0xU-jJveGMtJRfOB4plmBfySDwz9Cy-\\\",\\\"/BUTT_CSS_38/styles/buttontheme6.css\\\":\\\"YC1y2OYtsK-r-LOVqLeHXkPOa-MQxV6TVgtf_hgJ2PK2yF12IhFu8GQw0VKevsbk\\\",\\\"/js/siqchatwindow2.js\\\":\\\"KOT5J_kWWb68d9ldabOzzsP9Qj1clhrtVeZLUyPk9BnyMsWo5LCGivmUT2ycweja\\\",\\\"/styles/embedtheme5.css\\\":\\\"F_Me5jhGGLRusnjjYhhKhfq2UVC7ZA9oNwXdbizTT1f8CHX3dWcGLsAvoDxm8trk\\\",\\\"/js/siqchatwindow5.js\\\":\\\"I0_iplJB8t0XI0OBlKnX5L34fMXEaV9jFKDfEc_8CQFOKRBYH6GlOqsh5cm6q5II\\\",\\\"/js/floatbutton8.js\\\":\\\"NMTbpiMrM6jJiAt27-Y-qTDScwIeX8j9ef5nl9KmAF23734AViNUremvp_Zx50PA\\\",\\\"/BUTT_CSS_38/styles/buttontheme4.css\\\":\\\"YvINGMKu6hVS-mqz0ADyg4SQdP5DJ4jHPHEoeTaYnmUqg1R4g3bhUEafxny4IFy_\\\",\\\"/styles/personalizetheme2.css\\\":\\\"sSIOIZ4iaRpQcgnut4Q1qpAtBZwYKEHERGXfdREYHZ9_Tm6gRRTuYIHkWbLLayMN\\\",\\\"/FLOAT_CSS_55/styles/floatbutton10.css\\\":\\\"8eZFOFgfVNl28m7WfcJKYKVWLgfozUKZV5_70IE44YrhCv4mvsCBGPX4puoQTPKH\\\",\\\"/styles/floatbutton5.css\\\":\\\"QSByYBuQtzuajT5RggY0ZwdzFqaqj0hh9bIBwiClDC6pJ045HFpXZASiWiiA2PNh\\\",\\\"/js/floatbutton4.js\\\":\\\"Cy6ZjTIGr0FxFIUl68X-AilHqu3kdTTuo0h6K750daORO55ZCd4JdXFw-n-Z415Z\\\",\\\"/FLOAT_CSS_55/styles/floatbutton11.css\\\":\\\"fiEO8jNo_HEpHQSYDL1LP0mP2wmVZK0gUNZTukiyItMoi_MKSFFNPAo1kWtuScF4\\\",\\\"/styles/personalizetheme3.css\\\":\\\"dz7aKBrcdj7F7OkLCxdY-kXXgrxRw7lMf4WUGRBSAYbDIhzXTd6WMHJa6-kpnXBU\\\",\\\"/FLOAT_CSS_55/styles/floatbutton7.css\\\":\\\"DdDuzr-vy39zUGqyRjjTKx_QipcXncLobWQsdKX4qpjyrNvGcH_RqTsRz83KLZE1\\\",\\\"/styles/buttontheme9.css\\\":\\\"oHX0eC_vF3UgZtCdW33uj_uUVlEUwzb8E_NkMGhMAJugAYoDQ7vNs_6QxkCL8cV2\\\",\\\"/styles/embedtheme4.css\\\":\\\"EviO11HFoQJzR8_a9f0uBbx_7f9_YkQ4gITzvGiEaI6hcA2bcPTBywCKcplOCWMb\\\",\\\"/styles/personalizetheme1.css\\\":\\\"Otdz-kEqOJroUHjW6M5hw0-uhsOWltQmc7mIQXqnG6z4jOA5zNof3BFm7nXP99FF\\\",\\\"/BUTT_CSS_38/styles/buttontheme5.css\\\":\\\"Yqwbj9VVzveYu8ofEBJR5QIGnyTYbKY5yZAhmapJGmDsQGeQsWrXFGRC86vI9BoE\\\",\\\"/styles/buttontheme10.css\\\":\\\"eBXfcjkNnDuBoaT545Z1LAwH3mWLFOsi7alRPrVf1azy_OFmB-l6Z82l4ZUpk-6v\\\",\\\"/styles/floatbutton4.css\\\":\\\"UGEDiO0hifZhPeyyp-XcUfVom4BCjd_27HeRvmTpFs2y8HVZGVRxw6dTlEx_p0R2\\\",\\\"/js/siqchatwindow1.js\\\":\\\"LuAXz8A5z2sNmjvH0dQhKNurJVOqUiFMZvLpky0wSjynUjuQEMMMbQrdMrkA4vVz\\\",\\\"/styles/buttontheme8.css\\\":\\\"bJmJMc-py2owRZXPd68UN6etAmggDN-GZ-qisZUCsEdeagVbWnvWBCJbRCQOxtZi\\\",\\\"/styles/floatbutton3.css\\\":\\\"sw3hBNkIkEFWtCj17yJaugq4FTk9tjsQncCtvXh4lbDiEKON1YsB6mjKMgq41IYx\\\",\\\"/styles/embedtheme3.css\\\":\\\"sqqK6yWOzXrF0wKYDg2jpdeZGVBoT_GJZne9aUAqxVzfTXDZJtjwjWV9_QE1peyR\\\",\\\"/FLOAT_CSS_55/styles/floatbutton8.css\\\":\\\"ZkhVt3D9WbhDr7MhgtV5SHrAPEUG4JnjuBgyGgCrtKGs-oMS-N6E4QxQdvVetWEw\\\",\\\"/styles/embedtheme2.css\\\":\\\"dW-lzRQf6JzJE_RwQZ4uNYB6nR1cpf09XIVoJkl7afj62u3PTUjEd1ruDVzy3Qqx\\\",\\\"/js/floatbutton7.js\\\":\\\"J71c2p21vXGLPO6u2v-731sWZG8-dONliDwNi9U5p6JXDmnMpEZGuzOHVqCtKIi1\\\",\\\"/js/siqchatwindow4.js\\\":\\\"GaOTlGmA9Y_s1aSo_zlTE1JjoxFueLAB_7SWEYxVpvyClJrz8lt2jfrLDqKlxK9L\\\",\\\"/styles/buttontheme1.css\\\":\\\"15LKJY0eQk46yUHOlZjjPvenbjJ6Pw3829KcoaV0n2OsHUQsQ1nMkCIDuKia81_m\\\",\\\"/styles/floatbutton2.css\\\":\\\"dd-j-5Xzn3fcOH-Zw9uIN0V9zMYXiPkVFlzkveBZstC9j8YyL7sm_6Jj7LnE2rYm\\\",\\\"/BUTT_CSS_38/styles/buttontheme14.css\\\":\\\"R9ftAOkHSK8JnHZbJTWfSTdI1FlZLPUEh_vx2grSCZ7gd6iKNPNjsxel0j1nzoPb\\\",\\\"/js/floatbutton3.js\\\":\\\"hZr6jC5GVu5uJXL4vXI-qDmBjeEJ-nUGOHqFfCeaYywtEf3POwHbWWSuWHBHlxWf\\\",\\\"/styles/buttontheme11.css\\\":\\\"5ewui7Sxz13BCv0ptUbLjyWdHwAXEXPPXUF7IQHH4FNgNEqPRLTFM4kGoxfAFMBc\\\",\\\"/BUTT_CSS_38/styles/buttontheme1.css\\\":\\\"6uiik4LQqm5FFryAUzmsV-n-bT8aq0aJzMNHcY4olCjpm2L9XAtNtz756XlEuEy8\\\",\\\"/PERSONALIZE_CSS_44/styles/personalizetheme3.css\\\":\\\"dz7aKBrcdj7F7OkLCxdY-kXXgrxRw7lMf4WUGRBSAYbDIhzXTd6WMHJa6-kpnXBU\\\",\\\"/FLOAT_CSS_55/styles/floatbutton9.css\\\":\\\"Kk24KV5KBg_uQ1yAWdYKbCAeQhbhnELQIxL4JBTW0fF1OpjiPcUMWxTjLoGGxZWm\\\",\\\"/styles/floatbutton1.css\\\":\\\"bHMUH6QRyg-y4UwolhbfAFrRqOHGBNpYjKZlHLLG8Alb3uIpXyqEzmZexzeC6CuU\\\",\\\"/BUTT_CSS_38/styles/buttontheme3.css\\\":\\\"5Uml5zusDELwJwffK2p7nsAaMY2VJjGOHrZw62ltYe-qM1OlwyHqZdWD7M7M5V9Z\\\",\\\"/styles/embedtheme1.css\\\":\\\"JX_nWTRh1BVKbq9SwLRCI1DU9PW43LBluFUnYjsR4UrPaHs_IEXIRIWnyE_2IYP5\\\",\\\"/js/floatbutton10.js\\\":\\\"D_CGxem4mez75Cm5jUC2Pxc8HfI8hGEkVebOicvOLXSPVTItS-8zHh5E4-PbLdQL\\\",\\\"/BUTT_CSS_38/styles/buttontheme13.css\\\":\\\"gp6y0X6X61iM1GU7t4n7OiONDODAymHDwNWx-6kY5CjeQlaIEMmPvqodHEW3rOeL\\\",\\\"/FLOAT_CSS_55/styles/floatbutton1.css\\\":\\\"bHMUH6QRyg-y4UwolhbfAFrRqOHGBNpYjKZlHLLG8Alb3uIpXyqEzmZexzeC6CuU\\\",\\\"/PERSONALIZE_CSS_44/styles/personalizethemepostload.css\\\":\\\"Dphb2FI7c-HfiQ34ZLUbSG4owrUmW68TBdbI7fOSHrUcNdY9aC-WKuV2B6dxdzpc\\\",\\\"/styles/buttontheme2.css\\\":\\\"TlbYFt_IVN8fQ_lZHKSqczcOFxPhTYJWJEw_u72OIgfd4o-EAs0T-M7MbVGuWqP7\\\",\\\"/styles/buttontheme12.css\\\":\\\"MrNPTGv88GYjQQcJ3voWE8F4qroNyedZxDgT4S953udYq4g0hl4sC3XyEqkF"
+  },
+  {
+    "type": "response",
+    "url": "https://css.zohocdn.com/salesiq/styles/floatbutton1_bHMUH6QRyg-y4UwolhbfAFrRqOHGBNpYjKZlHLLG8Alb3uIpXyqEzmZexzeC6CuU_.css",
+    "status": 200,
+    "content_type": "text/css;charset=UTF-8",
+    "sample": ".zsiq_custommain,.zsiq_float,.zsiq_float *{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;margin:0;padding:0;font-family:inherit;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.zsiq_float *{font-family:inherit}.zsiq_float em{font-style:normal}.zsiq_custommain img,.zsiq_float{display:inline-block;cursor:pointer}.zsiq_custommain img{max-height:400px;max-width:400px;height:auto;width:auto}.zsiq_custommain,.zsiq_floatmain{animation:.3s zoomIn;-webkit-animation:.3s zoomIn;-moz-animation:.3s zoomIn;-o-animation:.3s zoomIn;-ms-animation:.3s zoomIn;z-index:2247483646!important;opacity:1;visibility:visible!important}.zsiq_custommain.zsiqfanim,.zsiq_floatmain.zsiqfanim{opacity:0}.zsiq_floatmain{position:fixed}.zsiq_float .siqico-min{height:15px;width:15px;cursor:pointer}.zsiq_float em.siqico-min{display:flex;align-items:center;justify-content:center}.pac-container{z-index:10000000!important}.zsiq_custommain{position:fixed;z-index:10000001}.siq_bR{bottom:10px;right:10px}.siq_bL{bottom:10px;left:10px}.siq_bM{bottom:10px;left:0;right:0;margin:auto}.siq_tR{top:10px;right:10px}.siq_tL{top:10px;left:10px}.siq_tM{top:10px;left:0;right:0;margin:auto}.siq_lM{bottom:0;top:0;left:10px;margin:auto}.siq_rM{bottom:0;top:0;right:10px;margin:auto}.siq_lft{left:0}.siq_rht{right:0}img.grayscl{-webkit-filter:grayscale(100%);filter:grayscale(100%)}.zsiq_user img{height:100%;width:100%}.zls-prelative iframe{height:417px!important}.zls-prelative{position:relative;z-index:10000001;height:100%}.zls-prelative iframe{z-index:999999}.zls-sptwndw iframe{border:none;opacity:1!important}.zls-sptwndw{height:417px;width:300px;visibility:visible!important}.zls-sptwndw img{border:none}.zls-sptwndw{color-scheme:normal}.zls-sptbscdmn,.zls-sptwndw{position:fixed;display:none;bottom:0;cursor:pointer;z-index:2247483647!important}.siqembed.zls-sptwndw{right:15px;bottom:15px}.siqembed.siq_lft{left:15px;right:auto}.zsiq-newtheme.zls-sptwndw{right:5px}.zsiq-newtheme.siq_lft{left:5px;right:auto}[embedtheme='1'] iframe{box-shadow:0 1px 5px 0 rgba(0,0,0,.21);border-radius:10px}[embedtheme] iframe{height:100%!important;box-shadow:0 0 20px 0 rgba(0,0,0,.3)}[embedtheme='2'] iframe{box-shadow:none}[embedtheme='3'] iframe{border-radius:10px}[embedtheme='5'] iframe{border-radius:15px}[embedtheme='4'] iframe{border-radius:10px}[embedtheme]{height:460px!important;width:371px!important}[embedtheme='2']{height:537px!important;width:371px!important}.zlscrest[embedtheme='2']{height:460px!important}[embedtheme='5']{height:443px!important;width:378px!important}[embedtheme='6']{height:465px!important;width:370px!important}[embedtheme='7']{height:435px!important;width:370px!important}.zsiq-newtheme.zsiq_size2[embedtheme],.zsiq_size2[embedtheme]{height:85%!important}.zsiq-newtheme.zsiq_size3[embedtheme],.zsiq_size3[embedtheme]{height:95%!important}.zls-sptwndw.siqembed.siqtrans.zsiq-newtheme.bot-preview{min-height:initial!important}.siqembed.zsiq-newtheme{height:674px!important;width:391px!important}.siqembed.zsiq-newtheme iframe{height:100%!important;box-shadow:none;width:1px;min-width:100%}.seasonal-hat.zsiq-newtheme.zsiq_size3[embedtheme],.seasonal-hat.zsiq_size3[embedtheme]{height:92%!important}@media only screen and (min-height:750px) and (max-height:5000px){.zsiq_size2[embedtheme]{height:592px!important}.zsiq_size3[embedtheme]{height:660px!important}.zsiq_size2.zsiq-newtheme[embedtheme]{height:663px!important}.zsiq_size3.zsiq-newtheme[embedtheme]{height:750px!important}.zsiq_size2[embedtheme='2']{height:630px!important}.zsiq_size3[embedtheme='2']{height:710px!important}}body .zls-sptwndw.siqembed.siq-calthememin[embedtheme]{height:120px!important}.siq-calthememin iframe{box-shadow:none}.errordiv{border:1px solid}.zsiq_custommain,.zsiq_floatmain,.zsiq_theme1 .zsiq_cnt,.zsiq_theme2 .zsiq_flt_rel{-webkit-transition:all .3s cubic-bezier(.25,.8,.25,1);-moz-transition:all .3s cubic-bezier(.25,.8,.25,1);-o-transition:all .3s cubic-bezier(.25,.8,.25,1);transition:all .3s cubic-bezier(.25,.8,.25,1);transform-origin:center center}.siq_noanim{-webkit-transition:none;-moz-transition:none;-o-transition:none;transition:none}.siqtrans:not(.siq_showload){display:block;animation:.5s zsiqcwhanim;-webkit-animation:.5s zsiqcwhanim;-moz-animation:.5s zsiqcwhanim;-o-animation:.5s zsiqcwhanim;-ms-animation:.5s zsiqcwhanim;transform:scale(0);-webkit-transform:scale(0);-o-transform:scale(0);-ms-transform:scale(0);opacity:0}.siqtrans.siq_showload,.siqtrans.siqanim{transform-origin:100% 100%;-webkit-transform-origin:100% 100%;-moz-transform-origin:100% 100%;-o-transform-origin:100% 100%;-ms-transform-origin:100% 100%;display:block;animation:.5s zsiqcwanim;-webkit-animation:.5s zsiqcwanim;-moz-animation:.5s zsiqcwanim;-o-animation:.5s zsiqcwanim;-ms-animation:.5s zsiqcwanim;transform:scale(1);-webkit-transform:scale(1);-o-transform:scale(1);-ms-transform:scale(1);opacity:1}.zsiq_theme2 .zsiq_min .zsiq_flt_rel{animation:.3s zsiqwid2;-webkit-animation:.3s zsiqwid2;-moz-animation:.3s zsiqwid2;-o-animation:.3s zsiqwid2;-ms-animation:.3s zsiqwid2}.zsiq_unrdcnt{animation:.3s zoomIn;-webkit-animation:.3s zoomIn;-moz-animation:.3s zoomIn;-o-animation:.3s zoomIn;-ms-animation:.3s zoomIn}@keyframes zsiqwid2{0%{height:204px;border-radius:12px}100%{height:30px;border-radius:8px 8px 0 0}}@keyframes zsiqcwanim{0%,30%{transform:translate(0,30em);opacity:0}100%{transform:translate(0);opacity:1}}@-webkit-keyframes zsiqcwanim{0%,30%{-webkit-transform:translate(0,30em);opacity:0}100%{-webkit-transform:translate(0);opacity:1}}@-moz-keyframes zsiqcwanim{0%,30%{-moz-transform:translate(0,30em);opacity:0}100%{-moz-transform:translate(0);opacity:1}}@-o-keyframes zsiqcwanim{0%,30%{-o-transform:translate(0,30em);opacity:0}100%{-o-transform:translate(0);opacity:1}}@-ms-keyframes zsiqcwanim{0%,30%{-ms-transform:translate(0,30em);opacity:0}100%{-ms-transform:translate(0);opacity:1}}@keyframes zsiqcwhanim{0%{transform:translate(0);opacity:1}100%{transform:translate(0,50em);opacity:0}}@-webkit-keyframes zsiqcwhanim{0%{-webkit-transform:translate(0);opacity:1}100%{-webkit-transform:translate(0,50em);opacity:0}}@-moz-keyframes zsiqcwhanim{0%{-moz-transform:translate(0);opacity:1}100%{-moz-transform:translate(0,50em);opacity:0}}@-o-keyframes zsiqcwhanim{0%{-o-transform:translate(0);opacity:1}100%{-o-transform:translate(0,50em);opacity:0}}@-ms-keyframes zsiqcwhanim{0%{-ms-transform:translate(0);opacity:1}100%{-ms-transform:translate(0,50em);opacity:0}}@keyframes zoomIn{from{opacity:0;transform:scale(.4)}100%{opacity:1;transform:scale(1)}}@-webkit-keyframes zoomIn{from{opacity:0;-webkit-transform:scale(.4)}100%{opacity:1;-webkit-transform:scale(1)}}@-moz-keyframes zoomIn{from{opacity:0;-moz-transform:scale(.4)}100%{opacity:1;-moz-transform:scale(1)}}@-o-keyframes zoomIn{from{opacity:0;-o-transform:scale(.4)}100%{opacity:1;-o-transform:scale(1)}}@-ms-keyframes zoomIn{from{opacity:0;-ms-transform:scale(.4)}100%{opacity:1;-ms-transform:scale(1)}}@media \\0screen{.zlsrotate_lft{left:0!important}}@media only screen and (min-width:100px) and (max-width:555px){.zls-prelative,.zls-sptwndw{height:100%;width:100%}.siqembed[embedtheme],.siqembed[embedtheme] iframe,.zls-sptwndw{top:auto;left:0;right:0;bottom:0;padding:0!important}.siqembed[embedtheme],.siqembed[embedtheme] iframe{width:100%!important;height:100%!important;border-radius:0}.zls-prelative iframe{width:100%;height:100%!important;bottom:0;position:absolute}.siqtrans.siqanim,.siqtrans.siqtrans{transition-property:none}body .zsiq-mobhgt[embedtheme].siqembed{height:90%!important}.zsiq-newtheme.zsiq_size2[embedtheme],.zsiq-newtheme.zsiq_size3[embedtheme],body .zsiq-mobhgt[embedtheme].zsiq-newtheme{height:100%!important}}@media only screen and (min-width:310px) and (max-width:800px) and (max-height:414px){.zls-prelative,.zls-sptwndw{height:100%;width:100%}.siqembed[embedtheme],.siqembed[embedtheme] iframe,.zls-sptwndw{top:auto;left:0;right:0;bottom:0;padding:0!important}.siqembed[embedtheme],.siqembed[embedtheme] iframe{width:100%!important;height:100%!important}.zls-prelative iframe{width:100%;height:100%!important;bottom:0;position:absolute}.siqtrans.siqanim,.siqtrans.siqtrans{transition-property:none}body .zsiq-mobhgt[embedtheme].siqembed{height:90%!important}.zsiq-newtheme.zsiq_size2[embedtheme],.zsiq-newtheme.zsiq_size3[embedtheme],body .zsiq-mobhgt[embedtheme].zsiq-newtheme{height:100%!important}}.zsiq_empty .zsiq_flt_rel{border:1px dashed #c7c7c7;border-radius:10px;background-color:#fafafa!important;height:140px;width:140px}.siq-caltheme[embedtheme] iframe,.siq-calthemefb[embedtheme] iframe,.siq-calthememin[embedtheme] iframe{border-radius:18px;box-shadow:0 2px 18.8px 1.2px rgba(0,0,0,.18)}.siq-calthemesign[embedtheme] iframe{border-radius:34px}.siq-caltheme[embedtheme]{height:300px!important;width:300px!important}.siq-calthememin[embedtheme],.zsiq-newtheme.siq-calthememin[embedtheme],.zsiq_size2[embedtheme].siq-calthememin[embedtheme]{transition:.5s;height:120px!important;width:370px!important;left:auto!important;top:auto!important}.siq-calthemefb[embedtheme]{height:350px!important;width:300px!important}.siq-calthemesign[embedtheme]{height:570px!important;width:300px!important}.siq_tL .zsiq_min,.siq_tR .zsiq_min{margin-top:-10px}.siq_lM .zsiq_min .zsiq_flt_rel,.siq_tL .zsiq_min .zsiq_flt_rel,.siq_tR .zsiq_min .zsiq_flt_rel{border-radius:0 0 5px 5px}.siq_bL .zsiq_min .zsiq_flt_rel,.siq_bR .zsiq_min .zsiq_flt_rel{top:10px}.zsiq_rotate90{-webkit-transition:none;-moz-transition:none;-o-transition:none;transition:none;transform:rotate(-90deg);-webkit-transform:rotate(-90deg);-moz-transform:rotate(-90deg);-o-transform:rotate(-90deg);-ms-transform:rotate(-90deg)}.siq-setngs-view{font-family:salesiq-font;width:268px;border-radius:18px;background-color:#fff;box-shadow:0 2px 5px 0 rgba(0,0,0,.15);padding:20px 32px 20px 28px;position:fixed;margin:auto;z-index:111111111111111;box-sizing:bo"
+  },
+  {
+    "type": "response",
+    "url": "https://js.zohocdn.com/salesiq/js/floatbutton1_lnNxO4nEmO-wlT4cHniB6JUyFNUwxXbQYUmdw8aPh8ofbPXQEHJ1B63KCfHE4-26_.js",
+    "status": 200,
+    "content_type": "text/javascript;charset=UTF-8",
+    "sample": "var $ZSIQChatWindow=$ZSIQChatWindow||function(){var S,l,a,h=0,s=document.documentElement.scrollTop||document.body.scrollTop,u={1:\"siq_rht\",2:\"siq_rht\",3:\"siq_lft\",4:\"siq_lft\",5:\"siq_lft\",6:\"siq_lft\",7:\"siq_lft\",8:\"siq_rht\",9:\"siq_rht\",10:\"siq_rht\",11:\"siq_rht\",12:\"siq_rht\"},r=function(){var e=$ZSIQUtil.getIframe().$Support;$zv.question&&(window._IS_REVAMP?IframeHandler.sendPostMessage(\"question\"):e&&e.handleVisitorQuestionJsApi())},p=function(e){if(S.className=S.className.replace(/(?:^|\\s)siqhide(?!\\S)/,\"\").replace(/(?:^|\\s)siqanim(?!\\S)/,\"\"),e){if(!$ZSIQUtil.getIframe())return w(),void $ZSIQChatWindow.populateIframe(function(){p(e)});$ZSIQChat.isOnboarding()?2!=$ZSIQWidgetUI.getWidgetState()&&$ZSIQWidget.handleCallBacks({\"chat.open\":\"\"}):$ZSIQWidget.handleCallBacks({\"chat.open\":\"\"}),S.className+=\" siqanim\",$ZSIQChatWindow.setLoadContentClass(),r();var t=$ZSIQUtil.getIframe().ZSIQTranscript;t&&t.scroll(\"\",\"\",!0)}!function(e){if(window._IS_REVAMP&&$ZSIQWidgetUI.isHandHeldDevice()&&document.getElementById(\"siqiframe\").contentDocument.documentElement.setAttribute(\"device\",\"mobile-device\"),$ZSIQWidgetUI.isHandHeldDevice()&&$ZSIQWidgetUI.isAppleDevice()){var t=document.body,i=document.documentElement;if(t.className=(t.className||\"\").replace(/(?:^|\\s)zsiq_fixedlayout(?!\\S)/,\"\"),!e)return i.scrollTop=s,t.scrollTop=s;s=i.scrollTop||t.scrollTop,t.className+=\" zsiq_fixedlayout\"}}(e)},f=function(){S.style.top=\"-10000px\",S.style.display=\"block\"},n=function(e,t,i){void 0===a&&(a=0),clearTimeout(a),$ZSIQUtil.storeCookieVal(e,t,i),a=setTimeout(function(){n(e,t,i)},12e4)},w=function(){$ZSIQWidgetUI.addClass($ZSIQChatWindow.getChatWindowDiv(),\"siq_showload\"),$ZSIQWidgetUI.addClass($ZSIQWidgetUI.getWidgetDiv(),\"zsiqfanim\")};return{getChatWindowDiv:function(){return S},isTrackingOnly:function(){var e=$ZSIQChat.getWidgetData().widgetobj;return 1==e.istracking&&(0==e.islivechat||1==e.hideembed)},showIframeLoading:w,constructIframe:function(e,t){if($ZSIQCookie.get(\"isiframeenabled\")&&!$ZSIQChatWindow.getChatWindowDiv()||!$ZSIQChatWindow.isTrackingOnly()||$ZSIQChat.isPreview()){var i,a=$ZSIQWidget.getEmbedObject(),s=$ZSIQWidget.getWidgetObject(),n=!1,o=$ZSIQChat.isPreview(),r=window._IS_REVAMP,l=$ZSIQUtil.getIframe().$Support,d=$zohosq.nonce,c=null!=s.isSeasonalThemeEnabled?s.isSeasonalThemeEnabled:$ZSIQChat.isSeasonalTheme();if(c=c&&r&&!$ZSIQChatWindow.isBotChatPreview(),S&&!_WINDOW_REPOPULATE&&(o?n=!0:(S.remove(),_WINDOW_REPOPULATE=!1)),n||(S&&S.remove(),(S=document.createElement(\"DIV\")).innerHTML='<div id=\"siqcht\" class=\"zls-prelative\" ><iframe id=\"siqiframe\" title=\"SalesIQ Chatwindow\" seamless=\"seamless\" height=\"460\" width=\"100%\" scrolling=\"no\"></iframe></div>',S.style.visibility=\"hidden\"),S.className=function(){$ZSIQWidget.getWidgetObject();var e=\"\";$ZSIQWidget.getWidgetObject().isshowcallbubble&&(e=\"theme5\"===$ZSIQWidget.getWidgetObject().calltheme?\" siq-calthemesign\":\"siq-caltheme\");var t=$ZSIQChatWindow.isBotChatPreview(),i=$ZSIQWidgetUI.isCSSTransformSupported()?\"zls-sptwndw \"+e+\" siqembed siqtrans siqhide \":\"zls-sptwndw \"+e+\" siqembed \";i+=$ZSIQChat.isPreview()?\"\":\"zsiq-mobhgt \",i+=$ZSIQChatWindow.isNewHeader()?\"zsiq-newtheme \":\"\",i+=!$ZSIQChatWindow.isOnlyCall()||t||window._IS_REVAMP?\"\":\"zsiqdircall \",i+=$ZSIQWidgetUI.isHandHeldDevice()?\"mobile-device \":\"\",i+=window._IS_REVAMP&&t?\" bot-preview \":\"\";var a=\" zsiq_size\"+$ZSIQWidget.getEmbedSize();return $ZSIQChat.isSignatureChat()?i+a:i+u[$ZSIQWidgetUI.getWidgetPosition()]+a}(),S.setAttribute(\"embedtheme\",a.theme),S.setAttribute(\"data-id\",\"zsiqembed\"),c?S.setAttribute(\"seasonal-type\",$ZSIQChat.getSeasonalThemeObj().type):S.removeAttribute(\"seasonal-type\"),d&&S.setAttribute(\"nonce\",d),n)!r&&l.init($ZSIQWidget.getEmbedObject());else if(function(){var e=$ZSIQChat.getWidgetData().embedobj.einfo.embedid,t=($ZSIQLSDB.get(\"ZLD\"+e)||{}).ongoingchats||{},i=0!==Object.keys(t).length;window._IS_REVAMP&&(i=0<((JSON.parse(localStorage.getItem(\"siq_embed\"))||{})[$ZSIQUtil.getLiveLSID()]||{}).ongoingchats);return $ZSIQLSDB.get(\"ZLDTRIGGER\"+e)||$ZSIQLSDB.get(\"ZLD\"+e+\"WAITING\")||i||$ZSIQChat.isPreview()}()||t||0==$zohosq.fileloadtime&&$ZSIQWidgetUI.F_WINDOW==$ZSIQWidgetUI.getWidgetState())$ZSIQChatWindow.populateIframe(t);else{var I=a.widget_performance_optimised?25e3:$zohosq.postloadtime||1e4,g=$zohosq.values||{},m=g.floatwindowvisible||g.chatwindowvisible;m&&\"show\"==m&&(I=0,r&&$ZSIQChatWindow.populateIframe(t)),r||(h=setTimeout(function(){$ZSIQChatWindow.populateIframe(t)},I))}!function(e){$ZSIQChat.getWidgetData().widgettype;var t=$zohosq.values,i=t.floatwindowvisible||t.chatwindowvisible;i?$ZSIQChatWindow.handleChatWindowVisible(i,e):$ZSIQWidgetUI.getWidgetState()!=$ZSIQWidgetUI.F_WINDOW?f():(w(),$ZSIQChatWindow.populateIframe(),p(!0))}(e),l&&l.Util&&l.Util.handleResize&&l.Util.handleResize(),(i=$ZSIQUtil.getCookieValue(\"dragpos\"))&&(i=JSON.parse(i),S.setAttribute(\"style\",\"left:\"+i.left+\";top:\"+i.top)),this.handleESCEvent()}},populateIframe:function(t,i){if(document.getElementById(\"siqiframe\"))S.className=S.className.replace(/(?:^|\\s)siq_showload(?!\\S)/,\"\");else{!window._IS_DEV&&function(){var e=$ZSIQChat.getWidgetData();if(iscdnenabled&&!$ZSIQChat.isPreview()){var t=$zohosq.nonce,i={};i[SIQ_FLOAT]=\"/salesiq/styles/floatbuttonpostload_S5HNJwau1PlMkc18a6InKleG3V-M1srNOiYisVaC3wqeJ7BJWxpuIqc1E9mPchsP_.css\",i[SIQ_BUTTON]=\"/salesiq/styles/buttonthemepostload_yUis0sioMxe1rx7Qd3xIO1zJu-3X4_Cs8aWQiwYxagCuZXpbFY2-HyoQiJc9yy9__.css\",i[SIQ_PERSONALIZE]=\"/salesiq/styles/personalizethemepostload_5IE0VkDCP4DXr3gA5Deng8sq-3w4CAn9HWGGXr2hhSdzwOHX91VjKdxqaB2JurZd_.css\";var a=e.widgetobj,s=JSON.parse(a.sticker)[1].default,n=i[e.widgettype],o=a.cssstaticserver,r=a.csscdnstaticserver,l=o+n,d=n.split(\"WIDGTHEME\"),c=d.join(s),I=window.cssjslist[n.split(\"_\")[0].substr(8)+\".css\"];l=void 0!==cssjslist[c]?r+(n=\"/salesiq\"+d[0]+s+\"_\"+cssjslist[c]+\"_\"+d[1]):r+n;var g=document.createElement(\"link\");g.rel=\"stylesheet\",g.href=l,g=$ZSIQUtil.setIntegrityAttr(g,I);var m=document.getElementsByTagName(\"head\");$ZSIQChat.notifyOnCDNFailure(g,m,(o+i[e.widgettype]).replace(/WIDGTHEME/g,s),\"css\"),t&&g.setAttribute(\"nonce\",t),m[0].appendChild(g)}}(),clearTimeout(h),document.body.appendChild(S),(0==$zohosq.fileloadtime||i)&&w();var e=document.getElementById(\"siqiframe\"),a=(e.contentWindow||e.contentDocument.document||e.contentDocument).document,s=$ZSIQChatWindow.getFiles(),n=function(){$ZSIQWidgetUI.checkWidgetVisibility($ZSIQUtil.isChatExist());var e=$ZSIQUtil.getIframe().$Support;e&&!_IS_REVAMP&&(e.handleStatusCallback(),e.handleAudioCallback()),function(){if($ZSIQChat.getWidgetData().widgettype==SIQ_PERSONALIZE){var e=$ZSIQLSDB.get(\"ZLDPERSONALIZE\");e&&$zoho.salesiq.chat.department($ZSIQWidgetUI.getUserDeptMapping()[e])}}(),t&&t(),S.className=S.className.replace(/(?:^|\\s)siq_showload(?!\\S)/,\"\"),i&&i(),$ZSIQUtil.idetifyVisitorData(),IframeHandler.loadExternalFiles(),r()};if(window._IS_REVAMP){this.handleRevampLoad=n;var o=function(){var t=e.contentDocument;t.open(),t.close(),s.forEach(function(e){$zohosq.nonce&&e.setAttribute(\"nonce\",$zohosq.nonce),t.head.appendChild(e)})};\"complete\"===a.readyState?o():e.onload=o}else e.onload=n,a.open(),a.write(s),a.close()}},handleIframeLoading:function(e){!$ZSIQChatWindow.getChatWindowDiv()&&$ZSIQChatWindow.isTrackingOnly()?($ZSIQCookie.set(\"isiframeenabled\",!0,864e5,!0),$ZSIQChatWindow.constructIframe(!1,e)):e&&e()},handleESCEvent:function(e){var t=e?e.parent:window;(e=e||window).document.addEventListener(\"keydown\",function(e){27==e.keyCode&&(document.querySelector(\".notify-cookie\")?$ZSIQNotifyCookie.closeBanner(e):t.$ZSIQChatWindow.closeImagePreview(e,!0))})},RemoveLoadingForTrigger:function(){$ZSIQChatWindow.getChatWindowDiv()&&$ZSIQChatWindow.getChatWindowDiv().classList.remove(\"siq_showload\"),delete $ZSIQUTSAction.widget_interaction,clearTimeout($ZSIQChatWindow.triggerloader)},isBotChatPreview:function(){return!!$ZSIQChat.isPreview()&&window.parent.IS_BOT_PREVIEW},openChatWindow:function(e,t,i){if(!e&&!i)try{$UTSHandler.updateAction({type:\"1\"})}catch(e){}S.hasAttribute(\"drag\")||(S.style.top=\"\"),$ZSIQWidgetUI.isCSSTransformSupported()?(p(!0),$ZSIQUTSAction.widget_interaction&&(w(),$ZSIQChatWindow.triggerloader=setTimeout(function(){$ZSIQChatWindow.RemoveLoadingForTrigger()},2e3))):S.style.display=\"block\";var a=$ZSIQWidgetUI.getWidgetDiv();try{var s=$ZSIQWidgetUI.getMinWidgetDiv();$ZSIQWidgetUI.addClass(s,\"zsiqfanim\")}catch(e){$ZSIQWidgetUI.addClass(a,\"zsiqfanim\")}if($ZSIQWidgetUI.setWidgetState($ZSIQWidgetUI.F_WINDOW),IframeHandler.sendPostMessage(\"iframestate\",!0),$ZSIQUtil.getIframe().$Support){\"true\"==a.getAttribute(\"data-autochat\")&&$ZSIQUtil.getIframe().$Support.handleAPIFunctionalities(\"chatstart\");var n=$ZSIQUtil.getIframe().$Support;n.getUnreadCount()&&!n.isConversationUIFocussed()&&(n.sendReadCall(),n.removeUnreadCookie(),$ZSIQWidgetUI.removeUnreadCount()),$ZSIQUtil.getIframe().$UI&&!$ZSIQChat.isPreview()&&setTimeout(function(){$ZSIQUtil.getIframe().$UI.handleComponentFocus(),$ZSIQUtil.startChatwindowOnload()},500)}},forceOpenChatWindow:function(){$ZSIQUtil.getIframe().$Support.getParent().$ZSIQWidgetUI.removeCallClass(),$ZSIQUtil.getIframe().$Support.contentdiv=null,$ZSIQUtil.getIframe().$Support.EmbedObj.lchid=-1,$ZSIQUtil.getIframe().$Support.checkAndShowUI(-1),$ZSIQUtil.getIframe().CallImpl.isCallWithChat=!1,$ZSIQUtil.getIframe().$EmbedManger.setQuitStatus(!1)},expandChatWindow:function(){var e=$ZSIQChat.getWidgetData().widgettype;e!=SIQ_FLOAT&&e!=SIQ_PERSONALIZE||($ZSIQWidgetUI.getWidgetDiv().style.display=\"none\");\"-10000px\"==S.style.top&&(S.style.top=\"\"),$ZSIQWidgetUI.isCSSTransformSupported()?p(!0):S.style.display=\"block\",$ZSIQWidgetUI.setWidgetState($ZSIQWidgetUI.F_WINDOW)},closeChatWindow:function(e){$ZSIQUtil.stopBlinking(),e?$ZSIQChat.isOnboarding()&&$ZSIQWidget.handleCallBacks({\"floatwindow.minimize\":\"\"}):$ZSIQWidget.handleCallBacks({\"chat.close\":\"\"}),p(),S.className=S.className.replace(/(?:^|\\s)remtrans(?!\\S)/,\"\"),IframeHandler.sendPostMessage(\"iframestate\",!1);try"
+  },
+  {
+    "type": "request",
+    "url": "https://css.zohocdn.com/salesiq/styles/fonts/float/siq_mpWsf52LIPg9mU40fjRdjF6WMUs-Q0VNu4KH07GkhNZGQTRxW2eRyFJLAq9VKCYB_.ttf",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "response",
+    "url": "https://css.zohocdn.com/salesiq/styles/fonts/float/siq_mpWsf52LIPg9mU40fjRdjF6WMUs-Q0VNu4KH07GkhNZGQTRxW2eRyFJLAq9VKCYB_.ttf",
+    "status": 200,
+    "content_type": "font/ttf",
+    "sample": null
+  }
+]

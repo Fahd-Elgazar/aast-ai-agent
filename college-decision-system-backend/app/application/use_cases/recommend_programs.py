@@ -486,7 +486,7 @@ class RecommendProgramsUseCase:
         if not interest_scores:
             return InterestAlignmentResult(matched_interests=[], score=0.55)
 
-        average_score = sum(interest_scores) / len(interest_scores)
+        average_score = max(interest_scores) if interest_scores else 0.0
         return InterestAlignmentResult(
             matched_interests=matched_interests,
             score=round(0.2 + (0.8 * average_score), 4),

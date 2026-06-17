@@ -62,7 +62,7 @@ def run_smoke_checks() -> None:
         (
             "unknown_fee",
             {
-                "certificate_type": "Egyptian Thanaweya Amma (Science)",
+                "certificate_type": "Egyptian Thanaweya Amma (Math)",
                 "high_school_percentage": 85,
                 "student_group": "other_states",
                 "budget": 7000,
@@ -97,7 +97,7 @@ def run_smoke_checks() -> None:
 
 def main() -> int:
     run_command([sys.executable, "-m", "alembic", "upgrade", "head"])
-    run_command([sys.executable, "-m", "pytest", "-q"])
+    run_command([sys.executable, "-m", "pytest", "tests/", "-q"])
     run_command([sys.executable, "scripts/audit_decision_db_integrity.py", "--format", "text"])
     run_smoke_checks()
     print("Delivery checks completed successfully.")

@@ -1,0 +1,953 @@
+[
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/gallery/index.php",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://www.googletagmanager.com/gtag/js?id=",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/gallery/css/font-icons.css",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/gallery/css/plugins.css",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/gallery/css/style.css",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/gallery/css/owl.css",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/gallery/css/upper-sec.css",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/gallery/css/gallery.css",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/gallery/css/mklb.css",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/gallery/jquery-1.12.0.min.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/gallery/script.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/main/css/main-menu.css",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/main/css/top-bar.css",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/topbar/css/style.css",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/main/css/animate.css",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/main/css/popup-search.css",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/ar.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/topbar/img/main-menu/logo-2.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/topbar/img/main-menu/arab_league.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/topbar/img/main-menu/ain-logo.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/topbar/img/main-menu/qs.jpg",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://img.youtube.com/vi/lBf1meFGkMU/hqdefault.jpg",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://img.youtube.com/vi/Ydnt7reITmg/hqdefault.jpg",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://img.youtube.com/vi/Km0BRXjcq-k/hqdefault.jpg",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_969_1_13082744_1092799730781723_4879725842806044464_n.jpg",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1361_1_19642370_1485006648227694_2429847099708129261_n.jpg",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1258_1_7.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_35_1_03.jpg",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_42_1_01.jpg",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/sharer.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/ar/footer/img/arab_league.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/ar/footer/img/ain-logo.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/ar/footer/img/QS-STARS.png",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/gallery/js/plugins.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/gallery/js/main.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/gallery/js/mklb.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/main/js/scripts.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/main/js/popup-search.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/main/js/jquery2-2.min.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/main/js/jquery.backstretch.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/main/js/wow.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/main/js/main.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/main/js/jquery.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/main/js/bootstrap.min.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/main/js/revolution.min.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/main/js/jquery.fancybox.pack.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/main/js/owl.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/main/js/script.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/gallery/lightbox/lightbox.min.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/template/en/main/js/bootstrap.min.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/main/js/owl.carousel.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/main/js/mklb.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/main/js/rocket-loader.min.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/main/js/plugins.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/main/js/webflow.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/main/js/wow.min.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "response",
+    "url": "https://www.googletagmanager.com/gtag/js?id=",
+    "status": 200,
+    "content_type": "application/javascript; charset=UTF-8",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en/gallery/index.php",
+    "status": 200,
+    "content_type": "text/html; charset=UTF-8",
+    "sample": "\n\n\n\n<!doctype html>\n<html class=\"no-js\" lang=\"en\">\n\n<head>\n    <title>AASTMT Gallery</title>\n    <meta charset='utf-8'><meta http-equiv='x-ua-compatible' content='ie=edge'><meta name='viewport' content='width=device-width, initial-scale=1.0'><link rel=\"icon\" type=\"image/x-icon\" href=\"https://aast.edu/template/favicon.ico\"/><title>Arab Academy for Science, Technology and Maritime Transport- | AASTMT</title><meta name='author' content='Website Design dept, Information and Documentation Center, Arab Academy for Science, Technology and Maritime Transport' /><meta name='copyright' content='Copyright (c) 2025Arab Academy for Science Technology and Maritime Transport' /><meta name='robots' content='index' /><meta name='allow-search' content='yes' /><meta http-equiv='imagetoolbar' content='false' /><script> window.dataLayer = window.dataLayer || [];     function gtag(){dataLayer.push(arguments);}     gtag('js', new Date());gtag('config', '');</script><script async src='https://www.googletagmanager.com/gtag/js?id='></script><link rel='canonical' href='https://aast.edu/en/gallery/index.php'/><meta name='description' content='AASTMT is one of the specialized organizations of the League of Arab States. We are a regional educational organization located in Egypt devoted to providing an excellent education for Arab youth and researchers.'/><meta name='keywords' content='aast, arab academy, university, academy, college, Egypt colleges, students, maritime, engineering, pharmacy, medicine, media, management, business, cairo, alexandria, aswan, portsaid, undergraduate, admission, alumni, majors, student accessibility, special needs '/><link rel='alternate' hreflang='en' href='https://aast.edu/en/gallery/index.php'>  <link rel=\"shortcut icon\" href=\"img\\favicon.png\" type=\"image/x-icon\">\n    <!-- Font Icons css -->\n    <link rel=\"stylesheet\" href=\"css\\font-icons.css\">\n    <!-- plugins css -->\n    <link rel=\"stylesheet\" href=\"css\\plugins.css\">\n    <!-- Main Stylesheet -->\n    <link rel=\"stylesheet\" href=\"css\\style.css\">\n    <link rel=\"stylesheet\" href=\"css\\owl.css\">\n    <link rel=\"stylesheet\" href=\"css\\upper-sec.css\">\n    <!-- Responsive css \n    <link rel=\"stylesheet\" href=\"css\\responsive.css\">-->\n\n<link rel=\"stylesheet\" href=\"css/gallery.css\">\n<link rel=\"stylesheet\" href=\"css/mklb.css\">\n   <script src=\"jquery-1.12.0.min.js\" type=\"text/javascript\"></script>\n        <script src=\"script.js\"></script>\n\t<link rel=\"stylesheet\" href=\"../../template/en/main/css/main-menu.css\" />\n    <link rel=\"stylesheet\" href=\"../../template/en/main/css/top-bar.css\" />\n<link rel=\"stylesheet\" href=\"../../template/en/topbar/css/style.css\" />\n    <link rel=\"stylesheet\" href=\"../../template/en/main/css/animate.css\">\n    <link rel=\"stylesheet\" href=\"../../template/en/main/css/popup-search.css\">\n    <script type=\"text/javascript\">\n        // window.addEventListener(\"resize\", function() {\n        //     \"use strict\";\n        //     window.location.reload();\n        // });\n        document.addEventListener(\"DOMContentLoaded\", function() {\n            // make it as accordion for smaller screens\n            if (window.innerWidth < 768) {\n                document.querySelectorAll('.sidebar .nav-link').forEach(function(element) {\n                    element.addEventListener('click', function(e) {\n                        let nextEl = element.nextElementSibling;\n                        let parentEl = element.parentElement;\n                        let allSubmenus_array = parentEl.querySelectorAll('.submenu');\n                        if (nextEl && nextEl.classList.contains('submenu')) {\n                            e.preventDefault();\n                            if (nextEl.style.display == 'block') {\n                                nextEl.style.display = 'none';\n                            } else {\n                                nextEl.style.display = 'block';\n                            }\n                        }\n                    });\n                })\n            }\n            // end if innerWidth\n        });\n        // DOMContentLoaded  end\n\n    </script>\n\n <!--   <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=63ac4499caf2ee001a714b34&product=sop' async='async'></script>\n\n    \n    <link rel=\"shortcut icon\" href=\"img\\favicon.png\" type=\"image/x-icon\">\n    \n    <link rel=\"stylesheet\" href=\"css\\font-icons.css\">\n    \n    <link rel=\"stylesheet\" href=\"css\\plugins.css\">\n    \n    <link rel=\"stylesheet\" href=\"css\\style.css\">\n    <link rel=\"stylesheet\" href=\"css\\owl.css\">\n    <link rel=\"stylesheet\" href=\"css\\upper-sec.css\">\n   \n\n\n<link rel=\"stylesheet\" href=\"css/mklb.css\">\n<script src=\"jquery-1.12.0.min.js\" type=\"text/javascript\"></script>\n        <script src=\"script.js\"></script>-->\n\t\t<link rel=\"stylesheet\" href=\"css/gallery.css\">\n\n</head>\n\n<body>\n\n<!-- Body main wrapper start -->\n<div class=\"body-wrapper\">\n\n    <!-- HEADER AREA START (header-5) -->\n    <header class=\"ltn__header-area ltn__header-5 ltn__header-transparent--- gradient-color-4---\">\n    \n\n  <!-- icons font-awsome-->\n    <!-- <link rel=\"stylesheet\" href=\"https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css\"> -->\n\n <header class=\"ltn__header-area ltn__header-5 ltn__header-transparent--- gradient-color-4---\">\n            <div class=\"ltn__header-top-area \">\n                <div class=\"auto-container\">\n                    <div class=\"row row2\">\n                        <div class=\"col-md-5 col-sm-12 col-xs-12\">\n                            <div class=\"ltn__top-bar-menu txt-991-center\">\n                                <ul>\n                                    <li> <a href=\"tel:19838\"><i class=\"fa fa-phone\" aria-hidden=\"true\"></i> 19838</a></li>\n\n                                    <li>\n                                        <!-- ltn__language-menu -->\n                                        <div class=\"ltn__drop-menu ltn__currency-menu ltn__language-menu\">\n                                            <ul>\n                                                <li><a href=\"#\" class=\"\"><span class=\"active-currency\"><i class=\"fa fa-unlock-alt\" aria-hidden=\"true\"></i> Login</span></a>\n                                                    <ul>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<li><a href=\"https://aastmtic.aast.edu/admission/application/ui/\"><i class=\"fa fa-angle-right\"></i> New Applicants </a></li>\n\n\t\t\t\t\t\t\t\t\t\t\t\t\t\n                                                        <li><a href=\"https://studentportal.aast.edu/Login\"><i class=\"fa fa-angle-right\"></i> Students</a></li>\n                                                        <li><a href=\"https://staffportal.aast.edu/\"><i class=\"fa fa-angle-right\"></i> Staff</a></li>\n                                                    </ul>\n                                                </li>\n                                            </ul>\n                                        </div>\n                                    </li>\n                                    <!--  -->\n                                    <li>\n                                        <!-- ltn__language-menu -->\n                                        <div class=\"ltn__drop-menu ltn__currency-menu ltn__language-menu\">\n                                            <ul>\n\n                                                <li><a href=\"#\" class=\"dropdown-toggle\"><i class=\"fa fa-globe\"></i> <span class=\"active-currency\">En</span></a>\n                                                     <ul> <li><a href='https://aast.edu/en/includes/functions/language_redirect.php?url=https%3A%2F%2Faast.edu%2Fen%2Fgallery%2Findex.php%26lnselect%3D2'>Ar <img src='https://aast.edu/template/ar.png' class='flag'></a></li></ul>                                                </li>\n                                            </ul>\n                                        </div>\n                                    </li>\n                                </ul>\n                            </div>\n                        </div>\n                        <div class=\"  col-md-5 col-sm-12 col-xs-12\">\n                            <div class=\"text-right\">\n                                <div class=\"ltn__top-bar-menu  txt-768-center  txt-991-center \">\n                                    <ul>\n                                        <!-- today -->\n                                        <li>\n                                            <div class=\"ltn__drop-menu ltn__currency-menu ltn__language-menu\">\n                                                <ul>\n                                                    <li><a href=\"#\" class=\"dropdown-toggle\"><span class=\"active-currency\">Our Latest </span></a>\n                                                        <ul>\n                                                            <li><a href=\"https://aast.edu/en/news/index.php?unit_id=1\"><i class=\"fa fa-angle-right\"></i> News</a></li>\n                                                            <li><a href=\"https://aast.edu/en/events/index.php?unit_id=482\"><i class=\"fa fa-angle-right\"></i> Events</a></li>\n                                                            <li><a href=\"https://aast.edu/en/gallery/index.php\"><i class=\"fa fa-angle-right\"></i> Media</a></li>\n\n                                                        </ul>\n                                                    </li>\n                                                </ul>\n                                            </div>\n                                            <!--  -->\n                                        </li>\n                                        <!--/.today  -->\n\n\n                                        <!-- info for -->\n                                        <li>\n                                            <!-- ltn__information-for -->\n                                            <div class=\"ltn__drop-menu ltn__currency-menu ltn__language-menu\">\n                                                <ul>\n                                                    <li><a href=\"#\" class=\"dropdown-tog"
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/main/css/main-menu.css",
+    "status": 200,
+    "content_type": "text/css",
+    "sample": "/****************************************************************************************************\r\ntop-bar.css\r\n***********************************************************************************************/\r\n.row2 {\r\n    background-color: #132b61;\r\n    border: none;\r\n    padding: 4px 17px;\r\n}\r\n\r\n.ltn__header-top-area .auto-container {\r\n    width: 94%;\r\n    display: block;\r\n    float: none;\r\n    margin: auto;\r\n}\r\n\r\n.ltn__drop-menu > ul > li:hover > a {\r\n    color: #fff;\r\n}\r\n\r\n.ltn__top-bar-menu > ul > li > i,\r\n.ltn__top-bar-menu > ul > li > a > i {\r\n    margin-right: 3px;\r\n    color: var(--ltn__secondary-color);\r\n}\r\n\r\n.ltn__top-bar-menu .ltn__currency-menu .active-currency {\r\n    font-size: 14px;\r\n    font-weight: 700;\r\n}\r\n\r\n.ltn__top-bar-menu > ul {\r\n    padding: 0;\r\n    margin: 0;\r\n}\r\n\r\n.ltn__top-bar-menu > ul > li > i,\r\n.ltn__top-bar-menu > ul > li > a > i {\r\n    margin-right: 3px;\r\n    color: #f9b702;\r\n    font-size: 0.85em;\r\n    font-weight: normal;\r\n}\r\n\r\n.ltn__top-bar-menu > ul > li {\r\n    list-style: none;\r\n    display: inline-block;\r\n    margin: 0 15px 0 0;\r\n    font-size: 14px;\r\n    font-weight: 700;\r\n}\r\n\r\n.ltn__drop-menu ul li:hover > ul {\r\n    top: 100%;\r\n    opacity: 1;\r\n    visibility: visible;\r\n}\r\n\r\n.ltn__currency-menu ul li ul {\r\n    min-width: max-content !important;\r\n}\r\n\r\n.ltn__drop-menu ul li ul li a {\r\n    color: inherit;\r\n    font-weight: 500;\r\n    font-size: 15px;\r\n}\r\n\r\n.ltn__drop-menu ul li ul {\r\n    position: absolute;\r\n    min-width: 150px;\r\n    right: 0;\r\n    background-color: #fff;\r\n    z-index: 999;\r\n    -webkit-box-shadow: var(--ltn__box-shadow-4);\r\n    box-shadow: var(--ltn__box-shadow-4);\r\n    border-top: 1px solid #ececec;\r\n    top: 130%;\r\n    padding: 7px 0;\r\n    margin: 0;\r\n    -webkit-transition: opacity .2s ease .1s, visibility .2s ease .1s, top .2s ease .1s;\r\n    -o-transition: opacity .2s ease .1s, visibility .2s ease .1s, top .2s ease .1s;\r\n    transition: opacity .2s ease .1s, visibility .2s ease .1s, top .2s ease .1s;\r\n    opacity: 0;\r\n    visibility: hidden;\r\n}\r\n\r\n.ltn__drop-menu {\r\n    display: inline-block;\r\n    text-align: left;\r\n}\r\n\r\n.ltn__drop-menu ul {\r\n    margin-bottom: 0;\r\n}\r\n\r\n.ltn__drop-menu ul li ul li {\r\n    display: block;\r\n    padding: 0px 0.5em;\r\n    font-size: 16px;\r\n    color: var(--ltn__paragraph-color);\r\n    font-weight: 500;\r\n}\r\n\r\n.ltn__top-bar-menu > ul > li:last-child {\r\n    margin-right: 0;\r\n}\r\n\r\nimg.flag {\r\n    width: 18px;\r\n    display: inline-block;\r\n    padding-left: 2px;\r\n}\r\n\r\n.ltn__drop-menu ul li i {\r\n    font-size: 0.7em;\r\n    font-weight: 500;\r\n    color: #ffc107;\r\n}\r\n\r\n.ltn__header-area {\r\n    z-index: 9999;\r\n    position: relative;\r\n    color: #fff;\r\n    background: #132b61;\r\n}\r\n\r\n.ltn__header-top-area {\r\n    border-bottom: 1px solid;\r\n    border-color: var(--border-color-3);\r\n}\r\n\r\n.ltn__header-top-area .ltn__social-media ul li {\r\n    font-size: 14px;\r\n    margin: 0 10px 0 0;\r\n}\r\n\r\n.top-area-color-white {\r\n    background-color: #fff;\r\n}\r\n\r\n.top-area-color-white p,\r\n.top-area-color-white a,\r\n.top-area-color-white li,\r\n.top-area-color-white .welcome p,\r\n.top-area-color-white .welcome a,\r\n.top-area-color-white .ltn__drop-menu > ul > li > a,\r\n.top-area-color-white .ltn__drop-menu > ul > li:hover > a {\r\n    color: var(--white);\r\n}\r\n\r\n.ltn__header-top-area .row {\r\n    -webkit-box-align: center;\r\n    -ms-flex-align: center;\r\n    align-items: center;\r\n}\r\n\r\n.ltn__language-menu .dropdown-toggle::before {\r\n    content: \"\\e939\";\r\n    font-size: 12px;\r\n    position: absolute;\r\n    top: 55%;\r\n    right: -9px;\r\n    -webkit-transform: translateY(-50%);\r\n    -ms-transform: translateY(-50%);\r\n    -moz-transform: translateY(-50%);\r\n    -o-transform: translateY(-50%);\r\n    transform: translateY(-50%);\r\n    font-family: 'icomoon';\r\n    color: #f9b702;\r\n}\r\n\r\n/******************************max-1250px**********************/\r\n\r\n@media (max-width: 1250px) {\r\n    .ltn__top-bar-menu > ul > li {\r\n        font-size: 12px;\r\n    }\r\n\r\n    ol,\r\n    ul {\r\n        padding-left: 1rem;\r\n    }\r\n\r\n    .ltn__header-top-area .auto-container {\r\n        width: 98%;\r\n    }\r\n}\r\n\r\n\r\n/******************************max-991px**********************/\r\n\r\n@media (max-width: 991px) {\r\n    .txt-991-center {\r\n        text-align: center;\r\n    }\r\n\r\n    .ltn__drop-menu ul {\r\n        margin-bottom: 0;\r\n        padding-left: 0 !important;\r\n    }\r\n\r\n    .ltn__top-bar-menu > ul > li {\r\n        font-size: 11px;\r\n        display: contents;\r\n    }\r\n\r\n    .ltn__drop-menu.ltn__currency-menu.ltn__language-menu ul {\r\n        padding-left: 0;\r\n    }\r\n\r\n    .ltn__drop-menu ul li ul li a {\r\n        font-size: 13px;\r\n    }\r\n\r\n    .ltn__drop-menu ul li i {\r\n        font-size: 0.5em;\r\n    }\r\n\r\n    .col-md-4,\r\n    .col-md-5 {\r\n        width: 100% !important;\r\n    }\r\n\r\n    .ltn__header-top-area .auto-container {\r\n        width: 100%\r\n    }\r\n}\r\n\r\n\r\n/******************************max-768px**********************/\r\n\r\n@media (max-width: 768px) {\r\n    .row2 .col-md-2 {\r\n        width: 100%;\r\n    }\r\n\r\n    li.DeskTopLogo {\r\n        display: none !important;\r\n    }\r\n\r\n    a.aast-mobile {\r\n        display: block;\r\n        width: 100%;\r\n        display: contents;\r\n    }\r\n\r\n    a.aast-mobile img {\r\n        display: block;\r\n        width: 60%;\r\n        float: left;\r\n        margin: 0 0 0 25px;\r\n    }\r\n\r\n    .ltn__header-top-area {\r\n\r\n        text-align: center;\r\n    }\r\n\r\n    .ltn__header-top-area .ltn__social-media ul li {\r\n        font-size: 12px;\r\n        margin: 0 5px 0 0;\r\n    }\r\n\r\n    .ltn__top-bar-menu .ltn__currency-menu .active-currency,\r\n    .ltn__top-bar-menu > ul > li {\r\n        font-size: 11px;\r\n    }\r\n\r\n    .ltn__drop-menu > ul > li {\r\n        position: inherit;\r\n    }\r\n\r\n    .ltn__drop-menu > ul > li > a {\r\n        height: 20px;\r\n        line-height: 20px;\r\n    }\r\n\r\n    .ltn__drop-menu ul li ul {\r\n        left: 50%;\r\n        right: 50%;\r\n        -webkit-transform: translateX(-50%);\r\n        -ms-transform: translateX(-50%);\r\n        transform: translateX(-50%);\r\n    }\r\n\r\n    .top-bar-right {\r\n        display: -webkit-box;\r\n        display: -ms-flexbox;\r\n        display: flex;\r\n        -webkit-box-pack: justify;\r\n        -ms-flex-pack: justify;\r\n        justify-content: space-between;\r\n    }\r\n\r\n    .site-logo {\r\n        min-width: 100px;\r\n    }\r\n}\r\n\r\n\r\n/******************************max-576px**********************/\r\n\r\n@media (max-width:576px) {\r\n    .col-sm-8 {\r\n        width: 70%;\r\n    }\r\n\r\n    .col-sm-6 {\r\n        width: 50%;\r\n    }\r\n\r\n    .col-sm-12 {\r\n        width: 100%;\r\n    }\r\n\r\n    .top-bar-right {\r\n        width: fit-content;\r\n    }\r\n\r\n    #menuToggle {\r\n        padding: 0.6em 0.2em 0.4em;\r\n        border-radius: 5px;\r\n    }\r\n\r\n    .aast-logo {\r\n        width: 50%;\r\n        left: 0%;\r\n        top: 2em;\r\n    }\r\n\r\n    .ltn__header-top-area {\r\n        background-color: #132b61;\r\n    }\r\n\r\n    .top-bar-right {\r\n        margin-top: 5em;\r\n    }\r\n\r\n    .ltn__top-bar-menu > ul > li {\r\n        margin: 0;\r\n    }\r\n\r\n    .col-sm-12 {\r\n        width: 100% !important;\r\n        padding: 0;\r\n    }\r\n}\r\n\r\n/****************************************************************************************************\r\n    main-menu.css\r\n**********************************************************************************************/\r\nbody.body--lock {\r\n    overflow-y: hidden !important;\r\n}\r\n\r\n.absolute {\r\n    position: absolute;\r\n}\r\n\r\n.inherit {\r\n    position: inherit;\r\n}\r\n\r\n.float-right {\r\n    float: right;\r\n}\r\n\r\n.mobile--overlay_content {\r\n    font-family: 'Nunito Sans', sans-serif;\r\n}\r\n\r\n.mobile--overlay_content > ul li,\r\n.mobile--overlay_content > ol li {\r\n    margin-top: 0;\r\n}\r\n\r\n#NavMobile li {\r\n    margin-top: 0 !important;\r\n}\r\n\r\n#NavMobile a.nav-link {\r\n    padding: 0 !important;\r\n}\r\n\r\nspan.open--menu {\r\n    cursor: pointer;\r\n}\r\n\r\ndiv#Overlay:after {\r\n    background: #04152e82;\r\n    width: 100%;\r\n    content: '';\r\n    height: 100%;\r\n    position: absolute;\r\n    right: 0;\r\n}\r\n\r\na.aast-mobile img {\r\n    opacity: 0;\r\n}\r\n\r\n/****************Start hamburger__line****************/\r\n.hamburger__line {\r\n    background: #f6ba42;\r\n    height: 0.25rem;\r\n    width: 1.7rem;\r\n    display: block;\r\n    margin: 4px auto 0;\r\n    transition: all 0.2s;\r\n    z-index: 3;\r\n}\r\n\r\n.hamburger__line-active {\r\n    background: white;\r\n    position: inherit;\r\n    z-index: 999999999;\r\n}\r\n\r\n.hamburger__line-active:nth-child(1) {\r\n    transform: rotate(45deg);\r\n    position: relative;\r\n}\r\n\r\n.hamburger__line-active:nth-child(2) {\r\n    display: none;\r\n}\r\n\r\n.hamburger__line-active:nth-child(3) {\r\n    transform: rotate(-45deg);\r\n    top: -10px;\r\n    position: relative;\r\n}\r\n\r\n/****************End hamburger__line****************/\r\n/****************Start Quick links****************/\r\nul.quickLinks2 {\r\n    display: inline-flex;\r\n    color: #fff;\r\n    background: #060f2f;\r\n    position: absolute;\r\n    z-index: 99999;\r\n    bottom: 0%;\r\n    border-top: 1px solid #ffffff6b;\r\n    width: 100%;\r\n    padding: 20px 10px;\r\n    height: 90px;\r\n    left: 0;\r\n    margin-bottom: 0;\r\n    margin-top: revert;\r\n    line-height: 50px;\r\n}\r\n\r\nul.quickLinks2 li {\r\n    padding-left: 23px;\r\n}\r\n\r\n.quickLinks2 span {\r\n    color: #9fa2a6;\r\n    font-size: 23px;\r\n    font-weight: bold;\r\n}\r\n\r\n.quickLink2 {\r\n    display: inline;\r\n}\r\n\r\n.quickLinks2 li {\r\n    display: table-cell;\r\n    padding-left: 33px;\r\n}\r\n\r\n.quickLinks2 li a {\r\n    font-size: 21px;\r\n    color: #ffc107;\r\n    text-decoration: none;\r\n}\r\n\r\n.quickLinks2 i {\r\n    padding-left: 15px;\r\n    font-style: normal;\r\n}\r\n\r\n/*******************End Quick Links**************/\r\n#NavMobile {\r\n    display: block;\r\n    width: 26%;\r\n    overflow-y: scroll;\r\n    height: 70%;\r\n}\r\n\r\n#NavMobile .nav {\r\n    display: flow-root;\r\n    padding-left: 0;\r\n    margin-bottom: 0;\r\n    list-style: none;\r\n}\r\n\r\n#NavMobile a.nav-link {\r\n    padding: 0;\r\n    display: inline-block;\r\n}\r\n\r\n.mobile--overlay {\r\n    height: 0%;\r\n    width: 100%;\r\n    position: fixed;\r\n    z-index: 999;\r\n    right: 0;\r\n    top: 0;\r\n    overflow-y: hidden;\r\n    opacity: 1;\r\n    background: #0a133"
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/main/css/top-bar.css",
+    "status": 200,
+    "content_type": "text/css",
+    "sample": ".row2 {\n    background-color: #132b61;\n    border: none;\n    padding: 4px 17px;\n}\n\n.ltn__header-top-area .auto-container {\n    width: 100%;\n    display: block;\n    float: none;\n    margin: auto;\n}\n\n.ltn__drop-menu > ul > li:hover > a {\n    color: #fff;\n}\n\n.ltn__top-bar-menu > ul > li > i,\n.ltn__top-bar-menu > ul > li > a > i {\n    margin-right: 3px;\n    color: var(--ltn__secondary-color);\n}\n\n.ltn__top-bar-menu .ltn__currency-menu .active-currency {\n    font-size: 14px;\n    font-weight: 700;\n}\n\n.ltn__top-bar-menu > ul {\n    padding: 0;\n    margin: 0;\n}\n\n.ltn__top-bar-menu > ul > li > i,\n.ltn__top-bar-menu > ul > li > a > i {\n    margin-right: 3px;\n    color: #f9b702;\n    font-size: 0.85em;\n    font-weight: normal;\n}\n\n.ltn__top-bar-menu > ul > li {\n    list-style: none;\n    display: inline-block;\n    margin: 0 15px 0 0;\n    font-size: 14px;\n    font-weight: 700;\n}\n\n.ltn__drop-menu ul li:hover > ul {\n    top: 100%;\n    opacity: 1;\n    visibility: visible;\n}\n\n.ltn__currency-menu ul li ul {\n    min-width: max-content !important;\n}\n\n.ltn__drop-menu ul li ul li a {\n    color: inherit;\n    font-weight: 500;\n    font-size: 15px;\n}\n\n.ltn__drop-menu ul li ul {\n    position: absolute;\n    min-width: 150px;\n    right: 0;\n    background-color: #fff;\n    z-index: 999;\n    -webkit-box-shadow: var(--ltn__box-shadow-4);\n    box-shadow: var(--ltn__box-shadow-4);\n    border-top: 1px solid #ececec;\n    top: 130%;\n    padding: 7px 0;\n    margin: 0;\n    -webkit-transition: opacity .2s ease .1s, visibility .2s ease .1s, top .2s ease .1s;\n    -o-transition: opacity .2s ease .1s, visibility .2s ease .1s, top .2s ease .1s;\n    transition: opacity .2s ease .1s, visibility .2s ease .1s, top .2s ease .1s;\n    opacity: 0;\n    visibility: hidden;\n}\n\n.ltn__drop-menu {\n    display: inline-block;\n    text-align: left;\n}\n\n.ltn__drop-menu ul {\n    margin-bottom: 0;\n}\n\n.ltn__drop-menu ul li ul li {\n    display: block;\n    padding: 0px 0.5em;\n    font-size: 16px;\n    color: var(--ltn__paragraph-color);\n    font-weight: 500;\n}\n\n.ltn__top-bar-menu > ul > li:last-child {\n    margin-right: 0;\n}\n\nimg.flag {\n    width: 18px;\n    display: inline-block;\n    padding-left: 2px;\n}\n\n.ltn__drop-menu ul li i {\n    font-size: 0.7em;\n    font-weight: 500;\n    color: #ffc107;\n}\n.fa.fa-phone {\n    color: #ffc107;\n}\n\n.ltn__header-area {\n    z-index: 9999;\n    position: relative;\n    color: #fff;\n}\n\n.ltn__header-top-area {\n    border-bottom: 1px solid;\n    border-color: var(--border-color-3);\n}\n\n.ltn__header-top-area .ltn__social-media ul li {\n    font-size: 14px;\n    margin: 0 10px 0 0;\n}\n\n.top-area-color-white {\n    background-color: #fff;\n}\n\n.top-area-color-white li,\n.top-area-color-white .welcome p,\n.top-area-color-white .welcome a,\n.top-area-color-white .ltn__drop-menu > ul > li > a,\n.top-area-color-white .ltn__drop-menu > ul > li:hover > a {\n    color: var(--white);\n}\n\n.ltn__header-top-area .row {\n    -webkit-box-align: center;\n    -ms-flex-align: center;\n    align-items: center;\n}\n\n.ltn__language-menu .dropdown-toggle::before {\n    content: \"\\e939\";\n    font-size: 12px;\n    position: absolute;\n    top: 60%;\n    right: -3px;\n    -webkit-transform: translateY(-50%);\n    -ms-transform: translateY(-50%);\n    -moz-transform: translateY(-50%);\n    -o-transform: translateY(-50%);\n    transform: translateY(-50%);\n    font-family: 'icomoon';\n    color: #f9b702;\n}\n\n\n/******************************max-1250px**********************/\n\n@media (max-width: 1250px) {\n    .ltn__top-bar-menu > ul > li {\n        font-size: 12px;\n    }\n\n    ol,\n    ul {\n        padding-left: 1rem;\n    }\n\n    .ltn__header-top-area .auto-container {\n        width: 100%;\n    }\n}\n\n\n/******************************max-991px**********************/\n\n@media (max-width: 991px) {\n    .txt-991-center {\n        text-align: center;\n    }\n\n    .ltn__drop-menu ul {\n        margin-bottom: 0;\n        padding-left: 0 !important;\n    }\n\n    .ltn__top-bar-menu > ul > li {\n        font-size: 11px;\n        display: contents;\n    }\n\n    .ltn__drop-menu.ltn__currency-menu.ltn__language-menu ul {\n        padding-left: 0;\n    }\n\n    .ltn__drop-menu ul li ul li a {\n        font-size: 13px;\n    }\n\n    .ltn__drop-menu ul li i {\n        font-size: 0.5em;\n    }\n\n    .col-md-4,\n    .col-md-5 {\n        width: 100% !important;\n    }\n\n    .ltn__header-top-area .auto-container {\n        width: 100%\n    }\n}\n\n\n/******************************max-768px**********************/\n\n@media (max-width: 768px) {\n    .row2 .col-md-2 {\n        width: 100%;\n    }\n\n    li.DeskTopLogo {\n        display: none !important;\n    }\n\n    a.aast-mobile {\n        display: block;\n        width: 100%;\n        display: contents;\n    }\n\n    a.aast-mobile img {\n        display: block;\n        width: 60%;\n        float: left;\n        margin: 0 0 0 25px;\n    }\n\n    .ltn__header-top-area {\n\n        text-align: center;\n    }\n\n    .ltn__header-top-area .ltn__social-media ul li {\n        font-size: 12px;\n        margin: 0 5px 0 0;\n    }\n\n    .ltn__top-bar-menu .ltn__currency-menu .active-currency,\n    .ltn__top-bar-menu > ul > li {\n        font-size: 11px;\n    }\n\n    .ltn__drop-menu > ul > li {\n        position: relative;\n    }\n\n    .ltn__drop-menu > ul > li > a {\n        height: 20px;\n        line-height: 20px;\n    }\n\n    .ltn__drop-menu ul li ul {\n        left: 50%;\n        right: 50%;\n        -webkit-transform: translateX(-50%);\n        -ms-transform: translateX(-50%);\n        transform: translateX(-50%);\n    }\n\n    .top-bar-right {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n        justify-content: space-between;\n    }\n\n    .site-logo {\n        min-width: 100px;\n    }\n}\n\n\n/******************************max-576px**********************/\n\n@media (max-width:576px) {\n    .col-sm-8 {\n        width: 70%;\n    }\n\n    .col-sm-6 {\n        width: 50%;\n    }\n\n    .col-sm-12 {\n        width: 100%;\n    }\n\n    .top-bar-right {\n        width: fit-content;\n    }\n\n    #menuToggle {\n        padding: 0.6em 0.2em 0.4em;\n        border-radius: 5px;\n    }\n\n    .aast-logo {\n        width: 50%;\n        left: 0%;\n        top: 2em;\n    }\n\n    .ltn__header-top-area {\n        background-color: #132b61;\n    }\n\n    .top-bar-right {\n        margin-top: 5em;\n    }\n\n    .ltn__top-bar-menu > ul > li {\n        margin: 0;\n    }\n\n    .col-sm-12 {\n        width: 100% !important;\n        padding: 0;\n    }\n}\n"
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/topbar/css/style.css",
+    "status": 200,
+    "content_type": "text/css",
+    "sample": "/* Single side border-radius  */\n/* BORDER RADIUS */\n/* user select */\n/* box sizing  */\n/* placeholder */\n/* transition  */\n/* transform */\n/* rotate */\n/* scale */\n/* translate */\n/* translate rotate */\n/* skew */\n/* ============================================================\n>>> TABLE OF CONTENTS:\n===============================================================\n# Google fonts\n# Gutter Code \n# Normalize\n# Typography\n# Custom Class\n# input and button type focus outline disable\n# Form input box\n# Text meant only for screen readers.\n# Transition\n\n# Accessibility\n# Globals\n\n# Alignments\n# Clearings\n# Posts and pages\n# Captions\n# Galleries\n# Unit test\n# ScrollUp\n# Owl Carousel \n# Slick Slider\n# Background Overlay\n# Scrollbar\n# Padding Top\n# Padding Bottom\n# Margin Top\n# Margin Bottom\n# Custom margin Padding\n\n============================================================= */\n/* -------------------------------------\n    Google fonts\n------------------------------------- */\n/* @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Rajdhani:wght@400;500;600;700&display=swap'); */\n/*\nfont-family: 'Open Sans', sans-serif;\nfont-family: 'Rajdhani', sans-serif;\n*/\n/* @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&family=Titillium+Web:wght@400;600;700;900&display=swap'); */\n/*\nfont-family: 'Nunito Sans', sans-serif;\nfont-family: 'Titillium Web', sans-serif;\n*/\n@import url(\"https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&family=Poppins:wght@400;500;600;700;800;900&display=swap\");\n\n/*\nfont-family: 'Nunito Sans', sans-serif;\nfont-family: 'Poppins', sans-serif;\n*/\n/* ====================================================\n    Gutter Code \n==================================================== */\n.container,\n.container-fluid {\n    padding-right: 15px;\n    padding-left: 15px;\n}\n\n.row {\n    margin-left: -15px;\n    margin-right: -15px;\n}\n\n.col,\n.col-1,\n.col-10,\n.col-11,\n.col-12,\n.col-2,\n.col-3,\n.col-4,\n.col-5,\n.col-6,\n.col-7,\n.col-8,\n.col-9,\n.col-auto,\n.col-lg,\n.col-lg-1,\n.col-lg-10,\n.col-lg-11,\n.col-lg-12,\n.col-lg-2,\n.col-lg-3,\n.col-lg-4,\n.col-lg-5,\n.col-lg-6,\n.col-lg-7,\n.col-lg-8,\n.col-lg-9,\n.col-lg-auto,\n.col-md,\n.col-md-1,\n.col-md-10,\n.col-md-11,\n.col-md-12,\n.col-md-2,\n.col-md-3,\n.col-md-4,\n.col-md-5,\n.col-md-6,\n.col-md-7,\n.col-md-8,\n.col-md-9,\n.col-md-auto,\n.col-sm,\n.col-sm-1,\n.col-sm-10,\n.col-sm-11,\n.col-sm-12,\n.col-sm-2,\n.col-sm-3,\n.col-sm-4,\n.col-sm-5,\n.col-sm-6,\n.col-sm-7,\n.col-sm-8,\n.col-sm-9,\n.col-sm-auto,\n.col-xl,\n.col-xl-1,\n.col-xl-10,\n.col-xl-11,\n.col-xl-12,\n.col-xl-2,\n.col-xl-3,\n.col-xl-4,\n.col-xl-5,\n.col-xl-6,\n.col-xl-7,\n.col-xl-8,\n.col-xl-9,\n.col-xl-auto {\n    padding-right: 15px;\n    padding-left: 15px;\n    position: relative;\n}\n\n.ltn__no-gutter > [class*='col-'] {\n    /* No padding only for child columns */\n    padding-right: 0;\n    padding-left: 0;\n}\n\n.ltn__no-gutter-all [class*='col-'] {\n    /* No padding for every columns */\n    padding-right: 0;\n    padding-left: 0;\n}\n\n@media (min-width: 992px) {\n\n    /* Modify this based on column def */\n    .ltn__custom-gutter {\n        margin-left: -0px;\n        margin-right: -0px;\n    }\n\n    .ltn__custom-gutter > [class*='col-'] {\n        padding-right: 0px;\n        padding-left: 0px;\n    }\n\n    .ltn__custom-gutter-all .row {\n        margin-left: -15px;\n        margin-right: -15px;\n    }\n\n    .ltn__custom-gutter-all .row [class*='col-'] {\n        padding-right: 15px;\n        padding-left: 15px;\n    }\n}\n\n@media (max-width: 991px) {\n\n    /* Modify this based on column def */\n    .ltn__custom-gutter {\n        margin-left: -15px;\n        margin-right: -15px;\n    }\n\n    .ltn__custom-gutter > [class*='col-'] {\n        padding-right: 15px;\n        padding-left: 15px;\n    }\n\n    .ltn__custom-gutter-all {\n        margin-left: -15px;\n        margin-right: -15px;\n    }\n\n    .ltn__custom-gutter-all [class*='col-'] {\n        padding-right: 15px;\n        padding-left: 15px;\n    }\n}\n\n@media (max-width: 767px) {\n\n    /* Modify this based on column def */\n    .ltn__product-gutter .row {\n        margin-left: -8px;\n        margin-right: -8px;\n    }\n\n    .ltn__product-gutter [class*='col-'] {\n        padding-right: 8px;\n        padding-left: 8px;\n    }\n}\n\n\n/* ----------------------------------------------------\n    Normalize    0B2C3D\n---------------------------------------------------- */\n:root {\n    --ltn__primary-color: #000000;\n    --ltn__primary-color-2: #041113;\n    /* Darken */\n    --ltn__primary-color-3: #133236;\n    /* Lighten */\n    --ltn__secondary-color: #FF5A3C;\n    --ltn__secondary-color-2: #cb3421;\n    /* Darken */\n    --ltn__secondary-color-3: #fb412a;\n    /* Lighten */\n    --ltn__heading-color: #071c1f;\n    --ltn__paragraph-color: #5C727D;\n    --ltn__heading-font: 'Poppins', sans-serif;\n    --ltn__body-font: 'Nunito Sans', sans-serif;\n    /* Footer ACD2D8 8CB2B2  */\n    --ltn__color-1: #8cb2b2;\n    --ltn__color-2: #ACD2D8;\n    --ltn__color-3: #A3BCC0;\n    --ltn__color-4: #84A2A6;\n    --ltn__color-5: #5C727D;\n    --ltn__color-6: #F5DFDC;\n    /* Gradient Colors */\n    --gradient-color-1: linear-gradient(90deg, rgba(242, 139, 194, 1) 0%, rgba(216, 177, 242, 1) 50%);\n    --gradient-color-2: linear-gradient(to top, rgba(7, 28, 31, 0) 0%, rgba(7, 28, 31, 1) 90%);\n    --gradient-color-3: linear-gradient(to bottom, rgba(7, 28, 31, 0) 0%, rgba(7, 28, 31, 1) 90%);\n    --gradient-color-4: linear-gradient(to top, rgba(242, 246, 247, 0) 0%, rgba(242, 246, 247, 1) 90%);\n    --gradient-color-5: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 70%);\n    /* Background Colors ( 1, 2, 3, 4, 5 )  */\n    --section-bg-1: #F2F6F7;\n    /* White */\n    --section-bg-2: #132E6B;\n    /* Black */\n    --section-bg-5: #FFF2F0;\n    /* White */\n    --section-bg-6: #132E6B;\n    /* Black */\n    --section-bg-7: #282b38;\n    /* Black */\n    /* Border Colors */\n    --border-color-1: #e5eaee;\n    /* White */\n    --border-color-2: #1e2021;\n    /* Black */\n    --border-color-3: #5C617F;\n    /* Black */\n    --border-color-4: #eb6954;\n    /* Red */\n    --border-color-5: #bc3928;\n    /* Red */\n    --border-color-6: #103034;\n    /* Black */\n    --border-color-7: #d1dae0;\n    /* White */\n    --border-color-8: #f6f6f6;\n    /* White */\n    --border-color-9: #e4ecf2;\n    /* White */\n    --border-color-10: #ebeeee;\n    /* White */\n    --border-color-11: #ededed;\n    /* White */\n    --border-color-12: #e1e6ff;\n    /* White */\n    --border-color-13: #f1f8ff;\n    /* White */\n    /* Box Shadow Colors */\n    --ltn__box-shadow-1: 0 16px 32px 0 rgba(7, 28, 31, 0.1);\n    --ltn__box-shadow-2: 0 0 4px rgba(0, 0, 0, 0.1);\n    /* like border */\n    --ltn__box-shadow-3: 0 1px 6px 0 rgba(32, 33, 36, .28);\n    /* like border GGL */\n    --ltn__box-shadow-4: 0 5px 20px 0 rgba(23, 44, 82, 0.1);\n    --ltn__box-shadow-5: 0 8px 16px 0 rgba(93, 93, 93, 0.1);\n    --ltn__box-shadow-6: 0 0 25px 2px rgba(93, 93, 93, 0.2);\n    --ltn__box-shadow-7: 0 0 10px 0px rgba(93, 93, 93, 0.2);\n    /* Common Colors */\n    --black: #000000;\n    --black-2: #22355B;\n    --white: #fff;\n    --white-2: #F2F6F7;\n    --white-3: #e8edee;\n    --white-4: #e6ecf0;\n    --white-5: #f0f4f7;\n    --white-6: #f1f1f1;\n    --white-7: #F7F7F7;\n    --white-8: #FAFAFA;\n    --white-9: #F2F7FA;\n    --white-10: #EDEDED;\n    --red: #FF0000;\n    --red-2: #f34f3f;\n    --red-3: #DB483B;\n    --silver: #C0C0C0;\n    --gray: #808080;\n    --maroon: #800000;\n    --yellow: #f6ba42;\n    --olive: #808000;\n    --lime: #00FF00;\n    --green: #77C720;\n    --green-2: #008000;\n    --aqua: #00FFFF;\n    --teal: #008080;\n    --blue: #2553a8;\n    --navy: #000080;\n    --fuchsia: #E82F51;\n    --purple: #800080;\n    --pink: #FFC0CB;\n    --nude: #ebc8b2;\n    --orange: #ffa500;\n    --ratings: #FFB800;\n    /* social media colors */\n    --facebook: #365493;\n    --twitter: #3CF;\n    --linkedin: #0077B5;\n    --pinterest: #c8232c;\n    --dribbble: #ea4c89;\n    --behance: #131418;\n    --google-plus: #dd4b39;\n    --instagram: #e4405f;\n    --vk: #3b5998;\n    --wechat: #7bb32e;\n    --youtube: #CB2027;\n    --email: #F89A1E;\n}\n\n/* -------------------------------------\n    Typography\n------------------------------------- */\nhtml {\n    -webkit-text-size-adjust: 100%;\n    -ms-text-size-adjust: 100%;\n    font-family: var(--ltn__body-font);\n}\n\n* {\n    -webkit-box-sizing: border-box;\n    box-sizing: border-box;\n    outline: none;\n    -moz-osx-font-smoothing: grayscale;\n    /* Firefox */\n    -webkit-font-smoothing: antialiased;\n    /* WebKit  */\n}\n\nbody {\n    color: var(--ltn__paragraph-color);\n    font-weight: 400;\n    font-style: normal;\n    font-size: 16px;\n    font-family: var(--ltn__body-font);\n    line-height: 1.8;\n    margin: 0 auto;\n    overflow-x: hidden;\n}\n\nh1,\n.h1 {\n    font-size: 36px;\n    line-height: 1.2;\n}\n\nh2,\n.h2 {\n    font-size: 35px;\n}\n\nh3,\n.h3 {\n    font-size: 26px;\n}\n\nh4,\n.h4 {\n    font-size: 19px;\n}\n\nh5,\n.h5 {\n    font-size: 18px;\n}\n\nh6,\n.h6 {\n    font-size: 17px;\n}\n\nh1,\nh2,\nh3,\nh4,\nh5,\nh6,\n.h1,\n.h2,\n.h3,\n.h4,\n.h5,\n.h6 {\n    color: var(--ltn__heading-color);\n    clear: both;\n    font-family: var(--ltn__heading-font);\n    font-weight: 700;\n    line-height: 1.3;\n    margin-bottom: 15px;\n}\n\np {\n    color: var(--ltn__paragraph-color);\n    margin-bottom: 1.5em;\n    /*text-align: justify;\n    -webkit-hyphens: auto;\n  -moz-hyphens: auto;\n  -ms-hyphens: auto;\n  hyphens: auto;*/\n}\n\na {\n    color: inherit;\n    text-decoration: none;\n    color: var(--ltn__paragraph-color);\n    -webkit-transition: all 0.3s ease 0s;\n    -o-transition: all 0.3s ease 0s;\n    transition: all 0.3s ease 0s;\n}\n\na,\na:hover,\na:focus,\na:active {\n    text-decoration: none;\n    outline: none;\n    color: inherit;\n}\n\na:hover {\n    color: var(--ltn__secondary-color);\n}\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n    font-family: var(--ltn__body-font);\n}\n\npre,\ncode,\nkbd,\ntt,\nvar,\nsamp {\n    font-family: var(--ltn__body-font);\n}\n\npre {\n    word-break: break-word;\n}\n\na i {\n    padding: 0 2px;\n}\n\nimg {\n    max-width: 100%;\n}\n\nul li,\nol li {\n    mar"
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/main/css/animate.css",
+    "status": 200,
+    "content_type": "text/css",
+    "sample": "@charset \"UTF-8\";\n\n\n/*!\nAnimate.css - http://daneden.me/animate\nLicensed under the MIT license\n\nCopyright (c) 2013 Daniel Eden\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n*/\n\n.animated {\n  -webkit-animation-duration: 1s;\n  animation-duration: 1s;\n  -webkit-animation-fill-mode: both;\n  animation-fill-mode: both;\n}\n\n.animated.hinge {\n  -webkit-animation-duration: 2s;\n  animation-duration: 2s;\n}\n\n@-webkit-keyframes bounce {\n  0%, 20%, 50%, 80%, 100% {\n    -webkit-transform: translateY(0);\n    transform: translateY(0);\n  }\n\n  40% {\n    -webkit-transform: translateY(-30px);\n    transform: translateY(-30px);\n  }\n\n  60% {\n    -webkit-transform: translateY(-15px);\n    transform: translateY(-15px);\n  }\n}\n\n@keyframes bounce {\n  0%, 20%, 50%, 80%, 100% {\n    -webkit-transform: translateY(0);\n    -ms-transform: translateY(0);\n    transform: translateY(0);\n  }\n\n  40% {\n    -webkit-transform: translateY(-30px);\n    -ms-transform: translateY(-30px);\n    transform: translateY(-30px);\n  }\n\n  60% {\n    -webkit-transform: translateY(-15px);\n    -ms-transform: translateY(-15px);\n    transform: translateY(-15px);\n  }\n}\n\n.bounce {\n  -webkit-animation-name: bounce;\n  animation-name: bounce;\n}\n\n@-webkit-keyframes flash {\n  0%, 50%, 100% {\n    opacity: 1;\n  }\n\n  25%, 75% {\n    opacity: 0;\n  }\n}\n\n@keyframes flash {\n  0%, 50%, 100% {\n    opacity: 1;\n  }\n\n  25%, 75% {\n    opacity: 0;\n  }\n}\n\n.flash {\n  -webkit-animation-name: flash;\n  animation-name: flash;\n}\n\n/* originally authored by Nick Pettit - https://github.com/nickpettit/glide */\n\n@-webkit-keyframes pulse {\n  0% {\n    -webkit-transform: scale(1);\n    transform: scale(1);\n  }\n\n  50% {\n    -webkit-transform: scale(1.1);\n    transform: scale(1.1);\n  }\n\n  100% {\n    -webkit-transform: scale(1);\n    transform: scale(1);\n  }\n}\n\n@keyframes pulse {\n  0% {\n    -webkit-transform: scale(1);\n    -ms-transform: scale(1);\n    transform: scale(1);\n  }\n\n  50% {\n    -webkit-transform: scale(1.1);\n    -ms-transform: scale(1.1);\n    transform: scale(1.1);\n  }\n\n  100% {\n    -webkit-transform: scale(1);\n    -ms-transform: scale(1);\n    transform: scale(1);\n  }\n}\n\n.pulse {\n  -webkit-animation-name: pulse;\n  animation-name: pulse;\n}\n\n@-webkit-keyframes shake {\n  0%, 100% {\n    -webkit-transform: translateX(0);\n    transform: translateX(0);\n  }\n\n  10%, 30%, 50%, 70%, 90% {\n    -webkit-transform: translateX(-10px);\n    transform: translateX(-10px);\n  }\n\n  20%, 40%, 60%, 80% {\n    -webkit-transform: translateX(10px);\n    transform: translateX(10px);\n  }\n}\n\n@keyframes shake {\n  0%, 100% {\n    -webkit-transform: translateX(0);\n    -ms-transform: translateX(0);\n    transform: translateX(0);\n  }\n\n  10%, 30%, 50%, 70%, 90% {\n    -webkit-transform: translateX(-10px);\n    -ms-transform: translateX(-10px);\n    transform: translateX(-10px);\n  }\n\n  20%, 40%, 60%, 80% {\n    -webkit-transform: translateX(10px);\n    -ms-transform: translateX(10px);\n    transform: translateX(10px);\n  }\n}\n\n.shake {\n  -webkit-animation-name: shake;\n  animation-name: shake;\n}\n\n@-webkit-keyframes swing {\n  20% {\n    -webkit-transform: rotate(15deg);\n    transform: rotate(15deg);\n  }\n\n  40% {\n    -webkit-transform: rotate(-10deg);\n    transform: rotate(-10deg);\n  }\n\n  60% {\n    -webkit-transform: rotate(5deg);\n    transform: rotate(5deg);\n  }\n\n  80% {\n    -webkit-transform: rotate(-5deg);\n    transform: rotate(-5deg);\n  }\n\n  100% {\n    -webkit-transform: rotate(0deg);\n    transform: rotate(0deg);\n  }\n}\n\n@keyframes swing {\n  20% {\n    -webkit-transform: rotate(15deg);\n    -ms-transform: rotate(15deg);\n    transform: rotate(15deg);\n  }\n\n  40% {\n    -webkit-transform: rotate(-10deg);\n    -ms-transform: rotate(-10deg);\n    transform: rotate(-10deg);\n  }\n\n  60% {\n    -webkit-transform: rotate(5deg);\n    -ms-transform: rotate(5deg);\n    transform: rotate(5deg);\n  }\n\n  80% {\n    -webkit-transform: rotate(-5deg);\n    -ms-transform: rotate(-5deg);\n    transform: rotate(-5deg);\n  }\n\n  100% {\n    -webkit-transform: rotate(0deg);\n    -ms-transform: rotate(0deg);\n    transform: rotate(0deg);\n  }\n}\n\n.swing {\n  -webkit-transform-origin: top center;\n  -ms-transform-origin: top center;\n  transform-origin: top center;\n  -webkit-animation-name: swing;\n  animation-name: swing;\n}\n\n@-webkit-keyframes tada {\n  0% {\n    -webkit-transform: scale(1);\n    transform: scale(1);\n  }\n\n  10%, 20% {\n    -webkit-transform: scale(0.9) rotate(-3deg);\n    transform: scale(0.9) rotate(-3deg);\n  }\n\n  30%, 50%, 70%, 90% {\n    -webkit-transform: scale(1.1) rotate(3deg);\n    transform: scale(1.1) rotate(3deg);\n  }\n\n  40%, 60%, 80% {\n    -webkit-transform: scale(1.1) rotate(-3deg);\n    transform: scale(1.1) rotate(-3deg);\n  }\n\n  100% {\n    -webkit-transform: scale(1) rotate(0);\n    transform: scale(1) rotate(0);\n  }\n}\n\n@keyframes tada {\n  0% {\n    -webkit-transform: scale(1);\n    -ms-transform: scale(1);\n    transform: scale(1);\n  }\n\n  10%, 20% {\n    -webkit-transform: scale(0.9) rotate(-3deg);\n    -ms-transform: scale(0.9) rotate(-3deg);\n    transform: scale(0.9) rotate(-3deg);\n  }\n\n  30%, 50%, 70%, 90% {\n    -webkit-transform: scale(1.1) rotate(3deg);\n    -ms-transform: scale(1.1) rotate(3deg);\n    transform: scale(1.1) rotate(3deg);\n  }\n\n  40%, 60%, 80% {\n    -webkit-transform: scale(1.1) rotate(-3deg);\n    -ms-transform: scale(1.1) rotate(-3deg);\n    transform: scale(1.1) rotate(-3deg);\n  }\n\n  100% {\n    -webkit-transform: scale(1) rotate(0);\n    -ms-transform: scale(1) rotate(0);\n    transform: scale(1) rotate(0);\n  }\n}\n\n.tada {\n  -webkit-animation-name: tada;\n  animation-name: tada;\n}\n\n/* originally authored by Nick Pettit - https://github.com/nickpettit/glide */\n\n@-webkit-keyframes wobble {\n  0% {\n    -webkit-transform: translateX(0%);\n    transform: translateX(0%);\n  }\n\n  15% {\n    -webkit-transform: translateX(-25%) rotate(-5deg);\n    transform: translateX(-25%) rotate(-5deg);\n  }\n\n  30% {\n    -webkit-transform: translateX(20%) rotate(3deg);\n    transform: translateX(20%) rotate(3deg);\n  }\n\n  45% {\n    -webkit-transform: translateX(-15%) rotate(-3deg);\n    transform: translateX(-15%) rotate(-3deg);\n  }\n\n  60% {\n    -webkit-transform: translateX(10%) rotate(2deg);\n    transform: translateX(10%) rotate(2deg);\n  }\n\n  75% {\n    -webkit-transform: translateX(-5%) rotate(-1deg);\n    transform: translateX(-5%) rotate(-1deg);\n  }\n\n  100% {\n    -webkit-transform: translateX(0%);\n    transform: translateX(0%);\n  }\n}\n\n@keyframes wobble {\n  0% {\n    -webkit-transform: translateX(0%);\n    -ms-transform: translateX(0%);\n    transform: translateX(0%);\n  }\n\n  15% {\n    -webkit-transform: translateX(-25%) rotate(-5deg);\n    -ms-transform: translateX(-25%) rotate(-5deg);\n    transform: translateX(-25%) rotate(-5deg);\n  }\n\n  30% {\n    -webkit-transform: translateX(20%) rotate(3deg);\n    -ms-transform: translateX(20%) rotate(3deg);\n    transform: translateX(20%) rotate(3deg);\n  }\n\n  45% {\n    -webkit-transform: translateX(-15%) rotate(-3deg);\n    -ms-transform: translateX(-15%) rotate(-3deg);\n    transform: translateX(-15%) rotate(-3deg);\n  }\n\n  60% {\n    -webkit-transform: translateX(10%) rotate(2deg);\n    -ms-transform: translateX(10%) rotate(2deg);\n    transform: translateX(10%) rotate(2deg);\n  }\n\n  75% {\n    -webkit-transform: translateX(-5%) rotate(-1deg);\n    -ms-transform: translateX(-5%) rotate(-1deg);\n    transform: translateX(-5%) rotate(-1deg);\n  }\n\n  100% {\n    -webkit-transform: translateX(0%);\n    -ms-transform: translateX(0%);\n    transform: translateX(0%);\n  }\n}\n\n.wobble {\n  -webkit-animation-name: wobble;\n  animation-name: wobble;\n}\n\n@-webkit-keyframes bounceIn {\n  0% {\n    opacity: 0;\n    -webkit-transform: scale(.3);\n    transform: scale(.3);\n  }\n\n  50% {\n    opacity: 1;\n    -webkit-transform: scale(1.05);\n    transform: scale(1.05);\n  }\n\n  70% {\n    -webkit-transform: scale(.9);\n    transform: scale(.9);\n  }\n\n  100% {\n    -webkit-transform: scale(1);\n    transform: scale(1);\n  }\n}\n\n@keyframes bounceIn {\n  0% {\n    opacity: 0;\n    -webkit-transform: scale(.3);\n    -ms-transform: scale(.3);\n    transform: scale(.3);\n  }\n\n  50% {\n    opacity: 1;\n    -webkit-transform: scale(1.05);\n    -ms-transform: scale(1.05);\n    transform: scale(1.05);\n  }\n\n  70% {\n    -webkit-transform: scale(.9);\n    -ms-transform: scale(.9);\n    transform: scale(.9);\n  }\n\n  100% {\n    -webkit-transform: scale(1);\n    -ms-transform: scale(1);\n    transform: scale(1);\n  }\n}\n\n.bounceIn {\n  -webkit-animation-name: bounceIn;\n  animation-name: bounceIn;\n}\n\n@-webkit-keyframes bounceInDown {\n  0% {\n    opacity: 0;\n    -webkit-transform: translateY(-2000px);\n    transform: translateY(-2000px);\n  }\n\n  60% {\n    opacity: 1;\n    -webkit-transform: translateY(30px);\n    transform: translateY(30px);\n  }\n\n  80% {\n    -webkit-transform: translateY(-10px);\n    transform: translateY(-10px);\n  }\n\n  100% {\n    -webkit-transform: translateY(0);\n    transform: translateY(0);\n  }\n}\n\n@keyframes bounceInDown {\n  0% {\n    opacity: 0;\n    -webkit-transform: translateY(-2000px);\n    -ms-transform: translateY(-2000px);\n    transform: translateY(-2000px);\n  }\n\n  60% {\n   "
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/main/css/popup-search.css",
+    "status": 200,
+    "content_type": "text/css",
+    "sample": "\n\n/* Start Search Popup */\n.search-popup{position:fixed;font-family:'Roboto', sans-serif;left:0px;top:-100%;width:100%;height:100%;background:#041a33cc;z-index:9999;visibility:hidden;opacity:0;overflow:auto;transition:all 700ms ease;-moz-transition:all 700ms ease;-webkit-transition:all 700ms ease;-ms-transition:all 700ms ease;-o-transition:all 700ms ease;}\n.search-popup.popup-visible{top:0;visibility:visible;opacity:1;}\n.search-popup .close-search{position:absolute;right:15px;top:10px;font-size:24px !important;color:#ffffff;cursor:pointer;z-index:5;}\n.search-popup .close-search .fa{font-size:24px !important;}\n.search-popup .close-search:hover{opacity:0.70;}\n.search-popup .search-form{position:relative;padding:0px 15px 50px;padding-top:130px;max-width:1024px;margin:0 auto;}\n.search-popup .search-form fieldset{position:relative;border: none;-webkit-border-radius:12px;-ms-border-radius:12px;-o-border-radius:12px;-moz-border-radius:12px;border-radius:12px;}\n.search-popup .search-form fieldset input[type=\"search\"], .search-popup .search-form fieldset input[type=\"text\"]{position:relative;height:70px;padding:20px 220px 20px 30px;background:#ffffff;line-height:30px;font-size:24px;color:#233145;-webkit-border-radius:7px;-ms-border-radius:7px;-o-border-radius:7px;-moz-border-radius:7px;border-radius:7px;}\n.search-popup .search-form fieldset input[type=\"submit\"]{margin-bottom: 0px;\nmargin-top: 30px;position:absolute;display:block;right:0px;top:0px;text-align:center;width:220px;height:70px;padding:20px 10px 20px 10px;color:#ffffff !important;background:#dda930;line-height:30px;font-size:20px;text-transform:uppercase;-moz-border-radius:0px 7px 7px 0px;-ms-border-radius:0px 7px 7px 0px;-o-border-radius:0px 7px 7px 0px;-webkit-border-radius:0px 7px 7px 0px;border-radius:0px 7px 7px 0px;border-color: transparent;}\n.search-popup .search-form fieldset input[type=\"submit\"]:hover{background:#dd9330;}\n.search-popup h3{font-family:'Roboto', sans-serif;font-size:24px;color:#ffffff;margin-bottom:20px;text-align:center;}\n.search-popup .recent-searches{font-size:16px;color:#ffffff;text-align:center;}\n.search-popup .recent-searches li{display:inline-block;margin:0px 10px 10px 0px;}\n.search-popup .recent-searches li a{display:block;line-height:24px;border:1px solid #ffffff;padding:7px 15px;color:#ffffff;border-radius:3px;}\n.search-popup .recent-searches li a:hover{color:#dda930;border-color:#dda930;}\n.form-group fieldset input[type=\"radio\"]{\n    padding: 5px;\n    margin: 15px;\n    font-size: 1.1em;\n    color: #fff !important;\n}\n/* EndSearch Popup */\n.form-group label {\n  color: #fff !important;\n}"
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en/gallery/css/font-icons.css",
+    "status": 200,
+    "content_type": "text/css",
+    "sample": "/* ===================================================\n>>> TABLE OF CONTENTS:\n======================================================\n  1. Font Awesome \n  2. Flat Icon\n  3. Iconmoon Icon\n\n \n=================================================== */\n\n/*---------------------------------------------------------------\n  1. Font Awesome 6 Icon\n---------------------------------------------------------------*/\n/*!\n * Font Awesome Free 6.0.0 by @fontawesome - https://fontawesome.com\n * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)\n * Copyright 2022 Fonticons, Inc.\n */\n .fa{font-family:var(--fa-style-family,\"Font Awesome 6 Free\");font-weight:var(--fa-style,900)}.fa,.fa-brands,.fa-duotone,.fa-light,.fa-regular,.fa-solid,.fa-thin,.fab,.fad,.fal,.far,.fas,.fat{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;display:var(--fa-display,inline-block);font-style:normal;font-variant:normal;line-height:1;text-rendering:auto}.fa-1x{font-size:1em}.fa-2x{font-size:2em}.fa-3x{font-size:3em}.fa-4x{font-size:4em}.fa-5x{font-size:5em}.fa-6x{font-size:6em}.fa-7x{font-size:7em}.fa-8x{font-size:8em}.fa-9x{font-size:9em}.fa-10x{font-size:10em}.fa-2xs{font-size:.625em;line-height:.1em;vertical-align:.225em}.fa-xs{font-size:.75em;line-height:.08333em;vertical-align:.125em}.fa-sm{font-size:.875em;line-height:.07143em;vertical-align:.05357em}.fa-lg{font-size:1.25em;line-height:.05em;vertical-align:-.075em}.fa-xl{font-size:1.5em;line-height:.04167em;vertical-align:-.125em}.fa-2xl{font-size:2em;line-height:.03125em;vertical-align:-.1875em}.fa-fw{text-align:center;width:1.25em}.fa-ul{list-style-type:none;margin-left:var(--fa-li-margin,2.5em);padding-left:0}.fa-ul>li{position:relative}.fa-li{left:calc(var(--fa-li-width, 2em)*-1);position:absolute;text-align:center;width:var(--fa-li-width,2em);line-height:inherit}.fa-border{border-radius:var(--fa-border-radius,.1em);border:var(--fa-border-width,.08em) var(--fa-border-style,solid) var(--fa-border-color,#eee);padding:var(--fa-border-padding,.2em .25em .15em)}.fa-pull-left{float:left;margin-right:var(--fa-pull-margin,.3em)}.fa-pull-right{float:right;margin-left:var(--fa-pull-margin,.3em)}.fa-beat{-webkit-animation-name:fa-beat;animation-name:fa-beat;-webkit-animation-delay:var(--fa-animation-delay,0);animation-delay:var(--fa-animation-delay,0);-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal);-webkit-animation-duration:var(--fa-animation-duration,1s);animation-duration:var(--fa-animation-duration,1s);-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,ease-in-out);animation-timing-function:var(--fa-animation-timing,ease-in-out)}.fa-bounce{-webkit-animation-name:fa-bounce;animation-name:fa-bounce;-webkit-animation-delay:var(--fa-animation-delay,0);animation-delay:var(--fa-animation-delay,0);-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal);-webkit-animation-duration:var(--fa-animation-duration,1s);animation-duration:var(--fa-animation-duration,1s);-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,cubic-bezier(.28,.84,.42,1));animation-timing-function:var(--fa-animation-timing,cubic-bezier(.28,.84,.42,1))}.fa-fade{-webkit-animation-name:fa-fade;animation-name:fa-fade;-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,cubic-bezier(.4,0,.6,1));animation-timing-function:var(--fa-animation-timing,cubic-bezier(.4,0,.6,1))}.fa-beat-fade,.fa-fade{-webkit-animation-delay:var(--fa-animation-delay,0);animation-delay:var(--fa-animation-delay,0);-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal);-webkit-animation-duration:var(--fa-animation-duration,1s);animation-duration:var(--fa-animation-duration,1s)}.fa-beat-fade{-webkit-animation-name:fa-beat-fade;animation-name:fa-beat-fade;-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,cubic-bezier(.4,0,.6,1));animation-timing-function:var(--fa-animation-timing,cubic-bezier(.4,0,.6,1))}.fa-flip{-webkit-animation-name:fa-flip;animation-name:fa-flip;-webkit-animation-delay:var(--fa-animation-delay,0);animation-delay:var(--fa-animation-delay,0);-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal);-webkit-animation-duration:var(--fa-animation-duration,1s);animation-duration:var(--fa-animation-duration,1s);-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,ease-in-out);animation-timing-function:var(--fa-animation-timing,ease-in-out)}.fa-shake{-webkit-animation-name:fa-shake;animation-name:fa-shake;-webkit-animation-duration:var(--fa-animation-duration,1s);animation-duration:var(--fa-animation-duration,1s);-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,linear);animation-timing-function:var(--fa-animation-timing,linear)}.fa-shake,.fa-spin{-webkit-animation-delay:var(--fa-animation-delay,0);animation-delay:var(--fa-animation-delay,0);-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal)}.fa-spin{-webkit-animation-name:fa-spin;animation-name:fa-spin;-webkit-animation-duration:var(--fa-animation-duration,5s);animation-duration:var(--fa-animation-duration,2s);-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,linear);animation-timing-function:var(--fa-animation-timing,linear)}.fa-spin-reverse{--fa-animation-direction:reverse}.fa-pulse,.fa-spin-pulse{-webkit-animation-name:fa-spin;animation-name:fa-spin;-webkit-animation-direction:var(--fa-animation-direction,normal);animation-direction:var(--fa-animation-direction,normal);-webkit-animation-duration:var(--fa-animation-duration,1s);animation-duration:var(--fa-animation-duration,1s);-webkit-animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-iteration-count:var(--fa-animation-iteration-count,infinite);-webkit-animation-timing-function:var(--fa-animation-timing,steps(8));animation-timing-function:var(--fa-animation-timing,steps(8))}@media (prefers-reduced-motion:reduce){.fa-beat,.fa-beat-fade,.fa-bounce,.fa-fade,.fa-flip,.fa-pulse,.fa-shake,.fa-spin,.fa-spin-pulse{-webkit-animation-delay:-1ms;animation-delay:-1ms;-webkit-animation-duration:1ms;animation-duration:1ms;-webkit-animation-iteration-count:1;animation-iteration-count:1;transition-delay:0s;transition-duration:0s}}@-webkit-keyframes fa-beat{0%,90%{-webkit-transform:scale(1);transform:scale(1)}45%{-webkit-transform:scale(var(--fa-beat-scale,1.25));transform:scale(var(--fa-beat-scale,1.25))}}@keyframes fa-beat{0%,90%{-webkit-transform:scale(1);transform:scale(1)}45%{-webkit-transform:scale(var(--fa-beat-scale,1.25));transform:scale(var(--fa-beat-scale,1.25))}}@-webkit-keyframes fa-bounce{0%{-webkit-transform:scale(1) translateY(0);transform:scale(1) translateY(0)}10%{-webkit-transform:scale(var(--fa-bounce-start-scale-x,1.1),var(--fa-bounce-start-scale-y,.9)) translateY(0);transform:scale(var(--fa-bounce-start-scale-x,1.1),var(--fa-bounce-start-scale-y,.9)) translateY(0)}30%{-webkit-transform:scale(var(--fa-bounce-jump-scale-x,.9),var(--fa-bounce-jump-scale-y,1.1)) translateY(var(--fa-bounce-height,-.5em));transform:scale(var(--fa-bounce-jump-scale-x,.9),var(--fa-bounce-jump-scale-y,1.1)) translateY(var(--fa-bounce-height,-.5em))}50%{-webkit-transform:scale(var(--fa-bounce-land-scale-x,1.05),var(--fa-bounce-land-scale-y,.95)) translateY(0);transform:scale(var(--fa-bounce-land-scale-x,1.05),var(--fa-bounce-land-scale-y,.95)) translateY(0)}57%{-webkit-transform:scale(1) translateY(var(--fa-bounce-rebound,-.125em));transform:scale(1) translateY(var(--fa-bounce-rebound,-.125em))}64%{-webkit-transform:scale(1) translateY(0);transform:scale(1) translateY(0)}to{-webkit-transform:scale(1) translateY(0);transform:scale(1) translateY(0)}}@keyframes fa-bounce{0%{-webkit-transform:scale(1) translateY(0);transform:scale(1) translateY(0)}10%{-webkit-transform:scale(var(--fa-bounce-start-scale-x,1.1),var(--fa-bounce-start-scale-y,.9)) translateY(0);transform:scale(var(--fa-bounce-start-scale-x,1.1),var(--fa-bounce-start-scale-y,.9)) translateY(0)}30%{-webkit-transform:scale(var(--fa-bounce-jump-scale-x,.9),var(--fa-bounce-jump-scale-y,1.1)) translateY(var(--fa-bounce-height,-.5em));transform:scale(var(--fa-bounce-jump-scale-x,.9),var(--fa-bounce-jump-scale-y,1.1)) translateY(var(--fa-bounce-height,-.5em))}50%{-webkit-transform:scale(var(--fa-bounce-land-scale-x,1.05),var(--fa-bounce-land-scale-y,.95)) translateY(0);transform:scale(var(--fa-bounce-land-scale-x,1.05),var(--fa-bounce-land-scale-y,.95)) translateY(0)}57%{-webkit-transform:scale(1) translateY(var(--fa-bounce-rebound,-.125em));transform:scale(1) translateY(var(--fa-bounce-rebound,-.125em))}64%{-webkit-transform:scale(1) translateY(0);transform:scale(1) translateY(0)}to{-webkit-transform:scal"
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en/gallery/css/owl.css",
+    "status": 200,
+    "content_type": "text/css",
+    "sample": "\n/* ========================================\n   Owl Carousel CSS File\n   ========================================*/\n.owl-carousel .animated {\n  -webkit-animation-duration: 1000ms;\n  animation-duration: 1000ms;\n  -webkit-animation-fill-mode: both;\n  animation-fill-mode: both;\n}\n.owl-carousel .owl-animated-in {\n  z-index: 0;\n}\n.owl-carousel .owl-animated-out {\n  z-index: 1;\n}\n.owl-carousel .fadeOut {\n  -webkit-animation-name: fadeOut;\n  animation-name: fadeOut;\n}\n\n@-webkit-keyframes fadeOut {\n  0% {\n    opacity: 1;\n  }\n\n  100% {\n    opacity: 0;\n  }\n}\n@keyframes fadeOut {\n  0% {\n    opacity: 1;\n  }\n\n  100% {\n    opacity: 0;\n  }\n}\n\n/* \n *  Owl Carousel - Auto Height Plugin\n */\n.owl-height {\n  -webkit-transition: height 500ms ease-in-out;\n  -moz-transition: height 500ms ease-in-out;\n  -ms-transition: height 500ms ease-in-out;\n  -o-transition: height 500ms ease-in-out;\n  transition: height 500ms ease-in-out;\n}\n\n/* \n *  Core Owl Carousel CSS File\n */\n.owl-carousel {\n  display: inline-flex;\n  width: 100%;\n  -webkit-tap-highlight-color: transparent;\n  /* position relative and z-index fix webkit rendering fonts issue */\n  position: relative;\n  z-index: 1;\n}\n.owl-carousel .owl-stage {\n  position: relative;\n  -ms-touch-action: pan-Y;\n}\n.owl-carousel .owl-stage:after {\n  content: \".\";\n  display: block;\n  clear: both;\n  visibility: hidden;\n  line-height: 0;\n  height: 0;\n}\n.owl-carousel .owl-stage-outer {\n  position: relative;\n  overflow: hidden;\n  /* fix for flashing background */\n  -webkit-transform: translate3d(0px, 0px, 0px);\n}\n.owl-carousel .owl-controls .owl-nav .owl-prev,\n.owl-carousel .owl-controls .owl-nav .owl-next,\n.owl-carousel .owl-controls .owl-dot {\n  cursor: pointer;\n  cursor: hand;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.owl-carousel.owl-loaded {\n  display: block;\n}\n.owl-carousel.owl-loading {\n  opacity: 0;\n  display: block;\n}\n.owl-carousel.owl-hidden {\n  opacity: 0;\n}\n.owl-carousel .owl-refresh .owl-item {\n  display: none;\n}\n.owl-carousel .owl-item {\n  padding: 0 15px;\n  position: relative;\n  min-height: 1px;\n  float: left;\n  -webkit-backface-visibility: hidden;\n  -webkit-tap-highlight-color: transparent;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.owl-carousel .owl-item img {\n  display: inline-block;\n  /*width: 100%;*/\n  -webkit-transform-style: preserve-3d;\n}\n.owl-carousel.owl-text-select-on .owl-item {\n  -webkit-user-select: auto;\n  -moz-user-select: auto;\n  -ms-user-select: auto;\n  user-select: auto;\n}\n.owl-carousel .owl-grab {\n  cursor: move;\n  cursor: -webkit-grab;\n  cursor: -o-grab;\n  cursor: -ms-grab;\n  cursor: grab;\n}\n.owl-carousel.owl-rtl {\n  direction: rtl;\n}\n.owl-carousel.owl-rtl .owl-item {\n  float: right;\n}\n\n/* \n *  Owl Carousel - Lazy Load Plugin\n */\n.owl-carousel .owl-item .owl-lazy {\n  opacity: 0;\n  -webkit-transition: opacity 400ms ease;\n  -moz-transition: opacity 400ms ease;\n  -ms-transition: opacity 400ms ease;\n  -o-transition: opacity 400ms ease;\n  transition: opacity 400ms ease;\n}\n.owl-carousel .owl-item img {\n  transform-style: preserve-3d;\n}\n\n\n/* owl dot */\n.owl-theme .owl-dots {\n  display: none;\n  text-align: left;\n  padding-left: 4px;\n}\n.owl-theme .owl-dots .owl-dot {\n    display: inline-block;\n    zoom: 1;\n    *display: inline;\n}\n.owl-theme .owl-dots .owl-dot span {\n    width: 14px;\n    height: 14px;\n    background-color: transparent;\n    border: 2px solid #fff;\n    border-radius: 6px;\n    margin: 4px 1px 10px 6px;\n    display: block;\n    -webkit-backface-visibility: visible;\n    -webkit-transition: opacity 200ms ease;\n    -moz-transition: opacity 200ms ease;\n    -ms-transition: opacity 200ms ease;\n    -o-transition: opacity 200ms ease;\n}\n\n\n/* owl Next and Prev buttons */\n.owl-theme .owl-controls .owl-nav div {\n    background: #ff5e14;\n    text-align: center;\n    display: block;\n    outline: 0;\n    width: 34px;\n    text-align: center;\n    line-height: 34px;\n    height: 34px;    \n    color: #fff;\n    top: 50%;\n    font-size: 0;\n    margin-top: -20px; \n    -webkit-transition: all 0.3s ease-in-out;\n       -moz-transition: all 0.3s ease-in-out;\n        -ms-transition: all 0.3s ease-in-out;\n         -o-transition: all 0.3s ease-in-out;\n            transition: all 0.3s ease-in-out;     \n}\n.owl-theme .owl-controls .owl-nav div:hover {\n  background: #333;\n}\n.owl-theme .owl-controls .owl-nav div.owl-prev {\n    position: absolute;\n    top: 165px;\n    right: 59px;\n    display: block;  \n}\n.owl-theme .owl-controls .owl-nav div.owl-prev:before,\n.owl-theme .owl-controls .owl-nav div.owl-next:before {\n    font-family: FontAwesome;    \n    font-size: 20px;\n    font-weight: 600;\n    color: #fff; \n    display: block;\n    -webkit-transition: all 0.3s ease-in-out;\n       -moz-transition: all 0.3s ease-in-out;\n        -ms-transition: all 0.3s ease-in-out;\n         -o-transition: all 0.3s ease-in-out;\n            transition: all 0.3s ease-in-out;\n}  \n\n.owl-theme .owl-controls .owl-nav div.owl-prev:before {\n   content: \"\\f104\"; \n}\n.owl-theme .owl-controls .owl-nav div.owl-prev:hover:before,\n.owl-theme .owl-controls .owl-nav div.owl-next:hover:before {    \n    color: #fff;\n}\n.owl-theme .owl-controls .owl-nav div.owl-next {\n  position: absolute;\n  top: 165px;\n  right: 20px;\n  display: block;\n}\n.owl-theme .owl-controls .owl-nav div.owl-next:before {    \n    content: \"\\f105\";    \n}  \n\n.ttm-boxes-spacing-5px.owl-carousel .owl-item {\n    padding-right: 2.5px;\n    padding-left: 2.5px;\n    margin-bottom: 5px;\n}\n\n\n\n\n@media (max-width: 1299px){\n  \n}\n@media (max-width: 1199px){\n\n}\n@media (max-width: 991px){\n  \n}\n@media (max-width: 768px){\n  .owl-theme .owl-controls .owl-nav div.owl-prev {\n      display: none !important;\n  }\n  .owl-theme .owl-controls .owl-nav div.owl-next {\n      display: none !important;\n  }\n}\n.ttm-boxes-spacing-10px.owl-carousel .owl-item {\n    padding-right: 0px;\n    padding-left: 0px;\n    margin-top: 10px;\n}\n\n/* testimonial-slide */\n.testimonial-slide.owl-theme .owl-controls .owl-dots {\n    margin: 0 auto;\n    text-align: center;\n    padding-top: 20px;\n    line-height: 1;\n}\n.testimonial-slide.owl-theme .owl-dots .owl-dot span {\n        width: 12px;\n    height: 10px;\n    background-color: rgba(255, 255, 255,.1);\n    transition: all 0.5s ease 0s;\n    border: none;\n}\n.testimonial-slide.owl-theme .owl-dots .owl-dot.active span{\n    width: 27px;\n    border-radius: 5px;\n    background-color: #09162a;\n}\n.ttm-bgcolor-skincolor .testimonial-slide.owl-theme .owl-dots .owl-dot.active span,\n.ttm-bgcolor-darkgrey .testimonial-slide.owl-theme .owl-dots .owl-dot.active span{\n    background-color: #fff;\n}\n.testimonial-slide.owl-theme.ttm-bgcolor-white .owl-dots .owl-dot.active span{background-color: #e9e9e9!important;}\n/* project-slide */\n.project-slide.owl-carousel .owl-item{padding: 0;}\n.project-slide.owl-theme .owl-dots .owl-dot span{\n    border: 2px solid #fff;\n    width: 11px;\n    height: 11px;\n    margin: 0 5px;\n}\n.project-slide.owl-theme .owl-dots{\n    position: absolute;\n    bottom: 10px;\n    left: 0;\n    right: 0;\n    padding: 0;\n    margin: 0 auto;\n    text-align: center;\n}\n.project-slide.owl-theme .owl-dots .owl-dot.active span,\n.project-slide.owl-theme .owl-dots .owl-dot:hover span{background-color: #fff!important;}\n\n/************/\n.ttm-row {\n  padding: 70px 0 60px;\n}\n.ttm-row.bottomzero-padding-section.ttm-bgcolor-skincolor.ttm-bg.ttm-bgimage-yes.bg-img5.clearfix {\n  margin-top: -61px;\n}\n.section-title.style2 {\n  margin-bottom: 40px;\n}\n.section-title {\n  position: relative;\n}\n.section-title.style2 .title-header, .section-title.style2 .title-desc, .section-title.style2 .title-desc2 {\n  display: table-cell;\n  vertical-align: middle;\n}\n.section-title.style2 .title-header {\n  width: 40%;\n  padding-right: 50px;\n  margin-bottom: 0;\n}\n.section-title.style2 .title-desc, .section-title.style2 .title-desc2 {\n  display: table-cell;\n  vertical-align: middle;\n\n}\n\n.section-title .title-desc {\n  font-weight: 400;\n  font-size: 18px;\n  line-height: 25px;\n  margin-bottom: 15px;\n  color: #6e6e6e;\n\tpadding-left: 1em;\n}\n.section-title .title-desc2 {\n  font-weight: 400;\n  font-size: 17px;\n  line-height: 25px;\n  margin-bottom: 15px;\n  color:#b8b8b8;\n\tpadding-left: 1em;\n}\n\n.ttm-btn.ttm-btn-style-border.ttm-btn-color-darkgrey {\n  color: #1e2637 !important;\n  border-color: #1e2637;\n}\n.section-title.style2 .title-header::after {\n  content: \"\";\n  left: 13em;\n  height: 90%;\n  position: absolute;\n  top: 10%;\n  width: 1px;\n  border-right-width: 1px;\n  background-color: #f0f0f0;\n}\n.clearfix::after {\n  display: block;\n  clear: both;\n  content: \"\";\n}\n/* ===============================================\n    13.featured-imagebox ( contents with image)\n------------------------*/\n.featured-imagebox .featured-thumbnail{position: relative;overflow: hidden;}\n\n\n/*  Team  */\n.featured-imagebox-team{position: relative;overflow: hidden; margin: 0.5em;}\n.featured-imagebox-team:hover .featured-thumbnail img{\n    -webkit-transform: scale(1.05);\n    -ms-transform: scale(1.05);\n    -moz-transform: scale(1.05);\n    transform: scale(1.05);\n}\n.featured-imagebox-team.style1 .featured-content{\n    text-align: center;\n    position: relative;\n    z-index: 2;\n   margin: -25px 30px 5px;\n   padding: 18px 3px 22px;\n    background-color: #fff;\n    border-bottom: 5px solid transparent;\n    -webkit-transition: .5s cubic-bezier(.3,.57,.55,1);\n    transition: .5s cubic-bezier(.3,.57,.55,1);\n}\n.featured-imagebox-team .social-icons{\n    position: absolute;\n    top: 0;\n    left: -40px;\n    right: auto;\n    padding: 10px;\n    margin-top: 0;\n    opacity: 0;\n    z-index: 9;\n    background-color: #000;\n    -webkit-transition: .5s all ease;\n    -ms-transition: .5s all ease;\n    -moz-transition: .5s all ease;\n    -o-transition: .5s all ease;\n    transition: .5s all ease;\n}\n.featured-imagebox-team ul.social-icons li{\n\tdisplay: block;line-height: 1.2em;\nfont-size: 1em;\nfont-weight: 500;\n\tmargin"
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en/gallery/css/plugins.css",
+    "status": 200,
+    "content_type": "text/css",
+    "sample": "/* ===================================================\n>>> TABLE OF CONTENTS:\n======================================================\n1. Bootstrap v4.1.3\n2. Slick slider \n3. Animate css\n4. Lightcase\n5. Nice Select JS\n6. jQuery UI\n\n\n=================================================== */\n\n/*---------------------------------------------------------------\n  1. Bootstrap v5.0.2\n---------------------------------------------------------------*/\n\n@charset \"UTF-8\";/*!\n * Bootstrap v5.0.2 (https://getbootstrap.com/)\n * Copyright 2011-2021 The Bootstrap Authors\n * Copyright 2011-2021 Twitter, Inc.\n * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)\n */\n:root {\n--bs-blue:#0d6efd;\n--bs-indigo:#6610f2;\n--bs-purple:#6f42c1;\n--bs-pink:#d63384;\n--bs-red:#dc3545;\n--bs-orange:#fd7e14;\n--bs-yellow:#ffc107;\n--bs-green:#198754;\n--bs-teal:#20c997;\n--bs-cyan:#0dcaf0;\n--bs-white:#fff;\n--bs-gray:#6c757d;\n--bs-gray-dark:#343a40;\n--bs-primary:#0d6efd;\n--bs-secondary:#6c757d;\n--bs-success:#198754;\n--bs-info:#0dcaf0;\n--bs-warning:#ffc107;\n--bs-danger:#dc3545;\n--bs-light:#f8f9fa;\n--bs-dark:#212529;\n--bs-font-sans-serif:system-ui, -apple-system, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Liberation Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\";\n--bs-font-monospace:SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace;\n--bs-gradient:linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0))\n}\n*, ::after, ::before {\n\tbox-sizing: border-box\n}\n\n@media (prefers-reduced-motion:no-preference) {\n:root {\n\tscroll-behavior: smooth\n}\n}\nbody {\n\tmargin: 0;\n\tfont-family: var(--bs-font-sans-serif);\n\tfont-size: 1em; /*iman*/\n\tfont-weight: 400;\n\tline-height: 1.5;\n\tcolor: #212529;\n\tbackground-color: #fff;\n\t-webkit-text-size-adjust: 100%;\n\t-webkit-tap-highlight-color: transparent\n}\nhr {\n\tmargin: 1rem 0;\n\tcolor: inherit;\n\tbackground-color: currentColor;\n\tborder: 0;\n\topacity: .25\n}\nhr:not([size]) {\n\theight: 1px\n}\n.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {\n\tmargin-top: 0;\n\tmargin-bottom: .5rem;\n\tfont-weight: 500;\n\tline-height: 1.2\n}\n.h1, h1 {\n\tfont-size: calc(1.375rem + 1.5vw)\n}\n\n@media (min-width:1200px) {\n.h1, h1 {\n\tfont-size: 2.5rem\n}\n}\n.h2, h2 {\n\tfont-size: calc(1.325rem + .9vw)\n}\n\n@media (min-width:1200px) {\n.h2, h2 {\n\tfont-size: 2rem\n}\n}\n.h3, h3 {\n\tfont-size: calc(1.3rem + .6vw)\n}\n\n@media (min-width:1200px) {\n.h3, h3 {\n\tfont-size: 1.75rem\n}\n}\n.h4, h4 {\n\tfont-size: calc(1.275rem + .3vw)\n}\n\n@media (min-width:1200px) {\n.h4, h4 {\n\tfont-size: 1.5rem\n}\n}\n.h5, h5 {\n\tfont-size: 1.25rem\n}\n.h6, h6 {\n\tfont-size: 1rem\n}\np {\n\tmargin-top: 0;\n\tmargin-bottom: 1rem\n}\nabbr[data-bs-original-title], abbr[title] {\n\t-webkit-text-decoration: underline dotted;\n\ttext-decoration: underline dotted;\n\tcursor: help;\n\t-webkit-text-decoration-skip-ink: none;\n\ttext-decoration-skip-ink: none\n}\naddress {\n\tmargin-bottom: 1rem;\n\tfont-style: normal;\n\tline-height: inherit\n}\nol, ul {\n\tpadding-left: 2rem\n}\ndl, ol, ul {\n\tmargin-top: 0;\n\tmargin-bottom: 1rem\n}\nol ol, ol ul, ul ol, ul ul {\n\tmargin-bottom: 0\n}\ndt {\n\tfont-weight: 700\n}\ndd {\n\tmargin-bottom: .5rem;\n\tmargin-left: 0\n}\nblockquote {\n\tmargin: 0 0 1rem\n}\nb, strong {\n\tfont-weight: bolder\n}\n.small, small {\n\tfont-size: .875em\n}\n.mark, mark {\n\tpadding: .2em;\n\tbackground-color: #fcf8e3\n}\nsub, sup {\n\tposition: relative;\n\tfont-size: .75em;\n\tline-height: 0;\n\tvertical-align: baseline\n}\nsub {\n\tbottom: -.25em\n}\nsup {\n\ttop: -.5em\n}\na {\n\tcolor: #0d6efd;\n\ttext-decoration: underline\n}\na:hover {\n\tcolor: #0a58ca\n}\na:not([href]):not([class]), a:not([href]):not([class]):hover {\n\tcolor: inherit;\n\ttext-decoration: none\n}\ncode, kbd, pre, samp {\n\tfont-family: var(--bs-font-monospace);\n\tfont-size: 1em;\n\tdirection: ltr;\n\tunicode-bidi: bidi-override\n}\npre {\n\tdisplay: block;\n\tmargin-top: 0;\n\tmargin-bottom: 1rem;\n\toverflow: auto;\n\tfont-size: .875em\n}\npre code {\n\tfont-size: inherit;\n\tcolor: inherit;\n\tword-break: normal\n}\ncode {\n\tfont-size: .875em;\n\tcolor: #d63384;\n\tword-wrap: break-word\n}\na>code {\n\tcolor: inherit\n}\nkbd {\n\tpadding: .2rem .4rem;\n\tfont-size: .875em;\n\tcolor: #fff;\n\tbackground-color: #212529;\n\tborder-radius: .2rem\n}\nkbd kbd {\n\tpadding: 0;\n\tfont-size: 1em;\n\tfont-weight: 700\n}\nfigure {\n\tmargin: 0 0 1rem\n}\nimg, svg {\n\tvertical-align: middle\n}\ntable {\n\tcaption-side: bottom;\n\tborder-collapse: collapse\n}\ncaption {\n\tpadding-top: .5rem;\n\tpadding-bottom: .5rem;\n\tcolor: #6c757d;\n\ttext-align: left\n}\nth {\n\ttext-align: inherit;\n\ttext-align: -webkit-match-parent\n}\ntbody, td, tfoot, th, thead, tr {\n\tborder-color: inherit;\n\tborder-style: solid;\n\tborder-width: 0\n}\nlabel {\n\tdisplay: inline-block\n}\nbutton {\n\tborder-radius: 0\n}\nbutton:focus:not(:focus-visible) {\n\toutline: 0\n}\nbutton, input, optgroup, select, textarea {\n\tmargin: 0;\n\tfont-family: inherit;\n\tfont-size: inherit;\n\tline-height: inherit\n}\nbutton, select {\n\ttext-transform: none\n}\n[role=button] {\n\tcursor: pointer\n}\nselect {\n\tword-wrap: normal;\n\tfont-size: 13pt;\n\tpadding: 0.5em;/*iman*/\n}\nselect:disabled {\n\topacity: 1\n}\n[list]::-webkit-calendar-picker-indicator {\ndisplay:none\n}\n[type=button], [type=reset], [type=submit], button {\n\t-webkit-appearance: button\n}\n[type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled), button:not(:disabled) {\n\tcursor: pointer\n}\n::-moz-focus-inner {\npadding:0;\nborder-style:none\n}\ntextarea {\n\tresize: vertical\n}\nfieldset {\n\tmin-width: 0;\n\tpadding: 0;\n\tmargin: 0;\n\tborder: 0\n}\nlegend {\n\tfloat: left;\n\twidth: 100%;\n\tpadding: 0;\n\tmargin-bottom: .5rem;\n\tfont-size: calc(1.275rem + .3vw);\n\tline-height: inherit\n}\n\n@media (min-width:1200px) {\nlegend {\n\tfont-size: 1.5rem\n}\n}\nlegend+* {\n\tclear: left\n}\n::-webkit-datetime-edit-day-field, ::-webkit-datetime-edit-fields-wrapper, ::-webkit-datetime-edit-hour-field, ::-webkit-datetime-edit-minute, ::-webkit-datetime-edit-month-field, ::-webkit-datetime-edit-text, ::-webkit-datetime-edit-year-field {\npadding:0\n}\n::-webkit-inner-spin-button {\nheight:auto\n}\n[type=search] {\n\toutline-offset: -2px;\n\t-webkit-appearance: textfield\n}\n::-webkit-search-decoration {\n-webkit-appearance:none\n}\n::-webkit-color-swatch-wrapper {\npadding:0\n}\n::file-selector-button {\nfont:inherit\n}\n::-webkit-file-upload-button {\nfont:inherit;\n-webkit-appearance:button\n}\noutput {\n\tdisplay: inline-block\n}\niframe {\n\tborder: 0\n}\nsummary {\n\tdisplay: list-item;\n\tcursor: pointer\n}\nprogress {\n\tvertical-align: baseline\n}\n[hidden] {\n\tdisplay: none!important\n}\n.lead {\n\tfont-size: 1.25rem;\n\tfont-weight: 300\n}\n.display-1 {\n\tfont-size: calc(1.625rem + 4.5vw);\n\tfont-weight: 300;\n\tline-height: 1.2\n}\n\n@media (min-width:1200px) {\n.display-1 {\n\tfont-size: 5rem\n}\n}\n.display-2 {\n\tfont-size: calc(1.575rem + 3.9vw);\n\tfont-weight: 300;\n\tline-height: 1.2\n}\n\n@media (min-width:1200px) {\n.display-2 {\n\tfont-size: 4.5rem\n}\n}\n.display-3 {\n\tfont-size: calc(1.525rem + 3.3vw);\n\tfont-weight: 300;\n\tline-height: 1.2\n}\n\n@media (min-width:1200px) {\n.display-3 {\n\tfont-size: 4rem\n}\n}\n.display-4 {\n\tfont-size: calc(1.475rem + 2.7vw);\n\tfont-weight: 300;\n\tline-height: 1.2\n}\n\n@media (min-width:1200px) {\n.display-4 {\n\tfont-size: 3.5rem\n}\n}\n.display-5 {\n\tfont-size: calc(1.425rem + 2.1vw);\n\tfont-weight: 300;\n\tline-height: 1.2\n}\n\n@media (min-width:1200px) {\n.display-5 {\n\tfont-size: 3rem\n}\n}\n.display-6 {\n\tfont-size: calc(1.375rem + 1.5vw);\n\tfont-weight: 300;\n\tline-height: 1.2\n}\n\n@media (min-width:1200px) {\n.display-6 {\n\tfont-size: 2.5rem\n}\n}\n.list-unstyled {\n\tpadding-left: 0;\n\tlist-style: none\n}\n.list-inline {\n\tpadding-left: 0;\n\tlist-style: none\n}\n.list-inline-item {\n\tdisplay: inline-block\n}\n.list-inline-item:not(:last-child) {\n\tmargin-right: .5rem\n}\n.initialism {\n\tfont-size: .875em;\n\ttext-transform: uppercase\n}\n.blockquote {\n\tmargin-bottom: 1rem;\n\tfont-size: 1.25rem\n}\n.blockquote>:last-child {\n\tmargin-bottom: 0\n}\n.blockquote-footer {\n\tmargin-top: -1rem;\n\tmargin-bottom: 1rem;\n\tfont-size: .875em;\n\tcolor: #6c757d\n}\n.blockquote-footer::before {\n\tcontent: \"— \"\n}\n.img-fluid {\n\tmax-width: 100%;\n\theight: auto\n}\n.img-thumbnail {\n\tpadding: .25rem;\n\tbackground-color: #fff;\n\tborder: 1px solid #dee2e6;\n\tborder-radius: .25rem;\n\tmax-width: 100%;\n\theight: auto\n}\n.figure {\n\tdisplay: inline-block\n}\n.figure-img {\n\tmargin-bottom: .5rem;\n\tline-height: 1\n}\n.figure-caption {\n\tfont-size: .875em;\n\tcolor: #6c757d\n}\n.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {\n\twidth: 100%;\n\tpadding-right: var(--bs-gutter-x, .75rem);\n\tpadding-left: var(--bs-gutter-x, .75rem);\n\tmargin-right: auto;\n\tmargin-left: auto\n}\n\n@media (min-width:576px) {\n.container, .container-sm {\n\tmax-width: 540px\n}\n}\n\n@media (min-width:768px) {\n.container, .container-md, .container-sm {\n\tmax-width: 720px\n}\n}\n\n@media (min-width:992px) {\n.container, .container-lg, .container-md, .container-sm {\n\tmax-width: 960px\n}\n}\n\n@media (min-width:1200px) {\n.container, .container-lg, .container-md, .container-sm, .container-xl {\n\tmax-width: 85%;\n}\n}\n\n@media (min-width:1400px) {\n.container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {\n\tmax-width: 1355px;\n}\n}\n.row {\n--bs-gutter-x:1.5rem;\n--bs-gutter-y:0;\n\tdisplay: flex;\n\tflex-wrap: wrap;\nmargin-top:calc(var(--bs-gutter-y) * -1);\nmargin-right:calc(var(--bs-gutter-x) * -.5);\nmargin-left:calc(var(--bs-gutter-x) * -.5)\n}\n.row>* {\n\tflex-shrink: 0;\n\twidth: 100%;\n\tmax-width: 100%;\n/*padding-right:calc(var(--bs-gutter-x) * .5);\npadding-left:calc(var(--bs-gutter-x) * .5);*/\n\tmargin-top: var(--bs-gutter-y)\n}\n.col {\n\tflex: 1 0 0%\n}\n.row-cols-auto>* {\n\tflex: 0 0 auto;\n\twidth: auto\n}\n.row-cols-1>* {\n\tflex: 0 0 auto;\n\twidth: 100%\n}\n.row-cols-2>* {\n\tflex: 0 0 auto;\n\twidth: 50%\n}\n.row-cols-3>* {\n\tflex: 0 0 auto;\n\twidth: 33.3333333333%\n}\n.row-cols-4>* {\n\tflex: 0 0 auto;\n\twidth: 25%\n}\n.row-cols-5>* {\n\tflex: 0 0 auto;\n\twidth: 20%\n}\n.row-cols-6>* {\n\tflex: 0 0 auto;\n\twidth: 16.6666666667%\n}\n\n@media (min-width:576px) {\n.col-sm {\n\tflex: 1 0 0%\n}\n.row-cols-sm-auto>* {\n\tflex: 0 0 auto;\n\twidth: auto\n}\n.row-cols-sm-1>* {\n\tflex: 0 0 auto;\n\twi"
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/ar.png",
+    "status": 200,
+    "content_type": "image/png",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/topbar/img/main-menu/logo-2.png",
+    "status": 200,
+    "content_type": "image/png",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/topbar/img/main-menu/arab_league.png",
+    "status": 200,
+    "content_type": "image/png",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/topbar/img/main-menu/ain-logo.png",
+    "status": 200,
+    "content_type": "image/png",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/sharer.js",
+    "status": 200,
+    "content_type": "application/javascript",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en/gallery/css/upper-sec.css",
+    "status": 200,
+    "content_type": "text/css",
+    "sample": ".aboutSection {\n    padding: 0;\n    color: #e8e6e3;\n    margin-bottom: 45px;\n  }\n  .twoBLockSection .innerWrap {\n    padding: 34px 50px;\n  }\n  .flexRow {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-wrap: nowrap;\n    flex-wrap: nowrap;\n    overflow: hidden;\n  }\n  .twoBLockSection .sectionRed {\n    background: #2c55a2; /*iman*/\n    /* background-image: linear-gradient(to right, #ca2600 , #fb0449) */\n  }\n  .twoBLockSection .sectionRed, .twoBLockSection .sectionBlack, .twoBLockSection .blockSection, .twoBLockSection .sectionLightRed {\n    width: 50%;\n    color: #fff;\n  }\n  .flexRow > div {\n    float: none;\n  }\n  .twoBLockSection .innerWrap {\n    padding: 34px 50px;\n  }\n  .aboutSection h4 {\n    text-align: center;\n    font-size: 2.3em;\n    margin: 0;\n    color: #fff;\n  }\n  .aboutSection .programFinder {\n    margin-top: 1.5em;\n  }\n  .twoBLockSection .sectionRed, .twoBLockSection .sectionBlack, .twoBLockSection .blockSection, .twoBLockSection .sectionLightRed {\n    color: #fff;\n  }\n  .aboutSection .programFinder .programFinderLeft {\n    width: 50%;\n    float: left;\n    padding: 0 15px;\n    margin-top: 1em;/*iman*/\n  }\n  .aboutSection .feildControl {\n    margin-bottom: 7px;\n  }\n\n.aboutSection input, .aboutSection select, .aboutSection textarea {\n\n    background: none;\n    color: #fff;\n    border: 1px solid #fff;\n    font-size: 1.050em;\n    width: 100%;\n    border-radius: 3px;\n    padding: 5px 10px;\n    height: 46px;\n\tmargin-bottom: 12px;/*iman*/\n\n} \n.programFinderRight i {\n  font-size: 0.8em;\n}\n/*iman*/ h6 a:hover{ \n  color: #1a2d30 !important;\n /* padding-left: 1em !important;*/\n}\n/*iman*/ .aboutSection select option { color: #071c1f;}\n.aboutSection .ui-selectmenu-button.ui-button {\n\n    border-radius: 3px;\n    padding: 5px 10px;\n        padding-top: 5px;\n    height: 46px;\n    font-size: 1.050em;\n    width: 100%;\n    outline: none;\n    border: 1px solid #ec8489;\n    background: none;\n    padding-top: 10px;\n    color: #fff;\n\n}\n.ui-selectmenu-button.ui-button {\n\n    text-align: left;\n    white-space: nowrap;\n    width: 14em;\n\n} \n.ui-button {\n    padding: .4em 1em;\n    display: inline-block;\n    position: relative;\n    line-height: normal;\n    margin-right: .1em;\n    cursor: pointer;\n    vertical-align: middle;\n    text-align: center;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -ms-user-select: none;\n    user-select: none;\n    overflow: visible;\n  }\n\n/*  input, button, select, textarea {\n    font-family: inherit;\n    font-size: inherit;\n    line-height: inherit;\n  }\n  button, select {\n    text-transform: none;\n  }\n  button, input, optgroup, select, textarea {\n    margin: 0;\n    font: inherit;\n      font-size: inherit;\n      line-height: inherit;\n      font-family: inherit;\n    color: inherit;\n  } iman*/\n  .programFinderLeft .inputBtnSvg input {\n    width: 125px;\n    opacity: 0;\n  }\n  .inputBtnSvg .readMoreBtn {\n    position: absolute;\n    pointer-events: none;\n    position: absolute;\n    top: 0;\n    right: 0;\n    width: 124px;\n    margin: 0;\n    border-radius: 3px;\n  }\n  .readMoreBtn {\n    display: inline-block;\n    margin: 4px 0;\n    padding: 8px 10px;\n      padding-right: 10px;\n    font-weight: 500;\n    background: none;\n    color: #fff;\n    padding-right: 50px;\n    position: relative;\n    font-size: 17px;\n    margin-top: 20px;\n    position: relative;\n  }\n  .readMoreBtn svg {\n    height: 45px;\n    left: 0;\n    position: absolute;\n    top: 0;\n    border-radius: 2px;\n    width: 100%;\n  }\n  svg:not(:root) {\n    overflow: hidden;\n  }\n  .readMoreBtn {\n    font-weight: 500;\n    color: #fff;\n    font-size: 17px;\n  }\n  text-right {\n    text-align: right;\n  }\n  .inputBtnSvg .readMoreBtn {\n    pointer-events: none;\n  }\n  .readMoreBtn::after {\n    color: #fff;\n    position: absolute;\n    right: 4px;\n    top: 0;\n    content: \"\\75\";\n    font-size: 45px;\n    font-family: \"uaeu\" !important;\n    font-style: normal !important;\n    font-weight: normal !important;\n    font-variant: normal !important;\n    text-transform: none !important;\n    speak: none;\n    line-height: 1;\n    -webkit-font-smoothing: antialiased;\n    -moz-osx-font-smoothing: grayscale;\n  }\n  .aboutSection .programFinder .programFinderRight {\n    width: 50%;\n    float: left;\n    padding: 0 15px;\n      padding-left: 15px;\n    padding-left: 0px;\n  }\n  .aboutSection .programFinder .programFinderRight h6 {\n    margin: 0;\n      margin-bottom: 0px;\n    margin-bottom: 15px;\n    font-weight: 400;\n    font-size: 1.50em;\n    color: #fff;\n\t/*iman*/  padding-left: 50px;\n  }\n  .aboutSection .programFinder .programFinderRight ul li {\n    list-style: none;\n    line-height: 1.6em;\n    font-weight: 400;\n    position: relative;\n    /*iman*/ padding-left: 24px;\ncolor: #e8e6e3;\nmargin-bottom: 5px;\nmargin-top: 0.3em;\nfont-size: 1.15em;\n  }\n \n  .aboutSection .programFinder .programFinderRight ul li a {\n    color: #fff;\n    position: relative;\n    padding-left: 0.5em;\n  }\n  \n.aboutSection .programFinder::after {\n\n    content: \"\";\n    display: table;\n    clear: both;\n\n}\n.aboutSection .sectionBlack .innerWrap {\n    position: relative;\n    /* z-index: 3; */\n  }\n  .twoBLockSection .innerWrap {\n    padding: 60px 50px;\n  }\n  .text-center {\n    text-align: center;\n  }\n \n  .aboutSection .sectionBlack {\n    position: relative;\n  }\n  .twoBLockSection .sectionBlack {\n    background: #132b61 !important;\n  }\n  .twoBLockSection .sectionRed, .twoBLockSection .sectionBlack, .twoBLockSection .blockSection, .twoBLockSection .sectionLightRed {\n    width: 50%;\n    color: #fff;\n\t  \n  }\n  .flexRow > div {\n    float: none;\n  }\n  .readMoreBtn rect {\n    fill: none;\n    stroke: #fff;\n    stroke-width: 2;\n    stroke-dasharray: 422, 0;\n  }\n  .programFinderRight ul{\n      padding-left: 0px;\n      margin-left: 0px;\n  }\n  .detailWrap p{\n      color: #fff;\n  }\n/* form */\n\n/*input {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    margin: 0 auto;\n  }\n\nlabel {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    margin: 0 auto;\n  }\nselect {\n    margin-bottom: 10px;\n    margin-top: 10px;\n  } iman*/\n.btn-wrapper {\n    display: block;\n    margin-top: 0em;\n    margin-left: 0.8em;\n  }\n  .btn {\n    border-radius: 0;\n    display: inline-block;\n    font-size: 16px;\n    font-weight: 400;\n    font-family: var(--ltn__heading-font);\n    padding: 15px 50px;\n    text-align: center;\n    cursor: pointer;\n    -webkit-transition: all 0.3s ease 0s;\n    -o-transition: all 0.3s ease 0s;\n    transition: all 0.3s ease 0s;\n    position: relative;\n    z-index: 1;\n    margin-right: 15px;\n    border-radius: 3px;\n  }\n         /*\n CSS for the main interaction\n*/\n.tabset > input[type=\"radio\"] {\n  position: absolute;\n  left: -200vw;\n}\n\n.tabset .tab-panel {\n  display: none;\n}\n\n.tabset > input:first-child:checked ~ .tab-panels > .tab-panel:first-child,\n.tabset > input:nth-child(3):checked ~ .tab-panels > .tab-panel:nth-child(2),\n.tabset > input:nth-child(5):checked ~ .tab-panels > .tab-panel:nth-child(3),\n.tabset > input:nth-child(7):checked ~ .tab-panels > .tab-panel:nth-child(4),\n.tabset > input:nth-child(9):checked ~ .tab-panels > .tab-panel:nth-child(5),\n.tabset > input:nth-child(11):checked ~ .tab-panels > .tab-panel:nth-child(6) {\n  display: block;\n}\n\n/*\n Styling\n*/\n\n.tabset > label {\n  position: relative;\n  display: inline-block;\n  padding: 15px 15px 25px;\n  \n  border-bottom: 0;\n  cursor: pointer;\n  font-weight: 600;\n  background-color: transparent;\nborder-bottom: 2px solid transparent;\npadding: 1px;\nmargin-right: 50px;\nfont-weight: 600;\nfont-size: 20px;\nline-height: 1.2;\nposition: relative;\ncolor: #232323;\n}\nlabel svg {\n  height: 45px;\n  left: 0;\n  position: absolute;\n  top: 0;\n  border-radius: 2px;\n  width: 100%;\n}\nsvg:not(:root) {\n  overflow: hidden;\n}\n.tabset > label:active::after {\n  background-color: var(--ltn__secondary-color);\n  border: 3px solid var(--white);\n  color: #d84c0d;\n}\n.tabset > label::after {\n  position: absolute;\ncontent: \"\";\nright: 45%;\ntop: 100%;\n-webkit-transform: translateY(-40%);\n-ms-transform: translateY(-40%);\ntransform: translateY(-40%);\nheight: 10px;\nwidth: 10px;\nbackground-color: transparent;\nopacity: 1;\nborder: 3px solid transparent;\nborder-radius: 100%;\n}\n/* .tabset > label:active {\n  color: var(--ltn__secondary-color);\n} */\n\n.tabset > label:hover, .tabset > input:active + label,\n.tabset > input:focus + label {\n    color:#d84c0d !important;;\n    background-color: transparent;\n    border-color: var(--ltn__secondary-color);\n}\n\n/* .tabset label:active {\n  color: var(--ltn__secondary-color);\n  background-color: transparent;\n  border-color: var(--ltn__secondary-color);\n} */\n\n/* .tabset > label:hover::after,\n.tabset > input:focus,\n.tabset > input:checked,.tabset > input:active  {\n  background: #ff5a3c;\n} */\n\n.tabset > input:checked + label {\n  border-color: #ccc;\n  border-bottom: 1px solid #fff;\n  margin-bottom: -1px;\n  border: none;\n}\n\n.tab-panel {\n  padding: 30px 0;\n  border-top: 1px solid #ccc;\n  border: none;\n}\n.gt-event-style-3 .gt-category ul li {\n  background-color: #ececec;\n}\n.gt-event-style-3 .gt-details + .gt-text {\n  margin-top: 20px;\n  text-align: left;\n}\n.gt-content{\n  border-top-color: #f6ba42 !important;\n}\n.gt-all-button {\n  color: #d84c0d;\n  font-size: 1.25em;\n}\n.gt-all-button:hover, .gt-all-button:focus  {\n  color: #d84c0d !important;\n  font-size: 1.25em;\n  text-decoration: underline;\n}\n.rs-about.style1 .notice-bord.style1 .title {\n background: none;\nfont-size: 22px;\ntext-transform: uppercase;\npadding: 0 5px;\ntext-align: left;\nfont-weight: 600;\ncolor: #e22023;\nmargin-bottom: 10px;\n}\n/*\n Demo purposes only\n*/\n*,\n*:before,\n*:after {\n  box-sizing: border-box;\n}\n.tabset {\n  max-width: 82%;\n  margin-left: auto;\n  margin-right: auto;\n  text-align: center;\n  margin-top: 2%;\n}\n  \n/* Burger navigation */\n #menuToggle\n {\n  display: block;\nposition: relative;\ntop: 0px;\nleft: 0em;\nz-index: 1;\n-webkit-user-select: none;\nuser-select: none;\nbackground-color:#f9b702 ; /*#e85c1beb*/\npadding: 0.5em;\nwidth: 100%;\n }\n"
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en/gallery/css/gallery.css",
+    "status": 200,
+    "content_type": "text/css",
+    "sample": "\n.gallery .control-operator:target ~ .controls .control-button {\n  color: #ccc;\n  color: rgba(255, 255, 255, 0.4);\n}\n\n.gallery .control-button:first-of-type, .items-2 .control-operator:nth-of-type(1):target ~ .controls .control-button:nth-of-type(1), .items-2 .control-operator:nth-of-type(2):target ~ .controls .control-button:nth-of-type(2), .items-3 .control-operator:nth-of-type(1):target ~ .controls .control-button:nth-of-type(1), .items-3 .control-operator:nth-of-type(2):target ~ .controls .control-button:nth-of-type(2), .items-3 .control-operator:nth-of-type(3):target ~ .controls .control-button:nth-of-type(3), .items-4 .control-operator:nth-of-type(1):target ~ .controls .control-button:nth-of-type(1), .items-4 .control-operator:nth-of-type(2):target ~ .controls .control-button:nth-of-type(2), .items-4 .control-operator:nth-of-type(3):target ~ .controls .control-button:nth-of-type(3), .items-4 .control-operator:nth-of-type(4):target ~ .controls .control-button:nth-of-type(4), .items-5 .control-operator:nth-of-type(1):target ~ .controls .control-button:nth-of-type(1), .items-5 .control-operator:nth-of-type(2):target ~ .controls .control-button:nth-of-type(2), .items-5 .control-operator:nth-of-type(3):target ~ .controls .control-button:nth-of-type(3), .items-5 .control-operator:nth-of-type(4):target ~ .controls .control-button:nth-of-type(4), .items-5 .control-operator:nth-of-type(5):target ~ .controls .control-button:nth-of-type(5) {\n  color: white;\n  color: rgba(255, 255, 255, 0.8);\n}\n\n.gallery .item:first-of-type {\n  position: static;\n  opacity: 1;\n}\n.gallery .item {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  opacity: 0;\n  transition: opacity 0.5s;\n}\n.gallery .control-operator {\n  display: none;\n}\n.gallery .control-operator:target ~ .item {\n  pointer-events: none;\n  opacity: 0;\n  animation: none;\n}\n.gallery .control-operator:target ~ .controls .control-button {\n  animation: none;\n}\n\n@keyframes controlAnimation-2 {\n  0% {\n    color: #ccc;\n    color: rgba(255, 255, 255, 0.4);\n  }\n\n  14.3%,\n  50% {\n    color: white;\n    color: rgba(255, 255, 255, 0.8);\n  }\n\n  64.3%,\n  100% {\n    color: #ccc;\n    color: rgba(255, 255, 255, 0.4);\n  }\n}\n\n@keyframes galleryAnimation-2 {\n  0% {\n    opacity: 0;\n  }\n\n  14.3%,\n  50% {\n    opacity: 1;\n  }\n\n  64.3%,\n  100% {\n    opacity: 0;\n  }\n}\n\n.items-2.autoplay .control-button {\n  animation: controlAnimation-2 14s infinite;\n}\n.items-2.autoplay .item {\n  animation: galleryAnimation-2 14s infinite;\n}\n.items-2 .control-operator:nth-of-type(1):target ~ .item:nth-of-type(1) {\n  pointer-events: auto;\n  opacity: 1;\n}\n.items-2 .control-button:nth-of-type(1),\n.items-2 .item:nth-of-type(1) {\n  animation-delay: -2s;\n}\n.items-2 .control-operator:nth-of-type(2):target ~ .item:nth-of-type(2) {\n  pointer-events: auto;\n  opacity: 1;\n}\n.items-2 .control-button:nth-of-type(2),\n.items-2 .item:nth-of-type(2) {\n  animation-delay: 5s;\n}\n\n@keyframes controlAnimation-3 {\n  0% {\n    color: #ccc;\n    color: rgba(255, 255, 255, 0.4);\n  }\n\n  9.5%,\n  33.3% {\n    color: white;\n    color: rgba(255, 255, 255, 0.8);\n  }\n\n  42.9%,\n  100% {\n    color: #ccc;\n    color: rgba(255, 255, 255, 0.4);\n  }\n}\n\n@keyframes galleryAnimation-3 {\n  0% {\n    opacity: 0;\n  }\n\n  9.5%,\n  33.3% {\n    opacity: 1;\n  }\n\n  42.9%,\n  100% {\n    opacity: 0;\n  }\n}\n\n.items-3.autoplay .control-button {\n  animation: controlAnimation-3 21s infinite;\n}\n.items-3.autoplay .item {\n  animation: galleryAnimation-3 21s infinite;\n}\n.items-3 .control-operator:nth-of-type(1):target ~ .item:nth-of-type(1) {\n  pointer-events: auto;\n  opacity: 1;\n}\n.items-3 .control-button:nth-of-type(1),\n.items-3 .item:nth-of-type(1) {\n  animation-delay: -2s;\n}\n.items-3 .control-operator:nth-of-type(2):target ~ .item:nth-of-type(2) {\n  pointer-events: auto;\n  opacity: 1;\n}\n.items-3 .control-button:nth-of-type(2),\n.items-3 .item:nth-of-type(2) {\n  animation-delay: 5s;\n}\n.items-3 .control-operator:nth-of-type(3):target ~ .item:nth-of-type(3) {\n  pointer-events: auto;\n  opacity: 1;\n}\n.items-3 .control-button:nth-of-type(3),\n.items-3 .item:nth-of-type(3) {\n  animation-delay: 12s;\n}\n\n@keyframes controlAnimation-4 {\n  0% {\n    color: #ccc;\n    color: rgba(255, 255, 255, 0.4);\n  }\n\n  7.1%,\n  25% {\n    color: white;\n    color: rgba(255, 255, 255, 0.8);\n  }\n\n  32.1%,\n  100% {\n    color: #ccc;\n    color: rgba(255, 255, 255, 0.4);\n  }\n}\n\n@keyframes galleryAnimation-4 {\n  0% {\n    opacity: 0;\n  }\n\n  7.1%,\n  25% {\n    opacity: 1;\n  }\n\n  32.1%,\n  100% {\n    opacity: 0;\n  }\n}\n\n.items-4.autoplay .control-button {\n  animation: controlAnimation-4 28s infinite;\n}\n.items-4.autoplay .item {\n  animation: galleryAnimation-4 28s infinite;\n}\n.items-4 .control-operator:nth-of-type(1):target ~ .item:nth-of-type(1) {\n  pointer-events: auto;\n  opacity: 1;\n}\n.items-4 .control-button:nth-of-type(1),\n.items-4 .item:nth-of-type(1) {\n  animation-delay: -2s;\n}\n.items-4 .control-operator:nth-of-type(2):target ~ .item:nth-of-type(2) {\n  pointer-events: auto;\n  opacity: 1;\n}\n.items-4 .control-button:nth-of-type(2),\n.items-4 .item:nth-of-type(2) {\n  animation-delay: 5s;\n}\n.items-4 .control-operator:nth-of-type(3):target ~ .item:nth-of-type(3) {\n  pointer-events: auto;\n  opacity: 1;\n}\n.items-4 .control-button:nth-of-type(3),\n.items-4 .item:nth-of-type(3) {\n  animation-delay: 12s;\n}\n.items-4 .control-operator:nth-of-type(4):target ~ .item:nth-of-type(4) {\n  pointer-events: auto;\n  opacity: 1;\n}\n.items-4 .control-button:nth-of-type(4),\n.items-4 .item:nth-of-type(4) {\n  animation-delay: 19s;\n}\n\n@keyframes controlAnimation-5 {\n  0% {\n    color: #ccc;\n    color: rgba(255, 255, 255, 0.4);\n  }\n\n  5.7%,\n  20% {\n    color: white;\n    color: rgba(255, 255, 255, 0.8);\n  }\n\n  25.7%,\n  100% {\n    color: #ccc;\n    color: rgba(255, 255, 255, 0.4);\n  }\n}\n\n@keyframes galleryAnimation-5 {\n  0% {\n    opacity: 0;\n  }\n\n  5.7%,\n  20% {\n    opacity: 1;\n  }\n\n  25.7%,\n  100% {\n    opacity: 0;\n  }\n}\n\n.items-5.autoplay .control-button {\n  animation: controlAnimation-5 35s infinite;\n}\n.items-5.autoplay .item {\n  animation: galleryAnimation-5 35s infinite;\n}\n.items-5 .control-operator:nth-of-type(1):target ~ .item:nth-of-type(1) {\n  pointer-events: auto;\n  opacity: 1;\n}\n.items-5 .control-button:nth-of-type(1),\n.items-5 .item:nth-of-type(1) {\n  animation-delay: -2s;\n}\n.items-5 .control-operator:nth-of-type(2):target ~ .item:nth-of-type(2) {\n  pointer-events: auto;\n  opacity: 1;\n}\n.items-5 .control-button:nth-of-type(2),\n.items-5 .item:nth-of-type(2) {\n  animation-delay: 5s;\n}\n.items-5 .control-operator:nth-of-type(3):target ~ .item:nth-of-type(3) {\n  pointer-events: auto;\n  opacity: 1;\n}\n.items-5 .control-button:nth-of-type(3),\n.items-5 .item:nth-of-type(3) {\n  animation-delay: 12s;\n}\n.items-5 .control-operator:nth-of-type(4):target ~ .item:nth-of-type(4) {\n  pointer-events: auto;\n  opacity: 1;\n}\n.items-5 .control-button:nth-of-type(4),\n.items-5 .item:nth-of-type(4) {\n  animation-delay: 19s;\n}\n.items-5 .control-operator:nth-of-type(5):target ~ .item:nth-of-type(5) {\n  pointer-events: auto;\n  opacity: 1;\n}\n.items-5 .control-button:nth-of-type(5),\n.items-5 .item:nth-of-type(5) {\n  animation-delay: 26s;\n}\n\n/*\n\tTheme controls how everything looks in Gallery CSS.\n*/\n.gallery {\n  position: relative;\n}\n.gallery .item {\n  overflow: hidden;\n}\n.gallery .controls {\n  position: absolute;\n  bottom: 0;\n  left: 50%;\n  z-index: 2;\n  width: 100%;\n  margin-left: -50%;\n  text-align: center;\n}\n.gallery .control-button {\n  display: inline-block;\n  margin: 0 0.02em;\n  font-size: 3em;\n  color: #ccc;\n  color: rgba(255, 255, 255, 0.4);\n  text-align: center;\n  text-decoration: none;\n  transition: color 0.1s;\n}\n.gallery .control-button:hover {\n  color: white;\n  color: rgba(255, 255, 255, 0.8);\n}\n\n\n\n@keyframes sway {\n  from {\n    transform: rotate(3deg);\n    transform-origin: 50% 0%; }\n\n  to {\n    transform: rotate(-3deg); } }\n\n@keyframes float {\n  from {\n    transform: translate3d(120%, 0, 0); }\n\n  to {\n    transform: translate3d(-60%, 0, 0); } }\n\n* {\n  -webkit-font-smoothing: antialiased;\n  text-rendering: optimizeLegibility; }\n\nbody {\n  line-height: 1.5; }\n\na {\n  color: inherit; }\n\n.gallery .ribbon {\n  position: absolute;\n  display: inline-block;\n  z-index: 3;\n  top: 0;\n  right: 0;\n  width: auto; }\n.gallery .item {\n  height: 100%;\n  text-rendering: optimizeLegibility; }\n.gallery .introduction {\n  background: #4D87E2;\n  text-align: center; }\n.gallery .custom-controls {\n  background: #73C16F; }\n.gallery .animations {\n  /*background: url(\"im\") no-repeat;*/\n  background-size: cover; }\n.gallery header {\n  color: white;\n  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.2); }\n\n.gallery .item:first-of-type {\n  position: absolute; }\n\n.superfluous {\n  display: table;\n  height: 100%;\n  width: 100%; }\n\n.introduction header {\n  display: table-cell;\n  vertical-align: middle; }\n.introduction h1 {\n  margin: 0;\n  font-size: 3em;\n  letter-spacing: 3px; }\n.introduction h2 {\n  margin: 0;\n  font-size: 1em;\n  color: rgba(255, 255, 255, 0.75); }\n\n.gallery .custom-controls header {\n  display: table-cell;\n  vertical-align: middle;\n  text-align: center;\n  padding: 0 25%;\n  font-size: .7em; }\n\n.gallery .control-operator:nth-of-type(2):target ~ .secondary-controls {\n  display: block; }\n\n.gallery .secondary-controls {\n  display: none;\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  z-index: 2;\n  pointer-events: none; }\n  .gallery .secondary-controls nav {\n    display: table-cell;\n    vertical-align: middle; }\n  .gallery .secondary-controls a {\n    pointer-events: auto;\n    height: 60px;\n    width: 60px;\n    border-radius: 60px;\n    color: rgba(255, 255, 255, 0.6);\n    font-size: 3em;\n    font-weight: bold;\n    text-decoration: none;\n    text-align: center;\n    background: rgba(0, 0, 0, 0.1);\n    transition: all .25s; }\n    .gallery .secondary-controls a:hover {\n      transform: scale(1.1); }\n  .gallery .secondary-controls a img {\n    margin-top: .1em; }\n  .gallery .secondary-controls a:nth-child(1) {\n    float: left;\n    margin-left: .2em; }\n  .gallery .secondary-con"
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en/gallery/css/mklb.css",
+    "status": 200,
+    "content_type": "text/css",
+    "sample": "#mkLightboxContainer {\n    position: fixed;\n    left: 0;\n    top: 0;\n    min-height: 100vh;\n    min-width: 100vw;\n    height: 100vh;\n    width: 100vw;\n    overflow: hidden;\n    box-sizing: border-box;\n    z-index: 999999;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n\n#mkLightboxContainer > * {\n    z-index: 99;\n}\n\n#overlay {\n    position: absolute;\n    left: 0;\n    top: 0;\n    height: 100vh;\n    width: 100%;\n    overflow: hidden;\n    box-sizing: border-box;\n    background: rgba(0,0,0,.85);\n    z-index: 0;\n}\n.parent .popup-video {}\n#mkLightboxContainer #mklbInner {\n    position: relative;\n    height: 100vh;\n    transition: all .4s ease-in-out;\n    margin-left: 0;\n}\n\nsection.imageContainer {\n    margin: 0;\n    padding: 1em;\n    box-sizing: border-box;\n    border: none;\n    height: 100vh;\n    width: 100vw;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    float: left;\n}\n\n#mkLightboxContainer img,\n#mkLightboxContainer video {\n    background: #fff;\n    box-shadow: 0 0 30px #222;\n    max-height: 85vh;\n    min-width: auto;\n    max-width: 75vw;\n    width: auto;\n    height: auto;\n}\n\n#mkLightboxContainer #yt-video {\n    width: 75vw;\n    height: 42.1875vw; /* 75*9/16 */\n}\n\n.mklbItem:hover {\n    cursor: pointer;\n    font-style: italic;\n}\n\n#closeIconContainer {\n    width: 25px;\n    height: 25px;\n    position: fixed;\n    top: 15px;\n    right: 15px;\n    transition: transform .2s linear;\n}\n\n#closeIconContainer:hover {\n    cursor: pointer;\n    transform: rotate(90deg);\n}\n\n#closeIconContainer svg,\n#prev svg,\n#next svg,\n#stopGallery svg, \n#playGallery svg{\n    fill: white;\n}\n\n#prevContainer,\n#nextContainer {\n    position: fixed;\n    left: 0;\n    top: 0;\n    height: 100vh;\n    padding: 10px 5px 10px 5px;\n    box-sizing: border-box;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    transition: all .2s ease-in;\n}\n\n#nextContainer {\n    left: auto;\n    right: 0;\n}\n\n#prevContainer:hover,\n#nextContainer:hover {\n    cursor: pointer;\n    background: rgba(0,0,0,0.25);\n}\n\n#prev,\n#next {\n    width: 35px;\n    height: 35px;\n}\n\n.grid {\n    display: grid;\n    align-content: flex-start;\n    grid-gap: 1em;\n}\n\n.grid-3 {\n    grid-template-columns: repeat(3, 1fr);\n}\n\n.grid-4 {\n    grid-template-columns: repeat(4, 1fr);\n}\n\n.grid figure {\n    width: 100%;\n    margin: 0;\n}\n\n.grid img {\n    width: 100%;\n}\n\n#controlContainer {\n    position: absolute;\n    top: 1em;\n    left: .5em;\n    display: flex;\n}\n\n#controlContainer > div {\n    width: 2em;\n}\n\n#controlContainer > div:hover {\n    cursor: pointer;\n}\n\n#controlContainer #stopGallery,\n#controlContainer.stop #playGallery{\n    opacity: 0.5;\n}\n\n#controlContainer.stop #stopGallery,\n#controlContainer #playGallery{\n    opacity: 1\n}\n\n@media screen and (max-width: 768px){\n    .grid-2-sm {\n        grid-template-columns: 1fr 1fr;\n    }\n}\n\n@media screen and (max-width: 450px){\n    .grid-12-xs {\n        grid-template-columns: 1fr;\n    }\n}\n\n.grid.grid-3.grid-2-sm.grid-12-xs {\n  margin-bottom: 3em;\n}"
+  },
+  {
+    "type": "request",
+    "url": "http://aast.edu/en",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&family=Poppins:wght@400;500;600;700;800;900&display=swap",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/gallery/script.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en/gallery/css/style.css",
+    "status": 200,
+    "content_type": "text/css",
+    "sample": "\n/* -------------------------------------\n    Google fonts\n------------------------------------- */\n/* @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Rajdhani:wght@400;500;600;700&display=swap'); */\n/*\nfont-family: 'Open Sans', sans-serif;\nfont-family: 'Rajdhani', sans-serif;\n*/\n/* @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&family=Titillium+Web:wght@400;600;700;900&display=swap'); */\n/*\nfont-family: 'Nunito Sans', sans-serif;\nfont-family: 'Titillium Web', sans-serif;\n*/\n@import url(\"https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&family=Poppins:wght@400;500;600;700;800;900&display=swap\");\n/*\nfont-family: 'Nunito Sans', sans-serif;\nfont-family: 'Poppins', sans-serif;\n*/\n/* ====================================================\n    Gutter Code \n==================================================== */\n.container,\n.container-fluid {\n  padding-right: 15px;\n  padding-left: 15px; }\n\n.row {\n  margin-left: -15px;\n  margin-right: -15px; }\n\n.col,\n.col-1,\n.col-10,\n.col-11,\n.col-12,\n.col-2,\n.col-3,\n.col-4,\n.col-5,\n.col-6,\n.col-7,\n.col-8,\n.col-9,\n.col-auto,\n.col-lg,\n.col-lg-1,\n.col-lg-10,\n.col-lg-11,\n.col-lg-12,\n.col-lg-2,\n.col-lg-3,\n.col-lg-4,\n.col-lg-5,\n.col-lg-6,\n.col-lg-7,\n.col-lg-8,\n.col-lg-9,\n.col-lg-auto,\n.col-md,\n.col-md-1,\n.col-md-10,\n.col-md-11,\n.col-md-12,\n.col-md-2,\n.col-md-3,\n.col-md-4,\n.col-md-5,\n.col-md-6,\n.col-md-7,\n.col-md-8,\n.col-md-9,\n.col-md-auto,\n.col-sm,\n.col-sm-1,\n.col-sm-10,\n.col-sm-11,\n.col-sm-12,\n.col-sm-2,\n.col-sm-3,\n.col-sm-4,\n.col-sm-5,\n.col-sm-6,\n.col-sm-7,\n.col-sm-8,\n.col-sm-9,\n.col-sm-auto,\n.col-xl,\n.col-xl-1,\n.col-xl-10,\n.col-xl-11,\n.col-xl-12,\n.col-xl-2,\n.col-xl-3,\n.col-xl-4,\n.col-xl-5,\n.col-xl-6,\n.col-xl-7,\n.col-xl-8,\n.col-xl-9,\n.col-xl-auto {\n  padding-right: 15px;\n  padding-left: 15px;\n  position: relative; }\n\n.ltn__no-gutter > [class*='col-'] {\n  /* No padding only for child columns */\n  padding-right: 0;\n  padding-left: 0; }\n\n.ltn__no-gutter-all [class*='col-'] {\n  /* No padding for every columns */\n  padding-right: 0;\n  padding-left: 0; }\n\n@media (min-width: 992px) {\n  /* Modify this based on column def */\n  .ltn__custom-gutter {\n    margin-left: -0px;\n    margin-right: -0px; }\n  .ltn__custom-gutter > [class*='col-'] {\n    padding-right: 0px;\n    padding-left: 0px; }\n  .ltn__custom-gutter-all .row {\n    margin-left: -15px;\n    margin-right: -15px; }\n    .ltn__custom-gutter-all .row [class*='col-'] {\n      padding-right: 15px;\n      padding-left: 15px; } }\n\n@media (max-width: 991px) {\n  /* Modify this based on column def */\n  .ltn__custom-gutter {\n    margin-left: -15px;\n    margin-right: -15px; }\n  .ltn__custom-gutter > [class*='col-'] {\n    padding-right: 15px;\n    padding-left: 15px; }\n  .ltn__custom-gutter-all {\n    margin-left: -15px;\n    margin-right: -15px; }\n  .ltn__custom-gutter-all [class*='col-'] {\n    padding-right: 15px;\n    padding-left: 15px; } }\n\n@media (max-width: 767px) {\n  /* Modify this based on column def */\n  .ltn__product-gutter .row {\n    margin-left: -8px;\n    margin-right: -8px; }\n  .ltn__product-gutter [class*='col-'] {\n    padding-right: 8px;\n    padding-left: 8px; } }\n\n\n/* ----------------------------------------------------\n    Normalize    0B2C3D\n---------------------------------------------------- */\n:root {\n  --ltn__primary-color: #000000;\n  --ltn__primary-color-2: #041113;\n  /* Darken */\n  --ltn__primary-color-3: #133236;\n  /* Lighten */\n  --ltn__secondary-color: #f9b702;\n  --ltn__secondary-color-2: #cb3421;\n  /* Darken */\n  --ltn__secondary-color-3: #fb412a;\n  /* Lighten */\n  --ltn__heading-color: #071c1f;\n  --ltn__paragraph-color: #5C727D;\n  --ltn__heading-font: 'Poppins', sans-serif;\n  --ltn__body-font: 'Nunito Sans', sans-serif;\n  /* Footer ACD2D8 8CB2B2  */\n  --ltn__color-1: #8cb2b2;\n  --ltn__color-2: #ACD2D8;\n  --ltn__color-3: #A3BCC0;\n  --ltn__color-4: #84A2A6;\n  --ltn__color-5: #5C727D;\n  --ltn__color-6: #F5DFDC;\n  /* Gradient Colors */\n  --gradient-color-1: linear-gradient(90deg, rgba(242,139,194,1) 0%, rgba(216,177,242,1) 50%);\n  --gradient-color-2: linear-gradient(to top, rgba(7,28,31,0) 0%, rgba(7,28,31,1) 90%);\n  --gradient-color-3: linear-gradient(to bottom, rgba(7,28,31,0) 0%, rgba(7,28,31,1) 90%);\n  --gradient-color-4: linear-gradient(to top, rgba(242,246,247,0) 0%, rgba(242,246,247,1) 90%);\n  --gradient-color-5: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 70%);\n  /* Background Colors ( 1, 2, 3, 4, 5 )  */\n  --section-bg-1: #F2F6F7;\n  /* White */\n  --section-bg-2: #132E6B;\n  /* Black */\n  --section-bg-5: #FFF2F0;\n  /* White */\n  --section-bg-6: #132E6B;\n  /* Black */\n  --section-bg-7: #282b38;\n  /* Black */\n  /* Border Colors */\n  --border-color-1: #e5eaee;\n  /* White */\n  --border-color-2: #1e2021;\n  /* Black */\n  --border-color-3: #5C617F;\n  /* Black */\n  --border-color-4: #eb6954;\n  /* Red */\n  --border-color-5: #bc3928;\n  /* Red */\n  --border-color-6: #103034;\n  /* Black */\n  --border-color-7: #d1dae0;\n  /* White */\n  --border-color-8: #f6f6f6;\n  /* White */\n  --border-color-9: #e4ecf2;\n  /* White */\n  --border-color-10: #ebeeee;\n  /* White */\n  --border-color-11: #ededed;\n  /* White */\n  --border-color-12: #e1e6ff;\n  /* White */\n  --border-color-13: #f1f8ff;\n  /* White */\n  /* Box Shadow Colors */\n  --ltn__box-shadow-1: 0 16px 32px 0 rgba(7, 28, 31, 0.1);\n  --ltn__box-shadow-2: 0 0 4px rgba(0, 0, 0, 0.1);\n  /* like border */\n  --ltn__box-shadow-3: 0 1px 6px 0 rgba(32, 33, 36, .28);\n  /* like border GGL */\n  --ltn__box-shadow-4: 0 5px 20px 0 rgba(23, 44, 82, 0.1);\n  --ltn__box-shadow-5: 0 8px 16px 0 rgba(93, 93, 93, 0.1);\n  --ltn__box-shadow-6: 0 0 25px 2px rgba(93, 93, 93, 0.2);\n  --ltn__box-shadow-7: 0 0 10px 0px rgba(93, 93, 93, 0.2);\n  /* Common Colors */\n  --black: #000000;\n  --black-2: #22355B;\n  --white: #fff;\n  --white-2: #F2F6F7;\n  --white-3: #e8edee;\n  --white-4: #e6ecf0;\n  --white-5: #f0f4f7;\n  --white-6: #f1f1f1;\n  --white-7: #F7F7F7;\n  --white-8: #FAFAFA;\n  --white-9: #F2F7FA;\n  --white-10: #EDEDED;\n  --red: #FF0000;\n  --red-2: #f34f3f;\n  --red-3: #DB483B;\n  --silver: #C0C0C0;\n  --gray: #808080;\n  --maroon: #800000;\n  --yellow: #f6ba42;\n  --olive: #808000;\n  --lime: #00FF00;\n  --green: #77C720;\n  --green-2: #008000;\n  --aqua: #00FFFF;\n  --teal: #008080;\n  --blue: #2553a8;\n  --navy: #000080;\n  --fuchsia: #B13BFF;\n  --purple: #800080;\n  --pink: #FFC0CB;\n  --nude: #ebc8b2;\n  --orange: #ffa500;\n  --ratings: #FFB800;\n  /* social media colors */\n  --facebook: #365493;\n  --twitter: #3CF;\n  --linkedin: #0077B5;\n  --pinterest: #c8232c;\n  --dribbble: #ea4c89;\n  --behance: #131418;\n  --google-plus: #dd4b39;\n  --instagram: #e4405f;\n  --vk: #3b5998;\n  --wechat: #7bb32e;\n  --youtube: #CB2027;\n  --email: #F89A1E; }\n\n/* -------------------------------------\n    Typography\n------------------------------------- */\nhtml {\n  -webkit-text-size-adjust: 100%;\n  -ms-text-size-adjust: 100%;\n  font-family: var(--ltn__body-font); }\n\n* {\n  -webkit-box-sizing: border-box;\n  box-sizing: border-box;\n  outline: none;\n  -moz-osx-font-smoothing: grayscale;\n  /* Firefox */\n  -webkit-font-smoothing: antialiased;\n  /* WebKit  */ }\n\nbody {\n  color: var(--ltn__paragraph-color);\n  font-weight: 400;\n  font-style: normal;\n  font-size: 16px;\n  font-family: var(--ltn__body-font);\n  line-height: 1.8;\n  margin: 0 auto; }\n\nh1, .h1 {\n  font-size: 36px;\n  line-height: 1.2; }\n\nh2, .h2 {\n  font-size: 35px; }\n\nh3, .h3 {\n  font-size: 26px; }\n\nh4, .h4 {\n  font-size: 20px; }\n\nh5, .h5 {\n  font-size: 18px; }\n\nh6, .h6 {\n  font-size: 17px; }\n\nh1,\nh2,\nh3,\nh4,\nh5,\nh6,\n.h1,\n.h2,\n.h3,\n.h4,\n.h5,\n.h6 {\n  color: var(--ltn__heading-color);\n  clear: both;\n  font-family: var(--ltn__heading-font);\n  font-weight: 700;\n  line-height: 1.3;\n  margin-bottom: 15px; }\n\np {\n  color: var(--ltn__paragraph-color);\n  margin-bottom: 1.5em;\n\ttext-align: justify;\n  /*-webkit-hyphens: auto;\n  -moz-hyphens: auto;\n  -ms-hyphens: auto;\n  hyphens: auto;*/ }\n\na {\n  color: inherit;\n  text-decoration: none;\n  color: var(--ltn__paragraph-color);\n  -webkit-transition: all 0.3s ease 0s;\n  -o-transition: all 0.3s ease 0s;\n  transition: all 0.3s ease 0s; }\n\na,\na:hover,\na:focus,\na:active {\n  text-decoration: none;\n  outline: none;\n  color: inherit; }\n\na:hover {\n  color: var(--ltn__secondary-color); }\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  font-family: var(--ltn__body-font); }\n\npre,\ncode,\nkbd,\ntt,\nvar,\nsamp {\n  font-family: var(--ltn__body-font); }\n\npre {\n  word-break: break-word; }\n\na i {\n  padding: 0 2px; }\n\nimg {\n  max-width: 100%; }\n\nul li,\nol li { margin-top: 1em; }\n\n/* -------------------------------------\n    Custom Class\n------------------------------------- */\n.section-bg-1 { background-color: var(--section-bg-1); }\n.section-bg-1 .ltn__separate-line .separate-icon {\n    background-color: var(--section-bg-1); }\n\n.section-bg-2,\n.section-bg-7 {\n  background-color: var(--section-bg-2); }\n\n.section-bg-6 {  background-color: #061B49;}\n  .section-bg-2 h1,\n  .section-bg-2 h2,\n  .section-bg-2 h3,\n  .section-bg-2 h4,\n  .section-bg-2 h5,\n  .section-bg-2 h6,\n  .section-bg-2 p,\n  .section-bg-2 li,\n  .section-bg-2 i,\n  .section-bg-2 span,\n  .section-bg-2 tr,\n  .section-bg-2 td,\n  .section-bg-6 h1,\n  .section-bg-6 h2,\n  .section-bg-6 h3,\n  .section-bg-6 h5,\n  .section-bg-6 h6,\n  .section-bg-6 p,\n  .section-bg-6 li,\n \n  .section-bg-6 tr,\n  .section-bg-6 td,\n  .section-bg-7 h1,\n  .section-bg-7 h2,\n  .section-bg-7 h3,\n  .section-bg-7 h4,\n  .section-bg-7 h5,\n  .section-bg-7 h6,\n  .section-bg-7 p,\n  .section-bg-7 li,\n  .section-bg-7 i,\n  .section-bg-7 span,\n  .section-bg-7 tr,\n  .section-bg-7 td {\n    color: var(--white); }\n\n.section-bg-6 span {font-weight: 600; font-size: 1.1em;}\n.section-bg-6 i {color:var(--ltn__secondary-color);}\n.ltn__search-by-place-item .search-by-place-info h4 a:hover {color:#6c6767 !important;}\n.ltn__search-by-place-item .search-by-place-info .search-by-place-btn a:hover {color: #454545 !important;}\n.section-bg-2 .ltn__separate-line .separate-icon,\n  .section-bg-6 .ltn__se"
+  },
+  {
+    "type": "request",
+    "url": "http://aast.edu/en",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "response",
+    "url": "https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&family=Poppins:wght@400;500;600;700;800;900&display=swap",
+    "status": 200,
+    "content_type": "text/css; charset=utf-8",
+    "sample": "/* cyrillic-ext */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 300;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t4R-tCKQ.woff2) format('woff2');\n  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;\n}\n/* cyrillic */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 300;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7txR-tCKQ.woff2) format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}\n/* vietnamese */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 300;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t6R-tCKQ.woff2) format('woff2');\n  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;\n}\n/* latin-ext */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 300;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t7R-tCKQ.woff2) format('woff2');\n  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;\n}\n/* latin */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 300;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t1R-s.woff2) format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n/* cyrillic-ext */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 400;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t4R-tCKQ.woff2) format('woff2');\n  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;\n}\n/* cyrillic */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 400;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7txR-tCKQ.woff2) format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}\n/* vietnamese */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 400;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t6R-tCKQ.woff2) format('woff2');\n  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;\n}\n/* latin-ext */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 400;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t7R-tCKQ.woff2) format('woff2');\n  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;\n}\n/* latin */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 400;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t1R-s.woff2) format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n/* cyrillic-ext */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 600;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t4R-tCKQ.woff2) format('woff2');\n  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;\n}\n/* cyrillic */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 600;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7txR-tCKQ.woff2) format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}\n/* vietnamese */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 600;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t6R-tCKQ.woff2) format('woff2');\n  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;\n}\n/* latin-ext */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 600;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t7R-tCKQ.woff2) format('woff2');\n  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;\n}\n/* latin */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 600;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t1R-s.woff2) format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n/* cyrillic-ext */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 700;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t4R-tCKQ.woff2) format('woff2');\n  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;\n}\n/* cyrillic */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 700;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7txR-tCKQ.woff2) format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}\n/* vietnamese */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 700;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t6R-tCKQ.woff2) format('woff2');\n  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;\n}\n/* latin-ext */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 700;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t7R-tCKQ.woff2) format('woff2');\n  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;\n}\n/* latin */\n@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 700;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t1R-s.woff2) format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n/* devanagari */\n@font-face {\n  font-family: 'Poppins';\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/poppins/v24/pxiEyp8kv8JHgFVrJJbecmNE.woff2) format('woff2');\n  unicode-range: U+0900-097F, U+1CD0-1CF9, U+200C-200D, U+20A8, U+20B9, U+20F0, U+25CC, U+A830-A839, U+A8E0-A8FF, U+11B00-11B09;\n}\n/* latin-ext */\n@font-face {\n  font-family: 'Poppins';\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/poppins/v24/pxiEyp8kv8JHgFVrJJnecmNE.woff2) format('woff2');\n  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;\n}\n/* latin */\n@font-face {\n  font-family: 'Poppins';\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(https"
+  },
+  {
+    "type": "request",
+    "url": "https://connect.facebook.net/en_US/fbevents.js",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/template/en/main/img/main-menu/t12.webp",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/gallery/webfonts/fa-brands-400.woff2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t1R-s.woff2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/gallery/webfonts/fa-v4compatibility.woff2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/gallery/fonts/icomoon.ttf",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/gallery/webfonts/fa-solid-900.woff2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLCz7Z1xlFQ.woff2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/gallery/webfonts/fa-regular-400.woff2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://fonts.gstatic.com/s/poppins/v24/pxiEyp8kv8JHgFVrJJfecg.woff2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLEj6Z1xlFQ.woff2",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/main/img/main-menu/t12.webp",
+    "status": 200,
+    "content_type": "",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/ar/footer/img/ain-logo.png",
+    "status": 200,
+    "content_type": "image/png",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/main/js/scripts.js",
+    "status": 200,
+    "content_type": "application/javascript",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/ar/footer/img/QS-STARS.png",
+    "status": 200,
+    "content_type": "image/png",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/main/js/popup-search.js",
+    "status": 200,
+    "content_type": "application/javascript",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://connect.facebook.net/en_US/fbevents.js",
+    "status": 200,
+    "content_type": "application/x-javascript; charset=utf-8",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/ar/footer/img/arab_league.png",
+    "status": 200,
+    "content_type": "image/png",
+    "sample": null
+  },
+  {
+    "type": "request",
+    "url": "https://connect.facebook.net/signals/config/139431910221475?v=2.9.242&r=stable&domain=aast.edu&hme=db9908e5ed1726a41bdcb93671634d1da820805416d5d2ea894e38123b1576dd&ex_m=89%2C148%2C128%2C18%2C65%2C66%2C121%2C61%2C41%2C122%2C70%2C60%2C135%2C78%2C13%2C88%2C26%2C116%2C108%2C68%2C71%2C115%2C132%2C97%2C137%2C7%2C3%2C4%2C6%2C5%2C2%2C79%2C87%2C138%2C215%2C159%2C55%2C217%2C218%2C48%2C174%2C25%2C67%2C223%2C222%2C162%2C28%2C54%2C8%2C57%2C83%2C84%2C85%2C90%2C112%2C27%2C24%2C114%2C111%2C110%2C129%2C69%2C131%2C130%2C43%2C53%2C105%2C12%2C134%2C38%2C204%2C206%2C169%2C21%2C22%2C23%2C15%2C16%2C37%2C33%2C35%2C34%2C74%2C80%2C82%2C95%2C120%2C123%2C39%2C96%2C19%2C17%2C101%2C62%2C31%2C125%2C124%2C126%2C117%2C20%2C30%2C52%2C94%2C133%2C63%2C14%2C127%2C29%2C184%2C155%2C278%2C202%2C146%2C187%2C180%2C156%2C92%2C113%2C73%2C103%2C47%2C40%2C102%2C107%2C51%2C58%2C42%2C98%2C46%2C49%2C45%2C86%2C136%2C0%2C106%2C11%2C104%2C9%2C1%2C50%2C81%2C56%2C59%2C100%2C77%2C76%2C44%2C109%2C118%2C75%2C72%2C64%2C99%2C91%2C36%2C119%2C32%2C93%2C10%2C139",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "response",
+    "url": "https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t1R-s.woff2",
+    "status": 200,
+    "content_type": "font/woff2",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLCz7Z1xlFQ.woff2",
+    "status": 200,
+    "content_type": "font/woff2",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://fonts.gstatic.com/s/poppins/v24/pxiEyp8kv8JHgFVrJJfecg.woff2",
+    "status": 200,
+    "content_type": "font/woff2",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLEj6Z1xlFQ.woff2",
+    "status": 200,
+    "content_type": "font/woff2",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en/gallery/js/main.js",
+    "status": 200,
+    "content_type": "application/javascript",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en/gallery/js/mklb.js",
+    "status": 200,
+    "content_type": "application/javascript",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://connect.facebook.net/signals/config/139431910221475?v=2.9.242&r=stable&domain=aast.edu&hme=db9908e5ed1726a41bdcb93671634d1da820805416d5d2ea894e38123b1576dd&ex_m=89%2C148%2C128%2C18%2C65%2C66%2C121%2C61%2C41%2C122%2C70%2C60%2C135%2C78%2C13%2C88%2C26%2C116%2C108%2C68%2C71%2C115%2C132%2C97%2C137%2C7%2C3%2C4%2C6%2C5%2C2%2C79%2C87%2C138%2C215%2C159%2C55%2C217%2C218%2C48%2C174%2C25%2C67%2C223%2C222%2C162%2C28%2C54%2C8%2C57%2C83%2C84%2C85%2C90%2C112%2C27%2C24%2C114%2C111%2C110%2C129%2C69%2C131%2C130%2C43%2C53%2C105%2C12%2C134%2C38%2C204%2C206%2C169%2C21%2C22%2C23%2C15%2C16%2C37%2C33%2C35%2C34%2C74%2C80%2C82%2C95%2C120%2C123%2C39%2C96%2C19%2C17%2C101%2C62%2C31%2C125%2C124%2C126%2C117%2C20%2C30%2C52%2C94%2C133%2C63%2C14%2C127%2C29%2C184%2C155%2C278%2C202%2C146%2C187%2C180%2C156%2C92%2C113%2C73%2C103%2C47%2C40%2C102%2C107%2C51%2C58%2C42%2C98%2C46%2C49%2C45%2C86%2C136%2C0%2C106%2C11%2C104%2C9%2C1%2C50%2C81%2C56%2C59%2C100%2C77%2C76%2C44%2C109%2C118%2C75%2C72%2C64%2C99%2C91%2C36%2C119%2C32%2C93%2C10%2C139",
+    "status": 200,
+    "content_type": "application/x-javascript; charset=utf-8",
+    "sample": null
+  },
+  {
+    "type": "request",
+    "url": "https://www.facebook.com/tr/?id=139431910221475&ev=PageView&dl=https%3A%2F%2Faast.edu%2Fen%2Fgallery%2Findex.php&rl=&if=false&ts=1763513472963&sw=1280&sh=720&v=2.9.242&r=stable&ec=0&o=4254&fbp=fb.1.1763510661634.546314588296484096&cs_est=true&ler=empty&bfs[b]=1&pmd[title]=AASTMT%20Gallery&pmd[description]=AASTMT%20is%20one%20of%20the%20specialized%20organizations%20of%20the%20League%20of%20Arab%20States.%20We%20are%20a%20regional%20educational%20organization%20located%20in%20Egypt%20devoted%20to%20providing%20an%20excellent%20education%20for%20Arab%20youth%20and%20researchers.&pmd[keywords]=aast%2C%20arab%20academy%2C%20university%2C%20academy%2C%20college%2C%20Egypt%20colleges%2C%20students%2C%20maritime%2C%20engineering%2C%20pharmacy%2C%20medicine%2C%20media%2C%20management%2C%20business%2C%20cairo%2C%20alexandria%2C%20aswan%2C%20portsaid%2C%20undergraduate%2C%20admission%2C%20alumni%2C%20majors%2C%20student%20accessibility%2C%20special%20needs%20&it=1763513472930&coo=false&expv2[0]=pl0&expv2[1]=el3&expv2[2]=bc1&expv2[3]=mr2&rqm=GET",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "response",
+    "url": "https://img.youtube.com/vi/Km0BRXjcq-k/hqdefault.jpg",
+    "status": 200,
+    "content_type": "image/jpeg",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://img.youtube.com/vi/Ydnt7reITmg/hqdefault.jpg",
+    "status": 200,
+    "content_type": "image/jpeg",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en/gallery/js/plugins.js",
+    "status": 200,
+    "content_type": "application/javascript",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://img.youtube.com/vi/lBf1meFGkMU/hqdefault.jpg",
+    "status": 200,
+    "content_type": "image/jpeg",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://www.facebook.com/tr/?id=139431910221475&ev=PageView&dl=https%3A%2F%2Faast.edu%2Fen%2Fgallery%2Findex.php&rl=&if=false&ts=1763513472963&sw=1280&sh=720&v=2.9.242&r=stable&ec=0&o=4254&fbp=fb.1.1763510661634.546314588296484096&cs_est=true&ler=empty&bfs[b]=1&pmd[title]=AASTMT%20Gallery&pmd[description]=AASTMT%20is%20one%20of%20the%20specialized%20organizations%20of%20the%20League%20of%20Arab%20States.%20We%20are%20a%20regional%20educational%20organization%20located%20in%20Egypt%20devoted%20to%20providing%20an%20excellent%20education%20for%20Arab%20youth%20and%20researchers.&pmd[keywords]=aast%2C%20arab%20academy%2C%20university%2C%20academy%2C%20college%2C%20Egypt%20colleges%2C%20students%2C%20maritime%2C%20engineering%2C%20pharmacy%2C%20medicine%2C%20media%2C%20management%2C%20business%2C%20cairo%2C%20alexandria%2C%20aswan%2C%20portsaid%2C%20undergraduate%2C%20admission%2C%20alumni%2C%20majors%2C%20student%20accessibility%2C%20special%20needs%20&it=1763513472930&coo=false&expv2[0]=pl0&expv2[1]=el3&expv2[2]=bc1&expv2[3]=mr2&rqm=GET",
+    "status": 200,
+    "content_type": "text/plain",
+    "sample": ""
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en/gallery/webfonts/fa-v4compatibility.woff2",
+    "status": 200,
+    "content_type": "font/woff2",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en/gallery/webfonts/fa-brands-400.woff2",
+    "status": 200,
+    "content_type": "font/woff2",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en/gallery/fonts/icomoon.ttf",
+    "status": 200,
+    "content_type": "font/ttf",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_969_1_13082744_1092799730781723_4879725842806044464_n.jpg",
+    "status": 200,
+    "content_type": "image/jpeg",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1361_1_19642370_1485006648227694_2429847099708129261_n.jpg",
+    "status": 200,
+    "content_type": "image/jpeg",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_1258_1_7.png",
+    "status": 200,
+    "content_type": "image/png",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_35_1_03.jpg",
+    "status": 200,
+    "content_type": "image/jpeg",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://www.aast.edu/getData/retreiveGalleryPIC.php?unit=1&img=en_42_1_01.jpg",
+    "status": 200,
+    "content_type": "image/jpeg",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en/gallery/webfonts/fa-regular-400.woff2",
+    "status": 200,
+    "content_type": "font/woff2",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/main/js/jquery2-2.min.js",
+    "status": 200,
+    "content_type": "application/javascript",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/main/js/jquery.backstretch.js",
+    "status": 200,
+    "content_type": "application/javascript",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/main/js/wow.js",
+    "status": 200,
+    "content_type": "application/javascript",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/main/js/main.js",
+    "status": 200,
+    "content_type": "application/javascript",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/main/js/jquery.js",
+    "status": 200,
+    "content_type": "application/javascript",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/main/js/bootstrap.min.js",
+    "status": 200,
+    "content_type": "application/javascript",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/main/js/revolution.min.js",
+    "status": 200,
+    "content_type": "application/javascript",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/main/js/jquery.fancybox.pack.js",
+    "status": 200,
+    "content_type": "application/javascript",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/main/js/owl.js",
+    "status": 200,
+    "content_type": "application/javascript",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/main/js/script.js",
+    "status": 200,
+    "content_type": "application/javascript",
+    "sample": null
+  },
+  {
+    "type": "request",
+    "url": "http://aast.edu/en",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "http://aast.edu/en",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/main/js/owl.carousel.js",
+    "status": 200,
+    "content_type": "application/javascript",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/topbar/img/main-menu/qs.jpg",
+    "status": 200,
+    "content_type": "image/jpeg",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en/gallery/webfonts/fa-solid-900.woff2",
+    "status": 200,
+    "content_type": "font/woff2",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/main/js/mklb.js",
+    "status": 200,
+    "content_type": "application/javascript",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/main/js/rocket-loader.min.js",
+    "status": 200,
+    "content_type": "application/javascript",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/main/js/webflow.js",
+    "status": 200,
+    "content_type": "application/javascript",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/main/js/wow.min.js",
+    "status": 200,
+    "content_type": "application/javascript",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/template/en/main/js/plugins.js",
+    "status": 200,
+    "content_type": "application/javascript",
+    "sample": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/gallery/img/news/14.jpg",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "request",
+    "url": "https://aast.edu/en/",
+    "method": "GET",
+    "post": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en/gallery/img/news/14.jpg",
+    "status": 301,
+    "content_type": "text/html; charset=iso-8859-1",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en",
+    "status": 301,
+    "content_type": "text/html; charset=iso-8859-1",
+    "sample": null
+  },
+  {
+    "type": "response",
+    "url": "https://aast.edu/en/",
+    "status": 200,
+    "content_type": "text/html; charset=UTF-8",
+    "sample": "\n<!doctype html>\n<html class=\"no-js\" lang=\"en\">\n\n<head>\n\n<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5de96879890a5300125e3eb9&product=sop' async='async'></script>\n<link rel=\"alternate\" hreflang=\"en\" href=\"https://aast.edu/en\">\n\n    <script type=\"application/ld+json\">\n        {\n            \"@context\": \"https://schema.org\",\n            \"@type\": \"EducationalOrganization\",\n            \"@id\": \"https://aast.edu/en/programs-courses/results-undergrad.php\",\n            \"name\": \"AASTMT\",\n            \"logo\": \"https://aast.edu/en/programs-courses/img/main-menu/logo-en-w.png\",\n            \"url\": \"https://aast.edu/en/\",\n            \"sameAs\": [\n                \"https://www.facebook.com/AAST.Officialpage/\"\n            ],\n            \"hasOfferCatalog\": {\n                \"@type\": \"OfferCatalog\",\n                \"name\": \"Programs Offered\",\n                \"itemListElement\": [\n                    {\n                        \"@type\": \"Offer\",\n                        \"itemOffered\": {\n                            \"@type\": \"EducationalOccupationalProgram\",\n                            \"name\": \"Architectural Engineering and Environmental Design\",\n                            \"description\": \"The increase of population in Egypt and most Arab countries has considerably increased the need for housing, public buildings, and urban services. On the other hand several problems appear, such as: upgrading, renewal, development of deteriorated areas, creation of new towns and settlements as well as problems of restoration, preservation, conservation, and enhancement of the built heritage. These problems led to a tremendous increase in the national investment in building and construction and consequently the need for professionals in this field. The preparation of engineers specialized in architecture and environmental design is necessary for the pursuit and success of the national building and construction policy. To cope with the needs of the Egyptian and Arab societies as well as the regional and international market demands, the College of Engineering and Technology at the Arab Academy for Science & Technology & Maritime Transport, decided in 1997 to establish a department of Architectural Engineering and Environmental Design (AEED).\",\n                            \"url\": \"https://aast.edu/en/programs-courses/program.php?unit_id=1222&program_id=335&language_id=1\"\n                        }\n                    }\n                    \n                ]\n            }\n        }\n    </script>\n\n    <meta charset=\"utf-8\">\n    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>\n    <meta http-equiv=\"x-ua-compatible\" content=\"ie=edge\">\n    <title>Arab Academy for Science, Technology & Maritime Transport - AASTMT</title>\n\n    <meta name=\"robots\" content=\"index, follow\">\n    <meta name=\"description\" content=\"AASTMT is one of the specialized organizations of the League of Arab States. We are a regional educational organization located in Egypt devoted to providing an excellent education for Arab youth and researchers.\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <link rel=\"icon\" type=\"image/x-icon\" href=\"https://aast.edu/template/favicon.ico\"/>\n\n\n    <!-- author -->\n    <meta name=\"author\" content=\"Website Design dept, Information and Documentation Center, Arab Academy for Science, Technology and Maritime Transport\" />\n    <meta name=\"copyright\" content=\"Copyright (c) 2023 Arab Academy for Science Technology and Maritime Transport\" />\n\n    <!-- Keywords-->\n    <meta name=\"keywords\" content= \"aast, arab academy, maritime transport, aast, academic cooperation, research, college, engineering, management, computing, information technology, program, bachelor, undergraduate, graduate, student, language, communication, exchange programs, Egypt\" />\n    <link rel=\"canonical\" href='https://aast.edu/en/' />\n    <!-- meta tags -->\n    <meta name=\"distribution\" content=\"global\"/>\n\n    \n    <meta property=\"og:title\" content=\"Arab Academy for Science, Technology & Maritime Transport - AASTMT\">\n    <meta property=\"og:description\" content=\"AASTMT is one of the specialized organizations of the League of Arab States. We are a regional educational organization located in Egypt devoted to providing an excellent education for Arab youth and researchers.\">\n    <meta property=\"og:image\" content=\"https://aast.edu/template/en/main/img/slider/slide1.webp\">\n    <meta property=\"og:site_name\" content=\"Arab Academy for Science, Technology & Maritime Transport - AASTMT\">\n\n    <meta name=\"twitter:card\" content=\"summary_large_image\">\n    <meta name=\"twitter:title\" content=\"Arab Academy for Science, Technology & Maritime Transport - AASTMT\">\n    <meta name=\"twitter:description\" content=\"AASTMT is one of the specialized organizations of the League of Arab States. We are a regional educational organization located in Egypt devoted to providing an excellent education for Arab youth and researchers.\">\n    <meta name=\"twitter:image\" content=\"https://aast.edu/template/en/main/img/slider/slide1.webp\">\n    <meta name=\"twitter:site\" content=\"@aastmteg\">\n\n    <meta property=\"og:title\" content=\"Arab Academy for Science, Technology & Maritime Transport - AASTMT\">\n    <meta property=\"og:description\" content=\"AASTMT is one of the specialized organizations of the League of Arab States. We are a regional educational organization located in Egypt devoted to providing an excellent education for Arab youth and researchers.\">\n    <meta property=\"og:image\" content=\"https://aast.edu/template/en/main/img/slider/slide1.webp\">\n    <meta property=\"og:site_name\" content=\"Arab Academy for Science, Technology & Maritime Transport - AASTMT\">\n\n    <!-- Schema Script  -->\n    <script type=\"application/ld+json\">\n        {\n            \"@context\": \"http://www.schema.org\",\n            \"@type\": \"EducationalOrganization\",\n            \"name\": \"Arab Academy for Science, Technology &Maritime Transport\",\n            \"url\": \"https://aast.edu/\",\n            \"sameAs\": [\n                \"https://aast.edu/ar/\",\n                \"https://aast.edu/en/\",\n                \"https://twitter.com/aastmteg\",\n                \"https://www.facebook.com/AASTMT.PR\"\n            ],\n            \"logo\": \"https://aast.edu/template/logo-blue03.webp\",\n            \"image\": \"https://aast.edu/template/logo-blue03.webp\",\n            \"description\": \"Arab Academy for Science Technology & Maritime Transport (AASTMT) a regional organization operated by Arab League and known for its undergraduate & graduate programs in Maritime Transportation, Engineering, Management, Computing & Information Technology, International Transport & Logistics, pharmacy Language & Communication, Artificial intelligence, dentistry, law and archeology\",\n            \"mainEntityOfPage\": {\n            \"@type\": \"WebPage\",\n            \"@id\": \"https://aast.edu/en/\"\n        },\n            \"breadcrumb\": {\n                \"@type\": \"SiteNavigationElement\",\n                \"itemListElement\": [\n                    {\n                        \"@type\": \"ListItem\",\n                        \"position\": 1,\n                        \"name\": \"Home\",\n                        \"item\": \"https://aast.edu/\"\n                    },\n                    {\n                        \"@type\": \"ListItem\",\n                        \"position\": 2,\n                        \"name\": \"en\",\n                        \"item\": \"https://aast.edu/en\"\n                    },\n                    {\n                        \"@type\": \"ListItem\",\n                        \"position\": 3,\n                        \"name\": \"Colleges\",\n                        \"item\": \"https://aast.edu/en/colleges\"\n                    }\n                ]\n            },\n            \"potentialAction\": {\n                \"@type\": \"SearchAction\",\n                \"target\": \"https://aast.edu/en/programs-courses/results.php?search={search_term_string}\",\n                \"query-input\": \"required search=search_term_string\"\n            },\n            \"address\": {\n                \"@type\": \"PostalAddress\",\n                \"streetAddress\": \"Egypt\",\n                \"addressLocality\": \"Alexandria\",\n                \"postalCode\": \"1029\",\n                \"addressCountry\": \"Egypt\"\n            },\n            \"geo\": {\n                \"@type\": \"GeoCoordinates\",\n                \"latitude\": \"31.3082\",\n                \"longitude\": \"30.063143\"\n            },\n            \"openingHours\": \"Mo, Tu, We, Th, Fr, Sa, Su -\",\n            \"contactPoint\": {\n                \"@type\": \"ContactPoint\",\n                \"telephone\": \"19838\"\n            }\n        }\n    </script>\n\n\n\n<!--    <script type=\"application/ld+json\">-->\n<!--        {-->\n<!--            \"@context\": \"https://schema.org\",-->\n<!--            \"@type\": \"SiteNavigationElement\",-->\n<!--            \"name\": [-->\n<!--                \"Home\",-->\n<!--                \"Admission\",-->\n<!--                \"Colleges\",-->\n<!--                \"Campuses\",-->\n<!--                \"Students\",-->\n<!--                \"staff\",-->\n<!--                \"visitors\"-->\n<!--            ],-->\n<!--            \"url\": [-->\n<!--                \"/aast\",-->\n<!--                \"https://aast.edu/en/admission/\",-->\n<!--                \"https://aast.edu/en/colleges/\",-->\n<!--                \"https://aast.edu/en/campuses/\",-->\n<!--                \"https://aast.edu/en/students.php\",-->\n<!--                \"https://aast.edu/en/staff.php\",-->\n<!--                \"https://aast.edu/en/visitors.php\"-->\n<!--            ]-->\n<!--        }-->\n<!--    </script>-->\n\n    <!-- Font Icons css -->\n    <link rel=\"stylesheet\" href=\"../template/en/main/css\\font-icons.css\">\n    <!-- plugins css -->\n    <link rel=\"stylesheet\" href=\"../template/en/main/css\\plugins.css\">\n    <!-- Main Stylesheet -->\n    <link rel=\"stylesheet\" href=\"../template/en/main/css\\style.css\">\n\n    <!-- admission-find-->\n    <link rel=\"stylesheet\" href=\"../template/en/main/css/upper-sec.css\">\n    <link rel=\"stylesheet\" href=\"../templ"
+  }
+]

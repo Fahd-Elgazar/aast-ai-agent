@@ -1,0 +1,1 @@
+[{"type": "request", "url": "https://aast.edu/en/colleges/coe/latakia/coe-news.php?get_event_type=1&last_id=7567&unit_id=1", "method": "GET"}, {"type": "response", "url": "https://aast.edu/en/colleges/coe/latakia/coe-news.php?get_event_type=1&last_id=7567&unit_id=1", "status": 500, "content_type": "text/html; charset=UTF-8", "sample": ""}]

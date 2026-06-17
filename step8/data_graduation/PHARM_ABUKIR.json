@@ -1,0 +1,292 @@
+{
+  "nodes": [
+    {
+      "label": "Campus",
+      "id": "CAMPUS_ABU_QIR",
+      "properties": {
+        "campus_id": "ABU_QIR",
+        "name": "Abu Qir Campus",
+        "city": "Alexandria",
+        "area": "Abu Qir",
+        "country": "Egypt",
+        "description": "Main headquarters of the College of Pharmacy at AASTMT, serving Alexandria and the northern region of Egypt.",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "College",
+      "id": "ABU_QIR_PHARM",
+      "properties": {
+        "college_id": "PHARM_ABUKIR",
+        "name": "College of Pharmacy",
+        "branch": "Abu Qir",
+        "academic_level": "UNDERGRADUATE",
+        "parent_institution": "Arab Academy for Science, Technology and Maritime Transport",
+        "year_established": null,
+        "vision": "To achieve excellence and international competitiveness in pharmacy education and research.",
+        "mission": "Achieving sustainable pharmacy education through quality education, applied research, international cooperation, and strong engagement with the pharmaceutical sector.",
+        "industry_and_international_relations": [
+          "Egyptian Pharmacy Syndicate",
+          "National pharmaceutical organizations",
+          "International pharmaceutical organizations",
+          "International universities"
+        ],
+        "qa_unit_exists": true,
+        "qa_description": "Five-year strategic plan (2021–2026) emphasizing continuous improvement, international benchmarking, digital transformation, and quality assurance in pharmacy education.",
+        "strategic_plan_period": "2021–2026",
+        "strategic_pillars": [
+          "Education and Learning",
+          "Research and Development",
+          "International Status",
+          "Social Responsibility",
+          "Digital Transformation"
+        ],
+        "stakeholders_involved": [
+          "Students",
+          "Faculty Members",
+          "Administrators",
+          "Pharmacy Syndicate",
+          "Pharmaceutical Organizations",
+          "Local Community"
+        ],
+        "core_values": [
+          "Alignment",
+          "Excellence",
+          "Respect",
+          "Accountability",
+          "Leadership",
+          "Dignity",
+          "Knowledge"
+        ],
+        "dean_name": "Prof. Amira Mostafa Senbel",
+        "dean_role": "Dean of the College of Pharmacy – Abu Qir Campus",
+        "education_model": "Outcome-based pharmacy education",
+        "curriculum_development": "Continuously updated study plans aligned with international pharmacy education standards",
+        "curriculum_focus_areas": [
+          "Pharmaceutical Sciences",
+          "Pharmacy Practice",
+          "Healthcare Quality",
+          "Pharmaceutical Supply Chain Management"
+        ],
+        "accreditation_national": [],
+        "accreditation_international": [
+          "International Pharmaceutical Federation (FIP)"
+        ],
+        "future_accreditation_direction": [
+          "Alignment with American Council for Pharmacy Education (ACPE) guidelines"
+        ],
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Degree",
+      "id": "ABU_QIR_PHARM_BPHARM",
+      "properties": {
+        "degree_name": "Bachelor of Pharmacy (B.Pharm)",
+        "level": "UNDERGRADUATE",
+        "study_duration_years": 5,
+        "training_structure": "Academic study integrated with experiential pharmaceutical training",
+        "degree_objective": "Preparation of competent pharmacists capable of national and international competition",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Program",
+      "id": "ABU_QIR_PHARM_BPHARM_PROGRAM",
+      "properties": {
+        "program_id": "BPHARM",
+        "name": "Bachelor of Pharmacy (B.Pharm)",
+        "degree": "B.Pharm",
+        "discipline": "Pharmacy",
+        "study_duration_years": 5,
+        "training_structure": "Academic study integrated with experiential pharmaceutical training",
+        "degree_objective": "Preparation of competent pharmacists capable of national and international competition",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Facility",
+      "id": "ABU_QIR_PHARM_FAC_ADV_PHARM_LABS",
+      "properties": {
+        "name": "Advanced pharmaceutical laboratories",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Facility",
+      "id": "ABU_QIR_PHARM_FAC_COMPUTING_DIGITAL",
+      "properties": {
+        "name": "Computing and digital learning facilities",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Facility",
+      "id": "ABU_QIR_PHARM_FAC_MODERN_INFRA",
+      "properties": {
+        "name": "Modern educational infrastructure supporting pharmacy education",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "TrainingModel",
+      "id": "ABU_QIR_PHARM_TRAININGMODEL_ROTATIONS",
+      "properties": {
+        "mandatory_training": true,
+        "industry_training": true,
+        "experiential_learning": true,
+        "description": "Four experiential learning rotations placed in summer semesters, including applied pharmaceutical and professional practice training.",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "ResearchArea",
+      "id": "RESEARCHAREA_PHARMACEUTICAL_SCIENCES",
+      "properties": {
+        "name": "Pharmaceutical sciences",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "ResearchArea",
+      "id": "RESEARCHAREA_PHARMACY_PRACTICE",
+      "properties": {
+        "name": "Pharmacy practice",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "ResearchArea",
+      "id": "RESEARCHAREA_HEALTHCARE_QUALITY_IMPROVEMENT",
+      "properties": {
+        "name": "Healthcare quality improvement",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "ResearchArea",
+      "id": "RESEARCHAREA_PHARM_LOGISTICS_SUPPLY_CHAINS",
+      "properties": {
+        "name": "Pharmaceutical logistics and supply chains",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Accreditation",
+      "id": "ABU_QIR_PHARM_ACC_FIP",
+      "properties": {
+        "name": "International Pharmaceutical Federation (FIP)",
+        "scope": "INTERNATIONAL",
+        "accreditation_type": "MEMBERSHIP",
+        "data_source_type": "official"
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "start_id": "CAMPUS_ABU_QIR",
+      "relationship_type": "HOSTS",
+      "end_id": "ABU_QIR_PHARM",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "ABU_QIR_PHARM",
+      "relationship_type": "OFFERS",
+      "end_id": "ABU_QIR_PHARM_BPHARM",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "ABU_QIR_PHARM_BPHARM",
+      "relationship_type": "INCLUDES_PROGRAM",
+      "end_id": "ABU_QIR_PHARM_BPHARM_PROGRAM",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "ABU_QIR_PHARM",
+      "relationship_type": "HAS_FACILITY",
+      "end_id": "ABU_QIR_PHARM_FAC_ADV_PHARM_LABS",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "ABU_QIR_PHARM",
+      "relationship_type": "HAS_FACILITY",
+      "end_id": "ABU_QIR_PHARM_FAC_COMPUTING_DIGITAL",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "ABU_QIR_PHARM",
+      "relationship_type": "HAS_FACILITY",
+      "end_id": "ABU_QIR_PHARM_FAC_MODERN_INFRA",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "ABU_QIR_PHARM",
+      "relationship_type": "HAS_ACCREDITATION",
+      "end_id": "ABU_QIR_PHARM_ACC_FIP",
+      "properties": {
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "ABU_QIR_PHARM_BPHARM_PROGRAM",
+      "relationship_type": "REQUIRES_TRAINING",
+      "end_id": "ABU_QIR_PHARM_TRAININGMODEL_ROTATIONS",
+      "properties": {
+        "origin": "training_and_practice",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "ABU_QIR_PHARM_BPHARM_PROGRAM",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_PHARMACEUTICAL_SCIENCES",
+      "properties": {
+        "origin": "research_and_innovation.research_focus",
+        "industry_projects": true,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "ABU_QIR_PHARM_BPHARM_PROGRAM",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_PHARMACY_PRACTICE",
+      "properties": {
+        "origin": "research_and_innovation.research_focus",
+        "industry_projects": true,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "ABU_QIR_PHARM_BPHARM_PROGRAM",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_HEALTHCARE_QUALITY_IMPROVEMENT",
+      "properties": {
+        "origin": "research_and_innovation.research_focus",
+        "industry_projects": true,
+        "data_source_type": "official"
+      }
+    },
+    {
+      "start_id": "ABU_QIR_PHARM_BPHARM_PROGRAM",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_PHARM_LOGISTICS_SUPPLY_CHAINS",
+      "properties": {
+        "origin": "research_and_innovation.research_focus",
+        "industry_projects": true,
+        "data_source_type": "official"
+      }
+    }
+  ]
+}

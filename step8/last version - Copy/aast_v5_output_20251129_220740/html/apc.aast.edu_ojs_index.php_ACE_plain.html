@@ -1,0 +1,294 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Advances in Computing and Engineering</title>
+	<meta name="description" content="Advances in Computing and Engineering" />
+	<meta name="keywords" content="Computer vision; Networks; Wireless and optical communication; AI; VLSI; IoT; Sensors;  Computer Architecture; Energy Harvesting; Nanotechnology, Speech and Signal Processing; Biomedical; Bioinformatics, Machine Learning, Artificial Intelligence" />
+	<meta name="generator" content="Open Journal Systems 2.4.4.1" />
+	
+		<link rel="stylesheet" href="https://apc.aast.edu/ojs/lib/pkp/styles/pkp.css" type="text/css" />
+	<link rel="stylesheet" href="https://apc.aast.edu/ojs/lib/pkp/styles/common.css" type="text/css" />
+	<link rel="stylesheet" href="https://apc.aast.edu/ojs/styles/common.css" type="text/css" />
+	<link rel="stylesheet" href="https://apc.aast.edu/ojs/styles/compiled.css" type="text/css" />
+
+	<!-- Base Jquery -->
+	<script type="text/javascript" src="//www.google.com/jsapi"></script>
+		<script type="text/javascript">
+			<!--
+			// Provide a local fallback if the CDN cannot be reached
+			if (typeof google == 'undefined') {
+				document.write(unescape("%3Cscript src='https://apc.aast.edu/ojs/lib/pkp/js/lib/jquery/jquery.min.js' type='text/javascript'%3E%3C/script%3E"));
+				document.write(unescape("%3Cscript src='https://apc.aast.edu/ojs/lib/pkp/js/lib/jquery/plugins/jqueryUi.min.js' type='text/javascript'%3E%3C/script%3E"));
+			} else {
+				google.load("jquery", "1.4.4");
+				google.load("jqueryui", "1.8.6");
+			}
+			// -->
+		</script>
+	
+	
+	
+	<link rel="stylesheet" href="https://apc.aast.edu/ojs/styles/sidebar.css" type="text/css" />		<link rel="stylesheet" href="https://apc.aast.edu/ojs/styles/rightSidebar.css" type="text/css" />	
+	
+	<!-- Default global locale keys for JavaScript -->
+	
+<script type="text/javascript">
+	jQuery.pkp = jQuery.pkp || { };
+	jQuery.pkp.locale = { };
+			
+				jQuery.pkp.locale.form_dataHasChanged = 'The data on this form has changed. Continue anyway?';
+	</script>
+	<!-- Compiled scripts -->
+			
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/lib/jquery/plugins/jquery.tag-it.js"></script>
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/lib/jquery/plugins/jquery.cookie.js"></script>
+
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/functions/fontController.js"></script>
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/functions/general.js"></script>
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/functions/jqueryValidatorI18n.js"></script>
+
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/classes/Helper.js"></script>
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/classes/ObjectProxy.js"></script>
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/classes/Handler.js"></script>
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/classes/linkAction/LinkActionRequest.js"></script>
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/classes/features/Feature.js"></script>
+
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/controllers/SiteHandler.js"></script><!-- Included only for namespace definition -->
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/controllers/UrlInDivHandler.js"></script>
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/controllers/AutocompleteHandler.js"></script>
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/controllers/ExtrasOnDemandHandler.js"></script>
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/controllers/form/FormHandler.js"></script>
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/controllers/form/AjaxFormHandler.js"></script>
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/controllers/form/ClientFormHandler.js"></script>
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/controllers/grid/GridHandler.js"></script>
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/controllers/linkAction/LinkActionHandler.js"></script>
+
+<script type="text/javascript" src="https://apc.aast.edu/ojs/js/pages/search/SearchFormHandler.js"></script>
+<script type="text/javascript" src="https://apc.aast.edu/ojs/js/statistics/ReportGeneratorFormHandler.js"></script>
+<script type="text/javascript" src="https://apc.aast.edu/ojs/plugins/generic/lucene/js/LuceneAutocompleteHandler.js"></script>
+
+<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/lib/jquery/plugins/jquery.pkp.js"></script>	
+	<!-- Form validation -->
+	<script type="text/javascript" src="https://apc.aast.edu/ojs/lib/pkp/js/lib/jquery/plugins/validate/jquery.validate.js"></script>
+	<script type="text/javascript">
+		<!--
+		// initialise plugins
+		
+		$(function(){
+			jqueryValidatorI18n("https://apc.aast.edu/ojs", "en_US"); // include the appropriate validation localization
+			
+			$(".tagit").live('click', function() {
+				$(this).find('input').focus();
+			});
+		});
+		// -->
+		
+	</script>
+
+		
+	<link rel="alternate" type="application/atom+xml" title="Advances in Computing and Engineering (atom+xml)" href="https://apc.aast.edu/ojs/index.php/ACE/gateway/plugin/WebFeedGatewayPlugin/atom" />
+	<link rel="alternate" type="application/rdf+xml" title="Advances in Computing and Engineering (rdf+xml)" href="https://apc.aast.edu/ojs/index.php/ACE/gateway/plugin/WebFeedGatewayPlugin/rss" />
+	<link rel="alternate" type="application/rss+xml" title="Advances in Computing and Engineering (rss+xml)" href="https://apc.aast.edu/ojs/index.php/ACE/gateway/plugin/WebFeedGatewayPlugin/rss2" />
+</head>
+<body id="pkp-common-openJournalSystems">
+<div id="container">
+
+<div id="header">
+<div id="headerTitle">
+<h1>
+	<img src="https://apc.aast.edu/ojs/public/journals/10/homeHeaderTitleImage_en_US.jpg" width="1280" height="243" alt="Page Header" />
+</h1>
+</div>
+</div>
+
+<div id="body">
+
+	<div id="sidebar">
+							<div id="rightSidebar">
+				<div class="block custom">
+	<h2><a href="https://docs.google.com/forms/d/e/1FAIpQLSfs-i0wAG4se5hAWX1JW7_oDw_yb04_2USI_B8Tc-hepq7NZw/viewform" target="_blank"><img src="/ojs/public/site/images/mkhalifa/emailListIcon4.png" alt="" /></a></h2>
+<p><a href="https://www.facebook.com/ace.apc.aastmt/" target="_blank"><img src="/ojs/public/site/images/mkhalifa/fb.png" alt="" /></a>&nbsp;<a href="https://twitter.com/ace_journal_apc" target="_blank"><img src="/ojs/public/site/images/mkhalifa/x.png" alt="" /></a></p>
+</div>	
+<div class="block" id="sidebarUser">
+			<span class="blockTitle">User</span>
+	
+						<form method="post" action="https://apc.aast.edu/ojs/index.php/ACE/login/signIn">
+				<table>
+					<tr>
+						<td><label for="sidebar-username">Username</label></td>
+						<td><input type="text" id="sidebar-username" name="username" value="" size="12" maxlength="32" class="textField" /></td>
+					</tr>
+					<tr>
+						<td><label for="sidebar-password">Password</label></td>
+						<td><input type="password" id="sidebar-password" name="password" value="" size="12" maxlength="32" class="textField" /></td>
+					</tr>
+					<tr>
+						<td colspan="2"><input type="checkbox" id="remember" name="remember" value="1" /> <label for="remember">Remember me</label></td>
+					</tr>
+					<tr>
+						<td colspan="2"><input type="submit" value="Login" class="button" /></td>
+					</tr>
+				</table>
+			</form>
+			</div> <div class="block" id="notification">
+	<span class="blockTitle">Notifications</span>
+	<ul>
+					<li><a href="https://apc.aast.edu/ojs/index.php/ACE/notification">View</a></li>
+			<li><a href="https://apc.aast.edu/ojs/index.php/ACE/notification/subscribeMailList">Subscribe</a></li>
+			</ul>
+</div>
+<div class="block" id="sidebarNavigation">
+	<span class="blockTitle">Journal Content</span>
+
+	<form id="simpleSearchForm" method="post" action="https://apc.aast.edu/ojs/index.php/ACE/search/search">
+		<table id="simpleSearchInput">
+			<tr>
+				<td>
+													<label for="simpleQuery">Search <br />
+					<input type="text" id="simpleQuery" name="simpleQuery" size="15" maxlength="255" value="" class="textField" /></label>
+								</td>
+			</tr>
+			<tr>
+				<td><label for="searchField">
+				Search Scope
+				<br />
+				<select id="searchField" name="searchField" size="1" class="selectMenu">
+					<option label="All" value="query">All</option>
+<option label="Authors" value="authors">Authors</option>
+<option label="Title" value="title">Title</option>
+<option label="Abstract" value="abstract">Abstract</option>
+<option label="Index terms" value="indexTerms">Index terms</option>
+<option label="Full Text" value="galleyFullText">Full Text</option>
+
+				</select></label>
+				</td>
+			</tr>
+			<tr>
+				<td><input type="submit" value="Search" class="button" /></td>
+			</tr>
+		</table>
+	</form>
+
+	<br />
+
+		<span class="blockSubtitle">Browse</span>
+	<ul>
+		<li><a href="https://apc.aast.edu/ojs/index.php/ACE/issue/archive">By Issue</a></li>
+		<li><a href="https://apc.aast.edu/ojs/index.php/ACE/search/authors">By Author</a></li>
+		<li><a href="https://apc.aast.edu/ojs/index.php/ACE/search/titles">By Title</a></li>
+		
+					<li><a href="https://apc.aast.edu/ojs/index.php/index">Other Journals</a></li>
+						</ul>
+	</div>
+
+<!-- Add javascript required for font sizer -->
+<script type="text/javascript">
+	<!--
+	$(function(){
+		fontSize("#sizer", "body", 9, 16, 32, "/ojs"); // Initialize the font sizer
+	});
+	// -->
+</script>
+
+<div class="block" id="sidebarFontSize" style="margin-bottom: 4px;">
+	<span class="blockTitle">Font Size</span>
+	<div id="sizer"></div>
+</div>
+<br /><div class="block" id="sidebarInformation">
+	<span class="blockTitle">Information</span>
+	<ul>
+		<li><a href="https://apc.aast.edu/ojs/index.php/ACE/information/readers">For Readers</a></li>		<li><a href="https://apc.aast.edu/ojs/index.php/ACE/information/authors">For Authors</a></li>		<li><a href="https://apc.aast.edu/ojs/index.php/ACE/information/librarians">For Librarians</a></li>	</ul>
+</div>
+<div class="block" id="sidebarHelp">
+	<a class="blockTitle" href="javascript:openHelp('https://apc.aast.edu/ojs/index.php/ACE/help/view/user/topic/000001')">Journal Help</a>
+</div><div class="block" id="sidebarDevelopedBy">
+	<a class="blockTitle" href="https://pkp.sfu.ca/ojs/" id="developedBy">Open Journal Systems</a>
+</div>
+			</div>
+			</div>
+
+<div id="main">
+<div id="navbar">
+	<ul class="menu">
+		<li id="home"><a href="https://apc.aast.edu/ojs/index.php/ACE/index">Home</a></li>
+		<li id="about"><a href="https://apc.aast.edu/ojs/index.php/ACE/about">About</a></li>
+
+					<li id="login"><a href="https://apc.aast.edu/ojs/index.php/ACE/login">Login</a></li>
+							<li id="register"><a href="https://apc.aast.edu/ojs/index.php/ACE/user/register">Register</a></li>
+												<li id="search"><a href="https://apc.aast.edu/ojs/index.php/ACE/search">Search</a></li>
+		
+					<li id="current"><a href="https://apc.aast.edu/ojs/index.php/ACE/issue/current">Current</a></li>
+			<li id="archives"><a href="https://apc.aast.edu/ojs/index.php/ACE/issue/archive">Archives</a></li>
+		
+					<li id="announcements"><a href="https://apc.aast.edu/ojs/index.php/ACE/announcement">Announcements</a></li>
+				
+
+								</ul>
+</div>
+
+<div id="breadcrumb">
+	<a href="https://apc.aast.edu/ojs/index.php/ACE/index">Home</a> &gt;
+			<a href="https://apc.aast.edu/ojs/index.php/ACE" class="current">Advances in Computing and Engineering</a></div>
+
+<h2>Advances in Computing and Engineering</h2>
+
+
+<div id="content">
+
+
+
+	<div id="journalDescription"><p style="text-align: justify;" dir="ltr">Journal of Advances in Computing and Engineering (ACE) is a peer-reviewed, open access, interdisciplinary journal, with two issues yearly. The focus of the journal is on theories, methods, and applications in computing and engineering. The journal covers all areas of computing, engineering, and technology, including interdisciplinary topics. ACE also publishes survey and review articles.</p><p style="text-align: justify;" dir="ltr">The scope of ACE includes but not limited to the following topics: Computer science theory; Algorithms; Intelligent computing; Bioinformatics; Health informatics; Deep learning; Networks; Wireless communication systems; Signal processing; Robotics; Optical design engineering; Sensors.</p><p style="text-align: justify;" dir="ltr">All submitted articles should report original, previously unpublished research results, experimental or theoretical. Articles submitted to the journal should meet these criteria and must not be under consideration for publication elsewhere. The manuscript should follow the style specified by the journal. For LaTeX format Submissions, kindly use this template: <a title="LaTeX Template for PLOS (Public Library of Science) Articles" href="/ojs/LaTeX%20Template%20for%20PLOS%20(Public%20Library%20of%20Science)%20Articles.zip" target="_blank">LaTeX Template for PLOS (Public Library of Science) Articles</a>.</p><p style="text-align: justify;">The journal is open-access with a liberal <a href="https://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a> which preserves the copyrights of published materials to the authors and protects it from unauthorized commercial use.</p><p style="text-align: justify;">The ACE journal does not collect Articles Processing Charges (APCs) or submission fees, and is free of charge for authors and readers, and operates an online submission with the peer review system allowing authors to submit articles online and track their progress via its web interface.</p><p style="text-align: justify;">The journal is financially supported by the Arab Academy for Science, Technology, and Maritime Transport <a href="https://www.aast.edu/" target="_blank">AASTMT</a> in order to maintain quality open-access source of research papers on <span id="docs-internal-guid-acfd65a6-7fff-933a-6f72-ac4157178a07">Computing and Engineering</span>.</p><p style="text-align: justify;">ACE has an outstanding editorial and advisory board of eminent scientists, researchers and engineers who contribute and enrich the journal with their vast experience in different fields of interest to the journal.</p></div>
+
+
+
+
+<br />
+<div id="additionalHomeContent"><!-- #######  THIS IS A COMMENT - Visible only in the source editor #########--><div><strong><span style="font-size: 18px;">Indexed by</span></strong></div><p><a title="Google Scholar" href="https://scholar.google.com/citations?hl=en&amp;user=NuDVokEAAAAJ&amp;view_op=list_works&amp;authuser=5" rel="noopener" target="_blank"><img src="/ojs/public/site/images/cybrarian/GS2.png" alt="" width="123" height="52" /></a>  <img src="/ojs/public/site/images/cybrarian/ebsc6.png" alt="" width="200" height="56" /> <a title="DOAJ" href="https://doaj.org/toc/2735-5985" rel="noopener" target="_blank"><img src="/ojs/public/site/images/cybrarian/DOAJ_logo4.png" alt="" width="144" height="46" /></a> <a title="WorldCat" href="https://search.worldcat.org/search?q=n2%3A2735-5985&amp;offset=1" rel="noopener" target="_blank"><img src="https://journal.cybrarians.info/public/site/images/admin/oclc.png" alt="" width="133" height="40" /></a></p><p> </p><div><strong><span style="font-size: 18px;">Discovered by</span></strong></div><p><a title="OpenAlex" href="https://openalex.org/sources/s4210234417" rel="noopener" target="_blank"><img src="https://journal.cybrarians.info/public/site/images/admin/openalex.png" alt="" width="178" height="47" /></a>  <a title="Dimensions" href="https://app.dimensions.ai/discover/publication?and_facet_source_title=jour.1410610" rel="noopener" target="_blank"><img src="https://journal.cybrarians.info/public/site/images/admin/dimensions-2.png" alt="" width="156" height="52" /></a>  <a title="Scilit" href="https://www.scilit.com/sources/113763" rel="noopener" target="_blank"><img src="https://journal.cybrarians.info/public/site/images/admin/scilit.jpg" alt="" width="135" height="62" /></a> <a title="Base" href="https://www.base-search.net/Search/Results?lookfor=publ:Academy%20publ:Publishing%20publ:Center%20Advances%20in%20Computing%20and%20Engineering&amp;type=allus&amp;oaboost=1&amp;refid=dcsoren&amp;sort=dcyear_sort%20desc,id%20asc" rel="noopener" target="_blank"><img src="https://journal.cybrarians.info/public/site/images/admin/base.png" alt="" width="147" height="58" /></a>  <a title="SCiNiTO" href="https://app.scinito.ai/search#filters=%7B%22pageNum%22%3A1%2C%22sortBy%22%3A%22YEAR%22%2C%22venue%22%3A%5B%7B%22id%22%3A%22S4210234417%22%2C%22name%22%3A%22Advances+in+Computing+and+Engineering%22%7D%5D%7D" rel="noopener" target="_blank"><img src="https://journal.cybrarians.info/public/site/images/admin/SciNito.png" alt="" width="170" height="60" /></a> </p><div><strong><span style="font-size: 18px;">Powered by</span></strong></div><h2><img src="/ojs/public/site/images/cybrarian/OA_2.png" alt="" width="133" height="50" /> <a href="https://www.crossref.org/members/prep/9074" rel="noopener" target="_blank"><img src="/ojs/public/site/images/cybrarian/Crossref-Logo3.png" alt="" /></a><img src="/ojs/public/site/images/cybrarian/ithenticate-badge-rec-reverse1.png" alt="" width="171" height="53" /> <img src="/ojs/public/site/images/cybrarian/cc2.png" alt="" /> </h2></div>
+
+		<div id="announcementsHome">
+		<h3>Announcements</h3>
+		<table class="announcements">
+	<tr>
+		<td colspan="2" class="headseparator">&nbsp;</td>
+	</tr>
+
+
+			<tr class="title">
+					<td class="title"><h4>How to submit an article?</h4></td>
+					<td class="more">&nbsp;</td>
+		</tr>
+		<tr class="description">
+			<td class="description"><iframe title="YouTube video player" src="https://www.youtube.com/embed/-H7b_5nnMAQ" frameborder="0" width="560" height="315"></iframe></td>
+			<td class="more">&nbsp;</td>
+		</tr>
+		<tr class="details">
+			<td class="posted">Posted: 2022-12-16</td>
+					</tr>
+		<tr>
+		<td colspan="2" class="endseparator">&nbsp;</td>
+	</tr>
+	
+</table>	
+		<table class="announcementsMore">
+			<tr>
+				<td><a href="https://apc.aast.edu/ojs/index.php/ACE/announcement">More Announcements...</a></td>
+			</tr>
+		</table>
+	</div>
+
+
+	<br /><br />
+	<div id="pageFooter"><!-- #######  THIS IS A COMMENT - Visible only in the source editor #########--><hr /><p><span style="font-size: 14px;"><strong>Advances in Computing and Engineering</strong></span></p><p><span style="font-size: 12px;">E-ISSN: 2735-5985</span></p><p><span style="font-size: 12px;">P-ISSN: 2735-5977</span></p><p> </p><p><span style="font-size: 14px;">Published by:</span></p><p><strong><span style="font-size: 14px;">Academy Publishing Center (APC)</span></strong></p><p><span style="font-size: 12px;">Arab Academy for Science, Technology and Maritime Transport (AASTMT)</span></p><p><span style="font-size: 12px;">Alexandria, Egypt</span></p><p><span style="font-size: 12px;"><a href="mailto:ace@aast.edu">ace@aast.edu</a></span></p><p><a href="https://www.facebook.com/ace.apc.aastmt" rel="noopener" target="_blank"><img src="/ojs/public/site/images/cybrarian/fb.png" alt="" /></a>  </p></div>
+
+</div><!-- content -->
+</div><!-- main -->
+</div><!-- body -->
+
+
+
+</div><!-- container -->
+</body>
+</html>

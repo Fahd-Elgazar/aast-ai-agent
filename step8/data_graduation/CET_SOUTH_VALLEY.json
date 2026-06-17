@@ -1,0 +1,258 @@
+{
+  "nodes": [
+    {
+      "label": "Campus",
+      "id": "CAMPUS_SOUTH_VALLEY",
+      "properties": {
+        "campus_id": "SOUTH_VALLEY",
+        "name": "South Valley Campus",
+        "city": "Aswan",
+        "country": "Egypt",
+        "branch": "South Valley",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "College",
+      "id": "SOUTH_VALLEY_CET",
+      "properties": {
+        "college_id": "CET_SOUTH_VALLEY",
+        "name": "College of Engineering & Technology South Valley",
+        "parent_institution": "Arab Academy for Science, Technology and Maritime Transport",
+        "year_established": 2006,
+        "vision": "Our Vision is to excel as one of the best engineering colleges locally and regionally and to maintain internationally recognized programs with an advanced academic rank. We also envision to provide the highest quality educational programs, research, and community services and to play a leading role in, all our engineering activities, as a foremost engineering school in the Arab world.",
+        "mission": "Our mission is to efficiently integrate all of our facilities, and resources to prepare young generations for the requirements of the knowledge based societies and to proactively provide competitive, intellectual, and market-driven academic programs, research, and community services and pledges strong collaboration between our faculty, staff members, students, researchers, alumni, and industrial and business leaders. Further to maintain and develop long term and lasting partnerships with Arab institutions, and internationally acknowledged bodies.",
+        "raw_text": "College Of Engineering & Technology  South Valley\nThe Industrial Advisory Committee (IAC) is a sub-committee of the Board of Studies in College of Engineering and Technology. The members of (IAC) were from chairmen of varieties of industries and engineering authorities. The (IAC) holds two meetings per year.\n\nThe role of (IAC) is:\n\nTo identify and promote new initiatives relating to the external interaction of the staff, students of the College of Engineering and Technology with the world of Industry and Commerce identify \"industrial and social relevance\" where possible.\nTo promote best practice for joint University-Industry projects by being aware of national schemes and resources and successful activities elsewhere which might complement our Industrial Portfolio, and suggest how letters of support might be best used.\nTo advise the Board of Studies on any matter related to Industrial collaboration and respond to questions and matters referred to the (IAC) to assist the Board strategic planning.\nTo monitor the College''s activity with Industry and track any National Developments which may introduce an assessment of the quality and quantity of the College''s performance in the matters High caliber faculty, assistants, and graduates\n\n. Strong ties with community and industry\n\n. Faculty Dedication and Commitment. Ethical Engineering Profession and integrity\n\n. Arab Cooperation\n\n. International Cooperate Agreements\n\n. Quality Teaching and Learning Environment\n\n. Multidisciplinary Research and Innovation\n\n. Decentralization and Authority Delegation\n\n. Student Activities and ParticipationVision\n\nOur Vision is to excel as one of the best engineering colleges locally and regionally and to maintain internationally recognized programs with an advanced academic rank. We also envision to provide the highest quality educational programs, research, and community services and to play a leading role in, all our engineering activities, as a foremost engineering school in the Arab world.\n\nMission\n\nOur mission is to efficiently integrate all of our facilities, and resources to prepare young generations for the requirements of the knowledge based societies and to proactively provide competitive, intellectual, and market-driven academic programs, research, and community services and pledges strong collaboration between our faculty, staff members, students, researchers, alumni, and industrial and business leaders. Further to maintain and develop long term and lasting partnerships with Arab institutions, and internationally acknowledged bodies.AASTMT has realized the importance of educational innovation and development, since the early days of its establishment in 1972.\n\nWithin the framework of the commitment of the Arab Academy for Science, Technology and Maritime Transport to its vision, mission and societal duties towards the development of the South Valley region, it has opened a branch in the South Valley (Aswan) with a 50% discount for the people of the South Valley and the citizens of Sudan.\n\nThe study started in the branch in 2006 in a temporary headquarters of the Academy’s headquarters in Alexandria and included the College of Engineering and Technology and the College of Business Administration as well as the Faculty of International Transport and Logistics. With the increasing demand in the numbers of students at the College of Engineering and Technology and over the years, engineering departments were established as following: -\n\n1- Electronics and Communication Engineering.\n\n2- Construction and Building Engineering.\n\n3- Architectural Engineering and Environmental Design.\n\n4- Mechanical & Mechatronics Engineering.\n\nBased on the desire of the Academy to allow the opportunity to start towards excellence in achieving its vision and mission, the College of Engineering and Technology-South Valley Branch were established in Aswan.\n\nProf. Dr. Mohamed Fahmy Shehadeh\n\nDean of the College of Engineering and Technology",
+        "data_source_type": "official"
+      }
+    },
+
+    {
+      "label": "Degree",
+      "id": "SOUTH_VALLEY_CET_BSC_ENGINEERING",
+      "properties": {
+        "degree_name": "Bachelor of Science",
+        "level": "UNDERGRADUATE",
+        "field": "Engineering & Technology",
+        "data_source_type": "official"
+      }
+    },
+
+    {
+      "label": "Program",
+      "id": "SOUTH_VALLEY_CET_ELECTRONICS_COMMUNICATION_ENGINEERING",
+      "properties": {
+        "program_id": "ELECTRONICS_COMMUNICATION_ENGINEERING",
+        "name": "Electronics and Communication Engineering",
+        "degree_level": "UNDERGRADUATE",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Program",
+      "id": "SOUTH_VALLEY_CET_CONSTRUCTION_BUILDING_ENGINEERING",
+      "properties": {
+        "program_id": "CONSTRUCTION_BUILDING_ENGINEERING",
+        "name": "Construction and Building Engineering",
+        "degree_level": "UNDERGRADUATE",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Program",
+      "id": "SOUTH_VALLEY_CET_ARCHITECTURAL_ENVIRONMENTAL_DESIGN",
+      "properties": {
+        "program_id": "ARCHITECTURAL_ENGINEERING_ENVIRONMENTAL_DESIGN",
+        "name": "Architectural Engineering and Environmental Design",
+        "degree_level": "UNDERGRADUATE",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Program",
+      "id": "SOUTH_VALLEY_CET_MECHANICAL_MECHATRONICS_ENGINEERING",
+      "properties": {
+        "program_id": "MECHANICAL_MECHATRONICS_ENGINEERING",
+        "name": "Mechanical & Mechatronics Engineering",
+        "degree_level": "UNDERGRADUATE",
+        "data_source_type": "official"
+      }
+    },
+
+    {
+      "label": "TrainingModel",
+      "id": "SOUTH_VALLEY_CET_INDUSTRY_COLLAB_IAC",
+      "properties": {
+        "name": "Industrial Advisory Committee (IAC) Collaboration Model",
+        "industry_training": true,
+        "mandatory_training": null,
+        "description": "Industry collaboration via IAC to promote university-industry interaction, joint projects, applied initiatives, and monitoring/benchmarking of industry engagement; IAC holds two meetings per year.",
+        "meeting_frequency_per_year": 2,
+        "data_source_type": "official"
+      }
+    },
+
+    {
+      "label": "Committee",
+      "id": "SOUTH_VALLEY_CET_IAC",
+      "properties": {
+        "name": "Industrial Advisory Committee (IAC)",
+        "type": "sub-committee",
+        "parent_body": "Board of Studies (College of Engineering and Technology)",
+        "member_profile": "Chairmen of varieties of industries and engineering authorities",
+        "meetings_per_year": 2,
+        "data_source_type": "official"
+      }
+    },
+
+    {
+      "label": "ResearchArea",
+      "id": "RESEARCHAREA_MULTIDISCIPLINARY_ENGINEERING_INNOVATION",
+      "properties": {
+        "name": "Multidisciplinary Research and Innovation",
+        "notes": "Focus on industrial and social relevance where possible.",
+        "data_source_type": "official"
+      }
+    },
+
+    {
+      "label": "ScholarshipPolicy",
+      "id": "SOUTH_VALLEY_CET_POLICY_TUITION_DISCOUNT_50",
+      "properties": {
+        "name": "South Valley & Sudan Tuition Discount",
+        "discount_rate": 0.5,
+        "eligible_groups": [
+          "People of the South Valley",
+          "Citizens of Sudan"
+        ],
+        "data_source_type": "official"
+      }
+    },
+
+    {
+      "label": "Person",
+      "id": "PERSON_MOHAMED_FAHMY_SHEHADEH",
+      "properties": {
+        "name": "Prof. Dr. Mohamed Fahmy Shehadeh",
+        "data_source_type": "official"
+      }
+    },
+    {
+      "label": "Role",
+      "id": "ROLE_DEAN_CET_SOUTH_VALLEY",
+      "properties": {
+        "name": "Dean of the College of Engineering and Technology",
+        "data_source_type": "official"
+      }
+    },
+
+    {
+      "label": "ValueSet",
+      "id": "SOUTH_VALLEY_CET_CORE_VALUES",
+      "properties": {
+        "name": "Core Values and Principles",
+        "values": [
+          "Strong ties with community and industry",
+          "Faculty dedication and commitment",
+          "Ethical engineering profession and integrity",
+          "Arab cooperation",
+          "International cooperation agreements",
+          "Quality teaching and learning environment",
+          "Multidisciplinary research and innovation",
+          "Decentralization and authority delegation",
+          "Student activities and participation"
+        ],
+        "data_source_type": "official"
+      }
+    }
+  ],
+
+  "relationships": [
+    {
+      "start_id": "CAMPUS_SOUTH_VALLEY",
+      "relationship_type": "HOSTS",
+      "end_id": "SOUTH_VALLEY_CET",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "SOUTH_VALLEY_CET",
+      "relationship_type": "OFFERS",
+      "end_id": "SOUTH_VALLEY_CET_BSC_ENGINEERING",
+      "properties": { "data_source_type": "modeled", "note": "Explicit degree title not provided; normalized to BSc for engineering undergraduate offering while preserving original program titles." }
+    },
+
+    {
+      "start_id": "SOUTH_VALLEY_CET_BSC_ENGINEERING",
+      "relationship_type": "INCLUDES_PROGRAM",
+      "end_id": "SOUTH_VALLEY_CET_ELECTRONICS_COMMUNICATION_ENGINEERING",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CET_BSC_ENGINEERING",
+      "relationship_type": "INCLUDES_PROGRAM",
+      "end_id": "SOUTH_VALLEY_CET_CONSTRUCTION_BUILDING_ENGINEERING",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CET_BSC_ENGINEERING",
+      "relationship_type": "INCLUDES_PROGRAM",
+      "end_id": "SOUTH_VALLEY_CET_ARCHITECTURAL_ENVIRONMENTAL_DESIGN",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CET_BSC_ENGINEERING",
+      "relationship_type": "INCLUDES_PROGRAM",
+      "end_id": "SOUTH_VALLEY_CET_MECHANICAL_MECHATRONICS_ENGINEERING",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "SOUTH_VALLEY_CET",
+      "relationship_type": "REQUIRES_TRAINING",
+      "end_id": "SOUTH_VALLEY_CET_INDUSTRY_COLLAB_IAC",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "SOUTH_VALLEY_CET",
+      "relationship_type": "HAS_GOVERNANCE_BODY",
+      "end_id": "SOUTH_VALLEY_CET_IAC",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "SOUTH_VALLEY_CET",
+      "relationship_type": "FOCUSES_ON",
+      "end_id": "RESEARCHAREA_MULTIDISCIPLINARY_ENGINEERING_INNOVATION",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "SOUTH_VALLEY_CET",
+      "relationship_type": "HAS_POLICY",
+      "end_id": "SOUTH_VALLEY_CET_POLICY_TUITION_DISCOUNT_50",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "SOUTH_VALLEY_CET",
+      "relationship_type": "HAS_VALUE_SET",
+      "end_id": "SOUTH_VALLEY_CET_CORE_VALUES",
+      "properties": { "data_source_type": "official" }
+    },
+
+    {
+      "start_id": "PERSON_MOHAMED_FAHMY_SHEHADEH",
+      "relationship_type": "HOLDS_ROLE",
+      "end_id": "ROLE_DEAN_CET_SOUTH_VALLEY",
+      "properties": { "data_source_type": "official" }
+    },
+    {
+      "start_id": "SOUTH_VALLEY_CET",
+      "relationship_type": "HAS_LEADERSHIP_ROLE",
+      "end_id": "ROLE_DEAN_CET_SOUTH_VALLEY",
+      "properties": { "data_source_type": "official" }
+    }
+  ]
+}

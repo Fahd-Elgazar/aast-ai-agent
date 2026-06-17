@@ -1,0 +1,1288 @@
+[
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=20&uid=16",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=20&uid=16",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=20&uid=16_plain.html",
+    "ids": {
+      "id": "20"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/research/news-details.php?event_type_id=1&language=1&news_id=486105604&unit_id=473&view=1",
+    "canonical": "https://aast.edu/en/research/news-details.php?event_type_id=1&language=1&news_id=486105604&unit_id=473&view=1",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_research_news-details.php_event_type_id=1&language=1&news_id=486105604&unit_id=473&view=1_plain.html",
+    "ids": {
+      "unit_id": "473",
+      "id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/research/news-details.php?event_type_id=1&language=1&news_id=486105582&unit_id=473&view=1",
+    "canonical": "https://aast.edu/en/research/news-details.php?event_type_id=1&language=1&news_id=486105582&unit_id=473&view=1",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_research_news-details.php_event_type_id=1&language=1&news_id=486105582&unit_id=473&view=1_plain.html",
+    "ids": {
+      "unit_id": "473",
+      "id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=2&uid=45",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=2&uid=45",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=2&uid=45_plain.html",
+    "ids": {
+      "id": "2"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/research/photogallery.php?unit_id=473",
+    "canonical": "https://aast.edu/en/research/photogallery.php?unit_id=473",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_research_photogallery.php_unit_id=473_plain.html",
+    "ids": {
+      "unit_id": "473",
+      "id": "473",
+      "page_id": "1000100031"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=5&uid=45",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=5&uid=45",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=5&uid=45_plain.html",
+    "ids": {
+      "id": "5"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=37&uid=16",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=37&uid=16",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=37&uid=16_plain.html",
+    "ids": {
+      "id": "37"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/research/list_staff.php?unit_id=473",
+    "canonical": "https://aast.edu/en/research/list_staff.php?unit_id=473",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_research_list_staff.php_unit_id=473_plain.html",
+    "ids": {
+      "unit_id": "473",
+      "id": "473",
+      "page_id": "1000100031"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=3718&uid=0",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=3718&uid=0",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=3718&uid=0_plain.html",
+    "ids": {
+      "id": "3718"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=2&uid=153",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=2&uid=153",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=2&uid=153_plain.html",
+    "ids": {
+      "id": "2"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/research/conference.php?event_type_id=2&language=1&unit_id=1&view=1",
+    "canonical": "https://aast.edu/en/research/conference.php?event_type_id=2&language=1&unit_id=1&view=1",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_research_conference.php_event_type_id=2&language=1&unit_id=1&view=1_plain.html",
+    "ids": {
+      "unit_id": "1",
+      "id": "2",
+      "page_id": "1000100031"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/research/news-details.php?event_type_id=1&language=1&news_id=486105603&unit_id=473&view=1",
+    "canonical": "https://aast.edu/en/research/news-details.php?event_type_id=1&language=1&news_id=486105603&unit_id=473&view=1",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_research_news-details.php_event_type_id=1&language=1&news_id=486105603&unit_id=473&view=1_plain.html",
+    "ids": {
+      "unit_id": "473",
+      "id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=2&uid=532",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=2&uid=532",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=2&uid=532_plain.html",
+    "ids": {
+      "id": "2"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=21&uid=16",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=21&uid=16",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=21&uid=16_plain.html",
+    "ids": {
+      "id": "21"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=372&uid=0",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=372&uid=0",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=372&uid=0_plain.html",
+    "ids": {
+      "id": "372"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=1&uid=409",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=1&uid=409",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=1&uid=409_plain.html",
+    "ids": {
+      "id": "1"
+    }
+  },
+  {
+    "url": "https://aastmtic3.aast.edu/sri/index.html",
+    "canonical": "https://aastmtic3.aast.edu/sri/index.html",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aastmtic3.aast.edu_sri_index.html_plain.html",
+    "ids": {}
+  },
+  {
+    "url": "https://aast.edu/en/vice/edu-affairs/announcements.php?unit_id=390",
+    "canonical": "https://aast.edu/en/vice/edu-affairs/announcements.php?unit_id=390",
+    "status": "duplicate",
+    "dup_of": "https://aast.edu/index.php",
+    "ids": {
+      "unit_id": "390",
+      "id": "390"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=3719&uid=0",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=3719&uid=0",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=3719&uid=0_plain.html",
+    "ids": {
+      "id": "3719"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=1&uid=352",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=1&uid=352",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=1&uid=352_plain.html",
+    "ids": {
+      "id": "1"
+    }
+  },
+  {
+    "url": "https://aastmtic2.aast.edu/SRI/frm_subscription.aspx",
+    "canonical": "https://aastmtic2.aast.edu/SRI/frm_subscription.aspx",
+    "status": "pw_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aastmtic2.aast.edu_SRI_frm_subscription.aspx_pw.html",
+    "ids": {}
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=3726&uid=0",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=3726&uid=0",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=3726&uid=0_plain.html",
+    "ids": {
+      "id": "3726"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/research/event-details.php?event_id=1994&event_type_id=2&language=1&unit_id=1&view=1",
+    "canonical": "https://aast.edu/en/research/event-details.php?event_id=1994&event_type_id=2&language=1&unit_id=1&view=1",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_research_event-details.php_event_id=1994&event_type_id=2&language=1&unit_id=1&view=1_plain.html",
+    "ids": {
+      "unit_id": "1",
+      "id": "1994",
+      "page_id": "1000100031"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=7&uid=16",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=7&uid=16",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=7&uid=16_plain.html",
+    "ids": {
+      "id": "7"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=&uid=16",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=&uid=16",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=&uid=16_plain.html",
+    "ids": {
+      "id": "16"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=1&uid=45",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=1&uid=45",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=1&uid=45_plain.html",
+    "ids": {
+      "id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=22&uid=16",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=22&uid=16",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=22&uid=16_plain.html",
+    "ids": {
+      "id": "22"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/research/contenttemp.php?page_id=47300130",
+    "canonical": "https://aast.edu/en/research/contenttemp.php?page_id=47300130",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_research_contenttemp.php_page_id=47300130_plain.html",
+    "ids": {
+      "page_id": "47300130",
+      "id": "47300130",
+      "unit_id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/research/contenttemp.php?page_id=47300051",
+    "canonical": "https://aast.edu/en/research/contenttemp.php?page_id=47300051",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_research_contenttemp.php_page_id=47300051_plain.html",
+    "ids": {
+      "page_id": "47300051",
+      "id": "47300051",
+      "unit_id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/research/contenttemp.php?page_id=47300043",
+    "canonical": "https://aast.edu/en/research/contenttemp.php?page_id=47300043",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_research_contenttemp.php_page_id=47300043_plain.html",
+    "ids": {
+      "page_id": "47300043",
+      "id": "47300043",
+      "unit_id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=3724&uid=0",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=3724&uid=0",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=3724&uid=0_plain.html",
+    "ids": {
+      "id": "3724"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=5&uid=16",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=5&uid=16",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=5&uid=16_plain.html",
+    "ids": {
+      "id": "5"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/vice/edu-affairs/contenttemp.php?page_id=39000096",
+    "canonical": "https://aast.edu/en/vice/edu-affairs/contenttemp.php?page_id=39000096",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_vice_edu-affairs_contenttemp.php_page_id=39000096_plain.html",
+    "ids": {
+      "page_id": "39000096",
+      "id": "39000096",
+      "unit_id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=33&uid=16",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=33&uid=16",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=33&uid=16_plain.html",
+    "ids": {
+      "id": "33"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/vice/edu-affairs/contenttemp.php?page_id=39000039",
+    "canonical": "https://aast.edu/en/vice/edu-affairs/contenttemp.php?page_id=39000039",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_vice_edu-affairs_contenttemp.php_page_id=39000039_plain.html",
+    "ids": {
+      "page_id": "39000039",
+      "id": "39000039",
+      "unit_id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/vice/edu-affairs/contenttemp.php?page_id=39000029",
+    "canonical": "https://aast.edu/en/vice/edu-affairs/contenttemp.php?page_id=39000029",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_vice_edu-affairs_contenttemp.php_page_id=39000029_plain.html",
+    "ids": {
+      "page_id": "39000029",
+      "id": "39000029",
+      "unit_id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/vice/edu-affairs/contenttemp.php?page_id=39000100",
+    "canonical": "https://aast.edu/en/vice/edu-affairs/contenttemp.php?page_id=39000100",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_vice_edu-affairs_contenttemp.php_page_id=39000100_plain.html",
+    "ids": {
+      "page_id": "39000100",
+      "id": "39000100",
+      "unit_id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/vice/edu-affairs/contenttemp.php?page_id=39000034",
+    "canonical": "https://aast.edu/en/vice/edu-affairs/contenttemp.php?page_id=39000034",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_vice_edu-affairs_contenttemp.php_page_id=39000034_plain.html",
+    "ids": {
+      "page_id": "39000034",
+      "id": "39000034",
+      "unit_id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/vice/edu-affairs/contenttemp.php?page_id=39000093",
+    "canonical": "https://aast.edu/en/vice/edu-affairs/contenttemp.php?page_id=39000093",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_vice_edu-affairs_contenttemp.php_page_id=39000093_plain.html",
+    "ids": {
+      "page_id": "39000093",
+      "id": "39000093",
+      "unit_id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=12&uid=16",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=12&uid=16",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=12&uid=16_plain.html",
+    "ids": {
+      "id": "12"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/research/announcements.php?unit_id=473",
+    "canonical": "https://aast.edu/en/research/announcements.php?unit_id=473",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_research_announcements.php_unit_id=473_plain.html",
+    "ids": {
+      "unit_id": "473",
+      "id": "473",
+      "page_id": "1000100031"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=3731&uid=0",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=3731&uid=0",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=3731&uid=0_plain.html",
+    "ids": {
+      "id": "3731"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=2&uid=16",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=2&uid=16",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=2&uid=16_plain.html",
+    "ids": {
+      "id": "2"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/all-projects.php",
+    "canonical": "https://aast.edu/en/scientific-research/projects/all-projects.php",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_all-projects.php_plain.html",
+    "ids": {}
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=23&uid=16",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=23&uid=16",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=23&uid=16_plain.html",
+    "ids": {
+      "id": "23"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=4&uid=16",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=4&uid=16",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=4&uid=16_plain.html",
+    "ids": {
+      "id": "4"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/vice/edu-affairs/contenttemp.php?page_id=39000103",
+    "canonical": "https://aast.edu/en/vice/edu-affairs/contenttemp.php?page_id=39000103",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_vice_edu-affairs_contenttemp.php_page_id=39000103_plain.html",
+    "ids": {
+      "page_id": "39000103",
+      "id": "39000103",
+      "unit_id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/vice/edu-affairs/contenttemp.php?page_id=39000001",
+    "canonical": "https://aast.edu/en/vice/edu-affairs/contenttemp.php?page_id=39000001",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_vice_edu-affairs_contenttemp.php_page_id=39000001_plain.html",
+    "ids": {
+      "page_id": "39000001",
+      "id": "39000001",
+      "unit_id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/research/event-details.php?event_id=1993&event_type_id=2&language=1&unit_id=1&view=1",
+    "canonical": "https://aast.edu/en/research/event-details.php?event_id=1993&event_type_id=2&language=1&unit_id=1&view=1",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_research_event-details.php_event_id=1993&event_type_id=2&language=1&unit_id=1&view=1_plain.html",
+    "ids": {
+      "unit_id": "1",
+      "id": "1993",
+      "page_id": "1000100031"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=14&uid=16",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=14&uid=16",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=14&uid=16_plain.html",
+    "ids": {
+      "id": "14"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=27&uid=16",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=27&uid=16",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=27&uid=16_plain.html",
+    "ids": {
+      "id": "27"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/research/events.php?unit_id=473",
+    "canonical": "https://aast.edu/en/research/events.php?unit_id=473",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_research_events.php_unit_id=473_plain.html",
+    "ids": {
+      "unit_id": "473",
+      "id": "473",
+      "page_id": "1000100031"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=19&uid=16",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=19&uid=16",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=19&uid=16_plain.html",
+    "ids": {
+      "id": "19"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/research/index.php",
+    "canonical": "https://aast.edu/en/research/index.php",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_research_index.php_plain.html",
+    "ids": {
+      "unit_id": "1",
+      "page_id": "1000100031",
+      "ser": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=34&uid=16",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=34&uid=16",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=34&uid=16_plain.html",
+    "ids": {
+      "id": "34"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=35&uid=16",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=35&uid=16",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=35&uid=16_plain.html",
+    "ids": {
+      "id": "35"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/research/pdf/Awards-Rules.pdf",
+    "canonical": "https://aast.edu/en/research/pdf/Awards-Rules.pdf",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_research_pdf_Awards-Rules.pdf_plain.html",
+    "ids": {}
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=9&uid=16",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=9&uid=16",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=9&uid=16_plain.html",
+    "ids": {
+      "id": "9"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=24&uid=16",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=24&uid=16",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=24&uid=16_plain.html",
+    "ids": {
+      "id": "24"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/research/contenttemp.php?page_id=47300129",
+    "canonical": "https://aast.edu/en/research/contenttemp.php?page_id=47300129",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_research_contenttemp.php_page_id=47300129_plain.html",
+    "ids": {
+      "page_id": "47300129",
+      "id": "47300129",
+      "unit_id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=26&uid=16",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=26&uid=16",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=26&uid=16_plain.html",
+    "ids": {
+      "id": "26"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=3728&uid=0",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=3728&uid=0",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=3728&uid=0_plain.html",
+    "ids": {
+      "id": "3728"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/research/contenttemp.php?page_id=47300099",
+    "canonical": "https://aast.edu/en/research/contenttemp.php?page_id=47300099",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_research_contenttemp.php_page_id=47300099_plain.html",
+    "ids": {
+      "page_id": "47300099",
+      "id": "47300099",
+      "unit_id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=25&uid=16",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=25&uid=16",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=25&uid=16_plain.html",
+    "ids": {
+      "id": "25"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/vice/edu-affairs/contenttemp.php?page_id=39000099",
+    "canonical": "https://aast.edu/en/vice/edu-affairs/contenttemp.php?page_id=39000099",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_vice_edu-affairs_contenttemp.php_page_id=39000099_plain.html",
+    "ids": {
+      "page_id": "39000099",
+      "id": "39000099",
+      "unit_id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/research/event-details.php?event_id=1768&event_type_id=1&language=1&unit_id=473&view=1",
+    "canonical": "https://aast.edu/en/research/event-details.php?event_id=1768&event_type_id=1&language=1&unit_id=473&view=1",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_research_event-details.php_event_id=1768&event_type_id=1&language=1&unit_id=473&view=1_plain.html",
+    "ids": {
+      "unit_id": "473",
+      "id": "1768",
+      "page_id": "1000100031"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=3729&uid=0",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=3729&uid=0",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=3729&uid=0_plain.html",
+    "ids": {
+      "id": "3729"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/research/news.php?unit_id=473",
+    "canonical": "https://aast.edu/en/research/news.php?unit_id=473",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_research_news.php_unit_id=473_plain.html",
+    "ids": {
+      "unit_id": "473",
+      "id": "473",
+      "page_id": "1000100031"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=31&uid=16",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=31&uid=16",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=31&uid=16_plain.html",
+    "ids": {
+      "id": "31"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/vice/edu-affairs/contenttemp.php?page_id=39000030",
+    "canonical": "https://aast.edu/en/vice/edu-affairs/contenttemp.php?page_id=39000030",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_vice_edu-affairs_contenttemp.php_page_id=39000030_plain.html",
+    "ids": {
+      "page_id": "39000030",
+      "id": "39000030",
+      "unit_id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/research/event-details.php?event_id=1995&event_type_id=2&language=1&unit_id=1&view=1",
+    "canonical": "https://aast.edu/en/research/event-details.php?event_id=1995&event_type_id=2&language=1&unit_id=1&view=1",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_research_event-details.php_event_id=1995&event_type_id=2&language=1&unit_id=1&view=1_plain.html",
+    "ids": {
+      "unit_id": "1",
+      "id": "1995",
+      "page_id": "1000100031"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=32&uid=16",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=32&uid=16",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=32&uid=16_plain.html",
+    "ids": {
+      "id": "32"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=3727&uid=0",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=3727&uid=0",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=3727&uid=0_plain.html",
+    "ids": {
+      "id": "3727"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=15&uid=16",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=15&uid=16",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=15&uid=16_plain.html",
+    "ids": {
+      "id": "15"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=3725&uid=0",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=3725&uid=0",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=3725&uid=0_plain.html",
+    "ids": {
+      "id": "3725"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/research/contenttemp.php?page_id=47300036",
+    "canonical": "https://aast.edu/en/research/contenttemp.php?page_id=47300036",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_research_contenttemp.php_page_id=47300036_plain.html",
+    "ids": {
+      "page_id": "47300036",
+      "id": "47300036",
+      "unit_id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=27&uid=1",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=27&uid=1",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=27&uid=1_plain.html",
+    "ids": {
+      "id": "27"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=1&uid=153",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=1&uid=153",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=1&uid=153_plain.html",
+    "ids": {
+      "id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=1&uid=532",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=1&uid=532",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=1&uid=532_plain.html",
+    "ids": {
+      "id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/research/contenttemp.php?page_id=47300062",
+    "canonical": "https://aast.edu/en/research/contenttemp.php?page_id=47300062",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_research_contenttemp.php_page_id=47300062_plain.html",
+    "ids": {
+      "page_id": "47300062",
+      "id": "47300062",
+      "unit_id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=13&uid=16",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=13&uid=16",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=13&uid=16_plain.html",
+    "ids": {
+      "id": "13"
+    }
+  },
+  {
+    "url": "https://aastmtic3.aast.edu/lup/frm_searchDevice.aspx",
+    "canonical": "https://aastmtic3.aast.edu/lup/frm_searchDevice.aspx",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aastmtic3.aast.edu_lup_frm_searchDevice.aspx_plain.html",
+    "ids": {}
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=10&uid=16",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=10&uid=16",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=10&uid=16_plain.html",
+    "ids": {
+      "id": "10"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=17&uid=16",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=17&uid=16",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=17&uid=16_plain.html",
+    "ids": {
+      "id": "17"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=11&uid=16",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=11&uid=16",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=11&uid=16_plain.html",
+    "ids": {
+      "id": "11"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=29&uid=16",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=29&uid=16",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=29&uid=16_plain.html",
+    "ids": {
+      "id": "29"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=28&uid=16",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=28&uid=16",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=28&uid=16_plain.html",
+    "ids": {
+      "id": "28"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/vice/edu-affairs/contenttemp.php?page_id=39000018",
+    "canonical": "https://aast.edu/en/vice/edu-affairs/contenttemp.php?page_id=39000018",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_vice_edu-affairs_contenttemp.php_page_id=39000018_plain.html",
+    "ids": {
+      "page_id": "39000018",
+      "id": "39000018",
+      "unit_id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=3&uid=45",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=3&uid=45",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=3&uid=45_plain.html",
+    "ids": {
+      "id": "3"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=18&uid=16",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=18&uid=16",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=18&uid=16_plain.html",
+    "ids": {
+      "id": "18"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=3721&uid=0",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=3721&uid=0",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=3721&uid=0_plain.html",
+    "ids": {
+      "id": "3721"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=8&uid=16",
+    "canonical": "https://aast.edu/en/scientific-research/projects/project.php?proj_id=8&uid=16",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_scientific-research_projects_project.php_proj_id=8&uid=16_plain.html",
+    "ids": {
+      "id": "8"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/training-courses/categories.php",
+    "canonical": "https://aast.edu/en/training-courses/categories.php",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_training-courses_categories.php_plain.html",
+    "ids": {
+      "unit_id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/training-courses/trainingresults.php?CATEGORYID=11",
+    "canonical": "https://aast.edu/en/training-courses/trainingresults.php?CATEGORYID=11",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_training-courses_trainingresults.php_CATEGORYID=11_plain.html",
+    "ids": {
+      "unit_id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/training-courses/trainingresults.php?CATEGORYID=28",
+    "canonical": "https://aast.edu/en/training-courses/trainingresults.php?CATEGORYID=28",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_training-courses_trainingresults.php_CATEGORYID=28_plain.html",
+    "ids": {
+      "unit_id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/training-courses/trainingresults.php?CATEGORYID=6",
+    "canonical": "https://aast.edu/en/training-courses/trainingresults.php?CATEGORYID=6",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_training-courses_trainingresults.php_CATEGORYID=6_plain.html",
+    "ids": {
+      "unit_id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/gallery/album.php?gallery_id=29&unit_id=1",
+    "canonical": "https://aast.edu/en/gallery/album.php?gallery_id=29&unit_id=1",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_gallery_album.php_gallery_id=29&unit_id=1_plain.html",
+    "ids": {
+      "unit_id": "1",
+      "gallery_id": "29",
+      "id": "29",
+      "page_id": "1000100031"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/training-courses/trainingresults.php?CATEGORYID=32",
+    "canonical": "https://aast.edu/en/training-courses/trainingresults.php?CATEGORYID=32",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_training-courses_trainingresults.php_CATEGORYID=32_plain.html",
+    "ids": {
+      "unit_id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/gallery/album.php?gallery_id=11&unit_id=1",
+    "canonical": "https://aast.edu/en/gallery/album.php?gallery_id=11&unit_id=1",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_gallery_album.php_gallery_id=11&unit_id=1_plain.html",
+    "ids": {
+      "unit_id": "1",
+      "gallery_id": "11",
+      "id": "11",
+      "page_id": "1000100031"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/gallery/album.php?gallery_id=32&unit_id=1",
+    "canonical": "https://aast.edu/en/gallery/album.php?gallery_id=32&unit_id=1",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_gallery_album.php_gallery_id=32&unit_id=1_plain.html",
+    "ids": {
+      "unit_id": "1",
+      "gallery_id": "32",
+      "id": "32",
+      "page_id": "1000100031"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/gallery/album.php?gallery_id=22&unit_id=1",
+    "canonical": "https://aast.edu/en/gallery/album.php?gallery_id=22&unit_id=1",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_gallery_album.php_gallery_id=22&unit_id=1_plain.html",
+    "ids": {
+      "unit_id": "1",
+      "gallery_id": "22",
+      "id": "22",
+      "page_id": "1000100031"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/students.php",
+    "canonical": "https://aast.edu/en/students.php",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_students.php_plain.html",
+    "ids": {
+      "page_id": "50400006"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/staff.php",
+    "canonical": "https://aast.edu/en/staff.php",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_staff.php_plain.html",
+    "ids": {
+      "page_id": "39000024"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/includes/functions/language_redirect.php?url=https://aast.edu/en/research/&lnselect=2",
+    "canonical": "https://aast.edu/en/includes/functions/language_redirect.php?url=https://aast.edu/en/research/",
+    "status": "duplicate",
+    "dup_of": "https://aast.edu/index.php",
+    "ids": {}
+  },
+  {
+    "url": "https://aast.edu/en/includes/functions/language_redirect.php?url=https://aast.edu/en/gallery/index.php&lnselect=2",
+    "canonical": "https://aast.edu/en/includes/functions/language_redirect.php?url=https://aast.edu/en/gallery/index.php",
+    "status": "duplicate",
+    "dup_of": "https://aast.edu/index.php",
+    "ids": {}
+  },
+  {
+    "url": "https://aast.edu/en/research/contenttemp.php?page_id=47300127",
+    "canonical": "https://aast.edu/en/research/contenttemp.php?page_id=47300127",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_research_contenttemp.php_page_id=47300127_plain.html",
+    "ids": {
+      "page_id": "47300127",
+      "id": "47300127",
+      "unit_id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/research/service-single.html",
+    "canonical": "https://aast.edu/en/research/service-single.html",
+    "status": "exception",
+    "error": "Page.goto: net::ERR_CONNECTION_TIMED_OUT at https://aast.edu/en/research/service-single.html\nCall log:\n  - navigating to \"https://aast.edu/en/research/service-single.html\", waiting until \"domcontentloaded\"\n",
+    "api_tried": null
+  },
+  {
+    "url": "https://aast.edu/en/research/contenttemp.php?page_id=47300044",
+    "canonical": "https://aast.edu/en/research/contenttemp.php?page_id=47300044",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_research_contenttemp.php_page_id=47300044_plain.html",
+    "ids": {
+      "page_id": "47300044",
+      "id": "47300044",
+      "unit_id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/research/contenttemp.php?page_id=47300112",
+    "canonical": "https://aast.edu/en/research/contenttemp.php?page_id=47300112",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_research_contenttemp.php_page_id=47300112_plain.html",
+    "ids": {
+      "page_id": "47300112",
+      "id": "47300112",
+      "unit_id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/research/contenttemp.php?page_id=47300019",
+    "canonical": "https://aast.edu/en/research/contenttemp.php?page_id=47300019",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_research_contenttemp.php_page_id=47300019_plain.html",
+    "ids": {
+      "page_id": "47300019",
+      "id": "47300019",
+      "unit_id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/research/contenttemp.php?page_id=47300035",
+    "canonical": "https://aast.edu/en/research/contenttemp.php?page_id=47300035",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_research_contenttemp.php_page_id=47300035_plain.html",
+    "ids": {
+      "page_id": "47300035",
+      "id": "47300035",
+      "unit_id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/research/contenttemp.php?page_id=47300121",
+    "canonical": "https://aast.edu/en/research/contenttemp.php?page_id=47300121",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_research_contenttemp.php_page_id=47300121_plain.html",
+    "ids": {
+      "page_id": "47300121",
+      "id": "47300121",
+      "unit_id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/research/contenttemp.php?page_id=47300041",
+    "canonical": "https://aast.edu/en/research/contenttemp.php?page_id=47300041",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_research_contenttemp.php_page_id=47300041_plain.html",
+    "ids": {
+      "page_id": "47300041",
+      "id": "47300041",
+      "unit_id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/research/contenttemp.php?page_id=47300128",
+    "canonical": "https://aast.edu/en/research/contenttemp.php?page_id=47300128",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_research_contenttemp.php_page_id=47300128_plain.html",
+    "ids": {
+      "page_id": "47300128",
+      "id": "47300128",
+      "unit_id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/research/contenttemp.php?page_id=47300122",
+    "canonical": "https://aast.edu/en/research/contenttemp.php?page_id=47300122",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_research_contenttemp.php_page_id=47300122_plain.html",
+    "ids": {
+      "page_id": "47300122",
+      "id": "47300122",
+      "unit_id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/research/contenttemp.php?page_id=47300050",
+    "canonical": "https://aast.edu/en/research/contenttemp.php?page_id=47300050",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_research_contenttemp.php_page_id=47300050_plain.html",
+    "ids": {
+      "page_id": "47300050",
+      "id": "47300050",
+      "unit_id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/research/contenttemp.php?page_id=47300042",
+    "canonical": "https://aast.edu/en/research/contenttemp.php?page_id=47300042",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_research_contenttemp.php_page_id=47300042_plain.html",
+    "ids": {
+      "page_id": "47300042",
+      "id": "47300042",
+      "unit_id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/research/contenttemp.php?page_id=47300034",
+    "canonical": "https://aast.edu/en/research/contenttemp.php?page_id=47300034",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_research_contenttemp.php_page_id=47300034_plain.html",
+    "ids": {
+      "page_id": "47300034",
+      "id": "47300034",
+      "unit_id": "1"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/visitors.php",
+    "canonical": "https://aast.edu/en/visitors.php",
+    "status": "http_saved",
+    "path": "C:\\Users\\mh978\\Downloads\\aast_scrape_final\\step8\\aast_v2_output_v4_20251125_125822\\html\\aast.edu_en_visitors.php_plain.html",
+    "ids": {
+      "page_id": "54600011"
+    }
+  },
+  {
+    "url": "https://aast.edu/en/sitemap/plus.google.com",
+    "canonical": "https://aast.edu/en/sitemap/plus.google.com",
+    "status": "exception",
+    "error": "Page.goto: net::ERR_CONNECTION_TIMED_OUT at https://aast.edu/en/sitemap/plus.google.com\nCall log:\n  - navigating to \"https://aast.edu/en/sitemap/plus.google.com\", waiting until \"domcontentloaded\"\n",
+    "api_tried": null
+  },
+  {
+    "url": "http://aast.edu/en/includes/functions/language_redirect.php?lang_id=1&url=http://aast.edu/en/sitemap/sitemap.php?unit_id=1",
+    "canonical": "http://aast.edu/en/includes/functions/language_redirect.php?lang_id=1&url=http://aast.edu/en/sitemap/sitemap.php?unit_id=1",
+    "status": "exception",
+    "error": "Page.goto: net::ERR_CONNECTION_TIMED_OUT at http://aast.edu/en/includes/functions/language_redirect.php?lang_id=1&url=http://aast.edu/en/sitemap/sitemap.php?unit_id=1\nCall log:\n  - navigating to \"http://aast.edu/en/includes/functions/language_redirect.php?lang_id=1&url=http://aast.edu/en/sitemap/sitemap.php?unit_id=1\", waiting until \"domcontentloaded\"\n",
+    "api_tried": null
+  },
+  {
+    "url": "https://aast.edu/en/sitemap/www.facebook.com",
+    "canonical": "https://aast.edu/en/sitemap/www.facebook.com",
+    "status": "exception",
+    "error": "Page.goto: net::ERR_CONNECTION_TIMED_OUT at https://aast.edu/en/sitemap/www.facebook.com\nCall log:\n  - navigating to \"https://aast.edu/en/sitemap/www.facebook.com\", waiting until \"domcontentloaded\"\n",
+    "api_tried": null
+  },
+  {
+    "url": "https://aast.edu/en/sitemap/www.twitter.com/umurbeyayt",
+    "canonical": "https://aast.edu/en/sitemap/www.twitter.com/umurbeyayt",
+    "status": "exception",
+    "error": "Page.goto: net::ERR_CONNECTION_TIMED_OUT at https://aast.edu/en/sitemap/www.twitter.com/umurbeyayt\nCall log:\n  - navigating to \"https://aast.edu/en/sitemap/www.twitter.com/umurbeyayt\", waiting until \"domcontentloaded\"\n",
+    "api_tried": null
+  },
+  {
+    "url": "https://aast.edu/en/sitemap/team-details.html",
+    "canonical": "https://aast.edu/en/sitemap/team-details.html",
+    "status": "exception",
+    "error": "Page.goto: net::ERR_CONNECTION_TIMED_OUT at https://aast.edu/en/sitemap/team-details.html\nCall log:\n  - navigating to \"https://aast.edu/en/sitemap/team-details.html\", waiting until \"domcontentloaded\"\n",
+    "api_tried": null
+  },
+  {
+    "url": "https://aast.edu/en/sitemap/www.youtube.com",
+    "canonical": "https://aast.edu/en/sitemap/www.youtube.com",
+    "status": "exception",
+    "error": "Page.goto: net::ERR_CONNECTION_TIMED_OUT at https://aast.edu/en/sitemap/www.youtube.com\nCall log:\n  - navigating to \"https://aast.edu/en/sitemap/www.youtube.com\", waiting until \"domcontentloaded\"\n",
+    "api_tried": null
+  },
+  {
+    "url": "https://aast.edu/en/sitemap/www.instagram.com",
+    "canonical": "https://aast.edu/en/sitemap/www.instagram.com",
+    "status": "exception",
+    "error": "Page.goto: net::ERR_CONNECTION_TIMED_OUT at https://aast.edu/en/sitemap/www.instagram.com\nCall log:\n  - navigating to \"https://aast.edu/en/sitemap/www.instagram.com\", waiting until \"domcontentloaded\"\n",
+    "api_tried": null
+  },
+  {
+    "url": "https://aast.edu/en/sitemap/index.html",
+    "canonical": "https://aast.edu/en/sitemap/index.html",
+    "status": "exception",
+    "error": "Page.goto: net::ERR_CONNECTION_TIMED_OUT at https://aast.edu/en/sitemap/index.html\nCall log:\n  - navigating to \"https://aast.edu/en/sitemap/index.html\", waiting until \"domcontentloaded\"\n",
+    "api_tried": null
+  },
+  {
+    "url": "https://aast.edu/en/sitemap/www.rss.com",
+    "canonical": "https://aast.edu/en/sitemap/www.rss.com",
+    "status": "exception",
+    "error": "Page.goto: net::ERR_CONNECTION_TIMED_OUT at https://aast.edu/en/sitemap/www.rss.com\nCall log:\n  - navigating to \"https://aast.edu/en/sitemap/www.rss.com\", waiting until \"domcontentloaded\"\n",
+    "api_tried": null
+  },
+  {
+    "url": "http://www.aast.edu/en/research/contenttemp.php?page_id=47300110",
+    "canonical": "http://www.aast.edu/en/research/contenttemp.php?page_id=47300110",
+    "status": "exception",
+    "error": "Page.goto: net::ERR_CONNECTION_TIMED_OUT at http://www.aast.edu/en/research/contenttemp.php?page_id=47300110\nCall log:\n  - navigating to \"http://www.aast.edu/en/research/contenttemp.php?page_id=47300110\", waiting until \"domcontentloaded\"\n",
+    "api_tried": "https://aast.edu/getData/getPageContent2021.php?page_id=47300110"
+  },
+  {
+    "url": "https://aast.edu/en/sitemap/portfolio-details.html",
+    "canonical": "https://aast.edu/en/sitemap/portfolio-details.html",
+    "status": "exception",
+    "error": "Page.goto: net::ERR_CONNECTION_TIMED_OUT at https://aast.edu/en/sitemap/portfolio-details.html\nCall log:\n  - navigating to \"https://aast.edu/en/sitemap/portfolio-details.html\", waiting until \"domcontentloaded\"\n",
+    "api_tried": null
+  },
+  {
+    "url": "https://aast.edu/en/sitemap/contenttemp.php?page_id=100024",
+    "canonical": "https://aast.edu/en/sitemap/contenttemp.php?page_id=100024",
+    "status": "exception",
+    "error": "Page.goto: net::ERR_CONNECTION_TIMED_OUT at https://aast.edu/en/sitemap/contenttemp.php?page_id=100024\nCall log:\n  - navigating to \"https://aast.edu/en/sitemap/contenttemp.php?page_id=100024\", waiting until \"domcontentloaded\"\n",
+    "api_tried": "https://aast.edu/getData/getPageContent2021.php?page_id=100024"
+  },
+  {
+    "url": "https://www.aast.edu/ar/policies",
+    "canonical": "https://www.aast.edu/ar/policies",
+    "status": "exception",
+    "error": "Page.goto: net::ERR_CONNECTION_TIMED_OUT at https://www.aast.edu/ar/policies\nCall log:\n  - navigating to \"https://www.aast.edu/ar/policies\", waiting until \"domcontentloaded\"\n",
+    "api_tried": null
+  },
+  {
+    "url": "https://aast.edu/en/sitemap/contenttemp.php?page_id=100019",
+    "canonical": "https://aast.edu/en/sitemap/contenttemp.php?page_id=100019",
+    "status": "exception",
+    "error": "Page.goto: net::ERR_CONNECTION_TIMED_OUT at https://aast.edu/en/sitemap/contenttemp.php?page_id=100019\nCall log:\n  - navigating to \"https://aast.edu/en/sitemap/contenttemp.php?page_id=100019\", waiting until \"domcontentloaded\"\n",
+    "api_tried": "https://aast.edu/getData/getPageContent2021.php?page_id=100019"
+  },
+  {
+    "url": "https://aast.edu/en/sitemap/contenttemp.php?page_id=100020",
+    "canonical": "https://aast.edu/en/sitemap/contenttemp.php?page_id=100020",
+    "status": "exception",
+    "error": "Page.goto: net::ERR_CONNECTION_TIMED_OUT at https://aast.edu/en/sitemap/contenttemp.php?page_id=100020\nCall log:\n  - navigating to \"https://aast.edu/en/sitemap/contenttemp.php?page_id=100020\", waiting until \"domcontentloaded\"\n",
+    "api_tried": "https://aast.edu/getData/getPageContent2021.php?page_id=100020"
+  },
+  {
+    "url": "https://aast.edu/en/sitemap/contenttemp.php?page_id=100001",
+    "canonical": "https://aast.edu/en/sitemap/contenttemp.php?page_id=100001",
+    "status": "exception",
+    "error": "Page.goto: net::ERR_CONNECTION_TIMED_OUT at https://aast.edu/en/sitemap/contenttemp.php?page_id=100001\nCall log:\n  - navigating to \"https://aast.edu/en/sitemap/contenttemp.php?page_id=100001\", waiting until \"domcontentloaded\"\n",
+    "api_tried": "https://aast.edu/getData/getPageContent2021.php?page_id=100001"
+  },
+  {
+    "url": "https://aast.edu/en/sitemap/contenttemp.php?page_id=100021",
+    "canonical": "https://aast.edu/en/sitemap/contenttemp.php?page_id=100021",
+    "status": "exception",
+    "error": "Page.goto: net::ERR_CONNECTION_TIMED_OUT at https://aast.edu/en/sitemap/contenttemp.php?page_id=100021\nCall log:\n  - navigating to \"https://aast.edu/en/sitemap/contenttemp.php?page_id=100021\", waiting until \"domcontentloaded\"\n",
+    "api_tried": "https://aast.edu/getData/getPageContent2021.php?page_id=100021"
+  },
+  {
+    "url": "https://aast.edu/en/sitemap/contenttemp.php?page_id=100022",
+    "canonical": "https://aast.edu/en/sitemap/contenttemp.php?page_id=100022",
+    "status": "exception",
+    "error": "Page.goto: net::ERR_CONNECTION_TIMED_OUT at https://aast.edu/en/sitemap/contenttemp.php?page_id=100022\nCall log:\n  - navigating to \"https://aast.edu/en/sitemap/contenttemp.php?page_id=100022\", waiting until \"domcontentloaded\"\n",
+    "api_tried": "https://aast.edu/getData/getPageContent2021.php?page_id=100022"
+  },
+  {
+    "url": "https://aast.edu/en/sitemap/contenttemp.php?page_id=100023",
+    "canonical": "https://aast.edu/en/sitemap/contenttemp.php?page_id=100023",
+    "status": "exception",
+    "error": "Page.goto: net::ERR_CONNECTION_TIMED_OUT at https://aast.edu/en/sitemap/contenttemp.php?page_id=100023\nCall log:\n  - navigating to \"https://aast.edu/en/sitemap/contenttemp.php?page_id=100023\", waiting until \"domcontentloaded\"\n",
+    "api_tried": "https://aast.edu/getData/getPageContent2021.php?page_id=100023"
+  }
+]
