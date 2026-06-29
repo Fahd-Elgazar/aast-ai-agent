@@ -13,6 +13,7 @@ import { LLM_CONFIG } from "../config/llmConfig.js";
 import { modelFailoverManager } from "./modelFailoverManager.js";
 import { gemmaRequestLimiter } from "./gemmaRequestLimiter.js";
 import { gemmaTelemetryService } from "./gemmaTelemetryService.js";
+import { incrementMetric, recordDuration } from "./metrics.js";
 
 const lastGenerationMetadata = new Map();
 const MAX_GENERATION_METADATA = 100;
@@ -46,6 +47,10 @@ function clampNumber(value, min, max) {
   const parsed = Number(value);
   if (!Number.isFinite(parsed)) return min;
   return Math.min(Math.max(parsed, min), max);
+}
+
+function isGemmaModel(model) {
+  return /\bgemma/i.test(String(model || ""));
 }
 
 export function classifyOllamaError(error) {
@@ -368,6 +373,7 @@ async function executeOllamaRequest({
         model,
         prompt,
         stream: false,
+        think: false,
         keep_alive: LLM_CONFIG.keepAlive,
         options,
       }),
@@ -454,6 +460,11 @@ async function generateWithRetries({
   let lastError = null;
   let lastClassification = null;
   let attemptsMade = 0;
+  const tracksGemmaMetrics = isGemmaModel(model);
+
+  if (tracksGemmaMetrics) {
+    incrementMetric("gemma_requests_total");
+  }
 
   for (let attempt = 0; attempt <= retryLimit; attempt += 1) {
     const remainingMs = deadlineAt - Date.now();
@@ -519,6 +530,10 @@ async function generateWithRetries({
       });
 
       const latencyMs = Date.now() - startedAt;
+      if (tracksGemmaMetrics) {
+        incrementMetric("gemma_success_total");
+        recordDuration("gemma_latency_ms", latencyMs);
+      }
       modelFailoverManager.recordModelSuccess({ model, role, latencyMs });
 
       return {
@@ -567,6 +582,17 @@ async function generateWithRetries({
   const latencyMs = Date.now() - startedAt;
   if (!lastClassification) {
     lastClassification = classifyOllamaError(lastError);
+  }
+  if (tracksGemmaMetrics) {
+    incrementMetric("gemma_failure_total");
+    recordDuration("gemma_latency_ms", latencyMs);
+    if (
+      lastClassification?.type === "timeout" ||
+      lastError?.code === "GEMMA_QUEUE_TIMEOUT" ||
+      /timeout|timed out/i.test(lastError?.message || "")
+    ) {
+      incrementMetric("gemma_timeout_total");
+    }
   }
   const circuitEligible = lastClassification?.circuitEligible !== false;
 

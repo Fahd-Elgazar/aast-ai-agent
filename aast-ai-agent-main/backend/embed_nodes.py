@@ -10,7 +10,7 @@ driver = GraphDatabase.driver(
     auth=(os.getenv("NEO4J_USER"), os.getenv("NEO4J_PASSWORD"))
 )
 
-OLLAMA_URL = "http://localhost:11434/api/embeddings"
+OLLAMA_URL = "http://192.168.1.7:11434/api/embeddings"
 MODEL = "nomic-embed-text"
 ALLOWED_KEYS = ["name", "description", "role", "course_code"]
 EMBED_TIMEOUT_SECONDS = 10

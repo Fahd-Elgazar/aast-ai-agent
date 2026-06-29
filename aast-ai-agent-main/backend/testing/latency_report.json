@@ -1,12 +1,63 @@
 {
   "metadata": {
     "total_queries": 35,
-    "network_failures": 35,
+    "network_failures": 0,
     "timeout_failures": 0,
-    "degraded_route_count": 0,
-    "estimated_avg_health_probe_latency_ms": "0",
-    "estimated_avg_fusion_latency_ms": "0"
+    "degraded_route_count": 1,
+    "estimated_avg_health_probe_latency_ms": "15",
+    "estimated_avg_fusion_latency_ms": "44"
   },
-  "routes": {},
-  "targets_validation": {}
+  "routes": {
+    "HYBRID": {
+      "count": 4,
+      "avg_ms": 864,
+      "median_ms": 798,
+      "p95_ms": 959,
+      "p99_ms": 959,
+      "min_ms": 757,
+      "max_ms": 959
+    },
+    "DECISION": {
+      "count": 1,
+      "avg_ms": 87,
+      "median_ms": 87,
+      "p95_ms": 87,
+      "p99_ms": 87,
+      "min_ms": 87,
+      "max_ms": 87
+    },
+    "CAREER": {
+      "count": 2,
+      "avg_ms": 10,
+      "median_ms": 9,
+      "p95_ms": 11,
+      "p99_ms": 11,
+      "min_ms": 9,
+      "max_ms": 11
+    },
+    "LLM": {
+      "count": 27,
+      "avg_ms": 569,
+      "median_ms": 162,
+      "p95_ms": 1960,
+      "p99_ms": 7082,
+      "min_ms": 11,
+      "max_ms": 7082
+    },
+    "INTERACTIVE": {
+      "count": 1,
+      "avg_ms": 10,
+      "median_ms": 10,
+      "p95_ms": 10,
+      "p99_ms": 10,
+      "min_ms": 10,
+      "max_ms": 10
+    }
+  },
+  "targets_validation": {
+    "HYBRID < 4000ms": "PASS",
+    "DECISION < 3500ms": "PASS",
+    "CAREER < 3500ms": "PASS",
+    "LLM < 6000ms": "PASS"
+  }
 }

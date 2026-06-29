@@ -1,0 +1,626 @@
+aast-ai-agent-main/backend/docs/llm_resilience_migration.md	*.md	2026-05-16T13:41:49.306498
+aast-ai-agent-main/backend/docs/phase3_golden_path_hardening.md	*.md	2026-05-17T02:12:57.219463
+aast-ai-agent-main/backend/docs/routing_precision_phase4.md	*.md	2026-05-16T19:29:05.486344
+aast-ai-agent-main/backend/rag_system/requirements.answer.txt	*.txt	2026-05-23T17:47:32.867416
+aast-ai-agent-main/backend/rag_system/requirements.retriever.txt	*.txt	2026-05-23T17:47:32.867416
+aast-ai-agent-main/backend/README.md	*.md	2026-04-16T16:27:26.828183
+aast-ai-agent-main/backend/run_commands.txt	*.txt	2026-05-17T02:27:01.025161
+aast-ai-agent-main/backend/services/decisionService.txt	*.txt	2026-04-17T01:24:11.934006
+aast-ai-agent-main/backend/testing/benchmark_summary.md	*.md	2026-05-02T19:11:16.538757
+aast-ai-agent-main/frontend/aast-ai-agent-main/AAST_AGENT_SYSTEM_DOCS.md	*.md	2026-05-01T17:35:59.685633
+aast-ai-agent-main/frontend/aast-ai-agent-main/backend/README.md	*.md	2026-05-01T17:35:59.688149
+aast-ai-agent-main/frontend/aast-ai-agent-main/backend/run_commands.txt	*.txt	2026-05-01T17:35:59.722445
+aast-ai-agent-main/frontend/aast-ai-agent-main/backend/services/decisionService.txt	*.txt	2026-05-01T17:35:59.724957
+aast-ai-agent-main/frontend/college-decision-system-backend/docs/demo_examples.md	*.md	2026-05-01T17:35:59.838505
+aast-ai-agent-main/frontend/college-decision-system-backend/requirements.txt	*.txt	2026-05-01T17:36:00.496425
+aast-ai-agent-main/frontend/college-decision-system-backend/SECURITY_SCRUB_GUIDE.md	*.md	2026-05-01T17:35:59.744920
+aast-ai-agent-main/frontend/college-decision-system-backend/SEMANTIC_TAGGING_GUIDE.md	*.md	2026-05-01T17:35:59.746445
+aast-ai-agent-main/frontend/dist/vite.svg	*.svg	2026-05-01T17:36:20.490926
+aast-ai-agent-main/frontend/frontend/public/vite.svg	*.svg	2026-05-01T17:36:00.851645
+aast-ai-agent-main/frontend/frontend/README.md	*.md	2026-05-01T17:36:00.793721
+aast-ai-agent-main/frontend/public/vite.svg	*.svg	2026-05-01T17:36:20.490926
+aast-ai-agent-main/frontend/README.md	*.md	2026-05-01T17:35:59.678594
+AUTHORITATIVE_SOURCE_REGISTRY.md	*.md	2026-06-14T15:25:42.081438
+BOOK_APPENDIX_DISCOVERY.md	*.md	2026-06-14T15:23:08.385125
+BOOK_CHAPTER_STRUCTURE_DISCOVERY.md	*.md	2026-06-14T15:22:43.905864
+BOOK_CONFLICT_REPORT.md	*.md	2026-06-14T15:14:52.346047
+BOOK_DISCOVERY_SUMMARY.md	*.md	2026-06-14T15:15:02.598576
+BOOK_DUPLICATE_REPORT.md	*.md	2026-06-14T15:14:46.062482
+BOOK_FIGURE_DISCOVERY.md	*.md	2026-06-14T15:22:58.411282
+BOOK_FINAL_READINESS_REPORT.md	*.md	2026-06-14T15:23:18.927629
+BOOK_GAP_REPORT.md	*.md	2026-06-14T15:14:56.359205
+BOOK_SOURCE_CONFLICT_RESOLUTION.md	*.md	2026-06-14T15:23:14.507663
+BOOK_SOURCE_INVENTORY.md	*.md	2026-06-14T15:14:41.474093
+BOOK_SOURCE_LOCK.md	*.md	2026-06-14T15:25:54.279837
+BOOK_SOURCE_MAPPING.md	*.md	2026-06-14T15:22:53.557757
+BOOK_TABLE_DISCOVERY.md	*.md	2026-06-14T15:23:02.928790
+college-decision-system-backend/.pytest_cache/README.md	*.md	2026-02-27T02:39:23.878256
+college-decision-system-backend/requirements.txt	*.txt	2026-04-16T15:24:27.106511
+data/relationship/aast-advisor-graph-desktop.png	*.png	2026-05-17T21:40:27.813526
+data/relationship/relationship_analysis.txt	*.txt	2026-05-17T02:44:17.759151
+data/relationship/relationship_analysis_clean.txt	*.txt	2026-05-17T02:44:51.507028
+data/scraping/step8/AAST_Scraping_Problems_Report.pdf	*.pdf	2025-11-23T01:07:12.166577
+data/scraping/step8/AAST_Scraping_Problems_Report_Professional.pdf	*.pdf	2025-11-23T01:08:45.745996
+data/scraping/step8/AAST_Unified_Scraping_Dataset_Report.pdf	*.pdf	2025-11-23T01:11:00.489929
+data/scraping/step8/aast_v2_output/files/aast.edu_ar_about_pdf_AASTMT-Strategic-Plan-2021-2026.pdf	*.pdf	2025-11-19T02:57:13.600878
+data/scraping/step8/aast_v2_output/files/aast.edu_en_colleges_practical-training_pdf_2024-summary.pdf	*.pdf	2025-11-19T03:02:57.779918
+data/scraping/step8/aast_v2_output/files/aast.edu_en_new-applicants_media_AAST-International-Degrees-2021-Final.pdf	*.pdf	2025-11-19T03:02:06.686169
+data/scraping/step8/aast_v2_output/files/aast.edu_en_research_pdf_Awards-Rules.pdf	*.pdf	2025-11-19T02:54:27.113200
+data/scraping/step8/aast_v2_output/files/aast.edu_getData_pdf_retreivefileNew.php_unit=1&filename=_mediafiles_1_Document_156483.pdf	*.pdf	2025-11-19T03:05:30.482929
+data/scraping/step8/aast_v2_output/files/aast.edu_getData_pdf_retreivefileNew.php_unit=1&filename=_mediafiles_1_Document_156484.pdf	*.pdf	2025-11-19T02:57:27.015154
+data/scraping/step8/aast_v2_output/files/aast.edu_getData_pdf_retreivefileNew.php_unit=1&filename=_mediafiles_1_Document_163942.pdf	*.pdf	2025-11-19T03:03:50.655926
+data/scraping/step8/aast_v2_output/files/aast.edu_getData_pdf_retreivefileNew.php_unit=1&filename=_mediafiles_1_Document_165864.pdf	*.pdf	2025-11-19T02:53:07.685285
+data/scraping/step8/aast_v2_output/files/aast.edu_getData_pdf_retreivefileNew.php_unit=1&filename=_mediafiles_1_Document_166027.pdf	*.pdf	2025-11-19T03:02:01.631177
+data/scraping/step8/aast_v2_output/files/aast.edu_getData_pdf_retreivefileNew.php_unit=1&filename=_mediafiles_1_Document_167027.pdf	*.pdf	2025-11-19T03:03:00.603871
+data/scraping/step8/aast_v2_output/files/aast.edu_getData_pdf_retreivefileNew.php_unit=1000&filename=_mediafiles_1000_Document_158608.PDF	*.pdf	2025-11-19T02:57:24.192030
+data/scraping/step8/aast_v2_output/files/aast.edu_getData_pdf_retreivefileNew.php_unit=1000&filename=_mediafiles_1000_Document_158683.PDF	*.pdf	2025-11-19T02:56:04.834087
+data/scraping/step8/aast_v2_output/files/aast.edu_getData_pdf_retreivefileNew.php_unit=1000&filename=_mediafiles_1000_Document_158685.PDF	*.pdf	2025-11-19T03:00:46.022484
+data/scraping/step8/aast_v2_output/files/aast.edu_getData_pdf_retreivefileNew.php_unit=1000&filename=_mediafiles_1000_Document_158686.pdf	*.pdf	2025-11-19T02:55:34.642617
+data/scraping/step8/aast_v2_output/files/aast.edu_getData_pdf_retreivefileNew.php_unit=1000&filename=_mediafiles_1000_Document_158721.pdf	*.pdf	2025-11-19T02:59:54.841275
+data/scraping/step8/aast_v2_output/files/aast.edu_template_en_practical-training_img_pdf_procedures2.pdf	*.pdf	2025-11-19T03:00:48.796305
+data/scraping/step8/AASTMT_Report.pdf	*.pdf	2025-12-26T04:56:00.548593
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_ar_about_pdf_AASTMT-Strategic-Plan-2021-2026.pdf_file.pdf	*.pdf	2025-11-29T22:24:03.192535
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_ar_centers_img_centers_aaisc.png_file.png	*.png	2025-11-29T23:18:08.166864
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_ar_centers_img_hcc.jpg_file.jpg	*.jpg	2025-11-29T23:18:09.048978
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_ar_colleges_img_Physical-Therapy.jpg_file.jpg	*.jpg	2025-11-29T22:25:43.964546
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_ar_deaneries_img_faculty.jpg_file.jpg	*.jpg	2025-11-29T23:17:55.463323
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_en_admission_AASTMT-English-Fees2025-2026.pdf_file.pdf	*.pdf	2025-11-29T22:52:17.774935
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_en_centers_img_centers_aaisc.png_file.png	*.png	2025-11-29T22:56:20.529011
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_en_centers_img_hcc.jpg_file.jpg	*.jpg	2025-11-29T22:56:20.519769
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_1.pdf_file.pdf	*.pdf	2025-11-29T23:08:18.916620
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_10.pdf_file.pdf	*.pdf	2025-11-29T23:08:20.003273
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_11.pdf_file.pdf	*.pdf	2025-11-29T23:08:18.669343
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_12.pdf_file.pdf	*.pdf	2025-11-29T23:08:20.688507
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_13.pdf_file.pdf	*.pdf	2025-11-29T23:08:17.486937
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_14.pdf_file.pdf	*.pdf	2025-11-29T23:08:19.565298
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_15.pdf_file.pdf	*.pdf	2025-11-29T23:08:18.723615
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_16.pdf_file.pdf	*.pdf	2025-11-29T23:08:17.235372
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_17.pdf_file.pdf	*.pdf	2025-11-29T23:08:18.619801
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_2.pdf_file.pdf	*.pdf	2025-11-29T23:08:20.211635
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_3.pdf_file.pdf	*.pdf	2025-11-29T23:08:23.344115
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_4.pdf_file.pdf	*.pdf	2025-11-29T23:08:22.094488
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_5.pdf_file.pdf	*.pdf	2025-11-29T23:08:17.564331
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_6.pdf_file.pdf	*.pdf	2025-11-29T23:08:17.635159
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_8.pdf_file.pdf	*.pdf	2025-11-29T23:08:22.623308
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_9.pdf_file.pdf	*.pdf	2025-11-29T23:08:21.237180
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_Computer_training.pdf_file.pdf	*.pdf	2025-11-29T23:07:12.496039
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_Construction_training.pdf_file.pdf	*.pdf	2025-11-29T23:07:12.087555
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_Electronics_training.pdf_file.pdf	*.pdf	2025-11-29T23:07:18.000608
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_Industrial_training.pdf_file.pdf	*.pdf	2025-11-29T23:07:14.081961
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_Mechanical_training.pdf_file.pdf	*.pdf	2025-11-29T23:07:13.243423
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_img_Physical-Therapy.jpg_file.jpg	*.jpg	2025-11-29T22:14:15.662385
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_practical-training_pdf_2024-summary.pdf_file.pdf	*.pdf	2025-11-29T22:36:01.273121
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_en_deaneries_img_faculty.jpg_file.jpg	*.jpg	2025-11-29T22:56:20.560441
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_en_new-applicants-2023_img_tabs_Digitalart.png_file.png	*.png	2025-11-29T22:15:00.060144
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_en_new-applicants_media_AAST-International-Degrees-2021-Final.pdf_file.pdf	*.pdf	2025-11-29T22:08:37.689396
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_en_pdf_Academic-staff-affairs-regulation-2021.pdf_file.pdf	*.pdf	2025-11-30T00:00:32.629863
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_en_pdf_catalog2020-en.pdf_file.pdf	*.pdf	2025-11-30T00:00:45.081598
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_en_research_pdf_Awards-Rules.pdf_file.pdf	*.pdf	2025-11-29T22:47:49.698417
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_en_research_pdf_Environmental Research Centers.pdf_file.pdf	*.pdf	2025-11-30T00:03:20.044396
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_en_services_img_header-temp-college.jpg_file.jpg	*.jpg	2025-11-29T23:29:19.612591
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_filename=_mediafiles_1000_Document_158608.PDF&unit=1000_file.pdf	*.pdf	2025-11-29T22:36:56.034240
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_filename=_mediafiles_1000_Document_158683.PDF&unit=1000_file.pdf	*.pdf	2025-11-29T22:36:59.189593
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_filename=_mediafiles_1000_Document_158685.PDF&unit=1000_file.pdf	*.pdf	2025-11-29T22:37:02.042158
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_filename=_mediafiles_1000_Document_158686.pdf&unit=1000_file.pdf	*.pdf	2025-11-29T22:36:57.253258
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_filename=_mediafiles_1000_Document_158721.pdf&unit=1000_file.pdf	*.pdf	2025-11-29T22:37:01.283367
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_filename=_mediafiles_1_Document_156483.pdf&unit=1_file.pdf	*.pdf	2025-11-29T22:07:44.157452
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_filename=_mediafiles_1_Document_156484.pdf&unit=1_file.pdf	*.pdf	2025-11-29T22:07:45.989373
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_filename=_mediafiles_1_Document_163942.pdf&unit=1_file.pdf	*.pdf	2025-11-29T22:09:55.052787
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_filename=_mediafiles_1_Document_165864.pdf&unit=1_file.pdf	*.pdf	2025-11-29T22:09:09.478046
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_filename=_mediafiles_1_Document_166027.pdf&unit=1_file.pdf	*.pdf	2025-11-29T22:07:51.939524
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_filename=_mediafiles_1_Document_167027.pdf&unit=1_file.pdf	*.pdf	2025-11-29T22:11:01.160206
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_unit=1&filename=_mediafiles_1_Document_156483.pdf_file.pdf	*.pdf	2025-11-29T22:51:08.159070
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_unit=1&filename=_mediafiles_1_Document_156484.pdf_file.pdf	*.pdf	2025-11-29T22:51:22.606234
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_unit=1&filename=_mediafiles_1_Document_163942.pdf_file.pdf	*.pdf	2025-11-29T22:51:18.486044
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_unit=1&filename=_mediafiles_1_Document_165864.pdf_file.pdf	*.pdf	2025-11-29T22:51:00.341974
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_unit=1&filename=_mediafiles_1_Document_166027.pdf_file.pdf	*.pdf	2025-11-29T22:51:22.434360
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_unit=1&filename=_mediafiles_1_Document_167027.pdf_file.pdf	*.pdf	2025-11-29T22:51:01.085771
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_unit=1&filename=_mediafiles_1_Document_171439.pdf_file.pdf	*.pdf	2025-11-29T23:52:12.762029
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_unit=1000&filename=_mediafiles_1000_Document_158608.PDF_file.pdf	*.pdf	2025-11-29T23:18:00.720588
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_unit=1000&filename=_mediafiles_1000_Document_158683.PDF_file.pdf	*.pdf	2025-11-29T23:18:02.651482
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_unit=1000&filename=_mediafiles_1000_Document_158685.PDF_file.pdf	*.pdf	2025-11-29T23:17:59.824261
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_unit=1000&filename=_mediafiles_1000_Document_158686.pdf_file.pdf	*.pdf	2025-11-29T23:18:00.621622
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_unit=1000&filename=_mediafiles_1000_Document_158721.pdf_file.pdf	*.pdf	2025-11-29T23:18:00.572187
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=1201&filename=_mediafiles_1201_Document_176148.pdf_file.pdf	*.pdf	2025-11-29T22:54:02.429963
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=1204&filename=_mediafiles_1204_Document_176152.pdf_file.pdf	*.pdf	2025-11-29T22:51:34.144360
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=1206&filename=_mediafiles_1206_Document_176383.pdf_file.pdf	*.pdf	2025-11-29T22:53:58.518384
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=3&filename=_mediafiles_3_Document_145126.pdf_file.pdf	*.pdf	2025-11-29T23:08:22.663651
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=3&filename=_mediafiles_3_Document_172504.pdf_file.pdf	*.pdf	2025-11-29T23:03:30.443355
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=385&filename=_mediafiles_385_Document_150752.pdf_file.pdf	*.pdf	2025-11-29T23:42:16.814294
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=385&filename=_mediafiles_385_Document_166992.pdf_file.pdf	*.pdf	2025-11-29T23:39:12.806463
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=385&filename=_mediafiles_385_Document_166998.pdf_file.pdf	*.pdf	2025-11-29T23:39:13.793903
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=385&filename=_mediafiles_385_Document_167006.pdf_file.pdf	*.pdf	2025-11-29T23:39:14.076159
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=390&filename=_mediafiles_390_Document_147108.pdf_file.pdf	*.pdf	2025-11-30T00:00:33.666721
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=390&filename=_mediafiles_390_Document_147111.pdf_file.pdf	*.pdf	2025-11-29T23:55:25.305982
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=390&filename=_mediafiles_390_Document_147113.pdf_file.pdf	*.pdf	2025-11-29T23:55:25.055020
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=390&filename=_mediafiles_390_Document_147115.pdf_file.pdf	*.pdf	2025-11-29T23:55:13.035490
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=390&filename=_mediafiles_390_Document_147150.pdf_file.pdf	*.pdf	2025-11-29T23:55:25.801878
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=390&filename=_mediafiles_390_Document_147151.pdf_file.pdf	*.pdf	2025-11-29T23:55:38.057237
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=390&filename=_mediafiles_390_Document_147152.pdf_file.pdf	*.pdf	2025-11-29T23:55:36.677627
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=390&filename=_mediafiles_390_Document_147226.pdf_file.pdf	*.pdf	2025-11-30T00:00:36.598354
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=390&filename=_mediafiles_390_Document_147227.pdf_file.pdf	*.pdf	2025-11-30T00:00:38.498754
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=390&filename=_mediafiles_390_Document_161610.pdf_file.pdf	*.pdf	2025-11-30T00:00:32.061153
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=390&filename=_mediafiles_390_Document_174719.pdf_file.pdf	*.pdf	2025-11-30T00:00:32.290378
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=473&filename=_mediafiles_473_Document_150456.pdf_file.pdf	*.pdf	2025-11-30T00:03:20.197798
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_retreiveOnePIC.php_unit=366&img=10_1_1_aast8.jpg_file.jpg	*.jpg	2025-11-29T23:41:48.294118
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_retreiveOnePIC.php_unit=366&img=11_1_1_1.jpg_file.jpg	*.jpg	2025-11-29T23:41:49.097027
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_retreiveOnePIC.php_unit=366&img=12_1_3_3.jpg_file.jpg	*.jpg	2025-11-29T23:41:47.771949
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_retreiveOnePIC.php_unit=366&img=5_1_1_2.jpg_file.jpg	*.jpg	2025-11-29T23:41:48.504383
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_retreiveOnePIC.php_unit=385&img=3_3_2_scan0004.jpg_file.jpg	*.jpg	2025-11-29T23:31:50.891105
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_retreiveOnePIC.php_unit=385&img=4_1_1_ØªÙ‚ÙŠÙŠÙ… Ø§Ù„Ø·Ù„Ø§Ø¨.png_file.png	*.png	2025-11-29T23:31:48.214625
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_retreiveOnePIC.php_unit=385&img=5_1_9_Motion Graphics.jpg_file.jpg	*.jpg	2025-11-29T23:31:48.691211
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_getData_retreiveOnePIC.php_unit=436&img=9_1_1_Welcome Class of 2021 (1).jpg_file.jpg	*.jpg	2025-11-29T23:38:32.536430
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms.php_disp_unit=1000_EDQMS5_1.pdf_file.pdf	*.pdf	2025-11-29T23:18:15.121094
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms.php_disp_unit=1000_EDQMS5_10.pdf_file.pdf	*.pdf	2025-11-29T23:18:11.142518
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms.php_disp_unit=1000_EDQMS5_11.pdf_file.pdf	*.pdf	2025-11-29T23:18:14.376112
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms.php_disp_unit=1000_EDQMS5_2.pdf_file.pdf	*.pdf	2025-11-29T23:18:14.844774
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms.php_disp_unit=1000_EDQMS5_3.pdf_file.pdf	*.pdf	2025-11-29T23:18:13.529392
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms.php_disp_unit=1000_EDQMS5_4.pdf_file.pdf	*.pdf	2025-11-29T23:21:03.682708
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms.php_disp_unit=1000_EDQMS5_5.pdf_file.pdf	*.pdf	2025-11-29T23:18:11.943730
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms.php_disp_unit=1000_EDQMS5_6.pdf_file.pdf	*.pdf	2025-11-29T23:21:04.674774
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms.php_disp_unit=1000_EDQMS5_7.pdf_file.pdf	*.pdf	2025-11-29T23:21:04.781061
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms.php_disp_unit=1000_EDQMS5_8.pdf_file.pdf	*.pdf	2025-11-29T23:18:12.355726
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms.php_disp_unit=1000_EDQMS5_9.pdf_file.pdf	*.pdf	2025-11-29T23:21:04.954044
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=346_AAST_Laboratory%20and%20Workshop%20Safety%20.pdf_file.pdf	*.pdf	2025-11-29T23:09:30.825107
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=346_FrontPage_Arabic.pdf_file.pdf	*.pdf	2025-11-29T23:08:56.947776
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=346_FrontPage_English.pdf_file.pdf	*.pdf	2025-11-29T23:08:56.798320
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=346_MPS11-5%20Withdrawal%20form.pdf_file.pdf	*.pdf	2025-11-29T23:09:30.861424
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=346_MPS14-1%20Student%20Complaint.pdf_file.pdf	*.pdf	2025-11-29T23:09:29.757788
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=346_MPS15-2%20Students%20Appeals.pdf_file.pdf	*.pdf	2025-11-29T23:09:30.258700
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=346_MPS16_Disclaimer.pdf_file.pdf	*.pdf	2025-11-29T23:08:57.181395
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=346_MPS20_Alumni%20Application.pdf_file.pdf	*.pdf	2025-11-29T23:08:56.717180
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=346_MPS44%20summer%20registeration.pdf_file.pdf	*.pdf	2025-11-29T23:09:33.243381
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=346_MPS7_training%20request.pdf_file.pdf	*.pdf	2025-11-29T23:09:31.121478
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=385_CMTH%20CAIRO%202015-2016.pdf_file.pdf	*.pdf	2025-11-29T23:43:47.806843
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=390_EducationandStudyRegulationssep2016.pdf_file.pdf	*.pdf	2025-11-29T23:55:38.637413
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=390_EducationRegulations2016.pdf_file.pdf	*.pdf	2025-11-29T23:55:36.258977
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=390_NewPromotionRegulations2022-2024.pdf_file.pdf	*.pdf	2025-11-29T23:55:24.180004
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=390_PromotionProcedures.pdf_file.pdf	*.pdf	2025-11-29T23:57:26.342863
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=390_Scan2.pdf_file.pdf	*.pdf	2025-11-29T23:55:38.115833
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=390_StaffAffairsRegulations.pdf_file.pdf	*.pdf	2025-11-30T00:00:24.318535
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=3_College%20Administrative%20History.pdf_file.pdf	*.pdf	2025-11-29T22:57:06.762347
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=3_College_MoU_2015.pdf_file.pdf	*.pdf	2025-11-29T22:57:02.035964
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=3_course%20withdrawal.pdf_file.pdf	*.pdf	2025-11-29T23:02:07.085762
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=3_Industry-18_27-12-2012.pdf_file.pdf	*.pdf	2025-11-29T23:08:21.979499
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=3_Industry-19_20-06-2013.pdf_file.pdf	*.pdf	2025-11-29T23:08:21.614119
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=3_Industry-20_26-12-2013.pdf_file.pdf	*.pdf	2025-11-29T23:08:21.786083
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=3_Industry-21_2014-06-25.pdf_file.pdf	*.pdf	2025-11-29T23:08:18.551653
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=3_Industry_18-12-2014.pdf_file.pdf	*.pdf	2025-11-29T23:08:25.575436
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=3_student%20appeal.pdf_file.pdf	*.pdf	2025-11-29T23:02:05.617449
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=419_allclasses14Feb2022.pdf_file.pdf	*.pdf	2025-11-29T23:30:52.107743
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=419_AR%20Curriculum%20and%20Brief%20Description.pdf_file.pdf	*.pdf	2025-11-29T23:29:53.683818
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=419_CB%20Curriculum%20and%20Brief%20Description.pdf_file.pdf	*.pdf	2025-11-29T23:29:50.479702
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=419_EC%20Curriculum%20and%20Brief%20Description.pdf_file.pdf	*.pdf	2025-11-29T23:29:50.559385
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=419_EG%20Curriculum%20and%20Brief%20Description.pdf_file.pdf	*.pdf	2025-11-29T23:29:52.522296
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=419_EG%20Curriculum%20and%20Brief%20Description2.pdf_file.pdf	*.pdf	2025-11-29T23:29:55.290711
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=419_ME%20Curriculum%20and%20Brief%20Description.pdf_file.pdf	*.pdf	2025-11-29T23:29:53.527992
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=419_Online-Magazine-April.pdf_file.pdf	*.pdf	2025-11-29T23:24:10.835267
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=474_College_Research_Areas.pdf_file.pdf	*.pdf	2025-11-29T23:33:43.936113
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=6_Academic%20Advising.pdf_file.pdf	*.pdf	2025-11-29T23:50:04.038399
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=6_CMT%20Strategic%20Plan.pdf_file.pdf	*.pdf	2025-11-29T23:50:04.338286
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=6_Form%20no%2011-a.pdf_file.pdf	*.pdf	2025-11-29T23:49:58.445414
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=6_Form%20no%2011-b.pdf_file.pdf	*.pdf	2025-11-29T23:49:58.788096
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=6_Revised%20CMT%20Strategic%20Plan.pdf_file.pdf	*.pdf	2025-11-29T23:50:02.470942
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=6_Revised%20Privacy%20and%20Copyrights.pdf_file.pdf	*.pdf	2025-11-29T23:49:58.959931
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=6_Revised%20Vision%20and%20Mission.pdf_file.pdf	*.pdf	2025-11-29T23:49:59.314648
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=6_Supreme%20Council%20Agreements.pdf_file.pdf	*.pdf	2025-11-29T23:50:02.524669
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=6_Teaching%20and%20learning%20strategy.pdf_file.pdf	*.pdf	2025-11-29T23:50:03.500778
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_pheed_staffadminview_pdf_retreive.php_stafftype=staffnew&url=staff_6444_cv_cv1.pdf_file.pdf	*.pdf	2025-11-29T22:45:35.249040
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_template_ar.png_file.png	*.png	2025-11-29T22:56:19.346862
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_template_ar_footer_img_ain-logo.png_file.png	*.png	2025-11-29T22:56:19.895461
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_template_ar_footer_img_arab_league.png_file.png	*.png	2025-11-29T22:56:19.984482
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_template_ar_footer_img_QS-STARS.png_file.png	*.png	2025-11-29T22:56:19.972640
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_template_ar_topbar_img_logo5.png_file.png	*.png	2025-11-29T23:17:54.636306
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_template_ar_topbar_img_main-menu_ain-logo.png_file.png	*.png	2025-11-29T23:17:55.114989
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_template_ar_topbar_img_main-menu_arab_league.png_file.png	*.png	2025-11-29T23:17:54.721123
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_template_ar_topbar_img_main-menu_qs.jpg_file.jpg	*.jpg	2025-11-29T23:17:55.226714
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_template_en.png_file.png	*.png	2025-11-29T23:17:54.424804
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_template_en_all-types_img_complexes_industry-service.jpg_file.jpg	*.jpg	2025-11-29T23:10:03.143491
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_template_en_all-types_img_institutes_Communication-studies.jpg_file.jpg	*.jpg	2025-11-29T22:56:20.007867
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_template_en_all-types_img_institutes_tvi.jpg_file.jpg	*.jpg	2025-11-29T22:56:20.101073
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_template_en_all-types_img_tabs_schoolofbusiness.jpg_file.jpg	*.jpg	2025-11-29T23:30:44.323417
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_template_en_practical-training_img_pdf_procedures2.pdf_file.pdf	*.pdf	2025-11-29T22:37:07.691051
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_template_en_topbar__img_main-menu_logo-2.png_file.png	*.png	2025-11-29T22:56:20.123406
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_template_en_topbar_img_main-menu_ain-logo.png_file.png	*.png	2025-11-29T22:56:19.535004
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_template_en_topbar_img_main-menu_arab_league.png_file.png	*.png	2025-11-29T22:56:19.437348
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_template_en_topbar_img_main-menu_logo-2.png_file.png	*.png	2025-11-29T22:56:19.702657
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aast.edu_template_en_topbar_img_main-menu_qs.jpg_file.jpg	*.jpg	2025-11-29T22:56:19.729389
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_SRI_About AASTMT Grant.pdf_file.pdf	*.pdf	2025-11-30T00:03:49.500895
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_17.2.1.pdf_file.pdf	*.pdf	2025-11-30T00:03:20.296187
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_17.2.3.pdf_file.pdf	*.pdf	2025-11-30T00:03:20.250174
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_17.2.4.pdf_file.pdf	*.pdf	2025-11-30T00:03:19.089963
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_17.2.5.pdf_file.pdf	*.pdf	2025-11-30T00:03:19.258077
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_AASTMT Educational Resources.pdf_file.pdf	*.pdf	2025-11-30T00:03:20.529653
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_AASTMT Educational Resources_Community Education.pdf_file.pdf	*.pdf	2025-11-30T00:03:19.353560
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_AASTMT Educational Resources_Public lectures.pdf_file.pdf	*.pdf	2025-11-30T00:03:19.792974
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_AASTMT Public Activities (Executive Education Programmes).pdf_file.pdf	*.pdf	2025-11-30T00:03:19.601821
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_AASTMT Public Activities(Educational Outreach Activities).pdf_file.pdf	*.pdf	2025-11-30T00:03:19.311179
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_AASTMT SDGs.pdf_file.pdf	*.pdf	2025-11-30T00:03:19.984263
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_AASTMT%20policy%20for%20Equality,%20diversity,%20and%20inclusion.pdf_file.pdf	*.pdf	2025-11-30T00:03:19.511176
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_Annex 1- التنمية المستدامة والمسئولية المجتمعية.pdf_file.pdf	*.pdf	2025-11-30T00:03:20.580533
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_Annex 2-توصيف بيانات الشبكة المعلوماتية العربية للتنمية المستدامة.pdf_file.pdf	*.pdf	2025-11-30T00:03:19.463829
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_Annex 3- المحاور الرئيسية لتقرير إستراتيجية وإنجازات الأكاديمية.pdf_file.pdf	*.pdf	2025-11-30T00:03:20.431965
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_Environmental Engineering.pdf_file.pdf	*.pdf	2025-11-30T00:03:19.840719
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_Environmental Monitoring and Climate Change Laboratory.pdf_file.pdf	*.pdf	2025-11-30T00:03:19.198493
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_Equal Opportunities in Education and Social Responsibility.pdf_file.pdf	*.pdf	2025-11-30T00:03:20.149104
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_Equality,%20diversity,%20and%20inclusion%20Policy.pdf_file.pdf	*.pdf	2025-11-30T00:03:20.101116
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_Gender Equality Policy Statement.pdf_file.pdf	*.pdf	2025-11-30T00:03:19.554881
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_ISC AAST Report.pdf_file.pdf	*.pdf	2025-11-30T00:03:19.143225
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_Marine Pollution Conventions & Laws.pdf_file.pdf	*.pdf	2025-11-30T00:03:19.893189
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_THE HUMAN RESOURCES.pdf_file.pdf	*.pdf	2025-11-30T00:03:19.935220
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aastmtic3.aast.edu_sri_AASTMT Innovation Research Grant – IRG 2025 Call.pdf_file.pdf	*.pdf	2025-11-29T23:57:33.047282
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/aastmtic3.aast.edu_sri_About%20the%20Grant%20of%20the%20AASTMT.pdf_file.pdf	*.pdf	2025-11-30T00:01:12.293412
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/uol.aast.edu_wp-content_uploads_2025_05_emfss-prospectus-2025.pdf_file.pdf	*.pdf	2025-11-29T22:53:46.180157
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/www.aast.edu_en_new-applicants_media_AswanFees-2022-2023.pdf_file.pdf	*.pdf	2025-11-29T22:52:04.316198
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/www.aast.edu_en_openfiles_opencmsfiles_pdf_retreive_cms.php_disp_unit=539_Students_Statement_E.pdf_file.pdf	*.pdf	2025-11-29T23:18:12.963219
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/www.aast.edu_en_research_pdf_Awards-Rules.pdf_file.pdf	*.pdf	2025-11-30T00:03:22.567792
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/www.aast.edu_getData_retreiveGalleryPIC.php_unit=1&img=en_1256_1_6.jpg_file.jpg	*.jpg	2025-11-30T00:00:04.720594
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/www.aast.edu_getData_retreiveGalleryPIC.php_unit=1&img=en_1257_1_3.jpg_file.jpg	*.jpg	2025-11-30T00:00:02.382944
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/www.aast.edu_getData_retreiveGalleryPIC.php_unit=1&img=en_1258_1_7.png_file.png	*.png	2025-11-30T00:00:31.302174
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/www.aast.edu_getData_retreiveGalleryPIC.php_unit=1&img=en_1361_1_19642370_1485006648227694_2429847099708129261_n.jpg_file.jpg	*.jpg	2025-11-30T00:00:02.343461
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/www.aast.edu_getData_retreiveGalleryPIC.php_unit=1&img=en_35_1_03.jpg_file.jpg	*.jpg	2025-11-30T00:00:04.285756
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/www.aast.edu_getData_retreiveGalleryPIC.php_unit=1&img=en_42_1_01.jpg_file.jpg	*.jpg	2025-11-30T00:00:02.431458
+data/scraping/step8/last version - Copy/aast_v5_output_20251129_220740/files/www.aast.edu_getData_retreiveGalleryPIC.php_unit=1&img=en_969_1_13082744_1092799730781723_4879725842806044464_n.jpg_file.jpg	*.jpg	2025-11-29T22:51:23.152114
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_ar_about_pdf_AASTMT-Strategic-Plan-2021-2026.pdf_file.pdf	*.pdf	2025-11-29T22:24:03.192535
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_ar_centers_img_centers_aaisc.png_file.png	*.png	2025-11-29T23:18:08.166864
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_ar_centers_img_hcc.jpg_file.jpg	*.jpg	2025-11-29T23:18:09.048978
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_ar_colleges_img_Physical-Therapy.jpg_file.jpg	*.jpg	2025-11-29T22:25:43.964546
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_ar_deaneries_img_faculty.jpg_file.jpg	*.jpg	2025-11-29T23:17:55.463323
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_en_admission_AASTMT-English-Fees2025-2026.pdf_file.pdf	*.pdf	2025-11-29T22:52:17.774935
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_en_centers_img_centers_aaisc.png_file.png	*.png	2025-11-29T22:56:20.529011
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_en_centers_img_hcc.jpg_file.jpg	*.jpg	2025-11-29T22:56:20.519769
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_1.pdf_file.pdf	*.pdf	2025-11-29T23:08:18.916620
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_10.pdf_file.pdf	*.pdf	2025-11-29T23:08:20.003273
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_11.pdf_file.pdf	*.pdf	2025-11-29T23:08:18.669343
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_12.pdf_file.pdf	*.pdf	2025-11-29T23:08:20.688507
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_13.pdf_file.pdf	*.pdf	2025-11-29T23:08:17.486937
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_14.pdf_file.pdf	*.pdf	2025-11-29T23:08:19.565298
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_15.pdf_file.pdf	*.pdf	2025-11-29T23:08:18.723615
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_16.pdf_file.pdf	*.pdf	2025-11-29T23:08:17.235372
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_17.pdf_file.pdf	*.pdf	2025-11-29T23:08:18.619801
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_2.pdf_file.pdf	*.pdf	2025-11-29T23:08:20.211635
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_3.pdf_file.pdf	*.pdf	2025-11-29T23:08:23.344115
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_4.pdf_file.pdf	*.pdf	2025-11-29T23:08:22.094488
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_5.pdf_file.pdf	*.pdf	2025-11-29T23:08:17.564331
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_6.pdf_file.pdf	*.pdf	2025-11-29T23:08:17.635159
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_8.pdf_file.pdf	*.pdf	2025-11-29T23:08:22.623308
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_9.pdf_file.pdf	*.pdf	2025-11-29T23:08:21.237180
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_Computer_training.pdf_file.pdf	*.pdf	2025-11-29T23:07:12.496039
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_Construction_training.pdf_file.pdf	*.pdf	2025-11-29T23:07:12.087555
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_Electronics_training.pdf_file.pdf	*.pdf	2025-11-29T23:07:18.000608
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_Industrial_training.pdf_file.pdf	*.pdf	2025-11-29T23:07:14.081961
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_coe_alex_pdf_Mechanical_training.pdf_file.pdf	*.pdf	2025-11-29T23:07:13.243423
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_img_Physical-Therapy.jpg_file.jpg	*.jpg	2025-11-29T22:14:15.662385
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_en_colleges_practical-training_pdf_2024-summary.pdf_file.pdf	*.pdf	2025-11-29T22:36:01.273121
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_en_deaneries_img_faculty.jpg_file.jpg	*.jpg	2025-11-29T22:56:20.560441
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_en_new-applicants-2023_img_tabs_Digitalart.png_file.png	*.png	2025-11-29T22:15:00.060144
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_en_new-applicants_media_AAST-International-Degrees-2021-Final.pdf_file.pdf	*.pdf	2025-11-29T22:08:37.689396
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_en_pdf_Academic-staff-affairs-regulation-2021.pdf_file.pdf	*.pdf	2025-11-30T00:00:32.629863
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_en_pdf_catalog2020-en.pdf_file.pdf	*.pdf	2025-11-30T00:00:45.081598
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_en_research_pdf_Awards-Rules.pdf_file.pdf	*.pdf	2025-11-29T22:47:49.698417
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_en_research_pdf_Environmental Research Centers.pdf_file.pdf	*.pdf	2025-11-30T00:03:20.044396
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_en_services_img_header-temp-college.jpg_file.jpg	*.jpg	2025-11-29T23:29:19.612591
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_filename=_mediafiles_1000_Document_158608.PDF&unit=1000_file.pdf	*.pdf	2025-11-29T22:36:56.034240
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_filename=_mediafiles_1000_Document_158683.PDF&unit=1000_file.pdf	*.pdf	2025-11-29T22:36:59.189593
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_filename=_mediafiles_1000_Document_158685.PDF&unit=1000_file.pdf	*.pdf	2025-11-29T22:37:02.042158
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_filename=_mediafiles_1000_Document_158686.pdf&unit=1000_file.pdf	*.pdf	2025-11-29T22:36:57.253258
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_filename=_mediafiles_1000_Document_158721.pdf&unit=1000_file.pdf	*.pdf	2025-11-29T22:37:01.283367
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_filename=_mediafiles_1_Document_156483.pdf&unit=1_file.pdf	*.pdf	2025-11-29T22:07:44.157452
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_filename=_mediafiles_1_Document_156484.pdf&unit=1_file.pdf	*.pdf	2025-11-29T22:07:45.989373
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_filename=_mediafiles_1_Document_163942.pdf&unit=1_file.pdf	*.pdf	2025-11-29T22:09:55.052787
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_filename=_mediafiles_1_Document_165864.pdf&unit=1_file.pdf	*.pdf	2025-11-29T22:09:09.478046
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_filename=_mediafiles_1_Document_166027.pdf&unit=1_file.pdf	*.pdf	2025-11-29T22:07:51.939524
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_filename=_mediafiles_1_Document_167027.pdf&unit=1_file.pdf	*.pdf	2025-11-29T22:11:01.160206
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_unit=1&filename=_mediafiles_1_Document_156483.pdf_file.pdf	*.pdf	2025-11-29T22:51:08.159070
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_unit=1&filename=_mediafiles_1_Document_156484.pdf_file.pdf	*.pdf	2025-11-29T22:51:22.606234
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_unit=1&filename=_mediafiles_1_Document_163942.pdf_file.pdf	*.pdf	2025-11-29T22:51:18.486044
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_unit=1&filename=_mediafiles_1_Document_165864.pdf_file.pdf	*.pdf	2025-11-29T22:51:00.341974
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_unit=1&filename=_mediafiles_1_Document_166027.pdf_file.pdf	*.pdf	2025-11-29T22:51:22.434360
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_unit=1&filename=_mediafiles_1_Document_167027.pdf_file.pdf	*.pdf	2025-11-29T22:51:01.085771
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_unit=1&filename=_mediafiles_1_Document_171439.pdf_file.pdf	*.pdf	2025-11-29T23:52:12.762029
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_unit=1000&filename=_mediafiles_1000_Document_158608.PDF_file.pdf	*.pdf	2025-11-29T23:18:00.720588
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_unit=1000&filename=_mediafiles_1000_Document_158683.PDF_file.pdf	*.pdf	2025-11-29T23:18:02.651482
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_unit=1000&filename=_mediafiles_1000_Document_158685.PDF_file.pdf	*.pdf	2025-11-29T23:17:59.824261
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_unit=1000&filename=_mediafiles_1000_Document_158686.pdf_file.pdf	*.pdf	2025-11-29T23:18:00.621622
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew.php_unit=1000&filename=_mediafiles_1000_Document_158721.pdf_file.pdf	*.pdf	2025-11-29T23:18:00.572187
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=1201&filename=_mediafiles_1201_Document_176148.pdf_file.pdf	*.pdf	2025-11-29T22:54:02.429963
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=1204&filename=_mediafiles_1204_Document_176152.pdf_file.pdf	*.pdf	2025-11-29T22:51:34.144360
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=1206&filename=_mediafiles_1206_Document_176383.pdf_file.pdf	*.pdf	2025-11-29T22:53:58.518384
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=3&filename=_mediafiles_3_Document_145126.pdf_file.pdf	*.pdf	2025-11-29T23:08:22.663651
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=3&filename=_mediafiles_3_Document_172504.pdf_file.pdf	*.pdf	2025-11-29T23:03:30.443355
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=385&filename=_mediafiles_385_Document_150752.pdf_file.pdf	*.pdf	2025-11-29T23:42:16.814294
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=385&filename=_mediafiles_385_Document_166992.pdf_file.pdf	*.pdf	2025-11-29T23:39:12.806463
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=385&filename=_mediafiles_385_Document_166998.pdf_file.pdf	*.pdf	2025-11-29T23:39:13.793903
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=385&filename=_mediafiles_385_Document_167006.pdf_file.pdf	*.pdf	2025-11-29T23:39:14.076159
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=390&filename=_mediafiles_390_Document_147108.pdf_file.pdf	*.pdf	2025-11-30T00:00:33.666721
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=390&filename=_mediafiles_390_Document_147111.pdf_file.pdf	*.pdf	2025-11-29T23:55:25.305982
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=390&filename=_mediafiles_390_Document_147113.pdf_file.pdf	*.pdf	2025-11-29T23:55:25.055020
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=390&filename=_mediafiles_390_Document_147115.pdf_file.pdf	*.pdf	2025-11-29T23:55:13.035490
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=390&filename=_mediafiles_390_Document_147150.pdf_file.pdf	*.pdf	2025-11-29T23:55:25.801878
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=390&filename=_mediafiles_390_Document_147151.pdf_file.pdf	*.pdf	2025-11-29T23:55:38.057237
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=390&filename=_mediafiles_390_Document_147152.pdf_file.pdf	*.pdf	2025-11-29T23:55:36.677627
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=390&filename=_mediafiles_390_Document_147226.pdf_file.pdf	*.pdf	2025-11-30T00:00:36.598354
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=390&filename=_mediafiles_390_Document_147227.pdf_file.pdf	*.pdf	2025-11-30T00:00:38.498754
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=390&filename=_mediafiles_390_Document_161610.pdf_file.pdf	*.pdf	2025-11-30T00:00:32.061153
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=390&filename=_mediafiles_390_Document_174719.pdf_file.pdf	*.pdf	2025-11-30T00:00:32.290378
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_pdf_retreivefileNew_open.php_unit=473&filename=_mediafiles_473_Document_150456.pdf_file.pdf	*.pdf	2025-11-30T00:03:20.197798
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_retreiveOnePIC.php_unit=366&img=10_1_1_aast8.jpg_file.jpg	*.jpg	2025-11-29T23:41:48.294118
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_retreiveOnePIC.php_unit=366&img=11_1_1_1.jpg_file.jpg	*.jpg	2025-11-29T23:41:49.097027
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_retreiveOnePIC.php_unit=366&img=12_1_3_3.jpg_file.jpg	*.jpg	2025-11-29T23:41:47.771949
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_retreiveOnePIC.php_unit=366&img=5_1_1_2.jpg_file.jpg	*.jpg	2025-11-29T23:41:48.504383
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_retreiveOnePIC.php_unit=385&img=3_3_2_scan0004.jpg_file.jpg	*.jpg	2025-11-29T23:31:50.891105
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_retreiveOnePIC.php_unit=385&img=4_1_1_ØªÙ‚ÙŠÙŠÙ… Ø§Ù„Ø·Ù„Ø§Ø¨.png_file.png	*.png	2025-11-29T23:31:48.214625
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_retreiveOnePIC.php_unit=385&img=5_1_9_Motion Graphics.jpg_file.jpg	*.jpg	2025-11-29T23:31:48.691211
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_getData_retreiveOnePIC.php_unit=436&img=9_1_1_Welcome Class of 2021 (1).jpg_file.jpg	*.jpg	2025-11-29T23:38:32.536430
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms.php_disp_unit=1000_EDQMS5_1.pdf_file.pdf	*.pdf	2025-11-29T23:18:15.121094
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms.php_disp_unit=1000_EDQMS5_10.pdf_file.pdf	*.pdf	2025-11-29T23:18:11.142518
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms.php_disp_unit=1000_EDQMS5_11.pdf_file.pdf	*.pdf	2025-11-29T23:18:14.376112
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms.php_disp_unit=1000_EDQMS5_2.pdf_file.pdf	*.pdf	2025-11-29T23:18:14.844774
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms.php_disp_unit=1000_EDQMS5_3.pdf_file.pdf	*.pdf	2025-11-29T23:18:13.529392
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms.php_disp_unit=1000_EDQMS5_4.pdf_file.pdf	*.pdf	2025-11-29T23:21:03.682708
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms.php_disp_unit=1000_EDQMS5_5.pdf_file.pdf	*.pdf	2025-11-29T23:18:11.943730
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms.php_disp_unit=1000_EDQMS5_6.pdf_file.pdf	*.pdf	2025-11-29T23:21:04.674774
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms.php_disp_unit=1000_EDQMS5_7.pdf_file.pdf	*.pdf	2025-11-29T23:21:04.781061
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms.php_disp_unit=1000_EDQMS5_8.pdf_file.pdf	*.pdf	2025-11-29T23:18:12.355726
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms.php_disp_unit=1000_EDQMS5_9.pdf_file.pdf	*.pdf	2025-11-29T23:21:04.954044
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=346_AAST_Laboratory%20and%20Workshop%20Safety%20.pdf_file.pdf	*.pdf	2025-11-29T23:09:30.825107
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=346_FrontPage_Arabic.pdf_file.pdf	*.pdf	2025-11-29T23:08:56.947776
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=346_FrontPage_English.pdf_file.pdf	*.pdf	2025-11-29T23:08:56.798320
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=346_MPS11-5%20Withdrawal%20form.pdf_file.pdf	*.pdf	2025-11-29T23:09:30.861424
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=346_MPS14-1%20Student%20Complaint.pdf_file.pdf	*.pdf	2025-11-29T23:09:29.757788
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=346_MPS15-2%20Students%20Appeals.pdf_file.pdf	*.pdf	2025-11-29T23:09:30.258700
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=346_MPS16_Disclaimer.pdf_file.pdf	*.pdf	2025-11-29T23:08:57.181395
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=346_MPS20_Alumni%20Application.pdf_file.pdf	*.pdf	2025-11-29T23:08:56.717180
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=346_MPS44%20summer%20registeration.pdf_file.pdf	*.pdf	2025-11-29T23:09:33.243381
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=346_MPS7_training%20request.pdf_file.pdf	*.pdf	2025-11-29T23:09:31.121478
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=385_CMTH%20CAIRO%202015-2016.pdf_file.pdf	*.pdf	2025-11-29T23:43:47.806843
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=390_EducationandStudyRegulationssep2016.pdf_file.pdf	*.pdf	2025-11-29T23:55:38.637413
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=390_EducationRegulations2016.pdf_file.pdf	*.pdf	2025-11-29T23:55:36.258977
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=390_NewPromotionRegulations2022-2024.pdf_file.pdf	*.pdf	2025-11-29T23:55:24.180004
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=390_PromotionProcedures.pdf_file.pdf	*.pdf	2025-11-29T23:57:26.342863
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=390_Scan2.pdf_file.pdf	*.pdf	2025-11-29T23:55:38.115833
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=390_StaffAffairsRegulations.pdf_file.pdf	*.pdf	2025-11-30T00:00:24.318535
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=3_College%20Administrative%20History.pdf_file.pdf	*.pdf	2025-11-29T22:57:06.762347
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=3_College_MoU_2015.pdf_file.pdf	*.pdf	2025-11-29T22:57:02.035964
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=3_course%20withdrawal.pdf_file.pdf	*.pdf	2025-11-29T23:02:07.085762
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=3_Industry-18_27-12-2012.pdf_file.pdf	*.pdf	2025-11-29T23:08:21.979499
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=3_Industry-19_20-06-2013.pdf_file.pdf	*.pdf	2025-11-29T23:08:21.614119
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=3_Industry-20_26-12-2013.pdf_file.pdf	*.pdf	2025-11-29T23:08:21.786083
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=3_Industry-21_2014-06-25.pdf_file.pdf	*.pdf	2025-11-29T23:08:18.551653
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=3_Industry_18-12-2014.pdf_file.pdf	*.pdf	2025-11-29T23:08:25.575436
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=3_student%20appeal.pdf_file.pdf	*.pdf	2025-11-29T23:02:05.617449
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=419_allclasses14Feb2022.pdf_file.pdf	*.pdf	2025-11-29T23:30:52.107743
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=419_AR%20Curriculum%20and%20Brief%20Description.pdf_file.pdf	*.pdf	2025-11-29T23:29:53.683818
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=419_CB%20Curriculum%20and%20Brief%20Description.pdf_file.pdf	*.pdf	2025-11-29T23:29:50.479702
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=419_EC%20Curriculum%20and%20Brief%20Description.pdf_file.pdf	*.pdf	2025-11-29T23:29:50.559385
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=419_EG%20Curriculum%20and%20Brief%20Description.pdf_file.pdf	*.pdf	2025-11-29T23:29:52.522296
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=419_EG%20Curriculum%20and%20Brief%20Description2.pdf_file.pdf	*.pdf	2025-11-29T23:29:55.290711
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=419_ME%20Curriculum%20and%20Brief%20Description.pdf_file.pdf	*.pdf	2025-11-29T23:29:53.527992
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=419_Online-Magazine-April.pdf_file.pdf	*.pdf	2025-11-29T23:24:10.835267
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=474_College_Research_Areas.pdf_file.pdf	*.pdf	2025-11-29T23:33:43.936113
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=6_Academic%20Advising.pdf_file.pdf	*.pdf	2025-11-29T23:50:04.038399
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=6_CMT%20Strategic%20Plan.pdf_file.pdf	*.pdf	2025-11-29T23:50:04.338286
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=6_Form%20no%2011-a.pdf_file.pdf	*.pdf	2025-11-29T23:49:58.445414
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=6_Form%20no%2011-b.pdf_file.pdf	*.pdf	2025-11-29T23:49:58.788096
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=6_Revised%20CMT%20Strategic%20Plan.pdf_file.pdf	*.pdf	2025-11-29T23:50:02.470942
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=6_Revised%20Privacy%20and%20Copyrights.pdf_file.pdf	*.pdf	2025-11-29T23:49:58.959931
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=6_Revised%20Vision%20and%20Mission.pdf_file.pdf	*.pdf	2025-11-29T23:49:59.314648
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=6_Supreme%20Council%20Agreements.pdf_file.pdf	*.pdf	2025-11-29T23:50:02.524669
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_openfiles_opencmsfiles_pdf_retreive_cms_open.php_disp_unit=6_Teaching%20and%20learning%20strategy.pdf_file.pdf	*.pdf	2025-11-29T23:50:03.500778
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_pheed_staffadminview_pdf_retreive.php_stafftype=staffnew&url=staff_6444_cv_cv1.pdf_file.pdf	*.pdf	2025-11-29T22:45:35.249040
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_template_ar.png_file.png	*.png	2025-11-29T22:56:19.346862
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_template_ar_footer_img_ain-logo.png_file.png	*.png	2025-11-29T22:56:19.895461
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_template_ar_footer_img_arab_league.png_file.png	*.png	2025-11-29T22:56:19.984482
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_template_ar_footer_img_QS-STARS.png_file.png	*.png	2025-11-29T22:56:19.972640
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_template_ar_topbar_img_logo5.png_file.png	*.png	2025-11-29T23:17:54.636306
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_template_ar_topbar_img_main-menu_ain-logo.png_file.png	*.png	2025-11-29T23:17:55.114989
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_template_ar_topbar_img_main-menu_arab_league.png_file.png	*.png	2025-11-29T23:17:54.721123
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_template_ar_topbar_img_main-menu_qs.jpg_file.jpg	*.jpg	2025-11-29T23:17:55.226714
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_template_en.png_file.png	*.png	2025-11-29T23:17:54.424804
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_template_en_all-types_img_complexes_industry-service.jpg_file.jpg	*.jpg	2025-11-29T23:10:03.143491
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_template_en_all-types_img_institutes_Communication-studies.jpg_file.jpg	*.jpg	2025-11-29T22:56:20.007867
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_template_en_all-types_img_institutes_tvi.jpg_file.jpg	*.jpg	2025-11-29T22:56:20.101073
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_template_en_all-types_img_tabs_schoolofbusiness.jpg_file.jpg	*.jpg	2025-11-29T23:30:44.323417
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_template_en_practical-training_img_pdf_procedures2.pdf_file.pdf	*.pdf	2025-11-29T22:37:07.691051
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_template_en_topbar__img_main-menu_logo-2.png_file.png	*.png	2025-11-29T22:56:20.123406
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_template_en_topbar_img_main-menu_ain-logo.png_file.png	*.png	2025-11-29T22:56:19.535004
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_template_en_topbar_img_main-menu_arab_league.png_file.png	*.png	2025-11-29T22:56:19.437348
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_template_en_topbar_img_main-menu_logo-2.png_file.png	*.png	2025-11-29T22:56:19.702657
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aast.edu_template_en_topbar_img_main-menu_qs.jpg_file.jpg	*.jpg	2025-11-29T22:56:19.729389
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_SRI_About AASTMT Grant.pdf_file.pdf	*.pdf	2025-11-30T00:03:49.500895
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_17.2.1.pdf_file.pdf	*.pdf	2025-11-30T00:03:20.296187
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_17.2.3.pdf_file.pdf	*.pdf	2025-11-30T00:03:20.250174
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_17.2.4.pdf_file.pdf	*.pdf	2025-11-30T00:03:19.089963
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_17.2.5.pdf_file.pdf	*.pdf	2025-11-30T00:03:19.258077
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_AASTMT Educational Resources.pdf_file.pdf	*.pdf	2025-11-30T00:03:20.529653
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_AASTMT Educational Resources_Community Education.pdf_file.pdf	*.pdf	2025-11-30T00:03:19.353560
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_AASTMT Educational Resources_Public lectures.pdf_file.pdf	*.pdf	2025-11-30T00:03:19.792974
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_AASTMT Public Activities (Executive Education Programmes).pdf_file.pdf	*.pdf	2025-11-30T00:03:19.601821
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_AASTMT Public Activities(Educational Outreach Activities).pdf_file.pdf	*.pdf	2025-11-30T00:03:19.311179
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_AASTMT SDGs.pdf_file.pdf	*.pdf	2025-11-30T00:03:19.984263
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_AASTMT%20policy%20for%20Equality,%20diversity,%20and%20inclusion.pdf_file.pdf	*.pdf	2025-11-30T00:03:19.511176
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_Annex 1- التنمية المستدامة والمسئولية المجتمعية.pdf_file.pdf	*.pdf	2025-11-30T00:03:20.580533
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_Annex 2-توصيف بيانات الشبكة المعلوماتية العربية للتنمية المستدامة.pdf_file.pdf	*.pdf	2025-11-30T00:03:19.463829
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_Annex 3- المحاور الرئيسية لتقرير إستراتيجية وإنجازات الأكاديمية.pdf_file.pdf	*.pdf	2025-11-30T00:03:20.431965
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_Environmental Engineering.pdf_file.pdf	*.pdf	2025-11-30T00:03:19.840719
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_Environmental Monitoring and Climate Change Laboratory.pdf_file.pdf	*.pdf	2025-11-30T00:03:19.198493
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_Equal Opportunities in Education and Social Responsibility.pdf_file.pdf	*.pdf	2025-11-30T00:03:20.149104
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_Equality,%20diversity,%20and%20inclusion%20Policy.pdf_file.pdf	*.pdf	2025-11-30T00:03:20.101116
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_Gender Equality Policy Statement.pdf_file.pdf	*.pdf	2025-11-30T00:03:19.554881
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_ISC AAST Report.pdf_file.pdf	*.pdf	2025-11-30T00:03:19.143225
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_Marine Pollution Conventions & Laws.pdf_file.pdf	*.pdf	2025-11-30T00:03:19.893189
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aastmtic2.aast.edu_sri_Reports_THE HUMAN RESOURCES.pdf_file.pdf	*.pdf	2025-11-30T00:03:19.935220
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aastmtic3.aast.edu_sri_AASTMT Innovation Research Grant – IRG 2025 Call.pdf_file.pdf	*.pdf	2025-11-29T23:57:33.047282
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/aastmtic3.aast.edu_sri_About%20the%20Grant%20of%20the%20AASTMT.pdf_file.pdf	*.pdf	2025-11-30T00:01:12.293412
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/uol.aast.edu_wp-content_uploads_2025_05_emfss-prospectus-2025.pdf_file.pdf	*.pdf	2025-11-29T22:53:46.180157
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/www.aast.edu_en_new-applicants_media_AswanFees-2022-2023.pdf_file.pdf	*.pdf	2025-11-29T22:52:04.316198
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/www.aast.edu_en_openfiles_opencmsfiles_pdf_retreive_cms.php_disp_unit=539_Students_Statement_E.pdf_file.pdf	*.pdf	2025-11-29T23:18:12.963219
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/www.aast.edu_en_research_pdf_Awards-Rules.pdf_file.pdf	*.pdf	2025-11-30T00:03:22.567792
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/www.aast.edu_getData_retreiveGalleryPIC.php_unit=1&img=en_1256_1_6.jpg_file.jpg	*.jpg	2025-11-30T00:00:04.720594
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/www.aast.edu_getData_retreiveGalleryPIC.php_unit=1&img=en_1257_1_3.jpg_file.jpg	*.jpg	2025-11-30T00:00:02.382944
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/www.aast.edu_getData_retreiveGalleryPIC.php_unit=1&img=en_1258_1_7.png_file.png	*.png	2025-11-30T00:00:31.302174
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/www.aast.edu_getData_retreiveGalleryPIC.php_unit=1&img=en_1361_1_19642370_1485006648227694_2429847099708129261_n.jpg_file.jpg	*.jpg	2025-11-30T00:00:02.343461
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/www.aast.edu_getData_retreiveGalleryPIC.php_unit=1&img=en_35_1_03.jpg_file.jpg	*.jpg	2025-11-30T00:00:04.285756
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/www.aast.edu_getData_retreiveGalleryPIC.php_unit=1&img=en_42_1_01.jpg_file.jpg	*.jpg	2025-11-30T00:00:02.431458
+data/scraping/step8/last version/aast_v5_output_20251129_220740/files/www.aast.edu_getData_retreiveGalleryPIC.php_unit=1&img=en_969_1_13082744_1092799730781723_4879725842806044464_n.jpg_file.jpg	*.jpg	2025-11-29T22:51:23.152114
+data/scraping/step8/requirements.txt	*.txt	2025-11-18T23:17:55.385767
+diagrams/AAST_AI_Agent_Architecture_Sequence_Diagrams.md	*.md	2026-05-25T16:53:10.984628
+diagrams/AAST_AI_Agent_Architecture_Sequence_Diagrams.pdf	*.pdf	2026-05-25T16:53:28.304761
+doc/book/01_authoritative_sources/ARCHITECTURE_BASELINE.md	*.md	2026-06-14T14:44:35.933758
+doc/book/01_authoritative_sources/BOOK_SOURCE_CONFLICT_RESOLUTION.md	*.md	2026-06-14T15:23:14.507663
+doc/book/01_authoritative_sources/BOOK_SOURCE_MAPPING.md	*.md	2026-06-14T15:22:53.557757
+doc/book/01_authoritative_sources/EXPERIMENT_EVIDENCE_REPORT.md	*.md	2026-06-14T15:24:34.665119
+doc/book/01_authoritative_sources/FINAL_PROJECT_STRUCTURE.md	*.md	2026-06-14T14:58:22.555144
+doc/book/01_authoritative_sources/IMPLEMENTATION_EVIDENCE_REPORT.md	*.md	2026-06-14T15:24:30.732061
+doc/book/01_authoritative_sources/PERFORMANCE_REVIEW_REPORT.md	*.md	2026-06-14T15:05:04.476216
+doc/book/01_authoritative_sources/PRODUCTION_SYSTEM_MAP.md	*.md	2026-06-14T15:02:51.850168
+doc/book/01_authoritative_sources/SECURITY_REVIEW_REPORT.md	*.md	2026-06-14T15:05:00.660558
+doc/book/01_authoritative_sources/SYSTEM_CONTEXT_MAP_V2.md	*.md	2026-06-14T14:43:27.897511
+doc/book/01_authoritative_sources/TARGET_ARCHITECTURE_V3.md	*.md	2026-06-14T14:40:09.828877
+doc/book/01_authoritative_sources/THESIS_EVIDENCE_MAP.md	*.md	2026-06-14T15:24:12.698534
+doc/book/02_figures/Architecture/diagram.jpeg	*.jpeg	2026-06-12T21:28:32.355165
+doc/book/02_figures/Architecture/diagram.pdf	*.pdf	2026-06-12T21:27:02.055004
+doc/book/02_figures/Architecture/diagram.png	*.png	2026-06-12T21:27:04.885358
+doc/book/02_figures/GraphRAG/aast-advisor-graph-desktop.png	*.png	2026-05-17T21:40:27.813526
+doc/book/02_figures/Runtime/AAST_AI_Agent_Sequence_Diagrams.md	*.md	2026-05-25T16:53:10.984628
+doc/book/04_evidence/EXPERIMENT_EVIDENCE_REPORT.md	*.md	2026-06-14T15:24:34.665119
+doc/book/04_evidence/IMPLEMENTATION_EVIDENCE_REPORT.md	*.md	2026-06-14T15:24:30.732061
+doc/book/04_evidence/THESIS_EVIDENCE_MAP.md	*.md	2026-06-14T15:24:12.698534
+doc/book/05_related_work/LITERATURE_REVIEW_DISCOVERY.md	*.md	2026-06-14T15:17:39.121414
+doc/book/05_related_work/PROJECT_NOVELTY_DISCOVERY.md	*.md	2026-06-14T15:20:50.004311
+doc/book/05_related_work/RELATED_WORK_DISCOVERY.md	*.md	2026-06-14T15:20:43.517676
+doc/book/05_related_work/RELATED_WORK_READINESS_REPORT.md	*.md	2026-06-14T15:20:54.302741
+doc/book/06_evaluation/EVALUATION_ASSET_INVENTORY.md	*.md	2026-06-14T15:21:31.399938
+doc/book/06_evaluation/EVALUATION_GAP_REPORT.md	*.md	2026-06-14T15:21:52.846851
+doc/book/06_evaluation/EVALUATION_METRIC_DISCOVERY.md	*.md	2026-06-14T15:21:38.178412
+doc/book/06_evaluation/EVALUATION_READINESS_REPORT.md	*.md	2026-06-14T15:21:59.313818
+doc/book/06_evaluation/EXPERIMENT_DISCOVERY.md	*.md	2026-06-14T15:21:47.355840
+doc/book/06_evaluation/SYSTEM_VALIDATION_DISCOVERY.md	*.md	2026-06-14T15:21:42.243844
+doc/book/07_appendices/BOOK_APPENDIX_DISCOVERY.md	*.md	2026-06-14T15:23:08.385125
+doc/book/chapter_1/evidence.md	*.md	2026-06-14T15:28:13.127847
+doc/book/chapter_1/figures.md	*.md	2026-06-14T15:28:13.126853
+doc/book/chapter_1/sources.md	*.md	2026-06-14T15:28:13.125847
+doc/book/chapter_1/tables.md	*.md	2026-06-14T15:28:13.126853
+doc/book/chapter_2/evidence.md	*.md	2026-06-14T15:28:13.130026
+doc/book/chapter_2/figures.md	*.md	2026-06-14T15:28:13.129021
+doc/book/chapter_2/sources.md	*.md	2026-06-14T15:28:13.127847
+doc/book/chapter_2/tables.md	*.md	2026-06-14T15:28:13.129021
+doc/book/chapter_3/evidence.md	*.md	2026-06-14T15:28:13.131021
+doc/book/chapter_3/figures.md	*.md	2026-06-14T15:28:13.131021
+doc/book/chapter_3/sources.md	*.md	2026-06-14T15:28:13.130026
+doc/book/chapter_3/tables.md	*.md	2026-06-14T15:28:13.131021
+doc/book/chapter_4/evidence.md	*.md	2026-06-14T15:28:13.133233
+doc/book/chapter_4/figures.md	*.md	2026-06-14T15:28:13.133233
+doc/book/chapter_4/sources.md	*.md	2026-06-14T15:28:13.132243
+doc/book/chapter_4/tables.md	*.md	2026-06-14T15:28:13.133233
+doc/book/chapter_5/evidence.md	*.md	2026-06-14T15:28:13.135235
+doc/book/chapter_5/figures.md	*.md	2026-06-14T15:28:13.134232
+doc/book/chapter_5/sources.md	*.md	2026-06-14T15:28:13.134232
+doc/book/chapter_5/tables.md	*.md	2026-06-14T15:28:13.135235
+doc/book/chapter_6/evidence.md	*.md	2026-06-14T15:28:13.137230
+doc/book/chapter_6/figures.md	*.md	2026-06-14T15:28:13.137230
+doc/book/chapter_6/sources.md	*.md	2026-06-14T15:28:13.136235
+doc/book/chapter_6/tables.md	*.md	2026-06-14T15:28:13.137230
+doc/book/registry/APPENDIX_REGISTRY.md	*.md	2026-06-14T15:28:13.124850
+doc/book/registry/BOOK_ASSET_AUDIT.md	*.md	2026-06-14T15:28:13.138229
+doc/book/registry/BOOK_SOURCE_REGISTRY.md	*.md	2026-06-14T15:28:13.120665
+doc/book/registry/EVALUATION_REGISTRY.md	*.md	2026-06-14T15:28:13.124850
+doc/book/registry/EVIDENCE_REGISTRY.md	*.md	2026-06-14T15:28:13.122858
+doc/book/registry/FIGURE_REGISTRY.md	*.md	2026-06-14T15:28:13.121846
+doc/book/registry/RELATED_WORK_REGISTRY.md	*.md	2026-06-14T15:28:13.123848
+doc/book/registry/TABLE_REGISTRY.md	*.md	2026-06-14T15:28:13.122858
+docs/api/decision_examples.md	*.md	2026-03-08T22:55:47.829898
+docs/architecture/02_COMPONENT_SYSTEM_DESCRIPTION.md	*.md	2026-05-17T17:47:06.806345
+docs/architecture/AAST_AGENT_SYSTEM_DOCS.md	*.md	2026-04-16T18:06:34.992489
+docs/architecture/CONDENSED_RUNTIME_TRACE.md	*.md	2026-05-26T01:23:32.946512
+docs/architecture/MASTER_PROJECT_BANK.md	*.md	2026-06-12T15:45:46.094289
+docs/architecture/MASTER_TECHNICAL_DOCUMENTATION.md	*.md	2026-05-26T16:02:07.877188
+docs/architecture/MASTER_TECHNICAL_DOCUMENTATION.pdf	*.pdf	2026-05-26T16:02:20.259765
+docs/architecture/VERIFIED_SYSTEM_MAP.md	*.md	2026-05-26T01:05:54.988371
+docs/deployment/DOCKERIZATION.md	*.md	2026-05-23T17:59:55.425340
+docs/development/INTERNAL_TEAM_DOCUMENTATION.md	*.md	2026-05-26T16:44:29.128658
+docs/development/INTERNAL_TEAM_DOCUMENTATION.pdf	*.pdf	2026-05-26T16:46:13.979492
+docs/development/SECURITY_SCRUB_GUIDE.md	*.md	2026-03-13T04:24:47.149788
+docs/development/SEMANTIC_TAGGING_GUIDE.md	*.md	2026-03-13T04:29:51.498863
+docs/diagrams/03_ARCHITECTURAL_DIAGRAMS.md	*.md	2026-05-17T17:48:35.415462
+docs/diagrams/AAST_AI_Agent_Sequence_Diagrams.md	*.md	2026-05-25T16:53:10.984628
+docs/diagrams/diagram.jpeg	*.jpeg	2026-06-12T21:28:32.355165
+docs/diagrams/diagram.md	*.md	2026-06-12T21:27:31.450258
+docs/diagrams/diagram.pdf	*.pdf	2026-06-12T21:27:02.055004
+docs/diagrams/diagram.png	*.png	2026-06-12T21:27:04.885358
+docs/reports/01_MASTER_TECHNICAL_REPORT.md	*.md	2026-05-18T00:26:14.024481
+docs/reports/04_PERFORMANCE_ANALYSIS.md	*.md	2026-05-26T16:31:37.566430
+docs/reports/audit/ARCHITECTURE_REPORT.md	*.md	2026-06-14T13:26:45.991933
+docs/reports/audit/BACKUP_PLAN.md	*.md	2026-06-14T13:32:08.393227
+docs/reports/audit/BATCH1_VALIDATION_REPORT.md	*.md	2026-06-14T13:45:34.681548
+docs/reports/audit/BATCH2_VALIDATION_REPORT.md	*.md	2026-06-14T14:32:27.327291
+docs/reports/audit/DEPENDENCY_GRAPH.md	*.md	2026-06-14T13:28:05.330606
+docs/reports/audit/DOCUMENTATION_AUDIT.md	*.md	2026-06-14T13:27:26.311836
+docs/reports/audit/DOCUMENTATION_MAP.md	*.md	2026-06-14T13:27:32.864369
+docs/reports/audit/DUPLICATE_PROJECT_ANALYSIS.md	*.md	2026-06-14T13:27:58.206141
+docs/reports/audit/ENTRYPOINT_ANALYSIS.md	*.md	2026-06-14T13:26:24.474392
+docs/reports/audit/EXTERNAL_DEPENDENCIES.md	*.md	2026-06-14T13:27:45.305123
+docs/reports/audit/FILE_CLASSIFICATION_REPORT.md	*.md	2026-06-14T13:39:58.221585
+docs/reports/audit/IMPORT_REWRITE_REPORT.md	*.md	2026-06-14T13:30:59.670316
+docs/reports/audit/MICROSERVICE_INTEGRATION_REPORT.md	*.md	2026-06-14T13:26:52.751546
+docs/reports/audit/MIGRATION_BATCHES.md	*.md	2026-06-14T13:40:23.412394
+docs/reports/audit/MIGRATION_PLAN.md	*.md	2026-06-14T13:28:14.439377
+docs/reports/audit/PHASE2_PRECHECK.md	*.md	2026-06-14T13:40:13.620808
+docs/reports/audit/PHASE3_EXECUTION_PLAN.md	*.md	2026-06-14T13:40:40.782927
+docs/reports/audit/PIPELINE_DEPENDENCY_REPORT.md	*.md	2026-06-14T13:40:54.923001
+docs/reports/audit/PRODUCTION_SYSTEM_MAP.md	*.md	2026-06-14T13:26:18.262813
+docs/reports/audit/REVIEW_VALIDATION_REPORT.md	*.md	2026-06-14T13:30:50.432296
+docs/reports/audit/RISK_REPORT.md	*.md	2026-06-14T13:26:59.434675
+docs/reports/audit/SERVICE_CRITICALITY_REPORT.md	*.md	2026-06-14T13:27:38.660670
+docs/reports/audit/STARTUP_FLOW.md	*.md	2026-06-14T13:27:51.891848
+docs/reports/audit/VALIDATION_MATRIX.md	*.md	2026-06-14T13:32:13.470665
+docs/reports/final_verdict_aast_ai_agent (1).docx	*.docx	2026-05-05T21:20:29.673457
+docs/reports/graph_metrics_phase4b.md	*.md	2026-05-17T13:49:46.330050
+docs/research/academic_ai_engineer_portfolio.md	*.md	2026-06-11T16:07:21.784657
+docs/reverse_engineering/00_audit_progress.md	*.md	2026-06-09T11:09:36.997836
+docs/reverse_engineering/04_orchestrator.md	*.md	2026-06-09T10:38:17.101253
+docs/reverse_engineering/05_brain_router.md	*.md	2026-06-09T10:39:15.420304
+docs/reverse_engineering/06_rag_engine.md	*.md	2026-06-09T10:39:38.375408
+docs/reverse_engineering/07_neo4j_engine.md	*.md	2026-06-09T10:40:24.937499
+docs/reverse_engineering/08_decision_engine.md	*.md	2026-06-09T11:03:14.036897
+docs/reverse_engineering/08a_domain_model.md	*.md	2026-06-09T11:03:21.980186
+docs/reverse_engineering/08b_business_rules.md	*.md	2026-06-09T11:03:51.361411
+docs/reverse_engineering/08c_recommendation_pipeline.md	*.md	2026-06-09T11:04:21.148613
+docs/reverse_engineering/08d_database_schema.md	*.md	2026-06-09T11:04:39.379254
+docs/reverse_engineering/08e_api_contracts.md	*.md	2026-06-09T10:51:31.433825
+docs/reverse_engineering/08f_validation_layer.md	*.md	2026-06-09T10:51:52.000643
+docs/reverse_engineering/08g_migrations_audit.md	*.md	2026-06-09T11:02:53.715389
+docs/reverse_engineering/08h_utilities_audit.md	*.md	2026-06-09T11:09:10.649394
+docs/reverse_engineering/09_conversation_system.md	*.md	2026-06-09T10:40:54.812730
+docs/reverse_engineering/10_memory_architecture.md	*.md	2026-06-09T10:41:10.454924
+docs/reverse_engineering/11_unified_answer_service.md	*.md	2026-06-09T10:41:55.479209
+docs/reverse_engineering/15_failover_system.md	*.md	2026-06-09T10:36:39.685963
+docs/reverse_engineering/16_circuit_breaker.md	*.md	2026-06-09T10:36:32.805280
+docs/reverse_engineering/17_persistence_layer.md	*.md	2026-06-09T10:36:24.597245
+docs/reverse_engineering/ACCURACY_VALIDATION_REPORT.md	*.md	2026-06-09T10:43:31.593736
+docs/reverse_engineering/AUDIT_COMPLIANCE_REPORT.md	*.md	2026-06-09T11:09:53.228919
+docs/reverse_engineering/college_decision_system_coverage_report.md	*.md	2026-06-09T11:09:24.208874
+docs/reverse_engineering/college_decision_system_inventory.md	*.md	2026-06-09T10:49:01.294008
+docs/reverse_engineering/phase4_gap_analysis.md	*.md	2026-06-09T11:08:38.201976
+EVALUATION_ASSET_INVENTORY.md	*.md	2026-06-14T15:21:31.399938
+EVALUATION_GAP_REPORT.md	*.md	2026-06-14T15:21:52.846851
+EVALUATION_METRIC_DISCOVERY.md	*.md	2026-06-14T15:21:38.178412
+EVALUATION_READINESS_REPORT.md	*.md	2026-06-14T15:21:59.313818
+EXPERIMENT_DISCOVERY.md	*.md	2026-06-14T15:21:47.355840
+EXPERIMENT_EVIDENCE_REPORT.md	*.md	2026-06-14T15:24:34.665119
+IMPLEMENTATION_EVIDENCE_REPORT.md	*.md	2026-06-14T15:24:30.732061
+LITERATURE_REVIEW_DISCOVERY.md	*.md	2026-06-14T15:17:39.121414
+MASTER_CONFLICT_AUDIT.md	*.md	2026-06-14T15:25:34.611729
+MASTER_DOCUMENT_VERDICT.md	*.md	2026-06-14T15:26:02.304394
+MISSING_EVIDENCE_REPORT.md	*.md	2026-06-14T15:24:41.892384
+PROJECT_NOVELTY_DISCOVERY.md	*.md	2026-06-14T15:20:50.004311
+RELATED_WORK_DISCOVERY.md	*.md	2026-06-14T15:20:43.517676
+RELATED_WORK_READINESS_REPORT.md	*.md	2026-06-14T15:20:54.302741
+REPORT_DUPLICATION_AUDIT.md	*.md	2026-06-14T15:25:49.633874
+REPORT_INVENTORY.md	*.md	2026-06-14T15:25:29.145760
+SYSTEM_VALIDATION_DISCOVERY.md	*.md	2026-06-14T15:21:42.243844
+THESIS_CLAIM_DISCOVERY.md	*.md	2026-06-14T15:24:08.174457
+THESIS_EVIDENCE_MAP.md	*.md	2026-06-14T15:24:12.698534
+THESIS_EVIDENCE_READINESS.md	*.md	2026-06-14T15:24:48.262398
+THESIS_FIGURE_EVIDENCE.md	*.md	2026-06-14T15:24:18.630403
+THESIS_TABLE_EVIDENCE.md	*.md	2026-06-14T15:24:22.672807

@@ -6,6 +6,8 @@ class StudentProfileSchema(BaseModel):
     high_school_percentage: float | None = None
     budget: float | None = None
     track_type: str = "regular"
+    preferred_branch: str | None = None
+    preferred_city: str | None = None
 
 class PreferencesSchema(BaseModel):
     interests: list[str] = Field(default_factory=list)
@@ -22,7 +24,9 @@ class AgentRecommendRequestSchema(BaseModel):
                     "certificate_type": "string",
                     "high_school_percentage": 85,
                     "budget": 50000,
-                    "track_type": "regular"
+                    "track_type": "regular",
+                    "preferred_branch": "heliopolis",
+                    "preferred_city": "cairo"
                 },
                 "preferences": {
                     "interests": ["AI", "Programming"],

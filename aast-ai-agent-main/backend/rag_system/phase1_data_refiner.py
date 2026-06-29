@@ -720,7 +720,7 @@ class SemanticDeduplicator:
     ):
         logger.info(f"Loading embedding model: {model_id}")
         t0 = time.time()
-        self.model = SentenceTransformer(model_id)
+        self.model = SentenceTransformer(model_id, device="cuda")
         logger.info(f"Model ready in {time.time() - t0:.1f}s")
         self.batch_size = batch_size
         self.threshold  = threshold

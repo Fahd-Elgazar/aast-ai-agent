@@ -6,6 +6,7 @@ export interface RecommendationPayload {
   studentProfile: {
     high_school_percentage: number;
     budget: number;
+    preferred_branch?: string | null;
   };
   preferences: {
     interests: string[];

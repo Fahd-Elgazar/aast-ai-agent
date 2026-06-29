@@ -121,7 +121,7 @@ Requirements:
 3) Mention exactly 1 specific skill from the top skills they should start learning today.
 Keep it under 5 sentences. Be warm and professional. Do NOT use emojis.\`;
 
-            const llmRes = await fetch("http://localhost:11434/api/generate", {
+            const llmRes = await fetch("http://192.168.1.7:11434/api/generate", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ model: "llama3.2:3b-instruct-q4_K_M", prompt: llmPrompt, stream: false }),
@@ -197,7 +197,7 @@ Keep it under 5 sentences. Be warm and professional. Do NOT use emojis.\`;
 
         try {
           const prompt = convo.messages.map(m => \`\${m.role.toUpperCase()}: \${m.content}\`).join("\\n\\n");
-          const resLLM = await fetch("http://localhost:11434/api/generate", {
+          const resLLM = await fetch("http://192.168.1.7:11434/api/generate", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ model: "llama3.2:3b-instruct-q4_K_M", prompt, stream: false }),

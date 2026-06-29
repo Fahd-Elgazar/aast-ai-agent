@@ -183,8 +183,8 @@ def recommend_programs(payload: AgentRecommendRequestSchema | RecommendProgramsR
                     if payload.student_profile.budget is not None
                     else None
                 ),
-                preferred_branch=None,
-                preferred_city=None,
+                preferred_branch=payload.student_profile.preferred_branch,
+                preferred_city=payload.student_profile.preferred_city,
                 interests=list(set(all_interests)),
                 track_type=payload.student_profile.track_type,
                 max_results=5,

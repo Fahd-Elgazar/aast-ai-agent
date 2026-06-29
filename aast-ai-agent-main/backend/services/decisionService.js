@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import fs from "fs";
 import path from "path";
 import { callOllama } from "./ollamaService.js";
+import { runtimeMode } from "../config/runtimeMode.js";
 
 dotenv.config();
 
@@ -167,6 +168,8 @@ function normalizeData(profile, preferences) {
           ? Number(p.budget)
           : null,
       track_type: normalizeString(p.track_type || p.trackType) || "unknown",
+      preferred_branch: normalizeString(p.preferred_branch || p.preferredBranch) || null,
+      preferred_city: normalizeString(p.preferred_city || p.preferredCity) || null,
     },
     preferences: {
       interests: (pref.interests || [])
@@ -231,6 +234,11 @@ export async function extractProfileData(text) {
   }
 
   /* ---------- LLM FALLBACK ---------- */
+  if (!runtimeMode.decisionLlmExtractionEnabled || runtimeMode.singleGemmaGenerationMode || runtimeMode.defenseMode) {
+    console.warn("Decision LLM extraction disabled; using deterministic rule extraction only.");
+    return null;
+  }
+
   try {
     const prompt = `
 Extract student profile and preferences as JSON ONLY:
@@ -313,35 +321,126 @@ async function safeExtractProfileData(text) {
    🚀 DYNAMIC CAREER ROADMAP ENGINE
 ============================================================ */
 
-function generateRoles(profile, pref) {
+function generateRoles(profile, pref, major) {
+  const majorName = String(major || "").toLowerCase();
+  
+  if (majorName) {
+    if (majorName.includes("cybersecurity")) {
+      return ["Cybersecurity Analyst", "Information Security Officer", "Security Architect"];
+    }
+    if (majorName.includes("software")) {
+      return ["Software Engineer", "Full-Stack Developer", "Systems Architect"];
+    }
+    if (majorName.includes("artificial intelligence") || majorName.includes("intelligent systems")) {
+      return ["AI Engineer", "Machine Learning Specialist", "Data Scientist"];
+    }
+    if (majorName.includes("computer science") || majorName.includes("computing")) {
+      return ["Software Developer", "Data Scientist", "Systems Analyst"];
+    }
+    if (majorName.includes("mechanical") || majorName.includes("mechatronics")) {
+      return ["Mechanical Engineer", "Mechatronics Specialist", "Robotics Integrator"];
+    }
+    if (majorName.includes("civil") || majorName.includes("construction") || majorName.includes("architectural") || majorName.includes("design")) {
+      if (majorName.includes("graphic") || majorName.includes("interior")) {
+        return ["UX/UI Designer", "Creative Lead", "Interior Architect"];
+      }
+      return ["Project Architect", "Structural Engineer", "Site Engineer"];
+    }
+    if (majorName.includes("computer engineering")) {
+      return ["Computer Engineer", "Hardware Developer", "Embedded Systems Specialist"];
+    }
+    if (majorName.includes("engineering")) {
+      return ["Engineering Consultant", "Project Engineer", "Operations Manager"];
+    }
+    if (majorName.includes("accounting") || majorName.includes("finance") || majorName.includes("business") || majorName.includes("management") || majorName.includes("economics") || majorName.includes("marketing")) {
+      return ["Business Analyst", "Product Manager", "Operations Consultant"];
+    }
+    if (majorName.includes("logistics") || majorName.includes("transport") || majorName.includes("trade")) {
+      return ["Supply Chain Analyst", "Logistics Coordinator", "Import/Export Specialist"];
+    }
+    if (majorName.includes("medicine") || majorName.includes("pharmacy") || majorName.includes("dentistry") || majorName.includes("pharmd") || majorName.includes("dental")) {
+      return ["Medical Practitioner", "Clinical Specialist", "Healthcare Consultant"];
+    }
+    if (majorName.includes("law")) {
+      return ["Legal Advisor", "Corporate Attorney", "Compliance Officer"];
+    }
+    if (majorName.includes("media") || majorName.includes("translation")) {
+      return ["Creative Director", "UX/UI Designer", "Translator/Content Lead"];
+    }
+  }
+
   const interests = (pref?.interests || []).join(" ").toLowerCase();
   
-  if (interests.includes("ai") || interests.includes("robotics") || interests.includes("data") || interests.includes("compute")) {
+  if (/\b(ai|artificial\s+intelligence|intelligent\s+systems|machine\s+learning|deep\s+learning|data\s+science|neural\s+networks|data|compute|computing|computer\s+science|software)\b/i.test(interests)) {
     return ["AI Engineer", "Data Scientist", "Systems Architect"];
   }
-  if (interests.includes("business") || interests.includes("manage") || interests.includes("finance")) {
+  if (/\b(robotics?|embedded|hardware|mechatronics?|control|automation)\b/i.test(interests)) {
+    return ["Mechanical Engineer", "Mechatronics Specialist", "Robotics Integrator"];
+  }
+  if (/\b(business|manage|management|finance|accounting|economics?|marketing|trade|logistics?|supply\s+chain)\b/i.test(interests)) {
     return ["Business Analyst", "Product Manager", "Operations Consultant"];
   }
-  if (interests.includes("design") || interests.includes("art") || interests.includes("create")) {
+  if (/\b(design|art|creative|graphic|interior|fashion|media|translation)\b/i.test(interests)) {
     return ["UX/UI Designer", "Creative Lead", "Frontend Developer"];
   }
-  if (interests.includes("engineering") || interests.includes("build") || interests.includes("machine")) {
+  if (/\b(engineering|build|construction|structural|mechanical|electrical|civil|chemical|petroleum|aerospace|marine)\b/i.test(interests)) {
     return ["Mechanical Engineer", "Project Architect", "Drilling Engineer"];
   }
   
   return ["Industry Specialist", "Technical Consultant", "Project Coordinator"];
 }
 
-function generateSkills(profile, pref) {
+function generateSkills(profile, pref, major) {
+  const majorName = String(major || "").toLowerCase();
+  
+  if (majorName) {
+    if (majorName.includes("cybersecurity")) {
+      return ["Network Security", "Ethical Hacking", "Cryptography", "Incident Response"];
+    }
+    if (majorName.includes("software")) {
+      return ["Software Development", "Clean Code Principles", "Database Design", "Project Management"];
+    }
+    if (majorName.includes("artificial intelligence") || majorName.includes("intelligent systems")) {
+      return ["Python", "Machine Learning", "Neural Networks", "Data Engineering"];
+    }
+    if (majorName.includes("computer science") || majorName.includes("computing")) {
+      return ["Python", "Machine Learning", "Software Development", "Data Engineering"];
+    }
+    if (majorName.includes("mechanical") || majorName.includes("mechatronics") || majorName.includes("electrical") || majorName.includes("electronics") || majorName.includes("computer engineering")) {
+      return ["CAD Operations", "Control Systems", "Embedded Programming", "Project Management"];
+    }
+    if (majorName.includes("engineering") || majorName.includes("architectural") || majorName.includes("construction")) {
+      return ["CAD Operations", "Structural Analysis", "Project Management", "Cost Estimation"];
+    }
+    if (majorName.includes("accounting") || majorName.includes("finance") || majorName.includes("business") || majorName.includes("management") || majorName.includes("economics") || majorName.includes("marketing")) {
+      return ["Strategic Planning", "Financial Modeling", "Agile Management"];
+    }
+    if (majorName.includes("logistics") || majorName.includes("transport") || majorName.includes("trade")) {
+      return ["Supply Chain Optimization", "Warehouse Management", "Freight Forwarding", "Project Management"];
+    }
+    if (majorName.includes("medicine") || majorName.includes("pharmacy") || majorName.includes("dentistry") || majorName.includes("pharmd") || majorName.includes("dental")) {
+      return ["Clinical Diagnostics", "Patient Care", "Medical Ethics"];
+    }
+    if (majorName.includes("law")) {
+      return ["Legal Research", "Contract Drafting", "Litigation Strategy"];
+    }
+    if (majorName.includes("media") || majorName.includes("translation") || majorName.includes("design")) {
+      return ["Graphic Design", "Technical Translation", "Communication Strategy"];
+    }
+  }
+
   const interests = (pref?.interests || []).join(" ").toLowerCase();
   
-  if (interests.includes("ai") || interests.includes("data") || interests.includes("compute")) {
+  if (/\b(ai|artificial\s+intelligence|intelligent\s+systems|machine\s+learning|deep\s+learning|data\s+science|neural\s+networks|data|compute|computing|computer\s+science|software)\b/i.test(interests)) {
     return ["Python", "Machine Learning", "Neural Networks", "Data Engineering"];
   }
-  if (interests.includes("business")) {
+  if (/\b(robotics?|embedded|hardware|mechatronics?|control|automation)\b/i.test(interests)) {
+    return ["Control Systems", "Embedded Programming", "Robotics", "Project Management"];
+  }
+  if (/\b(business|manage|management|finance|accounting|economics?|marketing|trade|logistics?|supply\s+chain)\b/i.test(interests)) {
     return ["Strategic Planning", "Financial Modeling", "Agile Management"];
   }
-  if (interests.includes("engineering")) {
+  if (/\b(engineering|build|construction|structural|mechanical|electrical|civil|chemical|petroleum|aerospace|marine)\b/i.test(interests)) {
     return ["CAD Operations", "Structural Analysis", "Project Management"];
   }
   
@@ -370,7 +469,31 @@ const skills_map = {
   "project management": ["Risk Assessment", "Resource Allocation", "Timeline Management"],
   "problem solving": ["Root Cause Analysis", "Logical Reasoning", "Algorithm Design"],
   "critical thinking": ["Information Evaluation", "Bias Identification", "Decision Matrix Analysis"],
-  "digital literacy": ["Office Suites", "Basic Scripting", "Cybersecurity Awareness"]
+  "digital literacy": ["Office Suites", "Basic Scripting", "Cybersecurity Awareness"],
+  "network security": ["Firewall configuration", "Intrusion Detection Systems", "Network Protocols (TCP/IP)"],
+  "ethical hacking": ["Penetration Testing methodologies", "Vulnerability Assessment", "OWASP Top 10"],
+  "cryptography": ["Symmetric/Asymmetric Encryption", "Hashing algorithms", "SSL/TLS protocols"],
+  "incident response": ["Threat Detection", "Containment strategies", "Post-Incident Analysis"],
+  "clean code principles": ["Refactoring techniques", "DRY & SOLID principles", "Code Review checklist"],
+  "database design": ["Normalization (1NF-3NF)", "ER Diagramming", "Index optimization"],
+  "control systems": ["Feedback loops", "PID Controllers", "System modeling"],
+  "embedded programming": ["C/C++ for Microcontrollers", "RTOS concepts", "Hardware interfacing (I2C/SPI)"],
+  "cost estimation": ["Quantity surveying", "Material takeoff", "Budget forecasting"],
+  "supply chain optimization": ["Inventory management", "Demand forecasting", "Operations Research"],
+  "warehouse management": ["Logistics & Warehousing", "Inventory tracking", "Safety standards"],
+  "freight forwarding": ["Customs regulations", "Shipping documentation", "Route planning"],
+  "clinical diagnostics": ["Laboratory techniques", "Symptom analysis", "Diagnostic tools"],
+  "patient care": ["Communication skills", "Basic life support", "Clinical procedures"],
+  "medical ethics": ["Bioethics principles", "Patient confidentiality", "Informed consent"],
+  "legal research": ["LexisNexis/Westlaw usage", "Case law analysis", "Statutory interpretation"],
+  "contract drafting": ["Clause structuring", "Liability limitations", "Legal writing"],
+  "litigation strategy": ["Courtroom procedures", "Evidence gathering", "Argument preparation"],
+  "graphic design": ["Adobe Creative Suite (Photoshop/Illustrator)", "Typography & Layout", "Color Theory"],
+  "technical translation": ["Terminology management", "Translation tools (CAT)", "Cross-cultural communication"],
+  "communication strategy": ["Audience analysis", "PR & Media relations", "Crisis communication"],
+  "agile methodologies": ["Scrum & Kanban", "Sprint cycles", "User Story mapping"],
+  "database management": ["SQL queries", "DBMS administration", "Backup & Recovery"],
+  "java/c++": ["Object-Oriented Programming", "Memory Management", "Standard Libraries"]
 };
 
 function mapSkillsToLearning(skillsArray) {
@@ -391,15 +514,16 @@ function generateTimeline(profile) {
   ];
 }
 
-export function buildCareerRoadmap(profile, preferences, memory) {
+export function buildCareerRoadmap(profile, preferences, memory, recommendedMajor) {
   // Graceful fallback processing securely combining tracked stats
   const safeProfile = profile || memory?.studentProfile || {};
   const safePref = preferences || memory?.preferences || {};
   
-  const generatedSkills = generateSkills(safeProfile, safePref);
+  const major = recommendedMajor || memory?.last_recommendation || safeProfile.last_recommendation || "";
+  const generatedSkills = generateSkills(safeProfile, safePref, major);
   
   return {
-    target_roles: generateRoles(safeProfile, safePref),
+    target_roles: generateRoles(safeProfile, safePref, major),
     top_skills: generatedSkills,
     industry_demand: estimateMarket(safeProfile),
     learning_path: mapSkillsToLearning(generatedSkills),
@@ -651,7 +775,7 @@ export async function getRecommendation({ studentProfile: inputSP, preferences: 
        ✅ SUCCESS RESPONSE
     ======================================================== */
     const memCache = cid ? decisionMemory.get(cid) : null;
-    const dynamicRoadmap = buildCareerRoadmap(sp, pref, memCache);
+    const dynamicRoadmap = buildCareerRoadmap(sp, pref, memCache, finalMajor);
     const generatedNextSteps = generateNextSteps(finalMajor);
 
     const grades_score = sp.high_school_percentage >= 85 ? 95 : (sp.high_school_percentage >= 70 ? 80 : 60);

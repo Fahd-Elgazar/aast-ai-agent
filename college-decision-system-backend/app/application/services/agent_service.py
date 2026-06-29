@@ -16,7 +16,7 @@ from app.infrastructure.db.repositories.chat_repo import ChatRepository
 
 logger = logging.getLogger(__name__)
 
-if settings.GEMINI_API_KEY:
+if settings.DECISION_GEMINI_ENABLED and settings.GEMINI_API_KEY:
     genai.configure(api_key=settings.GEMINI_API_KEY.get_secret_value())
 
 
@@ -96,11 +96,13 @@ class AgentService:
             "Do NOT invent or guess scores or fees. Always rely on the data returned by the tool."
         )
         
-        self.model = genai.GenerativeModel(
-            model_name="gemini-2.5-flash",
-            tools=self.get_recommendations_tool,
-            system_instruction=self.system_instruction,
-        )
+        self.model = None
+        if settings.DECISION_GEMINI_ENABLED and settings.GEMINI_API_KEY:
+            self.model = genai.GenerativeModel(
+                model_name="gemini-2.5-flash",
+                tools=self.get_recommendations_tool,
+                system_instruction=self.system_instruction,
+            )
 
     def _safe_decimal(self, val):
         if val is None:
@@ -158,6 +160,14 @@ class AgentService:
     def _process_message_internal(self, session_id: str, message: str) -> tuple[str, list[dict]]:
         # 1. Store user message
         self.chat_repo.add_message(session_id=session_id, role="user", content=message)
+
+        if self.model is None:
+            final_reply = (
+                "Decision chat Gemini is disabled for defense mode. "
+                "Use the recommendation form so the deterministic decision engine can rank programs from verified data."
+            )
+            self.chat_repo.add_message(session_id=session_id, role="model", content=final_reply)
+            return final_reply, []
 
         # 2. Build history for Gemini
         db_history = self.chat_repo.get_history(session_id=session_id, limit=6)

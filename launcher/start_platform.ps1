@@ -554,7 +554,7 @@ function Start-QdrantIfAvailable {
 
 function Start-Ollama {
     $ollamaBase = $env:OLLAMA_BASE_URL
-    if ([string]::IsNullOrWhiteSpace($ollamaBase)) { $ollamaBase = "http://localhost:11434" }
+    if ([string]::IsNullOrWhiteSpace($ollamaBase)) { $ollamaBase = "http://192.168.1.7:11434" }
     $ollamaBase = $ollamaBase.TrimEnd("/")
 
     Write-Host ""
@@ -601,7 +601,7 @@ function Test-OllamaModel {
     param([string]$Model)
 
     $ollamaBase = $env:OLLAMA_BASE_URL
-    if ([string]::IsNullOrWhiteSpace($ollamaBase)) { $ollamaBase = "http://localhost:11434" }
+    if ([string]::IsNullOrWhiteSpace($ollamaBase)) { $ollamaBase = "http://192.168.1.7:11434" }
     $ollamaBase = $ollamaBase.TrimEnd("/")
 
     try {
@@ -629,7 +629,7 @@ function Invoke-OllamaPrewarm {
     }
 
     $ollamaBase = $env:OLLAMA_BASE_URL
-    if ([string]::IsNullOrWhiteSpace($ollamaBase)) { $ollamaBase = "http://localhost:11434" }
+    if ([string]::IsNullOrWhiteSpace($ollamaBase)) { $ollamaBase = "http://192.168.1.7:11434" }
     $ollamaBase = $ollamaBase.TrimEnd("/")
 
     Write-Host ""
@@ -743,7 +743,7 @@ function Apply-ModeEnvironment {
 
     Set-LauncherEnv "AAST_LAUNCHER_MODE" $Mode
     Set-LauncherEnv "DECISION_API_URL" "http://127.0.0.1:8005"
-    Set-LauncherEnv "OLLAMA_BASE_URL" "http://localhost:11434"
+    Set-LauncherEnv "OLLAMA_BASE_URL" "http://192.168.1.7:11434"
     Set-LauncherEnv "PRIMARY_MODEL" $primaryModel
     Set-LauncherEnv "RAG_BASE_URL" "http://127.0.0.1:8001"
     Set-LauncherEnv "RAG_RETRIEVER_URL" "http://127.0.0.1:8001"
@@ -934,7 +934,7 @@ function Show-Summary {
         Write-Host "  RAG Answer:    http://127.0.0.1:8002/health"
         Write-Host "  Qdrant:        http://127.0.0.1:6333"
     }
-    Write-Host "  Ollama:       http://localhost:11434/api/tags"
+    Write-Host "  Ollama:       http://192.168.1.7:11434/api/tags"
     Write-Host ""
     Write-Host ("State file: {0}" -f $script:StatePath)
     Write-Host ("Logs:       {0}" -f $script:LauncherLogDir)

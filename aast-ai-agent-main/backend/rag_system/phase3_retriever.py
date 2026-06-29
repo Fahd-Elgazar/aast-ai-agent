@@ -18,7 +18,7 @@ import re
 import threading
 import time
 from contextlib import asynccontextmanager
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Set
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
@@ -72,6 +72,53 @@ PRIORITY_BOOSTS = {
 }
 
 MIN_CONFIDENCE_THRESHOLD = 0.45
+
+PHASE_B_WEIGHTS = {
+    "semantic_similarity": 0.30,
+    "document_type_alignment": 0.24,
+    "title_similarity": 0.16,
+    "lexical_overlap": 0.12,
+    "category_alignment": 0.08,
+    "tag_overlap": 0.05,
+    "program_level_alignment": 0.03,
+    "priority_score": 0.01,
+    "quality_score": 0.01,
+}
+
+TOKEN_STOPWORDS = {
+    "a", "an", "and", "are", "as", "at", "be", "been", "being", "before",
+    "between", "by", "can", "do", "does", "during", "each", "for", "from",
+    "had", "has", "have", "how", "i", "if", "in", "into", "is", "many",
+    "my", "of", "on", "or", "student", "students", "such", "the", "to",
+    "what", "when", "which", "who", "with", "college", "artificial",
+    "intelligence",
+}
+
+TOKEN_SYNONYMS = {
+    "admissions": "admission",
+    "admitted": "admission",
+    "apply": "application",
+    "cgpa": "gpa",
+    "conditioned": "condition",
+    "documents": "document",
+    "exemption": "scholarship",
+    "fees": "fee",
+    "grades": "grade",
+    "grading": "grade",
+    "prerequisites": "prerequisite",
+    "programs": "program",
+    "required": "requirement",
+    "requirements": "requirement",
+    "scholarships": "scholarship",
+    "semesters": "semester",
+    "specializations": "specialization",
+    "transferred": "transfer",
+}
+
+GENERIC_FIELD_PARTS = {
+    "academic", "general", "policies", "policy", "program", "programs",
+    "requirement", "requirements", "rules",
+}
 
 # ============================================================
 # LOGGING
@@ -269,35 +316,243 @@ class QueryClassifier:
 
 class RetrievalReranker:
     """
-    Score normalization approach:
-    Raw score is multiplied by boosts, then clamped to [0.0, 1.0]
-    to preserve consistency with the confidence threshold.
+    Phase B metadata-aware reranker.
+    It only reorders candidates that Qdrant already returned; it does not
+    filter categories, document types, tags, or program levels.
     """
 
     @staticmethod
-    def compute_final_score(result) -> float:
+    def _normalize(value: Any) -> str:
+        normalized = re.sub(r"[^a-z0-9]+", "_", str(value or "").lower())
+        return re.sub(r"_+", "_", normalized).strip("_")
+
+    @staticmethod
+    def _tokenize(value: Any) -> List[str]:
+        raw_tokens = re.findall(r"\b[a-z0-9]+\b", str(value or "").lower().replace("_", " "))
+        tokens = []
+        for token in raw_tokens:
+            mapped = TOKEN_SYNONYMS.get(token, token)
+            if len(mapped) > 1 and mapped not in TOKEN_STOPWORDS:
+                tokens.append(mapped)
+        return tokens
+
+    @classmethod
+    def _split_field_values(cls, value: Any) -> Set[str]:
+        if isinstance(value, (list, tuple, set)):
+            values = value
+        else:
+            values = re.split(r"[/|,]", str(value or ""))
+        return {cls._normalize(v) for v in values if cls._normalize(v)}
+
+    @staticmethod
+    def _overlap_score(query_terms: List[str], candidate_terms: List[str]) -> float:
+        unique_query_terms = list(dict.fromkeys(query_terms))
+        if not unique_query_terms:
+            return 0.0
+
+        candidate_set = set(candidate_terms)
+        matches = sum(1 for term in unique_query_terms if term in candidate_set)
+        return matches / len(unique_query_terms)
+
+    @classmethod
+    def _family_match(cls, expected_values: Set[str], actual_value: Any) -> bool:
+        actual_parts = {
+            part for part in cls._normalize(actual_value).split("_")
+            if len(part) > 3 and part not in GENERIC_FIELD_PARTS
+        }
+        if not actual_parts:
+            return False
+
+        for expected in expected_values:
+            expected_parts = {
+                part for part in expected.split("_")
+                if len(part) > 3 and part not in GENERIC_FIELD_PARTS
+            }
+            if actual_parts & expected_parts:
+                return True
+        return False
+
+    @staticmethod
+    def _clamp01(value: Any, default: float = 0.0) -> float:
+        try:
+            numeric = float(value)
+        except (ValueError, TypeError):
+            numeric = default
+        return min(max(numeric, 0.0), 1.0)
+
+    @classmethod
+    def build_query_profile(
+        cls,
+        query: str,
+        category: Optional[str] = None,
+        program_level: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        query_lower = query.lower()
+        categories: Set[str] = set()
+        document_types: Set[str] = set()
+        program_levels: Set[str] = set()
+
+        def add_categories(*values: str):
+            categories.update(cls._normalize(v) for v in values if v)
+
+        def add_document_types(*values: str):
+            document_types.update(cls._normalize(v) for v in values if v)
+
+        def add_program_levels(*values: str):
+            program_levels.update(cls._normalize(v) for v in values if v)
+
+        if re.search(r"\b(scholarship|exemption|high-performing|4\.00|tie|tuition exemption)\b", query_lower):
+            add_categories("academic_policies", "financial_policies")
+            add_document_types("scholarship_policy")
+
+        if re.search(r"\b(tuition|fee|fees|payment|cost)\b", query_lower):
+            add_categories("financial_policies")
+            add_document_types("tuition_policy", "scholarship_policy")
+
+        if re.search(r"\b(admission|admissions|admit|apply|application|documents|required|requirements|checklist|score|pass degree)\b", query_lower):
+            add_categories("admissions", "admissions_registration")
+            add_document_types("admission_policy")
+
+        if re.search(r"\b(transfer|transferred|internal transfer|external transfer)\b", query_lower):
+            add_categories("admissions_registration")
+            add_document_types("transfer_policy", "admission_policy")
+
+        if re.search(r"\b(orientation|registration|register|credit hour|semester course load|course load)\b", query_lower):
+            add_categories("admissions_registration", "academic_programs")
+            add_document_types("registration_policy")
+
+        if re.search(r"\b(gpa|cgpa|grade|grades|probation|underachievement|conditioned pass|repeat|repeated|failed course|marks|final exam|incomplete|passing|dismissal)\b", query_lower):
+            add_categories("grading_policies", "academic_rules", "academic_policies")
+            add_document_types("grading_policy")
+
+        if re.search(r"\b(absent|absence)\b", query_lower):
+            add_categories("grading_policies", "academic_rules")
+            add_document_types("attendance_policy", "grading_policy")
+
+        if re.search(r"\b(prerequisite|prerequisites)\b", query_lower):
+            add_categories("academic_rules")
+            add_document_types("prerequisite_policy")
+
+        if re.search(r"\b(advisor|adviser|support|course selection|academic planning)\b", query_lower):
+            add_categories("academic_policies")
+            add_document_types("compliance_policy", "general_policy")
+
+        if re.search(r"\b(program|structure|duration|study|specialization|specializations|academic year|first four|summer studies|uclan|credit hour system)\b", query_lower):
+            add_categories("academic_programs", "postgraduate_programs")
+            add_document_types("general_policy", "graduation_policy", "registration_policy")
+
+        if re.search(r"\b(msc|master|postgraduate|graduate|thesis|research|supervision|nlp|xai|bilingual|milestones)\b", query_lower):
+            add_categories("postgraduate_programs", "academic_policies")
+            add_document_types("research_requirement", "graduation_policy", "general_policy", "admission_policy")
+            add_program_levels("postgraduate")
+
+        if re.search(r"\b(undergraduate|secondary)\b", query_lower):
+            add_program_levels("undergraduate")
+
+        if program_level:
+            add_program_levels(program_level)
+
+        # Use caller/category inference only as a fallback signal. This avoids
+        # reintroducing Phase A's wrong-category behavior as a strong rank bias.
+        if category and not categories:
+            add_categories(category)
+
+        query_terms = cls._tokenize(query)
+        return {
+            "categories": categories,
+            "document_types": document_types,
+            "program_levels": program_levels,
+            "query_terms": list(dict.fromkeys(query_terms)),
+        }
+
+    @classmethod
+    def _alignment_score(cls, expected_values: Set[str], actual_value: Any, family_value: float) -> float:
+        actual = cls._normalize(actual_value)
+        if not expected_values:
+            return 0.0
+        if actual in expected_values:
+            return 1.0
+        if cls._family_match(expected_values, actual):
+            return family_value
+        return 0.0
+
+    @classmethod
+    def _program_level_score(cls, expected_levels: Set[str], actual_level: Any) -> float:
+        actual = cls._normalize(actual_level)
+        if not expected_levels:
+            return 0.5
+        if actual in expected_levels:
+            return 1.0
+        if actual:
+            return 0.1
+        return 0.45
+
+    @classmethod
+    def _priority_score(cls, value: Any) -> float:
+        normalized = cls._normalize(value)
+        if normalized == "high":
+            return 1.0
+        if normalized == "medium":
+            return 0.6
+        if normalized == "low":
+            return 0.25
+
+        try:
+            numeric = float(value)
+            if numeric > 1:
+                numeric = numeric / 10
+            return cls._clamp01(numeric, default=0.5)
+        except (ValueError, TypeError):
+            return 0.5
+
+    @staticmethod
+    def _round_signals(signals: Dict[str, float]) -> Dict[str, float]:
+        return {key: round(value, 4) for key, value in signals.items()}
+
+    @classmethod
+    def compute_phase_b_score(cls, result, query_profile: Dict[str, Any]) -> Dict[str, Any]:
         payload = getattr(result, "payload", {}) or {}
 
-        base_score = getattr(result, "score", 0.0)
-        category = payload.get("category", "other")
-        priority = payload.get("priority", "medium")
-        
-        try:
-            quality_score = float(payload.get("quality_score", 0.5))
-        except (ValueError, TypeError):
-            quality_score = 0.5
+        title_terms = cls._tokenize(
+            f"{payload.get('title', '')} {payload.get('subcategory', '')}"
+        )
+        tag_terms = cls._tokenize(" ".join(payload.get("tags", []) or []))
+        content_terms = cls._tokenize(payload.get("content", ""))
+        query_terms = query_profile.get("query_terms", [])
 
-        category_boost = CATEGORY_BOOSTS.get(category, 1.0)
-        priority_boost = PRIORITY_BOOSTS.get(priority, 1.0)
+        signals = {
+            "semantic_similarity": cls._clamp01(getattr(result, "score", 0.0)),
+            "document_type_alignment": cls._alignment_score(
+                query_profile.get("document_types", set()),
+                payload.get("document_type"),
+                0.5,
+            ),
+            "title_similarity": cls._overlap_score(query_terms, title_terms),
+            "lexical_overlap": cls._overlap_score(query_terms, title_terms + tag_terms + content_terms),
+            "category_alignment": cls._alignment_score(
+                query_profile.get("categories", set()),
+                payload.get("category"),
+                0.55,
+            ),
+            "tag_overlap": cls._overlap_score(query_terms, tag_terms),
+            "program_level_alignment": cls._program_level_score(
+                query_profile.get("program_levels", set()),
+                payload.get("program_level"),
+            ),
+            "priority_score": cls._priority_score(payload.get("priority", "medium")),
+            "quality_score": cls._clamp01(payload.get("quality_score", 0.5), default=0.5),
+        }
 
-        # Boost applied as additive weight to preserve [0,1] range
-        boost_factor = (category_boost + priority_boost + (1 + quality_score)) / 3
-        final_score = base_score * boost_factor
+        phase_b_score = sum(
+            signals[name] * PHASE_B_WEIGHTS[name]
+            for name in PHASE_B_WEIGHTS
+        )
 
-        # Clamp to [0.0, 1.0]
-        final_score = min(max(final_score, 0.0), 1.0)
-
-        return round(final_score, 4)
+        return {
+            "score": round(phase_b_score, 4),
+            "signals": cls._round_signals(signals),
+            "weights": PHASE_B_WEIGHTS,
+        }
 
 
 # ============================================================
@@ -363,10 +618,8 @@ class ProductionRetriever:
 
         conditions = []
 
-        if category:
-            conditions.append(
-                FieldCondition(key="category", match=MatchValue(value=category))
-            )
+        # Category is intentionally kept as a diagnostic/ranking signal only.
+        # Applying it as a Qdrant must-filter excludes relevant cross-category evidence.
 
         if program_level:
             conditions.append(
@@ -398,6 +651,12 @@ class ProductionRetriever:
         if not category and inferred_category:
             category = inferred_category
             category_inferred = True
+
+        query_profile = RetrievalReranker.build_query_profile(
+            query=query,
+            category=category,
+            program_level=program_level
+        )
 
         query_vector = self.embedder.encode_query(query)
 
@@ -455,11 +714,10 @@ class ProductionRetriever:
         reranked = []
 
         for result in points:
-            final_score = RetrievalReranker.compute_final_score(result)
-
-            if final_score < MIN_CONFIDENCE_THRESHOLD:
-                continue
-
+            phase_b = RetrievalReranker.compute_phase_b_score(result, query_profile)
+            final_score = phase_b["score"]
+            retrieval_score = round(getattr(result, "score", 0.0), 4)
+            confidence_score = round(max(final_score, retrieval_score), 4)
             payload = getattr(result, "payload", {}) or {}
 
             reranked.append({
@@ -473,46 +731,32 @@ class ProductionRetriever:
                 "program_level": payload.get("program_level"),
                 "source": payload.get("source", "unknown"),
                 "quality_score": payload.get("quality_score", 0.5),
-                "retrieval_score": round(getattr(result, "score", 0.0), 4),
+                "retrieval_score": retrieval_score,
+                "phase_b_score": final_score,
                 "final_score": final_score,
+                "confidence_score": confidence_score,
+                "ranking_signals": phase_b["signals"],
+                "ranking_weights": phase_b["weights"],
+                "ranking_profile": "metadata_heavy",
                 "tags": payload.get("tags", [])
             })
 
-        # Sort by final score
+        # Sort by Phase B metadata-aware score. No hard metadata filters are applied.
         reranked.sort(key=lambda x: x["final_score"], reverse=True)
-
-        # Source diversity control (max 2 per source)
-        diverse_results = []
-        source_counts = {}
-        for r in reranked:
-            src = r.get("source", "unknown")
-            if source_counts.get(src, 0) < 2:
-                diverse_results.append(r)
-                source_counts[src] = source_counts.get(src, 0) + 1
-        
-        reranked = diverse_results
 
         # Initial avg confidence for dynamic sizing
         avg_confidence = (
-            round(sum(x["final_score"] for x in reranked) / len(reranked), 4)
+            round(sum(x["confidence_score"] for x in reranked) / len(reranked), 4)
             if reranked else 0.0
         )
 
-        # Dynamic retrieval sizing
-        if avg_confidence > 0.80:
-            dynamic_top_k = 3
-        elif avg_confidence > 0.65:
-            dynamic_top_k = 5
-        else:
-            dynamic_top_k = 8
-
-        reranked = reranked[:dynamic_top_k]
+        reranked = reranked[:FINAL_TOP_K]
 
         latency = round(time.time() - start_time, 3)
 
         # Recalculate avg confidence after final trim
         avg_confidence = (
-            round(sum(x["final_score"] for x in reranked) / len(reranked), 4)
+            round(sum(x["confidence_score"] for x in reranked) / len(reranked), 4)
             if reranked else 0.0
         )
 
@@ -536,6 +780,7 @@ class ProductionRetriever:
         return {
             "query": query,
             "category_filter": category,
+            "category_filter_applied": False,
             "category_inferred": category_inferred,
             "fallback_used": fallback_used,
             "program_level_filter": program_level,

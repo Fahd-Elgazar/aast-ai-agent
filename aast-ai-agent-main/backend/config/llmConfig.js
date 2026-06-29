@@ -45,7 +45,7 @@ function booleanFromEnv(name, fallback) {
 
 const ollamaBaseUrl = stringFromEnv(
   "OLLAMA_BASE_URL",
-  "http://localhost:11434"
+  "http://192.168.1.7:11434"
 ).replace(/\/$/, "");
 
 const primaryModel = stringFromEnv(
@@ -67,7 +67,7 @@ const LLM_CONFIG = Object.freeze({
   keepAlive: stringFromEnv("OLLAMA_KEEP_ALIVE", "10m"),
 
   gemma: Object.freeze({
-    maxContextTokens: integerFromEnv("GEMMA_MAX_CONTEXT_TOKENS", 3500, {
+    maxContextTokens: integerFromEnv("GEMMA_MAX_CONTEXT_TOKENS", 2600, {
       min: 1024,
     }),
     contextHeadroomTokens: integerFromEnv("GEMMA_CONTEXT_HEADROOM_TOKENS", 192, {
@@ -75,21 +75,21 @@ const LLM_CONFIG = Object.freeze({
     }),
     highPressureContextTokens: integerFromEnv(
       "GEMMA_HIGH_PRESSURE_CONTEXT_TOKENS",
-      2800,
+      2200,
       { min: 1024 }
     ),
-    deferSynthesisTokens: integerFromEnv("GEMMA_DEFER_SYNTHESIS_TOKENS", 3200, {
+    deferSynthesisTokens: integerFromEnv("GEMMA_DEFER_SYNTHESIS_TOKENS", 2400, {
       min: 1024,
     }),
-    numCtx: integerFromEnv("GEMMA_NUM_CTX", 4096, { min: 1024 }),
+    numCtx: integerFromEnv("GEMMA_NUM_CTX", 3072, { min: 1024 }),
     minNumCtx: integerFromEnv("GEMMA_MIN_NUM_CTX", 512, { min: 256 }),
     numThread: integerFromEnv("GEMMA_NUM_THREAD", 0, { min: 0 }),
     numBatch: integerFromEnv("GEMMA_NUM_BATCH", 0, { min: 0 }),
     maxActiveRequests: integerFromEnv("GEMMA_MAX_ACTIVE_REQUESTS", 1, {
       min: 1,
     }),
-    maxQueueDepth: integerFromEnv("GEMMA_QUEUE_MAX_DEPTH", 24, { min: 0 }),
-    queueTimeoutMs: integerFromEnv("GEMMA_QUEUE_TIMEOUT_MS", 25000, {
+    maxQueueDepth: integerFromEnv("GEMMA_QUEUE_MAX_DEPTH", 2, { min: 0 }),
+    queueTimeoutMs: integerFromEnv("GEMMA_QUEUE_TIMEOUT_MS", 8000, {
       min: 1000,
     }),
     pressureHighRssMb: integerFromEnv("GEMMA_MEMORY_HIGH_RSS_MB", 6144, {
@@ -130,7 +130,7 @@ const LLM_CONFIG = Object.freeze({
   }),
 
   warmPool: Object.freeze({
-    enabled: booleanFromEnv("GEMMA_WARM_POOL_ENABLED", true),
+    enabled: booleanFromEnv("GEMMA_WARM_POOL_ENABLED", false),
     intervalMs: integerFromEnv("GEMMA_WARM_POOL_INTERVAL_MS", 420000, {
       min: 30000,
     }),
@@ -213,7 +213,7 @@ const LLM_CONFIG = Object.freeze({
   }),
 
   retries: Object.freeze({
-    primaryLimit: integerFromEnv("PRIMARY_RETRY_LIMIT", 2, { min: 0 }),
+    primaryLimit: integerFromEnv("PRIMARY_RETRY_LIMIT", 0, { min: 0 }),
     backupLimit: integerFromEnv("BACKUP_RETRY_LIMIT", 1, { min: 0 }),
     baseDelayMs: integerFromEnv("OLLAMA_RETRY_BASE_DELAY_MS", 300, { min: 0 }),
     maxDelayMs: integerFromEnv("OLLAMA_RETRY_MAX_DELAY_MS", 1200, { min: 0 }),

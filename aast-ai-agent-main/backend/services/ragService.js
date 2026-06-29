@@ -37,6 +37,7 @@
 import axios from 'axios';
 import axiosRetryPkg from 'axios-retry';
 import dotenv from 'dotenv';
+import { runtimeMode } from '../config/runtimeMode.js';
 const axiosRetry = axiosRetryPkg.default ?? axiosRetryPkg;
 
 dotenv.config();
@@ -471,13 +472,19 @@ class RAGService {
 
         this._runSyntheticProbes().catch(e => logger.error('HEALTH', 'Synthetic probe failed', { error: e.message }));
 
+        const answerEngineRequired = runtimeMode.ragAnswerEngineEnabled && !runtimeMode.singleGemmaGenerationMode && !runtimeMode.defenseMode;
+
         // Parallel: ping health endpoints + validate operational endpoints
         const [retrieverPing, answerPing, retrieverEndpoint, answerEndpoint] =
             await Promise.allSettled([
                 this._pingService('retriever', CONFIG.RETRIEVER_URL, CONFIG.HEALTH_PATH_RETRIEVER),
-                this._pingService('answer_engine', CONFIG.ANSWER_URL, CONFIG.HEALTH_PATH_ANSWER),
+                answerEngineRequired
+                    ? this._pingService('answer_engine', CONFIG.ANSWER_URL, CONFIG.HEALTH_PATH_ANSWER)
+                    : Promise.resolve({ ok: true, name: 'answer_engine', disabled: true }),
                 this._validateEndpoint('retriever', CONFIG.RETRIEVER_URL, CONFIG.RETRIEVER_PATH),
-                this._validateEndpoint('answer_engine', CONFIG.ANSWER_URL, CONFIG.ANSWER_PATH),
+                answerEngineRequired
+                    ? this._validateEndpoint('answer_engine', CONFIG.ANSWER_URL, CONFIG.ANSWER_PATH)
+                    : Promise.resolve(true),
             ]);
 
         const retrieverStatus = retrieverPing.status === 'fulfilled' ? retrieverPing.value : { ok: false, name: 'retriever', error: retrieverPing.reason?.message };
@@ -485,8 +492,12 @@ class RAGService {
         const retrieverEndpointOk = retrieverEndpoint.status === 'fulfilled' ? retrieverEndpoint.value : false;
         const answerEndpointOk = answerEndpoint.status === 'fulfilled' ? answerEndpoint.value : false;
 
-        const allHealthy = retrieverStatus.ok && answerStatus.ok;
-        const anyHealthy = retrieverStatus.ok || answerStatus.ok;
+        const allHealthy = answerEngineRequired
+            ? retrieverStatus.ok && answerStatus.ok
+            : retrieverStatus.ok;
+        const anyHealthy = answerEngineRequired
+            ? retrieverStatus.ok || answerStatus.ok
+            : retrieverStatus.ok;
         const systemStatus = allHealthy ? 'HEALTHY' : anyHealthy ? 'DEGRADED' : 'DOWN';
 
         const report = {
@@ -500,6 +511,7 @@ class RAGService {
             },
             answer_engine: {
                 ...answerStatus,
+                required: answerEngineRequired,
                 endpoint_valid: answerEndpointOk,
                 configured_endpoint: `${CONFIG.ANSWER_URL}${CONFIG.ANSWER_PATH}`,
                 fallback_endpoint: `${CONFIG.ANSWER_URL}${CONFIG.ANSWER_PATH_ALT}`,
@@ -626,6 +638,48 @@ class RAGService {
         });
 
         // ── PASS 3: Answer engine fallback ───────────────────
+        if (!runtimeMode.ragAnswerEngineEnabled || runtimeMode.singleGemmaGenerationMode || runtimeMode.defenseMode) {
+            const ranked = this.rankSources(pass2.sources || [], queryCategory);
+            logger.warn('SEARCH', 'PASS 3 answer engine disabled by runtime mode', {
+                source_count: ranked.length,
+                single_gemma_generation_mode: runtimeMode.singleGemmaGenerationMode,
+                defense_mode: runtimeMode.defenseMode,
+            });
+
+            if (ranked.length > 0) {
+                return this._buildSearchResult(
+                    {
+                        ...pass2,
+                        sources: ranked,
+                        fallback_used: false,
+                        metadata: {
+                            ...(pass2.metadata || {}),
+                            answer_engine_disabled: true,
+                            retrieval_only: true
+                        }
+                    },
+                    'PASS_2_RETRIEVAL_ONLY',
+                    simplifiedQuery,
+                    queryCategory,
+                    passLatencies,
+                    elapsedMs(totalStart)
+                );
+            }
+
+            this._telemetry.total_failures++;
+            return this._buildFailureResult(
+                'retrieval_failure',
+                'RAG answer engine disabled and retrieval-only passes returned no usable sources',
+                {
+                    passes_attempted: 2,
+                    answer_engine_disabled: true,
+                    pass_latencies: passLatencies,
+                    query_category: queryCategory,
+                    total_latency_ms: elapsedMs(totalStart),
+                }
+            );
+        }
+
         const p3Start = process.hrtime();
         logger.debug('SEARCH', 'PASS 3: answer engine fallback');
         const pass3 = await this._callAnswerEngine(query);
@@ -678,6 +732,23 @@ class RAGService {
     async answer(query) {
         const start = process.hrtime();
         logger.info('ANSWER', 'Calling grounded answer engine', { query });
+
+        if (!runtimeMode.ragAnswerEngineEnabled || runtimeMode.singleGemmaGenerationMode || runtimeMode.defenseMode) {
+            logger.warn('ANSWER', 'Answer engine disabled by runtime mode; using retrieval-only search', {
+                single_gemma_generation_mode: runtimeMode.singleGemmaGenerationMode,
+                defense_mode: runtimeMode.defenseMode,
+            });
+            const retrievalOnly = await this.search(query);
+            return {
+                ...retrievalOnly,
+                mode: 'RAG_RETRIEVAL_ONLY',
+                metadata: {
+                    ...(retrievalOnly.metadata || {}),
+                    answer_engine_disabled: true,
+                    direct_answer: false
+                }
+            };
+        }
 
         const result = await this._callAnswerEngine(query);
 
@@ -1116,7 +1187,24 @@ class RAGService {
 
         const dedupedSources = this._deduplicateSources(sources);
 
-        const ranked = dedupedSources.map((source) => {
+        const ranked = dedupedSources.map((source, originalIndex) => {
+            const canonicalPhaseBScore = source.phase_b_score ?? source.final_score;
+            const hasPhaseBScore =
+                canonicalPhaseBScore !== undefined &&
+                canonicalPhaseBScore !== null &&
+                canonicalPhaseBScore !== '';
+
+            if (hasPhaseBScore) {
+                const phaseBScore = safeFloat(canonicalPhaseBScore);
+                return {
+                    ...source,
+                    rerank_score: parseFloat(phaseBScore.toFixed(4)),
+                    rerank_source: 'phase_b_metadata_heavy',
+                    category_match: safeFloat(source.ranking_signals?.category_alignment ?? 0) > 0,
+                    _rank_original_index: originalIndex,
+                };
+            }
+
             let score = 0;
 
             // Signal 1: Official source boost
@@ -1161,17 +1249,27 @@ class RAGService {
             return {
                 ...source,
                 rerank_score: parseFloat(score.toFixed(4)),
+                rerank_source: 'node_fallback',
                 is_official: isOfficial,
                 category_match: categoryMatches,
+                _rank_original_index: originalIndex,
             };
         });
 
-        ranked.sort((a, b) => b.rerank_score - a.rerank_score);
+        ranked.sort((a, b) =>
+            (b.rerank_score - a.rerank_score) ||
+            ((a._rank_original_index ?? 0) - (b._rank_original_index ?? 0))
+        );
+
+        ranked.forEach(source => {
+            delete source._rank_original_index;
+        });
 
         logger.debug('SEARCH', 'Sources reranked', {
             count: ranked.length,
             top_score: ranked[0]?.rerank_score,
             category: queryCategory,
+            top_source: ranked[0]?.rerank_source,
         });
 
         return ranked;
@@ -1761,8 +1859,24 @@ class RAGService {
                 deduplicated.push(source);
             } else {
                 const existing = seen.get(groupKey);
-                const existingScore = safeFloat(existing.score || existing.confidence || existing.rerank_score || 0);
-                const newScore = safeFloat(source.score || source.confidence || source.rerank_score || 0);
+                const existingScore = safeFloat(
+                    existing.phase_b_score ??
+                    existing.final_score ??
+                    existing.rerank_score ??
+                    existing.retrieval_score ??
+                    existing.score ??
+                    existing.confidence ??
+                    0
+                );
+                const newScore = safeFloat(
+                    source.phase_b_score ??
+                    source.final_score ??
+                    source.rerank_score ??
+                    source.retrieval_score ??
+                    source.score ??
+                    source.confidence ??
+                    0
+                );
 
                 if (newScore > existingScore) {
                     const idx = deduplicated.indexOf(existing);

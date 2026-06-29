@@ -1,6 +1,6 @@
 import requests
 
-OLLAMA_URL = "http://localhost:11434/api/generate"
+OLLAMA_URL = "http://192.168.1.7:11434/api/generate"
 MODEL = "gemma4:e2b"
 
 def refine_description(text):

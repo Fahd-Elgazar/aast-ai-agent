@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Settings, Save, X, Edit2, ShieldAlert, Loader2 } from 'lucide-react';
+import { Settings, Save, X, Edit2, ShieldAlert, Loader2, RefreshCw } from 'lucide-react';
 
 const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:8000/api";
 
@@ -103,54 +103,77 @@ export default function AdminDashboardPage() {
           </div>
         </div>
 
-        {error && !editingProgram && (
+        {error && !editingProgram && programs.length > 0 && (
           <div className="bg-red-50 text-red-700 p-4 rounded-lg flex items-center gap-3">
             <ShieldAlert size={20} />
             {error}
           </div>
         )}
 
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-          <table className="min-w-full divide-y divide-slate-200">
-            <thead className="bg-slate-50">
-              <tr>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Program Name</th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">College ID</th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Min %</th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Program Fees</th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Allowed Tracks</th>
-                <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-slate-500 uppercase tracking-wider">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-slate-200">
-              {programs.map((program) => (
-                <tr key={program.id} className="hover:bg-slate-50 transition-colors">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">{program.program_name}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">{program.college_id}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
-                    {program.min_percentage !== null ? <span className="font-semibold text-slate-800">{program.min_percentage.toFixed(2)}%</span> : <span className="text-slate-400 italic">None</span>}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
-                    {program.program_fees !== null ? <span className="font-semibold text-slate-800">${program.program_fees.toFixed(2)}</span> : <span className="text-slate-400 italic">None</span>}
-                  </td>
-                  <td className="px-6 py-4 whitespace-normal text-sm text-slate-500">
-                    {program.allowed_tracks ? <code className="bg-slate-100 px-2 py-1 rounded border border-slate-200 text-xs text-slate-700">{program.allowed_tracks}</code> : <span className="text-slate-400 italic">All Allowed</span>}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <button onClick={() => handleEdit(program)} className="text-indigo-600 hover:text-indigo-900 inline-flex items-center gap-1">
-                      <Edit2 size={16} /> Edit
-                    </button>
-                  </td>
-                </tr>
-              ))}
-              {programs.length === 0 && (
+        {error && programs.length === 0 ? (
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-12 text-center flex flex-col items-center justify-center space-y-4 max-w-lg mx-auto mt-8">
+            <div className="w-16 h-16 rounded-full bg-red-50 text-red-600 flex items-center justify-center">
+              <ShieldAlert size={32} />
+            </div>
+            <h2 className="text-xl font-bold text-slate-800">Connection Failed</h2>
+            <p className="text-slate-500 text-sm leading-relaxed">
+              Unable to retrieve academic programs configuration. Please ensure the backend orchestrator service is running on port 8000 and the database is accessible.
+            </p>
+            <button
+              onClick={() => {
+                setLoading(true);
+                setError(null);
+                fetchPrograms();
+              }}
+              className="px-5 py-2.5 bg-[rgb(20,41,82)] hover:bg-[rgb(30,55,100)] text-white text-sm font-semibold rounded-lg shadow-sm transition-colors flex items-center gap-2 cursor-pointer focus:ring-2 focus:ring-[rgb(20,41,82)]/30 focus:outline-none"
+            >
+              <RefreshCw size={16} />
+              Retry Connection
+            </button>
+          </div>
+        ) : (
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+            <table className="min-w-full divide-y divide-slate-200">
+              <thead className="bg-slate-50">
                 <tr>
-                  <td colSpan={6} className="px-6 py-8 text-center text-slate-500">No programs found.</td>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Program Name</th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">College ID</th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Min %</th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Program Fees</th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Allowed Tracks</th>
+                  <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-slate-500 uppercase tracking-wider">Actions</th>
                 </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody className="bg-white divide-y divide-slate-200">
+                {programs.map((program) => (
+                  <tr key={program.id} className="hover:bg-slate-50 transition-colors">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">{program.program_name}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">{program.college_id}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
+                      {program.min_percentage !== null ? <span className="font-semibold text-slate-800">{program.min_percentage.toFixed(2)}%</span> : <span className="text-slate-400 italic">None</span>}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
+                      {program.program_fees !== null ? <span className="font-semibold text-slate-800">${program.program_fees.toFixed(2)}</span> : <span className="text-slate-400 italic">None</span>}
+                    </td>
+                    <td className="px-6 py-4 whitespace-normal text-sm text-slate-500">
+                      {program.allowed_tracks ? <code className="bg-slate-100 px-2 py-1 rounded border border-slate-200 text-xs text-slate-700">{program.allowed_tracks}</code> : <span className="text-slate-400 italic">All Allowed</span>}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <button onClick={() => handleEdit(program)} className="text-indigo-600 hover:text-indigo-900 inline-flex items-center gap-1">
+                        <Edit2 size={16} /> Edit
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+                {programs.length === 0 && (
+                  <tr>
+                    <td colSpan={6} className="px-6 py-8 text-center text-slate-500">No programs found.</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
 
       {editingProgram && (

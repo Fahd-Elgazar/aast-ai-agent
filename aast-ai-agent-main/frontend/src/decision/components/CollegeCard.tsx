@@ -64,19 +64,22 @@ export default function CollegeCard({
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (matchScore / 100) * circumference;
 
+  const normalizedAffordability = (affordability || '').trim().toLowerCase();
+
   return (
     <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col transition-all hover:shadow-md">
       <div className="p-5 flex gap-4">
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-1">
-            <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${matchType === 'Exact' ? 'bg-green-100 text-green-700' :
+            <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${
+              matchType === 'Exact' ? 'bg-green-100 text-green-700' :
               matchType === 'Stretch' ? 'bg-yellow-100 text-yellow-700' :
-                matchType === 'Partial' ? 'bg-blue-100 text-blue-700' :
-                  'bg-slate-100 text-slate-600'
-              }`}>
+              matchType === 'Partial' ? 'bg-blue-100 text-blue-700' :
+              'bg-slate-100 text-slate-600'
+            }`}>
               {matchType} Match
             </span>
-            {confidence === 'High' && <span className="text-[10px] bg-aast-navy/10 text-aast-navy font-bold px-2 py-0.5 rounded-full">High Confidence</span>}
+            {confidence === 'High' && <span className="text-[10px] bg-blue-100 text-blue-700 font-bold px-2 py-0.5 rounded-full">High Confidence</span>}
           </div>
           <h3 className="font-bold text-lg text-slate-800 leading-tight mb-1">{programName}</h3>
           <p className="text-sm text-slate-500 leading-snug">{collegeName}</p>
@@ -96,9 +99,10 @@ export default function CollegeCard({
         <div className="bg-slate-50 p-3 rounded-lg border border-slate-100 text-sm">
           <div className="flex justify-between items-center mb-1">
             <span className="text-slate-500">Estimated Tuition</span>
-            <span className={`font-semibold ${affordability === 'match' ? 'text-green-600' :
-              affordability === 'stretch' ? 'text-orange-500' : 'text-red-500'
-              }`}>
+            <span className={`font-semibold ${
+              normalizedAffordability === 'match' ? 'text-green-600' :
+              normalizedAffordability === 'stretch' ? 'text-orange-500' : 'text-red-500'
+            }`}>
               {affordability.toUpperCase()}
             </span>
           </div>
@@ -188,11 +192,11 @@ export default function CollegeCard({
                 className={`flex items-start gap-2 p-2 rounded border cursor-pointer transition-all ${checkedSteps.has(idx)
                   ? 'bg-blue-50/50 border-blue-200 opacity-60'
                   : 'bg-white border-slate-200 hover:border-blue-300 shadow-sm'
-                  }`}
+                }`}
                 onClick={() => toggleStep(idx)}
               >
                 <div className={`mt-0.5 shrink-0 w-4 h-4 rounded border flex items-center justify-center transition-colors ${checkedSteps.has(idx) ? 'bg-blue-500 border-blue-500 text-white' : 'border-slate-300'
-                  }`}>
+                }`}>
                   {checkedSteps.has(idx) && <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>}
                 </div>
                 <span className={`text-xs font-medium ${checkedSteps.has(idx) ? 'text-slate-400 line-through' : 'text-slate-700'}`}>

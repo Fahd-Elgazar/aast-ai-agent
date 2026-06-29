@@ -1,0 +1,170 @@
+{
+  "kg_precision_percent": "0.00",
+  "kg_empty_hit_percent": "14.29",
+  "kg_relation_miss_percent": "100.00",
+  "rag_recall_percent": "14.29",
+  "rag_citation_precision_percent": "14.29",
+  "rag_semantic_accuracy_percent": "14.29",
+  "hybrid_full_success_percent": "0.00",
+  "hybrid_partial_degradation_percent": "0.00",
+  "hybrid_total_failure_percent": "100.00",
+  "contradiction_detection_percent": "0.00",
+  "contradiction_miss_percent": "100.00",
+  "source_diversity_score": "10.00/10",
+  "evidence_redundancy_percent": "0.00",
+  "avg_latency_ms": "687",
+  "median_latency_ms": 234,
+  "p95_latency_ms": 2041,
+  "worst_latency_ms": 10347,
+  "network_failures": 0,
+  "orchestrator_failures": 0,
+  "invalid_payload_failures": 0,
+  "benchmark_integrity_score": "5.14",
+  "failure_examples": [
+    {
+      "query_id": "Q_KG_01",
+      "expected": "KG",
+      "got": [
+        "KG_DIRECT"
+      ],
+      "issue": "Missing KG source"
+    },
+    {
+      "query_id": "Q_KG_02",
+      "expected": "KG",
+      "got": [
+        "KG_DIRECT"
+      ],
+      "issue": "Missing KG source"
+    },
+    {
+      "query_id": "Q_KG_03",
+      "expected": "KG",
+      "got": [
+        "KG_DIRECT"
+      ],
+      "issue": "Missing KG source"
+    },
+    {
+      "query_id": "Q_KG_04",
+      "expected": "KG",
+      "got": [
+        "KG_DIRECT"
+      ],
+      "issue": "Missing KG source"
+    },
+    {
+      "query_id": "Q_KG_05",
+      "expected": "KG",
+      "got": [
+        "KG_DIRECT"
+      ],
+      "issue": "Missing KG source"
+    },
+    {
+      "query_id": "Q_KG_06",
+      "expected": "KG",
+      "got": [
+        "KG_DIRECT"
+      ],
+      "issue": "Missing KG source"
+    },
+    {
+      "query_id": "Q_KG_07",
+      "expected": "KG",
+      "got": [
+        "KG_DIRECT"
+      ],
+      "issue": "Missing KG source"
+    },
+    {
+      "query_id": "Q_RAG_01",
+      "expected": "RAG",
+      "got": [
+        "KG_DIRECT"
+      ],
+      "issue": "Missing RAG source"
+    },
+    {
+      "query_id": "Q_RAG_02",
+      "expected": "RAG",
+      "got": [
+        "KG_DIRECT",
+        "RAG_DIRECT"
+      ],
+      "issue": "Missing RAG source"
+    },
+    {
+      "query_id": "Q_RAG_03",
+      "expected": "RAG",
+      "got": [
+        "KG_DIRECT"
+      ],
+      "issue": "Missing RAG source"
+    },
+    {
+      "query_id": "Q_RAG_04",
+      "expected": "RAG",
+      "got": [
+        "RAG_DIRECT"
+      ],
+      "issue": "Missing RAG source"
+    },
+    {
+      "query_id": "Q_RAG_05",
+      "expected": "RAG",
+      "got": [
+        "KG_DIRECT"
+      ],
+      "issue": "Missing RAG source"
+    },
+    {
+      "query_id": "Q_RAG_07",
+      "expected": "RAG",
+      "got": [
+        "KG_DIRECT"
+      ],
+      "issue": "Missing RAG source"
+    },
+    {
+      "query_id": "Q_HYB_01",
+      "expected": "HYBRID",
+      "got": [
+        "RAG_DIRECT"
+      ],
+      "issue": "Hybrid degradation to fallback"
+    },
+    {
+      "query_id": "Q_HYB_02",
+      "expected": "HYBRID",
+      "got": [
+        "KG_DIRECT"
+      ],
+      "issue": "Hybrid degradation to fallback"
+    },
+    {
+      "query_id": "Q_HYB_03",
+      "expected": "HYBRID",
+      "got": [
+        "RAG_DIRECT"
+      ],
+      "issue": "Hybrid degradation to fallback"
+    },
+    {
+      "query_id": "Q_HYB_04",
+      "expected": "HYBRID",
+      "got": [
+        "KG_DIRECT"
+      ],
+      "issue": "Hybrid degradation to fallback"
+    },
+    {
+      "query_id": "Q_HYB_05",
+      "expected": "HYBRID",
+      "got": [
+        "RAG_DIRECT"
+      ],
+      "issue": "Hybrid degradation to fallback"
+    }
+  ]
+}

@@ -66,6 +66,7 @@ export default function DashboardPage() {
           studentProfile: {
             high_school_percentage: Number(profile.high_school_percentage),
             budget: Number(profile.budget),
+            preferred_branch: profile.preferred_branch || null,
           },
           preferences: {
             interests: profile.interests,
@@ -121,13 +122,13 @@ export default function DashboardPage() {
           <div className="mt-8 pt-6 border-t flex flex-col gap-2 border-slate-200">
             <button
               onClick={() => navigate("/decision/chat")}
-              className="bg-blue-500 text-white px-4 py-2 rounded mt-3"
+              className="bg-blue-500 text-white px-4 py-2 rounded mt-3 cursor-pointer"
             >
               Open Decision Chat
             </button>
             <button
               onClick={() => navigate("/decision/admin")}
-              className="bg-red-500 text-white px-4 py-2 rounded mt-3"
+              className="bg-red-500 text-white px-4 py-2 rounded mt-3 cursor-pointer"
             >
               Admin Panel
             </button>
@@ -157,7 +158,7 @@ export default function DashboardPage() {
             <div className="bg-white p-12 rounded-xl border border-slate-200 shadow-sm text-center text-slate-500 flex flex-col items-center">
               <span className="text-4xl mb-4">Search</span>
               <p className="text-lg">No recommendations found matching your current strict criteria.</p>
-              <p className="text-sm mt-2 max-w-md">Try relaxing your budget, adding more interests, or removing location constraints.</p>
+              <p className="text-sm mt-2 max-w-md">Try relaxing your budget, adding more interests, or choosing a different campus.</p>
             </div>
           )}
 

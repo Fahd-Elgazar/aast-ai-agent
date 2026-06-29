@@ -1,7 +1,7 @@
 import requests
 import base64
 
-OLLAMA_URL = "http://localhost:11434/api/generate"
+OLLAMA_URL = "http://192.168.1.7:11434/api/generate"
 MODEL = "llava:latest"  
 
 def describe_image(image_bytes, prompt = """

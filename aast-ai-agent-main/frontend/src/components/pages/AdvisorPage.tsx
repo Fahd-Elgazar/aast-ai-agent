@@ -489,7 +489,6 @@ const AdvisorPage = () => {
     window.addEventListener("pointerup", handlePointerUp, { once: true });
   }, [isDesktopLayout]);
 
-  const sidebarWidth = sidebarCollapsed ? 76 : 296;
   const graphMinWidth = graphPanelMode === "compact" ? 440 : graphPanelMode === "expanded" ? 660 : 540;
   const graphPanelStyle: CSSProperties | undefined = isDesktopLayout
     ? {

@@ -33,7 +33,7 @@ RETRIEVER_BASE_URL = os.getenv("RAG_RETRIEVER_URL", os.getenv("RAG_BASE_URL", "h
 RETRIEVER_API_URL = os.getenv("RAG_RETRIEVER_SEARCH_URL", f"{RETRIEVER_BASE_URL}/search")
 RETRIEVER_HEALTH_URL = os.getenv("RAG_RETRIEVER_HEALTH_URL", f"{RETRIEVER_BASE_URL}/health")
 
-OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434").rstrip("/")
+OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://192.168.1.7:11434").rstrip("/")
 OLLAMA_URL = os.getenv("OLLAMA_GENERATE_URL", f"{OLLAMA_BASE_URL}/api/generate")
 OLLAMA_TAGS_URL = os.getenv("OLLAMA_TAGS_URL", f"{OLLAMA_BASE_URL}/api/tags")
 LLM_MODEL = (
@@ -43,6 +43,7 @@ LLM_MODEL = (
     or os.getenv("OLLAMA_MODEL")
     or "tinyllama"
 )
+ANSWER_ENGINE_ENABLED = os.getenv("RAG_ANSWER_ENGINE_ENABLED", "false").strip().lower() in {"1", "true", "yes", "on"}
 
 MAX_CONTEXT_CHUNKS = 8
 REQUEST_TIMEOUT = int(os.getenv("RAG_ANSWER_TIMEOUT_SECONDS", "180"))
@@ -244,6 +245,29 @@ class AnswerValidator:
             raise ValueError("Answer confidence below minimum threshold.")
 
 
+def _coerce_source_text(source: Dict[str, Any]) -> str:
+    for key in ("content", "text", "chunk", "body", "answer", "title"):
+        value = source.get(key)
+        if isinstance(value, str) and value.strip():
+            return re.sub(r"\s+", " ", value).strip()
+    return ""
+
+
+def build_retrieval_only_answer(retrieval_data: Dict[str, Any]) -> str:
+    sources = retrieval_data.get("sources") or retrieval_data.get("results") or []
+    snippets = []
+    for source in sources[:3]:
+        if isinstance(source, dict):
+            text = _coerce_source_text(source)
+            if text:
+                snippets.append(text[:280])
+
+    if not snippets:
+        return "I found matching academic retrieval metadata, but no readable source text was available for a direct answer."
+
+    return "Based on the retrieved academic evidence: " + " ".join(snippets)
+
+
 # ============================================================
 # MAIN ANSWER ORCHESTRATOR
 # ============================================================
@@ -271,6 +295,21 @@ class AcademicAnswerEngine:
 
         # STEP 2 — Validate retrieval
         AnswerValidator.validate_retrieval(retrieval_data)
+
+        if not ANSWER_ENGINE_ENABLED:
+            retrieval_conf = retrieval_data.get("avg_confidence", 0.0)
+            answer = build_retrieval_only_answer(retrieval_data)
+            return {
+                "answer": answer,
+                "answer_confidence": retrieval_conf,
+                "confidence_level": "MEDIUM" if retrieval_conf >= MIN_RETRIEVAL_CONFIDENCE else "LOW",
+                "sources": retrieval_data.get("sources") or retrieval_data.get("results") or [],
+                "metadata": {
+                    "answer_engine_disabled": True,
+                    "retrieval_only": True,
+                    "latency_seconds": round(time.time() - start_time, 3),
+                },
+            }
 
         # STEP 3 — Build grounded prompt
         prompt = PromptBuilder.build_prompt(request.query, retrieval_data)
@@ -441,13 +480,14 @@ def health():
     except Exception:
         unhealthy_services.append("retriever")
 
-    # 2. Check Ollama
-    try:
-        o_resp = requests.get(OLLAMA_TAGS_URL, timeout=HEALTH_TIMEOUT)
-        if o_resp.status_code != 200:
+    # 2. Check Ollama only when generation is enabled.
+    if ANSWER_ENGINE_ENABLED:
+        try:
+            o_resp = requests.get(OLLAMA_TAGS_URL, timeout=HEALTH_TIMEOUT)
+            if o_resp.status_code != 200:
+                unhealthy_services.append("ollama")
+        except Exception:
             unhealthy_services.append("ollama")
-    except Exception:
-        unhealthy_services.append("ollama")
 
     if unhealthy_services:
         return JSONResponse(
@@ -461,7 +501,8 @@ def health():
     return {
         "status": "healthy",
         "retriever_api": RETRIEVER_API_URL,
-        "ollama_model": LLM_MODEL
+        "ollama_model": LLM_MODEL,
+        "answer_engine_enabled": ANSWER_ENGINE_ENABLED
     }
 
 

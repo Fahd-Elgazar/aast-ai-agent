@@ -1,5 +1,6 @@
 import { LLM_CONFIG } from "../config/llmConfig.js";
 import { gemmaTelemetryService } from "./gemmaTelemetryService.js";
+import { setGauge } from "./metrics.js";
 
 function createQueueError(code, message) {
   const error = new Error(message);
@@ -32,6 +33,8 @@ class GemmaRequestLimiter {
       active: this.active,
       pending: this.queue.length,
     });
+    setGauge("gemma_queue_depth", this.queue.length);
+    setGauge("gemma_active_requests", this.active);
   }
 
   async run(task, metadata = {}) {

@@ -5,6 +5,7 @@ import { getDecisionMemoryStatus } from "../services/decisionService.js";
 import { getMetricsSnapshot } from "../services/metrics.js";
 import { logger } from "../services/logger.js";
 import { getOllamaRuntimeStatus } from "../services/ollamaService.js";
+import { getRuntimeModeStatus } from "../config/runtimeMode.js";
 import ragService from "../services/ragService.js";
 
 const DEFAULT_TIMEOUT_MS = Number(process.env.HEALTH_TIMEOUT_MS || 2500);
@@ -31,6 +32,41 @@ function getProcessMemory() {
     heap_used_mb: toMb(memory.heapUsed),
     external_mb: toMb(memory.external),
     node_options: process.env.NODE_OPTIONS || null
+  };
+}
+
+function counterValue(counters, name) {
+  const value = Number(counters?.[name] || 0);
+  return Number.isFinite(value) ? value : 0;
+}
+
+function rate(numerator, denominator) {
+  if (!denominator) return 0;
+  return Number((numerator / denominator).toFixed(4));
+}
+
+function buildRuntimeMetricsSnapshot() {
+  const snapshot = getMetricsSnapshot();
+  const counters = snapshot.counters || {};
+  const ollama = getOllamaRuntimeStatus();
+  const telemetry = ollama?.gemma_telemetry || {};
+  const gemmaRequests = counterValue(counters, "gemma_requests_total");
+  const gemmaSuccess = counterValue(counters, "gemma_success_total");
+  const gemmaFailure = counterValue(counters, "gemma_failure_total");
+  const rateDenominator = Math.max(gemmaRequests, gemmaSuccess + gemmaFailure);
+
+  return {
+    ...snapshot,
+    gemma_requests_total: gemmaRequests,
+    gemma_success_total: gemmaSuccess,
+    gemma_failure_total: gemmaFailure,
+    gemma_timeout_total: counterValue(counters, "gemma_timeout_total"),
+    gemma_queue_depth: Number(ollama?.gemma_queue_depth ?? telemetry.gemma_queue_depth ?? 0),
+    gemini_fallback_total: counterValue(counters, "gemini_fallback_total"),
+    deterministic_fallback_total: counterValue(counters, "deterministic_fallback_total"),
+    success_rate: rate(gemmaSuccess, rateDenominator),
+    failure_rate: rate(gemmaFailure, rateDenominator),
+    runtime_mode: getRuntimeModeStatus(),
   };
 }
 
@@ -260,7 +296,8 @@ async function buildHealthPayload(getCacheStatus) {
         processMemory
       })
     },
-    metrics: getMetricsSnapshot()
+    runtimeMode: getRuntimeModeStatus(),
+    metrics: buildRuntimeMetricsSnapshot()
   };
 
   return payload;
@@ -302,7 +339,7 @@ export default function createHealthRouter({ getCacheStatus } = {}) {
   });
 
   router.get("/metrics", (req, res) => {
-    res.json(getMetricsSnapshot());
+    res.json(buildRuntimeMetricsSnapshot());
   });
 
   return router;

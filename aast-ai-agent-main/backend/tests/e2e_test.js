@@ -1,6 +1,8 @@
 import fetch from "node-fetch";
 
-const API_BASE = "http://localhost:8000/api";
+const API_BASE =
+  process.env.API_BASE ||
+  `http://localhost:${process.env.ORCHESTRATOR_PORT || 8004}/api`;
 
 async function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));

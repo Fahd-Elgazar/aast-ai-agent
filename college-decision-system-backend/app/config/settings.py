@@ -17,6 +17,7 @@ class Settings(BaseSettings):
 
     # Use SecretStr to prevent accidental printing/logging of sensitive data
     GEMINI_API_KEY: SecretStr | None = None
+    DECISION_GEMINI_ENABLED: bool = True
     INTERNAL_SECRET_KEY: SecretStr | None = None
 
     VOICE_ENABLED: bool = True

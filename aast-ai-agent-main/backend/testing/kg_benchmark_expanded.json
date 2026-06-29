@@ -1,0 +1,3505 @@
+[
+  {
+    "question": "Which policy does College of Artificial Intelligence follow?",
+    "expected_answer": "College of Artificial Intelligence follows Course Passing Criteria.",
+    "category": "Policies",
+    "difficulty": "Easy",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "POLICY_AAST_PASS_REQUIREMENTS",
+        "label": "GradingPolicy",
+        "name": "Course Passing Criteria"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "FOLLOWS_POLICY",
+        "id": "6917542221780615240",
+        "source": "College of Artificial Intelligence",
+        "target": "Course Passing Criteria"
+      }
+    ],
+    "id": "KG_EXP_001"
+  },
+  {
+    "question": "Which grading system does College of Artificial Intelligence use?",
+    "expected_answer": "College of Artificial Intelligence uses AAST Grading System (Pre-2023).",
+    "category": "Policies",
+    "difficulty": "Easy",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "GRADESYS_AAST_PRE_2023",
+        "label": "GradingSystem",
+        "name": "AAST Grading System (Pre-2023)"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "USES_GRADING_SYSTEM",
+        "id": "6917543321292243017",
+        "source": "College of Artificial Intelligence",
+        "target": "AAST Grading System (Pre-2023)"
+      }
+    ],
+    "id": "KG_EXP_002"
+  },
+  {
+    "question": "Which scholarship is connected to Intelligent Systems?",
+    "expected_answer": "Intelligent Systems has scholarship Excellence Scholarship.",
+    "category": "Scholarships",
+    "difficulty": "Easy",
+    "source_nodes": [
+      {
+        "id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+        "label": "Program",
+        "name": "Intelligent Systems"
+      },
+      {
+        "id": "SCHOLARSHIP_EXCELLENCE_MIN_GPA_34",
+        "label": "Scholarship",
+        "name": "Excellence Scholarship"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_SCHOLARSHIP",
+        "id": "1152929201188241417",
+        "source": "Intelligent Systems",
+        "target": "Excellence Scholarship"
+      }
+    ],
+    "id": "KG_EXP_003"
+  },
+  {
+    "id": "KG_EXP_004",
+    "question": "Which college has the Basic Electronic Lab facility?",
+    "expected_answer": "College of Artificial Intelligence has the Basic Electronic Lab facility.",
+    "category": "Facilities",
+    "difficulty": "Easy",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "FACILITY_EL_ALAMEIN_BASIC_ELECTRONIC_LAB",
+        "label": "Facility",
+        "name": "Basic Electronic Lab"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_FACILITY",
+        "id": "6917532326175965243",
+        "source": "College of Artificial Intelligence",
+        "target": "Basic Electronic Lab"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_005",
+    "question": "Which college has the Physics Lab facility?",
+    "expected_answer": "College of Artificial Intelligence has the Physics Lab facility.",
+    "category": "Facilities",
+    "difficulty": "Easy",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "FACILITY_EL_ALAMEIN_PHYSICS_LAB",
+        "label": "Facility",
+        "name": "Physics Lab"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_FACILITY",
+        "id": "6917532326175965244",
+        "source": "College of Artificial Intelligence",
+        "target": "Physics Lab"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_006",
+    "question": "Which college has the General Purpose Computers Lab facility?",
+    "expected_answer": "College of Artificial Intelligence has the General Purpose Computers Lab facility.",
+    "category": "Facilities",
+    "difficulty": "Easy",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "FACILITY_EL_ALAMEIN_GENERAL_PURPOSE_COMPUTERS_LAB",
+        "label": "Facility",
+        "name": "General Purpose Computers Lab"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_FACILITY",
+        "id": "6917532326175965245",
+        "source": "College of Artificial Intelligence",
+        "target": "General Purpose Computers Lab"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_007",
+    "question": "Which college has the UV (Un-Manned Vehicle) facility?",
+    "expected_answer": "College of Artificial Intelligence has the UV (Un-Manned Vehicle) facility.",
+    "category": "Facilities",
+    "difficulty": "Easy",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "FACILITY_EL_ALAMEIN_UV_LAB",
+        "label": "Facility",
+        "name": "UV (Un-Manned Vehicle)"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_FACILITY",
+        "id": "6917532326175965246",
+        "source": "College of Artificial Intelligence",
+        "target": "UV (Un-Manned Vehicle)"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_008",
+    "question": "Which college has the Embedded Systems facility?",
+    "expected_answer": "College of Artificial Intelligence has the Embedded Systems facility.",
+    "category": "Facilities",
+    "difficulty": "Easy",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "FACILITY_EL_ALAMEIN_EMBEDDED_SYSTEMS_LAB",
+        "label": "Facility",
+        "name": "Embedded Systems"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_FACILITY",
+        "id": "6917532326175965247",
+        "source": "College of Artificial Intelligence",
+        "target": "Embedded Systems"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_009",
+    "question": "Which college has the Basic IoT (Internet of Things) facility?",
+    "expected_answer": "College of Artificial Intelligence has the Basic IoT (Internet of Things) facility.",
+    "category": "Facilities",
+    "difficulty": "Easy",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "FACILITY_EL_ALAMEIN_BASIC_IOT_LAB",
+        "label": "Facility",
+        "name": "Basic IoT (Internet of Things)"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_FACILITY",
+        "id": "6917532326175965248",
+        "source": "College of Artificial Intelligence",
+        "target": "Basic IoT (Internet of Things)"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_010",
+    "question": "Which college has the Workstations Lab facility?",
+    "expected_answer": "College of Artificial Intelligence has the Workstations Lab facility.",
+    "category": "Facilities",
+    "difficulty": "Easy",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "FACILITY_EL_ALAMEIN_WORKSTATIONS_LAB",
+        "label": "Facility",
+        "name": "Workstations Lab"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_FACILITY",
+        "id": "6917532326175965249",
+        "source": "College of Artificial Intelligence",
+        "target": "Workstations Lab"
+      }
+    ]
+  },
+  {
+    "question": "Which scholarship is connected to Data Science?",
+    "expected_answer": "Data Science has scholarship Excellence Scholarship.",
+    "category": "Scholarships",
+    "difficulty": "Easy",
+    "source_nodes": [
+      {
+        "id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_DATA_SCIENCE",
+        "label": "Program",
+        "name": "Data Science"
+      },
+      {
+        "id": "SCHOLARSHIP_EXCELLENCE_MIN_GPA_34",
+        "label": "Scholarship",
+        "name": "Excellence Scholarship"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_SCHOLARSHIP",
+        "id": "1152929201188241418",
+        "source": "Data Science",
+        "target": "Excellence Scholarship"
+      }
+    ],
+    "id": "KG_EXP_011"
+  },
+  {
+    "question": "What accreditation is connected to College of Artificial Intelligence?",
+    "expected_answer": "College of Artificial Intelligence has accreditation from Egyptian Supreme Council of Universities.",
+    "category": "Accreditation",
+    "difficulty": "Easy",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "ACC_EG_SCU",
+        "label": "Accreditation",
+        "name": "Egyptian Supreme Council of Universities"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_ACCREDITATION",
+        "id": "1152923703630102529",
+        "source": "College of Artificial Intelligence",
+        "target": "Egyptian Supreme Council of Universities"
+      }
+    ],
+    "id": "KG_EXP_012"
+  },
+  {
+    "question": "Which college does El Alamein Campus host?",
+    "expected_answer": "El Alamein Campus hosts College of Artificial Intelligence.",
+    "category": "Campus",
+    "difficulty": "Easy",
+    "source_nodes": [
+      {
+        "id": "CAMPUS_EG_EL_ALAMEIN",
+        "label": "Campus",
+        "name": "El Alamein Campus"
+      },
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HOSTS",
+        "id": "1152921504606846976",
+        "source": "El Alamein Campus",
+        "target": "College of Artificial Intelligence"
+      }
+    ],
+    "id": "KG_EXP_013"
+  },
+  {
+    "question": "Which degree does College of Artificial Intelligence offer?",
+    "expected_answer": "College of Artificial Intelligence offers Bachelor of Science.",
+    "category": "Programs",
+    "difficulty": "Easy",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "DEGREE_EG_EL_ALAMEIN_CAI_BSC_UNDERGRAD",
+        "label": "Degree",
+        "name": "Bachelor of Science"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "OFFERS",
+        "id": "1152922604118474753",
+        "source": "College of Artificial Intelligence",
+        "target": "Bachelor of Science"
+      }
+    ],
+    "id": "KG_EXP_014"
+  },
+  {
+    "id": "KG_EXP_015",
+    "question": "Who teaches Robotics Design and Simulation?",
+    "expected_answer": "Amr Nasr teaches Robotics Design and Simulation.",
+    "category": "Faculty",
+    "difficulty": "Easy",
+    "source_nodes": [
+      {
+        "id": "PROF_AMR_NASR",
+        "label": "Professor",
+        "name": "Amr Nasr"
+      },
+      {
+        "id": "COURSE_ROBOTICS_DESIGN_AND_SIMULATION",
+        "label": "Course",
+        "name": "Robotics Design and Simulation"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "TEACHES",
+        "id": "1155188697583321166",
+        "source": "Amr Nasr",
+        "target": "Robotics Design and Simulation"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_016",
+    "question": "Who teaches Swarm Intelligence?",
+    "expected_answer": "Khaled Badran teaches Swarm Intelligence.",
+    "category": "Faculty",
+    "difficulty": "Easy",
+    "source_nodes": [
+      {
+        "id": "PROF_KHALED_BADRAN",
+        "label": "Professor",
+        "name": "Khaled Badran"
+      },
+      {
+        "id": "COURSE_SWARM_INTELLIGENCE",
+        "label": "Course",
+        "name": "Swarm Intelligence"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "TEACHES",
+        "id": "1152936897769635919",
+        "source": "Khaled Badran",
+        "target": "Swarm Intelligence"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_017",
+    "question": "Who teaches Block Chain?",
+    "expected_answer": "Amira Elsaid teaches Block Chain.",
+    "category": "Faculty",
+    "difficulty": "Easy",
+    "source_nodes": [
+      {
+        "id": "PROF_AMIRA_ELSAID",
+        "label": "Professor",
+        "name": "Amira Elsaid"
+      },
+      {
+        "id": "COURSE_BLOCK_CHAIN",
+        "label": "Course",
+        "name": "Block Chain"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "TEACHES",
+        "id": "1152936897769635921",
+        "source": "Amira Elsaid",
+        "target": "Block Chain"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_018",
+    "question": "Who teaches Image Processing & Pattern Recognition?",
+    "expected_answer": "Nihal Mabrouk teaches Image Processing & Pattern Recognition.",
+    "category": "Faculty",
+    "difficulty": "Easy",
+    "source_nodes": [
+      {
+        "id": "PROF_NIHAL_MABROUK",
+        "label": "Professor",
+        "name": "Nihal Mabrouk"
+      },
+      {
+        "id": "COURSE_IMAGE_PROCESSING_AND_PATTERN_RECOGNITION",
+        "label": "Course",
+        "name": "Image Processing & Pattern Recognition"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "TEACHES",
+        "id": "1152936897769635922",
+        "source": "Nihal Mabrouk",
+        "target": "Image Processing & Pattern Recognition"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_019",
+    "question": "Who teaches Statistics for Data Science?",
+    "expected_answer": "Eman Elakabawy teaches Statistics for Data Science.",
+    "category": "Faculty",
+    "difficulty": "Easy",
+    "source_nodes": [
+      {
+        "id": "PROF_EMAN_ELAKABAWY",
+        "label": "Professor",
+        "name": "Eman Elakabawy"
+      },
+      {
+        "id": "COURSE_STATISTICS_FOR_DATA_SCIENCE",
+        "label": "Course",
+        "name": "Statistics for Data Science"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "TEACHES",
+        "id": "1152936897769635923",
+        "source": "Eman Elakabawy",
+        "target": "Statistics for Data Science"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_020",
+    "question": "Who teaches Ethics & Governance of AI?",
+    "expected_answer": "Mohamed Talaat teaches Ethics & Governance of AI.",
+    "category": "Faculty",
+    "difficulty": "Easy",
+    "source_nodes": [
+      {
+        "id": "PROF_MOHAMED_TALAAT",
+        "label": "Professor",
+        "name": "Mohamed Talaat"
+      },
+      {
+        "id": "COURSE_ETHICS_AND_GOVERNANCE_OF_AI",
+        "label": "Course",
+        "name": "Ethics & Governance of AI"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "TEACHES",
+        "id": "1152936897769635924",
+        "source": "Mohamed Talaat",
+        "target": "Ethics & Governance of AI"
+      }
+    ]
+  },
+  {
+    "question": "Which tuition pathway policy is connected to Intelligent Systems?",
+    "expected_answer": "Intelligent Systems has tuition pathway Tuition and Fees Pathway.",
+    "category": "Policies",
+    "difficulty": "Medium",
+    "source_nodes": [
+      {
+        "id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+        "label": "Program",
+        "name": "Intelligent Systems"
+      },
+      {
+        "id": "POLICY_CAI_TUITION_PATHWAY",
+        "label": "Policy",
+        "name": "Tuition and Fees Pathway"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_TUITION_PATHWAY",
+        "id": "6917567510548054157",
+        "source": "Intelligent Systems",
+        "target": "Tuition and Fees Pathway"
+      }
+    ],
+    "id": "KG_EXP_021"
+  },
+  {
+    "question": "Which tuition pathway policy is connected to Data Science?",
+    "expected_answer": "Data Science has tuition pathway Tuition and Fees Pathway.",
+    "category": "Policies",
+    "difficulty": "Medium",
+    "source_nodes": [
+      {
+        "id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_DATA_SCIENCE",
+        "label": "Program",
+        "name": "Data Science"
+      },
+      {
+        "id": "POLICY_CAI_TUITION_PATHWAY",
+        "label": "Policy",
+        "name": "Tuition and Fees Pathway"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_TUITION_PATHWAY",
+        "id": "6919819310361739405",
+        "source": "Data Science",
+        "target": "Tuition and Fees Pathway"
+      }
+    ],
+    "id": "KG_EXP_022"
+  },
+  {
+    "question": "Which scholarship policy is connected to Intelligent Systems?",
+    "expected_answer": "Intelligent Systems has scholarship policy Scholarship Pathway.",
+    "category": "Scholarships",
+    "difficulty": "Medium",
+    "source_nodes": [
+      {
+        "id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+        "label": "Program",
+        "name": "Intelligent Systems"
+      },
+      {
+        "id": "POLICY_CAI_SCHOLARSHIP_PATHWAY",
+        "label": "Policy",
+        "name": "Scholarship Pathway"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_SCHOLARSHIP_POLICY",
+        "id": "6917568610059681934",
+        "source": "Intelligent Systems",
+        "target": "Scholarship Pathway"
+      }
+    ],
+    "id": "KG_EXP_023"
+  },
+  {
+    "question": "Which scholarship policy is connected to Data Science?",
+    "expected_answer": "Data Science has scholarship policy Scholarship Pathway.",
+    "category": "Scholarships",
+    "difficulty": "Medium",
+    "source_nodes": [
+      {
+        "id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_DATA_SCIENCE",
+        "label": "Program",
+        "name": "Data Science"
+      },
+      {
+        "id": "POLICY_CAI_SCHOLARSHIP_PATHWAY",
+        "label": "Policy",
+        "name": "Scholarship Pathway"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_SCHOLARSHIP_POLICY",
+        "id": "6919820409873367182",
+        "source": "Data Science",
+        "target": "Scholarship Pathway"
+      }
+    ],
+    "id": "KG_EXP_024"
+  },
+  {
+    "question": "Which advising pathway is connected to Intelligent Systems?",
+    "expected_answer": "Intelligent Systems has academic advising pathway Academic Advising Pathway.",
+    "category": "Policies",
+    "difficulty": "Medium",
+    "source_nodes": [
+      {
+        "id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+        "label": "Program",
+        "name": "Intelligent Systems"
+      },
+      {
+        "id": "POLICY_CAI_ACADEMIC_ADVISING_PATHWAY",
+        "label": "Policy",
+        "name": "Academic Advising Pathway"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_ADVISING_PATHWAY",
+        "id": "6917569709571309711",
+        "source": "Intelligent Systems",
+        "target": "Academic Advising Pathway"
+      }
+    ],
+    "id": "KG_EXP_025"
+  },
+  {
+    "question": "Which advising pathway is connected to Data Science?",
+    "expected_answer": "Data Science has academic advising pathway Academic Advising Pathway.",
+    "category": "Policies",
+    "difficulty": "Medium",
+    "source_nodes": [
+      {
+        "id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_DATA_SCIENCE",
+        "label": "Program",
+        "name": "Data Science"
+      },
+      {
+        "id": "POLICY_CAI_ACADEMIC_ADVISING_PATHWAY",
+        "label": "Policy",
+        "name": "Academic Advising Pathway"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_ADVISING_PATHWAY",
+        "id": "6919821509384994959",
+        "source": "Data Science",
+        "target": "Academic Advising Pathway"
+      }
+    ],
+    "id": "KG_EXP_026"
+  },
+  {
+    "question": "Which policy pathway does College of Artificial Intelligence support for queries?",
+    "expected_answer": "College of Artificial Intelligence supports the Tuition and Fees Pathway policy pathway.",
+    "category": "Policies",
+    "difficulty": "Medium",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "POLICY_CAI_TUITION_PATHWAY",
+        "label": "Policy",
+        "name": "Tuition and Fees Pathway"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "SUPPORTS_POLICY_QUERY",
+        "id": "6917566411036426381",
+        "source": "College of Artificial Intelligence",
+        "target": "Tuition and Fees Pathway"
+      }
+    ],
+    "id": "KG_EXP_027"
+  },
+  {
+    "question": "What syllabus schedule is attached to Data Mining?",
+    "expected_answer": "Data Mining has syllabus information: [{\"week\": 1, \"topic\": \"KDD & CRISP-DM\", \"lab_focus\": \"Mining project definition\", \"date\": \"2026-02-09\"}, {\"week\": 2, \"topic\": \"Problem understanding\", \"lab_focus\": \"Mining task for...",
+    "category": "Curriculum",
+    "difficulty": "Medium",
+    "source_nodes": [
+      {
+        "id": "COURSE_DS313",
+        "label": "Course",
+        "name": "Data Mining"
+      },
+      {
+        "id": "SYLLABUS_DATA_MINING_2026",
+        "label": "CourseSyllabus",
+        "name": "SYLLABUS_DATA_MINING_2026"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_SYLLABUS",
+        "id": "6919797320129183842",
+        "source": "Data Mining",
+        "target": "SYLLABUS_DATA_MINING_2026"
+      }
+    ],
+    "id": "KG_EXP_028"
+  },
+  {
+    "question": "What syllabus schedule is attached to Natural Language Processing?",
+    "expected_answer": "Natural Language Processing has syllabus information: [{\"week\": 1, \"topic\": \"Introduction to NLP (1)\"}, {\"week\": 2, \"topic\": \"Introduction to NLP (2)\"}, {\"week\": 3, \"topic\": \"NLP pipeline\"}, {\"week\": 4, \"topic\": \"Text Representation\"}...",
+    "category": "Curriculum",
+    "difficulty": "Medium",
+    "source_nodes": [
+      {
+        "id": "COURSE_NATURAL_LANGUAGE_PROCESSING",
+        "label": "Course",
+        "name": "Natural Language Processing"
+      },
+      {
+        "id": "SYLLABUS_NLP_2026",
+        "label": "CourseSyllabus",
+        "name": "SYLLABUS_NLP_2026"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_SYLLABUS",
+        "id": "6917545520315498592",
+        "source": "Natural Language Processing",
+        "target": "SYLLABUS_NLP_2026"
+      }
+    ],
+    "id": "KG_EXP_029"
+  },
+  {
+    "question": "What syllabus schedule is attached to Cognitive Computing?",
+    "expected_answer": "Cognitive Computing has syllabus information: [{\"week\": 1, \"topic\": \"The era of Cognitive Computing\"}, {\"week\": 2, \"topic\": \"Introduction to Natural Language Processing\"}, {\"week\": 3, \"topic\": \"Transformer (Text)\"}, {\"week\": 4...",
+    "category": "Curriculum",
+    "difficulty": "Medium",
+    "source_nodes": [
+      {
+        "id": "COURSE_COGNITIVE_COMPUTING",
+        "label": "Course",
+        "name": "Cognitive Computing"
+      },
+      {
+        "id": "SYLLABUS_COGNITIVE_COMPUTING_2026",
+        "label": "CourseSyllabus",
+        "name": "SYLLABUS_COGNITIVE_COMPUTING_2026"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_SYLLABUS",
+        "id": "6917545520315498593",
+        "source": "Cognitive Computing",
+        "target": "SYLLABUS_COGNITIVE_COMPUTING_2026"
+      }
+    ],
+    "id": "KG_EXP_030"
+  },
+  {
+    "question": "What syllabus schedule is attached to Mobile Computing?",
+    "expected_answer": "Mobile Computing has syllabus information: [{\"week\": 1, \"topic\": \"Mobile AI Strategy Fundamentals\", \"date\": \"2026-02-11\"}, {\"week\": 2, \"topic\": \"Mobile app Concepts & architecture\", \"date\": \"2026-02-18\"}, {\"week\": 3, \"topic...",
+    "category": "Curriculum",
+    "difficulty": "Medium",
+    "source_nodes": [
+      {
+        "id": "COURSE_MOBILE_COMPUTING",
+        "label": "Course",
+        "name": "Mobile Computing"
+      },
+      {
+        "id": "SYLLABUS_MOBILE_COMPUTING_2026",
+        "label": "CourseSyllabus",
+        "name": "SYLLABUS_MOBILE_COMPUTING_2026"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_SYLLABUS",
+        "id": "1152937997281263692",
+        "source": "Mobile Computing",
+        "target": "SYLLABUS_MOBILE_COMPUTING_2026"
+      }
+    ],
+    "id": "KG_EXP_031"
+  },
+  {
+    "question": "Which program does Bachelor of Science include?",
+    "expected_answer": "Bachelor of Science includes Intelligent Systems.",
+    "category": "Programs",
+    "difficulty": "Medium",
+    "source_nodes": [
+      {
+        "id": "DEGREE_EG_EL_ALAMEIN_CAI_BSC_UNDERGRAD",
+        "label": "Degree",
+        "name": "Bachelor of Science"
+      },
+      {
+        "id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+        "label": "Program",
+        "name": "Intelligent Systems"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "INCLUDES_PROGRAM",
+        "id": "1152927002164985858",
+        "source": "Bachelor of Science",
+        "target": "Intelligent Systems"
+      }
+    ],
+    "id": "KG_EXP_032"
+  },
+  {
+    "id": "KG_EXP_033",
+    "question": "Which track contains Ethics & Governance of AI from Data Science?",
+    "expected_answer": "Ethics & Governance of AI is included in Data Science and is part of the Artificial Intelligence track.",
+    "category": "Course Planning",
+    "difficulty": "Medium",
+    "source_nodes": [
+      {
+        "id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_DATA_SCIENCE",
+        "label": "Program",
+        "name": "Data Science"
+      },
+      {
+        "id": "COURSE_ETHICS_AND_GOVERNANCE_OF_AI",
+        "label": "Course",
+        "name": "Ethics & Governance of AI"
+      },
+      {
+        "id": "TRACK_ARTIFICIAL_INTELLIGENCE_REFERENCE",
+        "label": "Track",
+        "name": "Artificial Intelligence"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_COURSE",
+        "id": "1170945798720978954",
+        "source": "Data Science",
+        "target": "Ethics & Governance of AI"
+      },
+      {
+        "type": "PART_OF_TRACK",
+        "id": "6917562012989915267",
+        "source": "Ethics & Governance of AI",
+        "target": "Artificial Intelligence"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_034",
+    "question": "Which track contains Cognitive Computing from Robotics?",
+    "expected_answer": "Cognitive Computing is included in Robotics and is part of the Cognitive Computing track.",
+    "category": "Course Planning",
+    "difficulty": "Medium",
+    "source_nodes": [
+      {
+        "id": "SPEC_EL_ALAMEIN_ROBOTICS",
+        "label": "Specialization",
+        "name": "Robotics"
+      },
+      {
+        "id": "COURSE_COGNITIVE_COMPUTING",
+        "label": "Course",
+        "name": "Cognitive Computing"
+      },
+      {
+        "id": "TRACK_COGNITIVE_COMPUTING",
+        "label": "Track",
+        "name": "Cognitive Computing"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_COURSE",
+        "id": "1157434999838867469",
+        "source": "Robotics",
+        "target": "Cognitive Computing"
+      },
+      {
+        "type": "PART_OF_TRACK",
+        "id": "6917562012989915270",
+        "source": "Cognitive Computing",
+        "target": "Cognitive Computing"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_035",
+    "question": "Which course belongs to the Robotics specialization in Intelligent Systems?",
+    "expected_answer": "Fundamentals of Robotics belongs to the Robotics specialization in Intelligent Systems.",
+    "category": "Specializations",
+    "difficulty": "Medium",
+    "source_nodes": [
+      {
+        "id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+        "label": "Program",
+        "name": "Intelligent Systems"
+      },
+      {
+        "id": "SPEC_EL_ALAMEIN_ROBOTICS",
+        "label": "Specialization",
+        "name": "Robotics"
+      },
+      {
+        "id": "COURSE_FUNDAMENTALS_OF_ROBOTICS",
+        "label": "Course",
+        "name": "Fundamentals of Robotics"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_SPECIALIZATION",
+        "id": "1155179901490298889",
+        "source": "Intelligent Systems",
+        "target": "Robotics"
+      },
+      {
+        "type": "HAS_COURSE",
+        "id": "1152931400211496973",
+        "source": "Robotics",
+        "target": "Fundamentals of Robotics"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_036",
+    "question": "What career role is connected to the Artificial Intelligence track in Intelligent Systems?",
+    "expected_answer": "Intelligent Systems specializes in Artificial Intelligence, and Artificial Intelligence leads to or aligns with AI Engineer.",
+    "category": "Career",
+    "difficulty": "Medium",
+    "source_nodes": [
+      {
+        "id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+        "label": "Program",
+        "name": "Intelligent Systems"
+      },
+      {
+        "id": "TRACK_ARTIFICIAL_INTELLIGENCE_REFERENCE",
+        "label": "Track",
+        "name": "Artificial Intelligence"
+      },
+      {
+        "id": "CAREERROLE_AI_ENGINEER",
+        "label": "CareerRole",
+        "name": "AI Engineer"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "SPECIALIZES_IN",
+        "id": "6917560913478287491",
+        "source": "Intelligent Systems",
+        "target": "Artificial Intelligence"
+      },
+      {
+        "type": "LEADS_TO",
+        "id": "1152932499723124867",
+        "source": "Artificial Intelligence",
+        "target": "AI Engineer"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_037",
+    "question": "What career role is connected to the AI Foundations track in Intelligent Systems?",
+    "expected_answer": "Intelligent Systems specializes in AI Foundations, and AI Foundations leads to or aligns with Machine Learning Engineer.",
+    "category": "Career",
+    "difficulty": "Medium",
+    "source_nodes": [
+      {
+        "id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+        "label": "Program",
+        "name": "Intelligent Systems"
+      },
+      {
+        "id": "TRACK_AI_FOUNDATIONS",
+        "label": "Track",
+        "name": "AI Foundations"
+      },
+      {
+        "id": "CAREERROLE_MACHINE_LEARNING_ENGINEER",
+        "label": "CareerRole",
+        "name": "Machine Learning Engineer"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "SPECIALIZES_IN",
+        "id": "6917560913478287492",
+        "source": "Intelligent Systems",
+        "target": "AI Foundations"
+      },
+      {
+        "type": "LEADS_TO",
+        "id": "1152932499723124868",
+        "source": "AI Foundations",
+        "target": "Machine Learning Engineer"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_038",
+    "question": "What career role is connected to the Natural Language Processing track in Intelligent Systems?",
+    "expected_answer": "Intelligent Systems specializes in Natural Language Processing, and Natural Language Processing leads to or aligns with NLP Engineer.",
+    "category": "Career",
+    "difficulty": "Medium",
+    "source_nodes": [
+      {
+        "id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+        "label": "Program",
+        "name": "Intelligent Systems"
+      },
+      {
+        "id": "TRACK_NATURAL_LANGUAGE_PROCESSING",
+        "label": "Track",
+        "name": "Natural Language Processing"
+      },
+      {
+        "id": "CAREERROLE_NLP_ENGINEER",
+        "label": "CareerRole",
+        "name": "NLP Engineer"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "SPECIALIZES_IN",
+        "id": "6917560913478287493",
+        "source": "Intelligent Systems",
+        "target": "Natural Language Processing"
+      },
+      {
+        "type": "LEADS_TO",
+        "id": "1152932499723124869",
+        "source": "Natural Language Processing",
+        "target": "NLP Engineer"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_039",
+    "question": "What career role is connected to the Cognitive Computing track in Intelligent Systems?",
+    "expected_answer": "Intelligent Systems specializes in Cognitive Computing, and Cognitive Computing leads to or aligns with Cognitive AI Engineer.",
+    "category": "Career",
+    "difficulty": "Medium",
+    "source_nodes": [
+      {
+        "id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+        "label": "Program",
+        "name": "Intelligent Systems"
+      },
+      {
+        "id": "TRACK_COGNITIVE_COMPUTING",
+        "label": "Track",
+        "name": "Cognitive Computing"
+      },
+      {
+        "id": "CAREERROLE_COGNITIVE_AI_ENGINEER",
+        "label": "CareerRole",
+        "name": "Cognitive AI Engineer"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "SPECIALIZES_IN",
+        "id": "6917560913478287494",
+        "source": "Intelligent Systems",
+        "target": "Cognitive Computing"
+      },
+      {
+        "type": "LEADS_TO",
+        "id": "1152932499723124870",
+        "source": "Cognitive Computing",
+        "target": "Cognitive AI Engineer"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_040",
+    "question": "What career role is connected to the Data Science track in Data Science?",
+    "expected_answer": "Data Science specializes in Data Science, and Data Science leads to or aligns with Data Scientist.",
+    "category": "Career",
+    "difficulty": "Medium",
+    "source_nodes": [
+      {
+        "id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_DATA_SCIENCE",
+        "label": "Program",
+        "name": "Data Science"
+      },
+      {
+        "id": "TRACK_DATA_SCIENCE",
+        "label": "Track",
+        "name": "Data Science"
+      },
+      {
+        "id": "CAREERROLE_DATA_SCIENTIST",
+        "label": "CareerRole",
+        "name": "Data Scientist"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "SPECIALIZES_IN",
+        "id": "6917560913478287495",
+        "source": "Data Science",
+        "target": "Data Science"
+      },
+      {
+        "type": "CAREER_ALIGNMENT",
+        "id": "1152956688978935943",
+        "source": "Data Science",
+        "target": "Data Scientist"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_041",
+    "question": "Which component is inside the Robotics Lab facility at College of Artificial Intelligence?",
+    "expected_answer": "Robotics Lab at College of Artificial Intelligence contains Dobot Magician.",
+    "category": "Facilities",
+    "difficulty": "Medium",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "FACILITY_EL_ALAMEIN_ROBOTICS_LAB",
+        "label": "Facility",
+        "name": "Robotics Lab"
+      },
+      {
+        "id": "COMPONENT_ROBOTICS_DOBOT_MAGICIAN",
+        "label": "FacilityComponent",
+        "name": "Dobot Magician"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_FACILITY",
+        "id": "1152924803141730305",
+        "source": "College of Artificial Intelligence",
+        "target": "Robotics Lab"
+      },
+      {
+        "type": "CONTAINS_COMPONENT",
+        "id": "6917541122268987458",
+        "source": "Robotics Lab",
+        "target": "Dobot Magician"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_042",
+    "question": "How is CAI Governance connected to College of Artificial Intelligence governance?",
+    "expected_answer": "College of Artificial Intelligence is connected to CAI Governance through HAS_GOVERNANCE_BODY, and CAI Governance is also connected through HEAD_OF with Ahmed Mohamed Mansour Khames Elshaer.",
+    "category": "Governance",
+    "difficulty": "Medium",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "UNIT_CAI_EL_ALAMEIN_GOVERNANCE",
+        "label": "GovernanceUnit",
+        "name": "CAI Governance"
+      },
+      {
+        "id": "104",
+        "label": "Person",
+        "name": "Ahmed Mohamed Mansour Khames Elshaer"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_GOVERNANCE_BODY",
+        "id": "6917553216896893029",
+        "source": "College of Artificial Intelligence",
+        "target": "CAI Governance"
+      },
+      {
+        "type": "HEAD_OF",
+        "id": "1152940196304519272",
+        "source": "Ahmed Mohamed Mansour Khames Elshaer",
+        "target": "CAI Governance"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_043",
+    "question": "How is Program Governance connected to College of Artificial Intelligence governance?",
+    "expected_answer": "College of Artificial Intelligence is connected to Program Governance through HAS_GOVERNANCE_BODY, and Program Governance is also connected through MANAGES with Intelligent Systems.",
+    "category": "Governance",
+    "difficulty": "Medium",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "UNIT_CAI_EL_ALAMEIN_PROGRAM_GOVERNANCE",
+        "label": "GovernanceUnit",
+        "name": "Program Governance"
+      },
+      {
+        "id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+        "label": "Program",
+        "name": "Intelligent Systems"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_GOVERNANCE_BODY",
+        "id": "6917553216896893058",
+        "source": "College of Artificial Intelligence",
+        "target": "Program Governance"
+      },
+      {
+        "type": "MANAGES",
+        "id": "1155202991234482306",
+        "source": "Program Governance",
+        "target": "Intelligent Systems"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_044",
+    "question": "How is Quality Unit connected to College of Artificial Intelligence governance?",
+    "expected_answer": "College of Artificial Intelligence is connected to Quality Unit through HAS_UNIT, and Quality Unit is also connected through HEAD_OF with Hany Hanafy Mahmoud Said.",
+    "category": "Governance",
+    "difficulty": "Medium",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "UNIT_CAI_EL_ALAMEIN_QUALITY",
+        "label": "QualityUnit",
+        "name": "Quality Unit"
+      },
+      {
+        "id": "PROF_HANY_HANAFY_MAHMOUD_SAID",
+        "label": "Professor",
+        "name": "Hany Hanafy Mahmoud Said"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_UNIT",
+        "id": "6917554316408520832",
+        "source": "College of Artificial Intelligence",
+        "target": "Quality Unit"
+      },
+      {
+        "type": "HEAD_OF",
+        "id": "6919799519152439424",
+        "source": "Hany Hanafy Mahmoud Said",
+        "target": "Quality Unit"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_045",
+    "question": "How is Artificial Intelligence Department connected to College of Artificial Intelligence governance?",
+    "expected_answer": "College of Artificial Intelligence is connected to Artificial Intelligence Department through HAS_DEPARTMENT, and Artificial Intelligence Department is also connected through HEAD_OF with Ahmed Mohamed Mansour Khames Elshaer.",
+    "category": "Governance",
+    "difficulty": "Medium",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "DEPT_CAI_EL_ALAMEIN_ARTIFICIAL_INTELLIGENCE",
+        "label": "Department",
+        "name": "Artificial Intelligence Department"
+      },
+      {
+        "id": "104",
+        "label": "Person",
+        "name": "Ahmed Mohamed Mansour Khames Elshaer"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_DEPARTMENT",
+        "id": "6917555415920148609",
+        "source": "College of Artificial Intelligence",
+        "target": "Artificial Intelligence Department"
+      },
+      {
+        "type": "HEAD_OF",
+        "id": "6917547719338754177",
+        "source": "Ahmed Mohamed Mansour Khames Elshaer",
+        "target": "Artificial Intelligence Department"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_046",
+    "question": "Which track is associated with a course taught by Osama Badawy?",
+    "expected_answer": "Osama Badawy teaches Data Mining, and Data Mining is part of the Data Science track.",
+    "category": "Faculty",
+    "difficulty": "Medium",
+    "source_nodes": [
+      {
+        "id": "PROF_OSAMA_BADAWY",
+        "label": "Professor",
+        "name": "Osama Badawy"
+      },
+      {
+        "id": "COURSE_DS313",
+        "label": "Course",
+        "name": "Data Mining"
+      },
+      {
+        "id": "TRACK_DATA_SCIENCE",
+        "label": "Track",
+        "name": "Data Science"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "TEACHES",
+        "id": "1159692297210691659",
+        "source": "Osama Badawy",
+        "target": "Data Mining"
+      },
+      {
+        "type": "PART_OF_TRACK",
+        "id": "6922065612617285767",
+        "source": "Data Mining",
+        "target": "Data Science"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_047",
+    "question": "Which track is associated with a course taught by Eman Elakabawy?",
+    "expected_answer": "Eman Elakabawy teaches Statistics for Data Science, and Statistics for Data Science is part of the Data Science track.",
+    "category": "Faculty",
+    "difficulty": "Medium",
+    "source_nodes": [
+      {
+        "id": "PROF_EMAN_ELAKABAWY",
+        "label": "Professor",
+        "name": "Eman Elakabawy"
+      },
+      {
+        "id": "COURSE_STATISTICS_FOR_DATA_SCIENCE",
+        "label": "Course",
+        "name": "Statistics for Data Science"
+      },
+      {
+        "id": "TRACK_DATA_SCIENCE",
+        "label": "Track",
+        "name": "Data Science"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "TEACHES",
+        "id": "1152936897769635923",
+        "source": "Eman Elakabawy",
+        "target": "Statistics for Data Science"
+      },
+      {
+        "type": "PART_OF_TRACK",
+        "id": "6919813812803600519",
+        "source": "Statistics for Data Science",
+        "target": "Data Science"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_048",
+    "question": "Which track is associated with a course taught by Mohamed Talaat?",
+    "expected_answer": "Mohamed Talaat teaches Ethics & Governance of AI, and Ethics & Governance of AI is part of the Artificial Intelligence track.",
+    "category": "Faculty",
+    "difficulty": "Medium",
+    "source_nodes": [
+      {
+        "id": "PROF_MOHAMED_TALAAT",
+        "label": "Professor",
+        "name": "Mohamed Talaat"
+      },
+      {
+        "id": "COURSE_ETHICS_AND_GOVERNANCE_OF_AI",
+        "label": "Course",
+        "name": "Ethics & Governance of AI"
+      },
+      {
+        "id": "TRACK_ARTIFICIAL_INTELLIGENCE_REFERENCE",
+        "label": "Track",
+        "name": "Artificial Intelligence"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "TEACHES",
+        "id": "1152936897769635924",
+        "source": "Mohamed Talaat",
+        "target": "Ethics & Governance of AI"
+      },
+      {
+        "type": "PART_OF_TRACK",
+        "id": "6917562012989915267",
+        "source": "Ethics & Governance of AI",
+        "target": "Artificial Intelligence"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_049",
+    "question": "Which track is associated with a course taught by Somaya Ahmed?",
+    "expected_answer": "Somaya Ahmed teaches Computer Vision, and Computer Vision is part of the AI Foundations track.",
+    "category": "Faculty",
+    "difficulty": "Medium",
+    "source_nodes": [
+      {
+        "id": "PROF_SOMAYA_AHMED",
+        "label": "Professor",
+        "name": "Somaya Ahmed"
+      },
+      {
+        "id": "COURSE_COMPUTER_VISION",
+        "label": "Course",
+        "name": "Computer Vision"
+      },
+      {
+        "id": "TRACK_AI_FOUNDATIONS",
+        "label": "Track",
+        "name": "AI Foundations"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "TEACHES",
+        "id": "1152936897769635925",
+        "source": "Somaya Ahmed",
+        "target": "Computer Vision"
+      },
+      {
+        "type": "PART_OF_TRACK",
+        "id": "6928821012058341508",
+        "source": "Computer Vision",
+        "target": "AI Foundations"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_050",
+    "question": "Which track is associated with a course taught by Hany Hanafy Mahmoud Said?",
+    "expected_answer": "Hany Hanafy Mahmoud Said teaches Natural Language Processing, and Natural Language Processing is part of the Natural Language Processing track.",
+    "category": "Faculty",
+    "difficulty": "Medium",
+    "source_nodes": [
+      {
+        "id": "PROF_HANY_HANAFY_MAHMOUD_SAID",
+        "label": "Professor",
+        "name": "Hany Hanafy Mahmoud Said"
+      },
+      {
+        "id": "COURSE_NATURAL_LANGUAGE_PROCESSING",
+        "label": "Course",
+        "name": "Natural Language Processing"
+      },
+      {
+        "id": "TRACK_NATURAL_LANGUAGE_PROCESSING",
+        "label": "Track",
+        "name": "Natural Language Processing"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "TEACHES",
+        "id": "1152936897769635933",
+        "source": "Hany Hanafy Mahmoud Said",
+        "target": "Natural Language Processing"
+      },
+      {
+        "type": "PART_OF_TRACK",
+        "id": "6917562012989915269",
+        "source": "Natural Language Processing",
+        "target": "Natural Language Processing"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_051",
+    "question": "Which career role is aligned with a course in Intelligent Systems, and what is the course?",
+    "expected_answer": "Intelligent Systems includes Deep Learning; Deep Learning aligns with the Machine Learning Engineer career role.",
+    "category": "Career",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+        "label": "Program",
+        "name": "Intelligent Systems"
+      },
+      {
+        "id": "COURSE_IN311",
+        "label": "Course",
+        "name": "Deep Learning"
+      },
+      {
+        "id": "CAREERROLE_MACHINE_LEARNING_ENGINEER",
+        "label": "CareerRole",
+        "name": "Machine Learning Engineer"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_COURSE",
+        "id": "6917538923245731856",
+        "source": "Intelligent Systems",
+        "target": "Deep Learning"
+      },
+      {
+        "type": "CAREER_ALIGNMENT",
+        "id": "1152956688978935824",
+        "source": "Deep Learning",
+        "target": "Machine Learning Engineer"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_052",
+    "question": "Which career role is aligned with a course in Data Science, and what is the course?",
+    "expected_answer": "Data Science includes Data Mining; Data Mining aligns with the Data Scientist career role.",
+    "category": "Career",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_DATA_SCIENCE",
+        "label": "Program",
+        "name": "Data Science"
+      },
+      {
+        "id": "COURSE_DS313",
+        "label": "Course",
+        "name": "Data Mining"
+      },
+      {
+        "id": "CAREERROLE_DATA_SCIENTIST",
+        "label": "CareerRole",
+        "name": "Data Scientist"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_COURSE",
+        "id": "6917538923245731857",
+        "source": "Data Science",
+        "target": "Data Mining"
+      },
+      {
+        "type": "CAREER_ALIGNMENT",
+        "id": "1152956688978935825",
+        "source": "Data Mining",
+        "target": "Data Scientist"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_053",
+    "question": "Which career role is aligned with a course in Robotics, and what is the course?",
+    "expected_answer": "Robotics includes Cognitive Computing; Cognitive Computing aligns with the Cognitive AI Engineer career role.",
+    "category": "Career",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "SPEC_EL_ALAMEIN_ROBOTICS",
+        "label": "Specialization",
+        "name": "Robotics"
+      },
+      {
+        "id": "COURSE_COGNITIVE_COMPUTING",
+        "label": "Course",
+        "name": "Cognitive Computing"
+      },
+      {
+        "id": "CAREERROLE_COGNITIVE_AI_ENGINEER",
+        "label": "CareerRole",
+        "name": "Cognitive AI Engineer"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_COURSE",
+        "id": "1157434999838867469",
+        "source": "Robotics",
+        "target": "Cognitive Computing"
+      },
+      {
+        "type": "CAREER_ALIGNMENT",
+        "id": "6917564212013170826",
+        "source": "Cognitive Computing",
+        "target": "Cognitive AI Engineer"
+      }
+    ]
+  },
+  {
+    "question": "Which policy and grading system are connected to College of Artificial Intelligence?",
+    "expected_answer": "College of Artificial Intelligence follows Course Passing Criteria and uses AAST Grading System (Pre-2023).",
+    "category": "Policies",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "POLICY_AAST_PASS_REQUIREMENTS",
+        "label": "GradingPolicy",
+        "name": "Course Passing Criteria"
+      },
+      {
+        "id": "GRADESYS_AAST_PRE_2023",
+        "label": "GradingSystem",
+        "name": "AAST Grading System (Pre-2023)"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "FOLLOWS_POLICY",
+        "id": "6917542221780615240",
+        "source": "College of Artificial Intelligence",
+        "target": "Course Passing Criteria"
+      },
+      {
+        "type": "USES_GRADING_SYSTEM",
+        "id": "6917543321292243017",
+        "source": "College of Artificial Intelligence",
+        "target": "AAST Grading System (Pre-2023)"
+      }
+    ],
+    "id": "KG_EXP_054"
+  },
+  {
+    "question": "Who is connected to CAI Governance in College of Artificial Intelligence's governance graph?",
+    "expected_answer": "College of Artificial Intelligence is connected to CAI Governance through HAS_GOVERNANCE_BODY; Ahmed Mohamed Mansour Khames Elshaer is connected to CAI Governance through HEAD_OF.",
+    "category": "Governance",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "UNIT_CAI_EL_ALAMEIN_GOVERNANCE",
+        "label": "GovernanceUnit",
+        "name": "CAI Governance"
+      },
+      {
+        "id": "104",
+        "label": "Person",
+        "name": "Ahmed Mohamed Mansour Khames Elshaer"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_GOVERNANCE_BODY",
+        "id": "6917553216896893029",
+        "source": "College of Artificial Intelligence",
+        "target": "CAI Governance"
+      },
+      {
+        "type": "HEAD_OF",
+        "id": "1152940196304519272",
+        "source": "Ahmed Mohamed Mansour Khames Elshaer",
+        "target": "CAI Governance"
+      }
+    ],
+    "id": "KG_EXP_055"
+  },
+  {
+    "id": "KG_EXP_056",
+    "question": "Starting from Intelligent Systems, which career role can be reached through Fundamentals of AI and the AI Foundations track?",
+    "expected_answer": "Intelligent Systems includes Fundamentals of AI; Fundamentals of AI is part of AI Foundations; AI Foundations leads to or aligns with Machine Learning Engineer.",
+    "category": "Multi-Hop Career",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+        "label": "Program",
+        "name": "Intelligent Systems"
+      },
+      {
+        "id": "COURSE_FUNDAMENTALS_OF_AI",
+        "label": "Course",
+        "name": "Fundamentals of AI"
+      },
+      {
+        "id": "TRACK_AI_FOUNDATIONS",
+        "label": "Track",
+        "name": "AI Foundations"
+      },
+      {
+        "id": "CAREERROLE_MACHINE_LEARNING_ENGINEER",
+        "label": "CareerRole",
+        "name": "Machine Learning Engineer"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_COURSE",
+        "id": "6917538923245731858",
+        "source": "Intelligent Systems",
+        "target": "Fundamentals of AI"
+      },
+      {
+        "type": "PART_OF_TRACK",
+        "id": "6917562012989915268",
+        "source": "Fundamentals of AI",
+        "target": "AI Foundations"
+      },
+      {
+        "type": "LEADS_TO",
+        "id": "1152932499723124868",
+        "source": "AI Foundations",
+        "target": "Machine Learning Engineer"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_057",
+    "question": "Starting from Intelligent Systems, which career role can be reached through Linear Algebra and the AI Foundations track?",
+    "expected_answer": "Intelligent Systems includes Linear Algebra; Linear Algebra is part of AI Foundations; AI Foundations leads to or aligns with Machine Learning Engineer.",
+    "category": "Multi-Hop Career",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+        "label": "Program",
+        "name": "Intelligent Systems"
+      },
+      {
+        "id": "COURSE_LINEAR_ALGEBRA",
+        "label": "Course",
+        "name": "Linear Algebra"
+      },
+      {
+        "id": "TRACK_AI_FOUNDATIONS",
+        "label": "Track",
+        "name": "AI Foundations"
+      },
+      {
+        "id": "CAREERROLE_MACHINE_LEARNING_ENGINEER",
+        "label": "CareerRole",
+        "name": "Machine Learning Engineer"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_COURSE",
+        "id": "6917538923245731859",
+        "source": "Intelligent Systems",
+        "target": "Linear Algebra"
+      },
+      {
+        "type": "PART_OF_TRACK",
+        "id": "6919813812803600516",
+        "source": "Linear Algebra",
+        "target": "AI Foundations"
+      },
+      {
+        "type": "LEADS_TO",
+        "id": "1152932499723124868",
+        "source": "AI Foundations",
+        "target": "Machine Learning Engineer"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_058",
+    "question": "Starting from Intelligent Systems, which career role can be reached through Probability & Statistics and the AI Foundations track?",
+    "expected_answer": "Intelligent Systems includes Probability & Statistics; Probability & Statistics is part of AI Foundations; AI Foundations leads to or aligns with Machine Learning Engineer.",
+    "category": "Multi-Hop Career",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+        "label": "Program",
+        "name": "Intelligent Systems"
+      },
+      {
+        "id": "COURSE_PROBABILITY_AND_STATISTICS",
+        "label": "Course",
+        "name": "Probability & Statistics"
+      },
+      {
+        "id": "TRACK_AI_FOUNDATIONS",
+        "label": "Track",
+        "name": "AI Foundations"
+      },
+      {
+        "id": "CAREERROLE_MACHINE_LEARNING_ENGINEER",
+        "label": "CareerRole",
+        "name": "Machine Learning Engineer"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_COURSE",
+        "id": "6917538923245731868",
+        "source": "Intelligent Systems",
+        "target": "Probability & Statistics"
+      },
+      {
+        "type": "PART_OF_TRACK",
+        "id": "6922065612617285764",
+        "source": "Probability & Statistics",
+        "target": "AI Foundations"
+      },
+      {
+        "type": "LEADS_TO",
+        "id": "1152932499723124868",
+        "source": "AI Foundations",
+        "target": "Machine Learning Engineer"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_059",
+    "question": "Starting from Intelligent Systems, which career role can be reached through Computer Vision and the AI Foundations track?",
+    "expected_answer": "Intelligent Systems includes Computer Vision; Computer Vision is part of AI Foundations; AI Foundations leads to or aligns with Machine Learning Engineer.",
+    "category": "Multi-Hop Career",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+        "label": "Program",
+        "name": "Intelligent Systems"
+      },
+      {
+        "id": "COURSE_COMPUTER_VISION",
+        "label": "Course",
+        "name": "Computer Vision"
+      },
+      {
+        "id": "TRACK_AI_FOUNDATIONS",
+        "label": "Track",
+        "name": "AI Foundations"
+      },
+      {
+        "id": "CAREERROLE_MACHINE_LEARNING_ENGINEER",
+        "label": "CareerRole",
+        "name": "Machine Learning Engineer"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_COURSE",
+        "id": "6917538923245731871",
+        "source": "Intelligent Systems",
+        "target": "Computer Vision"
+      },
+      {
+        "type": "PART_OF_TRACK",
+        "id": "6928821012058341508",
+        "source": "Computer Vision",
+        "target": "AI Foundations"
+      },
+      {
+        "type": "LEADS_TO",
+        "id": "1152932499723124868",
+        "source": "AI Foundations",
+        "target": "Machine Learning Engineer"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_060",
+    "question": "Starting from Intelligent Systems, which career role can be reached through Natural Language Processing and the Natural Language Processing track?",
+    "expected_answer": "Intelligent Systems includes Natural Language Processing; Natural Language Processing is part of Natural Language Processing; Natural Language Processing leads to or aligns with NLP Engineer.",
+    "category": "Multi-Hop Career",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+        "label": "Program",
+        "name": "Intelligent Systems"
+      },
+      {
+        "id": "COURSE_NATURAL_LANGUAGE_PROCESSING",
+        "label": "Course",
+        "name": "Natural Language Processing"
+      },
+      {
+        "id": "TRACK_NATURAL_LANGUAGE_PROCESSING",
+        "label": "Track",
+        "name": "Natural Language Processing"
+      },
+      {
+        "id": "CAREERROLE_NLP_ENGINEER",
+        "label": "CareerRole",
+        "name": "NLP Engineer"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_COURSE",
+        "id": "6917538923245731872",
+        "source": "Intelligent Systems",
+        "target": "Natural Language Processing"
+      },
+      {
+        "type": "PART_OF_TRACK",
+        "id": "6917562012989915269",
+        "source": "Natural Language Processing",
+        "target": "Natural Language Processing"
+      },
+      {
+        "type": "LEADS_TO",
+        "id": "1152932499723124869",
+        "source": "Natural Language Processing",
+        "target": "NLP Engineer"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_061",
+    "question": "Starting from Data Science, which career role can be reached through Data Mining and the Data Science track?",
+    "expected_answer": "Data Science includes Data Mining; Data Mining is part of Data Science; Data Science leads to or aligns with Data Scientist.",
+    "category": "Multi-Hop Career",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_DATA_SCIENCE",
+        "label": "Program",
+        "name": "Data Science"
+      },
+      {
+        "id": "COURSE_DS313",
+        "label": "Course",
+        "name": "Data Mining"
+      },
+      {
+        "id": "TRACK_DATA_SCIENCE",
+        "label": "Track",
+        "name": "Data Science"
+      },
+      {
+        "id": "CAREERROLE_DATA_SCIENTIST",
+        "label": "CareerRole",
+        "name": "Data Scientist"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_COURSE",
+        "id": "6917538923245731857",
+        "source": "Data Science",
+        "target": "Data Mining"
+      },
+      {
+        "type": "PART_OF_TRACK",
+        "id": "6922065612617285767",
+        "source": "Data Mining",
+        "target": "Data Science"
+      },
+      {
+        "type": "CAREER_ALIGNMENT",
+        "id": "1152956688978935943",
+        "source": "Data Science",
+        "target": "Data Scientist"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_062",
+    "question": "Starting from Data Science, which career role can be reached through Fundamentals of Data Science and the Data Science track?",
+    "expected_answer": "Data Science includes Fundamentals of Data Science; Fundamentals of Data Science is part of Data Science; Data Science leads to or aligns with Data Scientist.",
+    "category": "Multi-Hop Career",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_DATA_SCIENCE",
+        "label": "Program",
+        "name": "Data Science"
+      },
+      {
+        "id": "COURSE_FUNDAMENTALS_OF_DATA_SCIENCE",
+        "label": "Course",
+        "name": "Fundamentals of Data Science"
+      },
+      {
+        "id": "TRACK_DATA_SCIENCE",
+        "label": "Track",
+        "name": "Data Science"
+      },
+      {
+        "id": "CAREERROLE_DATA_SCIENTIST",
+        "label": "CareerRole",
+        "name": "Data Scientist"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_COURSE",
+        "id": "1155183200025182218",
+        "source": "Data Science",
+        "target": "Fundamentals of Data Science"
+      },
+      {
+        "type": "PART_OF_TRACK",
+        "id": "6917562012989915271",
+        "source": "Fundamentals of Data Science",
+        "target": "Data Science"
+      },
+      {
+        "type": "CAREER_ALIGNMENT",
+        "id": "1152956688978935943",
+        "source": "Data Science",
+        "target": "Data Scientist"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_063",
+    "question": "Starting from Data Science, which career role can be reached through Statistics for Data Science and the Data Science track?",
+    "expected_answer": "Data Science includes Statistics for Data Science; Statistics for Data Science is part of Data Science; Data Science leads to or aligns with Data Scientist.",
+    "category": "Multi-Hop Career",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_DATA_SCIENCE",
+        "label": "Program",
+        "name": "Data Science"
+      },
+      {
+        "id": "COURSE_STATISTICS_FOR_DATA_SCIENCE",
+        "label": "Course",
+        "name": "Statistics for Data Science"
+      },
+      {
+        "id": "TRACK_DATA_SCIENCE",
+        "label": "Track",
+        "name": "Data Science"
+      },
+      {
+        "id": "CAREERROLE_DATA_SCIENTIST",
+        "label": "CareerRole",
+        "name": "Data Scientist"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_COURSE",
+        "id": "1157434999838867466",
+        "source": "Data Science",
+        "target": "Statistics for Data Science"
+      },
+      {
+        "type": "PART_OF_TRACK",
+        "id": "6919813812803600519",
+        "source": "Statistics for Data Science",
+        "target": "Data Science"
+      },
+      {
+        "type": "CAREER_ALIGNMENT",
+        "id": "1152956688978935943",
+        "source": "Data Science",
+        "target": "Data Scientist"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_064",
+    "question": "Starting from Data Science, which career role can be reached through Big Data Analytics and the Data Science track?",
+    "expected_answer": "Data Science includes Big Data Analytics; Big Data Analytics is part of Data Science; Data Science leads to or aligns with Data Scientist.",
+    "category": "Multi-Hop Career",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_DATA_SCIENCE",
+        "label": "Program",
+        "name": "Data Science"
+      },
+      {
+        "id": "COURSE_BIG_DATA_ANALYTICS",
+        "label": "Course",
+        "name": "Big Data Analytics"
+      },
+      {
+        "id": "TRACK_DATA_SCIENCE",
+        "label": "Track",
+        "name": "Data Science"
+      },
+      {
+        "id": "CAREERROLE_DATA_SCIENTIST",
+        "label": "CareerRole",
+        "name": "Data Scientist"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_COURSE",
+        "id": "1164190399279923210",
+        "source": "Data Science",
+        "target": "Big Data Analytics"
+      },
+      {
+        "type": "PART_OF_TRACK",
+        "id": "6924317412430971015",
+        "source": "Big Data Analytics",
+        "target": "Data Science"
+      },
+      {
+        "type": "CAREER_ALIGNMENT",
+        "id": "1152956688978935943",
+        "source": "Data Science",
+        "target": "Data Scientist"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_065",
+    "question": "Starting from Data Science, which career role can be reached through Information Retrieval & Search Engines and the Natural Language Processing track?",
+    "expected_answer": "Data Science includes Information Retrieval & Search Engines; Information Retrieval & Search Engines is part of Natural Language Processing; Natural Language Processing leads to or aligns with NLP Engineer.",
+    "category": "Multi-Hop Career",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_DATA_SCIENCE",
+        "label": "Program",
+        "name": "Data Science"
+      },
+      {
+        "id": "COURSE_INFORMATION_RETRIEVAL_AND_SEARCH_ENGINES",
+        "label": "Course",
+        "name": "Information Retrieval & Search Engines"
+      },
+      {
+        "id": "TRACK_NATURAL_LANGUAGE_PROCESSING",
+        "label": "Track",
+        "name": "Natural Language Processing"
+      },
+      {
+        "id": "CAREERROLE_NLP_ENGINEER",
+        "label": "CareerRole",
+        "name": "NLP Engineer"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_COURSE",
+        "id": "1166442199093608458",
+        "source": "Data Science",
+        "target": "Information Retrieval & Search Engines"
+      },
+      {
+        "type": "PART_OF_TRACK",
+        "id": "6919813812803600517",
+        "source": "Information Retrieval & Search Engines",
+        "target": "Natural Language Processing"
+      },
+      {
+        "type": "LEADS_TO",
+        "id": "1152932499723124869",
+        "source": "Natural Language Processing",
+        "target": "NLP Engineer"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_066",
+    "question": "Starting from Data Science, which career role can be reached through Ethics & Governance of AI and the Artificial Intelligence track?",
+    "expected_answer": "Data Science includes Ethics & Governance of AI; Ethics & Governance of AI is part of Artificial Intelligence; Artificial Intelligence leads to or aligns with AI Engineer.",
+    "category": "Multi-Hop Career",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_DATA_SCIENCE",
+        "label": "Program",
+        "name": "Data Science"
+      },
+      {
+        "id": "COURSE_ETHICS_AND_GOVERNANCE_OF_AI",
+        "label": "Course",
+        "name": "Ethics & Governance of AI"
+      },
+      {
+        "id": "TRACK_ARTIFICIAL_INTELLIGENCE_REFERENCE",
+        "label": "Track",
+        "name": "Artificial Intelligence"
+      },
+      {
+        "id": "CAREERROLE_AI_ENGINEER",
+        "label": "CareerRole",
+        "name": "AI Engineer"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_COURSE",
+        "id": "1170945798720978954",
+        "source": "Data Science",
+        "target": "Ethics & Governance of AI"
+      },
+      {
+        "type": "PART_OF_TRACK",
+        "id": "6917562012989915267",
+        "source": "Ethics & Governance of AI",
+        "target": "Artificial Intelligence"
+      },
+      {
+        "type": "LEADS_TO",
+        "id": "1152932499723124867",
+        "source": "Artificial Intelligence",
+        "target": "AI Engineer"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_067",
+    "question": "Starting from Robotics, which career role can be reached through Cognitive Computing and the Cognitive Computing track?",
+    "expected_answer": "Robotics includes Cognitive Computing; Cognitive Computing is part of Cognitive Computing; Cognitive Computing leads to or aligns with Cognitive AI Engineer.",
+    "category": "Multi-Hop Career",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "SPEC_EL_ALAMEIN_ROBOTICS",
+        "label": "Specialization",
+        "name": "Robotics"
+      },
+      {
+        "id": "COURSE_COGNITIVE_COMPUTING",
+        "label": "Course",
+        "name": "Cognitive Computing"
+      },
+      {
+        "id": "TRACK_COGNITIVE_COMPUTING",
+        "label": "Track",
+        "name": "Cognitive Computing"
+      },
+      {
+        "id": "CAREERROLE_COGNITIVE_AI_ENGINEER",
+        "label": "CareerRole",
+        "name": "Cognitive AI Engineer"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_COURSE",
+        "id": "1157434999838867469",
+        "source": "Robotics",
+        "target": "Cognitive Computing"
+      },
+      {
+        "type": "PART_OF_TRACK",
+        "id": "6917562012989915270",
+        "source": "Cognitive Computing",
+        "target": "Cognitive Computing"
+      },
+      {
+        "type": "LEADS_TO",
+        "id": "1152932499723124870",
+        "source": "Cognitive Computing",
+        "target": "Cognitive AI Engineer"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_068",
+    "question": "Which track is reached from Intelligent Systems through the Robotics specialization and Cognitive Computing?",
+    "expected_answer": "Intelligent Systems has specialization Robotics; Robotics includes Cognitive Computing; Cognitive Computing is part of the Cognitive Computing track.",
+    "category": "Specializations",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+        "label": "Program",
+        "name": "Intelligent Systems"
+      },
+      {
+        "id": "SPEC_EL_ALAMEIN_ROBOTICS",
+        "label": "Specialization",
+        "name": "Robotics"
+      },
+      {
+        "id": "COURSE_COGNITIVE_COMPUTING",
+        "label": "Course",
+        "name": "Cognitive Computing"
+      },
+      {
+        "id": "TRACK_COGNITIVE_COMPUTING",
+        "label": "Track",
+        "name": "Cognitive Computing"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_SPECIALIZATION",
+        "id": "1155179901490298889",
+        "source": "Intelligent Systems",
+        "target": "Robotics"
+      },
+      {
+        "type": "HAS_COURSE",
+        "id": "1157434999838867469",
+        "source": "Robotics",
+        "target": "Cognitive Computing"
+      },
+      {
+        "type": "PART_OF_TRACK",
+        "id": "6917562012989915270",
+        "source": "Cognitive Computing",
+        "target": "Cognitive Computing"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_069",
+    "question": "What graph comparison exists between Intelligent Systems and Cybersecurity?",
+    "expected_answer": "Intelligent Systems compares with Cybersecurity.",
+    "category": "Comparison",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+        "label": "Program",
+        "name": "Intelligent Systems"
+      },
+      {
+        "id": "TRACK_CYBERSECURITY_REFERENCE",
+        "label": "Track",
+        "name": "Cybersecurity"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "COMPARES_WITH",
+        "id": "6917565311524798600",
+        "source": "Intelligent Systems",
+        "target": "Cybersecurity"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_070",
+    "question": "What graph comparison exists between Artificial Intelligence and Cybersecurity?",
+    "expected_answer": "Artificial Intelligence compares with Cybersecurity.",
+    "category": "Comparison",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "TRACK_ARTIFICIAL_INTELLIGENCE_REFERENCE",
+        "label": "Track",
+        "name": "Artificial Intelligence"
+      },
+      {
+        "id": "TRACK_CYBERSECURITY_REFERENCE",
+        "label": "Track",
+        "name": "Cybersecurity"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "COMPARES_WITH",
+        "id": "1152957788490563715",
+        "source": "Artificial Intelligence",
+        "target": "Cybersecurity"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_071",
+    "question": "For course planning, what should be taken before Data Mining?",
+    "expected_answer": "Data Mining is recommended after Statistics for Data Science.",
+    "category": "Course Planning",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "COURSE_DS313",
+        "label": "Course",
+        "name": "Data Mining"
+      },
+      {
+        "id": "COURSE_STATISTICS_FOR_DATA_SCIENCE",
+        "label": "Course",
+        "name": "Statistics for Data Science"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "RECOMMENDED_AFTER",
+        "id": "1152955589467308049",
+        "source": "Data Mining",
+        "target": "Statistics for Data Science"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_072",
+    "question": "For course planning, what should be taken before Computer Vision?",
+    "expected_answer": "Computer Vision is recommended after Machine Learning.",
+    "category": "Course Planning",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "COURSE_COMPUTER_VISION",
+        "label": "Course",
+        "name": "Computer Vision"
+      },
+      {
+        "id": "COURSE_IN221",
+        "label": "Course",
+        "name": "Machine Learning"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "RECOMMENDED_AFTER",
+        "id": "1152955589467308063",
+        "source": "Computer Vision",
+        "target": "Machine Learning"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_073",
+    "question": "For course planning, what should be taken before Natural Language Processing?",
+    "expected_answer": "Natural Language Processing is recommended after Machine Learning.",
+    "category": "Course Planning",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "COURSE_NATURAL_LANGUAGE_PROCESSING",
+        "label": "Course",
+        "name": "Natural Language Processing"
+      },
+      {
+        "id": "COURSE_IN221",
+        "label": "Course",
+        "name": "Machine Learning"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "RECOMMENDED_AFTER",
+        "id": "1152955589467308064",
+        "source": "Natural Language Processing",
+        "target": "Machine Learning"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_074",
+    "question": "For course planning, what should be taken before Cognitive Computing?",
+    "expected_answer": "Cognitive Computing is recommended after Natural Language Processing.",
+    "category": "Course Planning",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "COURSE_COGNITIVE_COMPUTING",
+        "label": "Course",
+        "name": "Cognitive Computing"
+      },
+      {
+        "id": "COURSE_NATURAL_LANGUAGE_PROCESSING",
+        "label": "Course",
+        "name": "Natural Language Processing"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "RECOMMENDED_AFTER",
+        "id": "6919814912315228192",
+        "source": "Cognitive Computing",
+        "target": "Natural Language Processing"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_075",
+    "question": "For course planning, what should be taken before Big Data Analytics?",
+    "expected_answer": "Big Data Analytics is recommended after Data Mining.",
+    "category": "Course Planning",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "COURSE_BIG_DATA_ANALYTICS",
+        "label": "Course",
+        "name": "Big Data Analytics"
+      },
+      {
+        "id": "COURSE_DS313",
+        "label": "Course",
+        "name": "Data Mining"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "RECOMMENDED_AFTER",
+        "id": "6919814912315228177",
+        "source": "Big Data Analytics",
+        "target": "Data Mining"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_076",
+    "question": "For course planning, what should be taken before Information Retrieval & Search Engines?",
+    "expected_answer": "Information Retrieval & Search Engines is recommended after Data Mining.",
+    "category": "Course Planning",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "COURSE_INFORMATION_RETRIEVAL_AND_SEARCH_ENGINES",
+        "label": "Course",
+        "name": "Information Retrieval & Search Engines"
+      },
+      {
+        "id": "COURSE_DS313",
+        "label": "Course",
+        "name": "Data Mining"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "RECOMMENDED_AFTER",
+        "id": "6922066712128913425",
+        "source": "Information Retrieval & Search Engines",
+        "target": "Data Mining"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_077",
+    "question": "What prerequisite or sequencing evidence exists for Deep Learning?",
+    "expected_answer": "Machine Learning is a prerequisite for Deep Learning. Also, Computer Vision is recommended after Machine Learning.",
+    "category": "Course Planning",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "COURSE_IN311",
+        "label": "Course",
+        "name": "Deep Learning"
+      },
+      {
+        "id": "COURSE_IN221",
+        "label": "Course",
+        "name": "Machine Learning"
+      },
+      {
+        "id": "COURSE_COMPUTER_VISION",
+        "label": "Course",
+        "name": "Computer Vision"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_PREREQUISITE",
+        "id": "6922041423361474575",
+        "source": "Deep Learning",
+        "target": "Machine Learning"
+      },
+      {
+        "type": "RECOMMENDED_AFTER",
+        "id": "1152955589467308063",
+        "source": "Computer Vision",
+        "target": "Machine Learning"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_078",
+    "question": "What prerequisite or sequencing evidence exists for Data Mining?",
+    "expected_answer": "Fundamentals of Data Science is a prerequisite for Data Mining. Also, Data Mining is recommended after Statistics for Data Science.",
+    "category": "Course Planning",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "COURSE_DS313",
+        "label": "Course",
+        "name": "Data Mining"
+      },
+      {
+        "id": "COURSE_FUNDAMENTALS_OF_DATA_SCIENCE",
+        "label": "Course",
+        "name": "Fundamentals of Data Science"
+      },
+      {
+        "id": "COURSE_STATISTICS_FOR_DATA_SCIENCE",
+        "label": "Course",
+        "name": "Statistics for Data Science"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_PREREQUISITE",
+        "id": "1152930300699869201",
+        "source": "Data Mining",
+        "target": "Fundamentals of Data Science"
+      },
+      {
+        "type": "RECOMMENDED_AFTER",
+        "id": "1152955589467308049",
+        "source": "Data Mining",
+        "target": "Statistics for Data Science"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_079",
+    "question": "Which college has both partner institution Autònoma University of Barcelona and facility Robotics Lab?",
+    "expected_answer": "College of Artificial Intelligence has partner institution Autònoma University of Barcelona and has the Robotics Lab facility.",
+    "category": "Partnerships",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "PARTNERINST_UAB",
+        "label": "PartnerInstitution",
+        "name": "Autònoma University of Barcelona"
+      },
+      {
+        "id": "FACILITY_EL_ALAMEIN_ROBOTICS_LAB",
+        "label": "Facility",
+        "name": "Robotics Lab"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_PARTNER_INSTITUTION",
+        "id": "1152925902653358081",
+        "source": "College of Artificial Intelligence",
+        "target": "Autònoma University of Barcelona"
+      },
+      {
+        "type": "HAS_FACILITY",
+        "id": "1152924803141730305",
+        "source": "College of Artificial Intelligence",
+        "target": "Robotics Lab"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_080",
+    "question": "Which college has both partner institution Autònoma University of Barcelona and facility Virtual Reality Lab?",
+    "expected_answer": "College of Artificial Intelligence has partner institution Autònoma University of Barcelona and has the Virtual Reality Lab facility.",
+    "category": "Partnerships",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "PARTNERINST_UAB",
+        "label": "PartnerInstitution",
+        "name": "Autònoma University of Barcelona"
+      },
+      {
+        "id": "FACILITY_EL_ALAMEIN_VIRTUAL_REALITY_LAB",
+        "label": "Facility",
+        "name": "Virtual Reality Lab"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_PARTNER_INSTITUTION",
+        "id": "1152925902653358081",
+        "source": "College of Artificial Intelligence",
+        "target": "Autònoma University of Barcelona"
+      },
+      {
+        "type": "HAS_FACILITY",
+        "id": "1155176602955415553",
+        "source": "College of Artificial Intelligence",
+        "target": "Virtual Reality Lab"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_081",
+    "question": "Which college has both partner institution Autònoma University of Barcelona and facility IoT Lab?",
+    "expected_answer": "College of Artificial Intelligence has partner institution Autònoma University of Barcelona and has the IoT Lab facility.",
+    "category": "Partnerships",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "PARTNERINST_UAB",
+        "label": "PartnerInstitution",
+        "name": "Autònoma University of Barcelona"
+      },
+      {
+        "id": "FACILITY_EL_ALAMEIN_IOT_LAB",
+        "label": "Facility",
+        "name": "IoT Lab"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_PARTNER_INSTITUTION",
+        "id": "1152925902653358081",
+        "source": "College of Artificial Intelligence",
+        "target": "Autònoma University of Barcelona"
+      },
+      {
+        "type": "HAS_FACILITY",
+        "id": "1157428402769100801",
+        "source": "College of Artificial Intelligence",
+        "target": "IoT Lab"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_082",
+    "question": "Which college has both partner institution Autònoma University of Barcelona and facility Basic Electronic Lab?",
+    "expected_answer": "College of Artificial Intelligence has partner institution Autònoma University of Barcelona and has the Basic Electronic Lab facility.",
+    "category": "Partnerships",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "PARTNERINST_UAB",
+        "label": "PartnerInstitution",
+        "name": "Autònoma University of Barcelona"
+      },
+      {
+        "id": "FACILITY_EL_ALAMEIN_BASIC_ELECTRONIC_LAB",
+        "label": "Facility",
+        "name": "Basic Electronic Lab"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_PARTNER_INSTITUTION",
+        "id": "1152925902653358081",
+        "source": "College of Artificial Intelligence",
+        "target": "Autònoma University of Barcelona"
+      },
+      {
+        "type": "HAS_FACILITY",
+        "id": "6917532326175965243",
+        "source": "College of Artificial Intelligence",
+        "target": "Basic Electronic Lab"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_083",
+    "question": "Which college has both partner institution Autònoma University of Barcelona and facility Physics Lab?",
+    "expected_answer": "College of Artificial Intelligence has partner institution Autònoma University of Barcelona and has the Physics Lab facility.",
+    "category": "Partnerships",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "PARTNERINST_UAB",
+        "label": "PartnerInstitution",
+        "name": "Autònoma University of Barcelona"
+      },
+      {
+        "id": "FACILITY_EL_ALAMEIN_PHYSICS_LAB",
+        "label": "Facility",
+        "name": "Physics Lab"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_PARTNER_INSTITUTION",
+        "id": "1152925902653358081",
+        "source": "College of Artificial Intelligence",
+        "target": "Autònoma University of Barcelona"
+      },
+      {
+        "type": "HAS_FACILITY",
+        "id": "6917532326175965244",
+        "source": "College of Artificial Intelligence",
+        "target": "Physics Lab"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_084",
+    "question": "Which college has both partner institution Autònoma University of Barcelona and facility General Purpose Computers Lab?",
+    "expected_answer": "College of Artificial Intelligence has partner institution Autònoma University of Barcelona and has the General Purpose Computers Lab facility.",
+    "category": "Partnerships",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "PARTNERINST_UAB",
+        "label": "PartnerInstitution",
+        "name": "Autònoma University of Barcelona"
+      },
+      {
+        "id": "FACILITY_EL_ALAMEIN_GENERAL_PURPOSE_COMPUTERS_LAB",
+        "label": "Facility",
+        "name": "General Purpose Computers Lab"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_PARTNER_INSTITUTION",
+        "id": "1152925902653358081",
+        "source": "College of Artificial Intelligence",
+        "target": "Autònoma University of Barcelona"
+      },
+      {
+        "type": "HAS_FACILITY",
+        "id": "6917532326175965245",
+        "source": "College of Artificial Intelligence",
+        "target": "General Purpose Computers Lab"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_085",
+    "question": "Which college has both partner institution Autònoma University of Barcelona and facility UV (Un-Manned Vehicle)?",
+    "expected_answer": "College of Artificial Intelligence has partner institution Autònoma University of Barcelona and has the UV (Un-Manned Vehicle) facility.",
+    "category": "Partnerships",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "PARTNERINST_UAB",
+        "label": "PartnerInstitution",
+        "name": "Autònoma University of Barcelona"
+      },
+      {
+        "id": "FACILITY_EL_ALAMEIN_UV_LAB",
+        "label": "Facility",
+        "name": "UV (Un-Manned Vehicle)"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_PARTNER_INSTITUTION",
+        "id": "1152925902653358081",
+        "source": "College of Artificial Intelligence",
+        "target": "Autònoma University of Barcelona"
+      },
+      {
+        "type": "HAS_FACILITY",
+        "id": "6917532326175965246",
+        "source": "College of Artificial Intelligence",
+        "target": "UV (Un-Manned Vehicle)"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_086",
+    "question": "Which college has both partner institution Autònoma University of Barcelona and facility Embedded Systems?",
+    "expected_answer": "College of Artificial Intelligence has partner institution Autònoma University of Barcelona and has the Embedded Systems facility.",
+    "category": "Partnerships",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "PARTNERINST_UAB",
+        "label": "PartnerInstitution",
+        "name": "Autònoma University of Barcelona"
+      },
+      {
+        "id": "FACILITY_EL_ALAMEIN_EMBEDDED_SYSTEMS_LAB",
+        "label": "Facility",
+        "name": "Embedded Systems"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_PARTNER_INSTITUTION",
+        "id": "1152925902653358081",
+        "source": "College of Artificial Intelligence",
+        "target": "Autònoma University of Barcelona"
+      },
+      {
+        "type": "HAS_FACILITY",
+        "id": "6917532326175965247",
+        "source": "College of Artificial Intelligence",
+        "target": "Embedded Systems"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_087",
+    "question": "Which college has both partner institution Autònoma University of Barcelona and facility Basic IoT (Internet of Things)?",
+    "expected_answer": "College of Artificial Intelligence has partner institution Autònoma University of Barcelona and has the Basic IoT (Internet of Things) facility.",
+    "category": "Partnerships",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "PARTNERINST_UAB",
+        "label": "PartnerInstitution",
+        "name": "Autònoma University of Barcelona"
+      },
+      {
+        "id": "FACILITY_EL_ALAMEIN_BASIC_IOT_LAB",
+        "label": "Facility",
+        "name": "Basic IoT (Internet of Things)"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_PARTNER_INSTITUTION",
+        "id": "1152925902653358081",
+        "source": "College of Artificial Intelligence",
+        "target": "Autònoma University of Barcelona"
+      },
+      {
+        "type": "HAS_FACILITY",
+        "id": "6917532326175965248",
+        "source": "College of Artificial Intelligence",
+        "target": "Basic IoT (Internet of Things)"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_088",
+    "question": "Which college has both partner institution Autònoma University of Barcelona and facility Workstations Lab?",
+    "expected_answer": "College of Artificial Intelligence has partner institution Autònoma University of Barcelona and has the Workstations Lab facility.",
+    "category": "Partnerships",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "PARTNERINST_UAB",
+        "label": "PartnerInstitution",
+        "name": "Autònoma University of Barcelona"
+      },
+      {
+        "id": "FACILITY_EL_ALAMEIN_WORKSTATIONS_LAB",
+        "label": "Facility",
+        "name": "Workstations Lab"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_PARTNER_INSTITUTION",
+        "id": "1152925902653358081",
+        "source": "College of Artificial Intelligence",
+        "target": "Autònoma University of Barcelona"
+      },
+      {
+        "type": "HAS_FACILITY",
+        "id": "6917532326175965249",
+        "source": "College of Artificial Intelligence",
+        "target": "Workstations Lab"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_089",
+    "question": "Which college has both partner institution University of Central Lancashire (UCLan) and facility Robotics Lab?",
+    "expected_answer": "College of Artificial Intelligence has partner institution University of Central Lancashire (UCLan) and has the Robotics Lab facility.",
+    "category": "Partnerships",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "PARTNERINST_UCLAN",
+        "label": "PartnerInstitution",
+        "name": "University of Central Lancashire (UCLan)"
+      },
+      {
+        "id": "FACILITY_EL_ALAMEIN_ROBOTICS_LAB",
+        "label": "Facility",
+        "name": "Robotics Lab"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_PARTNER_INSTITUTION",
+        "id": "1155177702467043329",
+        "source": "College of Artificial Intelligence",
+        "target": "University of Central Lancashire (UCLan)"
+      },
+      {
+        "type": "HAS_FACILITY",
+        "id": "1152924803141730305",
+        "source": "College of Artificial Intelligence",
+        "target": "Robotics Lab"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_090",
+    "question": "Which college has both partner institution University of Central Lancashire (UCLan) and facility Virtual Reality Lab?",
+    "expected_answer": "College of Artificial Intelligence has partner institution University of Central Lancashire (UCLan) and has the Virtual Reality Lab facility.",
+    "category": "Partnerships",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "PARTNERINST_UCLAN",
+        "label": "PartnerInstitution",
+        "name": "University of Central Lancashire (UCLan)"
+      },
+      {
+        "id": "FACILITY_EL_ALAMEIN_VIRTUAL_REALITY_LAB",
+        "label": "Facility",
+        "name": "Virtual Reality Lab"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_PARTNER_INSTITUTION",
+        "id": "1155177702467043329",
+        "source": "College of Artificial Intelligence",
+        "target": "University of Central Lancashire (UCLan)"
+      },
+      {
+        "type": "HAS_FACILITY",
+        "id": "1155176602955415553",
+        "source": "College of Artificial Intelligence",
+        "target": "Virtual Reality Lab"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_091",
+    "question": "Which college has both partner institution University of Central Lancashire (UCLan) and facility IoT Lab?",
+    "expected_answer": "College of Artificial Intelligence has partner institution University of Central Lancashire (UCLan) and has the IoT Lab facility.",
+    "category": "Partnerships",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "PARTNERINST_UCLAN",
+        "label": "PartnerInstitution",
+        "name": "University of Central Lancashire (UCLan)"
+      },
+      {
+        "id": "FACILITY_EL_ALAMEIN_IOT_LAB",
+        "label": "Facility",
+        "name": "IoT Lab"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_PARTNER_INSTITUTION",
+        "id": "1155177702467043329",
+        "source": "College of Artificial Intelligence",
+        "target": "University of Central Lancashire (UCLan)"
+      },
+      {
+        "type": "HAS_FACILITY",
+        "id": "1157428402769100801",
+        "source": "College of Artificial Intelligence",
+        "target": "IoT Lab"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_092",
+    "question": "Which college has both partner institution University of Central Lancashire (UCLan) and facility Basic Electronic Lab?",
+    "expected_answer": "College of Artificial Intelligence has partner institution University of Central Lancashire (UCLan) and has the Basic Electronic Lab facility.",
+    "category": "Partnerships",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "PARTNERINST_UCLAN",
+        "label": "PartnerInstitution",
+        "name": "University of Central Lancashire (UCLan)"
+      },
+      {
+        "id": "FACILITY_EL_ALAMEIN_BASIC_ELECTRONIC_LAB",
+        "label": "Facility",
+        "name": "Basic Electronic Lab"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_PARTNER_INSTITUTION",
+        "id": "1155177702467043329",
+        "source": "College of Artificial Intelligence",
+        "target": "University of Central Lancashire (UCLan)"
+      },
+      {
+        "type": "HAS_FACILITY",
+        "id": "6917532326175965243",
+        "source": "College of Artificial Intelligence",
+        "target": "Basic Electronic Lab"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_093",
+    "question": "Which college has both partner institution University of Central Lancashire (UCLan) and facility Physics Lab?",
+    "expected_answer": "College of Artificial Intelligence has partner institution University of Central Lancashire (UCLan) and has the Physics Lab facility.",
+    "category": "Partnerships",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "PARTNERINST_UCLAN",
+        "label": "PartnerInstitution",
+        "name": "University of Central Lancashire (UCLan)"
+      },
+      {
+        "id": "FACILITY_EL_ALAMEIN_PHYSICS_LAB",
+        "label": "Facility",
+        "name": "Physics Lab"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_PARTNER_INSTITUTION",
+        "id": "1155177702467043329",
+        "source": "College of Artificial Intelligence",
+        "target": "University of Central Lancashire (UCLan)"
+      },
+      {
+        "type": "HAS_FACILITY",
+        "id": "6917532326175965244",
+        "source": "College of Artificial Intelligence",
+        "target": "Physics Lab"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_094",
+    "question": "Which college has both partner institution University of Central Lancashire (UCLan) and facility General Purpose Computers Lab?",
+    "expected_answer": "College of Artificial Intelligence has partner institution University of Central Lancashire (UCLan) and has the General Purpose Computers Lab facility.",
+    "category": "Partnerships",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "PARTNERINST_UCLAN",
+        "label": "PartnerInstitution",
+        "name": "University of Central Lancashire (UCLan)"
+      },
+      {
+        "id": "FACILITY_EL_ALAMEIN_GENERAL_PURPOSE_COMPUTERS_LAB",
+        "label": "Facility",
+        "name": "General Purpose Computers Lab"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_PARTNER_INSTITUTION",
+        "id": "1155177702467043329",
+        "source": "College of Artificial Intelligence",
+        "target": "University of Central Lancashire (UCLan)"
+      },
+      {
+        "type": "HAS_FACILITY",
+        "id": "6917532326175965245",
+        "source": "College of Artificial Intelligence",
+        "target": "General Purpose Computers Lab"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_095",
+    "question": "Which college has both partner institution University of Central Lancashire (UCLan) and facility UV (Un-Manned Vehicle)?",
+    "expected_answer": "College of Artificial Intelligence has partner institution University of Central Lancashire (UCLan) and has the UV (Un-Manned Vehicle) facility.",
+    "category": "Partnerships",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "PARTNERINST_UCLAN",
+        "label": "PartnerInstitution",
+        "name": "University of Central Lancashire (UCLan)"
+      },
+      {
+        "id": "FACILITY_EL_ALAMEIN_UV_LAB",
+        "label": "Facility",
+        "name": "UV (Un-Manned Vehicle)"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_PARTNER_INSTITUTION",
+        "id": "1155177702467043329",
+        "source": "College of Artificial Intelligence",
+        "target": "University of Central Lancashire (UCLan)"
+      },
+      {
+        "type": "HAS_FACILITY",
+        "id": "6917532326175965246",
+        "source": "College of Artificial Intelligence",
+        "target": "UV (Un-Manned Vehicle)"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_096",
+    "question": "Which college has both partner institution University of Central Lancashire (UCLan) and facility Embedded Systems?",
+    "expected_answer": "College of Artificial Intelligence has partner institution University of Central Lancashire (UCLan) and has the Embedded Systems facility.",
+    "category": "Partnerships",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "PARTNERINST_UCLAN",
+        "label": "PartnerInstitution",
+        "name": "University of Central Lancashire (UCLan)"
+      },
+      {
+        "id": "FACILITY_EL_ALAMEIN_EMBEDDED_SYSTEMS_LAB",
+        "label": "Facility",
+        "name": "Embedded Systems"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_PARTNER_INSTITUTION",
+        "id": "1155177702467043329",
+        "source": "College of Artificial Intelligence",
+        "target": "University of Central Lancashire (UCLan)"
+      },
+      {
+        "type": "HAS_FACILITY",
+        "id": "6917532326175965247",
+        "source": "College of Artificial Intelligence",
+        "target": "Embedded Systems"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_097",
+    "question": "Which college has both partner institution University of Central Lancashire (UCLan) and facility Basic IoT (Internet of Things)?",
+    "expected_answer": "College of Artificial Intelligence has partner institution University of Central Lancashire (UCLan) and has the Basic IoT (Internet of Things) facility.",
+    "category": "Partnerships",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "PARTNERINST_UCLAN",
+        "label": "PartnerInstitution",
+        "name": "University of Central Lancashire (UCLan)"
+      },
+      {
+        "id": "FACILITY_EL_ALAMEIN_BASIC_IOT_LAB",
+        "label": "Facility",
+        "name": "Basic IoT (Internet of Things)"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_PARTNER_INSTITUTION",
+        "id": "1155177702467043329",
+        "source": "College of Artificial Intelligence",
+        "target": "University of Central Lancashire (UCLan)"
+      },
+      {
+        "type": "HAS_FACILITY",
+        "id": "6917532326175965248",
+        "source": "College of Artificial Intelligence",
+        "target": "Basic IoT (Internet of Things)"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_098",
+    "question": "Which college has both partner institution University of Central Lancashire (UCLan) and facility Workstations Lab?",
+    "expected_answer": "College of Artificial Intelligence has partner institution University of Central Lancashire (UCLan) and has the Workstations Lab facility.",
+    "category": "Partnerships",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "PARTNERINST_UCLAN",
+        "label": "PartnerInstitution",
+        "name": "University of Central Lancashire (UCLan)"
+      },
+      {
+        "id": "FACILITY_EL_ALAMEIN_WORKSTATIONS_LAB",
+        "label": "Facility",
+        "name": "Workstations Lab"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_PARTNER_INSTITUTION",
+        "id": "1155177702467043329",
+        "source": "College of Artificial Intelligence",
+        "target": "University of Central Lancashire (UCLan)"
+      },
+      {
+        "type": "HAS_FACILITY",
+        "id": "6917532326175965249",
+        "source": "College of Artificial Intelligence",
+        "target": "Workstations Lab"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_099",
+    "question": "Which program can be reached from College of Artificial Intelligence through Bachelor of Science?",
+    "expected_answer": "College of Artificial Intelligence offers Bachelor of Science, and Bachelor of Science includes Intelligent Systems.",
+    "category": "Programs",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      },
+      {
+        "id": "DEGREE_EG_EL_ALAMEIN_CAI_BSC_UNDERGRAD",
+        "label": "Degree",
+        "name": "Bachelor of Science"
+      },
+      {
+        "id": "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+        "label": "Program",
+        "name": "Intelligent Systems"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "OFFERS",
+        "id": "1152922604118474753",
+        "source": "College of Artificial Intelligence",
+        "target": "Bachelor of Science"
+      },
+      {
+        "type": "INCLUDES_PROGRAM",
+        "id": "1152927002164985858",
+        "source": "Bachelor of Science",
+        "target": "Intelligent Systems"
+      }
+    ]
+  },
+  {
+    "id": "KG_EXP_100",
+    "question": "What governance or administrative role does Ali Ali Mohamed Fahmy have, and where do they work?",
+    "expected_answer": "Ali Ali Mohamed Fahmy is connected to CAI Governance through HAS_ADMIN and works in College of Artificial Intelligence.",
+    "category": "Governance",
+    "difficulty": "Hard",
+    "source_nodes": [
+      {
+        "id": "100",
+        "label": "Person",
+        "name": "Ali Ali Mohamed Fahmy"
+      },
+      {
+        "id": "UNIT_CAI_EL_ALAMEIN_GOVERNANCE",
+        "label": "GovernanceUnit",
+        "name": "CAI Governance"
+      },
+      {
+        "id": "COLLEGE_CAI_EL_ALAMEIN",
+        "label": "College",
+        "name": "College of Artificial Intelligence"
+      }
+    ],
+    "source_relationships": [
+      {
+        "type": "HAS_ADMIN",
+        "id": "1152939096792891492",
+        "source": "Ali Ali Mohamed Fahmy",
+        "target": "CAI Governance"
+      },
+      {
+        "type": "WORKS_IN",
+        "id": "1152942395327774820",
+        "source": "Ali Ali Mohamed Fahmy",
+        "target": "College of Artificial Intelligence"
+      }
+    ]
+  }
+]

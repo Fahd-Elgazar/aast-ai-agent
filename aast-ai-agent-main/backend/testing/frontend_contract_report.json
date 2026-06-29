@@ -1,430 +1,218 @@
 {
   "total_validations": 35,
-  "contract_success_rate": "0.00%",
-  "malformed_payload_rate": "100.00%",
-  "frontend_break_risk_percent": "100.00%",
+  "contract_success_rate": "22.86%",
+  "malformed_payload_rate": "77.14%",
+  "frontend_break_risk_percent": "0.00%",
   "target_validation": {
-    "Frontend Break Risk === 0%": "FAIL"
+    "Frontend Break Risk === 0%": "PASS"
   },
   "failures": [
     {
       "query_id": "Q_KG_01",
+      "route": "KG_DIRECT",
       "issues": [
-        "Missing/invalid 'answer'",
-        "Missing/invalid 'route'",
-        "Missing/invalid 'confidence'",
-        "Missing/invalid 'sources' array",
-        "Missing/invalid 'citations' array",
-        "Missing/invalid 'reasoning'",
-        "Missing/invalid 'metadata.trace'"
+        "Invalid route enum: KG_DIRECT",
+        "Invalid source enum: KG_DIRECT"
       ]
     },
     {
       "query_id": "Q_KG_02",
+      "route": "KG_DIRECT",
       "issues": [
-        "Missing/invalid 'answer'",
-        "Missing/invalid 'route'",
-        "Missing/invalid 'confidence'",
-        "Missing/invalid 'sources' array",
-        "Missing/invalid 'citations' array",
-        "Missing/invalid 'reasoning'",
-        "Missing/invalid 'metadata.trace'"
+        "Invalid route enum: KG_DIRECT",
+        "Invalid source enum: KG_DIRECT"
       ]
     },
     {
       "query_id": "Q_KG_03",
+      "route": "KG_DIRECT",
       "issues": [
-        "Missing/invalid 'answer'",
-        "Missing/invalid 'route'",
-        "Missing/invalid 'confidence'",
-        "Missing/invalid 'sources' array",
-        "Missing/invalid 'citations' array",
-        "Missing/invalid 'reasoning'",
-        "Missing/invalid 'metadata.trace'"
+        "Invalid route enum: KG_DIRECT",
+        "Invalid source enum: KG_DIRECT"
       ]
     },
     {
       "query_id": "Q_KG_04",
+      "route": "KG_DIRECT",
       "issues": [
-        "Missing/invalid 'answer'",
-        "Missing/invalid 'route'",
-        "Missing/invalid 'confidence'",
-        "Missing/invalid 'sources' array",
-        "Missing/invalid 'citations' array",
-        "Missing/invalid 'reasoning'",
-        "Missing/invalid 'metadata.trace'"
+        "Invalid route enum: KG_DIRECT",
+        "Invalid source enum: KG_DIRECT"
       ]
     },
     {
       "query_id": "Q_KG_05",
+      "route": "LLM",
       "issues": [
-        "Missing/invalid 'answer'",
-        "Missing/invalid 'route'",
-        "Missing/invalid 'confidence'",
-        "Missing/invalid 'sources' array",
-        "Missing/invalid 'citations' array",
-        "Missing/invalid 'reasoning'",
-        "Missing/invalid 'metadata.trace'"
+        "Invalid source enum: KG_DIRECT"
       ]
     },
     {
       "query_id": "Q_KG_06",
+      "route": "KG_DIRECT",
       "issues": [
-        "Missing/invalid 'answer'",
-        "Missing/invalid 'route'",
-        "Missing/invalid 'confidence'",
-        "Missing/invalid 'sources' array",
-        "Missing/invalid 'citations' array",
-        "Missing/invalid 'reasoning'",
-        "Missing/invalid 'metadata.trace'"
+        "Invalid route enum: KG_DIRECT",
+        "Invalid source enum: KG_DIRECT"
       ]
     },
     {
       "query_id": "Q_KG_07",
+      "route": "KG_DIRECT",
       "issues": [
-        "Missing/invalid 'answer'",
-        "Missing/invalid 'route'",
-        "Missing/invalid 'confidence'",
-        "Missing/invalid 'sources' array",
-        "Missing/invalid 'citations' array",
-        "Missing/invalid 'reasoning'",
-        "Missing/invalid 'metadata.trace'"
+        "Invalid route enum: KG_DIRECT",
+        "Invalid source enum: KG_DIRECT"
       ]
     },
     {
       "query_id": "Q_RAG_01",
+      "route": "KG_DIRECT",
       "issues": [
-        "Missing/invalid 'answer'",
-        "Missing/invalid 'route'",
-        "Missing/invalid 'confidence'",
-        "Missing/invalid 'sources' array",
-        "Missing/invalid 'citations' array",
-        "Missing/invalid 'reasoning'",
-        "Missing/invalid 'metadata.trace'"
+        "Invalid route enum: KG_DIRECT",
+        "Invalid source enum: KG_DIRECT"
       ]
     },
     {
       "query_id": "Q_RAG_02",
+      "route": "HYBRID",
       "issues": [
-        "Missing/invalid 'answer'",
-        "Missing/invalid 'route'",
-        "Missing/invalid 'confidence'",
-        "Missing/invalid 'sources' array",
-        "Missing/invalid 'citations' array",
-        "Missing/invalid 'reasoning'",
-        "Missing/invalid 'metadata.trace'"
+        "Invalid source enum: KG_DIRECT",
+        "Invalid source enum: RAG_DIRECT"
       ]
     },
     {
       "query_id": "Q_RAG_03",
+      "route": "KG_DIRECT",
       "issues": [
-        "Missing/invalid 'answer'",
-        "Missing/invalid 'route'",
-        "Missing/invalid 'confidence'",
-        "Missing/invalid 'sources' array",
-        "Missing/invalid 'citations' array",
-        "Missing/invalid 'reasoning'",
-        "Missing/invalid 'metadata.trace'"
+        "Invalid route enum: KG_DIRECT",
+        "Invalid source enum: KG_DIRECT"
       ]
     },
     {
       "query_id": "Q_RAG_04",
+      "route": "LLM",
       "issues": [
-        "Missing/invalid 'answer'",
-        "Missing/invalid 'route'",
-        "Missing/invalid 'confidence'",
-        "Missing/invalid 'sources' array",
-        "Missing/invalid 'citations' array",
-        "Missing/invalid 'reasoning'",
-        "Missing/invalid 'metadata.trace'"
+        "Invalid source enum: RAG_DIRECT"
       ]
     },
     {
       "query_id": "Q_RAG_05",
+      "route": "KG_DIRECT",
       "issues": [
-        "Missing/invalid 'answer'",
-        "Missing/invalid 'route'",
-        "Missing/invalid 'confidence'",
-        "Missing/invalid 'sources' array",
-        "Missing/invalid 'citations' array",
-        "Missing/invalid 'reasoning'",
-        "Missing/invalid 'metadata.trace'"
+        "Invalid route enum: KG_DIRECT",
+        "Invalid source enum: KG_DIRECT"
       ]
     },
     {
       "query_id": "Q_RAG_06",
+      "route": "RAG_DIRECT",
       "issues": [
-        "Missing/invalid 'answer'",
-        "Missing/invalid 'route'",
-        "Missing/invalid 'confidence'",
-        "Missing/invalid 'sources' array",
-        "Missing/invalid 'citations' array",
-        "Missing/invalid 'reasoning'",
-        "Missing/invalid 'metadata.trace'"
+        "Invalid route enum: RAG_DIRECT",
+        "Invalid source enum: RAG_DIRECT"
       ]
     },
     {
       "query_id": "Q_RAG_07",
+      "route": "KG_DIRECT",
       "issues": [
-        "Missing/invalid 'answer'",
-        "Missing/invalid 'route'",
-        "Missing/invalid 'confidence'",
-        "Missing/invalid 'sources' array",
-        "Missing/invalid 'citations' array",
-        "Missing/invalid 'reasoning'",
-        "Missing/invalid 'metadata.trace'"
+        "Invalid route enum: KG_DIRECT",
+        "Invalid source enum: KG_DIRECT"
       ]
     },
     {
       "query_id": "Q_HYB_01",
+      "route": "HYBRID",
       "issues": [
-        "Missing/invalid 'answer'",
-        "Missing/invalid 'route'",
-        "Missing/invalid 'confidence'",
-        "Missing/invalid 'sources' array",
-        "Missing/invalid 'citations' array",
-        "Missing/invalid 'reasoning'",
-        "Missing/invalid 'metadata.trace'"
+        "Invalid source enum: RAG_DIRECT"
       ]
     },
     {
       "query_id": "Q_HYB_02",
+      "route": "KG_DIRECT",
       "issues": [
-        "Missing/invalid 'answer'",
-        "Missing/invalid 'route'",
-        "Missing/invalid 'confidence'",
-        "Missing/invalid 'sources' array",
-        "Missing/invalid 'citations' array",
-        "Missing/invalid 'reasoning'",
-        "Missing/invalid 'metadata.trace'"
+        "Invalid route enum: KG_DIRECT",
+        "Invalid source enum: KG_DIRECT"
       ]
     },
     {
       "query_id": "Q_HYB_03",
+      "route": "HYBRID",
       "issues": [
-        "Missing/invalid 'answer'",
-        "Missing/invalid 'route'",
-        "Missing/invalid 'confidence'",
-        "Missing/invalid 'sources' array",
-        "Missing/invalid 'citations' array",
-        "Missing/invalid 'reasoning'",
-        "Missing/invalid 'metadata.trace'"
+        "Invalid source enum: RAG_DIRECT"
       ]
     },
     {
       "query_id": "Q_HYB_04",
+      "route": "KG_DIRECT",
       "issues": [
-        "Missing/invalid 'answer'",
-        "Missing/invalid 'route'",
-        "Missing/invalid 'confidence'",
-        "Missing/invalid 'sources' array",
-        "Missing/invalid 'citations' array",
-        "Missing/invalid 'reasoning'",
-        "Missing/invalid 'metadata.trace'"
+        "Invalid route enum: KG_DIRECT",
+        "Invalid source enum: KG_DIRECT"
       ]
     },
     {
       "query_id": "Q_HYB_05",
+      "route": "LLM",
       "issues": [
-        "Missing/invalid 'answer'",
-        "Missing/invalid 'route'",
-        "Missing/invalid 'confidence'",
-        "Missing/invalid 'sources' array",
-        "Missing/invalid 'citations' array",
-        "Missing/invalid 'reasoning'",
-        "Missing/invalid 'metadata.trace'"
-      ]
-    },
-    {
-      "query_id": "Q_DEC_01",
-      "issues": [
-        "Missing/invalid 'answer'",
-        "Missing/invalid 'route'",
-        "Missing/invalid 'confidence'",
-        "Missing/invalid 'sources' array",
-        "Missing/invalid 'citations' array",
-        "Missing/invalid 'reasoning'",
-        "Missing/invalid 'metadata.trace'"
+        "Invalid source enum: RAG_DIRECT"
       ]
     },
     {
       "query_id": "Q_DEC_02",
+      "route": "HYBRID",
       "issues": [
-        "Missing/invalid 'answer'",
-        "Missing/invalid 'route'",
-        "Missing/invalid 'confidence'",
-        "Missing/invalid 'sources' array",
-        "Missing/invalid 'citations' array",
-        "Missing/invalid 'reasoning'",
-        "Missing/invalid 'metadata.trace'"
+        "Invalid source enum: KG_DIRECT",
+        "Invalid source enum: RAG_DIRECT"
       ]
     },
     {
       "query_id": "Q_DEC_03",
+      "route": "KG_DIRECT",
       "issues": [
-        "Missing/invalid 'answer'",
-        "Missing/invalid 'route'",
-        "Missing/invalid 'confidence'",
-        "Missing/invalid 'sources' array",
-        "Missing/invalid 'citations' array",
-        "Missing/invalid 'reasoning'",
-        "Missing/invalid 'metadata.trace'"
-      ]
-    },
-    {
-      "query_id": "Q_DEC_04",
-      "issues": [
-        "Missing/invalid 'answer'",
-        "Missing/invalid 'route'",
-        "Missing/invalid 'confidence'",
-        "Missing/invalid 'sources' array",
-        "Missing/invalid 'citations' array",
-        "Missing/invalid 'reasoning'",
-        "Missing/invalid 'metadata.trace'"
-      ]
-    },
-    {
-      "query_id": "Q_CAR_01",
-      "issues": [
-        "Missing/invalid 'answer'",
-        "Missing/invalid 'route'",
-        "Missing/invalid 'confidence'",
-        "Missing/invalid 'sources' array",
-        "Missing/invalid 'citations' array",
-        "Missing/invalid 'reasoning'",
-        "Missing/invalid 'metadata.trace'"
+        "Invalid route enum: KG_DIRECT",
+        "Invalid source enum: KG_DIRECT"
       ]
     },
     {
       "query_id": "Q_CAR_02",
+      "route": "KG_DIRECT",
       "issues": [
-        "Missing/invalid 'answer'",
-        "Missing/invalid 'route'",
-        "Missing/invalid 'confidence'",
-        "Missing/invalid 'sources' array",
-        "Missing/invalid 'citations' array",
-        "Missing/invalid 'reasoning'",
-        "Missing/invalid 'metadata.trace'"
-      ]
-    },
-    {
-      "query_id": "Q_CAR_03",
-      "issues": [
-        "Missing/invalid 'answer'",
-        "Missing/invalid 'route'",
-        "Missing/invalid 'confidence'",
-        "Missing/invalid 'sources' array",
-        "Missing/invalid 'citations' array",
-        "Missing/invalid 'reasoning'",
-        "Missing/invalid 'metadata.trace'"
+        "Invalid route enum: KG_DIRECT",
+        "Invalid source enum: KG_DIRECT"
       ]
     },
     {
       "query_id": "Q_CAR_04",
+      "route": "LLM",
       "issues": [
-        "Missing/invalid 'answer'",
-        "Missing/invalid 'route'",
-        "Missing/invalid 'confidence'",
-        "Missing/invalid 'sources' array",
-        "Missing/invalid 'citations' array",
-        "Missing/invalid 'reasoning'",
-        "Missing/invalid 'metadata.trace'"
+        "Invalid source enum: KG_DIRECT"
       ]
     },
     {
       "query_id": "Q_FAQ_01",
+      "route": "LLM",
       "issues": [
-        "Missing/invalid 'answer'",
-        "Missing/invalid 'route'",
-        "Missing/invalid 'confidence'",
-        "Missing/invalid 'sources' array",
-        "Missing/invalid 'citations' array",
-        "Missing/invalid 'reasoning'",
-        "Missing/invalid 'metadata.trace'"
+        "Invalid source enum: RAG_DIRECT"
       ]
     },
     {
       "query_id": "Q_FAQ_02",
+      "route": "RAG_DIRECT",
       "issues": [
-        "Missing/invalid 'answer'",
-        "Missing/invalid 'route'",
-        "Missing/invalid 'confidence'",
-        "Missing/invalid 'sources' array",
-        "Missing/invalid 'citations' array",
-        "Missing/invalid 'reasoning'",
-        "Missing/invalid 'metadata.trace'"
+        "Invalid route enum: RAG_DIRECT",
+        "Invalid source enum: RAG_DIRECT"
       ]
     },
     {
       "query_id": "Q_FAQ_03",
+      "route": "RAG_DIRECT",
       "issues": [
-        "Missing/invalid 'answer'",
-        "Missing/invalid 'route'",
-        "Missing/invalid 'confidence'",
-        "Missing/invalid 'sources' array",
-        "Missing/invalid 'citations' array",
-        "Missing/invalid 'reasoning'",
-        "Missing/invalid 'metadata.trace'"
+        "Invalid route enum: RAG_DIRECT",
+        "Invalid source enum: RAG_DIRECT"
       ]
     },
     {
       "query_id": "Q_FAQ_04",
+      "route": "LLM",
       "issues": [
-        "Missing/invalid 'answer'",
-        "Missing/invalid 'route'",
-        "Missing/invalid 'confidence'",
-        "Missing/invalid 'sources' array",
-        "Missing/invalid 'citations' array",
-        "Missing/invalid 'reasoning'",
-        "Missing/invalid 'metadata.trace'"
-      ]
-    },
-    {
-      "query_id": "Q_LLM_01",
-      "issues": [
-        "Missing/invalid 'answer'",
-        "Missing/invalid 'route'",
-        "Missing/invalid 'confidence'",
-        "Missing/invalid 'sources' array",
-        "Missing/invalid 'citations' array",
-        "Missing/invalid 'reasoning'",
-        "Missing/invalid 'metadata.trace'"
-      ]
-    },
-    {
-      "query_id": "Q_LLM_02",
-      "issues": [
-        "Missing/invalid 'answer'",
-        "Missing/invalid 'route'",
-        "Missing/invalid 'confidence'",
-        "Missing/invalid 'sources' array",
-        "Missing/invalid 'citations' array",
-        "Missing/invalid 'reasoning'",
-        "Missing/invalid 'metadata.trace'"
-      ]
-    },
-    {
-      "query_id": "Q_LLM_03",
-      "issues": [
-        "Missing/invalid 'answer'",
-        "Missing/invalid 'route'",
-        "Missing/invalid 'confidence'",
-        "Missing/invalid 'sources' array",
-        "Missing/invalid 'citations' array",
-        "Missing/invalid 'reasoning'",
-        "Missing/invalid 'metadata.trace'"
-      ]
-    },
-    {
-      "query_id": "Q_LLM_04",
-      "issues": [
-        "Missing/invalid 'answer'",
-        "Missing/invalid 'route'",
-        "Missing/invalid 'confidence'",
-        "Missing/invalid 'sources' array",
-        "Missing/invalid 'citations' array",
-        "Missing/invalid 'reasoning'",
-        "Missing/invalid 'metadata.trace'"
+        "Invalid source enum: KG_DIRECT"
       ]
     }
   ]

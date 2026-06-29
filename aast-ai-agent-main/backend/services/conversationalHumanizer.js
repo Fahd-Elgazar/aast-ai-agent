@@ -1,4 +1,5 @@
 import { generateGeminiSynthesis } from "./geminiService.js";
+import { runtimeMode } from "../config/runtimeMode.js";
 
 const DEFAULT_HUMANIZER_TIMEOUT_MS = 7000;
 const DEFAULT_MAX_OUTPUT_TOKENS = 180;
@@ -21,6 +22,16 @@ function cleanText(value, limit = MAX_ANSWER_CHARS) {
   return String(value || "")
     .replace(/\s+/g, " ")
     .trim()
+    .slice(0, limit);
+}
+
+function cleanMultilineText(value, limit = MAX_ANSWER_CHARS) {
+  return String(value || "")
+    .replace(/\r\n/g, "\n")
+    .split("\n")
+    .map(line => cleanText(line, limit))
+    .filter(Boolean)
+    .join("\n")
     .slice(0, limit);
 }
 
@@ -148,6 +159,8 @@ export function applyGroundedConversationalExpansion({
   route = "UNKNOWN",
   responseBody = {}
 } = {}) {
+  const rawAnswer = String(groundedAnswer || "");
+  const hasMultilineGrounding = /\n/.test(rawAnswer);
   const answer = cleanText(groundedAnswer);
   if (!answer) return { answer, changed: false, reason: "EMPTY" };
   if (CONVERSATION_ROUTE_RE.test(route)) return { answer, changed: false, reason: "CONVERSATION_ROUTE" };
@@ -173,18 +186,20 @@ export function applyGroundedConversationalExpansion({
   }
 
   const teachingAnswer = rewriteTeachingAnswer(stripped, query, route);
-  if (teachingAnswer) {
+  if (!hasMultilineGrounding && teachingAnswer) {
     return { answer: teachingAnswer, changed: teachingAnswer !== answer, reason: "TEACHING_FLOW" };
   }
 
   const prerequisiteAnswer = rewritePrerequisiteAnswer(stripped, query, route);
-  if (prerequisiteAnswer) {
+  if (!hasMultilineGrounding && prerequisiteAnswer) {
     return { answer: prerequisiteAnswer, changed: prerequisiteAnswer !== answer, reason: "PREREQUISITE_FLOW" };
   }
 
   const framedAnswer = stripped || answer;
+  const preservedAnswer = hasMultilineGrounding ? cleanMultilineText(rawAnswer) : framedAnswer;
   const offer = buildGroundedOffer(query, framedAnswer, route);
-  const expanded = offer ? `${sentenceText(framedAnswer)}${offer}` : framedAnswer;
+  const isListAnswer = hasMultilineGrounding || /\b(show|list|all|courses|program courses)\b/.test(lowerQuery);
+  const expanded = offer ? `${isListAnswer ? preservedAnswer : sentenceText(framedAnswer)}${offer}` : preservedAnswer;
   return {
     answer: expanded,
     changed: expanded !== answer,
@@ -322,7 +337,7 @@ export async function humanizeGroundedAnswer({
     return { answer, changed: false, skipped: true, reason: "EMPTY_GROUNDED_ANSWER" };
   }
 
-  if (process.env.GEMINI_HUMANIZER_ENABLED === "false") {
+  if (!runtimeMode.humanizerEnabled) {
     console.log(`[GEMINI_HUMANIZER][HUMANIZER_SKIPPED][${requestId}] reason=DISABLED route=${route}`);
     return { answer, changed: expansion.changed, skipped: true, reason: "DISABLED", expansionReason: expansion.reason };
   }

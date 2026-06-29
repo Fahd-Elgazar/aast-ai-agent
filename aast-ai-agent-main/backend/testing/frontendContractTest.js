@@ -5,7 +5,9 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const ORCHESTRATOR_URL = 'http://localhost:8000/api/chatbot/query';
+const ORCHESTRATOR_URL =
+    process.env.ORCHESTRATOR_URL ||
+    `http://localhost:${process.env.ORCHESTRATOR_PORT || 8004}/api/chatbot/query`;
 
 const VALID_ROUTES = ["KG", "RAG", "HYBRID", "DECISION", "CAREER", "FAQ", "INTERACTIVE", "LLM", "ERROR"];
 const VALID_SOURCES = ["KG", "RAG", "HYBRID", "DECISION", "CAREER", "FAQ", "INTERACTIVE", "LLM"];

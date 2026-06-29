@@ -1238,6 +1238,38 @@ class RecommendProgramsUseCase:
             if any(token in college_name_lower or token in college_id_lower for token in medical_tokens):
                 return False
                 
+        # 3. Literature Track Logic (أدبي)
+        is_literature = "literature" in normalized_cert or "literary" in normalized_cert or "adabi" in normalized_cert
+        if is_literature:
+            # 1. Structural block of forbidden academic categories
+            forbidden_families = {
+                "AI_FAMILY",
+                "CS_FAMILY",
+                "CYBERSEC_FAMILY",
+                "DATA_FAMILY",
+                "IS_FAMILY",
+                "SOFTWARE_FAMILY",
+                "ENGINEERING_FAMILY",
+                "HEALTHCARE_FAMILY",
+            }
+            if program.program_family in forbidden_families:
+                return False
+
+            # 2. College-level block as a fail-safe check
+            forbidden_colleges = ("ccit", "cet", "pharm", "dent", "med", "cai")
+            if any(token in college_id_lower or token in college_name_lower for token in forbidden_colleges):
+                return False
+                
+            # 3. Keyword-level block as an extra backup layer
+            program_name_lower = (program.program_name or "").lower()
+            program_id_lower = (program.id or "").lower()
+            forbidden_program_keywords = (
+                "artificial intelligence", "intelligent systems", "computer science", "cybersecurity",
+                "software engineering", "engineering", "medicine", "pharmacy", "dentistry", "dent_", "pharm_", "med_"
+            )
+            if any(keyword in program_name_lower or keyword in program_id_lower for keyword in forbidden_program_keywords):
+                return False
+                
         return True
 
     def _normalize_text(self, value: str | None) -> str:

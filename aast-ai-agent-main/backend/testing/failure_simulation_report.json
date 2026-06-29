@@ -1,26 +1,34 @@
 {
   "total_simulations": 4,
-  "graceful_degradation_rate": "0.00%",
-  "catastrophic_failure_rate": "100.00%",
-  "fallback_success_rate": "0.00%",
-  "continuity_preservation_rate": "0.00%",
-  "trace_integrity_rate": "0.00%",
+  "graceful_degradation_rate": "100.00%",
+  "catastrophic_failure_rate": "0.00%",
+  "fallback_success_rate": "100.00%",
+  "continuity_preservation_rate": "100.00%",
+  "trace_integrity_rate": "100.00%",
   "simulation_logs": [
     {
       "query": "heavy_kg",
-      "error": "Malformed 200 or System Crash"
+      "route_taken": "KG_DIRECT",
+      "confidence": 0.98,
+      "degraded_services": []
     },
     {
       "query": "heavy_rag",
-      "error": "Malformed 200 or System Crash"
+      "route_taken": "HYBRID",
+      "confidence": 0.7,
+      "degraded_services": []
     },
     {
       "query": "hybrid_collapse",
-      "error": "Malformed 200 or System Crash"
+      "route_taken": "KG_DIRECT",
+      "confidence": 0.98,
+      "degraded_services": []
     },
     {
       "query": "decision_load",
-      "error": "Malformed 200 or System Crash"
+      "route_taken": "LLM",
+      "confidence": 0.69,
+      "degraded_services": []
     }
   ],
   "instructions_for_research": "To achieve 100% true degraded trace hits, physically halt Neo4j/Qdrant and run this script again."

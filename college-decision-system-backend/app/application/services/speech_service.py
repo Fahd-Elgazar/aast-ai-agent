@@ -1,6 +1,7 @@
 import json
 import logging
 import os
+import re
 import shutil
 import subprocess
 import threading
@@ -86,6 +87,9 @@ class SpeechService:
 
     @property
     def llm_model(self):
+        if not settings.DECISION_GEMINI_ENABLED:
+            raise RuntimeError("Decision Gemini extraction is disabled.")
+
         if self._llm_model is not None:
             return self._llm_model
 
@@ -185,6 +189,9 @@ class SpeechService:
         if not text:
             raise ValueError("No text provided for extraction, audio might be unclear or empty.")
 
+        if not settings.DECISION_GEMINI_ENABLED:
+            return self._extract_profile_deterministic(text)
+
         logger.info("Extracting profile using Gemini")
         response = self.llm_model.generate_content(text)
         try:
@@ -199,6 +206,28 @@ class SpeechService:
         except (json.JSONDecodeError, ValidationError) as exc:
             logger.error("Failed to parse Gemini response: %s", response.text)
             raise ValueError(f"Could not extract valid profile: {exc}")
+
+    def _extract_profile_deterministic(self, text: str) -> ExtractedProfile:
+        normalized = text.lower()
+        if re.search(r"\b(hi|hello|hey|salam|good morning|good evening)\b", normalized):
+            return ExtractedProfile(intent="greeting", reply_message=GREETING_REPLY_AR)
+
+        major_keywords = [
+            "ai", "artificial intelligence", "computer science", "engineering",
+            "business", "pharmacy", "dentistry", "medicine", "logistics"
+        ]
+        interested = [keyword for keyword in major_keywords if keyword in normalized]
+        number_match = re.search(r"\b(\d{1,3}(?:\.\d+)?)\b", normalized)
+        gpa = float(number_match.group(1)) if number_match else None
+
+        if interested or gpa is not None or "recommend" in normalized or "study" in normalized:
+            return ExtractedProfile(
+                intent="data_entry",
+                student_gpa=gpa,
+                interested_majors=interested,
+            )
+
+        return ExtractedProfile(intent="irrelevant", reply_message=IRRELEVANT_REPLY_AR)
 
     def runtime_status(self) -> dict:
         return {

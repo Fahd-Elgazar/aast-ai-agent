@@ -11,7 +11,10 @@ type ConversationResponse = {
 };
 
 function buildUrl(path: string, params?: Record<string, string>) {
-  const url = new URL(`${API_BASE}${path}`);
+  const normalizedBase = API_BASE.endsWith("/") ? API_BASE.slice(0, -1) : API_BASE;
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+  const fallbackOrigin = typeof window === "undefined" ? "http://localhost" : window.location.origin;
+  const url = new URL(`${normalizedBase}${normalizedPath}`, fallbackOrigin);
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value) url.searchParams.set(key, value);
   });
