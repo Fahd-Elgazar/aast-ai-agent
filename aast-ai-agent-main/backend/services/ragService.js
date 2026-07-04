@@ -62,11 +62,13 @@ const CONFIG = {
     HEALTH_PATH_ANSWER: process.env.RAG_HEALTH_PATH_ANSWER || '/health',
 
     // ── Reliability ───────────────────────────────────────────
-    TIMEOUT_MS: parseInt(process.env.RAG_TIMEOUT_MS || '20000', 10),
-    COLD_START_TIMEOUT_MS: parseInt(process.env.RAG_COLD_START_TIMEOUT_MS || '25000', 10),
+    TIMEOUT_MS: parseInt(process.env.RAG_TIMEOUT_MS || '60000', 10),
+    COLD_START_TIMEOUT_MS: parseInt(process.env.RAG_COLD_START_TIMEOUT_MS || '120000', 10),
     MAX_RETRIES: parseInt(process.env.RAG_MAX_RETRIES || '1', 10),
     BACKOFF_BASE_MS: parseInt(process.env.RAG_BACKOFF_BASE_MS || '300', 10),
     HEALTH_TIMEOUT_MS: parseInt(process.env.RAG_HEALTH_TIMEOUT_MS || '2500', 10),
+    SYNTHETIC_PROBES_ENABLED:
+        String(process.env.RAG_SYNTHETIC_PROBES_ENABLED || 'false').toLowerCase() === 'true',
 
     // ── Circuit Breaker ───────────────────────────────────────
     CB_FAILURE_THRESHOLD: parseInt(process.env.RAG_CB_FAILURE_THRESHOLD || '3', 10),
@@ -470,7 +472,15 @@ class RAGService {
         const start = process.hrtime();
         logger.info('HEALTH', 'Running health check on RAG subsystems');
 
-        this._runSyntheticProbes().catch(e => logger.error('HEALTH', 'Synthetic probe failed', { error: e.message }));
+        // Synthetic searches previously ran fire-and-forget on the shared
+        // circuit breaker. A slow CPU embedding could therefore report
+        // HEALTHY here while opening the breaker for the next user request.
+        // Keep them opt-in; retriever readiness is enforced by /health.
+        if (CONFIG.SYNTHETIC_PROBES_ENABLED) {
+            this._runSyntheticProbes().catch(e =>
+                logger.error('HEALTH', 'Synthetic probe failed', { error: e.message })
+            );
+        }
 
         const answerEngineRequired = runtimeMode.ragAnswerEngineEnabled && !runtimeMode.singleGemmaGenerationMode && !runtimeMode.defenseMode;
 
@@ -609,7 +619,7 @@ class RAGService {
         });
 
         // ── PASS 2: Simplified query, deep top_k ─────────────
-        const simplifiedQuery = this.simplifyQuery(query);
+        const simplifiedQuery = this.simplifyQuery(query, queryCategory);
         const p2Start = process.hrtime();
         logger.debug('SEARCH', 'PASS 2: simplified → retriever (deep top_k)', { simplifiedQuery });
 
@@ -970,8 +980,24 @@ class RAGService {
     expandQuery(query, categoryHint = 'GENERAL') {
         const lowerQuery = query.toLowerCase();
         const expansions = [];
+        const scholarshipContext =
+            categoryHint === 'financial_aid' ||
+            /\b(scholarship|scholarships|financial aid|merit award|tuition exemption)\b/i.test(query);
+        const explicitAdmissionContext =
+            /\b(admission|admissions|enroll|enrollment|entry requirements)\b/i.test(query);
 
         for (const [canonical, surfaces] of Object.entries(SYNONYM_DICT)) {
+            // "apply" is an admission synonym, but it is also a generic verb.
+            // Do not inject admission terms into an otherwise scholarship-only
+            // query such as "how to apply for a merit scholarship".
+            if (
+                scholarshipContext &&
+                !explicitAdmissionContext &&
+                canonical === 'admission requirements'
+            ) {
+                continue;
+            }
+
             const surfaceMatched = surfaces.some(s => {
                 const regex = new RegExp(`\\b${s}\\b`, 'i');
                 return regex.test(query);
@@ -1027,9 +1053,28 @@ class RAGService {
      *   → "grade point average required avoid academic probation AAST"
      *
      * @param {string} query
+     * @param {string} categoryHint
      * @returns {string} Simplified keyword-optimized query
      */
-    simplifyQuery(query) {
+    simplifyQuery(query, categoryHint = 'GENERAL') {
+        const scholarshipContext =
+            categoryHint === 'financial_aid' ||
+            /\b(scholarship|scholarships|financial aid|merit award|tuition exemption)\b/i.test(query);
+
+        if (scholarshipContext) {
+            let simplified = 'scholarship eligibility AAST';
+            if (/\b(renew|renewal|maintain|keep|lose|continuation|cancel)\b/i.test(query)) {
+                simplified = 'scholarship renewal AAST';
+            } else if (/\b(transfer|transferred)\b/i.test(query)) {
+                simplified = 'transfer student scholarship eligibility AAST';
+            }
+            logger.debug('SEARCH', 'Scholarship query simplified with category context', {
+                original: query,
+                simplified,
+            });
+            return simplified;
+        }
+
         const STOP_WORDS = new Set([
             'what', 'is', 'the', 'are', 'a', 'an', 'to', 'for', 'in', 'of', 'and', 'or',
             'how', 'do', 'i', 'can', 'does', 'with', 'that', 'this', 'it', 'my', 'your',

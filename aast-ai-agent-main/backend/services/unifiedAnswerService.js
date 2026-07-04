@@ -1603,6 +1603,53 @@ function repairTruncation(text) {
     };
 }
 
+function buildScholarshipApplicationPartialAnswer(query, ragContext) {
+    const scholarshipApplicationQuery =
+        /\b(apply|application|submit)\b.*\b(scholarship|financial aid|tuition exemption)\b/i.test(query) ||
+        /\b(scholarship|financial aid|tuition exemption)\b.*\b(apply|application|submit)\b/i.test(query);
+
+    if (!scholarshipApplicationQuery || !Array.isArray(ragContext)) {
+        return null;
+    }
+
+    const evidence = ragContext
+        .map(item => String(item?.content ?? item?.text ?? item?.evidence ?? "").trim())
+        .filter(Boolean)
+        .join(" ");
+
+    if (!/\b(scholarship|tuition fee exemption)\b/i.test(evidence)) {
+        return null;
+    }
+
+    const criteria = [];
+    const semesterMatch = evidence.match(/at least\s+([a-z0-9.]+)\s+full semesters?/i);
+    const gpaMatch = evidence.match(/GPA of at least\s+([0-9.]+)/i);
+    const majorSizeMatch = evidence.match(/major with at least\s+([0-9]+)\s+students?/i);
+
+    if (semesterMatch && /\bsame major\b/i.test(evidence)) {
+        criteria.push(`complete at least ${semesterMatch[1]} full semesters within the same major at CAI`);
+    }
+    if (gpaMatch) {
+        criteria.push(`maintain a GPA of at least ${gpaMatch[1]}`);
+    }
+    if (/completed all previous study hours without interruption/i.test(evidence)) {
+        criteria.push("complete all previous study hours without interruption");
+    }
+    if (majorSizeMatch) {
+        criteria.push(`belong to a major with at least ${majorSizeMatch[1]} students`);
+    }
+
+    if (criteria.length === 0) {
+        return null;
+    }
+
+    return (
+        `The verified records confirm these scholarship eligibility criteria: ${criteria.join("; ")}. ` +
+        "They do not specify the application submission steps; please confirm those steps through " +
+        "the official university portal or your academic advisor."
+    );
+}
+
 /**
  * Sanitizes raw LLM output through a multi-stage cleaning pipeline.
  *
@@ -2496,8 +2543,17 @@ export async function generateUnifiedAnswer({
         });
 
         // ── Step 5: Sanitize + truncation repair ─────────────────────────
-        const { text: finalAnswer, sanitized, truncated, rejection_reason } =
+        let { text: finalAnswer, sanitized, truncated, rejection_reason } =
             sanitizeResponse(rawAnswer);
+
+        const deterministicScholarshipAnswer =
+            buildScholarshipApplicationPartialAnswer(query, ragContext);
+
+        if (deterministicScholarshipAnswer) {
+            finalAnswer = deterministicScholarshipAnswer;
+            sanitized = true;
+            rejection_reason = "scholarship_application_grounded_partial";
+        }
 
         if (sanitized || truncated) {
             logWarn("response_post_processed", {

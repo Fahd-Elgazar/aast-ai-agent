@@ -39,13 +39,13 @@ QDRANT_PORT = int(os.getenv("QDRANT_PORT", "6333"))
 COLLECTION_NAME = os.getenv("RAG_COLLECTION_NAME", "aast_academic_rag_production")
 
 EMBEDDING_MODEL = "BAAI/bge-m3"
-EMBEDDING_INIT_MODE = os.getenv("RAG_EMBEDDING_INIT_MODE", "lazy").strip().lower()
+EMBEDDING_INIT_MODE = os.getenv("RAG_EMBEDDING_INIT_MODE", "eager").strip().lower()
 EMBEDDING_DEVICE = os.getenv("RAG_EMBEDDING_DEVICE", "cpu").strip() or "cpu"
 EMBEDDING_BATCH_SIZE = max(1, int(os.getenv("RAG_EMBED_BATCH_SIZE", "4")))
 EMBEDDING_LOW_CPU_MEM_USAGE = os.getenv("RAG_LOW_CPU_MEM_USAGE", "true").lower() in {"1", "true", "yes", "on"}
 EMBEDDING_DYNAMIC_QUANTIZE = os.getenv("RAG_EMBEDDING_DYNAMIC_QUANTIZE", "false").lower() in {"1", "true", "yes", "on"}
-TORCH_NUM_THREADS = max(1, int(os.getenv("RAG_TORCH_NUM_THREADS", "1")))
-HEALTH_REQUIRES_EMBEDDING = os.getenv("RAG_HEALTH_REQUIRES_EMBEDDING", "false").lower() in {"1", "true", "yes", "on"}
+TORCH_NUM_THREADS = max(1, int(os.getenv("RAG_TORCH_NUM_THREADS", "4")))
+HEALTH_REQUIRES_EMBEDDING = os.getenv("RAG_HEALTH_REQUIRES_EMBEDDING", "true").lower() in {"1", "true", "yes", "on"}
 WARMUP_QUERY = os.getenv("RAG_WARMUP_QUERY", "admission requirements academic policies").strip() or "admission requirements academic policies"
 
 DEFAULT_TOP_K = 8
@@ -806,6 +806,8 @@ async def lifespan(app: FastAPI):
     global retriever
     logger.info("Initializing ProductionRetriever with embedding init mode: %s", EMBEDDING_INIT_MODE)
     retriever = ProductionRetriever()
+    if EMBEDDING_INIT_MODE == "eager":
+        retriever.warmup()
     logger.info("ProductionRetriever ready.")
     yield
     logger.info("Shutting down.")
