@@ -12,6 +12,7 @@ const REQUIRED_COUNTERS = [
   "gemma_success_total",
   "gemma_failure_total",
   "gemma_timeout_total",
+  "gemini_primary_total",
   "gemini_fallback_total",
   "deterministic_fallback_total"
 ];

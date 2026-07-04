@@ -485,6 +485,61 @@ async function runOllamaSynthesis({
     };
 }
 
+async function runGeminiProvider({
+    prompt,
+    resolvedRoute,
+    inferenceOptions,
+    requestId,
+    promptTokenEst,
+    role = "backup",
+    gemmaPrimaryFailureReason = null,
+}) {
+    const primary = role === "primary";
+    const label = primary ? "PRIMARY" : "BACKUP";
+    const geminiRequestId = `gemini_${role}_${Date.now()}`;
+
+    console.log(`[GEMINI_${label}_ACTIVE][${requestId}] route=${resolvedRoute}`);
+    const geminiResult = await generateGeminiSynthesis({
+        prompt,
+        requestId: geminiRequestId,
+        timeoutMs: GEMINI_SYNTHESIS_TIMEOUT_MS,
+        options: {
+            ...inferenceOptions,
+            disableThinking: true,
+        },
+    });
+
+    console.log(
+        `[GEMINI_${label}_SUCCESS][${requestId}] route=${resolvedRoute} latency_ms=${geminiResult.latencyMs}`
+    );
+    incrementMetric(primary ? "gemini_primary_total" : "gemini_fallback_total");
+    logInfo("gemini_response_received", {
+        route: resolvedRoute,
+        requestId,
+        gemini_request_id: geminiRequestId,
+        provider_role: role,
+        gemini_latency_ms: geminiResult.latencyMs,
+        model_used: geminiResult.model,
+        raw_response_chars: geminiResult.text.length,
+        prompt_tokens: geminiResult.promptTokens || promptTokenEst,
+        output_tokens: geminiResult.outputTokens || estimateTokens(geminiResult.text),
+        finish_reason: geminiResult.finishReason,
+    });
+
+    return {
+        rawAnswer: geminiResult.text,
+        synthesisProvider: primary ? "gemini_primary" : "gemini_backup",
+        synthesisLatencyMs: geminiResult.latencyMs,
+        ollamaLatencyMs: null,
+        ollamaRuntime: getOllamaRuntimeStatus(),
+        ollamaGenerationMeta: null,
+        geminiResult,
+        geminiFallbackReason: null,
+        gemmaPrimaryFailureReason,
+        deterministicFallbackUsed: false,
+    };
+}
+
 async function runFinalSynthesis({
     prompt,
     resolvedRoute,
@@ -493,6 +548,90 @@ async function runFinalSynthesis({
     promptTokenEst,
     deterministicFallbackAnswer = "",
 }) {
+    if (runtimeMode.primaryLlmProvider === "gemini") {
+        let geminiPrimaryFailureReason = null;
+
+        try {
+            return await runGeminiProvider({
+                prompt,
+                resolvedRoute,
+                inferenceOptions,
+                requestId,
+                promptTokenEst,
+                role: "primary",
+            });
+        } catch (geminiError) {
+            const timeout = isGeminiTimeoutError(geminiError);
+            const reason = geminiError?.code || geminiError?.message || "GEMINI_ERROR";
+            geminiPrimaryFailureReason = {
+                reason,
+                status: geminiError?.status,
+                timeout,
+            };
+
+            console.warn(`[GEMINI_PRIMARY_FAILED][${requestId}] route=${resolvedRoute} reason=${reason}`);
+            logWarn("gemini_primary_failed", {
+                route: resolvedRoute,
+                requestId,
+                reason,
+                status: geminiError?.status,
+                timeout,
+            });
+        }
+
+        try {
+            console.log(`[GEMMA_FALLBACK_ACTIVE][${requestId}] route=${resolvedRoute}`);
+            const gemmaFallback = await runOllamaSynthesis({
+                prompt,
+                resolvedRoute,
+                inferenceOptions,
+                requestId,
+                promptTokenEst,
+                fallbackFromGemini: true,
+                allowBackup: false,
+            });
+
+            return {
+                ...gemmaFallback,
+                geminiPrimaryFailureReason,
+                deterministicFallbackUsed: false,
+            };
+        } catch (gemmaError) {
+            const gemmaReason = gemmaError?.code || gemmaError?.message || "GEMMA_ERROR";
+            const gemmaPrimaryFailureReason = {
+                reason: gemmaReason,
+                status: gemmaError?.status,
+            };
+
+            console.warn(`[GEMMA_FALLBACK_FAILED][${requestId}] route=${resolvedRoute} reason=${gemmaReason}`);
+            logWarn("gemma_fallback_failed", {
+                route: resolvedRoute,
+                requestId,
+                reason: gemmaReason,
+                status: gemmaError?.status,
+            });
+
+            if (deterministicFallbackAnswer) {
+                incrementMetric("deterministic_fallback_total");
+                return {
+                    rawAnswer: deterministicFallbackAnswer,
+                    synthesisProvider: "deterministic_context_fallback",
+                    synthesisLatencyMs: 0,
+                    ollamaLatencyMs: null,
+                    ollamaRuntime: getOllamaRuntimeStatus(),
+                    ollamaGenerationMeta: null,
+                    geminiResult: null,
+                    geminiFallbackReason: null,
+                    geminiPrimaryFailureReason,
+                    gemmaPrimaryFailureReason,
+                    deterministicFallbackUsed: true,
+                };
+            }
+
+            throw gemmaError;
+        }
+    }
+
     let gemmaPrimaryFailureReason = null;
 
     try {
@@ -549,46 +688,18 @@ async function runFinalSynthesis({
         throw new Error("Gemma primary failed and Gemini backup is disabled.");
     }
 
-    const geminiRequestId = `gemini_${Date.now()}`;
-
     try {
-        console.log(`[GEMINI_BACKUP_ACTIVE][${requestId}] route=${resolvedRoute}`);
-        const geminiResult = await generateGeminiSynthesis({
+        return await runGeminiProvider({
             prompt,
-            requestId: geminiRequestId,
-            timeoutMs: GEMINI_SYNTHESIS_TIMEOUT_MS,
-            options: inferenceOptions,
-        });
-
-        console.log(
-            `[GEMINI_BACKUP_SUCCESS][${requestId}] route=${resolvedRoute} latency_ms=${geminiResult.latencyMs}`
-        );
-        incrementMetric("gemini_fallback_total");
-        logInfo("gemini_response_received", {
-            route: resolvedRoute,
             requestId,
-            gemini_request_id: geminiRequestId,
-            gemini_latency_ms: geminiResult.latencyMs,
-            model_used: geminiResult.model,
-            raw_response_chars: geminiResult.text.length,
-            prompt_tokens: geminiResult.promptTokens || promptTokenEst,
-            output_tokens: geminiResult.outputTokens || estimateTokens(geminiResult.text),
-            finish_reason: geminiResult.finishReason,
-        });
-
-        return {
-            rawAnswer: geminiResult.text,
-            synthesisProvider: "gemini_backup",
-            synthesisLatencyMs: geminiResult.latencyMs,
-            ollamaLatencyMs: null,
-            ollamaRuntime: getOllamaRuntimeStatus(),
-            ollamaGenerationMeta: null,
-            geminiResult,
-            geminiFallbackReason: null,
+            resolvedRoute,
+            inferenceOptions,
+            promptTokenEst,
+            role: "backup",
             gemmaPrimaryFailureReason,
-            deterministicFallbackUsed: false,
-        };
+        });
     } catch (geminiError) {
+        const geminiRequestId = `gemini_backup_failed_${Date.now()}`;
         const timeout = isGeminiTimeoutError(geminiError);
         const reason = geminiError?.code || geminiError?.message || "GEMINI_ERROR";
 

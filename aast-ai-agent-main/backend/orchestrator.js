@@ -54,6 +54,7 @@ import ragService from "./services/ragService.js";
 import { checkSubsystemHealth, timeoutWrapper } from "./services/healthProbes.js";
 import responseFormatter from "./services/responseFormatter.js";
 import { buildDemoGraphResponse, isDemoGraphQuery } from "./services/demoGraphService.js";
+import { isCourseByTopicLookup } from "./services/queryShape.js";
 import {
   humanizeGroundedAnswer,
   shouldHumanizeResponseBody
@@ -194,9 +195,13 @@ app.use(bodyParser.json());
 // TASK 1 — SAFE NEO4J SINGLETON INITIALIZATION (prevents duplicate connections on hot reload)
 if (!global.neo4jInitialized) {
   try {
-    await connectNeo4j();
-    global.neo4jInitialized = true;
-    console.log("✅ Neo4j connected successfully");
+    const neo4jDriver = await connectNeo4j();
+    global.neo4jInitialized = Boolean(neo4jDriver);
+    if (neo4jDriver) {
+      console.log("Neo4j connected successfully");
+    } else {
+      console.warn("Neo4j unavailable on startup; lazy reconnect will retry during health checks and KG queries");
+    }
   } catch (neo4jErr) {
     console.error("❌ Neo4j connection failed on startup:", neo4jErr.message);
     logger.error("Neo4j startup connection failed", { error: neo4jErr.message });
@@ -971,7 +976,7 @@ app.post("/api/chatbot/query", async (req, res) => {
 
     if (isDemoGraphQuery(query) || isDemoGraphQuery(originalQuery)) {
       incrementMetric("route_demo_graph_hits");
-      const demoPayload = buildDemoGraphResponse({
+      const demoPayload = await buildDemoGraphResponse({
         conversationId,
         requestId,
         normalizationTrace,
@@ -1107,7 +1112,10 @@ app.post("/api/chatbot/query", async (req, res) => {
     const isProtectedKgIntent = (candidate) => PROTECTED_KG_INTENTS.has(normalizeIntentKeyword(candidate));
     const inferProtectedKgIntentFromQuery = (text) => {
       const normalized = String(text || "").toLowerCase().replace(/[^a-z0-9+#\s]/g, " ").replace(/\s+/g, " ").trim();
-      if (/\b(teach|teaches|teacher|teachers|teaching|taught|instructs)\b/.test(normalized)) return "TEACHING";
+      if (
+        /\b(teach|teaches|teacher|teachers|teaching|taught|instructs)\b/.test(normalized) &&
+        !isCourseByTopicLookup(normalized)
+      ) return "TEACHING";
       if (/\b(dean|admin|administrator|chairman|director|leadership)\b|\bhead of\b/.test(normalized)) return "ADMIN";
       if (
         /\b(prerequisite|prerequisites|prequisite|prequsties|prereq)\b|\brequired before\b|\bbefore taking\b/.test(normalized) ||
@@ -1119,7 +1127,9 @@ app.post("/api/chatbot/query", async (req, res) => {
       return null;
     };
     const protectedIntentFromQuery = inferProtectedKgIntentFromQuery(query);
-    if (isProtectedKgIntent(goldenMatch?.intent)) {
+    if (isCourseByTopicLookup(query)) {
+      intentKeyword = "CURRICULUM";
+    } else if (isProtectedKgIntent(goldenMatch?.intent)) {
       intentKeyword = normalizeIntentKeyword(goldenMatch.intent);
     } else if (isProtectedKgIntent(protectedIntentFromQuery)) {
       intentKeyword = protectedIntentFromQuery;

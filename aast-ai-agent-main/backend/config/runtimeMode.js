@@ -19,10 +19,15 @@ function stringFromEnv(name, fallback) {
 
 const defenseMode = booleanFromEnv("DEFENSE_MODE", false);
 const singleGemmaGenerationMode = booleanFromEnv("SINGLE_GEMMA_GENERATION_MODE", true);
+const primaryLlmProvider =
+  stringFromEnv("PRIMARY_LLM_PROVIDER", "gemma").toLowerCase() === "gemini"
+    ? "gemini"
+    : "gemma";
 
 export const runtimeMode = Object.freeze({
   defenseMode,
   singleGemmaGenerationMode,
+  primaryLlmProvider,
   geminiBackupEnabled: booleanFromEnv("GEMINI_BACKUP_ENABLED", true),
   llmIntentEnabled: booleanFromEnv("LLM_INTENT_ENABLED", false),
   graphRefineEnabled: booleanFromEnv("KG_GRAPH_REFINE_ENABLED", false),

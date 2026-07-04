@@ -1,4 +1,5 @@
   import { getSession } from "../db/neo4j.js";
+  import { isCourseByTopicLookup } from "./queryShape.js";
   import fetch from "node-fetch";
   import { logger } from "./logger.js";
   import { incrementMetric, recordDuration, startTimer } from "./metrics.js";
@@ -634,6 +635,7 @@
     const normalizedIntent = normalizeIntentKeyword(requestedIntent);
     const ontologyIntent = detectOntologyIntent(normalizedQuery);
 
+    if (isCourseByTopicLookup(normalizedQuery)) return "CURRICULUM";
     if (ONTOLOGY_INTENTS.has(normalizedIntent)) return normalizedIntent;
     if (ontologyIntent && normalizedIntent === "PERSON") return ontologyIntent;
     if (ontologyIntent && ["ALL", "GENERAL", "PROGRAM", "COMPARE", "COMPARISON"].includes(normalizedIntent)) return ontologyIntent;
@@ -3087,10 +3089,18 @@
     const queryExpansion = expandAcademicQuery(query);
     const exactOntologyEntity = queryExpansion.exact_entity || null;
     const retrievalQuery = exactOntologyEntity?.search_text || queryExpansion.expanded || query;
-    const requestedOntologyIntent = ONTOLOGY_INTENTS.has(normalizeIntentKeyword(intent))
-      ? normalizeIntentKeyword(intent)
+    const normalizedRequestedIntent = normalizeIntentKeyword(intent);
+    const requestedOntologyIntent = ONTOLOGY_INTENTS.has(normalizedRequestedIntent)
+      ? normalizedRequestedIntent
       : null;
-    const detectedIntent = requestedOntologyIntent || exactOntologyEntity?.intent || detectIntent(retrievalQuery, intent);
+    const requestedProtectedIntent = ["TEACHING", "PREREQUISITE", "ADMIN", "PERSON"].includes(normalizedRequestedIntent)
+      ? normalizedRequestedIntent
+      : null;
+    const detectedIntent =
+      requestedOntologyIntent ||
+      requestedProtectedIntent ||
+      exactOntologyEntity?.intent ||
+      detectIntent(retrievalQuery, intent);
     const normalizedRetrievalQuery = normalizeText(retrievalQuery);
     const requestedLimit = Math.max(Number.parseInt(limit, 10) || DEFAULT_CONTEXT_LIMIT, 1);
     const personRecallBoost = detectedIntent === "PERSON" && /\b(who is|tell me about|doctor|professor|dr|dean|office|room|location|specializes|specialization)\b/.test(normalizeText(retrievalQuery));
