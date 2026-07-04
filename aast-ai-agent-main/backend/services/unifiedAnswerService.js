@@ -2520,8 +2520,32 @@ export async function generateUnifiedAnswer({
             neo4jContext,
             ragContext
         });
+        const deterministicScholarshipAnswer =
+            buildScholarshipApplicationPartialAnswer(query, ragContext);
 
         // Step 4: Gemma primary, Gemini backup, deterministic fallback.
+        const synthesisResult = deterministicScholarshipAnswer
+            ? {
+                rawAnswer: deterministicScholarshipAnswer,
+                synthesisProvider: "deterministic_scholarship_evidence",
+                synthesisLatencyMs: 0,
+                ollamaLatencyMs: null,
+                ollamaRuntime: getOllamaRuntimeStatus(),
+                ollamaGenerationMeta: null,
+                geminiResult: null,
+                geminiFallbackReason: null,
+                gemmaPrimaryFailureReason: null,
+                deterministicFallbackUsed: true,
+            }
+            : await runFinalSynthesis({
+                prompt,
+                resolvedRoute,
+                inferenceOptions,
+                requestId: `unified_${Date.now()}`,
+                promptTokenEst,
+                deterministicFallbackAnswer: deterministicContextAnswer,
+            });
+
         const {
             rawAnswer,
             synthesisProvider,
@@ -2533,27 +2557,11 @@ export async function generateUnifiedAnswer({
             geminiFallbackReason,
             gemmaPrimaryFailureReason,
             deterministicFallbackUsed,
-        } = await runFinalSynthesis({
-            prompt,
-            resolvedRoute,
-            inferenceOptions,
-            requestId: `unified_${Date.now()}`,
-            promptTokenEst,
-            deterministicFallbackAnswer: deterministicContextAnswer,
-        });
+        } = synthesisResult;
 
         // ── Step 5: Sanitize + truncation repair ─────────────────────────
         let { text: finalAnswer, sanitized, truncated, rejection_reason } =
             sanitizeResponse(rawAnswer);
-
-        const deterministicScholarshipAnswer =
-            buildScholarshipApplicationPartialAnswer(query, ragContext);
-
-        if (deterministicScholarshipAnswer) {
-            finalAnswer = deterministicScholarshipAnswer;
-            sanitized = true;
-            rejection_reason = "scholarship_application_grounded_partial";
-        }
 
         if (sanitized || truncated) {
             logWarn("response_post_processed", {
