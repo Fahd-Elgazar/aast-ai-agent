@@ -7,7 +7,7 @@ from app.schema.normalize_colleges import normalize_all_colleges
 
 
 def test_normalization_smoke_subset(tmp_path: Path) -> None:
-    source_root = Path(__file__).resolve().parents[2] / "colleges"
+    source_root = Path(__file__).resolve().parent / "fixtures" / "colleges"
     input_dir = tmp_path / "input_colleges"
     output_dir = tmp_path / "normalized_colleges"
 

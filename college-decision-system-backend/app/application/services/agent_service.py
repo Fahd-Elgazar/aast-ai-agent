@@ -1,8 +1,6 @@
 import json
 import logging
 from collections.abc import Mapping
-import google.generativeai as genai
-from google.generativeai.types import content_types
 from pydantic import ValidationError
 from decimal import Decimal
 import re
@@ -16,8 +14,20 @@ from app.infrastructure.db.repositories.chat_repo import ChatRepository
 
 logger = logging.getLogger(__name__)
 
-if settings.DECISION_GEMINI_ENABLED and settings.GEMINI_API_KEY:
-    genai.configure(api_key=settings.GEMINI_API_KEY.get_secret_value())
+genai = None
+content_types = None
+
+if settings.DECISION_GEMINI_ENABLED:
+    try:
+        import google.generativeai as genai
+        from google.generativeai.types import content_types
+    except ImportError as exc:
+        raise RuntimeError(
+            "Decision Gemini requires requirements-optional.txt."
+        ) from exc
+
+    if settings.GEMINI_API_KEY:
+        genai.configure(api_key=settings.GEMINI_API_KEY.get_secret_value())
 
 
 class AgentService:

@@ -8,19 +8,19 @@ class Settings(BaseSettings):
     """Application configuration loaded from environment variables and .env."""
 
     APP_NAME: str = "College Decision Support System"
-    DEBUG: bool = True
+    DEBUG: bool = False
 
-    HOST: str = "127.0.0.1"
+    HOST: str = "0.0.0.0"
     PORT: int = 8005
 
     DATABASE_URL: str = "sqlite:///./dev.db"
 
     # Use SecretStr to prevent accidental printing/logging of sensitive data
     GEMINI_API_KEY: SecretStr | None = None
-    DECISION_GEMINI_ENABLED: bool = True
+    DECISION_GEMINI_ENABLED: bool = False
     INTERNAL_SECRET_KEY: SecretStr | None = None
 
-    VOICE_ENABLED: bool = True
+    VOICE_ENABLED: bool = False
     VOICE_WHISPER_MODEL: str = "base"
     VOICE_DEVICE: str = "cpu"
     VOICE_TEMP_DIR: str = "."

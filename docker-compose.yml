@@ -43,7 +43,7 @@ services:
       RAG_ROUTE_TIMEOUT_MS: ${RAG_ROUTE_TIMEOUT_MS:-70000}
       HYBRID_ROUTE_TIMEOUT_MS: ${HYBRID_ROUTE_TIMEOUT_MS:-70000}
       RAG_SYNTHETIC_PROBES_ENABLED: ${RAG_SYNTHETIC_PROBES_ENABLED:-false}
-      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://192.168.1.7:11434}
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
       SINGLE_GEMMA_GENERATION_MODE: ${SINGLE_GEMMA_GENERATION_MODE:-true}
       GEMINI_BACKUP_ENABLED: ${GEMINI_BACKUP_ENABLED:-true}
       PRIMARY_MODEL: ${PRIMARY_MODEL:-gemma4:e2b}
@@ -56,9 +56,9 @@ services:
       HEALTHCHECK_TIMEOUT_MS: ${HEALTHCHECK_TIMEOUT_MS:-25000}
       NEO4J_URI: bolt://neo4j:7687
       NEO4J_USER: ${NEO4J_USER:-neo4j}
-      NEO4J_PASSWORD: ${NEO4J_PASSWORD:-12345678}
+      NEO4J_PASSWORD: ${NEO4J_PASSWORD:?Set NEO4J_PASSWORD in .env}
       NEO4J_DATABASE: ${NEO4J_DATABASE:-neo4j}
-      INTERNAL_SECRET_KEY: ${INTERNAL_SECRET_KEY:-aast-internal-secret-2024}
+      INTERNAL_SECRET_KEY: ${INTERNAL_SECRET_KEY:?Set INTERNAL_SECRET_KEY in .env}
       LOG_DIR: /app/logs
     depends_on:
       neo4j:
@@ -98,7 +98,7 @@ services:
       PORT: 8005
       DATABASE_URL: sqlite:////app/runtime/dev.db
       VOICE_TEMP_DIR: /app/runtime/voice
-      INTERNAL_SECRET_KEY: ${INTERNAL_SECRET_KEY:-aast-internal-secret-2024}
+      INTERNAL_SECRET_KEY: ${INTERNAL_SECRET_KEY:?Set INTERNAL_SECRET_KEY in .env}
     ports:
       - "127.0.0.1:8005:8005"
     volumes:
@@ -158,7 +158,7 @@ services:
     image: aast-ai-agent/rag-answer:local
     environment:
       RAG_RETRIEVER_URL: http://rag-retriever:8001
-      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://192.168.1.7:11434}
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
       RAG_ANSWER_ENGINE_ENABLED: ${RAG_ANSWER_ENGINE_ENABLED:-false}
       RAG_ANSWER_MODEL: ${RAG_ANSWER_MODEL:-gemma4:e2b}
       RAG_ANSWER_TIMEOUT_SECONDS: ${RAG_ANSWER_TIMEOUT_SECONDS:-180}
@@ -200,7 +200,7 @@ services:
   neo4j:
     image: neo4j:5.26-community
     environment:
-      NEO4J_AUTH: ${NEO4J_USER:-neo4j}/${NEO4J_PASSWORD:-12345678}
+      NEO4J_AUTH: ${NEO4J_USER:-neo4j}/${NEO4J_PASSWORD:?Set NEO4J_PASSWORD in .env}
       NEO4J_dbms_default__database: ${NEO4J_DATABASE:-neo4j}
       NEO4J_server_memory_heap_initial__size: ${NEO4J_HEAP_INITIAL:-512m}
       NEO4J_server_memory_heap_max__size: ${NEO4J_HEAP_MAX:-1G}

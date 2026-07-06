@@ -9,7 +9,6 @@ import bodyParser from "body-parser";
 import fs from "fs";
 import path from "path";
 
-import chatbotRouter from "./routes/chatbot.js";
 import decisionRouter from "./routes/decision.js";
 import createConversationsRouter from "./routes/conversations.js";
 import createHealthRouter from "./routes/health.js";
@@ -212,7 +211,6 @@ if (!global.neo4jInitialized) {
 }
 
 // Routes
-app.use("/api/chatbot/legacy", chatbotRouter);
 app.use("/api/decision", decisionRouter);
 
 /* ============================================================

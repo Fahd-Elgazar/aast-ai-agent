@@ -1,14 +1,13 @@
-# Combined Backend (Neo4j + MySQL + MeiliSearch)
+# Advisor API
 
-## Structure
-- db/mysql.js        - MySQL pool helper
-- db/neo4j.js        - Neo4j driver + session helper
-- db/meili.js        - MeiliSearch client
-- routes/auth.js     - authentication (MySQL)
-- routes/graph.js    - graph queries (Neo4j)
-- routes/search.js   - search + indexing (MeiliSearch)
-- index.js           - main Express server
+The production entry point is `orchestrator.js`. It coordinates deterministic routing, Neo4j context, Qdrant retrieval, program recommendations, conversation persistence, and optional model synthesis.
 
-## Setup
-1. Copy `.env.example` to `.env` and fill credentials.
-2. Install dependencies:
+## Commands
+
+```powershell
+npm ci
+npm start
+npm run test:routing
+```
+
+Copy `.env.example` to `.env` and replace the required placeholders before starting outside Docker.

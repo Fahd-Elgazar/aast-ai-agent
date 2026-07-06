@@ -1,1 +1,0 @@
-[{"type": "request", "url": "https://aast.edu/en/success_stories/studentone-success.php?sucess_id=6&cat_id=2&unit=1", "method": "GET"}, {"type": "response", "url": "https://aast.edu/en/success_stories/studentone-success.php?sucess_id=6&cat_id=2&unit=1", "status": 500, "content_type": "text/html; charset=UTF-8", "sample": " \n\n        \n "}]

@@ -5,12 +5,19 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends build-essential \
-    && rm -rf /var/lib/apt/lists/*
+ARG INSTALL_OPTIONAL_AI=false
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN if [ "$INSTALL_OPTIONAL_AI" = "true" ]; then \
+      apt-get update \
+      && apt-get install -y --no-install-recommends build-essential \
+      && rm -rf /var/lib/apt/lists/*; \
+    fi
+
+COPY requirements*.txt ./
+RUN pip install --no-cache-dir -r requirements.txt \
+    && if [ "$INSTALL_OPTIONAL_AI" = "true" ]; then \
+         pip install --no-cache-dir -r requirements-optional.txt; \
+       fi
 
 COPY . .
 

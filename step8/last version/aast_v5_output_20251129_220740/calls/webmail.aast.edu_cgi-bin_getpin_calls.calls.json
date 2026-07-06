@@ -1,1 +1,0 @@
-[{"type": "request", "url": "http://webmail.aast.edu/cgi-bin/getpin", "method": "GET"}, {"type": "response", "url": "http://webmail.aast.edu/cgi-bin/getpin", "status": 200, "content_type": "", "sample": null}]

@@ -27,21 +27,61 @@ logs/
 # ========================
 __pycache__/
 *.pyc
+.pytest_cache/
+.coverage
+htmlcov/
 
 # ========================
 # Databases / Vector DB
 # ========================
 chroma_aast/
+qdrant_storage/
+*.db
+*.db.*
+*.sqlite
+*.sqlite3
+*.dump
 aast-ai-agent-main/backend/data/conversations.json
 aast-ai-agent-main/backend/decision_memory.json
 
 # ========================
-# Large / compressed files
+# Generated / binary files
 # ========================
 *.7z
 *.zip
 *.tar
 *.gz
+*.tgz
+*.exe
+*.wav
+*.webm
+*.mp3
+*_report.json
+*_stats.json
+benchmark_summary.md
+
+# ========================
+# Local research and recovery archives
+# ========================
+/.playwright-mcp/
+/archive/
+/book/
+/colleges/
+/docs/
+/relationship/
+/step8/
+/multimodal/
+/*_RECOVERY_*.md
+/FULL_INFRASTRUCTURE_RECOVERY_AUDIT.md
+/RAG_AND_CODEBASE_RECOVERY_REPORT.md
+
+# Historical nested workspace copies
+/aast-ai-agent-main/frontend/aast-ai-agent-main/
+/aast-ai-agent-main/frontend/college-decision-system-backend/
+/aast-ai-agent-main/frontend/frontend/
+/aast-ai-agent-main/frontend/multimodal/
+/aast-ai-agent-main/frontend-test/
+/aast-ai-agent-main/PPT/
 
 # ========================
 # OS / Editor
