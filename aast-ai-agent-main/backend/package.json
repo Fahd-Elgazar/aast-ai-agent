@@ -1,0 +1,39 @@
+{
+  "name": "aast-backend-combined",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node --max-old-space-size=3072 orchestrator.js",
+    "start:orchestrator": "node --max-old-space-size=3072 orchestrator.js",
+    "dev": "nodemon --exec \"node --max-old-space-size=3072\" orchestrator.js",
+    "dev:orchestrator": "nodemon --exec \"node --max-old-space-size=3072\" orchestrator.js",
+    "test:routing": "node testing/routingPrecisionCalibration.test.js",
+    "benchmark:golden": "node testing/goldenPathBenchmark.js",
+    "prewarm:golden": "node testing/prewarmGoldenQueries.js"
+  },
+  "dependencies": {
+    "axios": "^1.15.0",
+    "axios-retry": "^4.5.0",
+    "body-parser": "^1.20.2",
+    "boxen": "^8.0.1",
+    "chalk": "^5.3.0",
+    "cli-table3": "^0.6.5",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.18.2",
+    "neo4j-driver": "^5.9.0",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  },
+  "description": "Evidence-grounded academic advising orchestrator with Neo4j, Qdrant RAG, and decision support.",
+  "main": "orchestrator.js",
+  "keywords": [
+    "rag",
+    "neo4j",
+    "academic-advising"
+  ],
+  "author": "AAST AI Agent Team",
+  "license": "ISC"
+}

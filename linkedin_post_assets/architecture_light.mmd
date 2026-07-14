@@ -1,0 +1,17 @@
+flowchart LR
+    UI["User Interface<br/>React + Vite"]
+    API["AI Orchestration Layer<br/>Node.js + Express"]
+    Router["Brain Router<br/>KG / RAG / Hybrid / Decision"]
+    Memory["Conversation Memory"]
+    KG["Knowledge Graph<br/>Neo4j"]
+    RAG["Vector RAG<br/>Qdrant + BAAI/bge-m3"]
+    Decision["Decision Support Engine<br/>FastAPI"]
+    LLM["LLM Synthesis<br/>Gemma, Gemini backup, fallback"]
+    Answer["Grounded Answer<br/>used_facts + missing_information"]
+
+    UI --> API --> Router
+    API <--> Memory
+    Router --> KG --> LLM
+    Router --> RAG --> LLM
+    Router --> Decision --> LLM
+    LLM --> Answer --> UI

@@ -1,0 +1,13 @@
+node_modules
+__pycache__
+.pytest_cache
+.env
+*.pyc
+*.log
+tmp_*.db
+dev.db.bak
+ffmpeg.exe
+ffmpeg.exe.*
+requirements-dev.txt
+tests
+docs

@@ -1,0 +1,50 @@
+# ========================
+# Node
+# ========================
+node_modules/
+npm-debug.log*
+
+# ========================
+# Environment variables
+# ========================
+.env
+
+# ========================
+# Logs
+# ========================
+logs/
+*.log
+
+# ========================
+# Python
+# ========================
+__pycache__/
+*.pyc
+
+# ========================
+# Databases / Vector DB
+# ========================
+chroma_aast/
+backend/data/conversations.json
+backend/decision_memory.json
+
+# ========================
+# Large / compressed files
+# ========================
+*.7z
+*.zip
+*.tar
+*.gz
+
+# ========================
+# Frontend build/runtime artifacts
+# ========================
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+
+# ========================
+# OS files
+# ========================
+.DS_Store
+Thumbs.db

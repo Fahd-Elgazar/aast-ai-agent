@@ -1,0 +1,119 @@
+# ========================
+# Node
+# ========================
+node_modules/
+dist/
+dist-ssr/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ========================
+# Environment variables
+# ========================
+.env
+*.local
+
+# ========================
+# Logs
+# ========================
+logs/
+*.log
+
+# ========================
+# Python
+# ========================
+__pycache__/
+*.pyc
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ========================
+# Databases / Vector DB
+# ========================
+chroma_aast/
+qdrant_storage/
+*.db
+*.db.*
+*.sqlite
+*.sqlite3
+*.dump
+aast-ai-agent-main/backend/data/conversations.json
+aast-ai-agent-main/backend/decision_memory.json
+
+# ========================
+# Institutional data / proprietary datasets / env templates
+# (kept out of the public repo; present in local/private snapshots only)
+# ========================
+.env.docker.example
+aast-ai-agent-main/backend/.env.example
+aast-ai-agent-main/frontend/.env.example
+college-decision-system-backend/.env.example
+aast-ai-agent-main/backend/data/clean_graph.json
+aast-ai-agent-main/backend/data/faq.json
+aast-ai-agent-main/backend/rag_system/cleaned_chunked_cai_production_v4.json
+aast-ai-agent-main/backend/testing/kg_benchmark_expanded.json
+college-decision-system-backend/tests/fixtures/colleges/CCIT_HELIOPOLIS.json
+college-decision-system-backend/tests/fixtures/colleges/PHARM_ABUKIR.json
+
+# ========================
+# Generated / binary files
+# ========================
+*.7z
+*.zip
+*.tar
+*.gz
+*.tgz
+*.exe
+*.wav
+*.webm
+*.mp3
+*_report.json
+*_stats.json
+benchmark_summary.md
+
+# ========================
+# Local research and recovery archives
+# ========================
+/backup/
+/.playwright-mcp/
+/archive/
+/book/
+/colleges/
+/docs/
+/relationship/
+/step8/
+/multimodal/
+/*_RECOVERY_*.md
+/FULL_INFRASTRUCTURE_RECOVERY_AUDIT.md
+/RAG_AND_CODEBASE_RECOVERY_REPORT.md
+
+# Historical nested workspace copies
+/aast-ai-agent-main/frontend/aast-ai-agent-main/
+/aast-ai-agent-main/frontend/college-decision-system-backend/
+/aast-ai-agent-main/frontend/frontend/
+/aast-ai-agent-main/frontend/multimodal/
+/aast-ai-agent-main/frontend-test/
+/aast-ai-agent-main/PPT/
+
+# ========================
+# OS / Editor
+# ========================
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ========================
+# Claude Code local state
+# ========================
+.claude/

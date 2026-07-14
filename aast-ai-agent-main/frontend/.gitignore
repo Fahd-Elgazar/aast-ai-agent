@@ -1,0 +1,73 @@
+<<<<<<< HEAD
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+=======
+# ========================
+# Node
+# ========================
+node_modules/
+npm-debug.log*
+
+# ========================
+# Environment variables
+# ========================
+.env
+
+# ========================
+# Logs
+# ========================
+logs/
+*.log
+
+# ========================
+# Python
+# ========================
+__pycache__/
+*.pyc
+
+# ========================
+# Databases / Vector DB
+# ========================
+chroma_aast/
+
+# ========================
+# Large / compressed files
+# ========================
+*.7z
+*.zip
+*.tar
+*.gz
+
+# ========================
+# Frontend (ignore completely)
+# ========================
+frontend/
+
+# ========================
+# OS files
+# ========================
+.DS_Store
+Thumbs.db
+>>>>>>> 4e1131f1a5cef6c11f961dd4c7362053f5edf83c

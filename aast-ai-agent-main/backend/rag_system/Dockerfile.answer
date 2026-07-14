@@ -1,0 +1,15 @@
+FROM python:3.11-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+WORKDIR /app
+
+COPY requirements.answer.txt .
+RUN pip install --no-cache-dir -r requirements.answer.txt
+
+COPY phase4_llm_answer_engine.py ./
+
+EXPOSE 8002
+
+CMD ["uvicorn", "phase4_llm_answer_engine:app", "--host", "0.0.0.0", "--port", "8002"]

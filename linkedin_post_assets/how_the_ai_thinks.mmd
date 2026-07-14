@@ -1,0 +1,10 @@
+flowchart TD
+    A["Remember<br/>conversation memory"]
+    B["Understand<br/>normalize + infer intent"]
+    C["Route<br/>Brain Router chooses path"]
+    D["Retrieve<br/>Neo4j, Qdrant, Decision API"]
+    E["Synthesize<br/>Gemma, Gemini backup, fallback"]
+    F["Explain<br/>used facts + missing info"]
+    G["Persist<br/>save the turn"]
+
+    A --> B --> C --> D --> E --> F --> G

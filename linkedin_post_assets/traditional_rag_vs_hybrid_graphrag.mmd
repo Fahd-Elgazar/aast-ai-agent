@@ -1,0 +1,7 @@
+flowchart LR
+    subgraph T["Traditional RAG"]
+        T1["Embed query"] --> T2["Retrieve chunks"] --> T3["Generate answer"]
+    end
+    subgraph H["Hybrid GraphRAG"]
+        H1["Use memory"] --> H2["Brain Router"] --> H3["Neo4j + Qdrant + Decision API"] --> H4["LLM synthesis"] --> H5["Explain result"]
+    end

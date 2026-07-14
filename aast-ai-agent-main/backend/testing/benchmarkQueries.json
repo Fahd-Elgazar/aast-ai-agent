@@ -1,0 +1,43 @@
+[
+  { "query_id": "Q_KG_01", "query": "Who is the dean of the computing faculty?" },
+  { "query_id": "Q_KG_02", "query": "What are the prerequisites for AI 301?" },
+  { "query_id": "Q_KG_03", "query": "Which professors teach Data Structures?" },
+  { "query_id": "Q_KG_04", "query": "What tracks are available in the Computer Science curriculum?" },
+  { "query_id": "Q_KG_05", "query": "List all courses related to Machine Learning." },
+  { "query_id": "Q_KG_06", "query": "Who teaches Database Systems?" },
+  { "query_id": "Q_KG_07", "query": "Is Math 101 a prerequisite for Physics 201?" },
+  
+  { "query_id": "Q_RAG_01", "query": "What is the policy for academic probation?" },
+  { "query_id": "Q_RAG_02", "query": "How can I apply for a merit scholarship?" },
+  { "query_id": "Q_RAG_03", "query": "What are the transfer policies for international students?" },
+  { "query_id": "Q_RAG_04", "query": "How much is the tuition fee for the upcoming semester?" },
+  { "query_id": "Q_RAG_05", "query": "What are the late registration rules?" },
+  { "query_id": "Q_RAG_06", "query": "What is the minimum GPA to stay enrolled?" },
+  { "query_id": "Q_RAG_07", "query": "Explain the attendance regulation policy." },
+
+  { "query_id": "Q_HYB_01", "query": "If I transfer to the AI track, do my GPA requirements change?" },
+  { "query_id": "Q_HYB_02", "query": "I am on academic probation, can I still take AI 301 prerequisites?" },
+  { "query_id": "Q_HYB_03", "query": "Does the engineering dean approve scholarship applications for late registration?" },
+  { "query_id": "Q_HYB_04", "query": "What is the GPA required for the Software Engineering track?" },
+  { "query_id": "Q_HYB_05", "query": "Can international transfer students register for Data Structures?" },
+
+  { "query_id": "Q_DEC_01", "query": "I have an 85% in high school and a budget of 50000, what major should I choose?" },
+  { "query_id": "Q_DEC_02", "query": "Compare Computer Science with Artificial Intelligence." },
+  { "query_id": "Q_DEC_03", "query": "I love math and coding, which specialization fits me best?" },
+  { "query_id": "Q_DEC_04", "query": "Which major is better for someone interested in robotics, CS or Mechatronics?" },
+  
+  { "query_id": "Q_CAR_01", "query": "How do I become a Machine Learning Engineer?" },
+  { "query_id": "Q_CAR_02", "query": "What jobs can I get if I study Natural Language Processing?" },
+  { "query_id": "Q_CAR_03", "query": "What is the roadmap for a career in AI?" },
+  { "query_id": "Q_CAR_04", "query": "What does a data scientist do post-graduation?" },
+  
+  { "query_id": "Q_FAQ_01", "query": "Where is the admissions office located?" },
+  { "query_id": "Q_FAQ_02", "query": "What are the working hours for student affairs?" },
+  { "query_id": "Q_FAQ_03", "query": "When is the deadline to pay tuition?" },
+  { "query_id": "Q_FAQ_04", "query": "How can I contact the IT support desk?" },
+  
+  { "query_id": "Q_LLM_01", "query": "I'm feeling unmotivated to study, any advice?" },
+  { "query_id": "Q_LLM_02", "query": "What is your favorite color?" },
+  { "query_id": "Q_LLM_03", "query": "Can you summarize the plot of Lord of the Rings?" },
+  { "query_id": "Q_LLM_04", "query": "Write a python script for a calculator." }
+]

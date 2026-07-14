@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200">
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+<feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#0F172A" flood-opacity="0.10"/>
+</filter>
+<marker id="arrow" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L12,7 L2,12 z" fill="#8A94A6"/>
+</marker>
+</defs>
+<rect width="1200" height="1200" fill="#F6F8FB"/>
+<text x="72" y="102" font-family="Segoe UI, Arial" font-size="42" font-weight="700" fill="#111827">Traditional RAG vs Hybrid GraphRAG</text>
+<text x="74" y="144" font-family="Segoe UI, Arial" font-size="21" font-weight="400" fill="#5B6675">What changes when routing, graph facts, and decision support join vector</text>
+<text x="74" y="174" font-family="Segoe UI, Arial" font-size="21" font-weight="400" fill="#5B6675">retrieval.</text>
+<rect x="70" y="195" width="505" height="835" rx="28" fill="#FFFFFF" stroke="#D9E1EC" stroke-width="2"/>
+<rect x="625" y="195" width="505" height="835" rx="28" fill="#FFFFFF" stroke="#D9E1EC" stroke-width="2"/>
+<text x="110" y="258" font-family="Segoe UI, Arial" font-size="28" font-weight="700" fill="#111827">Traditional RAG</text>
+<text x="665" y="258" font-family="Segoe UI, Arial" font-size="28" font-weight="700" fill="#111827">Hybrid GraphRAG</text>
+<line x1="320.0" y1="415" x2="320.0" y2="485" stroke="#64748B" stroke-width="4" marker-end="url(#arrow)" stroke-linecap="round"/>
+<line x1="320.0" y1="590" x2="320.0" y2="660" stroke="#64748B" stroke-width="4" marker-end="url(#arrow)" stroke-linecap="round"/>
+<line x1="320.0" y1="765" x2="320.0" y2="835" stroke="#64748B" stroke-width="4" marker-end="url(#arrow)" stroke-linecap="round"/>
+<line x1="875.0" y1="395" x2="875.0" y2="445" stroke="#64748B" stroke-width="4" marker-end="url(#arrow)" stroke-linecap="round"/>
+<line x1="875.0" y1="540" x2="875.0" y2="590" stroke="#64748B" stroke-width="4" marker-end="url(#arrow)" stroke-linecap="round"/>
+<line x1="875.0" y1="685" x2="875.0" y2="735" stroke="#64748B" stroke-width="4" marker-end="url(#arrow)" stroke-linecap="round"/>
+<line x1="875.0" y1="830" x2="875.0" y2="880" stroke="#64748B" stroke-width="4" marker-end="url(#arrow)" stroke-linecap="round"/>
+<rect x="115" y="310" width="410" height="105" rx="22" fill="#F8FAFC" stroke="#D9E1EC" stroke-width="2" filter="url(#shadow)"/>
+<rect x="115" y="310" width="8" height="105" rx="4" fill="#64748B" stroke="#64748B" stroke-width="0"/>
+<text x="141" y="356" font-family="Segoe UI, Arial" font-size="23" font-weight="700" fill="#111827">1. Embed query</text>
+<text x="141" y="393" font-family="Segoe UI, Arial" font-size="18" font-weight="400" fill="#5B6675">Turn text into a vector</text>
+<rect x="115" y="485" width="410" height="105" rx="22" fill="#ECFEFF" stroke="#D9E1EC" stroke-width="2" filter="url(#shadow)"/>
+<rect x="115" y="485" width="8" height="105" rx="4" fill="#0891B2" stroke="#0891B2" stroke-width="0"/>
+<text x="141" y="531" font-family="Segoe UI, Arial" font-size="23" font-weight="700" fill="#111827">2. Retrieve chunks</text>
+<text x="141" y="568" font-family="Segoe UI, Arial" font-size="18" font-weight="400" fill="#5B6675">Find similar documents</text>
+<rect x="115" y="660" width="410" height="105" rx="22" fill="#F5F3FF" stroke="#D9E1EC" stroke-width="2" filter="url(#shadow)"/>
+<rect x="115" y="660" width="8" height="105" rx="4" fill="#7C3AED" stroke="#7C3AED" stroke-width="0"/>
+<text x="141" y="706" font-family="Segoe UI, Arial" font-size="23" font-weight="700" fill="#111827">3. Generate answer</text>
+<text x="141" y="743" font-family="Segoe UI, Arial" font-size="18" font-weight="400" fill="#5B6675">LLM writes from retrieved context</text>
+<rect x="115" y="835" width="410" height="105" rx="22" fill="#F8FAFC" stroke="#D9E1EC" stroke-width="2" filter="url(#shadow)"/>
+<rect x="115" y="835" width="8" height="105" rx="4" fill="#64748B" stroke="#64748B" stroke-width="0"/>
+<text x="141" y="881" font-family="Segoe UI, Arial" font-size="23" font-weight="700" fill="#111827">Common limitation</text>
+<text x="141" y="918" font-family="Segoe UI, Arial" font-size="18" font-weight="400" fill="#5B6675">Relationships and policy boundaries can be implicit</text>
+<rect x="670" y="300" width="410" height="95" rx="22" fill="#FFF7ED" stroke="#D9E1EC" stroke-width="2" filter="url(#shadow)"/>
+<rect x="670" y="300" width="8" height="95" rx="4" fill="#D97706" stroke="#D97706" stroke-width="0"/>
+<text x="696" y="346" font-family="Segoe UI, Arial" font-size="23" font-weight="700" fill="#111827">1. Use memory</text>
+<text x="696" y="376" font-family="Segoe UI, Arial" font-size="18" font-weight="400" fill="#5B6675">Conversation-aware query handling</text>
+<rect x="670" y="445" width="410" height="95" rx="22" fill="#F5F3FF" stroke="#D9E1EC" stroke-width="2" filter="url(#shadow)"/>
+<rect x="670" y="445" width="8" height="95" rx="4" fill="#7C3AED" stroke="#7C3AED" stroke-width="0"/>
+<text x="696" y="491" font-family="Segoe UI, Arial" font-size="23" font-weight="700" fill="#111827">2. Route intelligently</text>
+<text x="696" y="521" font-family="Segoe UI, Arial" font-size="18" font-weight="400" fill="#5B6675">Brain Router selects KG, RAG, Hybrid, Decision</text>
+<rect x="670" y="590" width="410" height="95" rx="22" fill="#ECFDF5" stroke="#D9E1EC" stroke-width="2" filter="url(#shadow)"/>
+<rect x="670" y="590" width="8" height="95" rx="4" fill="#059669" stroke="#059669" stroke-width="0"/>
+<text x="696" y="636" font-family="Segoe UI, Arial" font-size="23" font-weight="700" fill="#111827">3. Retrieve from specialists</text>
+<text x="696" y="666" font-family="Segoe UI, Arial" font-size="18" font-weight="400" fill="#5B6675">Neo4j facts + Qdrant sources + Decision API</text>
+<rect x="670" y="735" width="410" height="95" rx="22" fill="#F5F3FF" stroke="#D9E1EC" stroke-width="2" filter="url(#shadow)"/>
+<rect x="670" y="735" width="8" height="95" rx="4" fill="#7C3AED" stroke="#7C3AED" stroke-width="0"/>
+<text x="696" y="781" font-family="Segoe UI, Arial" font-size="23" font-weight="700" fill="#111827">4. Synthesize safely</text>
+<text x="696" y="811" font-family="Segoe UI, Arial" font-size="18" font-weight="400" fill="#5B6675">Gemma primary, Gemini backup, fallback</text>
+<rect x="670" y="880" width="410" height="95" rx="22" fill="#EFF6FF" stroke="#D9E1EC" stroke-width="2" filter="url(#shadow)"/>
+<rect x="670" y="880" width="8" height="95" rx="4" fill="#2563EB" stroke="#2563EB" stroke-width="0"/>
+<text x="696" y="926" font-family="Segoe UI, Arial" font-size="23" font-weight="700" fill="#111827">5. Explain result</text>
+<text x="696" y="956" font-family="Segoe UI, Arial" font-size="18" font-weight="400" fill="#5B6675">used_facts, graph payload, missing_information</text>
+</svg>

@@ -1,0 +1,41 @@
+{
+  "project_post_name": "Explainable Hybrid GraphRAG Academic Platform",
+  "official_repository_name": "AAST AI Academic Advisor",
+  "design_system": "square_1200_mobile_first",
+  "exports": [
+    "png",
+    "svg",
+    "pdf",
+    "mmd",
+    "drawio"
+  ],
+  "generated_files": [
+    "README.md",
+    "architecture_light.drawio",
+    "architecture_light.mmd",
+    "architecture_light.pdf",
+    "architecture_light.png",
+    "architecture_light.svg",
+    "how_the_ai_thinks.drawio",
+    "how_the_ai_thinks.mmd",
+    "how_the_ai_thinks.pdf",
+    "how_the_ai_thinks.png",
+    "how_the_ai_thinks.svg",
+    "linkedin_infographic_1200x1200.pdf",
+    "linkedin_infographic_1200x1200.png",
+    "linkedin_infographic_1200x1200.svg",
+    "linkedin_post_caption.md",
+    "manifest.json",
+    "request_lifecycle.drawio",
+    "request_lifecycle.mmd",
+    "request_lifecycle.pdf",
+    "request_lifecycle.png",
+    "request_lifecycle.svg",
+    "source_architecture_evidence.md",
+    "traditional_rag_vs_hybrid_graphrag.drawio",
+    "traditional_rag_vs_hybrid_graphrag.mmd",
+    "traditional_rag_vs_hybrid_graphrag.pdf",
+    "traditional_rag_vs_hybrid_graphrag.png",
+    "traditional_rag_vs_hybrid_graphrag.svg"
+  ]
+}

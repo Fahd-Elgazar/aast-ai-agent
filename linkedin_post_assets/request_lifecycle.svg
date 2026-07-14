@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200">
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+<feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#0F172A" flood-opacity="0.10"/>
+</filter>
+<marker id="arrow" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L12,7 L2,12 z" fill="#8A94A6"/>
+</marker>
+</defs>
+<rect width="1200" height="1200" fill="#F6F8FB"/>
+<text x="72" y="102" font-family="Segoe UI, Arial" font-size="42" font-weight="700" fill="#111827">Request Lifecycle</text>
+<text x="74" y="144" font-family="Segoe UI, Arial" font-size="21" font-weight="400" fill="#5B6675">Endpoint: POST /api/chatbot/query</text>
+<rect x="95" y="585" width="1010" height="205" rx="28" fill="#FFFFFF" stroke="#D9E1EC" stroke-width="2"/>
+<text x="130" y="636" font-family="Segoe UI, Arial" font-size="24" font-weight="700" fill="#111827">4. Retrieve evidence</text>
+<line x1="600.0" y1="310" x2="600.0" y2="355" stroke="#64748B" stroke-width="4" marker-end="url(#arrow)" stroke-linecap="round"/>
+<line x1="600.0" y1="445" x2="600.0" y2="490" stroke="#64748B" stroke-width="4" marker-end="url(#arrow)" stroke-linecap="round"/>
+<line x1="600.0" y1="580" x2="600.0" y2="585" stroke="#64748B" stroke-width="4" marker-end="url(#arrow)" stroke-linecap="round"/>
+<line x1="600.0" y1="790" x2="600.0" y2="835" stroke="#64748B" stroke-width="4" marker-end="url(#arrow)" stroke-linecap="round"/>
+<line x1="600.0" y1="925" x2="600.0" y2="970" stroke="#64748B" stroke-width="4" marker-end="url(#arrow)" stroke-linecap="round"/>
+<rect x="185" y="220" width="830" height="90" rx="22" fill="#EFF6FF" stroke="#D9E1EC" stroke-width="2" filter="url(#shadow)"/>
+<rect x="185" y="220" width="8" height="90" rx="4" fill="#2563EB" stroke="#2563EB" stroke-width="0"/>
+<text x="211" y="266" font-family="Segoe UI, Arial" font-size="23" font-weight="700" fill="#111827">1. Ask</text>
+<text x="211" y="296" font-family="Segoe UI, Arial" font-size="18" font-weight="400" fill="#5B6675">React UI sends query + conversation id</text>
+<rect x="185" y="355" width="830" height="90" rx="22" fill="#FFF7ED" stroke="#D9E1EC" stroke-width="2" filter="url(#shadow)"/>
+<rect x="185" y="355" width="8" height="90" rx="4" fill="#D97706" stroke="#D97706" stroke-width="0"/>
+<text x="211" y="401" font-family="Segoe UI, Arial" font-size="23" font-weight="700" fill="#111827">2. Normalize + Remember</text>
+<text x="211" y="431" font-family="Segoe UI, Arial" font-size="18" font-weight="400" fill="#5B6675">Clean academic wording and load conversation memory</text>
+<rect x="185" y="490" width="830" height="90" rx="22" fill="#F5F3FF" stroke="#D9E1EC" stroke-width="2" filter="url(#shadow)"/>
+<rect x="185" y="490" width="8" height="90" rx="4" fill="#7C3AED" stroke="#7C3AED" stroke-width="0"/>
+<text x="211" y="536" font-family="Segoe UI, Arial" font-size="23" font-weight="700" fill="#111827">3. Route</text>
+<text x="211" y="566" font-family="Segoe UI, Arial" font-size="18" font-weight="400" fill="#5B6675">Brain Router combines intent signals with subsystem health</text>
+<rect x="130" y="645" width="290" height="95" rx="22" fill="#ECFDF5" stroke="#D9E1EC" stroke-width="2" filter="url(#shadow)"/>
+<rect x="130" y="645" width="8" height="95" rx="4" fill="#059669" stroke="#059669" stroke-width="0"/>
+<text x="156" y="691" font-family="Segoe UI, Arial" font-size="23" font-weight="700" fill="#111827">Neo4j</text>
+<text x="156" y="721" font-family="Segoe UI, Arial" font-size="18" font-weight="400" fill="#5B6675">graph facts</text>
+<rect x="455" y="645" width="290" height="95" rx="22" fill="#ECFEFF" stroke="#D9E1EC" stroke-width="2" filter="url(#shadow)"/>
+<rect x="455" y="645" width="8" height="95" rx="4" fill="#0891B2" stroke="#0891B2" stroke-width="0"/>
+<text x="481" y="691" font-family="Segoe UI, Arial" font-size="23" font-weight="700" fill="#111827">Qdrant RAG</text>
+<text x="481" y="721" font-family="Segoe UI, Arial" font-size="18" font-weight="400" fill="#5B6675">retrieved sources</text>
+<rect x="780" y="645" width="290" height="95" rx="22" fill="#FFF1F2" stroke="#D9E1EC" stroke-width="2" filter="url(#shadow)"/>
+<rect x="780" y="645" width="8" height="95" rx="4" fill="#E11D48" stroke="#E11D48" stroke-width="0"/>
+<text x="806" y="691" font-family="Segoe UI, Arial" font-size="23" font-weight="700" fill="#111827">Decision API</text>
+<text x="806" y="721" font-family="Segoe UI, Arial" font-size="18" font-weight="400" fill="#5B6675">recommendations</text>
+<rect x="185" y="835" width="830" height="90" rx="22" fill="#F5F3FF" stroke="#D9E1EC" stroke-width="2" filter="url(#shadow)"/>
+<rect x="185" y="835" width="8" height="90" rx="4" fill="#7C3AED" stroke="#7C3AED" stroke-width="0"/>
+<text x="211" y="881" font-family="Segoe UI, Arial" font-size="23" font-weight="700" fill="#111827">5. Synthesize</text>
+<text x="211" y="911" font-family="Segoe UI, Arial" font-size="18" font-weight="400" fill="#5B6675">Gemma primary, Gemini backup, deterministic fallback</text>
+<rect x="185" y="970" width="830" height="90" rx="22" fill="#EFF6FF" stroke="#D9E1EC" stroke-width="2" filter="url(#shadow)"/>
+<rect x="185" y="970" width="8" height="90" rx="4" fill="#2563EB" stroke="#2563EB" stroke-width="0"/>
+<text x="211" y="1016" font-family="Segoe UI, Arial" font-size="23" font-weight="700" fill="#111827">6. Respond + Save</text>
+<text x="211" y="1046" font-family="Segoe UI, Arial" font-size="18" font-weight="400" fill="#5B6675">Answer, graph data, used facts, missing information</text>
+</svg>

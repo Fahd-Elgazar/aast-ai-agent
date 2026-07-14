@@ -1,0 +1,9 @@
+flowchart TD
+    A["1. Ask<br/>React UI sends query + cid"]
+    B["2. Normalize + Remember<br/>Clean wording and load memory"]
+    C["3. Route<br/>Brain Router scores intent and health"]
+    D["4. Retrieve Evidence<br/>KG, RAG, Hybrid, Decision, FAQ"]
+    E["5. Synthesize<br/>Gemma primary, Gemini backup, fallback"]
+    F["6. Respond + Save<br/>Answer, graph, used facts, missing info"]
+
+    A --> B --> C --> D --> E --> F

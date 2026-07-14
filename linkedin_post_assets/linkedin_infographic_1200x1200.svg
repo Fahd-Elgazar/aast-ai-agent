@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200">
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+<feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#0F172A" flood-opacity="0.10"/>
+</filter>
+<marker id="arrow" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L12,7 L2,12 z" fill="#8A94A6"/>
+</marker>
+</defs>
+<rect width="1200" height="1200" fill="#F6F8FB"/>
+<text x="72" y="102" font-family="Segoe UI, Arial" font-size="42" font-weight="700" fill="#111827">How Our AI Answers Questions</text>
+<text x="74" y="144" font-family="Segoe UI, Arial" font-size="21" font-weight="400" fill="#5B6675">AAST AI Academic Advisor | Explainable Hybrid GraphRAG Academic Platform</text>
+<rect x="70" y="530" width="1060" height="255" rx="28" fill="#FFFFFF" stroke="#D9E1EC" stroke-width="2"/>
+<text x="110" y="586" font-family="Segoe UI, Arial" font-size="24" font-weight="700" fill="#111827">Verified evidence systems</text>
+<line x1="460.0" y1="345" x2="600.0" y2="380" stroke="#64748B" stroke-width="4" marker-end="url(#arrow)" stroke-linecap="round"/>
+<line x1="740.0" y1="345" x2="600.0" y2="380" stroke="#64748B" stroke-width="4" marker-end="url(#arrow)" stroke-linecap="round"/>
+<line x1="600.0" y1="505" x2="600.0" y2="530" stroke="#64748B" stroke-width="4" marker-end="url(#arrow)" stroke-linecap="round"/>
+<line x1="600.0" y1="785" x2="600.0" y2="835" stroke="#64748B" stroke-width="4" marker-end="url(#arrow)" stroke-linecap="round"/>
+<line x1="600.0" y1="965" x2="600.0" y2="1035" stroke="#64748B" stroke-width="4" marker-end="url(#arrow)" stroke-linecap="round"/>
+<rect x="340" y="230" width="240" height="115" rx="22" fill="#EFF6FF" stroke="#D9E1EC" stroke-width="2" filter="url(#shadow)"/>
+<rect x="340" y="230" width="8" height="115" rx="4" fill="#2563EB" stroke="#2563EB" stroke-width="0"/>
+<text x="366" y="276" font-family="Segoe UI, Arial" font-size="23" font-weight="700" fill="#111827">Question</text>
+<text x="366" y="313" font-family="Segoe UI, Arial" font-size="18" font-weight="400" fill="#5B6675">student query</text>
+<text x="366" y="338" font-family="Segoe UI, Arial" font-size="18" font-weight="400" fill="#5B6675">conversation id</text>
+<rect x="620" y="230" width="240" height="115" rx="22" fill="#FFF7ED" stroke="#D9E1EC" stroke-width="2" filter="url(#shadow)"/>
+<rect x="620" y="230" width="8" height="115" rx="4" fill="#D97706" stroke="#D97706" stroke-width="0"/>
+<text x="646" y="276" font-family="Segoe UI, Arial" font-size="23" font-weight="700" fill="#111827">Memory</text>
+<text x="646" y="313" font-family="Segoe UI, Arial" font-size="18" font-weight="400" fill="#5B6675">history</text>
+<text x="646" y="338" font-family="Segoe UI, Arial" font-size="18" font-weight="400" fill="#5B6675">recent subjects</text>
+<rect x="340" y="380" width="520" height="125" rx="22" fill="#F5F3FF" stroke="#D9E1EC" stroke-width="2" filter="url(#shadow)"/>
+<rect x="340" y="380" width="8" height="125" rx="4" fill="#7C3AED" stroke="#7C3AED" stroke-width="0"/>
+<text x="366" y="426" font-family="Segoe UI, Arial" font-size="23" font-weight="700" fill="#111827">Brain Router</text>
+<text x="366" y="463" font-family="Segoe UI, Arial" font-size="18" font-weight="400" fill="#5B6675">intent + subsystem health</text>
+<text x="366" y="488" font-family="Segoe UI, Arial" font-size="18" font-weight="400" fill="#5B6675">KG, RAG, Hybrid, Decision, FAQ, fallback</text>
+<rect x="115" y="615" width="300" height="115" rx="22" fill="#ECFDF5" stroke="#D9E1EC" stroke-width="2" filter="url(#shadow)"/>
+<rect x="115" y="615" width="8" height="115" rx="4" fill="#059669" stroke="#059669" stroke-width="0"/>
+<text x="141" y="661" font-family="Segoe UI, Arial" font-size="23" font-weight="700" fill="#111827">Knowledge Graph</text>
+<text x="141" y="698" font-family="Segoe UI, Arial" font-size="18" font-weight="400" fill="#5B6675">Neo4j</text>
+<text x="141" y="723" font-family="Segoe UI, Arial" font-size="18" font-weight="400" fill="#5B6675">academic relationships</text>
+<rect x="450" y="615" width="300" height="115" rx="22" fill="#ECFEFF" stroke="#D9E1EC" stroke-width="2" filter="url(#shadow)"/>
+<rect x="450" y="615" width="8" height="115" rx="4" fill="#0891B2" stroke="#0891B2" stroke-width="0"/>
+<text x="476" y="661" font-family="Segoe UI, Arial" font-size="23" font-weight="700" fill="#111827">Vector RAG</text>
+<text x="476" y="698" font-family="Segoe UI, Arial" font-size="18" font-weight="400" fill="#5B6675">Qdrant</text>
+<text x="476" y="723" font-family="Segoe UI, Arial" font-size="18" font-weight="400" fill="#5B6675">BAAI/bge-m3 sources</text>
+<rect x="785" y="615" width="300" height="115" rx="22" fill="#FFF1F2" stroke="#D9E1EC" stroke-width="2" filter="url(#shadow)"/>
+<rect x="785" y="615" width="8" height="115" rx="4" fill="#E11D48" stroke="#E11D48" stroke-width="0"/>
+<text x="811" y="661" font-family="Segoe UI, Arial" font-size="23" font-weight="700" fill="#111827">Decision Support</text>
+<text x="811" y="698" font-family="Segoe UI, Arial" font-size="18" font-weight="400" fill="#5B6675">FastAPI</text>
+<text x="811" y="723" font-family="Segoe UI, Arial" font-size="18" font-weight="400" fill="#5B6675">program recommendations</text>
+<rect x="225" y="835" width="750" height="130" rx="22" fill="#F5F3FF" stroke="#D9E1EC" stroke-width="2" filter="url(#shadow)"/>
+<rect x="225" y="835" width="8" height="130" rx="4" fill="#7C3AED" stroke="#7C3AED" stroke-width="0"/>
+<text x="251" y="881" font-family="Segoe UI, Arial" font-size="23" font-weight="700" fill="#111827">LLM Synthesis</text>
+<text x="251" y="918" font-family="Segoe UI, Arial" font-size="18" font-weight="400" fill="#5B6675">Gemma primary, Gemini backup, deterministic fallback</text>
+<rect x="340" y="1035" width="520" height="95" rx="22" fill="#EFF6FF" stroke="#D9E1EC" stroke-width="2" filter="url(#shadow)"/>
+<rect x="340" y="1035" width="8" height="95" rx="4" fill="#2563EB" stroke="#2563EB" stroke-width="0"/>
+<text x="366" y="1081" font-family="Segoe UI, Arial" font-size="23" font-weight="700" fill="#111827">Grounded Answer</text>
+<text x="366" y="1111" font-family="Segoe UI, Arial" font-size="18" font-weight="400" fill="#5B6675">final_answer, used_facts, missing_information</text>
+</svg>

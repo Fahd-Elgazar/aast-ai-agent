@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200">
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+<feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#0F172A" flood-opacity="0.10"/>
+</filter>
+<marker id="arrow" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L12,7 L2,12 z" fill="#8A94A6"/>
+</marker>
+</defs>
+<rect width="1200" height="1200" fill="#F6F8FB"/>
+<text x="72" y="102" font-family="Segoe UI, Arial" font-size="42" font-weight="700" fill="#111827">How the AI Thinks</text>
+<text x="74" y="144" font-family="Segoe UI, Arial" font-size="21" font-weight="400" fill="#5B6675">Evidence first. Routing second. LLM synthesis only after grounding.</text>
+<line x1="600.0" y1="307" x2="600.0" y2="335" stroke="#64748B" stroke-width="4" marker-end="url(#arrow)" stroke-linecap="round"/>
+<line x1="600.0" y1="427" x2="600.0" y2="455" stroke="#64748B" stroke-width="4" marker-end="url(#arrow)" stroke-linecap="round"/>
+<line x1="600.0" y1="547" x2="600.0" y2="575" stroke="#64748B" stroke-width="4" marker-end="url(#arrow)" stroke-linecap="round"/>
+<line x1="600.0" y1="667" x2="600.0" y2="695" stroke="#64748B" stroke-width="4" marker-end="url(#arrow)" stroke-linecap="round"/>
+<line x1="600.0" y1="787" x2="600.0" y2="815" stroke="#64748B" stroke-width="4" marker-end="url(#arrow)" stroke-linecap="round"/>
+<line x1="600.0" y1="907" x2="600.0" y2="935" stroke="#64748B" stroke-width="4" marker-end="url(#arrow)" stroke-linecap="round"/>
+<rect x="170" y="215" width="860" height="92" rx="22" fill="#FFF7ED" stroke="#D9E1EC" stroke-width="2" filter="url(#shadow)"/>
+<rect x="170" y="215" width="8" height="92" rx="4" fill="#D97706" stroke="#D97706" stroke-width="0"/>
+<text x="196" y="261" font-family="Segoe UI, Arial" font-size="23" font-weight="700" fill="#111827">1. Remember</text>
+<text x="196" y="293" font-family="Segoe UI, Arial" font-size="20" font-weight="400" fill="#5B6675">conversation memory</text>
+<rect x="170" y="335" width="860" height="92" rx="22" fill="#EFF6FF" stroke="#D9E1EC" stroke-width="2" filter="url(#shadow)"/>
+<rect x="170" y="335" width="8" height="92" rx="4" fill="#2563EB" stroke="#2563EB" stroke-width="0"/>
+<text x="196" y="381" font-family="Segoe UI, Arial" font-size="23" font-weight="700" fill="#111827">2. Understand</text>
+<text x="196" y="413" font-family="Segoe UI, Arial" font-size="20" font-weight="400" fill="#5B6675">normalize + infer intent</text>
+<rect x="170" y="455" width="860" height="92" rx="22" fill="#F5F3FF" stroke="#D9E1EC" stroke-width="2" filter="url(#shadow)"/>
+<rect x="170" y="455" width="8" height="92" rx="4" fill="#7C3AED" stroke="#7C3AED" stroke-width="0"/>
+<text x="196" y="501" font-family="Segoe UI, Arial" font-size="23" font-weight="700" fill="#111827">3. Route</text>
+<text x="196" y="533" font-family="Segoe UI, Arial" font-size="20" font-weight="400" fill="#5B6675">Brain Router chooses path</text>
+<rect x="170" y="575" width="860" height="92" rx="22" fill="#ECFDF5" stroke="#D9E1EC" stroke-width="2" filter="url(#shadow)"/>
+<rect x="170" y="575" width="8" height="92" rx="4" fill="#059669" stroke="#059669" stroke-width="0"/>
+<text x="196" y="621" font-family="Segoe UI, Arial" font-size="23" font-weight="700" fill="#111827">4. Retrieve</text>
+<text x="196" y="653" font-family="Segoe UI, Arial" font-size="20" font-weight="400" fill="#5B6675">Neo4j, Qdrant, Decision API</text>
+<rect x="170" y="695" width="860" height="92" rx="22" fill="#F5F3FF" stroke="#D9E1EC" stroke-width="2" filter="url(#shadow)"/>
+<rect x="170" y="695" width="8" height="92" rx="4" fill="#7C3AED" stroke="#7C3AED" stroke-width="0"/>
+<text x="196" y="741" font-family="Segoe UI, Arial" font-size="23" font-weight="700" fill="#111827">5. Synthesize</text>
+<text x="196" y="773" font-family="Segoe UI, Arial" font-size="20" font-weight="400" fill="#5B6675">Gemma, Gemini backup, fallback</text>
+<rect x="170" y="815" width="860" height="92" rx="22" fill="#EFF6FF" stroke="#D9E1EC" stroke-width="2" filter="url(#shadow)"/>
+<rect x="170" y="815" width="8" height="92" rx="4" fill="#2563EB" stroke="#2563EB" stroke-width="0"/>
+<text x="196" y="861" font-family="Segoe UI, Arial" font-size="23" font-weight="700" fill="#111827">6. Explain</text>
+<text x="196" y="893" font-family="Segoe UI, Arial" font-size="20" font-weight="400" fill="#5B6675">used facts + missing info</text>
+<rect x="170" y="935" width="860" height="92" rx="22" fill="#FFF7ED" stroke="#D9E1EC" stroke-width="2" filter="url(#shadow)"/>
+<rect x="170" y="935" width="8" height="92" rx="4" fill="#D97706" stroke="#D97706" stroke-width="0"/>
+<text x="196" y="981" font-family="Segoe UI, Arial" font-size="23" font-weight="700" fill="#111827">7. Persist</text>
+<text x="196" y="1013" font-family="Segoe UI, Arial" font-size="20" font-weight="400" fill="#5B6675">save the turn</text>
+</svg>
