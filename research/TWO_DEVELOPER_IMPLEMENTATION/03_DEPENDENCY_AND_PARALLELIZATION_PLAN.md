@@ -43,7 +43,7 @@ flowchart LR
 
 | Checkpoint | What each person can do | Required handshake |
 |---|---|---|
-| Before source access | Mohammed arranges approved common code/fixture transport. Teammate reads the plan, verifies access and tools. | Two authenticated accounts, canonical clean parent, reviewed source distribution. |
+| Intake | Both fetch the published baseline. Mohammed arranges private cleanup transfer and approved fixture inputs. | Two accounts verify the same pinned source SHA and establish a reviewed PR route. |
 | P0 | Teammate reviews the exact cleanup, Mohammed prepares disposable baseline profile and consumer examples. | The approvers agree cleaned commit, replay pack, matched baseline metrics, frozen examples and limits. |
 | Wave 1 | Mohammed uses contract-returning doubles to exercise state and route. Teammate feeds the identical example plans into real adapters and judge. | Run at least one exact graph + document split, a missing part and an old single-part call with the actual P1 planner and P2 adapters. Compare IDs, stage events and order. |
 | Wave 2 | Mohammed edits public replies and lifecycle in sequence. Teammate runs independent cross-lane and cancellation fixtures through the integrated lower layers. | Compare the same oracle against the new public envelope. Reopen the producing phase if its output fails even with a correct caller. |

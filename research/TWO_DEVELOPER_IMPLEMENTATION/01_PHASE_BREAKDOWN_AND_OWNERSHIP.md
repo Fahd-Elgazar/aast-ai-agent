@@ -1,6 +1,6 @@
 # Phase cards and acceptance evidence
 
-Each phase has one accountable lead. In P0 and P5 both people must participate and attest independently. Task estimates cover execution. Cross-review allowance is in the master strategy. Each phase PR includes the named code or documentation, local test changes, commands, fixture fingerprints and review decision. New paths below are proposals for the future approved code repository.
+Each phase has one accountable lead. In P0 and P5 both people must participate and attest independently. Task estimates cover execution. Cross-review allowance is in the master strategy. Each phase PR includes the named code or documentation, local test changes, commands, fixture fingerprints and review decision. New paths below are proposed outputs on the signed phase branches.
 
 ## P0 · Reproducible baseline and contract freeze
 
@@ -10,7 +10,7 @@ Entry requires Mohammed’s approval to start P0. Only the baseline review mater
 
 ### BASE · Mohammed Hassan · 1.5 engineer-days
 
-Secure an approved common source location and independent cleanup-review ref. Inventory locked dependencies, eligible historical patches, fixture rights, model IDs, capacity and a disposable deployment profile. Record the clean parent, five normalized Git blobs and allowlisted fixture fingerprints in the baseline review.
+Verify both machines can fetch the published source. Arrange private transfer of the five-file patch by checksum and record the synthetic replay digest, approved evidence fixture rights, model IDs, dependency advisories, capacity and disposable deployment profile.
 
 | Field | Agreement |
 |---|---|
@@ -20,7 +20,7 @@ Secure an approved common source location and independent cleanup-review ref. In
 | Proposed files to create | `research/conversation-baseline/profile.json`, `research/conversation-baseline/replay.json` |
 | Implementation and acceptance evidence | Both machines can fetch the same clean parent and read the review diff and synthetic case pack. Shared mounts, published ports and model/dataset substitutions are ruled out by inspecting resolved settings locally. |
 | Verification procedures | BASELINE in [test gates](06_TESTING_AND_ACCEPTANCE_GATES.md) |
-| Main risk | The public remote lacks 61 commits. Replaying a branch wholesale can duplicate prior integrations or disclose private history. |
+| Main risk | The public snapshot excludes unpublished ancestry. Future recovery must use reviewed patches, and authorized evidence fixtures must match on both machines. |
 | Reversal | Withdraw the proposed ref from consideration and keep development gated on the last agreed identity. |
 | Reviewer | Teammate |
 
@@ -42,7 +42,7 @@ Independently review five cleanup diffs on machine 2. Inspect exports, call site
 
 ### FREEZE · Mohammed Hassan · 2 engineer-days
 
-Lead the joint freeze. Build and smoke the reviewed cleaned baseline on a disposable full stack. Agree producer/consumer examples, latency profile, absence semantics, synthetic export limits, and tests. Admit the plan documents to the approved integration line as a separate documentation commit.
+Lead the joint freeze. Build and smoke the reviewed cleaned baseline on a disposable full stack. Agree producer/consumer examples, latency profile, absence semantics, synthetic export limits, and tests. Record the verified GitHub baseline and both reviewers’ acceptance in the freeze evidence.
 
 | Field | Agreement |
 |---|---|

@@ -1,0 +1,24 @@
+# Six-phase plan validation
+
+**Decision.** Keep the six phases, 16 tasks, 19 prerequisite edges and existing ownership. The validated source is `1ffc196b402cad48b0fea7c952d1d7584fce2d05` on `integration/latest-project-baseline`. We independently reproduced the S-A01/4 resolver failure in that build tree. The referent resolved to Data Science while the explicit Machine Learning question became “What careers can Data Science lead to?” That confirms the need for STATE despite the passing older test suite. [Root cause](../CONVERSATIONAL_AGENT_REBUILD/06_ROOT_CAUSE_ANALYSIS.md)
+
+| Phase | Owner and validated boundary |
+|---|---|
+| P0 | Mohammed owns BASE and FREEZE. Teammate independently owns AUDIT. Source publication and synthetic prompt transfer are complete. Independent review, machine-2 parity, fixture data and cleaned-source smoke remain. |
+| P1 | Mohammed owns TRACE, STATE and PLAN. Authenticated orchestrator, owner-scoped state and Brain Router remain the producer side. There is no stable ordered, per-question-part contract across all routes. |
+| P2 | Teammate owns GRAPH, DOC and JUDGE. Reuse exact graph helpers, RAG relevance gate, existing fusion and sentence verification. Preserve single-question callers while adding by-part scope, eligibility, rejection and adjudication. |
+| P3 | Mohammed owns BIND, VOICE and BUDGET. React already prevents stale replies and renders citations. Extend those paths and unified formatting with per-part claim provenance and bounded cancellation through the pipeline. |
+| P4 | Teammate owns CASES and QUALIFY. Build an independent oracle with positive/negative, mixed, bilingual, authority conflict and adapter fault cases. |
+| P5 | Mohammed owns CANDIDATE. Teammate owns SIGNOFF of the exact image and release evidence. |
+
+## Evidence and corrections
+
+- Checked all 17 original plan artifacts, 58 owned existing/proposed paths, 15 audit-task mappings and Mermaid/JSON edge parity. Each task has an acceptance statement and reviewer. All existing file paths resolve, proposed profiles/review files are future outputs, and no tracked path has two writers. Reviewed all six phases against the actual source and the now-passing tests.
+- Native implementation anchors were inspected in Express, React, the conversation resolver and state store, the Brain Router, Neo4j adapters, Python search and readiness, Node RAG/fusion, evidence verifier, unified answer and Decision. Request/response compatibility, owner-scoped memory, directed graph facts, `/search` defaults, grounding outcomes and citation fields are existing interfaces. QueryPlan v1, per-part adjudication and one propagated execution deadline are design targets requiring both signatures at FREEZE. A passing existing helper is a regression control and should be reused.
+- Integration docs and both developer entry points now start with the pushed source rather than a separate code repository. The plan JSON distinguishes the original source provenance from the synchronized GitHub identity. The workflow resolves how to send and independently verify the five-file patch while keeping it separate from the GitHub baseline. The audit replay is available by commit and checksum, so BASE records the fixture provenance and chooses the independent evidence controls.
+- Competing local conversation/cancellation/admission/React changes remain outside this baseline. During their existing owned tasks review intent and cancellation patches by behavior. No recovery branch is a required prerequisite. The pre-existing dependency patch was integrated separately and the affected suites were rerun. Residual npm advisories are an explicit BASE/CANDIDATE disposition.
+- Confirmed the backend npm script names and nine standalone tests, npm frontend test/lint/tsc/build, the RAG pytest command, the hermetic Decision command and Compose parse for all three manifests. See actual [test results](14_FINAL_REPOSITORY_BASELINE.md). Existing CI is narrower than native verification. Attach native results when submitting a PR and treat failed CI as a failed gate.
+
+Both waves remain valid. P1 and P2 share the signed P0 boundary. P3 and P4 follow the integrated P1/P2 producer-consumer check. P5 follows both second-wave branches. Shared edits require the controller of the affected file to write the change, both developers to agree and version any contract change, and the dependent task to rebase or merge normally and rerun the real and mocked checks.
+
+**Open before P1/P2.** Mohammed confirms the shared SHA and teammate push or fork permissions, privately sends the five-file patch for AUDIT, and signs isolated evidence/profile plus versioned contract examples with the teammate. Both machines run the native gates. The cleaned source and required graph/document/Decision positives still need an isolated full-stack reproduction. [Git workflow](05_GITHUB_BRANCH_AND_MERGE_WORKFLOW.md) · [Contract freeze](04_SHARED_INTERFACE_CONTRACTS.md)

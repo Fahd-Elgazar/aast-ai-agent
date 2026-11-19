@@ -2,6 +2,8 @@
 
 **19 November 2026.** This report covers source and configuration inspection, audit reconciliation and planning checks. Product implementation, a new cleanup deployment and the historical benchmark were outside this run.
 
+The sections below record the original planning inspection. The [final baseline](14_FINAL_REPOSITORY_BASELINE.md) and [plan validation](15_FINAL_PLAN_VALIDATION_REPORT.md) record synchronization and current test results.
+
 ## Authority and Git state
 
 The open materials directory contains the audit and an empty/unusable Git directory. Git discovery there returned “not a git repository.” The authoritative linked checkout is `C:/AI_AGENT_WORKTREES/unified-platform`. It is on branch `unified-platform` at `6367b0df91f208e518fb7e04cd7c81bdb82b9ae4`. The index matched HEAD (zero staged paths). Status showed 53 modified tracked files (48 Markdown plus the five source paths below), and 10 untracked documentation files (nine Markdown and one PDF). That matches the audit's final inventory and patch digests. The audit itself is outside that source tree. The untracked release checklist, reconciliation notes and handoff files are unsuitable as baseline dependencies for a teammate clone. Use the planning pack and new, reviewed phase evidence.

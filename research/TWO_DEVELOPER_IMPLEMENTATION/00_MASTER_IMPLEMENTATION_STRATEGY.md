@@ -2,6 +2,8 @@
 
 **Recommendation for Mohammed Hassan and the teammate · 19 November 2026**
 
+Use the verified source on integration/latest-project-baseline at 1ffc196b402cad48b0fea7c952d1d7584fce2d05. [Final baseline](14_FINAL_REPOSITORY_BASELINE.md)
+
 Use six phases with two joint decisions and two periods of independent implementation. Mohammed owns the authenticated advisor from session state through public response. The teammate owns the graph/document adapters, evidence adjudication and independent fixture qualification. The owner follows the call boundary and the files that must change together. Either coding tool can run the same tests.
 
 | Order | Mohammed / Codex | Teammate / Claude Code | Exit |
@@ -32,7 +34,7 @@ The July appliance served 125 turns across 25 synthetic conversations. In 89 tur
 
 | Decision | Accountable person | Required evidence and deadline |
 |---|---|---|
-| Use one authorized GitHub implementation repository for both machines | Mohammed | Public planning branch is documentation only. Select an access-controlled common code repository, or authorize a publishable equivalent baseline after reviewing its contents and history. Both accounts must fetch the identical approved SHA before P0 exits. |
+| Sign the shared GitHub baseline | Mohammed | Both accounts verify the synchronized SHA and branch permissions. The source and synthetic prompts are already published. Both sign the reviewed P0 entry SHA before P1/P2. |
 | Admit the cleanup and distribute the synthetic inputs | Teammate reviews, Mohammed controls transport | Review exact five-file diff and hashes independently. Provide both accounts a versioned, authorized synthetic replay pack and isolated graph/document controls. Do not transfer private corpora, credentials, working stores or unreviewed history to the public remote. |
 | Full-stack cleaned baseline vs July runtime | Mohammed | Before feature development, build cleaned source and record image, model and fixture fingerprints, reachable services, guest smoke and rollback reference. If either machine lacks capacity, reserve an isolated host for heavyweight tests and still run local contract checks on both. |
 | Future fees, application procedure/deadline and calendar scope | Teammate | Fixture ground truth must identify authority and effective version. A missing source becomes a localized gap. A missing *positive control* blocks that test from passing. |

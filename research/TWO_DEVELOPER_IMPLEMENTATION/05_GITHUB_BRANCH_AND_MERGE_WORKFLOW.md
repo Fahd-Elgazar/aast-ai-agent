@@ -1,129 +1,37 @@
 # GitHub workflow for two machines
 
-The configured remote is `https://github.com/Fahd-Elgazar/aast-ai-agent.git`. GitHub reported public visibility, WRITE for the inspecting account, default branch `main`, and no branch protection on main. The published `main` and `reliability-hardening` both pointed to `3e2f0100254a0d20a9e81b52d28c127d612f9dc1` before this operation. The planning branch is `plan/conversation-two-developer`, a docs-only child of that public revision. Treat it as a reading copy. Never branch implementation from that old tree. Both developers must use the same approved code repository for implementation PRs.
-
-## Read the plan on machine 2
+Use `Fahd-Elgazar/aast-ai-agent` and `integration/latest-project-baseline`. The screened source commit is `1ffc196b402cad48b0fea7c952d1d7584fce2d05`. The historical plan remains at `b79a5e76a6fa35a8e983d9d33f5378639f2f86f6` on `plan/conversation-two-developer`. Use the active integration branch for the current source and plan. [Verified baseline](https://github.com/Fahd-Elgazar/aast-ai-agent/tree/1ffc196b402cad48b0fea7c952d1d7584fce2d05)
 
 ```powershell
-git clone --single-branch --branch plan/conversation-two-developer https://github.com/Fahd-Elgazar/aast-ai-agent.git advisor-plan
-git -C advisor-plan rev-parse HEAD
-git -C advisor-plan diff --name-status 3e2f0100254a0d20a9e81b52d28c127d612f9dc1 HEAD
+git clone --single-branch --branch integration/latest-project-baseline https://github.com/Fahd-Elgazar/aast-ai-agent.git advisor
+Set-Location advisor
+$sourceSha = '1ffc196b402cad48b0fea7c952d1d7584fce2d05'
+git merge-base --is-ancestor $sourceSha HEAD
+# Exit code 0 confirms that the pinned source is present.
+git diff --exit-code $sourceSha HEAD -- . ':(exclude)research/TWO_DEVELOPER_IMPLEMENTATION/**'
+# Exit code 0 confirms the initial documentation-only follow-up.
 ```
 
-Compare the first output with the published planning SHA. Every added path must be in the planning directory. The [verification record](planning_verification_report.md) describes what was verified.
+Later reviewed implementation PRs advance integration. For those phases inspect the approved phase-entry SHA instead of requiring an unchanged initial source tree. Fetch the exact agreed SHA. If only public read access is available, work locally and arrange write access or a fork for the PR.
 
-## Establish the implementation remote and baseline
+## P0 and cleanup
 
-1. Mohammed selects one authorized common GitHub code repository and verifies both accounts' read/write and review access. Prefer a private implementation repository if the source/history requires restricted distribution. If the intended eventual stable branch is in the public repository, crossing that visibility boundary requires a separately reviewed publishable source/history. Confirm the intended stable target before starting code PRs.
-2. Start the separate source handoff from the exact August parent `6367b0df91f208e518fb7e04cd7c81bdb82b9ae4`. Inspect history, tracked content, environment files, private corpora and model assets before explicitly authorizing **any** transfer. A public branch from that parent would publish all missing ancestors. A private repository also requires source-distribution authorization. If the exact parent cannot be shared, stop BASE until both approve a sanitized source-equivalent commit with a tracked-tree difference manifest and repeat the baseline tests there.
-3. In the approved code repository Mohammed supplies a separate cleanup-only review ref with an explicit five-path diff against the approved parent. The teammate fetches both and compares normalized Git blob IDs, raw hashes where EOLs match, documented exports and paired tests. Record approvals on the review. Only after separate authorization admit the reviewed cleanup commit to the code baseline. Unrelated docs/untracked files never enter that commit.
-4. Create `integration/conversation-v1` in that repository at the approved cleaned SHA and bring in the planning commit as a **reviewed docs-only import** on a short P0 setup branch. Merge it via reviewed PR after inspecting the path list. No merge of public/main history is necessary. Stage the P0 profile, synthetic fixture manifest, contract examples and actual gate results on the P0 phase PR. A test-only restricted fixture bundle can be provided by an approved internal location keyed by SHA-256; do not publish it to the planning branch.
-5. Both record the integrated P0 SHA as the immutable starting point of P1/P2. Maintain separate identities for original source, cleanup, baseline docs/fixtures and built OCI image. A candidate cannot inherit the July image just because its tag is convenient.
+Mohammed records the synchronized SHA and shares the separate pending patch through an approved private channel. The teammate creates a disposable worktree at the pinned source to compare native checks before and after `git apply --check --index <patch>` and `git apply --index <patch>`. Verify the five normalized blob pairs and the patch checksum in the [baseline report](14_FINAL_REPOSITORY_BASELINE.md). Keep edits in that worktree separate from the review report branch. Do not publish the review patch, a provisional source change, local stores, or private corpus data.
 
-Commands below are **future**, after approval. Run in a new clean clone. Supply reviewed values when prompted. Stop on any nonzero exit, unexpected file, URL, access policy or SHA mismatch.
+Put AUDIT findings on `claude/p0-cleanup-review` from the synchronized integration tip and submit the report for Mohammed's review. Use the AUDIT path in the [ownership matrix](02_TASK_OWNERSHIP_MATRIX.md). If the provisional cleanup is accepted, Mohammed applies only the approved patch on a short reviewed P0 branch, adds profile and contract evidence, and merges the complete P0 gate. An unapproved behavioral hunk stays out and returns to its owner. Both record the merged P0 entry SHA to start P1/P2.
 
-```powershell
-$codeUrl = Read-Host 'Approved shared code repository URL'
-$cleanSha = Read-Host 'Full reviewed cleaned source SHA'
-git clone $codeUrl advisor-code
-Set-Location advisor-code
-git fetch origin
-git cat-file -e "$cleanSha^{commit}"
-git switch -c integration/conversation-v1 $cleanSha
-git push -u origin integration/conversation-v1
-git switch -c codex/p0-baseline
-git fetch https://github.com/Fahd-Elgazar/aast-ai-agent.git refs/heads/plan/conversation-two-developer
-$planSha = git rev-parse FETCH_HEAD
-git diff --name-status 3e2f0100254a0d20a9e81b52d28c127d612f9dc1 $planSha
-```
+## Phase branches
 
-To transplant the current planning snapshot including any verification-only follow-up commits, restore only the documentation directory into the clean P0 setup branch, then stage the explicit filenames from the verification inventory individually. Inspect any existing destination first. If the paths already exist, review differences and reconcile before importing.
-
-```powershell
-git ls-tree -r --name-only HEAD -- research/TWO_DEVELOPER_IMPLEMENTATION
-# Continue only for an empty destination after verifying the allowlist.
-git restore --source=$planSha --worktree -- research/TWO_DEVELOPER_IMPLEMENTATION
-$planFiles = git diff --diff-filter=A --name-only 3e2f0100254a0d20a9e81b52d28c127d612f9dc1 $planSha -- research/TWO_DEVELOPER_IMPLEMENTATION
-# Compare every entry to the published inventory before staging.
-git add -- $planFiles
-git diff --cached --name-status
-git diff --cached --check
-git commit -m "docs(P0): import approved collaboration plan"
-git push -u origin codex/p0-baseline
-```
-
-Open the documentation-import PR into integration. For the P0 phase itself use a fresh `codex/p0-freeze` branch from the documentation-bearing integration head. The teammate contributes the independent review artifact on a short teammate-owned branch into that phase branch. Both acknowledge the complete P0 exit before integration accepts it. During the initial bootstrap, BASE/AUDIT may use signed review attachments in the approved code repo prior to the cleaned branch existing. Transfer those records into P0 by their owner. The shared v1 examples are tracked with the P0 phase.
-
-## Future cleanup transfer after separate authorization
-
-Mohammed runs this only after the common code destination and transfer of the reviewed history are approved. From the dirty integrated checkout, use a new path outside it and an explicit pathspec. The current planning operation does not run these commands.
-
-```powershell
-$parentSha = '6367b0df91f208e518fb7e04cd7c81bdb82b9ae4'
-$reviewDir = Read-Host 'New, unused absolute path for the isolated cleanup review checkout'
-$patchFile = Join-Path ([IO.Path]::GetTempPath()) ("advisor-cleanup-" + [guid]::NewGuid() + ".patch")
-$cleanupFiles = @(
-  'aast-ai-agent-main/backend/orchestrator.js'
-  'aast-ai-agent-main/backend/services/neo4jcontext.js'
-  'aast-ai-agent-main/backend/services/decisionService.js'
-  'aast-ai-agent-main/backend/rag_system/phase3_retriever.py'
-  'aast-ai-agent-main/backend/rag_system/phase4_llm_answer_engine.py'
-)
-if ((git rev-parse HEAD) -ne $parentSha) { throw 'Source parent differs' }
-if (Test-Path -LiteralPath $reviewDir) { throw 'Choose a new review checkout path' }
-git diff --binary --output=$patchFile $parentSha -- $cleanupFiles
-git worktree add -b review/conversation-cleanup $reviewDir $parentSha
-git -C $reviewDir apply --check $patchFile
-# Stop on any nonzero result. Compare the five changed paths/blobs with the verification table.
-git -C $reviewDir apply $patchFile
-git -C $reviewDir diff --stat
-git -C $reviewDir add -- $cleanupFiles
-git -C $reviewDir diff --cached --check
-git -C $reviewDir diff --cached --name-status
-```
-
-After inspecting the staged five blobs, commit them in the review checkout with `git -C $reviewDir commit -m "chore(AUDIT): isolate cleanup candidate"`. The word “candidate” marks independent review as pending. To transfer, supply the explicitly approved code URL (the review checkout inherits the public origin), verify its identity and visibility, then push just `HEAD:refs/heads/review/conversation-cleanup` to that URL. Do not use an unqualified push. The accepted cleaned SHA is determined by the separate approval/merge. For a sanitized equivalent baseline, compare contents and obtain an equivalent reviewed patch and new digest table before using that ref.
-
-On machine 2, in the approved repository after the ref is provided:
-
-```powershell
-git fetch origin refs/heads/review/conversation-cleanup
-$reviewSha = git rev-parse FETCH_HEAD
-git diff --name-status "$reviewSha^" $reviewSha
-git rev-parse "$reviewSha^"
-git ls-tree -r $reviewSha -- aast-ai-agent-main/backend
-```
-
-Compare parent and five blob IDs with the review table. Inspect each hunk and the exports/callers, run the paired gates, and record the independent result before FREEZE accepts the cleanup. Source transfer is a separate operation from publishing this planning branch.
-
-## Development and integration queue
-
-| Phase | Branch | Base and normal order | PR reviewer |
+| Phase | Branch | Entry | Reviewer |
 |---|---|---|---|
-| P1 | codex/p1-turn-plan | integration after P0 | Teammate |
-| P2 | claude/p2-evidence | same P0 SHA as P1 | Mohammed |
-| P3 | codex/p3-replies | integration after both P1/P2 and handshake | Teammate |
-| P4 | claude/p4-qualification | same joined SHA as P3 | Mohammed |
-| P5 | codex/p5-candidate | integration after P3/P4 and handshake | Teammate, including independent sign-off |
+| P0 review | claude/p0-cleanup-review | Synchronized integration tip | Mohammed |
+| P0 freeze | codex/p0-freeze | Synchronized integration plus reviewed AUDIT | Teammate |
+| P1 | codex/p1-turn-plan | Signed P0 integration SHA | Teammate |
+| P2 | claude/p2-evidence | Same signed P0 SHA | Mohammed |
+| P3 | codex/p3-replies | Both P1/P2 complete and real-interface join passes | Teammate |
+| P4 | claude/p4-qualification | Same P1/P2 join | Mohammed |
+| P5 | codex/p5-candidate | Both P3/P4 complete | Teammate, including independent SIGNOFF |
 
-Example on machine 2 for P2. Substitute the exact branch from this table for another phase. Use a normal clean clone in the approved repository, including its remote tracking refs.
+Create branches from the verified integration head with `git fetch origin` and `git switch -c <phase-branch> origin/integration/latest-project-baseline`. Check the SHA against its entry gate. Commit selected paths with `type(TASK-ID): description` and push your own branch. Open the PR using `gh pr create --base integration/latest-project-baseline --head <phase-branch> --body-file <review-note>` or the GitHub UI after confirming the target. A PR records base and tested SHAs, tasks, scope, contract examples, fixture/model IDs, actual test results, rollback and any blocker. Keep each phase atomic. Mohammed queues merges and records the resulting SHA. P5 sign-off is attached to that phase before promotion approval.
 
-```powershell
-git fetch origin
-git switch -c claude/p2-evidence origin/integration/conversation-v1
-git rev-parse HEAD
-# Compare to the signed phase entry SHA before editing.
-git status --short
-# Stage individual owned paths only.
-git diff --cached --check
-git diff --cached --name-only
-# Commit convention: type(TASK-ID): tested change.
-git push -u origin claude/p2-evidence
-gh pr create --base integration/conversation-v1 --head claude/p2-evidence --title "P2: scoped evidence and adjudication" --body-file $reviewBodyFile
-```
-
-Set `$reviewBodyFile` to the path of a prepared review note outside the staged source. Each PR records phase/task/owner, base and tested SHAs, modified paths, example/contract diff, exact commands, fixture and model identities, results including negative tests, risks, reversal and remaining blockers. Draft task commits are fine on the owner's branch. A phase PR merges only when every task in it meets its exit. The author never approves their own phase. For joint phases, independently review the other person's contributions.
-
-Before merging a second lane, fetch and merge the latest integration head into the feature branch with a regular merge. Rerun both boundary suites on the combined tree and record its SHA. Resolve a shared-file conflict with the registered writer and have the other developer rerun affected contracts. Never auto-select a whole side. A changed interface gets a reviewed example before new consumers land. Serialize merges, require green CI and named reviewer approval; use GitHub rulesets when maintainers can enable them, otherwise enforce via the merge queue and review record. Stable branches receive reviewed release PRs only. No direct stable pushes, force-pushes, broad staging or partial-phase merges.
-
-Prefer one squash merge per completed phase, preserving task IDs and evidence links in the PR. Revert a phase with a new PR referencing that merge, rolling back consumers before producers. Tag the **approved tested release commit** only after stable-branch tests pass and a maintainer authorizes it, for example `advisor-conversation-v1.0.0`. Record its image digest and fixture profile. Tags and deployment are outside this planning operation.
+For a contract edit, notify both developers first. The registered writer updates an example and the version or compatibility expectation. The other developer checks the producer and consumer cases. Resolve conflicts by file owner after a normal integration merge. Re-run both boundary suites before updating approval. No force-push, direct default-branch updates or broad staging. Use reviewed phase revert PRs in reverse dependency order and reverify the candidate. A stable release requires explicit maintainer approval and a tested image/digest.

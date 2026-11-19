@@ -4,13 +4,15 @@ Act for Teammate on machine 2 on the AAST academic advisor. Start only after Moh
 
 The July diagnostic recorded 25 synthetic sessions, 125 turns and 89 partial/missed requests. “The other one” resolved to Data Science, but an explicit Machine Learning inclusion question became a careers request on three source revisions. Other cases include wrong-week carryover, graph recommendation mistaken for major selection, ungrounded policy replies, lost second questions and generic recaps. August includes direct-grounding, readiness and truth checks. Reproduce on the approved August-based source and keep existing passing behavior.
 
+Use the [final teammate prompt](FINAL_CLAUDE_CODE_TEAMMATE_PROMPT.md) for the complete handoff on this synchronized branch.
+
 ## Establish your checkout
 
 1. For the reading copy use `git clone --single-branch --branch plan/conversation-two-developer https://github.com/Fahd-Elgazar/aast-ai-agent.git advisor-plan`. Find all planning files under `research/TWO_DEVELOPER_IMPLEMENTATION/`. The public base is `3e2f0100254a0d20a9e81b52d28c127d612f9dc1`. It is only a plan checkout.
 2. Use the **approved shared code repository** specified in the baseline handoff. Confirm the exact canonical parent `6367b0df91f208e518fb7e04cd7c81bdb82b9ae4` or an explicitly validated sanitized equivalent. Inspect the independent five-file cleanup ref and signed clean commit. The historical running appliance is `4a38cf5f9969e893cf04a39e1306a74cc8fbe939`. Never substitute it as proof about August. During P0 an implementation branch may not yet exist; request the authorized source and review ref by SHA. Never guess a branch or depend on a local path on the other machine.
 3. Use `git fetch origin`, `git rev-parse HEAD`, `git status --short` and compare Git blobs, fixture hashes, toolchains, actual image, models and collection versions. Verify isolation for database, volumes, cache and ports. Both reviewers sign the source/profile and contract examples before coding P1 or P2. A missing exact input is a blocker to the corresponding gate.
 4. First, independently inspect the complete cleanup diff and normalized before/after blobs for orchestrator.js, services/neo4jcontext.js, services/decisionService.js and rag_system/phase3_retriever.py and phase4_llm_answer_engine.py (all within aast-ai-agent-main/backend). Check external exports/call sites, compare native gates on clean/cleaned revisions and deliver a signed five-row review. Mohammed prepares the authorized source/ref and release baseline.
-5. After P0, create each phase branch from the signed `origin/integration/conversation-v1` head using `git switch -c BRANCH origin/integration/conversation-v1`. Use claude/p2-evidence, then claude/p4-qualification after P1+P2 join. For AUDIT/SIGNOFF submit your own review artifact/commit to the relevant P0/P5 lead via a short teammate branch and independently attest on the final SHA.
+5. After P0, create each phase branch from the signed `origin/integration/latest-project-baseline` head using `git switch -c BRANCH origin/integration/latest-project-baseline`. Use claude/p2-evidence, then claude/p4-qualification after P1+P2 join. For AUDIT/SIGNOFF submit your own review artifact/commit to the relevant P0/P5 lead via a short teammate branch and independently attest on the final SHA.
 
 ## Your assigned tasks
 
