@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+import { resolveRuntimeTopology } from "./runtimeTopology.js";
 
 dotenv.config();
 
@@ -23,11 +24,15 @@ const primaryLlmProvider =
   stringFromEnv("PRIMARY_LLM_PROVIDER", "gemma").toLowerCase() === "gemini"
     ? "gemini"
     : "gemma";
+const topology = resolveRuntimeTopology();
 
 export const runtimeMode = Object.freeze({
   defenseMode,
   singleGemmaGenerationMode,
   primaryLlmProvider,
+  launcherMode: topology.mode,
+  ragRoutesEnabled: topology.ragRoutesEnabled,
+  topologyServices: topology.services,
   geminiBackupEnabled: booleanFromEnv("GEMINI_BACKUP_ENABLED", true),
   llmIntentEnabled: booleanFromEnv("LLM_INTENT_ENABLED", false),
   graphRefineEnabled: booleanFromEnv("KG_GRAPH_REFINE_ENABLED", false),

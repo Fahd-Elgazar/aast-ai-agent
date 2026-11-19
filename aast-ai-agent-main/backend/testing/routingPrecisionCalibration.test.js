@@ -45,6 +45,19 @@ function routeQuery(rawQuery, intent = "GENERAL") {
 }
 
 const cases = [
+  // Dean WOW deterministic conversation and standalone bank
+  { query: "Which bachelor's programs does the College of Artificial Intelligence offer at El Alamein?", intent: "PROGRAM", expectedGroup: "KG", goldenId: "golden_dean_program_offerings", forbiddenOntologyIntent: "CAMPUS", minGoldenTimeoutMs: 8000 },
+  { query: "What two programs are included in the Bachelor of Science offered by the College of Artificial Intelligence at El Alamein?", expectedGroup: "KG", goldenId: "golden_dean_program_offerings", minGoldenTimeoutMs: 8000 },
+  { query: "Compare Intelligent Systems with Data Science for a student choosing between building AI systems and working deeply with data.", expectedGroup: "KG", goldenId: "golden_dean_program_comparison", minGoldenTimeoutMs: 8000 },
+  { query: "What career roles can the Intelligent Systems program lead to?", expectedGroup: "KG", goldenId: "golden_dean_program_careers" },
+  { query: "List all career roles shown for Data Science.", expectedGroup: "KG", goldenId: "golden_dean_program_careers" },
+  { query: "Which program includes Machine Learning, and what are its course code and credits?", expectedGroup: "KG", goldenId: "golden_dean_machine_learning_membership" },
+  { query: "Which of Intelligent Systems and Data Science includes Machine Learning?", expectedGroup: "KG", goldenId: "golden_dean_machine_learning_membership" },
+  { query: "Which course is recommended after Machine Learning for language technology?", expectedGroup: "KG", goldenId: "golden_dean_course_sequence" },
+  { query: "Which career role is Cognitive Computing aligned with?", expectedGroup: "KG", goldenId: "golden_dean_course_career_alignment" },
+  { query: "What other role does Hany Hanafy Mahmoud Said hold at the college?", expectedGroup: "KG", goldenId: "golden_dean_hany_role" },
+  { query: "Is Ali Ali Mohamed Fahmy the dean of the College of Artificial Intelligence?", expectedGroup: "KG", goldenId: "golden_dean_ali_role" },
+
   // Faculty/person hardening
   { query: "who teaches NLP", expectedGroup: "KG", goldenId: "golden_hany_teaches" },
   { query: "who is hany hanafy", expectedGroup: "KG", alias: "hany hanafy", goldenId: "golden_hany_profile" },
@@ -59,6 +72,10 @@ const cases = [
   { query: "ML prerequisites", expectedGroup: "KG", alias: "machine learning" },
   { query: "blockchain prerequisites", expectedGroup: "KG" },
   { query: "What are AI prerequisites?", expectedGroup: "KG", goldenId: "golden_ai_prerequisites" },
+  { query: "What should I take after Calculus I?", expectedGroup: "KG" },
+  { query: "What comes after Calculus I?", expectedGroup: "KG" },
+  { query: "Which course follows Calculus I?", expectedGroup: "KG" },
+  { query: "What should I study after Calculus I?", expectedGroup: "KG" },
   { query: "Modules in AI major", expectedGroup: "KG", goldenId: "golden_modules_major" },
   { query: "What specializations exist in AI?", intent: "PROGRAM", expectedGroup: "KG", ontologyIntent: "TRACK" },
   { query: "scholarship requirements", expectedGroup: "HYBRID" },
@@ -116,6 +133,14 @@ for (const item of cases) {
     );
   }
 
+  if (item.forbiddenOntologyIntent) {
+    assert.notEqual(
+      result.analysis.routing_features?.ontology_intent,
+      item.forbiddenOntologyIntent,
+      `${item.query} incorrectly replaced ${item.intent} intent with ${item.forbiddenOntologyIntent}`
+    );
+  }
+
   if (item.goldenId) {
     const golden = classifyGoldenQuery(result.query);
     assert.equal(
@@ -129,6 +154,13 @@ for (const item of cases) {
       item.goldenId,
       `${item.query} did not expose golden path decision metadata`
     );
+
+    if (item.minGoldenTimeoutMs) {
+      assert.ok(
+        golden.timeoutMs >= item.minGoldenTimeoutMs,
+        `${item.query} golden timeout ${golden.timeoutMs}ms is below ${item.minGoldenTimeoutMs}ms`
+      );
+    }
   }
 }
 

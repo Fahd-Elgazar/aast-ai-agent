@@ -48,7 +48,10 @@ All published ports bind to localhost by default.
 
 ## Configuration
 
-Create local environment files; never commit them:
+For Docker Compose, the root `.env` file is the configuration authority. The
+service-level files are only for running that service directly outside
+Compose. Create local files from the tracked, non-secret templates; never
+commit the resulting `.env` files:
 
 ```powershell
 Copy-Item .env.docker.example .env
@@ -58,13 +61,37 @@ Copy-Item college-decision-system-backend\.env.example college-decision-system-b
 ```
 
 Replace all `replace-with-*` values. The Compose and application internal secrets must match.
+`INTERNAL_SECRET_KEY` and `AUTH_JWT_SECRET` must be different, randomly
+generated values. A Compose deployment receives both from the root `.env`, so
+do not duplicate conflicting values in service-level files.
 
 ## Run
 
+The institutional RAG corpus is private deployment input and is not bundled in
+the repository or images. On a new Qdrant volume, validate and ingest the
+official corpus before starting the complete stack:
+
 ```powershell
+$env:RAG_PRIVATE_CORPUS_PATH = 'C:\secure\official-aast-corpus.json'
+
+Push-Location aast-ai-agent-main\backend\rag_system
+docker compose -f compose.private-corpus.yml run --rm rag-corpus-preflight
+Pop-Location
+
+docker compose up -d qdrant
+
+Push-Location aast-ai-agent-main\backend\rag_system
+docker compose -f compose.private-corpus.yml run --rm rag-corpus-ingest
+Pop-Location
+
 docker compose up -d --build
 docker compose ps
 ```
+
+Ingestion refuses to replace an existing collection. Reuse a validated
+existing volume, or follow the explicit `--force-rebuild` procedure in
+`aast-ai-agent-main/backend/rag_system/PRIVATE_CORPUS.md`. Never substitute
+generated or sample university facts for the official corpus.
 
 Open:
 
@@ -110,3 +137,7 @@ Pop-Location
 Runtime databases, model caches, scraped source archives, generated reports, credentials, and local recovery material are deliberately excluded from the production tree. Neo4j, Qdrant, conversation, and decision data live in Docker volumes. Whisper and decision-side Gemini dependencies are optional and are not installed in the default production image.
 
 Answers are designed to distinguish verified evidence from missing information. Academic decisions should still be confirmed through official university channels.
+
+## Conversation rebuild handoff
+
+See the [implementation strategy](research/TWO_DEVELOPER_IMPLEMENTATION/00_MASTER_IMPLEMENTATION_STRATEGY.md) and the [published conversation audit](research/CONVERSATIONAL_AGENT_REBUILD/PUBLICATION_NOTE.md). Use the recorded source identity and isolated fixture gates before running any full-stack checks.

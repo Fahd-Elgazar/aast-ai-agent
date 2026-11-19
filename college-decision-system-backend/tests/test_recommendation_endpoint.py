@@ -1,6 +1,11 @@
 from fastapi.testclient import TestClient
 from sqlalchemy import event
 
+from app.api.v1.routers import decisions as decisions_router
+from app.application.use_cases.recommend_programs import (
+    DECISION_SCORE_WEIGHTS,
+    RecommendProgramsResult,
+)
 from app.infrastructure.db.session import engine
 from app.main import app
 
@@ -159,3 +164,114 @@ def test_recommend_endpoint_avoids_n_plus_one_queries() -> None:
 
     assert response.status_code == 200, response.text
     assert len(executed_queries) <= 12
+
+
+def test_ranking_score_and_displayed_breakdown_share_exact_weights() -> None:
+    client = TestClient(app)
+    response = client.post(
+        "/api/v1/decisions/recommend",
+        json=_build_payload(interest="AI", budget=5000),
+    )
+
+    assert response.status_code == 200, response.text
+    recommendation = response.json()["recommendations"][0]
+    breakdown = recommendation["score_breakdown"]
+    contribution_keys = [
+        f"{component}_contribution" for component in DECISION_SCORE_WEIGHTS
+    ]
+
+    assert dict(DECISION_SCORE_WEIGHTS) == {
+        "interest_alignment": 0.60,
+        "affordability": 0.20,
+        "employment_outlook": 0.10,
+        "location_preference": 0.05,
+        "career_flexibility": 0.025,
+        "certificate_compatibility": 0.025,
+    }
+    assert breakdown["weighted_subtotal"] == round(
+        sum(breakdown[key] for key in contribution_keys),
+        2,
+    )
+    assert breakdown["total"] == round(
+        max(0, breakdown["weighted_subtotal"] - breakdown["missing_data_penalty"]),
+        2,
+    )
+    assert recommendation["score"] == breakdown["total"]
+
+
+def test_agent_contract_returns_full_upstream_recommendations() -> None:
+    client = TestClient(app)
+    response = client.post(
+        "/api/v1/decisions/recommend",
+        json={
+            "student_profile": {
+                "certificate_type": "Egyptian Thanaweya Amma (Science)",
+                "high_school_percentage": 85,
+                "budget": 5000,
+                "track_type": "regular",
+            },
+            "preferences": {"interests": ["AI"], "career_goals": []},
+        },
+    )
+
+    assert response.status_code == 200, response.text
+    body = response.json()
+    assert body["success"] is True
+    assert body["result_status"] == "ok"
+    assert body["recommendations"]
+    assert body["recommended_major"] == body["recommendations"][0]["program_name"]
+    assert body["confidence"] == body["recommendations"][0]["score"]
+    assert body["score_breakdown"] == body["recommendations"][0]["score_breakdown"]
+
+
+def test_agent_contract_represents_empty_result_without_fake_major(monkeypatch) -> None:
+    monkeypatch.setattr(
+        decisions_router.RecommendProgramsUseCase,
+        "execute",
+        lambda self, request: RecommendProgramsResult(
+            total_candidates_considered=0,
+            recommendations=[],
+        ),
+    )
+    client = TestClient(app)
+    response = client.post(
+        "/api/v1/decisions/recommend",
+        json={
+            "student_profile": {
+                "high_school_percentage": 85,
+                "budget": 5000,
+                "track_type": "regular",
+            },
+            "preferences": {"interests": ["AI"], "career_goals": []},
+        },
+    )
+
+    assert response.status_code == 200, response.text
+    assert response.json() == {
+        "success": True,
+        "result_status": "no_results",
+        "recommended_major": None,
+        "confidence": None,
+        "reason": "No programs found matching the given criteria.",
+        "score_breakdown": None,
+        "warnings": [],
+        "total_candidates_considered": 0,
+        "recommendations": [],
+    }
+
+
+def test_agent_contract_rejects_invalid_numeric_profile() -> None:
+    client = TestClient(app)
+    response = client.post(
+        "/api/v1/decisions/recommend",
+        json={
+            "student_profile": {
+                "high_school_percentage": 101,
+                "budget": -1,
+            },
+            "preferences": {"interests": []},
+        },
+    )
+
+    assert response.status_code == 422
+    assert "recommended_major" not in response.json()

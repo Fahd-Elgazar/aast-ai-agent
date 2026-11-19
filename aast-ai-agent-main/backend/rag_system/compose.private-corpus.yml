@@ -1,0 +1,41 @@
+services:
+  rag-corpus-preflight:
+    profiles: ["preflight"]
+    restart: "no"
+    build:
+      context: .
+      dockerfile: Dockerfile.ingestion
+    image: aast-ai-agent/rag-ingestion:local
+    environment:
+      RAG_CORPUS_PATH: /run/private/corpus.json
+      RAG_EMBEDDING_DEVICE: ${RAG_EMBEDDING_DEVICE:-cpu}
+      RAG_TORCH_NUM_THREADS: ${RAG_TORCH_NUM_THREADS:-4}
+    volumes:
+      - type: bind
+        source: ${RAG_PRIVATE_CORPUS_PATH:?Set RAG_PRIVATE_CORPUS_PATH to the official corpus JSON}
+        target: /run/private/corpus.json
+        read_only: true
+    command: ["--preflight-only"]
+
+  rag-corpus-ingest:
+    profiles: ["ingest"]
+    restart: "no"
+    build:
+      context: .
+      dockerfile: Dockerfile.ingestion
+    image: aast-ai-agent/rag-ingestion:local
+    environment:
+      RAG_CORPUS_PATH: /run/private/corpus.json
+      QDRANT_HOST: ${RAG_INGEST_QDRANT_HOST:-host.docker.internal}
+      QDRANT_PORT: ${RAG_INGEST_QDRANT_PORT:-6333}
+      RAG_COLLECTION_NAME: ${RAG_COLLECTION_NAME:-aast_academic_rag_production}
+      RAG_EMBEDDING_DEVICE: ${RAG_EMBEDDING_DEVICE:-cpu}
+      RAG_TORCH_NUM_THREADS: ${RAG_TORCH_NUM_THREADS:-4}
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    volumes:
+      - type: bind
+        source: ${RAG_PRIVATE_CORPUS_PATH:?Set RAG_PRIVATE_CORPUS_PATH to the official corpus JSON}
+        target: /run/private/corpus.json
+        read_only: true
+    command: []

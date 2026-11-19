@@ -22,6 +22,7 @@ from contextlib import asynccontextmanager
 from typing import List, Dict, Any, Optional, Set
 
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
 from qdrant_client import QdrantClient
@@ -38,6 +39,7 @@ from qdrant_client.http.models import (
 QDRANT_HOST = os.getenv("QDRANT_HOST", "localhost")
 QDRANT_PORT = int(os.getenv("QDRANT_PORT", "6333"))
 COLLECTION_NAME = os.getenv("RAG_COLLECTION_NAME", "aast_academic_rag_production")
+EXPECTED_VECTOR_SIZE = 1024
 
 EMBEDDING_MODEL = "BAAI/bge-m3"
 EMBEDDING_INIT_MODE = os.getenv("RAG_EMBEDDING_INIT_MODE", "eager").strip().lower()
@@ -48,10 +50,31 @@ EMBEDDING_DYNAMIC_QUANTIZE = os.getenv("RAG_EMBEDDING_DYNAMIC_QUANTIZE", "false"
 TORCH_NUM_THREADS = max(1, int(os.getenv("RAG_TORCH_NUM_THREADS", "4")))
 HEALTH_REQUIRES_EMBEDDING = os.getenv("RAG_HEALTH_REQUIRES_EMBEDDING", "true").lower() in {"1", "true", "yes", "on"}
 WARMUP_QUERY = os.getenv("RAG_WARMUP_QUERY", "admission requirements academic policies").strip() or "admission requirements academic policies"
+READINESS_SMOKE_LIMIT = max(1, min(int(os.getenv("RAG_READINESS_SMOKE_LIMIT", "3")), 10))
+EXPECTED_DISTANCE = "cosine"
+READINESS_REQUIRED_PAYLOAD_FIELDS = {
+    "title",
+    "content",
+    "category",
+    "subcategory",
+    "priority",
+    "document_type",
+    "program_level",
+    "source",
+    "quality_score",
+    "tags",
+}
 
 DEFAULT_TOP_K = 8
 FINAL_TOP_K = 5
 MAX_TOP_K = 50
+
+# CLA-WOW-002: retrieve a wide candidate pool BEFORE reranking, then select a
+# small bounded final set. A shallow pool cannot recover a passage that dense
+# search ranks just outside top_k but that reranking would promote.
+CANDIDATE_POOL_SIZE = int(os.getenv("RAG_CANDIDATE_POOL_SIZE", "22"))
+MIN_FINAL_TOP_K = int(os.getenv("RAG_MIN_FINAL_TOP_K", "5"))
+MAX_FINAL_TOP_K = int(os.getenv("RAG_MAX_FINAL_TOP_K", "8"))
 
 CATEGORY_BOOSTS = {
     "academic_rules": 1.25,
@@ -73,6 +96,21 @@ PRIORITY_BOOSTS = {
 }
 
 MIN_CONFIDENCE_THRESHOLD = 0.45
+
+# CLA-WOW-002: minimum reranked relevance an accepted chunk must reach. Enforced
+# after reranking so a semantic false positive can be dropped, and so unsupported
+# / out-of-domain queries abstain instead of returning unrelated chunks.
+MIN_RELEVANCE_THRESHOLD = float(os.getenv("RAG_MIN_RELEVANCE_THRESHOLD", str(MIN_CONFIDENCE_THRESHOLD)))
+
+# A chunk is only acceptable if it shares at least one of these alignment signals
+# with the standalone query (lexical, entity/title, category, or document type).
+ALIGNMENT_SIGNAL_KEYS = (
+    "lexical_overlap",
+    "title_similarity",
+    "category_alignment",
+    "document_type_alignment",
+    "tag_overlap",
+)
 
 PHASE_B_WEIGHTS = {
     "semantic_similarity": 0.30,
@@ -275,6 +313,12 @@ class EmbeddingEngine:
             "encode_count": self.encode_count,
             "last_encode_seconds": self.last_encode_seconds,
         }
+
+    def close(self):
+        with self.load_lock:
+            self.model = None
+            self.loaded_at = None
+        gc.collect()
 
 
 # ============================================================
@@ -555,6 +599,124 @@ class RetrievalReranker:
             "weights": PHASE_B_WEIGHTS,
         }
 
+    @classmethod
+    def evaluate_acceptance(cls, final_score: float, signals: Dict[str, float]) -> Dict[str, Any]:
+        """
+        Decide whether a reranked candidate is admissible evidence and record an
+        auditable reason. A chunk must (1) share query alignment and (2) reach the
+        minimum reranked relevance. Reranked relevance is authoritative, so a
+        high-semantic / no-metadata false positive is rejected.
+        """
+        has_alignment = any(
+            cls._clamp01(signals.get(key, 0.0)) > 0.0 for key in ALIGNMENT_SIGNAL_KEYS
+        )
+        if not has_alignment:
+            return {"accepted": False, "reason": "no_query_alignment", "has_alignment": False}
+        if final_score < MIN_RELEVANCE_THRESHOLD:
+            return {"accepted": False, "reason": "below_min_relevance", "has_alignment": True}
+        return {"accepted": True, "reason": "accepted", "has_alignment": True}
+
+
+def _final_top_k(top_k: int) -> int:
+    """Bound the final result count to the configured 5..8 window."""
+    try:
+        requested = int(top_k)
+    except (TypeError, ValueError):
+        requested = DEFAULT_TOP_K
+    return max(MIN_FINAL_TOP_K, min(requested, MAX_FINAL_TOP_K))
+
+
+def _candidate_limit(top_k: int) -> int:
+    """Widen the Qdrant fetch to at least the candidate pool, capped at MAX_TOP_K."""
+    try:
+        requested = int(top_k)
+    except (TypeError, ValueError):
+        requested = DEFAULT_TOP_K
+    return max(1, min(max(CANDIDATE_POOL_SIZE, requested), MAX_TOP_K))
+
+
+def rank_gate_select(points: List[Any], query_profile: Dict[str, Any], final_k: int) -> Dict[str, Any]:
+    """
+    Rerank a candidate pool, enforce relevance/alignment gating, and select the
+    final bounded set. Pure with respect to I/O (no Qdrant/embedder) so it is unit
+    testable against fixture points. Reranked relevance is authoritative — the
+    confidence score is the reranked score, never max(rerank, raw_semantic).
+    """
+    reranked: List[Dict[str, Any]] = []
+
+    for result in points:
+        phase_b = RetrievalReranker.compute_phase_b_score(result, query_profile)
+        final_score = phase_b["score"]
+        signals = phase_b["signals"]
+        retrieval_score = round(RetrievalReranker._clamp01(getattr(result, "score", 0.0)), 4)
+        verdict = RetrievalReranker.evaluate_acceptance(final_score, signals)
+        payload = getattr(result, "payload", {}) or {}
+
+        reranked.append({
+            "id": getattr(result, "id", None),
+            "title": payload.get("title", "Unknown Title"),
+            "content": payload.get("content", ""),
+            "category": payload.get("category", "unknown"),
+            "subcategory": payload.get("subcategory"),
+            "priority": payload.get("priority", "medium"),
+            "document_type": payload.get("document_type", "unknown"),
+            "program_level": payload.get("program_level"),
+            "source": payload.get("source", "unknown"),
+            "quality_score": payload.get("quality_score", 0.5),
+            "retrieval_score": retrieval_score,
+            "phase_b_score": final_score,
+            "final_score": final_score,
+            # Authoritative: reranked relevance, not max(rerank, raw semantic).
+            "confidence_score": final_score,
+            "accepted": verdict["accepted"],
+            "acceptance_reason": verdict["reason"],
+            "has_alignment": verdict["has_alignment"],
+            "ranking_signals": signals,
+            "ranking_weights": phase_b["weights"],
+            "ranking_profile": "metadata_heavy",
+            "tags": payload.get("tags", []),
+        })
+
+    reranked.sort(key=lambda x: x["final_score"], reverse=True)
+
+    accepted = [r for r in reranked if r["accepted"]]
+    rejected = [
+        {
+            "id": r["id"],
+            "reason": r["acceptance_reason"],
+            "final_score": r["final_score"],
+            "retrieval_score": r["retrieval_score"],
+        }
+        for r in reranked if not r["accepted"]
+    ]
+
+    selected = accepted[:final_k]
+    abstained = len(selected) == 0
+
+    abstention_reason = None
+    if abstained:
+        if not reranked:
+            abstention_reason = "no_candidates"
+        elif not any(r["has_alignment"] for r in reranked):
+            abstention_reason = "out_of_domain_no_alignment"
+        else:
+            abstention_reason = "below_min_relevance"
+
+    avg_confidence = (
+        round(sum(r["confidence_score"] for r in selected) / len(selected), 4)
+        if selected else 0.0
+    )
+
+    return {
+        "selected": selected,
+        "rejected": rejected,
+        "candidates_evaluated": len(reranked),
+        "accepted_count": len(accepted),
+        "abstained": abstained,
+        "abstention_reason": abstention_reason,
+        "avg_confidence": avg_confidence,
+    }
+
 
 # ============================================================
 # MAIN RETRIEVAL ENGINE
@@ -564,18 +726,37 @@ class ProductionRetriever:
     def __init__(self):
         logger.info("Connecting to Qdrant...")
         self.client = QdrantClient(host=QDRANT_HOST, port=QDRANT_PORT)
+        self.embedder: Optional[EmbeddingEngine] = None
 
         try:
             self.client.get_collections()
             logger.info("Qdrant connection verified.")
         except Exception as e:
+            self.close()
             raise ConnectionError(f"Unable to connect to Qdrant: {e}")
 
-        self.embedder = EmbeddingEngine()
-        self.started_at = time.time()
+        try:
+            self.embedder = EmbeddingEngine()
+            self.started_at = time.time()
 
-        if EMBEDDING_INIT_MODE == "eager":
-            self.embedder.load()
+            if EMBEDDING_INIT_MODE == "eager":
+                self.embedder.load()
+        except Exception:
+            self.close()
+            raise
+
+    def close(self):
+        embedder = getattr(self, "embedder", None)
+        client = getattr(self, "client", None)
+        self.embedder = None
+        self.client = None
+        try:
+            if embedder is not None:
+                embedder.close()
+        finally:
+            close = getattr(client, "close", None)
+            if callable(close):
+                close()
 
     def warmup(self, query: str = WARMUP_QUERY) -> Dict[str, Any]:
         start = time.time()
@@ -609,6 +790,35 @@ class ProductionRetriever:
             return response
             
         return []
+
+    def _query_qdrant(
+        self,
+        query_vector: List[float],
+        query_filter: Optional[Filter],
+        limit: int,
+    ) -> Any:
+        """Use the SDK method supported by the installed qdrant-client version."""
+        query_points = getattr(self.client, "query_points", None)
+        if callable(query_points):
+            return query_points(
+                collection_name=COLLECTION_NAME,
+                query=query_vector,
+                query_filter=query_filter,
+                limit=limit,
+            )
+
+        legacy_search = getattr(self.client, "search", None)
+        if callable(legacy_search):
+            return legacy_search(
+                collection_name=COLLECTION_NAME,
+                query_vector=query_vector,
+                query_filter=query_filter,
+                limit=limit,
+            )
+
+        raise RuntimeError(
+            "Installed qdrant-client exposes neither query_points() nor search()."
+        )
 
     def build_filter(
         self,
@@ -645,6 +855,10 @@ class ProductionRetriever:
 
         start_time = time.time()
 
+        # CLA-WOW-002: fetch a wide candidate pool, then select a small bounded set.
+        candidate_limit = _candidate_limit(top_k)
+        final_k = _final_top_k(top_k)
+
         # Auto category inference (only when user did not supply one)
         category_inferred = False
         inferred_category = QueryClassifier.infer_category(query)
@@ -669,97 +883,26 @@ class ProductionRetriever:
 
         fallback_used = False
 
-        try:
-            raw_results = self.client.query_points(
-                collection_name=COLLECTION_NAME,
-                query=query_vector.tolist(),
-                query_filter=search_filter,
-                limit=top_k
-            )
-        except Exception as e:
-            logger.warning(f"query_points failed, attempting search compatibility mode: {e}")
-            raw_results = self.client.search(
-                collection_name=COLLECTION_NAME,
-                query_vector=query_vector.tolist(),
-                query_filter=search_filter,
-                limit=top_k
-            )
+        raw_results = self._query_qdrant(
+            query_vector=query_vector.tolist(),
+            query_filter=search_filter,
+            limit=candidate_limit,
+        )
 
         points = self._extract_points(raw_results)
 
-        # Fallback if no results found with category filter
-        if not points and category is not None:
-            fallback_used = True
-            logger.info(f"Category '{category}' filter yielded 0 results. Triggering fallback search.")
-            search_filter = self.build_filter(
-                category=None,
-                program_level=program_level,
-                priority_only=priority_only
-            )
-            try:
-                raw_results = self.client.query_points(
-                    collection_name=COLLECTION_NAME,
-                    query=query_vector.tolist(),
-                    query_filter=search_filter,
-                    limit=top_k
-                )
-            except Exception:
-                raw_results = self.client.search(
-                    collection_name=COLLECTION_NAME,
-                    query_vector=query_vector.tolist(),
-                    query_filter=search_filter,
-                    limit=top_k
-                )
-            points = self._extract_points(raw_results)
+        # Category is a ranking/diagnostic signal, not a Qdrant filter. Repeating
+        # the same vector query without it cannot widen the candidate set, so an
+        # empty result proceeds directly to the explicit abstention path.
 
-        reranked = []
-
-        for result in points:
-            phase_b = RetrievalReranker.compute_phase_b_score(result, query_profile)
-            final_score = phase_b["score"]
-            retrieval_score = round(getattr(result, "score", 0.0), 4)
-            confidence_score = round(max(final_score, retrieval_score), 4)
-            payload = getattr(result, "payload", {}) or {}
-
-            reranked.append({
-                "id": getattr(result, "id", None),
-                "title": payload.get("title", "Unknown Title"),
-                "content": payload.get("content", ""),
-                "category": payload.get("category", "unknown"),
-                "subcategory": payload.get("subcategory"),
-                "priority": payload.get("priority", "medium"),
-                "document_type": payload.get("document_type", "unknown"),
-                "program_level": payload.get("program_level"),
-                "source": payload.get("source", "unknown"),
-                "quality_score": payload.get("quality_score", 0.5),
-                "retrieval_score": retrieval_score,
-                "phase_b_score": final_score,
-                "final_score": final_score,
-                "confidence_score": confidence_score,
-                "ranking_signals": phase_b["signals"],
-                "ranking_weights": phase_b["weights"],
-                "ranking_profile": "metadata_heavy",
-                "tags": payload.get("tags", [])
-            })
-
-        # Sort by Phase B metadata-aware score. No hard metadata filters are applied.
-        reranked.sort(key=lambda x: x["final_score"], reverse=True)
-
-        # Initial avg confidence for dynamic sizing
-        avg_confidence = (
-            round(sum(x["confidence_score"] for x in reranked) / len(reranked), 4)
-            if reranked else 0.0
-        )
-
-        reranked = reranked[:FINAL_TOP_K]
+        # Rerank the wide candidate pool, enforce relevance/alignment gating, and
+        # select the bounded final set (abstaining when nothing qualifies).
+        outcome = rank_gate_select(points, query_profile, final_k)
+        reranked = outcome["selected"]
 
         latency = round(time.time() - start_time, 3)
 
-        # Recalculate avg confidence after final trim
-        avg_confidence = (
-            round(sum(x["confidence_score"] for x in reranked) / len(reranked), 4)
-            if reranked else 0.0
-        )
+        avg_confidence = outcome["avg_confidence"]
 
         # Determine confidence level
         if avg_confidence >= 0.80:
@@ -774,7 +917,10 @@ class ProductionRetriever:
 
         logger.info(
             f"query='{query}' category={category} "
-            f"inferred={category_inferred} fallback={fallback_used} results={len(reranked)} "
+            f"inferred={category_inferred} fallback={fallback_used} "
+            f"pool={candidate_limit} evaluated={outcome['candidates_evaluated']} "
+            f"accepted={outcome['accepted_count']} results={len(reranked)} "
+            f"abstained={outcome['abstained']} reason={outcome['abstention_reason']} "
             f"latency={latency}s avg_confidence={avg_confidence} level={confidence_level}"
         )
 
@@ -791,6 +937,14 @@ class ProductionRetriever:
             "retrieval_confidence_level": confidence_level,
             "source_diversity_score": source_diversity_score,
             "latency_seconds": latency,
+            # CLA-WOW-002 auditable relevance envelope.
+            "candidate_pool_size": candidate_limit,
+            "candidates_evaluated": outcome["candidates_evaluated"],
+            "accepted_count": outcome["accepted_count"],
+            "min_relevance_threshold": MIN_RELEVANCE_THRESHOLD,
+            "abstained": outcome["abstained"],
+            "abstention_reason": outcome["abstention_reason"],
+            "rejections": outcome["rejected"],
             "results": reranked
         }
 
@@ -800,45 +954,129 @@ class ProductionRetriever:
 # ============================================================
 
 retriever: Optional[ProductionRetriever] = None
+retriever_init_failure: Optional[str] = None
+retriever_state_lock = threading.Lock()
 
 RETRIEVER_INIT_MAX_ATTEMPTS = int(os.getenv("RETRIEVER_INIT_MAX_ATTEMPTS", "5"))
 RETRIEVER_INIT_BACKOFF_SECONDS = float(os.getenv("RETRIEVER_INIT_BACKOFF_SECONDS", "2"))
+RETRIEVER_RECOVERY_INTERVAL_SECONDS = float(os.getenv("RETRIEVER_RECOVERY_INTERVAL_SECONDS", "10"))
+
+
+def _classify_initialization_failure(error: Exception) -> str:
+    return (
+        "qdrant_unavailable"
+        if isinstance(error, ConnectionError)
+        else "retriever_initialization_failed"
+    )
+
+
+def _close_retriever(instance: Optional[ProductionRetriever]):
+    if instance is None:
+        return
+    try:
+        instance.close()
+    except Exception:
+        logger.exception("Failed to close retriever resources cleanly.")
+
+
+def _construct_and_warm_retriever() -> ProductionRetriever:
+    candidate: Optional[ProductionRetriever] = None
+    try:
+        candidate = ProductionRetriever()
+        if EMBEDDING_INIT_MODE == "eager":
+            candidate.warmup()
+        return candidate
+    except Exception:
+        _close_retriever(candidate)
+        raise
+
+
+async def _initialize_retriever_once() -> bool:
+    global retriever, retriever_init_failure
+    try:
+        candidate = await asyncio.to_thread(_construct_and_warm_retriever)
+    except Exception as error:
+        with retriever_state_lock:
+            retriever_init_failure = _classify_initialization_failure(error)
+        logger.warning("Retriever initialization attempt failed: %s", retriever_init_failure)
+        return False
+
+    with retriever_state_lock:
+        previous = retriever
+        retriever = candidate
+        retriever_init_failure = None
+    if previous is not candidate:
+        await asyncio.to_thread(_close_retriever, previous)
+    logger.info("ProductionRetriever initialized and warmup policy completed.")
+    return True
+
+
+async def _initialize_retriever_with_retries(max_attempts: int) -> bool:
+    attempts = max(1, max_attempts)
+    for attempt in range(1, attempts + 1):
+        if await _initialize_retriever_once():
+            return True
+        if attempt < attempts:
+            wait_seconds = RETRIEVER_INIT_BACKOFF_SECONDS * (2 ** (attempt - 1))
+            logger.warning(
+                "Retriever initialization failed (attempt %d/%d); retrying in %.1fs.",
+                attempt,
+                attempts,
+                wait_seconds,
+            )
+            await asyncio.sleep(wait_seconds)
+    return False
+
+
+async def _recover_retriever_until_ready(shutdown_event: asyncio.Event):
+    while not shutdown_event.is_set():
+        if await _initialize_retriever_once():
+            return
+        try:
+            await asyncio.wait_for(
+                shutdown_event.wait(),
+                timeout=max(0.1, RETRIEVER_RECOVERY_INTERVAL_SECONDS),
+            )
+        except asyncio.TimeoutError:
+            continue
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    global retriever
+    global retriever, retriever_init_failure
     logger.info("Initializing ProductionRetriever with embedding init mode: %s", EMBEDDING_INIT_MODE)
+    with retriever_state_lock:
+        retriever = None
+        retriever_init_failure = None
 
-    # Qdrant's own health check can still be settling when this starts, even with
-    # depends_on: condition: service_healthy, so retry with backoff instead of
-    # letting a transient ConnectionError permanently fail the container.
-    last_error: Optional[Exception] = None
-    for attempt in range(1, RETRIEVER_INIT_MAX_ATTEMPTS + 1):
-        try:
-            retriever = ProductionRetriever()
-            last_error = None
-            break
-        except ConnectionError as e:
-            last_error = e
-            if attempt == RETRIEVER_INIT_MAX_ATTEMPTS:
-                break
-            wait_seconds = RETRIEVER_INIT_BACKOFF_SECONDS * (2 ** (attempt - 1))
-            logger.warning(
-                "Qdrant not ready (attempt %d/%d): %s. Retrying in %.1fs.",
-                attempt, RETRIEVER_INIT_MAX_ATTEMPTS, e, wait_seconds
-            )
-            await asyncio.sleep(wait_seconds)
+    initialized = await _initialize_retriever_with_retries(RETRIEVER_INIT_MAX_ATTEMPTS)
+    shutdown_event = asyncio.Event()
+    recovery_task = None
+    if not initialized:
+        logger.error(
+            "Initial retriever attempts exhausted; readiness remains false and background recovery is active."
+        )
+        recovery_task = asyncio.create_task(
+            _recover_retriever_until_ready(shutdown_event),
+            name="rag-retriever-recovery",
+        )
 
-    if last_error is not None:
-        logger.error("Failed to connect to Qdrant after %d attempts.", RETRIEVER_INIT_MAX_ATTEMPTS)
-        raise last_error
-
-    if EMBEDDING_INIT_MODE == "eager":
-        retriever.warmup()
-    logger.info("ProductionRetriever ready.")
-    yield
-    logger.info("Shutting down.")
+    try:
+        yield
+    finally:
+        shutdown_event.set()
+        if recovery_task is not None:
+            # Do not cancel a to_thread initialization: Python cannot stop the
+            # worker and cancellation could orphan a newly-created model/client.
+            # Let the active attempt finish, observe the shutdown event, and
+            # then close the published resources below.
+            await recovery_task
+        with retriever_state_lock:
+            active_retriever = retriever
+            retriever = None
+            retriever_init_failure = None
+        await asyncio.to_thread(_close_retriever, active_retriever)
+        logger.info("Retriever resources closed; shutdown complete.")
 
 
 # ============================================================
@@ -862,6 +1100,15 @@ def root():
         "status": "healthy",
         "system": "Production VectorRAG Retriever",
         "collection": COLLECTION_NAME
+    }
+
+
+@app.get("/live")
+def liveness():
+    """Process liveness only; dependency and data checks belong to readiness."""
+    return {
+        "status": "alive",
+        "system": "Production VectorRAG Retriever",
     }
 
 
@@ -893,42 +1140,238 @@ def search_endpoint(request: SearchRequest):
         )
 
 
+def _collection_names(response: Any) -> Set[str]:
+    collections = getattr(response, "collections", []) or []
+    names = set()
+    for item in collections:
+        name = item.get("name") if isinstance(item, dict) else getattr(item, "name", None)
+        if name:
+            names.add(str(name))
+    return names
+
+
+def _collection_vector_size(collection_info: Any) -> Optional[int]:
+    config = getattr(collection_info, "config", None)
+    params = getattr(config, "params", None)
+    vectors = getattr(params, "vectors", None)
+
+    # The retriever sends unnamed vectors. A named-vector collection therefore
+    # has an incompatible schema even when one named vector happens to be 1024d.
+    if isinstance(vectors, dict):
+        return None
+
+    size = getattr(vectors, "size", None)
+    try:
+        return int(size)
+    except (TypeError, ValueError):
+        return None
+
+
+def _normalized_enum_value(value: Any) -> str:
+    raw = getattr(value, "value", value)
+    return str(raw or "").strip().lower()
+
+
+def _collection_vector_distance(collection_info: Any) -> Optional[str]:
+    config = getattr(collection_info, "config", None)
+    params = getattr(config, "params", None)
+    vectors = getattr(params, "vectors", None)
+    if isinstance(vectors, dict):
+        return None
+    distance = _normalized_enum_value(getattr(vectors, "distance", None))
+    return distance or None
+
+
+def _optimizer_error(optimizer_status: Any) -> Optional[str]:
+    if _normalized_enum_value(optimizer_status) == "ok":
+        return None
+    if isinstance(optimizer_status, dict):
+        error = optimizer_status.get("error")
+    else:
+        error = getattr(optimizer_status, "error", None)
+    if isinstance(error, str) and error.strip():
+        return error.strip()
+    return "optimizer_status_unavailable"
+
+
+def _extract_scroll_points(response: Any) -> List[Any]:
+    if isinstance(response, tuple):
+        return list(response[0] or [])
+    points = getattr(response, "points", None)
+    if points is not None:
+        return list(points)
+    if isinstance(response, list):
+        return response
+    return []
+
+
+def _payload_smoke_error(points: List[Any]) -> Optional[str]:
+    if not points:
+        return "payload_smoke_empty"
+    for point in points:
+        payload = getattr(point, "payload", None)
+        if not isinstance(payload, dict):
+            return "payload_missing"
+        missing = READINESS_REQUIRED_PAYLOAD_FIELDS - set(payload.keys())
+        if missing:
+            return f"payload_fields_missing:{','.join(sorted(missing))}"
+        for field in (
+            "title",
+            "content",
+            "category",
+            "subcategory",
+            "priority",
+            "document_type",
+            "program_level",
+            "source",
+        ):
+            if not isinstance(payload.get(field), str) or not payload[field].strip():
+                return f"payload_field_invalid:{field}"
+        quality = payload.get("quality_score")
+        if (
+            isinstance(quality, bool)
+            or not isinstance(quality, (int, float))
+            or not 0.0 <= float(quality) <= 1.0
+        ):
+            return "payload_field_invalid:quality_score"
+        tags = payload.get("tags")
+        if not isinstance(tags, list):
+            return "payload_field_invalid:tags"
+    return None
+
+
+def evaluate_readiness(active_retriever: Optional[ProductionRetriever]) -> tuple[int, Dict[str, Any]]:
+    """Return an HTTP status and truthful dependency/data readiness payload."""
+    checks = {
+        "qdrant_connected": False,
+        "collection_exists": False,
+        "vector_size_compatible": False,
+        "vector_distance_compatible": False,
+        "collection_non_empty": False,
+        "collection_status_healthy": False,
+        "optimizer_healthy": False,
+        "payload_smoke_valid": False,
+        "embedding_ready": False,
+    }
+    payload: Dict[str, Any] = {
+        "status": "not_ready",
+        "collection_name": COLLECTION_NAME,
+        "expected_vector_size": EXPECTED_VECTOR_SIZE,
+        "expected_distance": EXPECTED_DISTANCE,
+        "qdrant_connected": False,
+        "checks": checks,
+        "reasons": [],
+        "memory": _process_memory_mb(),
+    }
+
+    if active_retriever is None:
+        payload["reasons"].append(retriever_init_failure or "retriever_initializing")
+        return 503, payload
+
+    try:
+        collections = active_retriever.client.get_collections()
+        checks["qdrant_connected"] = True
+        payload["qdrant_connected"] = True
+    except Exception:
+        payload["reasons"].append("qdrant_unavailable")
+        return 503, payload
+
+    if COLLECTION_NAME not in _collection_names(collections):
+        payload["reasons"].append("collection_missing")
+        return 503, payload
+
+    checks["collection_exists"] = True
+
+    try:
+        collection_info = active_retriever.client.get_collection(COLLECTION_NAME)
+    except Exception:
+        payload["reasons"].append("collection_metadata_unavailable")
+        return 503, payload
+
+    actual_vector_size = _collection_vector_size(collection_info)
+    payload["actual_vector_size"] = actual_vector_size
+    if actual_vector_size != EXPECTED_VECTOR_SIZE:
+        payload["reasons"].append("vector_size_incompatible")
+        return 503, payload
+    checks["vector_size_compatible"] = True
+
+    actual_distance = _collection_vector_distance(collection_info)
+    payload["actual_distance"] = actual_distance
+    if actual_distance != EXPECTED_DISTANCE:
+        payload["reasons"].append("vector_distance_incompatible")
+        return 503, payload
+    checks["vector_distance_compatible"] = True
+
+    point_count = getattr(collection_info, "points_count", None)
+    payload["points_count"] = point_count
+    if not isinstance(point_count, int) or point_count <= 0:
+        payload["reasons"].append(
+            "collection_empty" if point_count == 0 else "point_count_unavailable"
+        )
+        return 503, payload
+    checks["collection_non_empty"] = True
+
+    collection_status = _normalized_enum_value(getattr(collection_info, "status", None))
+    payload["collection_status"] = collection_status or None
+    if collection_status != "green":
+        payload["reasons"].append("collection_status_unhealthy")
+        return 503, payload
+    checks["collection_status_healthy"] = True
+
+    optimizer_error = _optimizer_error(getattr(collection_info, "optimizer_status", None))
+    payload["optimizer_error"] = optimizer_error
+    if optimizer_error is not None:
+        payload["reasons"].append("optimizer_unhealthy")
+        return 503, payload
+    checks["optimizer_healthy"] = True
+
+    try:
+        scroll_response = active_retriever.client.scroll(
+            collection_name=COLLECTION_NAME,
+            limit=READINESS_SMOKE_LIMIT,
+            with_payload=True,
+            with_vectors=False,
+        )
+        smoke_points = _extract_scroll_points(scroll_response)
+    except Exception:
+        payload["reasons"].append("payload_smoke_failed")
+        return 503, payload
+    smoke_error = _payload_smoke_error(smoke_points)
+    payload["payload_smoke_count"] = len(smoke_points)
+    if smoke_error is not None:
+        payload["reasons"].append(smoke_error)
+        return 503, payload
+    checks["payload_smoke_valid"] = True
+
+    try:
+        embedding_status = active_retriever.embedder.status()
+    except Exception:
+        payload["reasons"].append("embedding_status_unavailable")
+        return 503, payload
+    embedding_loaded = bool(embedding_status.get("loaded"))
+    lazy_embedding_available = (
+        EMBEDDING_INIT_MODE == "lazy"
+        and not embedding_status.get("last_error")
+    )
+    checks["embedding_ready"] = (
+        embedding_loaded
+        or lazy_embedding_available
+        or not HEALTH_REQUIRES_EMBEDDING
+    )
+    payload["embedding"] = embedding_status
+    if not checks["embedding_ready"]:
+        payload["reasons"].append("embedding_not_ready")
+        return 503, payload
+
+    payload["status"] = "ready"
+    return 200, payload
+
+
+@app.get("/ready")
 @app.get("/health")
 def system_health():
-    try:
-        if retriever is None:
-            return {
-                "status": "starting",
-                "qdrant_connected": False,
-                "embedding": {
-                    "model": EMBEDDING_MODEL,
-                    "init_mode": EMBEDDING_INIT_MODE,
-                    "loaded": False
-                },
-                "memory": _process_memory_mb(),
-            }
-
-        collections = retriever.client.get_collections()
-        embedding_status = retriever.embedder.status()
-        status = "healthy"
-        if HEALTH_REQUIRES_EMBEDDING and not embedding_status["loaded"]:
-            status = "starting"
-        return {
-            "status": status,
-            "qdrant_connected": True,
-            "embedding_model": EMBEDDING_MODEL,
-            "embedding": embedding_status,
-            "collection_name": COLLECTION_NAME,
-            "collections_available": len(collections.collections),
-            "memory": _process_memory_mb(),
-        }
-
-    except Exception as e:
-        logger.exception("Health check failed.")
-        return {
-            "status": "unhealthy",
-            "error": "Qdrant unreachable."
-        }
+    status_code, payload = evaluate_readiness(retriever)
+    return JSONResponse(status_code=status_code, content=payload)
 
 
 @app.post("/warmup")

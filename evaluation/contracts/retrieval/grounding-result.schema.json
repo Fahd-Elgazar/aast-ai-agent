@@ -1,0 +1,95 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://aast-ai-agent/contracts/retrieval/grounding-result.schema.json",
+  "title": "Grounding Verification Result",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "status",
+    "grounded",
+    "sentence_results",
+    "evidence_ids",
+    "unsupported_sentences",
+    "partially_supported_sentences",
+    "conflicting_sentences",
+    "conversation_history_used_as_evidence",
+    "latency_ms"
+  ],
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": [
+        "fully_supported",
+        "partially_supported",
+        "unsupported",
+        "conflicting",
+        "nonfactual"
+      ]
+    },
+    "grounded": { "type": "boolean" },
+    "sentence_results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "sentence",
+          "factual",
+          "status",
+          "evidence_ids",
+          "claim_types",
+          "coverage",
+          "reasons"
+        ],
+        "properties": {
+          "sentence": { "type": "string" },
+          "factual": { "type": "boolean" },
+          "status": {
+            "type": "string",
+            "enum": [
+              "fully_supported",
+              "partially_supported",
+              "unsupported",
+              "conflicting",
+              "nonfactual"
+            ]
+          },
+          "evidence_ids": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "claim_types": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "coverage": { "type": "number", "minimum": 0, "maximum": 1 },
+          "reasons": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "evidence_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "contributing_sources": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "unsupported_sentences": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "partially_supported_sentences": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "conflicting_sentences": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "conversation_history_used_as_evidence": { "const": false },
+    "latency_ms": { "type": "number", "minimum": 0 }
+  }
+}

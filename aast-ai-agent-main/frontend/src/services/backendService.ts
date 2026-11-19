@@ -1,6 +1,12 @@
 import type { ChatMessage } from "../types";
+import { getAuthSubject } from "./authStorage";
 
 const CHAT_HISTORY_KEY = "advisor_chat_history";
+
+// This browser copy is only a fallback; canonical conversations live on the
+// backend. Bounding it prevents stale guest sessions from exhausting storage
+// without deleting or truncating any active server conversation.
+export const MAX_LOCAL_CHAT_HISTORY_MESSAGES = 200;
 
 type PersistedMessage = Omit<ChatMessage, "timestamp"> & {
   timestamp: string;
@@ -13,7 +19,7 @@ type MessageToPersist = Omit<ChatMessage, "timestamp" | "id"> & {
 
 function readLocalHistory(): PersistedMessage[] {
   try {
-    const raw = localStorage.getItem(CHAT_HISTORY_KEY);
+    const raw = localStorage.getItem(`${CHAT_HISTORY_KEY}:${getAuthSubject()}`);
     if (!raw) return [];
 
     const parsed = JSON.parse(raw);
@@ -24,7 +30,11 @@ function readLocalHistory(): PersistedMessage[] {
 }
 
 function writeLocalHistory(messages: PersistedMessage[]): void {
-  localStorage.setItem(CHAT_HISTORY_KEY, JSON.stringify(messages));
+  localStorage.setItem(`${CHAT_HISTORY_KEY}:${getAuthSubject()}`, JSON.stringify(messages));
+}
+
+export function retainLocalHistory<T>(messages: readonly T[]): T[] {
+  return messages.slice(-MAX_LOCAL_CHAT_HISTORY_MESSAGES);
 }
 
 function toPersistedMessage(message: MessageToPersist): PersistedMessage {
@@ -39,6 +49,6 @@ function toPersistedMessage(message: MessageToPersist): PersistedMessage {
 
 export async function saveMessage(message: MessageToPersist): Promise<void> {
   const normalized = toPersistedMessage(message);
-  const nextHistory = [...readLocalHistory(), normalized];
+  const nextHistory = retainLocalHistory([...readLocalHistory(), normalized]);
   writeLocalHistory(nextHistory);
 }

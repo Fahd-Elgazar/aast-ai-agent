@@ -1,0 +1,210 @@
+{
+  "schemaVersion": 1,
+  "branch": "unified-platform",
+  "sourceCommit": "6367b0df91f208e518fb7e04cd7c81bdb82b9ae4",
+  "deployedCommit": "4a38cf5f9969e893cf04a39e1306a74cc8fbe939",
+  "preexistingWorktree": {
+    "trackedMarkdownEdits": 48,
+    "untrackedDocumentationFiles": 10,
+    "plannedPathsDirty": false
+  },
+  "state": "verified-source-cleanup",
+  "changes": [
+    {
+      "id": "C00",
+      "path": "aast-ai-agent-main/backend/orchestrator.js",
+      "lines": "22",
+      "change": "Remove unused getSession import binding, preserve connectNeo4j.",
+      "verification": [
+        "node --check orchestrator.js",
+        "npm run test:topology",
+        "npm run test:auth",
+        "npm run test:health"
+      ],
+      "classification": "C0",
+      "state": "applied-and-verified",
+      "beforeSha256": "bd520188dff9fd9cd09cffd8798a5039d00500b0377d21c698cbf4e35494d771",
+      "risk": "low",
+      "rollback": "Inspect the exact cleanup diff against the recorded HEAD and reverse only this group's hunks, preserving intervening edits. Verify against recorded digest when the file had no intervening edits.",
+      "afterSha256": "cae735d2092c5fd540fc8f33ff6dbe499604d1a49dbb796e8948a19c7fe167fe"
+    },
+    {
+      "id": "C01",
+      "path": "aast-ai-agent-main/backend/services/neo4jcontext.js",
+      "lines": "110,146,170–235,245",
+      "change": "Remove private uncalled formatter, unused refinement local and unused constant.",
+      "verification": [
+        "npm run test:kg",
+        "node testing/retrievalEntityAlignment.test.js",
+        "npm run test:routing"
+      ],
+      "classification": "C0",
+      "state": "applied-and-verified",
+      "beforeSha256": "6e7b729eda683c90168dfca8a0598c267cf31b44b569cdbc1bfa95b1bf25cb04",
+      "risk": "low",
+      "rollback": "Inspect the exact cleanup diff against the recorded HEAD and reverse only this group's hunks, preserving intervening edits. Verify against recorded digest when the file had no intervening edits.",
+      "afterSha256": "507f8fe1d66df2bbfdda12d19029ac4e8e1567fda0e47adf9bf13fbddc84dd05"
+    },
+    {
+      "id": "C02",
+      "path": "aast-ai-agent-main/backend/services/decisionService.js",
+      "lines": "354–545",
+      "change": "Remove six private unreachable career heuristics and the heading directly preceding them. Keep buildCareerRoadmap and all exports.",
+      "verification": [
+        "npm run test:decision",
+        "npm run test:admin-proxy",
+        "python scripts/run_delivery_checks.py"
+      ],
+      "classification": "C0",
+      "state": "applied-and-verified",
+      "beforeSha256": "8b088bdc39cf26b47793080ac49a9036b1d3d8ae5a3114602b3f171acd590150",
+      "risk": "low",
+      "rollback": "Inspect the exact cleanup diff against the recorded HEAD and reverse only this group's hunks, preserving intervening edits. Verify against recorded digest when the file had no intervening edits.",
+      "afterSha256": "bd79d8c3941bf6c4e5eb2b47f95ed3deeb12330964bf88ef76bbf6f944ec3ff8"
+    },
+    {
+      "id": "C03",
+      "path": "aast-ai-agent-main/backend/rag_system/phase3_retriever.py",
+      "lines": "1135,1429",
+      "change": "Remove the unused exception aliases in search and benchmark handlers.",
+      "verification": [
+        "python -m pytest -p no:cacheprovider -q test_phase3_retriever.py test_rag_readiness.py"
+      ],
+      "classification": "C0",
+      "state": "applied-and-verified",
+      "beforeSha256": "837412a0d8bb1fc813eb90aec5d7340ef7133ff556fdbe14a75fd43bd3ad14d2",
+      "risk": "low",
+      "rollback": "Inspect the exact cleanup diff against the recorded HEAD and reverse only this group's hunks, preserving intervening edits. Verify against recorded digest when the file had no intervening edits.",
+      "afterSha256": "b9177c37ef377d9e24cad0f8daf00546af95a7a667c8441b0d75397642ee74c3"
+    },
+    {
+      "id": "C03",
+      "path": "aast-ai-agent-main/backend/rag_system/phase4_llm_answer_engine.py",
+      "lines": "23,468",
+      "change": "Remove unused HTTPException import and unused exception alias in answer handler.",
+      "verification": [
+        "Compile without writing bytecode",
+        "python -m pytest -p no:cacheprovider -q test_phase3_retriever.py test_rag_readiness.py"
+      ],
+      "classification": "C0",
+      "state": "applied-and-verified",
+      "beforeSha256": "65199afa55a2885674443d15bc7d18194ac533026c0815e7db1f4e492e72feb9",
+      "risk": "low",
+      "rollback": "Inspect the exact cleanup diff against the recorded HEAD and reverse only this group's hunks, preserving intervening edits. Verify against recorded digest when the file had no intervening edits.",
+      "afterSha256": "b4609e4a545da45995bb80d4af3b275e89dacae13382734bed6fe86614038254"
+    }
+  ],
+  "retained": [
+    {
+      "id": "C04",
+      "classification": "C1",
+      "candidate": "Empty package markers",
+      "reason": "Different import paths",
+      "state": "retained",
+      "evidence": "10_DUPLICATE_AND_DEAD_CODE_INVENTORY.md"
+    },
+    {
+      "id": "C05",
+      "classification": "C2",
+      "candidate": "services/runtimeMode.js",
+      "reason": "Out-of-tree import ABI",
+      "state": "retained",
+      "evidence": "10_DUPLICATE_AND_DEAD_CODE_INVENTORY.md"
+    },
+    {
+      "id": "C06",
+      "classification": "C2",
+      "candidate": "rag_system/app.py",
+      "reason": "Operator availability unknown",
+      "state": "retained",
+      "evidence": "10_DUPLICATE_AND_DEAD_CODE_INVENTORY.md"
+    },
+    {
+      "id": "C07",
+      "classification": "C3",
+      "candidate": "ragService.js and phase4_llm_answer_engine.py",
+      "reason": "Optional independent generation service",
+      "state": "retained",
+      "evidence": "10_DUPLICATE_AND_DEAD_CODE_INVENTORY.md"
+    },
+    {
+      "id": "C08",
+      "classification": "C4",
+      "candidate": "ragService.js and Python lint leads",
+      "reason": "Input or import side effects possible",
+      "state": "retained",
+      "evidence": "10_DUPLICATE_AND_DEAD_CODE_INVENTORY.md"
+    },
+    {
+      "id": "C09",
+      "classification": "C3",
+      "candidate": "Intent, meta, golden and router overlap",
+      "reason": "Actual precedence in observed traces",
+      "state": "retained",
+      "evidence": "10_DUPLICATE_AND_DEAD_CODE_INVENTORY.md"
+    },
+    {
+      "id": "C10",
+      "classification": "C3",
+      "candidate": "Decision and Admin",
+      "reason": "Frontend and live upstream consumers",
+      "state": "retained",
+      "evidence": "10_DUPLICATE_AND_DEAD_CODE_INVENTORY.md"
+    },
+    {
+      "id": "C11",
+      "classification": "C3",
+      "candidate": "Student/Decision/Graph/VR frontend",
+      "reason": "Separate mounted capabilities",
+      "state": "retained",
+      "evidence": "10_DUPLICATE_AND_DEAD_CODE_INVENTORY.md"
+    },
+    {
+      "id": "C12",
+      "classification": "C4",
+      "candidate": "Public vite.svg",
+      "reason": "Potential public URL consumer",
+      "state": "retained",
+      "evidence": "10_DUPLICATE_AND_DEAD_CODE_INVENTORY.md"
+    },
+    {
+      "id": "C13",
+      "classification": "C3",
+      "candidate": "Replay, operations and migration scripts",
+      "reason": "Test, operator or migration use",
+      "state": "retained",
+      "evidence": "10_DUPLICATE_AND_DEAD_CODE_INVENTORY.md"
+    },
+    {
+      "id": "C14",
+      "classification": "C5",
+      "candidate": "Historical docs",
+      "reason": "Preserve outstanding user changes",
+      "state": "retained",
+      "evidence": "10_DUPLICATE_AND_DEAD_CODE_INVENTORY.md"
+    },
+    {
+      "id": "C15",
+      "classification": "C2",
+      "candidate": "Decision exports",
+      "reason": "Keep import contract and tested helpers",
+      "state": "retained",
+      "evidence": "10_DUPLICATE_AND_DEAD_CODE_INVENTORY.md"
+    },
+    {
+      "id": "C16",
+      "classification": "C5",
+      "candidate": "Profile and policy duplication",
+      "reason": "Run-time effective settings differ",
+      "state": "retained",
+      "evidence": "10_DUPLICATE_AND_DEAD_CODE_INVENTORY.md"
+    }
+  ],
+  "reports": [
+    "10_DUPLICATE_AND_DEAD_CODE_INVENTORY.md",
+    "11_LEGACY_AND_DEAN_SPECIFIC_CODE_AUDIT.md",
+    "12_DEPENDENCY_AND_CONFIGURATION_AUDIT.md",
+    "13_CLEANUP_EXECUTION_LOG.md",
+    "14_CLEANUP_VERIFICATION_REPORT.md"
+  ]
+}

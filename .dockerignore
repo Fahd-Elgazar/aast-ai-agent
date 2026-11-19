@@ -1,0 +1,28 @@
+.git
+.github
+.claude
+.pytest_cache
+**/.pytest_cache
+**/__pycache__
+**/*.pyc
+**/.venv
+**/venv
+**/node_modules
+**/dist
+**/*.log
+logs
+backup
+reliability-audit
+linkedin_post_assets
+.playwright-mcp
+*.local
+*.wav
+*.webm
+*.mp3
+
+# Institutional RAG corpora are explicit read-only deployment inputs. Never
+# allow ignored/private JSON placed beside the RAG code to enter an image via
+# the appliance's bulk backend COPY.
+aast-ai-agent-main/backend/rag_system/*.json
+aast-ai-agent-main/backend/rag_system/**/*.json
+

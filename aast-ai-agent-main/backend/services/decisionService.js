@@ -2,7 +2,6 @@ import fetch from "node-fetch";
 import dotenv from "dotenv";
 import fs from "fs";
 import path from "path";
-import { callOllama } from "./ollamaService.js";
 import { runtimeMode } from "../config/runtimeMode.js";
 
 dotenv.config();
@@ -10,7 +9,6 @@ dotenv.config();
 /* ============================================================
    🔐 CONFIG
 ============================================================ */
-
 const API_URL = process.env.DECISION_API_URL || "http://127.0.0.1:8005";
 const SECRET_KEY = process.env.INTERNAL_SECRET_KEY || "your-secret-key-here";
 
@@ -67,8 +65,16 @@ async function saveMemory() {
   return saveQueue;
 }
 
-export function getUserMemory(cid) {
-  return decisionMemory.get(cid) || {};
+function requireDecisionOwner(ownerId) {
+  const normalized = typeof ownerId === "string" ? ownerId.trim() : "";
+  if (!normalized || normalized.length > 256) throw new Error("A valid decision-memory owner is required");
+  return normalized;
+}
+
+export function getUserMemory(cid, { ownerId } = {}) {
+  const owner = requireDecisionOwner(ownerId);
+  const memory = decisionMemory.get(cid);
+  return memory?.ownerId === owner ? memory : {};
 }
 
 export function getDecisionMemoryStatus() {
@@ -99,8 +105,13 @@ function deepMerge(target = {}, source = {}) {
   return output;
 }
 
-export async function updateUserMemory(cid, newData) {
-  const current = decisionMemory.get(cid) || {
+export async function updateUserMemory(cid, newData, { ownerId } = {}) {
+  const owner = requireDecisionOwner(ownerId);
+  const stored = decisionMemory.get(cid);
+  if (stored && stored.ownerId !== owner) throw new Error("Decision memory not found");
+
+  const current = stored || {
+    ownerId: owner,
     studentProfile: {},
     preferences: {},
     history: [],
@@ -110,7 +121,7 @@ export async function updateUserMemory(cid, newData) {
     version: "v2"
   };
   
-  const updated = deepMerge(current, newData);
+  const updated = deepMerge(current, { ...newData, ownerId: owner });
   
   // Custom logic for arrays appending instead of overwriting
   if (newData.history) updated.history = [...new Set([...(current.history || []), ...newData.history])];
@@ -134,7 +145,11 @@ export async function updateUserMemory(cid, newData) {
   return updated;
 }
 
-export async function deleteUserMemory(cid) {
+export async function deleteUserMemory(cid, { ownerId } = {}) {
+  const owner = requireDecisionOwner(ownerId);
+  const stored = decisionMemory.get(cid);
+  if (!stored || stored.ownerId !== owner) return false;
+
   if (decisionTimers.has(cid)) {
     clearTimeout(decisionTimers.get(cid));
     decisionTimers.delete(cid);
@@ -157,11 +172,13 @@ function normalizeString(str) {
 function normalizeData(profile, preferences) {
   const p = profile || {};
   const pref = preferences || {};
+  const rawPercentage = p.high_school_percentage ?? p.highSchoolPercentage;
+  const parsedPercentage = rawPercentage == null ? null : Number(rawPercentage);
 
   return {
     studentProfile: {
       certificate_type: normalizeString(p.certificate_type || p.certificateType) || "unknown",
-      high_school_percentage: parseFloat(p.high_school_percentage || p.highSchoolPercentage) || 0,
+      high_school_percentage: Number.isFinite(parsedPercentage) ? parsedPercentage : null,
       budget: p.budget == null
         ? null
         : Number.isFinite(Number(p.budget))
@@ -190,12 +207,22 @@ function normalizeData(profile, preferences) {
 ============================================================ */
 
 function validateInput(studentProfile) {
-  if (studentProfile.high_school_percentage < 0 || studentProfile.high_school_percentage > 100) {
-    throw new Error("Invalid high school percentage");
+  if (!Number.isFinite(studentProfile.high_school_percentage)) {
+    const error = new Error("A numeric high school percentage is required");
+    error.code = "INVALID_REQUEST";
+    throw error;
   }
 
-  if (studentProfile.budget < 0) {
-    throw new Error("Invalid budget");
+  if (studentProfile.high_school_percentage < 0 || studentProfile.high_school_percentage > 100) {
+    const error = new Error("High school percentage must be between 0 and 100");
+    error.code = "INVALID_REQUEST";
+    throw error;
+  }
+
+  if (studentProfile.budget !== null && (!Number.isFinite(studentProfile.budget) || studentProfile.budget < 0)) {
+    const error = new Error("Budget must be a non-negative number");
+    error.code = "INVALID_REQUEST";
+    throw error;
   }
 }
 
@@ -260,6 +287,9 @@ Text:
 ${text}
 `;
 
+    // Keep the model runtime out of structured Decision API requests and unit
+    // tests. Natural-language extraction is the only path that needs it.
+    const { callOllama } = await import("./ollamaService.js");
     const llmPromise = callOllama(prompt, undefined, `decision_extract_${Date.now()}`, {
       routeType: "DECISION_EXTRACTION",
       trafficType: "decision_extraction",
@@ -514,105 +544,317 @@ function generateTimeline(profile) {
   ];
 }
 
-export function buildCareerRoadmap(profile, preferences, memory, recommendedMajor) {
-  // Graceful fallback processing securely combining tracked stats
-  const safeProfile = profile || memory?.studentProfile || {};
-  const safePref = preferences || memory?.preferences || {};
-  
-  const major = recommendedMajor || memory?.last_recommendation || safeProfile.last_recommendation || "";
-  const generatedSkills = generateSkills(safeProfile, safePref, major);
-  
-  return {
-    target_roles: generateRoles(safeProfile, safePref, major),
-    top_skills: generatedSkills,
-    industry_demand: estimateMarket(safeProfile),
-    learning_path: mapSkillsToLearning(generatedSkills),
-    timeline: generateTimeline(safeProfile)
+export function buildCareerRoadmap(profile, preferences, memory) {
+  const candidates = [
+    profile?.career_roadmap,
+    preferences?.career_roadmap,
+    memory?.career_roadmap,
+    memory?.last_decision?.career_roadmap,
+  ];
+  const roadmap = candidates.find(candidate => (
+    typeof candidate === "object" && candidate !== null && !Array.isArray(candidate)
+  ));
+  if (!roadmap) return null;
+
+  const targetRoles = cleanWarnings(roadmap.target_roles);
+  const topSkills = cleanWarnings(roadmap.top_skills);
+  const industryDemand = cleanString(roadmap.industry_demand);
+  if (targetRoles.length === 0 || topSkills.length === 0 || !industryDemand) return null;
+
+  const verifiedRoadmap = {
+    target_roles: targetRoles,
+    top_skills: topSkills,
+    industry_demand: industryDemand,
   };
+  if (Array.isArray(roadmap.learning_path)) verifiedRoadmap.learning_path = roadmap.learning_path;
+  if (Array.isArray(roadmap.timeline)) verifiedRoadmap.timeline = cleanWarnings(roadmap.timeline);
+  return verifiedRoadmap;
 }
 
 /* ============================================================
    🛡️ DECISION OUTPUT VALIDATOR
 ============================================================ */
 
-function safeDecision(rawOutput, fallbackMajor) {
-  const safeConfidence = Math.min(Math.max(Number(rawOutput.confidence) || 50, 0), 100);
-  const safeMajor = typeof rawOutput.recommended_major === "string" && rawOutput.recommended_major ? rawOutput.recommended_major : fallbackMajor;
-  const rawTopRecommendations = Array.isArray(rawOutput.top_recommendations)
-    ? rawOutput.top_recommendations
-    : Array.isArray(rawOutput.candidates)
-      ? rawOutput.candidates
-      : Array.isArray(rawOutput.score_breakdown?.candidates)
-        ? rawOutput.score_breakdown.candidates
-      : [];
+function isRecord(value) {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
 
-  let topRecommendations = rawTopRecommendations
-    .map(item => {
-      const major = typeof item?.major === "string"
-        ? item.major
-        : typeof item?.recommended_major === "string"
-          ? item.recommended_major
-          : typeof item?.name === "string"
-            ? item.name
-            : null;
-      const rawScore = item?.score ?? item?.confidence ?? item?.match_score;
-      const score = Math.min(Math.max(Number(rawScore) || safeConfidence, 0), 100);
+function cleanString(value) {
+  return typeof value === "string" && value.trim() ? value.trim() : null;
+}
 
-      if (!major) return null;
-      return { major, score };
-    })
-    .filter(Boolean)
-    .slice(0, 3);
+function cleanWarnings(value) {
+  return Array.isArray(value)
+    ? value.filter(item => typeof item === "string" && item.trim()).map(item => item.trim())
+    : [];
+}
 
-  if (topRecommendations.length === 0) {
-    topRecommendations = [
-      { major: safeMajor, score: safeConfidence },
-      { major: Array.isArray(rawOutput.alternatives) && rawOutput.alternatives[0] ? rawOutput.alternatives[0] : safeMajor, score: Math.max(safeConfidence - 4, 0) },
-      { major: Array.isArray(rawOutput.alternatives) && rawOutput.alternatives[1] ? rawOutput.alternatives[1] : safeMajor, score: Math.max(safeConfidence - 7, 0) }
-    ];
+function noResultsResponse(data, reason = null) {
+  const response = {
+    success: true,
+    result_status: "no_results",
+    recommended_major: null,
+    confidence: null,
+    score_breakdown: null,
+    warnings: cleanWarnings(data?.warnings),
+    recommendations: [],
+  };
+
+  const upstreamReason = cleanString(reason) || cleanString(data?.reason);
+  if (upstreamReason) response.reason = upstreamReason;
+  if (Number.isInteger(data?.total_candidates_considered) && data.total_candidates_considered >= 0) {
+    response.total_candidates_considered = data.total_candidates_considered;
+  }
+  return response;
+}
+
+function invalidUpstreamResponse(message) {
+  const error = new Error(message);
+  error.code = "INVALID_UPSTREAM_RESPONSE";
+  return error;
+}
+
+function isValidRecommendation(item) {
+  if (
+    !isRecord(item) ||
+    !cleanString(item.program_name) ||
+    !cleanString(item.college_name) ||
+    !cleanString(item.match_type) ||
+    !cleanString(item.confidence_level) ||
+    !cleanString(item.affordability_label) ||
+    !cleanString(item.explanation_summary) ||
+    typeof item.score !== "number" ||
+    !Number.isFinite(item.score) ||
+    item.score < 0 ||
+    item.score > 100
+  ) return false;
+
+  const fee = item.estimated_semester_fee;
+  if (fee !== null && (typeof fee !== "number" || !Number.isFinite(fee) || fee < 0)) return false;
+  if (fee !== null && (!cleanString(item.currency) || !cleanString(item.fee_mode))) return false;
+
+  const breakdown = item.score_breakdown;
+  if (!isRecord(breakdown)) return false;
+  const componentFields = [
+    "interest_alignment",
+    "affordability",
+    "employment_outlook",
+    "location_preference",
+    "career_flexibility",
+    "certificate_compatibility",
+    "decision_data_completeness",
+    "missing_data_penalty",
+    "interest_alignment_contribution",
+    "affordability_contribution",
+    "employment_outlook_contribution",
+    "location_preference_contribution",
+    "career_flexibility_contribution",
+    "certificate_compatibility_contribution",
+    "weighted_subtotal",
+    "total",
+  ];
+  if (componentFields.some(field => (
+    typeof breakdown[field] !== "number" ||
+    !Number.isFinite(breakdown[field]) ||
+    breakdown[field] < 0 ||
+    breakdown[field] > 100
+  ))) return false;
+
+  const contributionTotal = [
+    "interest_alignment_contribution",
+    "affordability_contribution",
+    "employment_outlook_contribution",
+    "location_preference_contribution",
+    "career_flexibility_contribution",
+    "certificate_compatibility_contribution",
+  ].reduce((sum, field) => sum + breakdown[field], 0);
+  const tolerance = 0.06;
+  return (
+    Math.abs(contributionTotal - breakdown.weighted_subtotal) <= tolerance &&
+    Math.abs(Math.max(0, breakdown.weighted_subtotal - breakdown.missing_data_penalty) - breakdown.total) <= tolerance &&
+    Math.abs(breakdown.total - item.score) <= tolerance
+  );
+}
+
+export function normalizeDecisionResponse(data, { rejectedMajors = [] } = {}) {
+  if (!isRecord(data)) {
+    throw invalidUpstreamResponse("Decision API returned an invalid response");
   }
 
-  topRecommendations = topRecommendations
-    .filter((item, index, array) => item.major && array.findIndex(entry => entry.major === item.major) === index)
-    .slice(0, 3);
+  if (data.success !== true) {
+    throw invalidUpstreamResponse("Decision API reported an unsuccessful result");
+  }
 
-  if (topRecommendations.length < 3) {
-    const fallbackMajors = [
-      safeMajor,
-      ...(Array.isArray(rawOutput.alternatives) ? rawOutput.alternatives : []),
-      fallbackMajor,
-      "Information Technology",
-      "Business Administration"
-    ];
+  if (data.result_status !== "ok" && data.result_status !== "no_results") {
+    throw invalidUpstreamResponse("Decision API returned an unknown result status");
+  }
 
-    for (const major of fallbackMajors) {
-      if (!major || topRecommendations.some(item => item.major === major)) continue;
-      topRecommendations.push({
-        major,
-        score: Math.max(safeConfidence - (topRecommendations.length * 4), 0)
-      });
-      if (topRecommendations.length === 3) break;
+  if (!Array.isArray(data.recommendations)) {
+    throw invalidUpstreamResponse("Decision API omitted the recommendations array");
+  }
+
+  const recommendations = data.recommendations.filter(isValidRecommendation);
+  if (recommendations.length !== data.recommendations.length) {
+    throw invalidUpstreamResponse("Decision API returned a malformed recommendation");
+  }
+  const upstreamMajor = cleanString(data.recommended_major);
+
+  if (data.result_status === "no_results") {
+    if (
+      upstreamMajor ||
+      recommendations.length > 0 ||
+      data.confidence !== null ||
+      data.score_breakdown !== null
+    ) {
+      throw invalidUpstreamResponse("Decision API returned a contradictory empty result");
+    }
+    return noResultsResponse(data);
+  }
+
+  if (!upstreamMajor || recommendations.length === 0) {
+    throw invalidUpstreamResponse("Decision API omitted the recommended program");
+  }
+
+  const rejected = new Set(
+    rejectedMajors.filter(item => typeof item === "string" && item.trim())
+  );
+  let selectedRecommendation = recommendations.find(item => {
+    const programName = cleanString(item.program_name);
+    return programName && programName === upstreamMajor;
+  });
+  if (!selectedRecommendation) {
+    throw invalidUpstreamResponse("Decision API recommendation does not match the selected program");
+  }
+  let selectedMajor = upstreamMajor;
+
+  if (selectedMajor && rejected.has(selectedMajor)) {
+    selectedRecommendation = recommendations.find(item => {
+      const programName = cleanString(item.program_name);
+      return programName && !rejected.has(programName);
+    });
+    selectedMajor = cleanString(selectedRecommendation?.program_name);
+    if (!selectedMajor) {
+      return noResultsResponse(data, "All returned programs were previously rejected.");
     }
   }
-  
-  return {
+
+  if (!selectedMajor) {
+    throw invalidUpstreamResponse("Decision API omitted the recommended program");
+  }
+
+  const response = {
     success: true,
-    recommended_major: safeMajor,
-    confidence: safeConfidence,
-    top_recommendations: topRecommendations,
-    reason: rawOutput.reason || "Recommended based on your academic profile match.",
-    warnings: Array.isArray(rawOutput.warnings) ? rawOutput.warnings : [],
-    pros: Array.isArray(rawOutput.pros) ? rawOutput.pros : ["Aligns well with recent academic track records."],
-    cons_and_risks: Array.isArray(rawOutput.cons_and_risks) ? rawOutput.cons_and_risks : ["Standard university workload and prerequisites."],
-    alternatives: Array.isArray(rawOutput.alternatives) && rawOutput.alternatives.length > 0 ? rawOutput.alternatives : ["General Program", "Information Technology"],
-    career_roadmap: typeof rawOutput.career_roadmap === "object" && rawOutput.career_roadmap !== null 
-      ? rawOutput.career_roadmap 
-      : { target_roles: ["Professional"], top_skills: ["Analysis"], industry_demand: "Stable demand." },
-    confidence_breakdown: typeof rawOutput.confidence_breakdown === "object" && rawOutput.confidence_breakdown 
-      ? rawOutput.confidence_breakdown 
-      : { overall: safeConfidence },
-    next_steps: Array.isArray(rawOutput.next_steps) && rawOutput.next_steps.length > 0 ? rawOutput.next_steps : ["Consult with an academic advisor."]
+    result_status: "ok",
+    recommended_major: selectedMajor,
+    recommendations,
+    warnings: cleanWarnings(selectedRecommendation?.warnings ?? data.warnings),
   };
+
+  response.confidence = selectedRecommendation.score;
+
+  const reason = cleanString(selectedRecommendation?.explanation_summary) || cleanString(data.reason);
+  if (reason) response.reason = reason;
+
+  const scoreBreakdown = selectedRecommendation?.score_breakdown ?? data.score_breakdown;
+  if (isRecord(scoreBreakdown)) response.score_breakdown = scoreBreakdown;
+
+  if (Number.isInteger(data.total_candidates_considered) && data.total_candidates_considered >= 0) {
+    response.total_candidates_considered = data.total_candidates_considered;
+  }
+
+  return response;
+}
+
+export function decisionFailureResponse(error) {
+  if (error?.code === "INVALID_REQUEST" || error?.code === "UPSTREAM_VALIDATION") {
+    return {
+      success: false,
+      result_status: "invalid_request",
+      error_code: "INVALID_REQUEST",
+      message: error?.code === "INVALID_REQUEST"
+        ? error.message
+        : "The decision request was rejected as invalid.",
+    };
+  }
+
+  const timedOut = error?.name === "AbortError";
+  return {
+    success: false,
+    result_status: "unavailable",
+    error_code: timedOut ? "DECISION_TIMEOUT" : "DECISION_UNAVAILABLE",
+    message: timedOut
+      ? "The decision service timed out."
+      : "The decision service is unavailable.",
+  };
+}
+
+export function toOrchestratorDecisionEvidence(result) {
+  if (
+    !isRecord(result) ||
+    result.success !== true ||
+    result.result_status !== "ok" ||
+    !cleanString(result.recommended_major) ||
+    !cleanString(result.reason) ||
+    typeof result.confidence !== "number" ||
+    !Number.isFinite(result.confidence) ||
+    result.confidence < 0 ||
+    result.confidence > 100
+  ) return null;
+
+  return {
+    recommendation: `Recommended Major: ${result.recommended_major}. Reason: ${result.reason}`,
+    confidence: result.confidence / 100,
+    factors: result,
+  };
+}
+
+export async function requestDecisionApi({
+  studentProfile,
+  preferences,
+  timeoutMs,
+  maxAttempts,
+  fetchImpl = fetch,
+  apiUrl = API_URL,
+  secretKey = SECRET_KEY,
+}) {
+  let lastResponse;
+
+  for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), timeoutMs);
+
+    try {
+      const response = await fetchImpl(`${apiUrl}/api/v1/decisions/recommend`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Internal-Secret": secretKey,
+        },
+        body: JSON.stringify({
+          student_profile: studentProfile,
+          preferences,
+        }),
+        signal: controller.signal,
+      });
+      lastResponse = response;
+
+      if (!response.ok) continue;
+
+      // Keep the same deadline active through body consumption. A server that
+      // sends headers and then stalls must not hold this request indefinitely.
+      return await response.json();
+    } catch (error) {
+      if (attempt === maxAttempts - 1) throw error;
+    } finally {
+      clearTimeout(timeout);
+    }
+  }
+
+  const error = new Error("Decision API request failed");
+  error.code = lastResponse?.status === 400 || lastResponse?.status === 422
+    ? "UPSTREAM_VALIDATION"
+    : "UPSTREAM_UNAVAILABLE";
+  throw error;
 }
 
 /* ============================================================
@@ -629,7 +871,7 @@ function safeMerge(base = {}, update = {}) {
   return result;
 }
 
-export async function getRecommendation({ studentProfile: inputSP, preferences: inputPref, text, memory, cid, requestId = "none" }) {
+export async function getRecommendation({ studentProfile: inputSP, preferences: inputPref, text, memory, cid, ownerId, requestId = "none" }) {
   try {
     let studentProfile;
     let preferences;
@@ -678,7 +920,6 @@ export async function getRecommendation({ studentProfile: inputSP, preferences: 
           success: false,
           is_missing_data: true,
           missing_fields,
-          extracted_partial: extracted || {}
         };
       }
     } else {
@@ -694,114 +935,44 @@ export async function getRecommendation({ studentProfile: inputSP, preferences: 
 
     validateInput(sp);
 
-    console.log(`[DECISION][${requestId}] Input:`, { studentProfile: sp, preferences: pref });
     console.time(`[DECISION][${requestId}]`);
 
     /* ========================================================
        🌐 API CALL (WITH TIMEOUT)
     ======================================================== */
 
-    let response;
     const decisionTimeoutMs = Number(process.env.DECISION_API_TIMEOUT_MS || 7000);
     const decisionMaxAttempts = Math.max(1, Number(process.env.DECISION_API_MAX_ATTEMPTS || 1));
-
-    for (let i = 0; i < decisionMaxAttempts; i++) {
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), decisionTimeoutMs);
-      try {
-        response = await fetch(`${API_URL}/api/v1/decisions/recommend`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-Internal-Secret": SECRET_KEY,
-          },
-          body: JSON.stringify({
-            student_profile: sp,
-            preferences: pref,
-          }),
-          signal: controller.signal,
-        });
-        if (response.ok) break;
-      } catch (err) {
-        if (i === decisionMaxAttempts - 1) throw err;
-      } finally {
-        clearTimeout(timeout);
-      }
-    }
-
-    if (!response.ok) {
-      throw new Error(`Decision API error: ${response.status}`);
-    }
-
-    const data = await response.json();
-
-    if (!data || !data.recommended_major) {
-      throw new Error("Invalid response from decision API");
-    }
+    const data = await requestDecisionApi({
+      studentProfile: sp,
+      preferences: pref,
+      timeoutMs: decisionTimeoutMs,
+      maxAttempts: decisionMaxAttempts,
+    });
 
     console.timeEnd(`[DECISION][${requestId}]`);
-    console.log(`[DECISION][${requestId}] Output:`, data);
 
     /* ========================================================
        🧠 SAVE MEMORY
     ======================================================== */
 
-    let finalMajor = data.recommended_major;
-    const alternatives = data.alternatives || ["Related IT degree", "Data Science"];
-    
-    // Safety Fallback Check ensuring we pick an alternative if completely blocked
-    const memCacheCheck = cid ? decisionMemory.get(cid) : null;
-    if (memCacheCheck && memCacheCheck.rejected_majors && memCacheCheck.rejected_majors.includes(finalMajor)) {
-       console.log(`[Decision] Swapping recommendation: ${finalMajor} was previously rejected.`);
-       // Traverse alternatives to find one not rejected
-       const viableAlternative = alternatives.find(alt => !memCacheCheck.rejected_majors.includes(alt));
-       if (viableAlternative) {
-         alternatives[0] = finalMajor;
-         finalMajor = viableAlternative;
-       } else {
-         finalMajor = "General Sciences/Business";
-       }
-    }
+    const memCacheCheck = cid ? getUserMemory(cid, { ownerId }) : null;
+    const normalizedResult = normalizeDecisionResponse(data, {
+      rejectedMajors: memCacheCheck?.rejected_majors || [],
+    });
 
-    if (cid) {
+    if (cid && normalizedResult.result_status === "ok") {
       await updateUserMemory(cid, {
         studentProfile: sp,
         preferences: pref,
-        last_recommendation: finalMajor
-      });
+        last_recommendation: normalizedResult.recommended_major,
+      }, { ownerId });
     }
 
     /* ========================================================
        ✅ SUCCESS RESPONSE
     ======================================================== */
-    const memCache = cid ? decisionMemory.get(cid) : null;
-    const dynamicRoadmap = buildCareerRoadmap(sp, pref, memCache, finalMajor);
-    const generatedNextSteps = generateNextSteps(finalMajor);
-
-    const grades_score = sp.high_school_percentage >= 85 ? 95 : (sp.high_school_percentage >= 70 ? 80 : 60);
-    const interests_score = (pref.interests && pref.interests.length > 0) ? 90 : 50; 
-    const market_score = 85;
-
-    const confidence_breakdown = {
-      grades_score,
-      interests_score,
-      market_score,
-      overall: data.confidence || 0
-    };
-
-    return safeDecision({
-      recommended_major: finalMajor,
-      confidence: data.confidence,
-      top_recommendations: data.top_recommendations || data.candidates,
-      reason: data.reason,
-      warnings: data.warnings,
-      pros: data.pros,
-      cons_and_risks: data.cons_and_risks,
-      alternatives: alternatives,
-      career_roadmap: dynamicRoadmap,
-      confidence_breakdown,
-      next_steps: generatedNextSteps
-    }, "General Sciences/Business");
+    return normalizedResult;
 
   } catch (err) {
     if (err.name === "AbortError") {
@@ -810,11 +981,7 @@ export async function getRecommendation({ studentProfile: inputSP, preferences: 
       console.error(`[ERROR][${requestId}] Decision Error:`, err.message);
     }
 
-    return {
-      success: false,
-      is_fallback: true,
-      message: err.message || "Decision system unavailable"
-    };
+    return decisionFailureResponse(err);
   }
 }
 
@@ -822,58 +989,17 @@ export async function getRecommendation({ studentProfile: inputSP, preferences: 
    🚀 NEXT STEP GENERATOR
 ============================================================ */
 
-export function generateNextSteps(major) {
-  const m = String(major).toLowerCase();
-  
-  if (m.includes("engineering") || m.includes("mechanic") || m.includes("architect")) {
-    return ["Review Calculus and Physics fundamentals", "Check AAST lab facility schedule", "Research SPE/IEEE student chapters"];
-  }
-  if (m.includes("computer") || m.includes("ai") || m.includes("data") || m.includes("software")) {
-    return ["Start core language logic tutorials (Python/C++)", "Explore AAST competitive programming team", "Look into regional hackathon schedules"];
-  }
-  if (m.includes("business") || m.includes("manage") || m.includes("finance")) {
-    return ["Read introductory market/economic concepts", "Check AAST student union business clubs", "Draft a mock startup or consulting pitch"];
-  }
-  return ["Consult with your assigned academic advisor", "Review prerequisite 101 courses in the catalog", "Join relevant extracurricular student forums"];
+export function generateNextSteps(upstreamSteps) {
+  return cleanWarnings(upstreamSteps);
 }
 
 /* ============================================================
    🚀 WHAT-IF SIMULATION ENGINE
 ============================================================ */
-
-export function compareMajors(majorA, majorB, profile, requestId = "none") {
-  console.log(`[DECISION][${requestId}] Input (Compare):`, { majorA, majorB, profile });
-  console.time(`[DECISION][${requestId}]`);
-  const safeProfile = profile || {};
-  const mathScore = safeProfile.high_school_percentage || 80;
-  
-  const isEngA = majorA.toLowerCase().includes("engineering") || majorA.toLowerCase().includes("architecture");
-  const isCmpA = majorA.toLowerCase().includes("computer") || majorA.toLowerCase().includes("ai") || majorA.toLowerCase().includes("data");
-  
-  const isEngB = majorB.toLowerCase().includes("engineering") || majorB.toLowerCase().includes("architecture");
-  const isCmpB = majorB.toLowerCase().includes("computer") || majorB.toLowerCase().includes("ai") || majorB.toLowerCase().includes("data");
-
-  let diffA = isEngA ? 8 : (isCmpA ? 7 : 5);
-  let diffB = isEngB ? 8 : (isCmpB ? 7 : 5);
-
-  if (mathScore < 80) {
-    if (isEngA || isCmpA) diffA += 2;
-    if (isEngB || isCmpB) diffB += 2;
-  }
-
-  const result = {
-    majorA,
-    majorB,
-    salary_outlook: `In the Egyptian market, starting salaries for ${majorA} and ${majorB} are competitive, but ${isCmpA || isCmpB ? 'tech-focused roles' : 'specialized roles'} typically see a 15-20% premium over the first 3 years.`,
-    difficulty_level: {
-      [majorA]: Math.min(diffA, 10),
-      [majorB]: Math.min(diffB, 10)
-    },
-    skills_overlap: `Both fields share foundational problem-solving skills. However, ${majorA} focuses more on specialized core logic, whereas ${majorB} leans into parallel systems.`,
-    career_progression: `In 5-10 years, ${majorA} graduates often move into senior local leadership. ${majorB} paths frequently branch into global remote integration and management.`
+export function compareMajors() {
+  return {
+    success: false,
+    result_status: "unsupported",
+    reason: "No verified comparison data was provided by the Decision API.",
   };
-
-  console.timeEnd(`[DECISION][${requestId}]`);
-  console.log(`[DECISION][${requestId}] Output (Compare):`, result);
-  return result;
 }

@@ -412,6 +412,14 @@ const safeParse = (text) => {
 // SECTION 7 — RAGService CLASS
 // ─────────────────────────────────────────────────────────────
 
+// CLA-WOW-002: discriminating standalone-query modifiers that must survive
+// expansion/simplification. Losing them collapses distinct questions (e.g.
+// scholarship *renewal* vs *high-performing* eligibility, *summer* vs regular
+// term) into one generic query that retrieves the wrong policy.
+const STANDALONE_QUERY_MODIFIERS = [
+    'high-performing', 'apply', 'renew', 'renewal', 'transfer', 'summer', 'tie'
+];
+
 class RAGService {
 
     constructor() {
@@ -684,14 +692,18 @@ class RAGService {
 
         // ── PASS 3: Answer engine fallback ───────────────────
         if (!runtimeMode.ragAnswerEngineEnabled || runtimeMode.singleGemmaGenerationMode || runtimeMode.defenseMode) {
-            const ranked = this.rankSources(pass2.sources || [], queryCategory);
             logger.warn('SEARCH', 'PASS 3 answer engine disabled by runtime mode', {
-                source_count: ranked.length,
+                source_count: pass2.sources?.length ?? 0,
+                pass2_confidence: safeFloat(pass2.raw_confidence),
                 single_gemma_generation_mode: runtimeMode.singleGemmaGenerationMode,
                 defense_mode: runtimeMode.defenseMode,
             });
 
-            if (ranked.length > 0) {
+            // Only surface retrieval-only evidence when PASS 2 cleared the relevance
+            // floor. A weak PASS 2 abstains (returns no evidence) instead of being
+            // accepted merely because some sources exist.
+            if (this._retrievalOnlyAcceptable(pass2)) {
+                const ranked = this.rankSources(pass2.sources, queryCategory);
                 return this._buildSearchResult(
                     {
                         ...pass2,
@@ -712,12 +724,20 @@ class RAGService {
             }
 
             this._telemetry.total_failures++;
+            logger.warn('SEARCH', 'Weak PASS 2 with answer engine disabled — returning no evidence', {
+                pass2_confidence: safeFloat(pass2.raw_confidence),
+                relevance_floor: CONFIG.MEDIUM_CONFIDENCE_FLOOR,
+                abstained: pass2.abstained === true,
+            });
             return this._buildFailureResult(
                 'retrieval_failure',
-                'RAG answer engine disabled and retrieval-only passes returned no usable sources',
+                'RAG answer engine disabled and PASS 2 retrieval was below the minimum relevance floor',
                 {
                     passes_attempted: 2,
                     answer_engine_disabled: true,
+                    weak_pass2_no_evidence: true,
+                    pass2_confidence: safeFloat(pass2.raw_confidence),
+                    relevance_floor: CONFIG.MEDIUM_CONFIDENCE_FLOOR,
                     pass_latencies: passLatencies,
                     query_category: queryCategory,
                     total_latency_ms: elapsedMs(totalStart),
@@ -1105,6 +1125,10 @@ class RAGService {
             } else if (/\b(transfer|transferred)\b/i.test(query)) {
                 simplified = 'transfer student scholarship eligibility AAST';
             }
+            // Re-attach any discriminating modifiers the template collapse dropped
+            // (e.g. high-performing, summer, tie) so distinct scholarship questions
+            // do not all resolve to the same generic query.
+            simplified = this._preserveModifiers(query, simplified);
             logger.debug('SEARCH', 'Scholarship query simplified with category context', {
                 original: query,
                 simplified,
@@ -1121,10 +1145,12 @@ class RAGService {
             'explain', 'describe', 'list', 'tell', 'help',
         ]);
 
-        // Institutional anchor terms to preserve (adaptive filtering)
+        // Institutional anchor terms to preserve (adaptive filtering).
+        // CLA-WOW-002: standalone-query modifiers are never stripped as stop-words.
         const PRESERVE_TERMS = new Set([
             'scholarship', 'gpa', 'admission', 'probation', 'visa', 'dean', 'faculty',
-            'transfer', 'dismissal', 'tuition', 'fee', 'program', 'degree', 'credit'
+            'transfer', 'dismissal', 'tuition', 'fee', 'program', 'degree', 'credit',
+            'apply', 'renew', 'renewal', 'summer', 'tie', 'high', 'performing'
         ]);
 
         // Step 1: lowercase + strip punctuation
@@ -1156,9 +1182,28 @@ class RAGService {
         // Step 4: domain anchor
         if (!seen.has('aast')) tokens.push('AAST');
 
-        const simplified = tokens.join(' ');
+        const simplified = this._preserveModifiers(query, tokens.join(' '));
         logger.debug('SEARCH', 'Query simplified for PASS 2', { original: query, simplified });
         return simplified;
+    }
+
+    /**
+     * Appends any standalone-query modifiers present in the original query that
+     * the simplified form dropped. Keeps discriminating terms (apply, renew,
+     * transfer, summer, tie, high-performing) in the PASS 2 query.
+     * @private
+     */
+    _preserveModifiers(originalQuery, simplified) {
+        const lowerSimplified = simplified.toLowerCase();
+        const additions = [];
+        for (const modifier of STANDALONE_QUERY_MODIFIERS) {
+            const escaped = modifier.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const present = new RegExp(`\\b${escaped}\\b`, 'i').test(originalQuery);
+            if (present && !lowerSimplified.includes(modifier.toLowerCase())) {
+                additions.push(modifier);
+            }
+        }
+        return additions.length ? `${simplified} ${additions.join(' ')}` : simplified;
     }
 
     // ══════════════════════════════════════════════════════════
@@ -1461,6 +1506,10 @@ class RAGService {
             source_count: sources.length,
             source_diversity: this._computeSourceDiversity(sources),
             fallback_used: data.fallback_used || false,
+            // CLA-WOW-002: propagate the retriever's abstention verdict so the
+            // multi-pass loop can honour explicit no-evidence.
+            abstained: data.abstained === true,
+            abstention_reason: data.abstention_reason || null,
             category: data.category_filter || data.category || category || 'GENERAL',
             metadata: data.metadata || { latency_seconds: data.latency_seconds },
             endpoint_used: result.endpoint_used,
@@ -1751,6 +1800,23 @@ class RAGService {
             result.success === true &&
             safeFloat(result.raw_confidence) >= CONFIG.CONFIDENCE_THRESHOLD &&
             (result.sources?.length ?? 0) > 0
+        );
+    }
+
+    /**
+     * CLA-WOW-002: retrieval-only evidence (answer engine disabled) is admissible
+     * only when it clears the minimum relevance floor and the retriever did not
+     * abstain. A weak PASS 2 must return no evidence rather than surface
+     * confident-sounding but unsupported chunks.
+     * @private
+     */
+    _retrievalOnlyAcceptable(result) {
+        return (
+            !!result &&
+            result.success === true &&
+            result.abstained !== true &&
+            (result.sources?.length ?? 0) > 0 &&
+            safeFloat(result.raw_confidence) >= CONFIG.MEDIUM_CONFIDENCE_FLOOR
         );
     }
 

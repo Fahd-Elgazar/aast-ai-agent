@@ -190,6 +190,158 @@ const FALLBACKS = Object.freeze({
 
 export const GOLDEN_PATH_REGISTRY = Object.freeze([
   {
+    id: "golden_dean_program_offerings",
+    priority: 100,
+    category: "program_modules",
+    route: ROUTES.KG_DIRECT,
+    execution: "DIRECT_NEO4J",
+    intent: "PROGRAM",
+    cacheable: true,
+    timeoutMs: 8000,
+    entityTypes: ["college", "degree", "program"],
+    entities: ["College of Artificial Intelligence", "Bachelor of Science"],
+    patterns: [
+      /^(?=.*\bprograms?\b)(?=.*\b(?:bachelor|bsc)\b)(?=.*\bcollege of artificial intelligence\b).*$/i,
+    ],
+    variants: [
+      "Which bachelor's programs does the College of Artificial Intelligence offer at El Alamein?",
+      "What two programs are included in the Bachelor of Science offered by the College of Artificial Intelligence at El Alamein?",
+    ],
+  },
+  {
+    id: "golden_dean_program_comparison",
+    priority: 100,
+    category: "program_modules",
+    route: ROUTES.KG_DIRECT,
+    execution: "DIRECT_NEO4J",
+    intent: "COMPARE",
+    cacheable: true,
+    timeoutMs: 8000,
+    entityTypes: ["program", "course"],
+    entities: ["Intelligent Systems", "Data Science"],
+    patterns: [
+      /^(?=.*\b(?:compare|comparison|difference)\b)(?=.*\bintelligent systems\b)(?=.*\bdata science\b).*$/i,
+    ],
+    variants: [
+      "Compare Intelligent Systems and Data Science.",
+      "Compare Intelligent Systems with Data Science for a student choosing between building AI systems and working deeply with data.",
+    ],
+  },
+  {
+    id: "golden_dean_program_careers",
+    priority: 100,
+    category: "program_modules",
+    route: ROUTES.KG_DIRECT,
+    execution: "DIRECT_NEO4J",
+    intent: "PROGRAM",
+    cacheable: true,
+    timeoutMs: 2400,
+    entityTypes: ["program", "career"],
+    entities: ["program career roles"],
+    patterns: [
+      /^(?=.*\b(?:career|careers|jobs?|roles?)\b)(?=.*\b(?:intelligent systems|data science)\b).*$/i,
+    ],
+    variants: [
+      "What career roles can the Intelligent Systems program lead to?",
+      "What career roles can the Data Science program lead to?",
+    ],
+  },
+  {
+    id: "golden_dean_machine_learning_membership",
+    priority: 100,
+    category: "program_modules",
+    route: ROUTES.KG_DIRECT,
+    execution: "DIRECT_NEO4J",
+    intent: "PROGRAM",
+    cacheable: true,
+    timeoutMs: 2400,
+    entityTypes: ["program", "course"],
+    entities: ["Intelligent Systems", "Machine Learning"],
+    patterns: [
+      /^(?=.*\bmachine learning\b)(?=.*\b(?:which program|program includes|course code|credits?|credit value)\b).*$/i,
+      /^(?=.*\bmachine learning\b)(?=.*\bintelligent systems\b)(?=.*\bdata science\b)(?=.*\b(?:which|include|includes)\b).*$/i,
+    ],
+    variants: [
+      "Which program includes Machine Learning, and what are its course code and credits?",
+      "Does Intelligent Systems include Machine Learning? Give me the course code and credit value.",
+    ],
+  },
+  {
+    id: "golden_dean_course_sequence",
+    priority: 100,
+    category: "course_prerequisites",
+    route: ROUTES.KG_DIRECT,
+    execution: "DIRECT_NEO4J",
+    intent: "PROGRAM",
+    cacheable: true,
+    timeoutMs: 2400,
+    entityTypes: ["course", "program"],
+    entities: ["course sequence"],
+    patterns: [
+      /^(?=.*\b(?:recommended after|comes after|take after)\b)(?=.*\b(?:machine learning|natural language processing)\b).*$/i,
+    ],
+    variants: [
+      "Which course is recommended after Machine Learning for language technology?",
+      "Which course is recommended after Natural Language Processing?",
+    ],
+  },
+  {
+    id: "golden_dean_course_career_alignment",
+    priority: 100,
+    category: "program_modules",
+    route: ROUTES.KG_DIRECT,
+    execution: "DIRECT_NEO4J",
+    intent: "PROGRAM",
+    cacheable: true,
+    timeoutMs: 2400,
+    entityTypes: ["course", "career"],
+    entities: ["course career alignment"],
+    patterns: [
+      /^(?=.*\bcareer role\b)(?=.*\b(?:natural language processing|cognitive computing)\b).*$/i,
+    ],
+    variants: [
+      "Which career role is Natural Language Processing aligned with?",
+      "Which career role is Cognitive Computing aligned with?",
+    ],
+  },
+  {
+    id: "golden_dean_hany_role",
+    priority: 100,
+    category: "leadership_role",
+    route: ROUTES.KG_DIRECT,
+    execution: "DIRECT_NEO4J",
+    intent: "ADMIN",
+    cacheable: true,
+    timeoutMs: 2400,
+    entityTypes: ["professor", "role", "unit"],
+    entities: ["Hany Hanafy Mahmoud Said", "Quality Unit"],
+    patterns: [
+      /^(?=.*\bhany hanafy(?: mahmoud said)?\b)(?=.*\b(?:other role|another role|hold.*role|quality unit)\b).*$/i,
+    ],
+    variants: [
+      "What other role does Hany Hanafy Mahmoud Said hold at the college?",
+      "Does Hany Hanafy Mahmoud Said hold another role at the college?",
+    ],
+  },
+  {
+    id: "golden_dean_ali_role",
+    priority: 100,
+    category: "leadership_role",
+    route: ROUTES.KG_DIRECT,
+    execution: "DIRECT_NEO4J",
+    intent: "ADMIN",
+    cacheable: true,
+    timeoutMs: 2400,
+    entityTypes: ["person", "role", "college"],
+    entities: ["Ali Ali Mohamed Fahmy", "College of Artificial Intelligence"],
+    patterns: [
+      /^(?=.*\bali ali mohamed fahmy\b)(?=.*\bdean\b)(?=.*\bcollege of artificial intelligence\b).*$/i,
+    ],
+    variants: [
+      "Is Ali Ali Mohamed Fahmy the dean of the College of Artificial Intelligence?",
+    ],
+  },
+  {
     id: "golden_hany_profile",
     priority: 100,
     category: "faculty_profile",
@@ -442,6 +594,17 @@ export function extractGoldenEntities(match, query = "") {
     return parseComparisonEntities(query);
   }
 
+  // Registry `entities` may describe a query family (for example
+  // "program career roles") rather than an institutional entity. Prefer exact
+  // identities actually named in this question so descriptive placeholders
+  // never enter typed conversation memory or later golden matching.
+  const exactEntities = resolveExactEntities(query)
+    .map(entity => entity.canonical_name)
+    .filter(Boolean);
+  if (exactEntities.length > 0) {
+    return [...new Set(exactEntities)];
+  }
+
   return Array.isArray(match.entities) ? match.entities : [];
 }
 
@@ -476,41 +639,219 @@ export function parseComparisonEntities(query = "") {
   return found;
 }
 
-export function buildGoldenFallbackPayload(match, { routeOverride, reason = "GOLDEN_STATIC_FALLBACK" } = {}) {
-  if (!match?.fallback) return null;
-  const fallback = match.fallback;
-  const route = routeOverride || match.route || ROUTES.FAQ;
+export function buildGoldenFallbackPayload() {
+  // A query classifier is routing metadata, not academic evidence. Historical
+  // fallback text attached named facts to a successful-looking route even when
+  // KG/RAG retrieval had timed out or returned nothing. Keep this compatibility
+  // function for existing callers, but make unverified factual fallback
+  // construction impossible. Callers must return a truthful evidence gap.
+  return null;
+}
 
-  return {
-    final_answer: fallback.answer,
-    answer: fallback.answer,
-    confidence: fallback.confidence || Math.max(match.confidence || 0.72, 0.72),
-    route_used: route,
-    sources: [route],
-    contributing_sources: [route],
-    used_facts: Array.isArray(fallback.facts) ? fallback.facts : [fallback.answer],
-    missing_information: reason === "KG_EMPTY" ? ["Live graph did not return a stronger fact within the demo timeout."] : [],
-    graph: fallback.graph || { nodes: [], links: [] },
-    citations: [],
-    reasoning: `Golden path controlled fallback: ${reason}.`,
-    explainability: {
-      deterministic: true,
-      golden_path: true,
-      golden_id: match.id,
-      route_locked: true,
-      fallback_reason: reason,
-      llm_bypassed: true,
-    },
-    metadata: {
-      golden_path: {
-        id: match.id,
-        category: match.category,
-        execution: match.execution,
-        priority: match.priority,
-        fallback_reason: reason,
-      },
-    },
-  };
+/* ============================================================
+  CLA-WOW-001 — EXACT ENTITY IDENTITY REGISTRY
+  Canonical person/course/program identities used to run
+  deterministic exact retrieval before semantic search.
+  Grounded in aast-ai-agent-main/backend/data/clean_graph.json
+  canonical node ids so exact lookups map to live graph nodes.
+============================================================ */
+
+export const EXACT_ENTITY_REGISTRY = Object.freeze([
+  {
+    canonical_id: "CAMPUS_EG_EL_ALAMEIN",
+    canonical_name: "El Alamein Campus",
+    entity_type: "campus",
+    intent: "PROGRAM",
+    aliases: ["el alamein", "alamein campus", "el alamein campus"],
+    course_code: null,
+  },
+  {
+    canonical_id: "COLLEGE_CAI_EL_ALAMEIN",
+    canonical_name: "College of Artificial Intelligence",
+    entity_type: "college",
+    intent: "PROGRAM",
+    aliases: [
+      "college of artificial intelligence",
+      "artificial intelligence college",
+      "ai college",
+      "the college",
+    ],
+    course_code: null,
+  },
+  {
+    canonical_id: "DEGREE_EG_EL_ALAMEIN_CAI_BSC_UNDERGRAD",
+    canonical_name: "Bachelor of Science in Artificial Intelligence",
+    entity_type: "degree",
+    intent: "PROGRAM",
+    aliases: [
+      "bachelor of science",
+      "bachelor's program",
+      "bachelor's programs",
+      "bachelors program",
+      "bachelors programs",
+      "bachelor program",
+      "bsc programs",
+      "bsc program",
+      "bsc",
+    ],
+    course_code: null,
+  },
+  {
+    canonical_id: "PROF_HANY_HANAFY_MAHMOUD_SAID",
+    canonical_name: "Hany Hanafy Mahmoud Said",
+    entity_type: "professor",
+    intent: "PERSON",
+    aliases: ["hany", "hany hanafy", "dr hany", "doctor hany", "professor hany", "hany hanafy mahmoud said"],
+    course_code: null,
+  },
+  {
+    canonical_id: "PERSON_ALI_ALI_MOHAMED_FAHMY",
+    canonical_name: "Ali Ali Mohamed Fahmy",
+    entity_type: "person",
+    intent: "PERSON",
+    aliases: ["ali ali mohamed fahmy", "the dean", "dean of the college"],
+    course_code: null,
+  },
+  {
+    canonical_id: "COURSE_NATURAL_LANGUAGE_PROCESSING",
+    canonical_name: "Natural Language Processing",
+    entity_type: "course",
+    intent: "COURSE",
+    aliases: ["nlp", "natural language processing"],
+    course_code: null,
+  },
+  {
+    canonical_id: "COURSE_IN221",
+    canonical_name: "Machine Learning",
+    entity_type: "course",
+    intent: "COURSE",
+    aliases: ["ml", "machine learning"],
+    course_code: "IN221",
+  },
+  {
+    canonical_id: "COURSE_COGNITIVE_COMPUTING",
+    canonical_name: "Cognitive Computing",
+    entity_type: "course",
+    intent: "COURSE",
+    aliases: ["cognitive computing"],
+    course_code: null,
+  },
+  {
+    canonical_id: "COURSE_FUNDAMENTALS_OF_AI",
+    canonical_name: "Fundamentals of AI",
+    entity_type: "course",
+    intent: "COURSE",
+    aliases: ["fundamentals of ai", "fundamentals of artificial intelligence"],
+    course_code: null,
+  },
+  {
+    canonical_id: "COURSE_LINEAR_ALGEBRA",
+    canonical_name: "Linear Algebra",
+    entity_type: "course",
+    intent: "COURSE",
+    aliases: ["linear algebra"],
+    course_code: null,
+  },
+  {
+    canonical_id: "COURSE_CALCULUS_I",
+    canonical_name: "Calculus I",
+    entity_type: "course",
+    intent: "COURSE",
+    aliases: ["calculus i", "calculus 1", "calculus one"],
+    course_code: null,
+  },
+  {
+    canonical_id: "COURSE_CALCULUS_II",
+    canonical_name: "Calculus II",
+    entity_type: "course",
+    intent: "COURSE",
+    aliases: ["calculus ii", "calculus 2", "calculus two"],
+    course_code: null,
+  },
+  {
+    canonical_id: "COURSE_BLOCK_CHAIN",
+    canonical_name: "Block Chain",
+    entity_type: "course",
+    intent: "COURSE",
+    aliases: ["blockchain", "block chain", "block-chain"],
+    course_code: null,
+  },
+  {
+    canonical_id: "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_INTELLIGENT_SYSTEMS",
+    canonical_name: "Intelligent Systems",
+    entity_type: "program",
+    intent: "PROGRAM",
+    aliases: ["intelligent systems"],
+    course_code: null,
+  },
+  {
+    canonical_id: "CAMPUS_EG_EL_ALAMEIN__COLLEGE_CAI_EL_ALAMEIN__PROGRAM_DATA_SCIENCE",
+    canonical_name: "Data Science",
+    entity_type: "program",
+    intent: "PROGRAM",
+    aliases: ["data science"],
+    course_code: null,
+  },
+  {
+    canonical_id: "UNIT_CAI_EL_ALAMEIN_QUALITY",
+    canonical_name: "Quality Unit",
+    entity_type: "unit",
+    intent: "PERSON",
+    aliases: ["quality unit"],
+    course_code: null,
+  },
+]);
+
+function escapeExactSurface(value) {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function exactSurfacePattern(surface) {
+  const parts = String(surface).trim().split(/[\s-]+/).filter(Boolean).map(escapeExactSurface);
+  const body = parts.length > 1 ? parts.join("[\\s-]+") : (parts[0] || "");
+  // Whole-token / whole-phrase match so short aliases (e.g. "ml") never match
+  // inside unrelated words and distinct entities cannot cross-resolve.
+  return new RegExp(`(^|[^a-z0-9])(${body})(?=$|[^a-z0-9])`, "i");
+}
+
+const EXACT_ENTITY_SURFACE_INDEX = EXACT_ENTITY_REGISTRY
+  .flatMap((entity) =>
+    [entity.canonical_name, entity.course_code, ...entity.aliases]
+      .filter(Boolean)
+      .map((surface) => ({ entity, surface, pattern: exactSurfacePattern(surface) }))
+  )
+  // Longest surface first so the most specific identity wins.
+  .sort((a, b) => b.surface.length - a.surface.length);
+
+export function resolveExactEntities(query) {
+  const text = String(query || "").toLowerCase();
+  if (!text.trim()) return [];
+
+  const resolved = [];
+  const seen = new Set();
+  for (const candidate of EXACT_ENTITY_SURFACE_INDEX) {
+    const match = candidate.pattern.exec(text);
+    if (match && !seen.has(candidate.entity.canonical_id)) {
+      const entity = candidate.entity;
+      seen.add(entity.canonical_id);
+      resolved.push({
+        canonical_id: entity.canonical_id,
+        canonical_name: entity.canonical_name,
+        entity_type: entity.entity_type,
+        intent: entity.intent,
+        aliases: entity.aliases.slice(),
+        course_code: entity.course_code,
+        matched_surface: candidate.surface,
+        matched_index: match.index + match[1].length,
+      });
+    }
+  }
+
+  return resolved.sort((a, b) => a.matched_index - b.matched_index);
+}
+
+export function resolveExactEntity(query) {
+  return resolveExactEntities(query)[0] || null;
 }
 
 export function getGoldenPrewarmQueries() {
@@ -531,9 +872,12 @@ export default {
   QUERY_CATEGORY_TABLE,
   ENTITY_PRIORITY_TABLE,
   GOLDEN_PATH_REGISTRY,
+  EXACT_ENTITY_REGISTRY,
   classifyGoldenQuery,
   extractGoldenEntities,
   parseComparisonEntities,
   buildGoldenFallbackPayload,
   getGoldenPrewarmQueries,
+  resolveExactEntities,
+  resolveExactEntity,
 };

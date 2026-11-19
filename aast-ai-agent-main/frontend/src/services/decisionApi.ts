@@ -1,6 +1,7 @@
 import type { CareerRoadmap, DecisionConfidenceBreakdown, RecommendationCardData, ScoreBreakdown } from "../types";
 import { API_BASE } from "../config/api";
-import { fetchWithTimeout } from "./httpClient";
+import { validateRecommendationResponse } from "../decision/utils/recommendationTruth";
+import { fetchAndConsumeWithTimeout } from "./httpClient";
 
 export interface RecommendationPayload {
   studentProfile: {
@@ -15,40 +16,55 @@ export interface RecommendationPayload {
 
 export interface RecommendationResponse {
   success: boolean;
-  recommended_major?: string;
-  confidence?: number;
+  result_status: "ok" | "no_results";
+  recommended_major?: string | null;
+  confidence?: number | null;
   reason?: string;
+  error?: string;
+  error_code?: string;
   warnings?: string[];
   confidence_breakdown?: DecisionConfidenceBreakdown;
   career_roadmap?: CareerRoadmap | null;
   next_steps?: string[];
-  score_breakdown?: ScoreBreakdown;
+  score_breakdown?: ScoreBreakdown | null;
   recommendations?: RecommendationCardData[];
   [key: string]: unknown;
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
 export async function getRecommendation(
   data: RecommendationPayload
 ): Promise<RecommendationResponse> {
-  const res = await fetchWithTimeout(`${API_BASE}/decision/recommend`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
+  return fetchAndConsumeWithTimeout(
+    `${API_BASE}/decision/recommend`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
     },
-    body: JSON.stringify(data),
-  });
+    async (response) => {
+      let body: unknown;
+      try {
+        body = await response.json();
+      } catch {
+        throw new Error(`Recommendation API returned invalid JSON with status ${response.status}`);
+      }
 
-  let body: RecommendationResponse;
-  try {
-    body = (await res.json()) as RecommendationResponse;
-  } catch {
-    throw new Error(`Recommendation API returned invalid JSON with status ${res.status}`);
-  }
+      if (!response.ok) {
+        const message = isRecord(body) && typeof body.error === "string" ? body.error : response.statusText;
+        throw new Error(`Recommendation API failed (${response.status}): ${message}`);
+      }
 
-  if (!res.ok) {
-    const message = typeof body.error === "string" ? body.error : res.statusText;
-    throw new Error(`Recommendation API failed (${res.status}): ${message}`);
-  }
+      if (!validateRecommendationResponse(body)) {
+        throw new Error("Recommendation API returned a contradictory or incomplete result");
+      }
 
-  return body;
+      return body as RecommendationResponse;
+    },
+  );
 }

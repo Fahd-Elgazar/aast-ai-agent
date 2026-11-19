@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "defaultMode": "full",
+  "modes": {
+    "quick": {
+      "description": "Reduced local shell with external academic services disabled.",
+      "ragRoutesEnabled": false,
+      "services": {
+        "neo4j": "disabled",
+        "ollama": "disabled",
+        "qdrant": "disabled",
+        "ragRetriever": "disabled",
+        "ragAnswer": "disabled",
+        "decisionApi": "disabled"
+      }
+    },
+    "demo": {
+      "description": "Demo-complete academic topology with KG, decision, and RAG retrieval.",
+      "ragRoutesEnabled": true,
+      "services": {
+        "neo4j": "required",
+        "ollama": "required",
+        "qdrant": "required",
+        "ragRetriever": "required",
+        "ragAnswer": "disabled",
+        "decisionApi": "required"
+      }
+    },
+    "full": {
+      "description": "Full academic topology with required retrieval and optional RAG answer service.",
+      "ragRoutesEnabled": true,
+      "services": {
+        "neo4j": "required",
+        "ollama": "required",
+        "qdrant": "required",
+        "ragRetriever": "required",
+        "ragAnswer": "optional",
+        "decisionApi": "required"
+      }
+    }
+  }
+}

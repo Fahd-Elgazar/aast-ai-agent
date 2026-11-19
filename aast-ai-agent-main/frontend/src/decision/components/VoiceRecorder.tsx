@@ -1,10 +1,22 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Mic, Square, Loader2 } from 'lucide-react';
-import { askAgent } from '../../services/agentService';
-import type { AgentDecisionResponse, DecisionLike, RecommendationCardData } from '../../types';
+import {
+  AdvisorRequestCoordinator,
+  askAgent,
+  getResponseConversationId,
+} from '../../services/agentService';
+import {
+  HttpTimeoutError,
+  isRequestCancellationError,
+} from '../../services/httpClient';
+import type { AgentDecisionResponse, RecommendationCardData } from '../../types';
+import { extractVerifiedRecommendations } from '../utils/recommendationTruth';
 
 interface VoiceRecorderProps {
   cid?: string | null;
+  onCidChange?: (cid: string) => void;
+  requestCoordinator?: AdvisorRequestCoordinator;
+  disabled?: boolean;
   onResponseFetched: (
     reply: string,
     data: RecommendationCardData[],
@@ -45,58 +57,54 @@ function getSpeechRecognition(): SpeechRecognitionConstructor | undefined {
   return speechWindow.SpeechRecognition || speechWindow.webkitSpeechRecognition;
 }
 
-function decisionToRecommendation(decision: DecisionLike): RecommendationCardData {
-  const rawConf = decision?.confidence || 0;
-  const conf = rawConf > 1 ? rawConf : rawConf * 100;
-
-  return {
-    program_name: decision?.recommended_major || "Recommended Program",
-    college_name: decision?.college_name || "AAST Program",
-    score: conf,
-    match_type: decision?.match_type || "Recommended",
-    confidence_level: conf >= 80 ? "High" : conf >= 50 ? "Medium" : "Low",
-    estimated_semester_fee: decision?.estimated_semester_fee || 0,
-    currency: decision?.currency || "USD",
-    fee_mode: decision?.fee_mode || "Semester",
-    affordability_label: decision?.affordability_label || "Match",
-    score_breakdown: decision?.score_breakdown || {
-      interest_alignment: decision?.confidence_breakdown?.interests_score || conf,
-      affordability: 100,
-      employment_outlook: decision?.confidence_breakdown?.market_score || 85,
-      location_preference: 100,
-      career_flexibility: 90,
-      certificate_compatibility: decision?.confidence_breakdown?.grades_score || 100,
-      decision_data_completeness: 100,
-      missing_data_penalty: 0
-    },
-    warnings: decision?.warnings || (decision?.reason ? [decision.reason] : [])
-  };
-}
-
 function extractRecommendations(response: AgentDecisionResponse): RecommendationCardData[] {
-  if (Array.isArray(response?.recommendations)) return response.recommendations;
-  if (response?.decision) return [decisionToRecommendation(response.decision)];
-  return [];
+  return extractVerifiedRecommendations(response);
 }
 
-export default function VoiceRecorder({ cid, onResponseFetched, setLoading, setError }: VoiceRecorderProps) {
+export default function VoiceRecorder({
+  cid,
+  onCidChange,
+  requestCoordinator,
+  disabled = false,
+  onResponseFetched,
+  setLoading,
+  setError,
+}: VoiceRecorderProps) {
   const [isRecording, setIsRecording] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const recognitionRef = useRef<BrowserSpeechRecognition | null>(null);
+  const internalCoordinatorRef = useRef(new AdvisorRequestCoordinator());
+  const coordinator = requestCoordinator || internalCoordinatorRef.current;
+
+  useEffect(() => () => {
+    if (!requestCoordinator) internalCoordinatorRef.current.cancel();
+  }, [requestCoordinator]);
 
   const submitTranscript = async (transcript: string) => {
+    const activeCid = cid || null;
+    const request = coordinator.begin(activeCid);
     setIsProcessing(true);
     setLoading(true);
 
     try {
-      const response = (await askAgent(transcript, cid)) as AgentDecisionResponse;
+      const response = (await askAgent(transcript, activeCid, {
+        signal: request.controller.signal,
+      })) as AgentDecisionResponse;
+      if (!coordinator.isCurrent(request, cid || null)) return;
+
+      const responseCid = getResponseConversationId(response, activeCid);
+      if (responseCid && responseCid !== activeCid) onCidChange?.(responseCid);
       onResponseFetched(response.answer || "", extractRecommendations(response), transcript, response);
     } catch (err) {
+      if (isRequestCancellationError(err)) return;
+      if (!coordinator.isCurrent(request, cid || null)) return;
       console.error("Voice transcript orchestrator error:", err);
-      setError("Failed to process voice transcript through the orchestrator.");
+      setError(err instanceof HttpTimeoutError
+        ? "The advisor did not respond before the request deadline."
+        : "The advisor service could not process the voice transcript.");
     } finally {
       setIsProcessing(false);
-      setLoading(false);
+      if (coordinator.finish(request)) setLoading(false);
     }
   };
 
@@ -151,11 +159,11 @@ export default function VoiceRecorder({ cid, onResponseFetched, setLoading, setE
   return (
     <button
       onClick={isRecording ? stopRecording : startRecording}
-      disabled={isProcessing}
+      disabled={isProcessing || disabled}
       className={`flex items-center justify-center w-12 h-12 rounded-full transition-all focus:outline-none shrink-0 ${isRecording
         ? 'bg-red-500 hover:bg-red-600 animate-pulse ring-4 ring-red-100 shadow-lg text-white'
         : 'bg-slate-100 hover:bg-slate-200 text-slate-700 shadow-sm'
-        } ${isProcessing ? 'opacity-50 cursor-not-allowed bg-slate-200 shadow-none' : ''}`}
+        } ${isProcessing || disabled ? 'opacity-50 cursor-not-allowed bg-slate-200 shadow-none' : ''}`}
       title={isProcessing ? "Processing audio..." : isRecording ? "Stop recording" : "Record your preference"}
     >
       {isProcessing ? (

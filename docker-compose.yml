@@ -29,9 +29,11 @@ services:
       dockerfile: Dockerfile
     image: aast-ai-agent/backend:local
     env_file:
-      - ./aast-ai-agent-main/backend/.env
+      - path: ./aast-ai-agent-main/backend/.env
+        required: false
     environment:
       NODE_ENV: production
+      AAST_LAUNCHER_MODE: ${AAST_LAUNCHER_MODE:-full}
       NODE_OPTIONS: ${NODE_OPTIONS:---max-old-space-size=4096}
       ORCHESTRATOR_PORT: 8004
       DECISION_API_URL: http://decision-api:8005
@@ -44,6 +46,10 @@ services:
       HYBRID_ROUTE_TIMEOUT_MS: ${HYBRID_ROUTE_TIMEOUT_MS:-70000}
       RAG_SYNTHETIC_PROBES_ENABLED: ${RAG_SYNTHETIC_PROBES_ENABLED:-false}
       OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
+      KG_EMBED_MODEL: ${KG_EMBED_MODEL:-nomic-embed-text}
+      KG_EMBED_STARTUP_TIMEOUT_MS: ${KG_EMBED_STARTUP_TIMEOUT_MS:-90000}
+      KG_ROUTE_TIMEOUT_MS: ${KG_ROUTE_TIMEOUT_MS:-12000}
+      KG_SEMAPHORE_ACQUIRE_TIMEOUT_MS: ${KG_SEMAPHORE_ACQUIRE_TIMEOUT_MS:-3000}
       SINGLE_GEMMA_GENERATION_MODE: ${SINGLE_GEMMA_GENERATION_MODE:-true}
       GEMINI_BACKUP_ENABLED: ${GEMINI_BACKUP_ENABLED:-true}
       PRIMARY_MODEL: ${PRIMARY_MODEL:-gemma4:e2b}
@@ -59,6 +65,9 @@ services:
       NEO4J_PASSWORD: ${NEO4J_PASSWORD:?Set NEO4J_PASSWORD in .env}
       NEO4J_DATABASE: ${NEO4J_DATABASE:-neo4j}
       INTERNAL_SECRET_KEY: ${INTERNAL_SECRET_KEY:?Set INTERNAL_SECRET_KEY in .env}
+      AUTH_JWT_SECRET: ${AUTH_JWT_SECRET:?Set AUTH_JWT_SECRET in .env}
+      AUTH_USERS_JSON: "${AUTH_USERS_JSON:-[]}"
+      AUTH_GUEST_ENABLED: ${AUTH_GUEST_ENABLED:-true}
       LOG_DIR: /app/logs
     depends_on:
       neo4j:
@@ -92,13 +101,15 @@ services:
       dockerfile: Dockerfile
     image: aast-ai-agent/decision-api:local
     env_file:
-      - ./college-decision-system-backend/.env
+      - path: ./college-decision-system-backend/.env
+        required: false
     environment:
       HOST: 0.0.0.0
       PORT: 8005
       DATABASE_URL: sqlite:////app/runtime/dev.db
       VOICE_TEMP_DIR: /app/runtime/voice
       INTERNAL_SECRET_KEY: ${INTERNAL_SECRET_KEY:?Set INTERNAL_SECRET_KEY in .env}
+      AUTH_JWT_SECRET: ${AUTH_JWT_SECRET:?Set AUTH_JWT_SECRET in .env}
     ports:
       - "127.0.0.1:8005:8005"
     volumes:

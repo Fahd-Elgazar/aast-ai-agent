@@ -12,10 +12,13 @@ Environment : Windows-compatible, Python 3.9+
 """
 
 import argparse
+import gc
 import json
 import logging
+import math
 import os
 import time
+import uuid
 from datetime import datetime
 from pathlib import Path
 from typing import List, Dict, Any
@@ -36,6 +39,7 @@ from qdrant_client.http.models import (
 # ============================================================
 
 COLLECTION_NAME = os.getenv("RAG_COLLECTION_NAME", "aast_academic_rag_production")
+CORPUS_PATH_ENV = "RAG_CORPUS_PATH"
 
 QDRANT_HOST = os.getenv("QDRANT_HOST", "localhost")
 QDRANT_PORT = int(os.getenv("QDRANT_PORT", "6333"))
@@ -68,15 +72,18 @@ logger = logging.getLogger(__name__)
 # ARGPARSE
 # ============================================================
 
-def parse_args():
+def parse_args(argv=None):
     parser = argparse.ArgumentParser(
         description="Production Qdrant ingestion pipeline"
     )
 
     parser.add_argument(
         "--input",
-        required=True,
-        help=r"C:\Users\mh978\Downloads\AI_AGENT\aast-ai-agent-main\backend\rag_system\cleaned_chunked_cai_production_v4.json"
+        default=None,
+        help=(
+            "Path to the private refined institutional corpus JSON. "
+            f"May also be supplied through {CORPUS_PATH_ENV}; no corpus is bundled."
+        )
     )
 
     parser.add_argument(
@@ -85,12 +92,40 @@ def parse_args():
         help="Delete and rebuild collection if it exists"
     )
 
-    return parser.parse_args()
+    parser.add_argument(
+        "--preflight-only",
+        action="store_true",
+        help=(
+            "Validate the private corpus and generate/validate all embeddings "
+            "without connecting to or modifying Qdrant."
+        )
+    )
+
+    return parser.parse_args(argv)
 
 
 # ============================================================
 # DATA LOADER
 # ============================================================
+
+def resolve_corpus_path(cli_path: str = None, environment=None) -> Path:
+    """Resolve the explicit private corpus input without assuming local assets."""
+    env = os.environ if environment is None else environment
+    configured_path = str(cli_path or env.get(CORPUS_PATH_ENV, "")).strip()
+
+    if not configured_path:
+        raise ValueError(
+            "No RAG corpus configured. Supply --input <path> or set "
+            f"{CORPUS_PATH_ENV}. Institutional corpus data is not bundled "
+            "with the retriever image or source tree."
+        )
+
+    path = Path(configured_path).expanduser()
+    if not path.is_file():
+        raise FileNotFoundError(f"RAG corpus file not found: {path}")
+
+    return path
+
 
 def load_dataset(file_path: str) -> List[Dict[str, Any]]:
     path = Path(file_path)
@@ -100,6 +135,9 @@ def load_dataset(file_path: str) -> List[Dict[str, Any]]:
 
     with open(path, "r", encoding="utf-8") as f:
         data = json.load(f)
+
+    if not isinstance(data, list):
+        raise ValueError("RAG corpus root must be a JSON array of chunk objects.")
 
     logger.info(f"Loaded dataset with {len(data)} entries.")
     return data
@@ -123,27 +161,110 @@ REQUIRED_FIELDS = {
     "tags"
 }
 
+REQUIRED_NONEMPTY_TEXT_FIELDS = {
+    "title",
+    "content",
+    "category",
+    "subcategory",
+    "priority",
+    "document_type",
+    "program_level",
+    "source",
+}
+
+
+def _point_id_key(value: Any) -> str:
+    if isinstance(value, bool):
+        raise ValueError("must be an unsigned 64-bit integer or canonical UUID string")
+    if isinstance(value, int):
+        if value < 0 or value > (2 ** 64) - 1:
+            raise ValueError("must be an unsigned 64-bit integer or canonical UUID string")
+        return f"int:{value}"
+    if isinstance(value, str):
+        try:
+            parsed = uuid.UUID(value)
+            if value.lower() == str(parsed):
+                return f"uuid:{parsed}"
+        except (ValueError, AttributeError):
+            pass
+    raise ValueError("must be an unsigned 64-bit integer or canonical UUID string")
+
 def validate_dataset(data: List[Dict[str, Any]]) -> None:
-    invalid_count = 0
+    if not data:
+        raise ValueError("RAG corpus must contain at least one chunk.")
+
+    errors = []
+    seen_ids = set()
 
     for idx, item in enumerate(data):
+        if not isinstance(item, dict):
+            errors.append(f"entry {idx}: must be a JSON object")
+            continue
+
         missing = REQUIRED_FIELDS - set(item.keys())
-
         if missing:
-            invalid_count += 1
-            logger.warning(f"Entry {idx} missing fields: {missing}")
+            errors.append(f"entry {idx}: missing fields {sorted(missing)}")
+            continue
 
-        if not isinstance(item.get("quality_score"), (float, int)):
-            invalid_count += 1
-            logger.warning(
-                f"Entry {idx} invalid quality_score type: "
-                f"{type(item.get('quality_score'))}"
+        try:
+            point_key = _point_id_key(item["id"])
+            if point_key in seen_ids:
+                errors.append(f"entry {idx}: duplicate id {item['id']!r}")
+            else:
+                seen_ids.add(point_key)
+        except ValueError as exc:
+            errors.append(f"entry {idx}: id {exc}")
+
+        for field in REQUIRED_NONEMPTY_TEXT_FIELDS:
+            value = item.get(field)
+            if not isinstance(value, str) or not value.strip():
+                errors.append(f"entry {idx}: {field} must be a non-empty string")
+
+        quality_score = item.get("quality_score")
+        if (
+            isinstance(quality_score, bool)
+            or not isinstance(quality_score, (float, int))
+            or not math.isfinite(float(quality_score))
+            or not 0.0 <= float(quality_score) <= 1.0
+        ):
+            errors.append(
+                f"entry {idx}: quality_score must be a finite number between 0 and 1"
             )
 
-    if invalid_count > 0:
-        raise ValueError(f"{invalid_count} invalid entries detected.")
+        tags = item.get("tags")
+        if not isinstance(tags, list):
+            errors.append(f"entry {idx}: tags must be a list")
+        elif any(not isinstance(tag, str) or not tag.strip() for tag in tags):
+            errors.append(f"entry {idx}: tags must contain only non-empty strings")
+
+    if errors:
+        preview = "; ".join(errors[:20])
+        suffix = f"; and {len(errors) - 20} more" if len(errors) > 20 else ""
+        raise ValueError(f"RAG corpus validation failed: {preview}{suffix}")
 
     logger.info("Dataset schema validation PASSED.")
+
+
+def validate_embeddings(data: List[Dict[str, Any]], embeddings: np.ndarray) -> None:
+    array = np.asarray(embeddings)
+    if array.ndim != 2:
+        raise ValueError(
+            f"Embedding matrix must be two-dimensional; received shape {array.shape}."
+        )
+    if array.shape[0] != len(data):
+        raise ValueError(
+            f"Embedding count mismatch: expected {len(data)}, got {array.shape[0]}."
+        )
+    if array.shape[1] != VECTOR_SIZE:
+        raise ValueError(
+            f"Embedding dimension mismatch: expected {VECTOR_SIZE}, got {array.shape[1]}."
+        )
+    if not np.issubdtype(array.dtype, np.number) or np.issubdtype(array.dtype, np.bool_):
+        raise ValueError("Embeddings must contain numeric floating-point values.")
+    if not np.isfinite(array).all():
+        raise ValueError("Embeddings contain NaN or infinite values.")
+
+    logger.info("Embedding count, dimension, and finiteness validation PASSED.")
 
 
 # ============================================================
@@ -195,6 +316,10 @@ class EmbeddingEngine:
             show_progress_bar=True
         )
 
+    def close(self):
+        self.model = None
+        gc.collect()
+
 
 # ============================================================
 # QDRANT INGESTION ENGINE
@@ -214,9 +339,17 @@ class QdrantIngestionEngine:
             self.client.get_collections()
             logger.info("Qdrant connection verified.")
         except Exception as e:
+            self.close()
             raise ConnectionError(
                 f"Unable to connect to Qdrant: {e}"
             )
+
+    def close(self):
+        client = getattr(self, "client", None)
+        self.client = None
+        close = getattr(client, "close", None)
+        if callable(close):
+            close()
 
     def rebuild_collection(self, force_rebuild: bool):
         collections = self.client.get_collections().collections
@@ -430,37 +563,42 @@ def main():
 
     start_time = time.time()
 
-    # Fail fast Qdrant connection
-    qdrant = QdrantIngestionEngine()
+    qdrant = None
+    embedder = None
+    try:
+        # Validate every private input and every generated vector before a
+        # forced rebuild is allowed to delete the existing collection.
+        corpus_path = resolve_corpus_path(args.input)
+        data = load_dataset(corpus_path)
+        validate_dataset(data)
 
-    # Load dataset only after Qdrant confirmed
-    data = load_dataset(args.input)
+        embedder = EmbeddingEngine(EMBEDDING_MODEL)
+        texts = [embedder.build_embedding_text(item) for item in data]
+        embeddings = embedder.encode_batch(texts)
+        validate_embeddings(data, embeddings)
 
-    validate_dataset(data)
+        if args.preflight_only:
+            logger.info("Private corpus preflight PASSED; Qdrant was not modified.")
+            return
 
-    embedder = EmbeddingEngine(EMBEDDING_MODEL)
+        qdrant = QdrantIngestionEngine()
+        qdrant.rebuild_collection(force_rebuild=args.force_rebuild)
+        qdrant.create_payload_indexes()
+        qdrant.upload_data(data, embeddings)
+        qdrant.validate_collection(len(data))
 
-    texts = [
-        embedder.build_embedding_text(item)
-        for item in data
-    ]
-
-    embeddings = embedder.encode_batch(texts)
-
-    qdrant.rebuild_collection(
-        force_rebuild=args.force_rebuild
-    )
-
-    qdrant.create_payload_indexes()
-    qdrant.upload_data(data, embeddings)
-    qdrant.validate_collection(len(data))
-
-    total_time = time.time() - start_time
-
-    generate_ingestion_report(
-        total_entries=len(data),
-        total_time=total_time
-    )
+        total_time = time.time() - start_time
+        generate_ingestion_report(
+            total_entries=len(data),
+            total_time=total_time
+        )
+    finally:
+        try:
+            if qdrant is not None:
+                qdrant.close()
+        finally:
+            if embedder is not None:
+                embedder.close()
 
     logger.info("===================================================")
     logger.info("PHASE 2 QDRANT INGESTION ENGINE COMPLETE")

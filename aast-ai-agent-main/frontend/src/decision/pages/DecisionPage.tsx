@@ -5,46 +5,17 @@ import DecisionForm from '../../decision/components/DecisionForm';
 import CollegeCard from '../../decision/components/CollegeCard';
 import { Loader2 } from 'lucide-react';
 import { getRecommendation, type RecommendationResponse } from '../../services/decisionApi';
-import type { CareerRoadmap, RecommendationCardData, ScoreBreakdown } from '../../types';
+import { readAuthSession } from '../../services/authStorage';
+import type { RecommendationCardData } from '../../types';
+import { extractVerifiedRecommendations } from '../utils/recommendationTruth';
 
 function normalizeRecommendations(data: RecommendationResponse): RecommendationCardData[] {
-  if (data.recommended_major) {
-    const rawConf = data.confidence || 0;
-    const conf = rawConf > 1 ? rawConf : rawConf * 100;
-    const scoreBreakdown = data.score_breakdown as ScoreBreakdown | undefined;
-
-    return [{
-      program_id: "rec-1",
-      program_name: data.recommended_major,
-      college_name: String(data.college_name || "AAST Program"),
-      score: conf,
-      match_type: String(data.match_type || "Recommended"),
-      confidence_level: conf >= 80 ? "High" : conf >= 50 ? "Medium" : "Low",
-      estimated_semester_fee: Number(data.estimated_semester_fee || 0),
-      currency: String(data.currency || "USD"),
-      fee_mode: String(data.fee_mode || "Semester"),
-      affordability_label: String(data.affordability_label || "Match"),
-      score_breakdown: scoreBreakdown || {
-        interest_alignment: data.confidence_breakdown?.interests_score || conf,
-        affordability: 100,
-        employment_outlook: data.confidence_breakdown?.market_score || 85,
-        location_preference: 100,
-        career_flexibility: 90,
-        certificate_compatibility: data.confidence_breakdown?.grades_score || 100,
-        decision_data_completeness: 100,
-        missing_data_penalty: 0
-      },
-      warnings: data.warnings || (data.reason ? [data.reason] : []),
-      career_roadmap: (data.career_roadmap as CareerRoadmap | null | undefined) || null,
-      next_steps: data.next_steps || []
-    }];
-  }
-
-  return Array.isArray(data.recommendations) ? (data.recommendations as RecommendationCardData[]) : [];
+  return extractVerifiedRecommendations(data);
 }
 
 export default function DashboardPage() {
   const navigate = useNavigate();
+  const canAccessAdmin = readAuthSession()?.user.role === 'admin';
   const { profile } = useStudent();
   const [recommendations, setRecommendations] = useState<RecommendationCardData[]>([]);
   const [loading, setLoading] = useState(false);
@@ -77,30 +48,8 @@ export default function DashboardPage() {
         setRecommendations(normalizeRecommendations(data));
       } catch (err) {
         console.error("Recommendation API error:", err);
-        setError("Unable to fetch recommendations from the orchestrator. Showing fallback data.");
-        setRecommendations([{
-          program_id: "mock-1",
-          program_name: "Computer Science (Fallback)",
-          college_name: "College of Computing",
-          score: 85,
-          match_type: "Exact",
-          confidence_level: "High",
-          estimated_semester_fee: 5000,
-          currency: "USD",
-          fee_mode: "Semester",
-          affordability_label: "Match",
-          score_breakdown: {
-            interest_alignment: 80,
-            affordability: 90,
-            employment_outlook: 85,
-            location_preference: 100,
-            career_flexibility: 95,
-            certificate_compatibility: 100,
-            decision_data_completeness: 90,
-            missing_data_penalty: 0
-          },
-          warnings: ["Orchestrator recommendation request failed, showing sample recommendation."]
-        }]);
+        setError("Unable to fetch verified recommendations from the decision service.");
+        setRecommendations([]);
       } finally {
         setLoading(false);
       }
@@ -128,6 +77,7 @@ export default function DashboardPage() {
             </button>
             <button
               onClick={() => navigate("/decision/admin")}
+              hidden={!canAccessAdmin}
               className="bg-red-500 text-white px-4 py-2 rounded mt-3 cursor-pointer"
             >
               Admin Panel

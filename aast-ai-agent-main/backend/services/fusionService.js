@@ -77,6 +77,25 @@ class FusionService {
 
             this.metrics.total_evidence_processed += rawEvidence.length;
 
+            if (rawEvidence.length === 0) {
+                logger.warn('FUSE_EMPTY', 'No verified evidence was available for fusion', { route });
+                return {
+                    final_answer: "I don't have enough verified academic information to answer this question.",
+                    confidence: 0.1,
+                    route_used: 'LLM_FALLBACK',
+                    contributing_sources: [],
+                    citations: [],
+                    reasoning: 'Fusion stopped because every source returned empty or unreadable evidence.',
+                    missing_information: ['Insufficient evidence available.'],
+                    metadata: {
+                        evidence_count: 0,
+                        source_breakdown: {},
+                        evidence_absent: true,
+                        original_route: route
+                    }
+                };
+            }
+
             // 2. Evidence Deduplication
             const preDedupeCount = rawEvidence.length;
             let dedupedEvidence = this.deduplicateEvidence(rawEvidence);
@@ -197,71 +216,157 @@ class FusionService {
     processKGResults(kgRaw) {
         if (!kgRaw) return [];
         const items = Array.isArray(kgRaw) ? kgRaw : [kgRaw];
-        return items.map(item => ({
-            source_type: 'KG',
-            confidence: item.confidence || 0.9,
-            evidence: item.content || item.description || JSON.stringify(item),
-            citations: item.node_id ? [`Graph Node: ${item.node_id}`] : [],
-            officiality: 1.0,
-            freshness: this._calculateFreshness(item.metadata),
-            metadata: item.metadata || {}
-        }));
+        return items.map((item, index) => {
+            const metadata = item?.metadata || {};
+            const evidence = String(
+                item?.evidence ?? item?.text ?? item?.content ?? item?.description ?? ''
+            ).replace(/\s+/g, ' ').trim();
+            if (!evidence) return null;
+            return {
+                source_type: 'KG',
+                confidence: item?.confidence ?? 0.9,
+                evidence,
+                citations: [this._buildEvidenceCitation({
+                    item,
+                    evidence,
+                    sourceType: 'KG',
+                    fallbackId: `kg-${index}`,
+                    fallbackSource: metadata.source || 'Knowledge Graph'
+                })],
+                officiality: 1.0,
+                freshness: this._calculateFreshness(metadata),
+                metadata
+            };
+        }).filter(Boolean);
     }
 
     processRAGResults(ragRaw) {
         if (!ragRaw) return [];
-        const items = Array.isArray(ragRaw) ? ragRaw : [ragRaw];
-        return items.map(item => ({
-            source_type: 'RAG',
-            confidence: item.score || item.confidence || 0.7,
-            evidence: item.text || item.content || '',
-            citations: item.metadata?.source_file ? [`Doc: ${item.metadata.source_file}`] : [],
-            officiality: 0.9,
-            freshness: this._calculateFreshness(item.metadata),
-            metadata: item.metadata || {}
-        }));
+        const envelope = !Array.isArray(ragRaw) && Array.isArray(ragRaw.results) ? ragRaw : null;
+        const items = envelope ? envelope.results : (Array.isArray(ragRaw) ? ragRaw : [ragRaw]);
+        return items.map((item, index) => {
+            const metadata = item?.metadata || item?.payload || {};
+            const evidence = String(
+                item?.text ?? item?.content ?? item?.page_content ?? item?.excerpt ??
+                metadata.text ?? metadata.content ?? ''
+            ).replace(/\s+/g, ' ').trim();
+            if (!evidence) return null;
+            return {
+                source_type: 'RAG',
+                confidence: item?.score ?? item?.confidence ?? envelope?.confidence ?? 0.7,
+                evidence,
+                citations: [this._buildEvidenceCitation({
+                    item,
+                    evidence,
+                    sourceType: 'RAG',
+                    fallbackId: `rag-${index}`,
+                    fallbackSource: item?.source || metadata.source_file || metadata.source || 'Institutional document'
+                })],
+                officiality: 0.9,
+                freshness: this._calculateFreshness(metadata),
+                metadata
+            };
+        }).filter(Boolean);
+    }
+
+    _buildEvidenceCitation({ item, evidence, sourceType, fallbackId, fallbackSource }) {
+        const metadata = item?.metadata || item?.payload || {};
+        const explicit = Array.isArray(item?.citations)
+            ? item.citations.find(citation => citation && typeof citation === 'object')
+            : null;
+        const explicitEvidenceId = String(
+            explicit?.evidence_id || explicit?.id || item?.evidence_id || item?.id ||
+            metadata.evidence_id || metadata.doc_id || ''
+        ).trim();
+        const topLevelSource = item?.source || item?.source_file || null;
+        const fallbackMaterial = JSON.stringify({
+            sourceType,
+            source: topLevelSource || metadata.source_file || metadata.source || fallbackId || null,
+            evidence
+        });
+        const evidenceId = explicitEvidenceId ||
+            `${sourceType.toLowerCase()}-${crypto.createHash('sha256').update(fallbackMaterial).digest('hex').slice(0, 16)}`;
+        return {
+            id: evidenceId,
+            evidence_id: evidenceId,
+            source: explicit?.source || topLevelSource || metadata.source_file || metadata.source || fallbackSource,
+            title: explicit?.title || item?.title || metadata.title || metadata.source_file || fallbackSource,
+            category: explicit?.category || item?.category || metadata.category || `${sourceType.toLowerCase()}_evidence`,
+            excerpt: explicit?.excerpt || evidence.slice(0, 420),
+            score: explicit?.score ?? explicit?.confidence ?? item?.score ?? item?.confidence ?? 0.7
+        };
     }
 
     processDecisionResults(decisionRaw) {
         if (!decisionRaw) return [];
         const items = Array.isArray(decisionRaw) ? decisionRaw : [decisionRaw];
-        return items.map(item => ({
-            source_type: 'DECISION',
-            confidence: item.confidence || 0.85,
-            evidence: item.recommendation || item.advice || JSON.stringify(item),
-            citations: ['AAST Academic Decision Engine'],
-            officiality: 0.8,
-            freshness: this._calculateFreshness(item.factors),
-            metadata: item.factors || {}
-        }));
+        return items.map((item, index) => {
+            const evidence = String(item?.recommendation || item?.advice || '').trim();
+            if (!evidence) return null;
+            return {
+                source_type: 'DECISION',
+                confidence: item?.confidence ?? 0.85,
+                evidence,
+                citations: [this._buildEvidenceCitation({
+                    item,
+                    evidence,
+                    sourceType: 'DECISION',
+                    fallbackId: `decision-${index}`,
+                    fallbackSource: 'AAST Academic Decision Engine'
+                })],
+                officiality: 0.8,
+                freshness: this._calculateFreshness(item.factors),
+                metadata: item.factors || {}
+            };
+        }).filter(Boolean);
     }
 
     processCareerResults(careerRaw) {
         if (!careerRaw) return [];
         const items = Array.isArray(careerRaw) ? careerRaw : [careerRaw];
-        return items.map(item => ({
-            source_type: 'CAREER',
-            confidence: item.confidence || 0.8,
-            evidence: item.career_path || item.roadmap || JSON.stringify(item),
-            citations: ['AAST Career Advisory Engine'],
-            officiality: 0.7,
-            freshness: this._calculateFreshness(item.market_data),
-            metadata: item.market_data || {}
-        }));
+        return items.map((item, index) => {
+            const evidence = String(item?.career_path || item?.roadmap || '').trim();
+            if (!evidence) return null;
+            return {
+                source_type: 'CAREER',
+                confidence: item?.confidence ?? 0.8,
+                evidence,
+                citations: [this._buildEvidenceCitation({
+                    item,
+                    evidence,
+                    sourceType: 'CAREER',
+                    fallbackId: `career-${index}`,
+                    fallbackSource: 'AAST Career Advisory Engine'
+                })],
+                officiality: 0.7,
+                freshness: this._calculateFreshness(item.market_data),
+                metadata: item.market_data || {}
+            };
+        }).filter(Boolean);
     }
 
     processFAQResults(faqRaw) {
         if (!faqRaw) return [];
         const items = Array.isArray(faqRaw) ? faqRaw : [faqRaw];
-        return items.map(item => ({
-            source_type: 'FAQ',
-            confidence: item.confidence || 0.95,
-            evidence: item.answer || item.content || JSON.stringify(item),
-            citations: ['AAST Official FAQ'],
-            officiality: 1.0,
-            freshness: this._calculateFreshness({}),
-            metadata: {}
-        }));
+        return items.map((item, index) => {
+            const evidence = String(item?.answer || item?.content || '').trim();
+            if (!evidence) return null;
+            return {
+                source_type: 'FAQ',
+                confidence: item?.confidence ?? 0.95,
+                evidence,
+                citations: [this._buildEvidenceCitation({
+                    item,
+                    evidence,
+                    sourceType: 'FAQ',
+                    fallbackId: `faq-${index}`,
+                    fallbackSource: 'AAST Official FAQ'
+                })],
+                officiality: 1.0,
+                freshness: this._calculateFreshness(item?.metadata || {}),
+                metadata: item?.metadata || {}
+            };
+        }).filter(Boolean);
     }
 
     processLLMResults(llmRaw) {
@@ -271,7 +376,7 @@ class FusionService {
             source_type: 'LLM',
             confidence: item.confidence || 0.4,
             evidence: item.text || item.response || JSON.stringify(item),
-            citations: ['General Knowledge Fallback'],
+            citations: [],
             officiality: 0.1,
             freshness: 0.5,
             metadata: {}
@@ -619,7 +724,14 @@ class FusionService {
 
     _extractUniqueCitations(evidenceArray) {
         const allCitations = evidenceArray.flatMap(e => e.citations || []);
-        return [...new Set(allCitations)];
+        const unique = new Map();
+        for (const citation of allCitations) {
+            if (!citation || typeof citation !== 'object') continue;
+            const evidenceId = String(citation.evidence_id || citation.id || '').trim();
+            if (!evidenceId || unique.has(evidenceId)) continue;
+            unique.set(evidenceId, citation);
+        }
+        return [...unique.values()];
     }
 
     _createFallbackEnvelope(query, routeData, errorMessage) {

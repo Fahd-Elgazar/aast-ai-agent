@@ -1,4 +1,6 @@
 from logging.config import fileConfig
+import os
+
 from sqlalchemy import engine_from_config, pool
 from alembic import context
 
@@ -15,6 +17,13 @@ sys.path.append(str(BASE_DIR))
 # Alembic Config object
 # -------------------------------------------------
 config = context.config
+
+# Docker and release tooling provide the authoritative database location through
+# DATABASE_URL.  Without this override Alembic silently uses alembic.ini's local
+# ./dev.db even while the application serves a mounted runtime database.
+database_url = os.getenv("DATABASE_URL")
+if database_url:
+    config.set_main_option("sqlalchemy.url", database_url.replace("%", "%%"))
 
 # Configure logging
 if config.config_file_name is not None:

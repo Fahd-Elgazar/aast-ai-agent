@@ -1,6 +1,6 @@
 import type { ConversationDetail, ConversationSummary } from "../types";
 import { API_BASE } from "../config/api";
-import { fetchWithTimeout } from "./httpClient";
+import { fetchAndConsumeWithTimeout } from "./httpClient";
 
 type ConversationListResponse = {
   conversations?: ConversationSummary[];
@@ -8,6 +8,10 @@ type ConversationListResponse = {
 
 type ConversationResponse = {
   conversation?: ConversationDetail;
+};
+
+type ConversationRequestOptions = {
+  signal?: AbortSignal;
 };
 
 function buildUrl(path: string, params?: Record<string, string>) {
@@ -22,33 +26,43 @@ function buildUrl(path: string, params?: Record<string, string>) {
 }
 
 async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
-  const response = await fetchWithTimeout(buildUrl(path), {
-    ...options,
-    headers: {
-      "Content-Type": "application/json",
-      ...(options.headers || {}),
+  return fetchAndConsumeWithTimeout(
+    buildUrl(path),
+    {
+      ...options,
+      headers: {
+        "Content-Type": "application/json",
+        ...(options.headers || {}),
+      },
     },
-  });
+    async (response) => {
+      if (!response.ok) {
+        const message = await response.text();
+        throw new Error(message || `HTTP ${response.status}`);
+      }
 
-  if (!response.ok) {
-    const message = await response.text();
-    throw new Error(message || `HTTP ${response.status}`);
-  }
-
-  if (response.status === 204) return undefined as T;
-  return (await response.json()) as T;
+      if (response.status === 204) return undefined as T;
+      return (await response.json()) as T;
+    },
+  );
 }
 
-export async function listConversations(search = "") {
+export async function listConversations(
+  search = "",
+  options: ConversationRequestOptions = {},
+) {
   const url = buildUrl("/conversations", search ? { search } : undefined);
-  const response = await fetchWithTimeout(url);
-
-  if (!response.ok) {
-    const message = await response.text();
-    throw new Error(message || `HTTP ${response.status}`);
-  }
-
-  const payload = (await response.json()) as ConversationListResponse;
+  const payload = await fetchAndConsumeWithTimeout(
+    url,
+    { signal: options.signal },
+    async (response) => {
+      if (!response.ok) {
+        const message = await response.text();
+        throw new Error(message || `HTTP ${response.status}`);
+      }
+      return (await response.json()) as ConversationListResponse;
+    },
+  );
   return payload.conversations || [];
 }
 
@@ -62,8 +76,14 @@ export async function createConversation() {
   return payload.conversation;
 }
 
-export async function getConversation(cid: string) {
-  const payload = await request<ConversationResponse>(`/conversations/${encodeURIComponent(cid)}`);
+export async function getConversation(
+  cid: string,
+  options: ConversationRequestOptions = {},
+) {
+  const payload = await request<ConversationResponse>(
+    `/conversations/${encodeURIComponent(cid)}`,
+    { signal: options.signal },
+  );
   if (!payload.conversation) throw new Error("Conversation was not returned.");
   return payload.conversation;
 }

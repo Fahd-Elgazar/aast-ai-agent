@@ -25,8 +25,8 @@ PROGRAM_RECOMMENDATION_EXAMPLE = {
     "college_id": "CCIT_ABUKIR",
     "college_name": "College of Computing and Information Technology",
     "confidence_level": "Medium",
-    "score": 77.12,
-    "recommendation_score": 77.12,
+    "score": 85.09,
+    "recommendation_score": 85.09,
     "fee_category": "egyptian_secondary_or_nile_or_stem_or_azhar",
     "fee_category_confidence": "resolved",
     "fee_resolution_reason": (
@@ -60,21 +60,22 @@ PROGRAM_RECOMMENDATION_EXAMPLE = {
     "derived_training_intensity_label": "high",
     "score_breakdown": {
         "interest_alignment": 96.64,
-        "interest_alignment_contribution": 30.92,
+        "interest_alignment_contribution": 57.98,
         "affordability": 70.0,
-        "affordability_contribution": 19.6,
+        "affordability_contribution": 14.0,
         "employment_outlook": 80.0,
-        "employment_outlook_contribution": 16.0,
+        "employment_outlook_contribution": 8.0,
         "location_preference": 55.0,
-        "location_preference_contribution": 5.5,
+        "location_preference_contribution": 2.75,
         "career_flexibility": 75.0,
-        "career_flexibility_contribution": 3.75,
+        "career_flexibility_contribution": 1.88,
         "certificate_compatibility": 35.0,
-        "certificate_compatibility_contribution": 1.75,
+        "certificate_compatibility_contribution": 0.88,
         "training_intensity_signal": 74.4,
         "decision_data_completeness": 95.0,
+        "weighted_subtotal": 85.49,
         "missing_data_penalty": 0.4,
-        "total": 77.12,
+        "total": 85.09,
     },
     "explanation_summary": (
         "Matched interests: AI. Estimated semester tuition is close to the stated "
@@ -127,7 +128,10 @@ PROGRAM_RECOMMENDATION_EXAMPLE = {
 
 
 class RecommendProgramsRequestSchema(BaseModel):
-    model_config = ConfigDict(json_schema_extra={"example": RECOMMEND_PROGRAMS_REQUEST_EXAMPLE})
+    model_config = ConfigDict(
+        extra="forbid",
+        json_schema_extra={"example": RECOMMEND_PROGRAMS_REQUEST_EXAMPLE},
+    )
 
     certificate_type: str | None = Field(
         default=None,

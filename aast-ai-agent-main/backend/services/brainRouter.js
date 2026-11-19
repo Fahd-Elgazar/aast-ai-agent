@@ -124,7 +124,8 @@ const SIGNAL_DICTIONARY = {
 
         // Prerequisites / Course Dependencies
         'prerequisite', 'prerequisites', 'requirement', 'requirements',
-        'required before', 'depends on', 'course sequence',
+        'required before', 'depends on', 'course sequence', 'recommended after',
+        'take after', 'study after', 'comes after', 'followed by',
 
         // Faculty / Staff
         'professor', 'professors', 'doctor', 'doctors',
@@ -163,6 +164,8 @@ const SIGNAL_DICTIONARY = {
 
         // Major Courses
         'machine learning',
+        'calculus i',
+        'calculus ii',
         'deep learning',
         'mobile computing',
         'cognitive computing',
@@ -464,6 +467,7 @@ class BrainRouter {
             /pre-requisite/i,
             /pre requisite/i,
             /required before/i,
+            /recommended after|take after|study after|comes after|followed by|course follows|what follows/i,
             /dean/i,
             /vice dean/i,
             /office/i,
@@ -543,6 +547,9 @@ class BrainRouter {
             .toUpperCase()
             .replace(/[\s-]+/g, '_')
             .replace(/[^A-Z_]/g, '');
+        const hasExactProgramScope =
+            ['PROGRAM', 'COMPARE', 'COMPARISON'].includes(normalizedExistingIntent) &&
+            /\b(program|programs|programme|programmes|degree|degrees|bachelor|bsc)\b/i.test(lowerQuery);
         const existingOntologyIntentFromInput = ONTOLOGY_KG_INTENTS.has(normalizedExistingIntent)
             ? normalizedExistingIntent
             : null;
@@ -555,7 +562,7 @@ class BrainRouter {
             : clamp(Math.max(...aliases.map(alias => alias.canonical_hit ? 0.82 : 0.94)));
 
         const hasCourseCode = /\b[a-z]{2,5}\s*\d{3,4}\b/i.test(lowerQuery);
-        const hasSpecificSubject = /\b(machine learning|natural language processing|mobile computing|blockchain|deep learning|computer vision|data science|artificial intelligence|software engineering|nlp|ml)\b/i.test(lowerQuery);
+        const hasSpecificSubject = /\b(machine learning|natural language processing|mobile computing|blockchain|deep learning|computer vision|data science|artificial intelligence|software engineering|calculus (?:i{1,2}|1|2|one|two)|nlp|ml)\b/i.test(lowerQuery);
         const hasCurriculum = existingOntologyIntent === 'CURRICULUM' || hasCurriculumSignal;
         const hasFacility = existingOntologyIntent === 'FACILITY' || aliasCategories.has('ontology_facility') || aliasCategories.has('ontology_facility_component') || /\b(facility|facilities|lab|labs|laboratory|laboratories|facility component|equipment|robotics lab|iot lab|virtual reality lab)\b/i.test(lowerQuery);
         const hasStructuralPolicy = existingOntologyIntent === 'POLICY' || aliasCategories.has('ontology_policy') || /\b(policy|policies|policy pathway|policy pathways|grading|grading system|grading systems|grading policy|passing criteria|tuition pathway|scholarship pathway|advising pathway)\b/i.test(lowerQuery);
@@ -563,7 +570,15 @@ class BrainRouter {
         const hasTrack = existingOntologyIntent === 'TRACK' || (!hasStructuralPolicy && (aliasCategories.has('ontology_track') || hasExplicitTrackIntent));
         const hasPartnerInstitution = existingOntologyIntent === 'PARTNER_INSTITUTION' || aliasCategories.has('ontology_partner_institution') || /\b(partner institution|partner institutions|partner university|academic partner|international partner|international collaboration|uclan|barcelona)\b/i.test(lowerQuery);
         const hasGovernance = existingOntologyIntent === 'GOVERNANCE' || aliasCategories.has('ontology_governance') || /\b(governance|governance body|governance unit|quality unit|quality assurance unit|program governance|college governance)\b/i.test(lowerQuery);
-        const hasCampus = existingOntologyIntent === 'CAMPUS' || aliasCategories.has('ontology_campus') || /\b(campus|campuses|branch|branches|el alamein|new el alamein)\b/i.test(lowerQuery);
+        // A campus mention locates an explicitly requested degree/program; it
+        // must not replace that structural intent. Explicit CAMPUS intent still
+        // wins for questions whose subject is the campus itself.
+        const hasCampus =
+            existingOntologyIntent === 'CAMPUS' ||
+            (!hasExactProgramScope && (
+                aliasCategories.has('ontology_campus') ||
+                /\b(campus|campuses|branch|branches|el alamein|new el alamein)\b/i.test(lowerQuery)
+            ));
         const hasOntologyAlias = [...aliasCategories].some(category => ONTOLOGY_NON_PERSON_CATEGORIES.includes(category));
         const hasOntologyNonPerson = !!existingOntologyIntent || hasOntologyAlias || hasCurriculum || hasFacility || hasTrack || hasPartnerInstitution || hasGovernance || hasStructuralPolicy || hasCampus;
         const hasPersonTitleOrAlias = aliasCategories.has('faculty_person') || /\b(dr|doctor|professor|prof|instructor|lecturer|staff)\b/i.test(lowerQuery);
@@ -571,6 +586,7 @@ class BrainRouter {
         const hasFacultyRole = aliasCategories.has('faculty_role') || /\b(dean|vice dean|head of department|hod|program director|department head)\b/i.test(lowerQuery);
         const hasTeaching = /\b(who teaches|who is teaching|teacher|teaches|teaching|taught by|instructor|lecturer)\b/i.test(lowerQuery);
         const hasCoursePrereq = /\b(prerequisite|prerequisites|prereq|pre requisite|required before|depends on|before taking)\b/i.test(lowerQuery);
+        const hasCourseSequence = /\b(recommended after|take after|study after|comes after|followed by|course follows|what follows|which course follows)\b/i.test(lowerQuery);
         const hasRequirements = /\b(requirement|requirements|required|eligibility|eligible|criteria|condition|conditions)\b/i.test(lowerQuery);
         const hasScholarship = /\b(scholarship|scholarships|financial aid|tuition exemption|fee waiver|discount|grant|bursary)\b/i.test(lowerQuery);
         const hasFees = /\b(fee|fees|tuition|cost|payment|price|charges)\b/i.test(lowerQuery);
@@ -587,6 +603,7 @@ class BrainRouter {
         if (hasFacultyRole) classes.push('leadership');
         if (hasTeaching) classes.push('teaching');
         if (hasCoursePrereq) classes.push('course_prerequisite');
+        if (hasCourseSequence) classes.push('course_sequence');
         if (hasFacility) classes.push('facility');
         if (hasTrack) classes.push('track');
         if (hasPartnerInstitution) classes.push('partner_institution');
@@ -619,7 +636,7 @@ class BrainRouter {
             (hasSpecificSubject ? 0.22 : 0) +
             (hasPerson || hasFacultyRole ? 0.22 : 0) +
             (hasOntologyNonPerson ? 0.20 : 0) +
-            (hasRequirements || hasCoursePrereq ? 0.16 : 0) +
+            (hasRequirements || hasCoursePrereq || hasCourseSequence ? 0.16 : 0) +
             (hasGpa || hasFees || hasScholarship ? 0.14 : 0)
         );
 
@@ -648,6 +665,7 @@ class BrainRouter {
         else if (hasPerson) questionClass = 'faculty_person';
         else if (hasFacultyRole) questionClass = 'leadership';
         else if (hasCoursePrereq) questionClass = 'course_prerequisite';
+        else if (hasCourseSequence) questionClass = 'course_sequence';
         else if (hasFacility) questionClass = 'facility';
         else if (hasTrack) questionClass = 'track';
         else if (hasPartnerInstitution) questionClass = 'partner_institution';
@@ -692,7 +710,7 @@ class BrainRouter {
                                 : hasCampus ? 'CAMPUS'
                                     : (existingIntent || null)),
             force_hybrid: hybridTriggerReasons.length > 0 && !(hasTeaching || (hasPerson && !hasRequirements && !hasScholarship && !hasFees) || (hasOntologyNonPerson && !hasComparison)),
-            force_kg: ((hasTeaching || hasPerson || hasFacultyRole || hasCoursePrereq || (hasOntologyNonPerson && !hasComparison)) && hybridTriggerReasons.length === 0) || hasStructuralPolicy,
+            force_kg: ((hasTeaching || hasPerson || hasFacultyRole || hasCoursePrereq || hasCourseSequence || (hasOntologyNonPerson && !hasComparison)) && hybridTriggerReasons.length === 0) || hasStructuralPolicy,
             allow_llm_direct: hasConversational && !hasProgram && !hasSpecificSubject && !hasRequirements && !hasScholarship && !hasOntologyNonPerson,
         };
     }
@@ -991,6 +1009,12 @@ class BrainRouter {
             logger.debug('ROUTING_SIGNAL', 'Detected prerequisite query');
         }
 
+        const sequencePattern = /(recommended after|take after|study after|comes after|followed by|course follows|what follows)/i;
+        if (sequencePattern.test(lowerQuery)) {
+            scores.kg_score += 0.45;
+            logger.debug('ROUTING_SIGNAL', 'Detected course sequence query');
+        }
+
         // --- STEP A: Keyword & Phrase Dictionary Matching ---
         const calculateScore = (dictionary) => {
             let score = 0;
@@ -1032,7 +1056,8 @@ class BrainRouter {
 
         // Pattern: Recommendation Framing ("What should I", "Which is better")
         const hasRecommendationFraming = /(what should i|which is better|recommend a|help me choose|best fit)/i.test(lowerQuery);
-        if (hasRecommendationFraming) {
+        const hasCourseSequenceFraming = /\b(?:what should i (?:take|study)|which course|what course).*\bafter\b|\b(?:comes after|course follows|followed by)\b/i.test(lowerQuery);
+        if (hasRecommendationFraming && !hasCourseSequenceFraming) {
             scores.decision_score += this.signalWeights.pattern_decision;
             logger.debug('ROUTING_SIGNAL', 'Detected recommendation semantic framing');
         }
@@ -1081,38 +1106,87 @@ class BrainRouter {
             deterministic_policy: policy = deterministic_policy,
             routing_features: features = routing_features,
             extra = {}
-        }) => ({
-            route,
-            confidence: parseFloat(clamp(confidence).toFixed(3)),
-            reasoning,
-            fallback_chain,
-            services_required,
-            ambiguity_score,
-            ambiguity_detected,
-            deterministic_policy: policy,
-            routing_features: features,
-            thresholds: thresholds || {},
-            telemetry: {
-                route_chosen: route,
-                confidence_score: parseFloat(clamp(confidence).toFixed(3)),
-                entity_score: features?.entity_confidence || 0,
-                alias_score: features?.alias_confidence || 0,
-                query_specificity: features?.query_specificity || 0,
-                semantic_ambiguity: features?.semantic_ambiguity || 0,
-                hybrid_trigger_reasons: features?.hybrid_trigger_reasons || [],
-                alias_expansions: features?.matched_aliases || [],
-                golden_path: golden_path ? {
-                    id: golden_path.id,
-                    category: golden_path.category,
-                    execution: golden_path.execution,
-                    priority: golden_path.priority,
-                    route: golden_path.route
-                } : null,
-                thresholds_used: thresholds || {},
-                fallback_chain
-            },
-            ...extra
-        });
+        }) => {
+            const routeHealthKey = {
+                [ROUTES.KG_DIRECT]: 'kg',
+                [ROUTES.KG_ONLY]: 'kg',
+                [ROUTES.RAG_DIRECT]: 'rag',
+                [ROUTES.RAG_ONLY]: 'rag',
+                [ROUTES.HYBRID_KG_RAG]: 'rag',
+                [ROUTES.DECISION_ENGINE]: 'decision',
+                [ROUTES.CAREER_ENGINE]: 'career',
+                [ROUTES.FAQ]: 'faq',
+                [ROUTES.LLM_FALLBACK]: 'llm'
+            };
+            const routeAvailable = candidate => {
+                if (candidate === ROUTES.HYBRID_KG_RAG) return health.kg !== false && health.rag !== false;
+                const healthKey = routeHealthKey[candidate];
+                return !healthKey || health[healthKey] !== false;
+            };
+            const filteredFallbackChain = fallback_chain.filter(routeAvailable);
+            let effectiveRoute = route;
+            let effectiveServices = services_required;
+            let effectiveReasoning = reasoning;
+
+            // C-005 topology invariant: a disabled or unhealthy service may not
+            // appear as either the selected route or a fallback. This final gate
+            // also covers legacy scoring branches that selected a degradation
+            // route without re-checking service health.
+            if (!routeAvailable(effectiveRoute)) {
+                const replacementCandidates = [
+                    ...filteredFallbackChain,
+                    ROUTES.FAQ,
+                    ROUTES.LLM_FALLBACK
+                ];
+                effectiveRoute = replacementCandidates.find(routeAvailable) || ROUTES.LLM_FALLBACK;
+                const serviceByRoute = {
+                    [ROUTES.KG_DIRECT]: ['kg'],
+                    [ROUTES.KG_ONLY]: ['kg'],
+                    [ROUTES.RAG_DIRECT]: ['rag'],
+                    [ROUTES.RAG_ONLY]: ['rag'],
+                    [ROUTES.HYBRID_KG_RAG]: ['kg', 'rag'],
+                    [ROUTES.DECISION_ENGINE]: ['decision'],
+                    [ROUTES.CAREER_ENGINE]: ['career'],
+                    [ROUTES.FAQ]: ['faq'],
+                    [ROUTES.LLM_FALLBACK]: ['llm']
+                };
+                effectiveServices = serviceByRoute[effectiveRoute] || [];
+                effectiveReasoning = `${reasoning} The selected service is unavailable in the active topology; downgraded to ${effectiveRoute}.`;
+            }
+
+            return {
+                route: effectiveRoute,
+                confidence: parseFloat(clamp(confidence).toFixed(3)),
+                reasoning: effectiveReasoning,
+                fallback_chain: filteredFallbackChain,
+                services_required: effectiveServices,
+                ambiguity_score,
+                ambiguity_detected,
+                deterministic_policy: policy,
+                routing_features: features,
+                thresholds: thresholds || {},
+                telemetry: {
+                    route_chosen: effectiveRoute,
+                    confidence_score: parseFloat(clamp(confidence).toFixed(3)),
+                    entity_score: features?.entity_confidence || 0,
+                    alias_score: features?.alias_confidence || 0,
+                    query_specificity: features?.query_specificity || 0,
+                    semantic_ambiguity: features?.semantic_ambiguity || 0,
+                    hybrid_trigger_reasons: features?.hybrid_trigger_reasons || [],
+                    alias_expansions: features?.matched_aliases || [],
+                    golden_path: golden_path ? {
+                        id: golden_path.id,
+                        category: golden_path.category,
+                        execution: golden_path.execution,
+                        priority: golden_path.priority,
+                        route: golden_path.route
+                    } : null,
+                    thresholds_used: thresholds || {},
+                    fallback_chain: filteredFallbackChain
+                },
+                ...extra
+            };
+        };
 
         if (golden_path) {
             const routePolicy = golden_path.execution || golden_path.route;

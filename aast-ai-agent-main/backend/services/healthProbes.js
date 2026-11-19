@@ -5,12 +5,10 @@
  * Lightweight, cached subsystem health polling with circuit breaking.
  * Protects orchestrator latency loops before executing queries.
  *
- * RELIABILITY (RC-01 fix): health is "sticky last-known-good" with
- * hysteresis. A subsystem is marked UP after a single successful probe
- * but only marked DOWN after HEALTH_FAILURE_THRESHOLD consecutive
- * failed probe cycles. The previous behavior (reset everything to
- * false after 60s idle, then trust a single probe window) made the
- * first request after a demo pause route against a flapped snapshot.
+ * RELIABILITY (C-004): routing may reuse only a fresh observed snapshot.
+ * Cold start or cache expiry runs one shared probe cycle; no optimistic
+ * all-healthy state is invented. Hysteresis still requires consecutive
+ * failed observations before a previously healthy subsystem is marked down.
  * ============================================================
  */
 
@@ -22,6 +20,9 @@ import { getRecommendation, buildCareerRoadmap } from "./decisionService.js";
 import { incrementMetric } from "./metrics.js";
 import { getOllamaRuntimeStatus } from "./ollamaService.js";
 import { logger } from "./logger.js";
+import { createSubsystemHealthManager } from "./subsystemHealthManager.js";
+import { runtimeMode } from "../config/runtimeMode.js";
+import { constrainSubsystemHealthForTopology } from "../config/runtimeTopology.js";
 
 const HEALTH_CACHE_TTL = Number(process.env.HEALTH_CACHE_TTL_MS || 15000); // 15 seconds
 // Consecutive failed probe cycles required before a subsystem is marked DOWN.
@@ -33,38 +34,31 @@ const RAG_HEALTH_PROBE_TIMEOUT_MS = Number(process.env.RAG_HEALTH_PROBE_TIMEOUT_
 
 const SUBSYSTEMS = ["kg", "rag", "decision", "career", "faq", "llm"];
 
-let cachedHealth = {
-    kg: false, rag: false, decision: false, career: false, faq: false, llm: false
-};
-// Consecutive failure counters per subsystem (hysteresis state).
-const consecutiveFailures = {
-    kg: 0, rag: 0, decision: 0, career: 0, faq: 0, llm: 0
-};
-let lastCheckTime = 0;
-let refreshInFlight = null;
+const healthManager = createSubsystemHealthManager({
+    subsystems: SUBSYSTEMS,
+    cacheTtlMs: HEALTH_CACHE_TTL,
+    failureThreshold: HEALTH_FAILURE_THRESHOLD,
+    probe: runProbeCycle,
+    onProbeFailure: name => {
+        incrementMetric(`health_probe_failures_${name}`);
+    },
+    onTransitions: transitions => {
+        logger.warn("Subsystem health transitions", { transitions });
+        console.warn(`[HEALTH_TRANSITION] ${transitions.join(", ")}`);
+    },
+    onProbeError: err => {
+        logger.error("Subsystem probe cycle failed", { error: err?.message });
+        console.error("[HEALTH_PROBE] Global failure:", err?.message);
+    }
+});
 
 /** Age of the health snapshot in ms; Infinity before the first probe cycle. (LG-01) */
 export function getHealthCacheAge() {
-    return lastCheckTime > 0 ? Date.now() - lastCheckTime : Infinity;
+    return healthManager.getCacheAge();
 }
 
-export function getCachedSubsystemHealth({ optimistic = false } = {}) {
-    if (lastCheckTime > 0) {
-        return { ...cachedHealth };
-    }
-
-    if (optimistic) {
-        return {
-            kg: true,
-            rag: true,
-            decision: true,
-            career: true,
-            faq: true,
-            llm: true
-        };
-    }
-
-    return { ...cachedHealth };
+export function getCachedSubsystemHealth() {
+    return healthManager.getSnapshot();
 }
 
 /**
@@ -120,37 +114,6 @@ async function checkDecisionApiHealth() {
         return false;
     } finally {
         clearTimeout(timer);
-    }
-}
-
-/**
- * Apply one probe cycle's raw results with hysteresis:
- * - success -> subsystem immediately UP, failure counter reset
- * - failure/timeout -> counter++, subsystem marked DOWN only at threshold
- */
-function applyProbeResults(rawResults) {
-    const transitions = [];
-
-    for (const name of SUBSYSTEMS) {
-        const probeOk = rawResults[name] === true;
-
-        if (probeOk) {
-            if (!cachedHealth[name]) transitions.push(`${name}:UP`);
-            cachedHealth[name] = true;
-            consecutiveFailures[name] = 0;
-        } else {
-            consecutiveFailures[name] += 1;
-            if (consecutiveFailures[name] >= HEALTH_FAILURE_THRESHOLD && cachedHealth[name]) {
-                cachedHealth[name] = false;
-                transitions.push(`${name}:DOWN(after ${consecutiveFailures[name]} consecutive failures)`);
-            }
-            incrementMetric(`health_probe_failures_${name}`);
-        }
-    }
-
-    if (transitions.length > 0) {
-        logger.warn("Subsystem health transitions", { transitions });
-        console.warn(`[HEALTH_TRANSITION] ${transitions.join(", ")}`);
     }
 }
 
@@ -246,35 +209,13 @@ async function runProbeCycle() {
         career: checks[5].status === 'fulfilled' ? checks[5].value : false
     };
 
-    applyProbeResults(rawResults);
-    lastCheckTime = Date.now();
+    return constrainSubsystemHealthForTopology(rawResults, runtimeMode);
 }
 
 export async function checkSubsystemHealth(options = {}) {
-    const { fast = false, optimistic = false } = options || {};
-    const now = Date.now();
-    const age = now - lastCheckTime;
-
-    if (fast) {
-        return getCachedSubsystemHealth({ optimistic });
-    }
-
-    if (lastCheckTime > 0 && age < HEALTH_CACHE_TTL) {
-        return { ...cachedHealth };
-    }
-
-    try {
-        // Dedupe concurrent refreshes: all callers in the same window share one
-        // probe cycle instead of racing independent ones.
-        if (!refreshInFlight) {
-            refreshInFlight = runProbeCycle().finally(() => {
-                refreshInFlight = null;
-            });
-        }
-        await refreshInFlight;
-    } catch (err) {
-        console.error("[HEALTH_PROBE] Global failure:", err.message);
-    }
-
-    return { ...cachedHealth };
+    // Legacy fast/optimistic flags are intentionally not honored. The manager
+    // reuses fresh observed state and refreshes cold or expired state.
+    return healthManager.readAuthoritative({
+        forceRefresh: options?.forceRefresh === true
+    });
 }

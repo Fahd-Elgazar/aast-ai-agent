@@ -301,6 +301,16 @@ export const ACADEMIC_ALIAS_GROUPS = Object.freeze([
   },
   {
     category: "academic_subject",
+    canonical: "calculus i",
+    aliases: ["calculus 1", "calculus one", "calculus-i"],
+  },
+  {
+    category: "academic_subject",
+    canonical: "calculus ii",
+    aliases: ["calculus 2", "calculus two", "calculus-ii"],
+  },
+  {
+    category: "academic_subject",
     canonical: "artificial intelligence",
     aliases: ["ai", "a.i.", "artificial-intelligence", "artificialintelligence"],
   },

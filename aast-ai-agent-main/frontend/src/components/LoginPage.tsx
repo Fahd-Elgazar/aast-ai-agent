@@ -1,24 +1,38 @@
 import React, { useState } from 'react';
-import type { User } from "../types";
-
 interface LoginPageProps {
-  onLogin: (user: User) => void;
-  onGuestAccess: () => void;
+  onLogin: (studentId: string, password: string) => Promise<void>;
+  onGuestAccess: () => Promise<void>;
 }
 
 const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onGuestAccess }) => {
   const [studentId, setStudentId] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (studentId && password) {
-      onLogin({
-        name: "Somaya Osama",
-        major: "Computer Engineering",
-        studentId,
-        avatarUrl: "https://i.pravatar.cc/150?img=32"
-      });
+    if (!studentId.trim() || !password) return;
+    setSubmitting(true);
+    setError('');
+    try {
+      await onLogin(studentId.trim(), password);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Login failed');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleGuestAccess = async () => {
+    setSubmitting(true);
+    setError('');
+    try {
+      await onGuestAccess();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Guest access failed');
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -69,6 +83,12 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onGuestAccess }) => {
         {/* Login */}
         <h2 className="text-sm font-semibold text-gray-700 mb-4">Login</h2>
 
+        {error && (
+          <div className="mb-4 rounded-lg bg-red-50 border border-red-200 p-3 text-sm text-red-700" role="alert">
+            {error}
+          </div>
+        )}
+
         <form onSubmit={handleSubmit} className="space-y-4">
           
           <input
@@ -102,9 +122,10 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onGuestAccess }) => {
 
           <button 
             type="submit"
-            className="w-full bg-navy-800 hover:bg-navy-900 text-white font-bold py-3 rounded-lg transition-all"
+            disabled={submitting}
+            className="w-full bg-navy-800 hover:bg-navy-900 text-white font-bold py-3 rounded-lg transition-all disabled:opacity-60"
           >
-            Login
+            {submitting ? 'Signing in...' : 'Login'}
           </button>
         </form>
 
@@ -119,8 +140,9 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onGuestAccess }) => {
         </div>
 
         <button
-          onClick={onGuestAccess}
-          className="w-full bg-white border-2 border-gold-400 text-navy-800 hover:bg-gold-50 font-bold py-3 rounded-lg flex items-center justify-center gap-2"
+          onClick={handleGuestAccess}
+          disabled={submitting}
+          className="w-full bg-white border-2 border-gold-400 text-navy-800 hover:bg-gold-50 font-bold py-3 rounded-lg flex items-center justify-center gap-2 disabled:opacity-60"
         >
           <svg className="w-5 h-5 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"

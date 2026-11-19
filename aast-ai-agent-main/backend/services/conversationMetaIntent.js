@@ -3,7 +3,9 @@ const META_INTENTS = {
   PREVIOUS_TOPIC: "PREVIOUS_TOPIC",
   LAST_ASSISTANT_RESPONSE: "LAST_ASSISTANT_RESPONSE",
   CONTINUE_TOPIC: "CONTINUE_TOPIC",
-  CONVERSATION_SUMMARY: "CONVERSATION_SUMMARY"
+  CONVERSATION_SUMMARY: "CONVERSATION_SUMMARY",
+  PREVIOUS_ANSWER_SUMMARY: "PREVIOUS_ANSWER_SUMMARY",
+  SIMPLIFY_PREVIOUS: "SIMPLIFY_PREVIOUS"
 };
 
 const TOPIC_LABELS = {
@@ -34,6 +36,20 @@ function normalizeQuery(query) {
 
 function matchesAny(text, patterns) {
   return patterns.some(pattern => pattern.test(text));
+}
+
+export function extractRequestedBulletCount(query) {
+  const text = normalizeQuery(query);
+  const wordNumbers = {
+    one: 1,
+    two: 2,
+    three: 3,
+    four: 4,
+    five: 5
+  };
+  const match = text.match(/\b(?:in|as|into)?\s*(one|two|three|four|five|[1-5])\s+(?:concise\s+|short\s+)?(?:bullet|bullets|point|points)\b/);
+  if (!match) return null;
+  return wordNumbers[match[1]] || Number.parseInt(match[1], 10) || null;
 }
 
 const TOKEN_SYNONYMS = {
@@ -212,6 +228,31 @@ function detectSemanticMetaIntent(text) {
 export function detectMetaConversationIntent(query) {
   const text = normalizeQuery(query);
   if (!text) return null;
+  const bulletCount = extractRequestedBulletCount(query);
+
+  if (matchesAny(text, [
+    /^(summarize|summarise|recap) (that|this|your last answer|the last answer|the previous answer)\b/,
+    /^(summarize|summarise|recap) what you just (said|answered)\b/
+  ])) {
+    return {
+      type: META_INTENTS.PREVIOUS_ANSWER_SUMMARY,
+      confidence: 1,
+      source: "deterministic_regex",
+      bulletCount
+    };
+  }
+
+  if (matchesAny(text, [
+    /^(explain|say|state|rewrite|restate) (that|this|your last answer|the previous answer) (more )?(simply|plainly|clearly)$/,
+    /^(make|put) (that|this|your last answer) (more )?(simple|plain|clear)$/,
+    /^in simpler (words|terms)$/
+  ])) {
+    return {
+      type: META_INTENTS.SIMPLIFY_PREVIOUS,
+      confidence: 1,
+      source: "deterministic_regex"
+    };
+  }
 
   if (matchesAny(text, [
     /^(what|whats|what is|what was) my last (question|query)$/,
@@ -279,9 +320,17 @@ export function detectMetaConversationIntent(query) {
     /^(summarize|summarise|recap) (our|this|the) chat$/,
     /^(summarize|summarise|recap) (our|this|the) discussion$/,
     /^conversation summary$/,
-    /^what have we discussed so far$/
+    /^what have we discussed so far$/,
+    /^(summarize|summarise|recap) (only )?(the |your )?(verified )?(advice|answers|guidance) (you )?(gave|provided|shared|gave me)?/,
+    /^(summarize|summarise|recap).*\b(this|our|the) conversation\b/,
+    /^(summarize|summarise|recap) the advice you gave me\b/
   ])) {
-    return { type: META_INTENTS.CONVERSATION_SUMMARY, confidence: 1, source: "deterministic_regex" };
+    return {
+      type: META_INTENTS.CONVERSATION_SUMMARY,
+      confidence: 1,
+      source: "deterministic_regex",
+      bulletCount
+    };
   }
 
   return detectSemanticMetaIntent(text);
@@ -358,6 +407,107 @@ function lowercaseFirst(text) {
   return `${value.charAt(0).toLowerCase()}${value.slice(1)}`;
 }
 
+function getVerifiedTurns(memory = {}) {
+  return (Array.isArray(memory.verifiedTurns) ? memory.verifiedTurns : [])
+    .filter(turn => turn && cleanText(turn.answer, 1200))
+    .slice()
+    .reverse();
+}
+
+function splitGroundedSentences(value) {
+  return String(value || "")
+    .replace(/\[[^\]]{1,80}\]/g, "")
+    .split(/(?<=[.!?])\s+|\n+/)
+    .map(sentence => cleanText(sentence, 600))
+    .filter(Boolean);
+}
+
+function compactVerifiedAnswers(turns, limit = 650) {
+  const sentences = [];
+  const seen = new Set();
+  for (const turn of turns) {
+    for (const sentence of splitGroundedSentences(turn.answer)) {
+      const key = normalizeQuery(sentence);
+      if (!key || seen.has(key)) continue;
+      seen.add(key);
+      sentences.push(sentence);
+    }
+  }
+
+  let result = "";
+  for (const sentence of sentences) {
+    const next = result ? `${result} ${sentence}` : sentence;
+    if (next.length > limit) break;
+    result = next;
+  }
+  return result;
+}
+
+function classifyVerifiedTurn(turn) {
+  const relations = new Set(
+    (Array.isArray(turn.relations) ? turn.relations : [])
+      .map(relation => String(relation || "").toUpperCase())
+  );
+  const query = normalizeQuery(turn.query);
+
+  if (
+    [...relations].some(relation =>
+      ["TEACHES", "HEAD_OF", "HEAD_OF_UNIT", "DEAN_OF", "HAS_ROLE", "ACTS_AS"].includes(relation)
+    )
+  ) {
+    return "people";
+  }
+  if (
+    [...relations].some(relation =>
+      ["HAS_PREREQUISITE", "REQUIRES", "PREREQUISITE_FOR", "RECOMMENDED_AFTER"].includes(relation)
+    ) ||
+    /\b(prerequisite|before taking|recommended after|which of .* includes machine learning)\b/.test(query)
+  ) {
+    return "course";
+  }
+  return "program";
+}
+
+function buildThreePartVerifiedSummary(turns) {
+  const groups = {
+    program: [],
+    course: [],
+    people: []
+  };
+  for (const turn of turns) groups[classifyVerifiedTurn(turn)].push(turn);
+
+  const labels = [
+    ["program", "Programs and careers"],
+    ["course", "Course path"],
+    ["people", "Faculty and leadership"]
+  ];
+  const bullets = labels
+    .map(([key, label]) => {
+      const text = compactVerifiedAnswers(groups[key], 650);
+      return text ? `- ${label}: ${text}` : "";
+    })
+    .filter(Boolean);
+
+  if (bullets.length === 3) return bullets.join("\n");
+
+  const fallback = compactVerifiedAnswers(turns, 1500);
+  const sentences = splitGroundedSentences(fallback);
+  if (sentences.length === 0) return "";
+  return Array.from({ length: 3 }, (_, index) => {
+    const bucket = sentences.filter((_, sentenceIndex) => sentenceIndex % 3 === index);
+    return bucket.length > 0 ? `- ${bucket.join(" ")}` : "";
+  }).filter(Boolean).join("\n");
+}
+
+function buildExtractiveBulletSummary(value, count) {
+  const sentences = splitGroundedSentences(value);
+  if (sentences.length === 0) return "";
+  const bulletCount = Math.max(1, Math.min(Number(count) || 3, 5));
+  const buckets = Array.from({ length: Math.min(bulletCount, sentences.length) }, () => []);
+  sentences.forEach((sentence, index) => buckets[index % buckets.length].push(sentence));
+  return buckets.map(bucket => `- ${bucket.join(" ")}`).join("\n");
+}
+
 export function buildConversationMetaResponse(intent, { messages = [], conversationMemory = {} } = {}) {
   const type = typeof intent === "string" ? intent : intent?.type;
   const memory = conversationMemory || {};
@@ -390,23 +540,46 @@ export function buildConversationMetaResponse(intent, { messages = [], conversat
   }
 
   if (type === META_INTENTS.LAST_ASSISTANT_RESPONSE) {
-    const summary = cleanText(memory.lastAssistantSummary, 220) || findLastAssistantResponse(messages);
+    const summary =
+      cleanText(memory.lastVerifiedAssistantAnswer, 1200) ||
+      cleanText(memory.lastAssistantSummary, 220) ||
+      findLastAssistantResponse(messages);
     return summary
       ? `My last answer was: ${summary}`
       : "I do not have an earlier assistant answer in this conversation yet.";
   }
 
+  if (type === META_INTENTS.PREVIOUS_ANSWER_SUMMARY) {
+    const verifiedAnswer = cleanText(memory.lastVerifiedAssistantAnswer, 1200);
+    if (!verifiedAnswer) {
+      return "I do not have a verified earlier answer to summarize yet.";
+    }
+    const bulletCount = intent?.bulletCount || 3;
+    const summary = buildExtractiveBulletSummary(verifiedAnswer, bulletCount);
+    return summary || "I do not have enough verified content to summarize yet.";
+  }
+
+  if (type === META_INTENTS.SIMPLIFY_PREVIOUS) {
+    const verifiedAnswer = cleanText(memory.lastVerifiedAssistantAnswer, 1200);
+    if (!verifiedAnswer) {
+      return "I do not have a verified earlier answer to restate yet.";
+    }
+    const sentences = splitGroundedSentences(verifiedAnswer).slice(0, 3);
+    return `Simply put: ${sentences.join(" ")}`;
+  }
+
   if (type === META_INTENTS.CONVERSATION_SUMMARY) {
-    const topicPhrase = buildTopicPhrase(memory, messages);
-    const lastQuestion = findLastUserQuestion(messages);
-    const lastAnswer = cleanText(memory.lastAssistantSummary, 180) || findLastAssistantResponse(messages);
-    const parts = [];
-    if (topicPhrase) parts.push(`we discussed ${topicPhrase}`);
-    if (lastQuestion) parts.push(`your last question was "${lastQuestion}"`);
-    if (lastAnswer) parts.push(`my last answer covered: ${lastAnswer}`);
-    return parts.length > 0
-      ? `So far, ${parts.join(". ")}.`
-      : "There is not enough conversation history to summarize yet.";
+    const verifiedTurns = getVerifiedTurns(memory);
+    if (verifiedTurns.length === 0) {
+      return "There is not enough verified conversation history to summarize yet.";
+    }
+    if ((intent?.bulletCount || 0) === 3) {
+      return buildThreePartVerifiedSummary(verifiedTurns);
+    }
+    const combined = compactVerifiedAnswers(verifiedTurns, 1800);
+    return intent?.bulletCount
+      ? buildExtractiveBulletSummary(combined, intent.bulletCount)
+      : `Verified conversation summary: ${combined}`;
   }
 
   return "I can help with the previous conversation context, but I do not have enough history yet.";

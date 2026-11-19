@@ -1,0 +1,43 @@
+{
+  "source": {
+    "data_source_type": "manual",
+    "last_updated": "2026-07-07"
+  },
+  "campus": {
+    "campus_id": "SAMPLE_COAST",
+    "name": "Sample Coast Campus",
+    "city": "Sample Coast",
+    "country": "Exampleland"
+  },
+  "college": {
+    "college_id": "SAMPLE_HEALTH",
+    "name": "Sample College of Health Sciences",
+    "parent_institution": "Sample University",
+    "branch": "Sample Coast",
+    "overview": "Synthetic fixture used only to validate schema normalization."
+  },
+  "programs": [
+    {
+      "name": "Clinical Sciences",
+      "level": "Undergraduate",
+      "discipline": "health sciences",
+      "duration_years": 5,
+      "teaching_language": "English",
+      "admission_rules": {
+        "min_score": 75,
+        "certificate_types": ["sample_certificate"],
+        "mandatory_subjects": ["Biology", "Chemistry"]
+      },
+      "study_profile": {
+        "theoretical_intensity": "high",
+        "practical_intensity": "high",
+        "technology_dependency": "medium"
+      },
+      "career_outcomes": {
+        "common_roles": ["Clinical Specialist"],
+        "employment_sectors": ["Healthcare"],
+        "employability_level": "medium_high"
+      }
+    }
+  ]
+}

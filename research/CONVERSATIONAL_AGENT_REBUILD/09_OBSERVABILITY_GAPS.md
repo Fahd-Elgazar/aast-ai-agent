@@ -1,0 +1,17 @@
+# Observability gaps and trace contract
+
+**Stage D · correlated evidence from a sequential synthetic run**
+
+`conversation_results.jsonl` preserves the replay order, submitted synthetic prompts and historical route/timing. The local diagnostic contains account-scoped IDs and responses. Exactly 523 allowlisted app events joined across all request IDs. The dedicated routing audit returned 31 rows. Route, JSON body and runtime image were observed. No raw authentication envelope, secrets, private endpoint addresses or unrelated user logs were retained.
+
+| Signal | Observed assessment | Open gap |
+|---|---|---|
+| Request, scenario, CID, prior message and adaptive trigger | All 125 have unique request IDs, 25 CIDs, no CID change. Previous turn linked in the JSONL. 7 missing prompts and 1 source challenge were selected adaptively. | Need an explicit blocked authentication or timeout record when those occur. No real-student cohorts used. |
+| Normalization and resolution | Operational log recorded 27 normalized events and 13 resolved follow-ups. A01/4, B04/4 and D03/3 contain the crucial resolved text. | Absence of a rewrite event does not confirm no rewrite. Log a stable applied/unchanged/ambiguous/blocked state and chosen referent IDs. |
+| Intent/routing | HTTP route observed on all. Effective budgets appear on 114 turns and route audit on 31. S-F04/1 was captured as meta bypass. | Generic `LLM` is effective output label, not a provider or initial decision. Carry requested route, final route, overrides, calibration and missing data through one allowlisted envelope. |
+| Graph retrieval | 79 retrieval-start events, 38 ordinary completion events, other deterministic completion paths. Named IDs/types where returned, and logged timeouts on exceptions. | Some branches emit facts without entity-match rationale. Exact, semantic, empty, timeout and accidental neighboring data need distinct result reasons. |
+| RAG and fusion | Some success/fallback events expose source counts. Citation payload selected 70 turns with at least one citation. | Candidate IDs before and after ranking, dense/metadata scores, why rejected, per-part rank/fusion attribution and selected passage versions are incomplete. S-D03/1 missing calendar cannot be locally assigned to vector scoring from this trace. |
+| Generation, fallback and circuit | Health captured Gemma active and breaker closed at sampled time, with configurable backup and humanizer. Source flags and 39 synthesis budget traces exist. | Per-turn model, provider and fallback purpose unavailable for many turns. Provider mode, exact failure and whether the operation continued after client disconnect need correlation. |
+| Persistence and privacy | Request logs are written by `orchestrator.js:148–165,228–237` and `services/logger.js`. `REQ_EXPLAIN` summary starts around `684`. Structured conversation saved via `persistenceLayer.js`. | Logs can retain prompt text. Future public/QA outputs should use synthetic fixtures, fact IDs and minimized summaries. Keep raw access restricted and set a retention contract separately. |
+
+T-01 adds a disabled-by-default diagnostic export of existing state and per-stage availability, correlated by request ID. The task should never force heavy duplicate retrieval just to produce metrics. T-41 preserves provenance in the public reply and T-60 adds per-stage timeout/abort state. [Roadmap](16_MASTER_IMPLEMENTATION_ROADMAP.md) · [Schema inputs](02_ACTUAL_ARCHITECTURE_AND_DATAFLOW.md)

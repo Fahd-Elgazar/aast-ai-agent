@@ -13,7 +13,16 @@ import type {
   GraphData,
 } from "../../types";
 import { saveMessage } from "../../services/backendService";
-import { askAgent } from "../../services/agentService";
+import {
+  AdvisorRequestCoordinator,
+  ConversationLoadGate,
+  askAgent,
+  getResponseConversationId,
+} from "../../services/agentService";
+import {
+  HttpTimeoutError,
+  isRequestCancellationError,
+} from "../../services/httpClient";
 import {
   deleteConversation,
   getConversation,
@@ -163,7 +172,11 @@ const AdvisorPage = () => {
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
   const inputRef = useRef(input);
-  const preventReloadRef = useRef<string | null>(null);
+  const currentCidRef = useRef(currentCid);
+  const advisorRequestRef = useRef(new AdvisorRequestCoordinator());
+  const conversationLoadRef = useRef(new AdvisorRequestCoordinator());
+  const conversationLoadGateRef = useRef(new ConversationLoadGate());
+  const conversationListRef = useRef(new AdvisorRequestCoordinator());
 
   const currentConversation = useMemo(
     () => conversations.find((conversation) => conversation.cid === currentCid) || null,
@@ -175,9 +188,17 @@ const AdvisorPage = () => {
   }, [input]);
 
   useEffect(() => {
+    currentCidRef.current = currentCid;
     if (currentCid) localStorage.setItem(ACTIVE_CID_KEY, currentCid);
     else localStorage.removeItem(ACTIVE_CID_KEY);
   }, [currentCid]);
+
+  useEffect(() => () => {
+    advisorRequestRef.current.cancel();
+    conversationLoadRef.current.cancel();
+    conversationLoadGateRef.current.clear();
+    conversationListRef.current.cancel();
+  }, []);
 
   useEffect(() => {
     localStorage.setItem(SIDEBAR_COLLAPSED_KEY, String(sidebarCollapsed));
@@ -192,45 +213,69 @@ const AdvisorPage = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isLoading]);
 
+  const updateCurrentCid = useCallback((cid: string | null) => {
+    currentCidRef.current = cid;
+    setCurrentCid(cid);
+  }, []);
+
+  const cancelAdvisorRequest = useCallback(() => {
+    advisorRequestRef.current.cancel();
+    setIsLoading(false);
+  }, []);
+
+  const cancelConversationLoad = useCallback(() => {
+    conversationLoadRef.current.cancel();
+    conversationLoadGateRef.current.clear();
+    setHistoryLoading(false);
+  }, []);
+
   const refreshConversations = useCallback(async (searchTerm = "") => {
+    const request = conversationListRef.current.begin(searchTerm || null);
     setHistoryLoading(true);
     setHistoryError(null);
 
     try {
-      const nextConversations = await listConversations(searchTerm);
+      const nextConversations = await listConversations(searchTerm, {
+        signal: request.controller.signal,
+      });
+      if (!conversationListRef.current.isLatest(request)) return;
       setConversations(nextConversations);
-
-      if (!searchTerm && currentCid && !nextConversations.some((item) => item.cid === currentCid)) {
-        setCurrentCid(null);
-        setMessages([buildWelcomeMessage()]);
-      }
     } catch (error) {
+      if (isRequestCancellationError(error)) return;
+      if (!conversationListRef.current.isLatest(request)) return;
       const message = error instanceof Error ? error.message : "Unable to load chat history.";
       setHistoryError(message);
     } finally {
-      setHistoryLoading(false);
+      if (conversationListRef.current.finish(request)) setHistoryLoading(false);
     }
-  }, [currentCid]);
+  }, []);
 
   const loadConversation = useCallback(async (cid: string) => {
+    const request = conversationLoadRef.current.begin(cid);
     setHistoryLoading(true);
     setHistoryError(null);
 
     try {
-      const conversation = await getConversation(cid);
+      const conversation = await getConversation(cid, {
+        signal: request.controller.signal,
+      });
+      if (!conversationLoadRef.current.isCurrent(request, currentCidRef.current)) return;
       setMessages(hydrateMessages(conversation));
     } catch (error) {
+      if (isRequestCancellationError(error)) return;
+      if (!conversationLoadRef.current.isCurrent(request, currentCidRef.current)) return;
       const message = error instanceof Error ? error.message : "Unable to restore this chat.";
       if (message.includes("404") || message.toLowerCase().includes("not found")) {
-        setCurrentCid(null);
+        updateCurrentCid(null);
         setMessages([buildWelcomeMessage()]);
+        setGraph(null);
         return;
       }
       setHistoryError(message);
     } finally {
-      setHistoryLoading(false);
+      if (conversationLoadRef.current.finish(request)) setHistoryLoading(false);
     }
-  }, []);
+  }, [updateCurrentCid]);
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -242,23 +287,37 @@ const AdvisorPage = () => {
 
   useEffect(() => {
     if (currentCid) {
-      if (currentCid === preventReloadRef.current) {
-        preventReloadRef.current = null;
+      if (!conversationLoadGateRef.current.shouldLoad(currentCid)) {
+        setHistoryLoading(false);
         return;
       }
       void loadConversation(currentCid);
     } else {
+      conversationLoadRef.current.cancel();
+      conversationLoadGateRef.current.clear();
+      setHistoryLoading(false);
       setMessages([buildWelcomeMessage()]);
     }
   }, [currentCid, loadConversation]);
 
   const createNewSession = useCallback(() => {
-    setCurrentCid(null);
+    cancelAdvisorRequest();
+    cancelConversationLoad();
+    updateCurrentCid(null);
     setMessages([buildWelcomeMessage()]);
     setGraph(null);
     setInput("");
     inputRef.current = "";
-  }, []);
+  }, [cancelAdvisorRequest, cancelConversationLoad, updateCurrentCid]);
+
+  const selectConversation = useCallback((cid: string) => {
+    if (cid === currentCidRef.current) return;
+    cancelAdvisorRequest();
+    cancelConversationLoad();
+    updateCurrentCid(cid);
+    setMessages([]);
+    setGraph(null);
+  }, [cancelAdvisorRequest, cancelConversationLoad, updateCurrentCid]);
 
   const safeSaveMessage = async (message: SaveMessagePayload) => {
     try {
@@ -282,22 +341,24 @@ const AdvisorPage = () => {
     const confirmed = window.confirm(`Delete "${conversation.title}"?`);
     if (!confirmed) return;
 
+    if (conversation.cid === currentCidRef.current) cancelAdvisorRequest();
     await deleteConversation(conversation.cid);
 
-    if (conversation.cid === currentCid) {
-      setCurrentCid(null);
+    if (conversation.cid === currentCidRef.current) {
+      cancelConversationLoad();
+      updateCurrentCid(null);
       setMessages([buildWelcomeMessage()]);
       setGraph(null);
     }
 
     await refreshConversations(historySearch);
-  }, [currentCid, historySearch, refreshConversations]);
+  }, [cancelAdvisorRequest, cancelConversationLoad, historySearch, refreshConversations, updateCurrentCid]);
 
   const sendMessage = useCallback(async () => {
     const userText = inputRef.current.trim();
     if (!userText || isLoading) return;
 
-    const activeCid = currentCid;
+    const activeCid = currentCidRef.current;
 
     if (userText.toLowerCase() === "open decision chat") {
       navigate("/decision/chat");
@@ -305,6 +366,11 @@ const AdvisorPage = () => {
       inputRef.current = "";
       return;
     }
+
+    // A selected conversation may still be hydrating. Once the user sends a
+    // turn, the optimistic messages and ensuing response become authoritative
+    // for this view; a late history read must not replace them.
+    cancelConversationLoad();
 
     const userMessage: ChatMessageType = {
       id: crypto.randomUUID(),
@@ -328,22 +394,31 @@ const AdvisorPage = () => {
     inputRef.current = "";
     setIsLoading(true);
     setHistoryError(null);
+    const request = advisorRequestRef.current.begin(activeCid);
 
     try {
-      const response = await askAgent(userText, activeCid);
+      const response = await askAgent(userText, activeCid, {
+        signal: request.controller.signal,
+      });
+
+      if (!advisorRequestRef.current.isCurrent(request, currentCidRef.current)) return;
 
       if (!response) {
         throw new Error("No response from backend");
       }
 
-      const nextCid = response.cid || response.conversationId || response.conversation?.cid || activeCid;
-      if (nextCid) {
-        if (nextCid !== activeCid) {
-          preventReloadRef.current = nextCid;
-        }
-        setCurrentCid(nextCid);
+      const nextCid = getResponseConversationId(response, activeCid);
+      if (nextCid && nextCid !== activeCid) {
+        conversationLoadRef.current.cancel();
+        setHistoryLoading(false);
+        conversationLoadGateRef.current.deferNextAutomaticLoad(nextCid);
+        updateCurrentCid(nextCid);
       }
 
+      const responseGraph = response.graph;
+      const hasGraphEvidence =
+        (Array.isArray(responseGraph?.nodes) && responseGraph.nodes.length > 0) ||
+        (Array.isArray(responseGraph?.links) && responseGraph.links.length > 0);
       const botMessage: ChatMessageType = {
         id: crypto.randomUUID(),
         role: "model",
@@ -351,7 +426,8 @@ const AdvisorPage = () => {
         timestamp: new Date(),
         source: response.source || response.route || "AI",
         decision: response.decision ?? undefined,
-        hasGraph: !!response.graph,
+        citations: Array.isArray(response.citations) ? response.citations : [],
+        hasGraph: hasGraphEvidence,
       };
 
       setMessages((prev) => [
@@ -367,26 +443,28 @@ const AdvisorPage = () => {
         decision: botMessage.decision,
       });
 
-      const graphData = response.graph || null;
-      window.setTimeout(() => {
-        setGraph(graphData);
-      }, 100);
+      setGraph(response.graph || null);
       await refreshConversations(historySearch);
     } catch (error) {
+      if (isRequestCancellationError(error)) return;
+      if (!advisorRequestRef.current.isCurrent(request, currentCidRef.current)) return;
       console.error(error);
+      const errorText = error instanceof HttpTimeoutError
+        ? "The advisor did not respond before the request deadline. No academic answer was received; please try again."
+        : "The advisor service could not complete this request. No academic answer was received; please try again.";
       setMessages((prev) => [
         ...prev.filter((message) => message.id !== "welcome"),
         {
           id: crypto.randomUUID(),
           role: "model",
-          text: "I could not connect to the advisor backend. Please make sure the Node orchestrator is running.",
+          text: errorText,
           timestamp: new Date(),
         },
       ]);
     } finally {
-      setIsLoading(false);
+      if (advisorRequestRef.current.finish(request)) setIsLoading(false);
     }
-  }, [currentCid, historySearch, isLoading, navigate, refreshConversations]);
+  }, [cancelConversationLoad, historySearch, isLoading, navigate, refreshConversations, updateCurrentCid]);
 
   const handleSpeechToText = useCallback(() => {
     const speechWindow = window as SpeechRecognitionWindow;
@@ -505,7 +583,7 @@ const AdvisorPage = () => {
           onSearchChange={setHistorySearch}
           onToggleCollapsed={() => setSidebarCollapsed((value) => !value)}
           onNewChat={createNewSession}
-          onSelectConversation={setCurrentCid}
+          onSelectConversation={selectConversation}
           onRenameConversation={handleRenameConversation}
           onTogglePinConversation={handleTogglePinConversation}
           onDeleteConversation={handleDeleteConversation}

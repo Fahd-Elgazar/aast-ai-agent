@@ -25,13 +25,32 @@ $script:FrontendPath = Join-Path $script:BaseDir "aast-ai-agent-main\frontend"
 $script:BackendPath = Join-Path $script:BaseDir "aast-ai-agent-main\backend"
 $script:DecisionPath = Join-Path $script:BaseDir "college-decision-system-backend"
 $script:RagPath = Join-Path $script:BaseDir "aast-ai-agent-main\backend\rag_system"
+$script:RuntimeTopologyPath = Join-Path $script:BackendPath "config\runtimeTopology.json"
+
+if (-not (Test-Path -LiteralPath $script:RuntimeTopologyPath)) {
+    throw "Runtime topology contract is missing: $script:RuntimeTopologyPath"
+}
+
+try {
+    $script:RuntimeTopologyContract = Get-Content -LiteralPath $script:RuntimeTopologyPath -Raw | ConvertFrom-Json
+    $modeProperty = $script:RuntimeTopologyContract.modes.PSObject.Properties[$Mode]
+    if ($null -eq $modeProperty) {
+        throw "Mode '$Mode' is not defined"
+    }
+    $script:ModeContract = $modeProperty.Value
+    $script:ServiceContract = $script:ModeContract.services
+} catch {
+    throw "Runtime topology contract is invalid: $($_.Exception.Message)"
+}
 
 New-Item -ItemType Directory -Path $script:LauncherLogDir -Force | Out-Null
 
 $script:State = [ordered]@{
-    schema = 2
+    schema = 3
     launcher = "AAST Phase 2"
     mode = $Mode
+    ragRoutesEnabled = [bool]$script:ModeContract.ragRoutesEnabled
+    serviceContract = $script:ServiceContract
     baseDir = $script:BaseDir
     startedAt = (Get-Date).ToString("o")
     diagnosticsOnly = [bool]$DiagnosticsOnly
@@ -507,6 +526,8 @@ function Start-TcpServiceCheck {
 }
 
 function Start-QdrantIfAvailable {
+    param([bool]$Required = $false)
+
     Write-Host ""
     Write-Color "[qdrant] Qdrant vector service" "Yellow"
 
@@ -517,7 +538,9 @@ function Start-QdrantIfAvailable {
     }
 
     if (-not (Test-CommandAvailable "docker")) {
-        Add-Result -Service "Qdrant" -Status "WARN" -Detail "Docker not found. Full RAG starts degraded without Qdrant."
+        $status = if ($Required -or $Strict) { "FAIL" } else { "WARN" }
+        Add-Result -Service "Qdrant" -Status $status -Detail "Docker is required to start qdrant_prod for this topology."
+        if ($Required -or $Strict) { $script:CriticalFailure = $true }
         return $false
     }
 
@@ -544,11 +567,15 @@ function Start-QdrantIfAvailable {
             return $true
         }
 
-        Add-Result -Service "Qdrant" -Status "WARN" -Detail "Docker container qdrant_prod did not become ready"
+        $status = if ($Required -or $Strict) { "FAIL" } else { "WARN" }
+        Add-Result -Service "Qdrant" -Status $status -Detail "Docker container qdrant_prod did not become ready"
+        if ($Required -or $Strict) { $script:CriticalFailure = $true }
         return $false
     }
 
-    Add-Result -Service "Qdrant" -Status "WARN" -Detail "qdrant_prod container not found. RAG services will be skipped/degraded."
+    $status = if ($Required -or $Strict) { "FAIL" } else { "WARN" }
+    Add-Result -Service "Qdrant" -Status $status -Detail "qdrant_prod container was not found."
+    if ($Required -or $Strict) { $script:CriticalFailure = $true }
     return $false
 }
 
@@ -598,7 +625,10 @@ function Start-Ollama {
 }
 
 function Test-OllamaModel {
-    param([string]$Model)
+    param(
+        [string]$Model,
+        [switch]$Required
+    )
 
     $ollamaBase = $env:OLLAMA_BASE_URL
     if ([string]::IsNullOrWhiteSpace($ollamaBase)) { $ollamaBase = "http://127.0.0.1:11434" }
@@ -606,16 +636,23 @@ function Test-OllamaModel {
 
     try {
         $tags = Invoke-RestMethod -Uri "$ollamaBase/api/tags" -TimeoutSec 5
-        $models = @($tags.models | ForEach-Object { $_.name })
-        if ($models -contains $Model) {
-            Add-Result -Service "Ollama model" -Status "OK" -Detail "Primary model is installed: $Model"
+        $models = @($tags.models | ForEach-Object { if ($_.name) { $_.name } else { $_.model } })
+        $acceptedModels = @($Model)
+        if (-not $Model.Contains(":")) { $acceptedModels += "${Model}:latest" }
+        $installedModel = $models | Where-Object { $acceptedModels -contains $_ } | Select-Object -First 1
+        if ($installedModel) {
+            Add-Result -Service "Ollama model" -Status "OK" -Detail "Required model is installed: $installedModel"
             return $true
         }
 
-        Add-Result -Service "Ollama model" -Status "WARN" -Detail "Model $Model was not listed. Suggested fix: ollama pull $Model"
+        $status = if ($Required) { "FAIL" } else { "WARN" }
+        Add-Result -Service "Ollama model" -Status $status -Detail "Model $Model was not listed. Required fix: ollama pull $Model"
+        if ($Required) { $script:CriticalFailure = $true }
         return $false
     } catch {
-        Add-Result -Service "Ollama model" -Status "WARN" -Detail "Could not list Ollama models: $($_.Exception.Message)"
+        $status = if ($Required) { "FAIL" } else { "WARN" }
+        Add-Result -Service "Ollama model" -Status $status -Detail "Could not list Ollama models: $($_.Exception.Message)"
+        if ($Required) { $script:CriticalFailure = $true }
         return $false
     }
 }
@@ -662,11 +699,14 @@ function Invoke-OllamaPrewarm {
 }
 
 function Invoke-OllamaEmbedPrewarm {
-    param([string]$Model = "nomic-embed-text")
+    param(
+        [string]$Model = "nomic-embed-text",
+        [switch]$Required
+    )
 
     if ($SkipPrewarm -or $DiagnosticsOnly) {
         Add-Result -Service "Embed prewarm" -Status "SKIP" -Detail "Prewarm skipped"
-        return
+        return $true
     }
 
     $ollamaBase = $env:OLLAMA_BASE_URL
@@ -683,14 +723,17 @@ function Invoke-OllamaEmbedPrewarm {
 
     $sw = [System.Diagnostics.Stopwatch]::StartNew()
     try {
-        Invoke-RestMethod -Uri "$ollamaBase/api/embeddings" -Method Post -ContentType "application/json" -Body $body -TimeoutSec 60 | Out-Null
+        $response = Invoke-RestMethod -Uri "$ollamaBase/api/embeddings" -Method Post -ContentType "application/json" -Body $body -TimeoutSec 60
+        if (@($response.embedding).Count -eq 0) { throw "Embedding prewarm returned an empty vector" }
         $sw.Stop()
         Add-Result -Service "Embed prewarm" -Status "READY" -Detail ("Embedding model {0} warmed in {1}ms" -f $Model, [int]$sw.ElapsedMilliseconds)
+        return $true
     } catch {
         $sw.Stop()
-        $status = if ($Strict) { "FAIL" } else { "WARN" }
+        $status = if ($Required -or $Strict) { "FAIL" } else { "WARN" }
         Add-Result -Service "Embed prewarm" -Status $status -Detail ("Embed prewarm failed after {0}ms: {1}. KG semantic retrieval depends on this model. Fix: ollama pull {2}" -f [int]$sw.ElapsedMilliseconds, $_.Exception.Message, $Model)
-        if ($Strict) { $script:CriticalFailure = $true }
+        if ($Required -or $Strict) { $script:CriticalFailure = $true }
+        return $false
     }
 }
 
@@ -777,6 +820,9 @@ function Apply-ModeEnvironment {
     Set-LauncherEnv "AAST_LAUNCHER_MODE" $Mode
     Set-LauncherEnv "DECISION_API_URL" "http://127.0.0.1:8005"
     Set-LauncherEnv "OLLAMA_BASE_URL" "http://127.0.0.1:11434"
+    if ([string]::IsNullOrWhiteSpace($env:KG_EMBED_MODEL)) {
+        Set-LauncherEnv "KG_EMBED_MODEL" "nomic-embed-text"
+    }
     Set-LauncherEnv "PRIMARY_MODEL" $primaryModel
     Set-LauncherEnv "RAG_BASE_URL" "http://127.0.0.1:8001"
     Set-LauncherEnv "RAG_RETRIEVER_URL" "http://127.0.0.1:8001"
@@ -784,6 +830,18 @@ function Apply-ModeEnvironment {
     Set-LauncherEnv "TOKENIZERS_PARALLELISM" "false"
     Set-LauncherEnv "OMP_NUM_THREADS" "1"
     Set-LauncherEnv "MKL_NUM_THREADS" "1"
+
+    if ([bool]$script:ModeContract.ragRoutesEnabled) {
+        Set-LauncherEnv "RAG_EMBEDDING_INIT_MODE" "eager"
+        Set-LauncherEnv "RAG_HEALTH_REQUIRES_EMBEDDING" "true"
+        Set-LauncherEnv "RAG_WARMUP_QUERY" "admission requirements academic policies"
+        Set-LauncherEnv "RAG_TORCH_NUM_THREADS" "1"
+        Set-LauncherEnv "RAG_EMBED_BATCH_SIZE" "4"
+    }
+
+    if ([string]$script:ServiceContract.ragAnswer -eq "disabled") {
+        Set-LauncherEnv "RAG_ANSWER_ENGINE_ENABLED" "false"
+    }
 
     switch ($Mode) {
         "quick" {
@@ -840,11 +898,6 @@ function Apply-ModeEnvironment {
             Set-LauncherEnv "OLLAMA_STARTUP_WAIT_ENABLED" "true"
             Set-LauncherEnv "STARTUP_PRELOAD_ENABLED" "true"
             Set-LauncherEnv "PERIODIC_HEALTH_ENABLED" "true"
-            Set-LauncherEnv "RAG_EMBEDDING_INIT_MODE" "eager"
-            Set-LauncherEnv "RAG_HEALTH_REQUIRES_EMBEDDING" "true"
-            Set-LauncherEnv "RAG_WARMUP_QUERY" "admission requirements academic policies"
-            Set-LauncherEnv "RAG_TORCH_NUM_THREADS" "1"
-            Set-LauncherEnv "RAG_EMBED_BATCH_SIZE" "4"
             Set-LauncherEnv "OLLAMA_TIMEOUT_MS" "20000"
             Set-LauncherEnv "PRIMARY_TIMEOUT_MS" "20000"
             Set-LauncherEnv "LLM_REQUEST_DEADLINE_MS" "20000"
@@ -898,17 +951,61 @@ function Ensure-BackendSecret {
     }
 }
 
+function Ensure-AuthConfiguration {
+    $backendEnvPath = Join-Path $script:BackendPath ".env"
+    $authSecret = $env:AUTH_JWT_SECRET
+    if ([string]::IsNullOrWhiteSpace($authSecret)) {
+        $authSecret = Get-DotEnvValue -EnvPath $backendEnvPath -Name "AUTH_JWT_SECRET"
+    }
+
+    if ([string]::IsNullOrWhiteSpace($authSecret)) {
+        try {
+            $authSecret = ([guid]::NewGuid().ToString("N") + [guid]::NewGuid().ToString("N"))
+            Add-Content -LiteralPath $backendEnvPath -Value ("AUTH_JWT_SECRET={0}" -f $authSecret) -Encoding Ascii
+            Add-Result -Service "User auth" -Status "OK" -Detail "JWT signing secret auto-generated and persisted to backend .env"
+        } catch {
+            Add-Result -Service "User auth" -Status "FAIL" -Detail ("Could not configure AUTH_JWT_SECRET: {0}" -f $_.Exception.Message)
+            $script:PreflightFailure = $true
+            return
+        }
+    } else {
+        Add-Result -Service "User auth" -Status "OK" -Detail "JWT signing secret is configured"
+    }
+    Set-LauncherEnv "AUTH_JWT_SECRET" $authSecret
+
+    $authUsers = $env:AUTH_USERS_JSON
+    if ([string]::IsNullOrWhiteSpace($authUsers)) {
+        $authUsers = Get-DotEnvValue -EnvPath $backendEnvPath -Name "AUTH_USERS_JSON"
+    }
+    if ([string]::IsNullOrWhiteSpace($authUsers)) {
+        $authUsers = "[]"
+        Add-Result -Service "User directory" -Status "OK" -Detail "Guest-only mode; provision hashed student/admin accounts in AUTH_USERS_JSON"
+    } else {
+        Add-Result -Service "User directory" -Status "OK" -Detail "Hashed account directory is configured"
+    }
+    Set-LauncherEnv "AUTH_USERS_JSON" $authUsers
+
+    $guestEnabled = $env:AUTH_GUEST_ENABLED
+    if ([string]::IsNullOrWhiteSpace($guestEnabled)) {
+        $guestEnabled = Get-DotEnvValue -EnvPath $backendEnvPath -Name "AUTH_GUEST_ENABLED"
+    }
+    if ([string]::IsNullOrWhiteSpace($guestEnabled)) { $guestEnabled = "true" }
+    Set-LauncherEnv "AUTH_GUEST_ENABLED" $guestEnabled
+}
+
 function Invoke-Preflight {
     Write-Color "[preflight] Validating paths, commands, and local dependencies" "Yellow"
+
+    Add-Result -Service "Runtime topology" -Status "OK" -Detail ("{0}: RAG routes={1}; retriever={2}; answer={3}" -f $Mode, [bool]$script:ModeContract.ragRoutesEnabled, $script:ServiceContract.ragRetriever, $script:ServiceContract.ragAnswer)
 
     Require-Path -Label "Backend path" -Path $script:BackendPath | Out-Null
     Require-Path -Label "Frontend path" -Path $script:FrontendPath | Out-Null
 
-    if ($Mode -ne "quick") {
+    if ([string]$script:ServiceContract.decisionApi -ne "disabled") {
         Require-Path -Label "Decision API path" -Path $script:DecisionPath | Out-Null
     }
 
-    if ($Mode -eq "full") {
+    if ([string]$script:ServiceContract.ragRetriever -ne "disabled") {
         Require-Path -Label "RAG path" -Path $script:RagPath | Out-Null
     }
 
@@ -917,21 +1014,29 @@ function Invoke-Preflight {
     Test-NodeApp -Label "Backend package" -Path $script:BackendPath | Out-Null
     Test-NodeApp -Label "Frontend package" -Path $script:FrontendPath | Out-Null
 
-    if ($Mode -ne "quick") {
+    if (([string]$script:ServiceContract.decisionApi -ne "disabled") -or ([string]$script:ServiceContract.ragRetriever -ne "disabled")) {
         Require-Command -Label "Python" -Command "python" -Required $true | Out-Null
+    }
+
+    if ([string]$script:ServiceContract.decisionApi -ne "disabled") {
         Test-PythonModules -Label "Decision API modules" -Modules @("fastapi", "uvicorn", "pydantic_settings") -Required $true | Out-Null
+    }
+
+    if ([string]$script:ServiceContract.ollama -ne "disabled") {
         Require-Command -Label "Ollama CLI" -Command "ollama" -Required $false | Out-Null
-
-        Ensure-BackendSecret
     }
 
-    if ($Mode -eq "quick") {
-        Ensure-BackendSecret
+    Ensure-BackendSecret
+    Ensure-AuthConfiguration
+
+    if ([string]$script:ServiceContract.ragRetriever -ne "disabled") {
+        $ragRequired = [string]$script:ServiceContract.ragRetriever -eq "required"
+        Test-PythonModules -Label "RAG modules" -Modules @("fastapi", "uvicorn", "qdrant_client", "sentence_transformers") -Required $ragRequired | Out-Null
     }
 
-    if ($Mode -eq "full") {
-        Test-PythonModules -Label "RAG modules" -Modules @("fastapi", "uvicorn", "qdrant_client", "sentence_transformers") -Required:$Strict | Out-Null
-        Require-Command -Label "Docker" -Command "docker" -Required:$Strict | Out-Null
+    if ([string]$script:ServiceContract.qdrant -ne "disabled") {
+        $qdrantRequired = [string]$script:ServiceContract.qdrant -eq "required"
+        Require-Command -Label "Docker" -Command "docker" -Required $qdrantRequired | Out-Null
     }
 }
 
@@ -959,7 +1064,8 @@ function Show-Summary {
                 "*Decision*" { Write-Host "  - From college-decision-system-backend, verify: python -m uvicorn app.main:app --host 127.0.0.1 --port 8005." }
                 "*Backend*" { Write-Host "  - From aast-ai-agent-main\backend, verify npm install and npm run start:orchestrator." }
                 "*Frontend*" { Write-Host "  - From aast-ai-agent-main\frontend, verify npm install and npm run dev:lowmem." }
-                "*RAG*" { Write-Host "  - Start Docker Desktop and qdrant_prod, or use demo mode to skip heavy RAG services." }
+                "*Qdrant*" { Write-Host "  - Start Docker Desktop and the qdrant_prod container; demo and full modes require RAG retrieval." }
+                "*RAG*" { Write-Host "  - Verify the local RAG Python modules, Qdrant collection, and port 8001 health endpoint." }
                 default { Write-Host ("  - Review: {0} -> {1}" -f $item.Service, $item.Detail) }
             }
         }
@@ -969,13 +1075,19 @@ function Show-Summary {
     Write-Host "Service URLs:"
     Write-Host "  Frontend:     http://127.0.0.1:5173"
     Write-Host "  Backend:      http://127.0.0.1:8004/health"
-    Write-Host "  Decision API: http://127.0.0.1:8005/health"
-    if ($Mode -eq "full") {
+    if ([string]$script:ServiceContract.decisionApi -ne "disabled") {
+        Write-Host "  Decision API: http://127.0.0.1:8005/health"
+    }
+    if ([string]$script:ServiceContract.ragRetriever -ne "disabled") {
         Write-Host "  RAG Retriever: http://127.0.0.1:8001/health"
-        Write-Host "  RAG Answer:    http://127.0.0.1:8002/health"
         Write-Host "  Qdrant:        http://127.0.0.1:6333"
     }
-    Write-Host "  Ollama:       http://127.0.0.1:11434/api/tags"
+    if ([string]$script:ServiceContract.ragAnswer -ne "disabled") {
+        Write-Host "  RAG Answer:    http://127.0.0.1:8002/health"
+    }
+    if ([string]$script:ServiceContract.ollama -ne "disabled") {
+        Write-Host "  Ollama:       http://127.0.0.1:11434/api/tags"
+    }
     Write-Host ""
     Write-Host ("State file: {0}" -f $script:StatePath)
     Write-Host ("Logs:       {0}" -f $script:LauncherLogDir)
@@ -1005,15 +1117,27 @@ if ($script:PreflightFailure) {
     exit 2
 }
 
-if ($Mode -ne "quick") {
-    Start-TcpServiceCheck -Id "neo4j" -Name "Neo4j Bolt" -Port 7687 -TimeoutSeconds 8 -Required $true | Out-Null
+if ([string]$script:ServiceContract.neo4j -ne "disabled") {
+    $neo4jRequired = [string]$script:ServiceContract.neo4j -eq "required"
+    Start-TcpServiceCheck -Id "neo4j" -Name "Neo4j Bolt" -Port 7687 -TimeoutSeconds 8 -Required $neo4jRequired | Out-Null
 }
 
-if ($Mode -eq "full") {
-    $qdrantReady = Start-QdrantIfAvailable
+$qdrantReady = $false
+if ([string]$script:ServiceContract.qdrant -ne "disabled") {
+    $qdrantRequired = [string]$script:ServiceContract.qdrant -eq "required"
+    $qdrantReady = Start-QdrantIfAvailable -Required $qdrantRequired
 }
 
-if ($Mode -ne "quick") {
+if (([string]$script:ServiceContract.qdrant -eq "required") -and -not $qdrantReady) {
+    Show-Summary
+    Stop-LaunchedOnFailure
+    Write-Color "Launcher stopped before application startup because required Qdrant readiness failed." "Red"
+    Pause-IfNeeded
+    exit 1
+}
+
+$embeddingReadinessFailed = $false
+if ([string]$script:ServiceContract.ollama -ne "disabled") {
     $ollamaReady = Start-Ollama
     if ($ollamaReady) {
         Test-OllamaModel -Model $primaryModel | Out-Null
@@ -1023,13 +1147,30 @@ if ($Mode -ne "quick") {
         # (neo4jcontext.js -> /api/embeddings, model nomic-embed-text). It was
         # never verified or warmed, so the FIRST KG question paid a cold load
         # or failed outright when the model was missing.
-        Test-OllamaModel -Model "nomic-embed-text" | Out-Null
-        Invoke-OllamaEmbedPrewarm -Model "nomic-embed-text"
+        $embeddingModel = $env:KG_EMBED_MODEL
+        $embeddingModelReady = Test-OllamaModel -Model $embeddingModel -Required
+        if ($embeddingModelReady) {
+            $embeddingPrewarmReady = Invoke-OllamaEmbedPrewarm -Model $embeddingModel -Required
+            if (-not $embeddingPrewarmReady) { $embeddingReadinessFailed = $true }
+        } else {
+            $embeddingReadinessFailed = $true
+        }
+    } else {
+        $embeddingReadinessFailed = $true
     }
 }
 
-if ($Mode -eq "full") {
-    if ($qdrantReady -or $Strict) {
+if ($embeddingReadinessFailed) {
+    Show-Summary
+    Stop-LaunchedOnFailure
+    Write-Color "Launcher stopped before application startup because KG embedding readiness failed." "Red"
+    Pause-IfNeeded
+    exit 1
+}
+
+if ([string]$script:ServiceContract.ragRetriever -ne "disabled") {
+    $ragRetrieverRequired = [string]$script:ServiceContract.ragRetriever -eq "required"
+    if ($qdrantReady) {
         $ragRetrieverReady = Start-HttpService `
             -Id "rag-retriever" `
             -Name "RAG Retriever" `
@@ -1038,14 +1179,32 @@ if ($Mode -eq "full") {
             -WorkingDirectory $script:RagPath `
             -Command "python -m uvicorn phase3_retriever:app --host 127.0.0.1 --port 8001" `
             -TimeoutSeconds 180 `
-            -Required:$Strict `
+            -Required $ragRetrieverRequired `
             -AcceptedJsonStatuses @("healthy")
 
         if ($ragRetrieverReady) {
             Invoke-RagRetrieverWarmup
         }
 
-        Start-HttpService `
+    } else {
+        $status = if ($ragRetrieverRequired -or $Strict) { "FAIL" } else { "WARN" }
+        Add-Result -Service "RAG Retriever" -Status $status -Detail "Skipped because Qdrant is not ready"
+        if ($ragRetrieverRequired -or $Strict) { $script:CriticalFailure = $true }
+        $ragRetrieverReady = $false
+    }
+}
+
+if (([string]$script:ServiceContract.ragRetriever -eq "required") -and -not $ragRetrieverReady) {
+    Show-Summary
+    Stop-LaunchedOnFailure
+    Write-Color "Launcher stopped before application startup because required RAG retrieval readiness failed." "Red"
+    Pause-IfNeeded
+    exit 1
+}
+
+if (([string]$script:ServiceContract.ragAnswer -ne "disabled") -and $ragRetrieverReady) {
+    $ragAnswerRequired = [string]$script:ServiceContract.ragAnswer -eq "required"
+    Start-HttpService `
             -Id "rag-answer" `
             -Name "RAG Answer Engine" `
             -Port 8002 `
@@ -1053,14 +1212,12 @@ if ($Mode -eq "full") {
             -WorkingDirectory $script:RagPath `
             -Command "python -m uvicorn phase4_llm_answer_engine:app --host 127.0.0.1 --port 8002" `
             -TimeoutSeconds 90 `
-            -Required:$Strict `
+            -Required $ragAnswerRequired `
             -AcceptedJsonStatuses @("healthy") | Out-Null
-    } else {
-        Add-Result -Service "RAG services" -Status "WARN" -Detail "Skipped because Qdrant is not ready"
-    }
 }
 
-if ($Mode -ne "quick") {
+if ([string]$script:ServiceContract.decisionApi -ne "disabled") {
+    $decisionRequired = [string]$script:ServiceContract.decisionApi -eq "required"
     Start-HttpService `
         -Id "decision-api" `
         -Name "Decision API" `
@@ -1069,7 +1226,7 @@ if ($Mode -ne "quick") {
         -WorkingDirectory $script:DecisionPath `
         -Command "python -m uvicorn app.main:app --host 127.0.0.1 --port 8005" `
         -TimeoutSeconds 50 `
-        -Required $true `
+        -Required $decisionRequired `
         -AcceptedJsonStatuses @("ok") | Out-Null
 }
 
@@ -1078,13 +1235,16 @@ $backendHealthUrl = if ($Mode -eq "quick") { "http://127.0.0.1:8004/health/metri
 # supervisor to restart it. run_supervised.cmd restarts on exit (capped) so a
 # single crash no longer takes the backend down for the rest of a session.
 $supervisorPath = Join-Path $script:BaseDir "launcher\run_supervised.cmd"
+# Demo/full modes reach this direct command only after the required model
+# inventory and embedding prewarm gates above have passed. Quick mode is a
+# separate reduced-topology contract tracked by C-005.
 Start-HttpService `
     -Id "backend" `
     -Name "Orchestrator Backend" `
     -Port 8004 `
     -HealthUrl $backendHealthUrl `
     -WorkingDirectory $script:BackendPath `
-    -Command ("`"{0}`" npm run start:orchestrator" -f $supervisorPath) `
+    -Command ("`"{0}`" npm run start:orchestrator:direct" -f $supervisorPath) `
     -TimeoutSeconds 85 `
     -Required $true `
     -AcceptAny2xx | Out-Null

@@ -6,6 +6,8 @@ import unicodedata
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from decimal import Decimal
+from types import MappingProxyType
+from typing import Mapping
 
 from app.application.services.decision_numeric_normalizer import DecisionNumericNormalizer
 from app.application.services.fee_category_resolver import (
@@ -28,6 +30,18 @@ from app.infrastructure.db.repositories.decision_program_repo import DecisionPro
 
 from app.application.services.interest_expansion_service import InterestExpansionService
 from thefuzz import process
+
+
+DECISION_SCORE_WEIGHTS: Mapping[str, float] = MappingProxyType(
+    {
+        "interest_alignment": 0.60,
+        "affordability": 0.20,
+        "employment_outlook": 0.10,
+        "location_preference": 0.05,
+        "career_flexibility": 0.025,
+        "certificate_compatibility": 0.025,
+    }
+)
 
 
 @dataclass(frozen=True)
@@ -304,16 +318,6 @@ class RecommendProgramsUseCase:
             if not self._is_track_compatible(program, college, request.certificate_type):
                 continue
 
-            weighted_score = (
-                interest_result.score * 0.60
-                + affordability_score * 0.20
-                + employment_result.score * 0.10
-                + location_score * 0.05
-                + flexibility_result.score * 0.025
-                + admission_result.score * 0.025
-            )
-            final_score = max(0.0, weighted_score - missing_data_penalty)
-            score_value = round(final_score * 100, 2)
             decision_warnings = self._merge_messages(
                 interest_result.warnings,
                 training.warnings,
@@ -332,9 +336,9 @@ class RecommendProgramsUseCase:
                 training=training,
                 completeness=completeness,
                 missing_data_penalty=missing_data_penalty,
-                final_score=final_score,
                 fee_match_level=tuition.fee_match_level,
             )
+            score_value = float(score_breakdown["total"])
 
             # Assign dynamic match_type based on explicit boundaries and leniency
             is_affordable = affordability_label in ("affordable", "unknown")
@@ -1044,31 +1048,47 @@ class RecommendProgramsUseCase:
         training: DerivedTrainingIntensity,
         completeness: DecisionDataCompleteness,
         missing_data_penalty: float,
-        final_score: float,
         fee_match_level: str,
     ) -> dict[str, float | str]:
         fee_status = "Estimated" if fee_match_level in ("college_fallback", "branch_fallback") else "Verified"
+        component_scores = {
+            "interest_alignment": interest_score,
+            "affordability": affordability_score,
+            "employment_outlook": employment_score,
+            "location_preference": location_score,
+            "career_flexibility": flexibility_score,
+            "certificate_compatibility": admission_score,
+        }
+        contributions = {
+            component: round(component_scores[component] * weight * 100, 2)
+            for component, weight in DECISION_SCORE_WEIGHTS.items()
+        }
+        weighted_subtotal = round(sum(contributions.values()), 2)
+        penalty_points = round(missing_data_penalty * 100, 2)
+        total = round(max(0.0, weighted_subtotal - penalty_points), 2)
+
         return {
             "interest_alignment": round(interest_score * 100, 2),
-            "interest_alignment_contribution": round(interest_score * 0.32 * 100, 2),
+            "interest_alignment_contribution": contributions["interest_alignment"],
             "affordability": round(affordability_score * 100, 2),
-            "affordability_contribution": round(affordability_score * 0.28 * 100, 2),
+            "affordability_contribution": contributions["affordability"],
             "employment_outlook": round(employment_score * 100, 2),
-            "employment_outlook_contribution": round(employment_score * 0.20 * 100, 2),
+            "employment_outlook_contribution": contributions["employment_outlook"],
             "location_preference": round(location_score * 100, 2),
-            "location_preference_contribution": round(location_score * 0.10 * 100, 2),
+            "location_preference_contribution": contributions["location_preference"],
             "career_flexibility": round(flexibility_score * 100, 2),
-            "career_flexibility_contribution": round(flexibility_score * 0.05 * 100, 2),
+            "career_flexibility_contribution": contributions["career_flexibility"],
             "certificate_compatibility": round(admission_score * 100, 2),
-            "certificate_compatibility_contribution": round(admission_score * 0.05 * 100, 2),
+            "certificate_compatibility_contribution": contributions["certificate_compatibility"],
             "training_intensity_signal": round(
                 (training.training_intensity_score if training.training_intensity_score is not None else 5.0)
                 * 10,
                 2,
             ),
             "decision_data_completeness": round(completeness.completeness_score, 2),
-            "missing_data_penalty": round(missing_data_penalty * 100, 2),
-            "total": round(final_score * 100, 2),
+            "weighted_subtotal": weighted_subtotal,
+            "missing_data_penalty": penalty_points,
+            "total": total,
             "fee_status": fee_status,
         }
 

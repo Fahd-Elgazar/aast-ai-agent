@@ -1,0 +1,665 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "6367b0df91f208e518fb7e04cd7c81bdb82b9ae4",
+  "status": "planned-not-implemented",
+  "phaseNames": [
+    "Baseline and trace",
+    "Context and memory",
+    "Intent and arbitration",
+    "Graph and document retrieval",
+    "Grounded evidence and replies",
+    "Natural interaction",
+    "Reliability and regression",
+    "Integration and release"
+  ],
+  "docs": {
+    "design": "15_TARGET_ARCHITECTURE.md",
+    "roadmap": "16_MASTER_IMPLEMENTATION_ROADMAP.md",
+    "ownership": "17_TWO_DEVELOPER_WORK_SPLIT.md",
+    "verification": "18_TESTING_AND_REGRESSION_STRATEGY.md",
+    "decisions": "19_OPEN_DECISIONS_AND_BLOCKERS.md"
+  },
+  "tasks": [
+    {
+      "id": "T-00",
+      "phase": 0,
+      "mergeSequence": 1,
+      "owner": "Developer 1 / Codex",
+      "reviewer": "Developer 2 / Claude Code",
+      "dependsOn": [],
+      "estimatedEngineerDays": 1,
+      "risk": "medium",
+      "problem": "Source and running image differ, and the teammate may lack local branches and private inputs.",
+      "evidence": [
+        "01_REPOSITORY_AND_RUNTIME_AUDIT.md",
+        "14_CLEANUP_VERIFICATION_REPORT.md",
+        "19_OPEN_DECISIONS_AND_BLOCKERS.md"
+      ],
+      "rootCause": [
+        "Version and environment drift"
+      ],
+      "solution": "Verify both machines can resolve the canonical code and cleanup patch. Export an allowlisted environment manifest and agree on an isolated fixture profile. Run the existing gates. Choose one authorized profile for exact-revision release tests and document capacity before startup.",
+      "files": [
+        "docker-compose.appliance.yml",
+        "docker-compose.yml",
+        "appliance/README.md",
+        "docs/stabilization/BASELINE.md",
+        ".github/workflows/ci.yml"
+      ],
+      "apiSchemaImpact": "Read profile, command and version inventory first. Any Compose/CI change is a separate reviewed diff. Public API unchanged.",
+      "acceptanceCriteria": [
+        "Both machines report exact commit, profile, toolchain, model identities and dataset fingerprint or a specific declared input gap.",
+        "A disposable fixture path with temporary service stores is documented and smoke-tested once by each developer.",
+        "No hidden fallback to a historical image."
+      ],
+      "tests": [
+        "git rev-parse HEAD",
+        "docker compose -f docker-compose.appliance.yml config --no-interpolate --services",
+        "Run the Section 18 native gates and isolated Decision delivery checks."
+      ],
+      "rollback": "Keep prior Compose files and revert any baseline documentation/CI diff independently."
+    },
+    {
+      "id": "T-01",
+      "phase": 0,
+      "mergeSequence": 2,
+      "owner": "Developer 1 / Codex",
+      "reviewer": "Developer 2 / Claude Code",
+      "dependsOn": [
+        "T-00"
+      ],
+      "estimatedEngineerDays": 2,
+      "risk": "medium",
+      "problem": "Only 31 routing audit rows and incomplete stage attribution for 125 requests.",
+      "evidence": [
+        "09_OBSERVABILITY_GAPS.md",
+        "S-D03/1",
+        "S-B02/2"
+      ],
+      "rootCause": [
+        "R04",
+        "R05",
+        "R07",
+        "R09"
+      ],
+      "solution": "Add optional request-scoped stage tracing with predeclared events and reason enums. Bound record size and use synthetic request logging only by default. Put fixtures over stage RAG/graph failures before adapters change.",
+      "files": [
+        "aast-ai-agent-main/backend/orchestrator.js",
+        "aast-ai-agent-main/backend/services/logger.js",
+        "aast-ai-agent-main/backend/services/metrics.js",
+        "aast-ai-agent-main/backend/services/persistenceLayer.js",
+        "aast-ai-agent-main/backend/testing/conversationalIntelligence.test.js"
+      ],
+      "apiSchemaImpact": "Internal trace version 1 in target spec. Public reply shape unchanged.",
+      "acceptanceCriteria": [
+        "All required stages are represented on 100% of synthetic turns by ran/skipped/unavailable/error events keyed by one request ID.",
+        "Allowlisted logs contain no tokens, private paths or full student prompts. Disabled feature has no extra retrieval."
+      ],
+      "tests": [
+        "node testing/conversationalIntelligence.test.js",
+        "npm run test:auth",
+        "Replay S-D03/1 and S-B02/2 with tracing enabled and disabled in fixture mode."
+      ],
+      "rollback": "Disable synthetic trace collection and revert the instrumentation patch without touching stored conversation schema."
+    },
+    {
+      "id": "T-02",
+      "phase": 0,
+      "mergeSequence": 3,
+      "owner": "Developer 2 / Claude Code",
+      "reviewer": "Developer 1 / Codex",
+      "dependsOn": [
+        "T-00"
+      ],
+      "estimatedEngineerDays": 1,
+      "risk": "medium",
+      "problem": "August evidence changes and older Decision/RAG branches may overlap planned work.",
+      "evidence": [
+        "06_ROOT_CAUSE_ANALYSIS.md",
+        "10_DUPLICATE_AND_DEAD_CODE_INVENTORY.md",
+        "14_CLEANUP_VERIFICATION_REPORT.md"
+      ],
+      "rootCause": [
+        "R04",
+        "R05"
+      ],
+      "solution": "Independently review C00–C03, compare branch changes by file and behavior, and capture 6 positive/negative graph/document fixtures that express stable IDs and sanctions for missing evidence. Capture fixture-owned hashes.",
+      "files": [
+        "aast-ai-agent-main/backend/services/neo4jcontext.js",
+        "aast-ai-agent-main/backend/services/directRagEvidencePolicy.js",
+        "aast-ai-agent-main/backend/rag_system/test_phase3_retriever.py",
+        "evaluation/contracts/retrieval/entity-evidence.schema.json"
+      ],
+      "apiSchemaImpact": "Read-only review of cleanup and code. Add synthetic fixture data only after scope is frozen.",
+      "acceptanceCriteria": [
+        "Five-file cleanup review documents reference/contract evidence and exact revision.",
+        "August truth-contract work is checked before an overlapping patch is proposed.",
+        "Fixtures reproduce at least two route/rejection observations without external PII."
+      ],
+      "tests": [
+        "npm run test:kg",
+        "node testing/directRagGroundingContract.test.js",
+        "python -m pytest -p no:cacheprovider -q test_phase3_retriever.py test_rag_readiness.py"
+      ],
+      "rollback": "Revert only fixture or review additions."
+    },
+    {
+      "id": "T-10",
+      "phase": 1,
+      "mergeSequence": 4,
+      "owner": "Developer 1 / Codex",
+      "reviewer": "Developer 2 / Claude Code",
+      "dependsOn": [
+        "T-01"
+      ],
+      "estimatedEngineerDays": 3,
+      "risk": "high",
+      "problem": "Explicit current predicate and time scope are overwritten by earlier conversation.",
+      "evidence": [
+        "06_ROOT_CAUSE_ANALYSIS.md#systemic-root-causes",
+        "S-A01/2",
+        "S-A01/4",
+        "S-B04/4",
+        "S-D03/3"
+      ],
+      "rootCause": [
+        "R01",
+        "R02"
+      ],
+      "solution": "Make the resolver return explicit/current versus borrowed slots. Apply entity references without altering explicit predicate, week, term, correction or question goal. Rank referents using typed accepted targets. Ask one short clarification on ambiguity.",
+      "files": [
+        "aast-ai-agent-main/backend/services/conversationPriority.js",
+        "aast-ai-agent-main/backend/testing/demoConversationFollowup.test.js",
+        "aast-ai-agent-main/backend/testing/conversationalIntelligence.test.js"
+      ],
+      "apiSchemaImpact": "Internal QueryPlan fields resolved, explicit, borrowed and unresolved. Existing request/response fields preserved.",
+      "acceptanceCriteria": [
+        "A01/4 preserves Data Science and Machine Learning relation.",
+        "A01/2 asks a typed comparison, or clarifies a genuinely unresolved pair.",
+        "B04/4 and D03/3 keep corrected subject and week."
+      ],
+      "tests": [
+        "node testing/demoConversationFollowup.test.js",
+        "node testing/conversationalIntelligence.test.js",
+        "Replay A01, B04 and D03 with one CID each."
+      ],
+      "rollback": "Retain legacy resolver behind the reviewed profile switch for one release. Back out T-10 and dependent rollout together if downstream plan readers are present."
+    },
+    {
+      "id": "T-11",
+      "phase": 1,
+      "mergeSequence": 5,
+      "owner": "Developer 1 / Codex",
+      "reviewer": "Developer 2 / Claude Code",
+      "dependsOn": [
+        "T-10"
+      ],
+      "estimatedEngineerDays": 2.5,
+      "risk": "high",
+      "problem": "Transport continuity holds while target state and earlier-topic returns can be wrong.",
+      "evidence": [
+        "08_MEMORY_ROUTING_RETRIEVAL_ANALYSIS.md",
+        "S-B02/3",
+        "S-C01/2",
+        "S-F04/4"
+      ],
+      "rootCause": [
+        "R01",
+        "R02"
+      ],
+      "solution": "Separate focused targets, prior turns and accepted evidence. Merge only specific confirmed slots from a clarification and rehydrate older session records using existing canonical fields. Clear narrow topic/route bias when new input changes scope.",
+      "files": [
+        "aast-ai-agent-main/backend/services/conversationService.js",
+        "aast-ai-agent-main/backend/services/persistenceLayer.js",
+        "aast-ai-agent-main/backend/testing/demoConversationMemory.test.js",
+        "aast-ai-agent-main/backend/testing/authIsolation.test.js"
+      ],
+      "apiSchemaImpact": "Backward-compatible in-memory projection. Existing stored record, ownership and API scope remain intact. Dual-read only if legacy serialization requires it.",
+      "acceptanceCriteria": [
+        "Latest explicit correction wins through next turn.",
+        "Return-to-topic can recover an earlier evidenced subject by explicit reference.",
+        "Old session fixture loads and different owner cannot access CID."
+      ],
+      "tests": [
+        "node testing/demoConversationMemory.test.js",
+        "node testing/demoConversationFollowup.test.js",
+        "npm run test:auth",
+        "Replay B02, C01, F04."
+      ],
+      "rollback": "Disable new projection and continue legacy read path; revert new write fields if any were approved separately."
+    },
+    {
+      "id": "T-20",
+      "phase": 2,
+      "mergeSequence": 6,
+      "owner": "Developer 1 / Codex",
+      "reviewer": "Developer 2 / Claude Code",
+      "dependsOn": [
+        "T-11",
+        "T-02"
+      ],
+      "estimatedEngineerDays": 3,
+      "risk": "high",
+      "problem": "Golden and meta shortcuts override explicit evidence and out-of-domain intent.",
+      "evidence": [
+        "06_ROOT_CAUSE_ANALYSIS.md",
+        "S-E02/1",
+        "S-F04/1",
+        "S-D04/1",
+        "S-F01/4"
+      ],
+      "rootCause": [
+        "R03"
+      ],
+      "solution": "Require evidence-intent and scope checks before golden/meta fast lane selection. Separate confidence from rule precedence and record route reasons. Keep genuine recommendations and prior-answer recall working. Calibrate on declared fixtures instead of deployment-wide threshold changes.",
+      "files": [
+        "aast-ai-agent-main/backend/orchestrator.js",
+        "aast-ai-agent-main/backend/services/brainRouter.js",
+        "aast-ai-agent-main/backend/services/conversationMetaIntent.js",
+        "aast-ai-agent-main/backend/config/goldenPathRegistry.js",
+        "aast-ai-agent-main/backend/testing/routingPrecisionCalibration.test.js"
+      ],
+      "apiSchemaImpact": "Internal routing decision with requested/final route and reason. Public route labels and envelopes remain compatible.",
+      "acceptanceCriteria": [
+        "E02/1 bypasses career Decision and retains exact graph relation.",
+        "F04/1 goes to an unsupported-domain outcome.",
+        "D04/1 picks authoritative calendar evidence path. Legitimate Decision and recalls still pass."
+      ],
+      "tests": [
+        "npm run test:routing",
+        "npm run test:golden-cache",
+        "npm run test:decision",
+        "Replay E02, F04, D04, F01."
+      ],
+      "rollback": "Disable new scope arbitration as one policy. Preserve existing golden cache layout and key-space."
+    },
+    {
+      "id": "T-21",
+      "phase": 2,
+      "mergeSequence": 7,
+      "owner": "Developer 1 / Codex",
+      "reviewer": "Developer 2 / Claude Code",
+      "dependsOn": [
+        "T-20"
+      ],
+      "estimatedEngineerDays": 2.5,
+      "risk": "high",
+      "problem": "Two same-intent questions share an entity or scope; hybrid parts can disappear.",
+      "evidence": [
+        "05_TURN_LEVEL_FAILURE_ANALYSIS.md",
+        "S-E03/1",
+        "S-D03/1"
+      ],
+      "rootCause": [
+        "R09"
+      ],
+      "solution": "Split independently answerable clauses into ordered part IDs before classification. Keep each explicit entity, relation, temporal constraint and expected source lane through retrieval. Cap parts and total budget with an explicit gap for unsupported ones.",
+      "files": [
+        "aast-ai-agent-main/backend/orchestrator.js",
+        "aast-ai-agent-main/backend/services/conversationPriority.js",
+        "aast-ai-agent-main/backend/services/brainRouter.js",
+        "aast-ai-agent-main/backend/testing/conversationalIntelligence.test.js"
+      ],
+      "apiSchemaImpact": "Internal ordered QueryPlan.parts. Use existing combined response until T-41 connects coverage.",
+      "acceptanceCriteria": [
+        "E03/1 produces two distinct scoped plans in original order.",
+        "D03/1 keeps both syllabus and official-calendar parts.",
+        "A constrained or ambiguous part is tracked without poisoning another part."
+      ],
+      "tests": [
+        "node testing/conversationalIntelligence.test.js",
+        "npm run test:routing",
+        "Add same-family and graph/document paired assertions for E03 and D03."
+      ],
+      "rollback": "Disable part planner and restore existing single planning path and compatible public behavior."
+    },
+    {
+      "id": "T-30",
+      "phase": 3,
+      "mergeSequence": 8,
+      "owner": "Developer 2 / Claude Code",
+      "reviewer": "Developer 1 / Codex",
+      "dependsOn": [
+        "T-02",
+        "T-01"
+      ],
+      "estimatedEngineerDays": 3,
+      "risk": "high",
+      "problem": "Graph retrieval may surface loosely related facts when a typed relation is absent.",
+      "evidence": [
+        "06_ROOT_CAUSE_ANALYSIS.md",
+        "S-D02/1",
+        "S-C02/2",
+        "S-E02/1"
+      ],
+      "rootCause": [
+        "R04"
+      ],
+      "solution": "Pass target IDs plus expected edge type and direction to exact retrieval. Record per-part match/miss/timeout reasons. Quarantine semantic candidates without matching entity and relation, retaining broad search for legitimate generalized queries.",
+      "files": [
+        "aast-ai-agent-main/backend/services/neo4jcontext.js",
+        "aast-ai-agent-main/backend/testing/kgReliability.test.js",
+        "aast-ai-agent-main/backend/testing/retrievalEntityAlignment.test.js"
+      ],
+      "apiSchemaImpact": "Internal graph evidence adapter reads frozen QueryPlan. Keep graph data, Neo4j schema, route shape and provider configuration.",
+      "acceptanceCriteria": [
+        "Positive fixtures preserve direction and distinction between HAS_COURSE, RECOMMENDED_AFTER and formal prerequisite.",
+        "Wrong neighboring Physics/Computer Vision evidence is rejected for policy.",
+        "Named relation miss produces an explicit reason."
+      ],
+      "tests": [
+        "npm run test:kg",
+        "node testing/retrievalEntityAlignment.test.js",
+        "Run positive/negative exact edge replay on isolated graph."
+      ],
+      "rollback": "Disable stricter per-part eligibility for isolated rollback. Revert adapter and fixture changes together."
+    },
+    {
+      "id": "T-31",
+      "phase": 3,
+      "mergeSequence": 9,
+      "owner": "Developer 2 / Claude Code",
+      "reviewer": "Developer 1 / Codex",
+      "dependsOn": [
+        "T-30"
+      ],
+      "estimatedEngineerDays": 3,
+      "risk": "high",
+      "problem": "Policy/calendar eligibility and syllabus chunks may be lost or replaced by unrelated lane evidence.",
+      "evidence": [
+        "08_MEMORY_ROUTING_RETRIEVAL_ANALYSIS.md",
+        "S-D02/1",
+        "S-D04/1",
+        "S-B04/4"
+      ],
+      "rootCause": [
+        "R04",
+        "R09"
+      ],
+      "solution": "Expose retrieval reason codes and distinguish candidate recall from selection. Filter for topic, authority, version, scope and part ID. Preserve a bounded exact-title fallback with provenance. Require evidence of the asked process, threshold or deadline before escalation.",
+      "files": [
+        "aast-ai-agent-main/backend/services/ragService.js",
+        "aast-ai-agent-main/backend/rag_system/phase3_retriever.py",
+        "aast-ai-agent-main/backend/rag_system/test_phase3_retriever.py",
+        "aast-ai-agent-main/backend/rag_system/test_rag_readiness.py"
+      ],
+      "apiSchemaImpact": "Optional internal metadata and trace fields. Preserve endpoint request defaults, collection/index, vectors and ingestion. Freeze with Codex before consumer use.",
+      "acceptanceCriteria": [
+        "Known calendar and scholarship eligibility fixture passage IDs are recallable for their own questions.",
+        "Eligibility does not satisfy a missing application procedure.",
+        "Per-part syllabus and calendar candidates cannot be relabeled across lanes."
+      ],
+      "tests": [
+        "python -m pytest -p no:cacheprovider -q test_phase3_retriever.py test_rag_readiness.py",
+        "node testing/directRagGroundingContract.test.js",
+        "Replay C02, D02, D04 and E03."
+      ],
+      "rollback": "Disable metadata policy and restore existing retrieval ordering without reingestion."
+    },
+    {
+      "id": "T-40",
+      "phase": 4,
+      "mergeSequence": 10,
+      "owner": "Developer 2 / Claude Code",
+      "reviewer": "Developer 1 / Codex",
+      "dependsOn": [
+        "T-21",
+        "T-31"
+      ],
+      "estimatedEngineerDays": 3,
+      "risk": "high",
+      "problem": "The response can carry a route-level source tag with incomplete or unrelated support.",
+      "evidence": [
+        "06_ROOT_CAUSE_ANALYSIS.md",
+        "S-D01/1",
+        "S-F03/1",
+        "S-D03/1"
+      ],
+      "rootCause": [
+        "R04",
+        "R05",
+        "R09"
+      ],
+      "solution": "Adapt reusable integrated direct-RAG and fusion contract logic into per-part evidence adjudication. Deduplicate within source IDs, compare authority and version, retain genuine disagreement, and emit selected/rejected reasons and evidence coverage. Refuse impermissible claims if any source is missing.",
+      "files": [
+        "aast-ai-agent-main/backend/services/fusionService.js",
+        "aast-ai-agent-main/backend/services/directRagEvidencePolicy.js",
+        "aast-ai-agent-main/backend/services/groundingVerificationService.js",
+        "evaluation/contracts/retrieval/entity-evidence.schema.json",
+        "evaluation/contracts/retrieval/grounding-result.schema.json",
+        "aast-ai-agent-main/backend/testing/fusionEvidenceContract.test.js"
+      ],
+      "apiSchemaImpact": "Freeze internal EvidenceItem/Adjudication types with Codex. Maintain existing source-tag/evidence semantics for external callers.",
+      "acceptanceCriteria": [
+        "Direct RAG policy claim has usable citation or localized gap.",
+        "Hybrid preserves the evidence source for each part and detects selected mismatches.",
+        "Conflicting authority fixture reports disagreement and exact sources."
+      ],
+      "tests": [
+        "node testing/fusionEvidenceContract.test.js",
+        "node testing/groundingVerification.test.js",
+        "node testing/directRagGroundingContract.test.js"
+      ],
+      "rollback": "Keep prior adjudication adapter and disable per-part merger with T-41 when rollback is needed."
+    },
+    {
+      "id": "T-41",
+      "phase": 4,
+      "mergeSequence": 11,
+      "owner": "Developer 1 / Codex",
+      "reviewer": "Developer 2 / Claude Code",
+      "dependsOn": [
+        "T-40"
+      ],
+      "estimatedEngineerDays": 2.5,
+      "risk": "high",
+      "problem": "Current presentation and API omit necessary citations from some valid or partial answers.",
+      "evidence": [
+        "05_TURN_LEVEL_FAILURE_ANALYSIS.md",
+        "S-D01/1",
+        "S-F03/4",
+        "S-D03/1"
+      ],
+      "rootCause": [
+        "R05",
+        "R09"
+      ],
+      "solution": "Bind verified selected IDs to supported claims, pass provenance and part coverage consistently through deterministic and generated return paths. Render bounded safe source info in React. Use same evidence policy on fallback.",
+      "files": [
+        "aast-ai-agent-main/backend/orchestrator.js",
+        "aast-ai-agent-main/backend/services/responseFormatter.js",
+        "aast-ai-agent-main/frontend/src/components/ChatMessage.tsx",
+        "aast-ai-agent-main/frontend/src/types.ts",
+        "aast-ai-agent-main/backend/testing/directRagGroundingContract.test.js"
+      ],
+      "apiSchemaImpact": "Keep current citation/source/route/answer fields. Additional public part coverage is opt-in and version-reviewed under D-04.",
+      "acceptanceCriteria": [
+        "Every fixture policy claim is attributable to an actual selected passage.",
+        "Hybrid shows attribution and a specific missing part where appropriate.",
+        "Existing clients and frontend tolerate older responses."
+      ],
+      "tests": [
+        "node testing/directRagGroundingContract.test.js",
+        "node testing/fallbackTruthContract.test.js",
+        "Frontend npm test, lint, typecheck and build.",
+        "Replay D01, D03 and F03."
+      ],
+      "rollback": "Disable new rendering/coverage first, retain legacy-compatible formatter, then roll back shared evidence changes if needed."
+    },
+    {
+      "id": "T-50",
+      "phase": 5,
+      "mergeSequence": 12,
+      "owner": "Developer 1 / Codex",
+      "reviewer": "Developer 2 / Claude Code",
+      "dependsOn": [
+        "T-41"
+      ],
+      "estimatedEngineerDays": 3,
+      "risk": "medium",
+      "problem": "Restatement and general refusal templates miss explanation/rephrase intentions.",
+      "evidence": [
+        "07_ROBOTIC_RESPONSE_ANALYSIS.md",
+        "S-B01/4",
+        "S-B03/2",
+        "S-E01/4"
+      ],
+      "rootCause": [
+        "R06"
+      ],
+      "solution": "Implement rephrase, example and why as bounded transformations over previously accepted evidence. Prefer short answer-first style and one relevant clarification. Add no facts or citations through humanizer. Render abstention or partial response by reason.",
+      "files": [
+        "aast-ai-agent-main/backend/services/conversationMetaIntent.js",
+        "aast-ai-agent-main/backend/services/conversationalHumanizer.js",
+        "aast-ai-agent-main/backend/services/unifiedAnswerService.js",
+        "aast-ai-agent-main/frontend/src/components/ChatMessage.tsx",
+        "aast-ai-agent-main/backend/testing/demoConversationAnswer.test.js"
+      ],
+      "apiSchemaImpact": "Keep shared reply envelope. Add reason-guided shaping internally.",
+      "acceptanceCriteria": [
+        "The three named follow-ups address the requested transformation with support retained.",
+        "Unknown institution facts yield a concise scope-specific gap or clarification.",
+        "Template repetition fall-off is measured under the same fixture prompts."
+      ],
+      "tests": [
+        "node testing/demoConversationAnswer.test.js",
+        "node testing/fallbackTruthContract.test.js",
+        "Node grounding and frontend tests, replay B01/B03/E01."
+      ],
+      "rollback": "Disable revised shaping separately. Roll back text policy while keeping citation/coverage fixes."
+    },
+    {
+      "id": "T-60",
+      "phase": 6,
+      "mergeSequence": 13,
+      "owner": "Developer 1 / Codex",
+      "reviewer": "Developer 2 / Claude Code",
+      "dependsOn": [
+        "T-21",
+        "T-01"
+      ],
+      "estimatedEngineerDays": 3,
+      "risk": "high",
+      "problem": "One KG early timeout and one slow empty turn expose effective deadline drift.",
+      "evidence": [
+        "06_ROOT_CAUSE_ANALYSIS.md",
+        "S-B02/2",
+        "S-A02/2",
+        "12_DEPENDENCY_AND_CONFIGURATION_AUDIT.md"
+      ],
+      "rootCause": [
+        "R07"
+      ],
+      "solution": "Review two residual cancellation commits and admission control against the exact baseline. Apply a shared request deadline and stage cancellations after contract review. Retry only transient idempotent reads with remaining budget. Protect queue, generation and emitted synthetic request events.",
+      "files": [
+        "aast-ai-agent-main/backend/orchestrator.js",
+        "aast-ai-agent-main/backend/services/ollamaService.js",
+        "aast-ai-agent-main/backend/services/circuitStateManager.js",
+        "aast-ai-agent-main/backend/services/healthMonitor.js",
+        "aast-ai-agent-main/backend/config/runtimeMode.js",
+        "aast-ai-agent-main/backend/testing/healthReadiness.test.js"
+      ],
+      "apiSchemaImpact": "Forward bounded options to retrieval/generation adapters and preserve existing codes. Shared-file edits occur after T-41 and T-50 even when the design can start earlier.",
+      "acceptanceCriteria": [
+        "Fixture deadline yields declared fallback and stops downstream work after cancellation.",
+        "No extra retry/query when budget is exhausted or request aborts.",
+        "Matched profile baseline/candidate record reproducible stage and end-to-end latency."
+      ],
+      "tests": [
+        "npm run test:health",
+        "npm run test:kg",
+        "node testing/fallbackTruthContract.test.js",
+        "Inject delay, disconnect and breaker state in hermetic tests."
+      ],
+      "rollback": "Turn off shared execution policy and restore previous bounded timeouts from pinned profile."
+    },
+    {
+      "id": "T-61",
+      "phase": 6,
+      "mergeSequence": 14,
+      "owner": "Developer 2 / Claude Code",
+      "reviewer": "Developer 1 / Codex",
+      "dependsOn": [
+        "T-40",
+        "T-02"
+      ],
+      "estimatedEngineerDays": 2,
+      "risk": "medium",
+      "problem": "Issue-specific retrieval regressions need independent checks beyond positive single-turn answers.",
+      "evidence": [
+        "05_TURN_LEVEL_FAILURE_ANALYSIS.md",
+        "09_OBSERVABILITY_GAPS.md",
+        "18_TESTING_AND_REGRESSION_STRATEGY.md"
+      ],
+      "rootCause": [
+        "R04",
+        "R05",
+        "R09"
+      ],
+      "solution": "Author independent negative/positive fixture cases for cross-entity evidence, no sources, data-version disagreement, two-scope hybrid and Arabic-English. Compare expected facts, source and scope with evidence IDs. Record unknowns as such.",
+      "files": [
+        "aast-ai-agent-main/backend/testing/retrievalEntityAlignment.test.js",
+        "aast-ai-agent-main/backend/testing/fusionEvidenceContract.test.js",
+        "aast-ai-agent-main/backend/rag_system/test_phase3_retriever.py",
+        "aast-ai-agent-main/backend/rag_system/test_rag_readiness.py"
+      ],
+      "apiSchemaImpact": "Tests/fixtures only. Coordinate freeze with T-41 so adjacent file changes are serialized.",
+      "acceptanceCriteria": [
+        "Every P0 retrieval/grounding root has both a positive and a negative assertion.",
+        "Tests can distinguish an actual absent record from route filters and unrelated evidence.",
+        "Results contain stable fixture fingerprints and no copied research evaluation set."
+      ],
+      "tests": [
+        "node testing/retrievalEntityAlignment.test.js",
+        "node testing/fusionEvidenceContract.test.js",
+        "python -m pytest -p no:cacheprovider -q test_phase3_retriever.py test_rag_readiness.py"
+      ],
+      "rollback": "Revert only failing test/fixture additions after reviewer agreement that implementation contract is correct."
+    },
+    {
+      "id": "T-70",
+      "phase": 7,
+      "mergeSequence": 15,
+      "owner": "Developer 1 / Codex",
+      "reviewer": "Developer 2 / Claude Code",
+      "dependsOn": [
+        "T-50",
+        "T-60",
+        "T-61",
+        "T-41"
+      ],
+      "estimatedEngineerDays": 2,
+      "risk": "high",
+      "problem": "Need a versioned end-to-end candidate and reproducible rollout with known-good rollback.",
+      "evidence": [
+        "14_CLEANUP_VERIFICATION_REPORT.md",
+        "18_TESTING_AND_REGRESSION_STRATEGY.md",
+        "17_TWO_DEVELOPER_WORK_SPLIT.md"
+      ],
+      "rootCause": [
+        "Release identity and verification gap"
+      ],
+      "solution": "Integrate in order and build one exact-revision candidate under an approved capacity profile. Run native, hermetic, synthetic end-to-end and specialized route gates. Capture measured results, artefact hashes and rollback drill. Seek joint confirmation for promotion.",
+      "files": [
+        "appliance/README.md",
+        "appliance/Dockerfile",
+        "docker-compose.appliance.yml",
+        ".github/workflows/ci.yml",
+        "docs/stabilization/REGRESSION_RESULTS.md",
+        "project_management/RELEASE_CHECKLIST.md"
+      ],
+      "apiSchemaImpact": "Keep published endpoints and data layouts. Deployment artifact/promotion requires explicit owner sign-off.",
+      "acceptanceCriteria": [
+        "All required gates in report 18 verified on recorded source/image/data/model fingerprints.",
+        "Reproducibility and rollback demonstrated on isolated deployment.",
+        "Both developers approve review and no unresolved P0 is present."
+      ],
+      "tests": [
+        "Run all Section 18 gates and full 25-session focused regression once.",
+        "Run admin/Decision/graph health smoke without a production data write.",
+        "Run previous-image replay on a disposable profile during rollback drill."
+      ],
+      "rollback": "Restore prior image digest, documented environment contract and compatible retained data mounts, keeping diagnosis artifacts."
+    }
+  ]
+}

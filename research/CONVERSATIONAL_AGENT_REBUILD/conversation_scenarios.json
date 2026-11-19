@@ -1,0 +1,822 @@
+{
+  "schema": 1,
+  "diagnostic_only": true,
+  "live_revision": "4a38cf5f9969e893cf04a39e1306a74cc8fbe939",
+  "planned_turns": 125,
+  "personas": {
+    "A": "New student",
+    "B": "Curious student",
+    "C": "Career-oriented student",
+    "D": "Administrative student",
+    "E": "Technical AI student",
+    "F": "Informal bilingual student"
+  },
+  "adaptation": {
+    "turn": 5,
+    "missing": "Which part can you confirm from an official academic source, and what information is missing?",
+    "ambiguous": "Please use the subject in my most recent specific academic question. If it is still unclear, tell me what you need.",
+    "unsupported": "What specific graph fact or official university passage supports your last claim?"
+  },
+  "scenarios": [
+    {
+      "id": "S-A01",
+      "persona": "A",
+      "title": "Program choice",
+      "turns": [
+        {
+          "number": 1,
+          "query": "Which bachelor programs does the College of Artificial Intelligence offer at El Alamein?",
+          "expected": "List the verified programs"
+        },
+        {
+          "number": 2,
+          "query": "Which of the two focuses more on data?",
+          "expected": "Compare their evidenced focus"
+        },
+        {
+          "number": 3,
+          "query": "What careers can the first one lead to?",
+          "expected": "Bind ordinal to the presented order or clarify"
+        },
+        {
+          "number": 4,
+          "query": "Does the other one include Machine Learning?",
+          "expected": "Use the other program or clarify"
+        },
+        {
+          "number": 5,
+          "query": "Summarize the difference in two simple sentences.",
+          "expected": "Summarize only verified differences"
+        }
+      ]
+    },
+    {
+      "id": "S-A02",
+      "persona": "A",
+      "title": "Campus, college and labs",
+      "turns": [
+        {
+          "number": 1,
+          "query": "What college does the El Alamein campus host in the graph?",
+          "expected": "Scope the campus"
+        },
+        {
+          "number": 2,
+          "query": "What degree does that college offer?",
+          "expected": "Resolve college"
+        },
+        {
+          "number": 3,
+          "query": "Which programs are part of that degree?",
+          "expected": "Resolve the degree"
+        },
+        {
+          "number": 4,
+          "query": "Does it have labs?",
+          "expected": "Clarify college versus degree"
+        },
+        {
+          "number": 5,
+          "query": "Tell me more about one lab you can verify.",
+          "expected": "Name a supported facility"
+        }
+      ]
+    },
+    {
+      "id": "S-A03",
+      "persona": "A",
+      "title": "First-year explanation",
+      "turns": [
+        {
+          "number": 1,
+          "query": "I’m new to the College of Artificial Intelligence. Can you explain my program options simply?",
+          "expected": "Ground options and keep tone simple"
+        },
+        {
+          "number": 2,
+          "query": "What is the difference between Intelligent Systems and Data Science?",
+          "expected": "Use graph for comparison"
+        },
+        {
+          "number": 3,
+          "query": "What about the one focused on building AI systems?",
+          "expected": "Resolve relevant program"
+        },
+        {
+          "number": 4,
+          "query": "Does it include Machine Learning?",
+          "expected": "Bind course relation to program"
+        },
+        {
+          "number": 5,
+          "query": "Why does the course matter for someone starting out?",
+          "expected": "Explain conceptually without inventing requirements"
+        }
+      ]
+    },
+    {
+      "id": "S-A04",
+      "persona": "A",
+      "title": "Staff switch and return",
+      "turns": [
+        {
+          "number": 1,
+          "query": "Who teaches Natural Language Processing?",
+          "expected": "Use course-teacher edge"
+        },
+        {
+          "number": 2,
+          "query": "Does he teach any other courses?",
+          "expected": "Resolve prior person"
+        },
+        {
+          "number": 3,
+          "query": "Who is the dean of the College of Artificial Intelligence?",
+          "expected": "Switch to dean role"
+        },
+        {
+          "number": 4,
+          "query": "Back to the NLP teacher, what else does he do at the college?",
+          "expected": "Restore the NLP teacher"
+        },
+        {
+          "number": 5,
+          "query": "Which part came from the graph?",
+          "expected": "Expose supporting edge or acknowledge limitation"
+        }
+      ]
+    },
+    {
+      "id": "S-B01",
+      "persona": "B",
+      "title": "Why a prerequisite matters",
+      "turns": [
+        {
+          "number": 1,
+          "query": "Which prerequisites are listed for Machine Learning?",
+          "expected": "Use recorded prerequisite relations"
+        },
+        {
+          "number": 2,
+          "query": "Why are those helpful?",
+          "expected": "Explain their preparation value"
+        },
+        {
+          "number": 3,
+          "query": "What about the first one?",
+          "expected": "Honor displayed ordering or clarify"
+        },
+        {
+          "number": 4,
+          "query": "Can you give me a simple example?",
+          "expected": "Label example as illustrative"
+        },
+        {
+          "number": 5,
+          "query": "Does the graph actually say that example is required?",
+          "expected": "Separate illustration and official requirement"
+        }
+      ]
+    },
+    {
+      "id": "S-B02",
+      "persona": "B",
+      "title": "Ambiguous course reference",
+      "turns": [
+        {
+          "number": 1,
+          "query": "Compare the recorded topics of NLP and Cognitive Computing.",
+          "expected": "Keep two courses distinct"
+        },
+        {
+          "number": 2,
+          "query": "Does it have prerequisites?",
+          "expected": "Clarify if both are plausible"
+        },
+        {
+          "number": 3,
+          "query": "I mean Natural Language Processing.",
+          "expected": "Apply clarification to pending prerequisite request"
+        },
+        {
+          "number": 4,
+          "query": "What about Cognitive Computing?",
+          "expected": "Transfer only the requested relation"
+        },
+        {
+          "number": 5,
+          "query": "What evidence supports that?",
+          "expected": "Attribute or abstain"
+        }
+      ]
+    },
+    {
+      "id": "S-B03",
+      "persona": "B",
+      "title": "Week follow-up and rephrasing",
+      "turns": [
+        {
+          "number": 1,
+          "query": "What does week 3 of Cognitive Computing cover?",
+          "expected": "Retrieve correct week"
+        },
+        {
+          "number": 2,
+          "query": "Could you rephrase that without bullets?",
+          "expected": "Preserve fact and change format"
+        },
+        {
+          "number": 3,
+          "query": "Could you give me an example of that idea?",
+          "expected": "Keep concept in scope"
+        },
+        {
+          "number": 4,
+          "query": "And week 4?",
+          "expected": "Use same course, change week"
+        },
+        {
+          "number": 5,
+          "query": "Remind me what we said about week 3 only.",
+          "expected": "Recover earlier week without blending"
+        }
+      ]
+    },
+    {
+      "id": "S-B04",
+      "persona": "B",
+      "title": "Explicit correction",
+      "turns": [
+        {
+          "number": 1,
+          "query": "Tell me about the NLP syllabus.",
+          "expected": "Retrieve NLP"
+        },
+        {
+          "number": 2,
+          "query": "What happens in week 4?",
+          "expected": "Carry NLP scope"
+        },
+        {
+          "number": 3,
+          "query": "Sorry, I meant week 4 of Cognitive Computing.",
+          "expected": "Replace NLP with Cognitive Computing"
+        },
+        {
+          "number": 4,
+          "query": "And the week after that?",
+          "expected": "Resolve week 5 in corrected course"
+        },
+        {
+          "number": 5,
+          "query": "Can you show where the course and week came from?",
+          "expected": "Provide correct claim-level evidence"
+        }
+      ]
+    },
+    {
+      "id": "S-C01",
+      "persona": "C",
+      "title": "Careers and program order",
+      "turns": [
+        {
+          "number": 1,
+          "query": "What careers can Intelligent Systems lead to?",
+          "expected": "Use graph facts"
+        },
+        {
+          "number": 2,
+          "query": "And Data Science?",
+          "expected": "Inherit career relation while switching subject"
+        },
+        {
+          "number": 3,
+          "query": "Which of the first program’s courses is related to working with language?",
+          "expected": "Resolve first program or clarify"
+        },
+        {
+          "number": 4,
+          "query": "Who teaches that course?",
+          "expected": "Resolve sourced course"
+        },
+        {
+          "number": 5,
+          "query": "What's a practical next step for exploring that pathway?",
+          "expected": "Give conditional next step"
+        }
+      ]
+    },
+    {
+      "id": "S-C02",
+      "persona": "C",
+      "title": "Recommendation versus prerequisite",
+      "turns": [
+        {
+          "number": 1,
+          "query": "What course is recommended after Machine Learning for studying language technology?",
+          "expected": "Use graph sequence with correct relation"
+        },
+        {
+          "number": 2,
+          "query": "Is that required, or just suggested?",
+          "expected": "Distinguish requirement"
+        },
+        {
+          "number": 3,
+          "query": "What are the prerequisites for Machine Learning itself?",
+          "expected": "Switch to ML and prerequisites"
+        },
+        {
+          "number": 4,
+          "query": "Why are those relevant to an AI career?",
+          "expected": "Explain relation without inventing eligibility"
+        },
+        {
+          "number": 5,
+          "query": "Which relation supports the recommendation?",
+          "expected": "Name traced relation"
+        }
+      ]
+    },
+    {
+      "id": "S-C03",
+      "persona": "C",
+      "title": "Preference changes",
+      "turns": [
+        {
+          "number": 1,
+          "query": "I like building AI systems. Compare Intelligent Systems with Data Science for me.",
+          "expected": "Compare programs grounded in evidence"
+        },
+        {
+          "number": 2,
+          "query": "What careers can the better fit lead to?",
+          "expected": "Preserve caveated fit or ask"
+        },
+        {
+          "number": 3,
+          "query": "Does that one include Machine Learning?",
+          "expected": "Bind selected program"
+        },
+        {
+          "number": 4,
+          "query": "I’m more interested in working with data now.",
+          "expected": "Update preference"
+        },
+        {
+          "number": 5,
+          "query": "What should I ask an advisor before choosing?",
+          "expected": "Ask a useful follow-up"
+        }
+      ]
+    },
+    {
+      "id": "S-C04",
+      "persona": "C",
+      "title": "Decision inputs",
+      "turns": [
+        {
+          "number": 1,
+          "query": "Can you recommend a program for someone who enjoys machine learning?",
+          "expected": "Ask missing profile or qualify"
+        },
+        {
+          "number": 2,
+          "query": "I’m comparing AI and Cybersecurity. I prefer technical work.",
+          "expected": "Keep alternatives without invented fees"
+        },
+        {
+          "number": 3,
+          "query": "What information about me do you need?",
+          "expected": "Request relevant fields"
+        },
+        {
+          "number": 4,
+          "query": "Can you explain the recommendation factors before I give grades or budget?",
+          "expected": "Explain constraints and ranking factors"
+        },
+        {
+          "number": 5,
+          "query": "Can you separate eligibility from fit?",
+          "expected": "Preserve distinction"
+        }
+      ]
+    },
+    {
+      "id": "S-D01",
+      "persona": "D",
+      "title": "GPA threshold and exact boundary",
+      "turns": [
+        {
+          "number": 1,
+          "query": "What GPA threshold is stated for academic probation?",
+          "expected": "Retrieve supported policy threshold"
+        },
+        {
+          "number": 2,
+          "query": "How is that GPA calculated?",
+          "expected": "Recover calculation"
+        },
+        {
+          "number": 3,
+          "query": "Why does the word below matter?",
+          "expected": "Explain strict inequality"
+        },
+        {
+          "number": 4,
+          "query": "What if I have exactly 2.0?",
+          "expected": "Avoid broader policy inference"
+        },
+        {
+          "number": 5,
+          "query": "Where can I check the relevant rule?",
+          "expected": "Identify attributable source"
+        }
+      ]
+    },
+    {
+      "id": "S-D02",
+      "persona": "D",
+      "title": "Scholarship missing steps",
+      "turns": [
+        {
+          "number": 1,
+          "query": "How do I apply for the merit scholarship?",
+          "expected": "Distinguish steps and eligibility"
+        },
+        {
+          "number": 2,
+          "query": "What eligibility conditions do you actually have evidence for?",
+          "expected": "State sourced eligibility"
+        },
+        {
+          "number": 3,
+          "query": "Does that tell me where to submit the application?",
+          "expected": "Do not invent submission steps"
+        },
+        {
+          "number": 4,
+          "query": "What about the deadline?",
+          "expected": "Qualify or abstain on deadline"
+        },
+        {
+          "number": 5,
+          "query": "Which official source should I check for the missing step?",
+          "expected": "Point to authoritative channel without invented URL"
+        }
+      ]
+    },
+    {
+      "id": "S-D03",
+      "persona": "D",
+      "title": "Mixed syllabus and calendar",
+      "turns": [
+        {
+          "number": 1,
+          "query": "Does Mobile Computing have a recorded syllabus, and who issues the official academic calendar?",
+          "expected": "Cover both sourced intents"
+        },
+        {
+          "number": 2,
+          "query": "Which part came from the policy passage?",
+          "expected": "Identify policy part"
+        },
+        {
+          "number": 3,
+          "query": "What about week 3 of that course?",
+          "expected": "Resolve Mobile Computing"
+        },
+        {
+          "number": 4,
+          "query": "Can you repeat the calendar part in one sentence?",
+          "expected": "Recover only calendar part"
+        },
+        {
+          "number": 5,
+          "query": "Show the evidence for both parts separately.",
+          "expected": "Keep two evidence types distinct"
+        }
+      ]
+    },
+    {
+      "id": "S-D04",
+      "persona": "D",
+      "title": "Calendar and future dates",
+      "turns": [
+        {
+          "number": 1,
+          "query": "Who issues the official academic calendar?",
+          "expected": "Use policy authority"
+        },
+        {
+          "number": 2,
+          "query": "When does spring start according to the policy you have?",
+          "expected": "State only supported timing"
+        },
+        {
+          "number": 3,
+          "query": "What about exact registration dates next year?",
+          "expected": "Abstain on unspecified future dates"
+        },
+        {
+          "number": 4,
+          "query": "Can you tell me how to find the current dates?",
+          "expected": "Point to current official source"
+        },
+        {
+          "number": 5,
+          "query": "Remind me who issues the calendar.",
+          "expected": "Restore authority"
+        }
+      ]
+    },
+    {
+      "id": "S-D05",
+      "persona": "D",
+      "title": "Fee scope and limits",
+      "turns": [
+        {
+          "number": 1,
+          "query": "How can I check the current tuition for an AAST program?",
+          "expected": "Clarify relevant scope"
+        },
+        {
+          "number": 2,
+          "query": "I mean an AI bachelor's program at El Alamein.",
+          "expected": "Narrow institution and program"
+        },
+        {
+          "number": 3,
+          "query": "Can you give an exact price for next year?",
+          "expected": "No future quote without evidence"
+        },
+        {
+          "number": 4,
+          "query": "What financial eligibility information can you verify instead?",
+          "expected": "Give attributable alternatives or clarify"
+        },
+        {
+          "number": 5,
+          "query": "Can you separate admissions requirements from tuition?",
+          "expected": "Separate evidence needs"
+        }
+      ]
+    },
+    {
+      "id": "S-E01",
+      "persona": "E",
+      "title": "ML program and course code",
+      "turns": [
+        {
+          "number": 1,
+          "query": "Which program includes Machine Learning, and what are its course code and credits?",
+          "expected": "Use program/IN221/credits evidence"
+        },
+        {
+          "number": 2,
+          "query": "What must a student complete before taking it?",
+          "expected": "Resolve prerequisite scope"
+        },
+        {
+          "number": 3,
+          "query": "Is Linear Algebra an actual prerequisite?",
+          "expected": "Confirm only recorded relation"
+        },
+        {
+          "number": 4,
+          "query": "Could you say that in plain language for a first-year student?",
+          "expected": "Retain fact and simplify"
+        },
+        {
+          "number": 5,
+          "query": "What evidence do you have for the prerequisite?",
+          "expected": "Show linked evidence"
+        }
+      ]
+    },
+    {
+      "id": "S-E02",
+      "persona": "E",
+      "title": "CV and NLP sequence",
+      "turns": [
+        {
+          "number": 1,
+          "query": "Does the graph recommend Computer Vision after Machine Learning?",
+          "expected": "Scope recommendation edge"
+        },
+        {
+          "number": 2,
+          "query": "What about Natural Language Processing?",
+          "expected": "Apply same relation to NLP"
+        },
+        {
+          "number": 3,
+          "query": "Which course is recommended after NLP?",
+          "expected": "Change anchor to NLP"
+        },
+        {
+          "number": 4,
+          "query": "Does that mean an enforced prerequisite?",
+          "expected": "Avoid reading suggestion as requirement"
+        },
+        {
+          "number": 5,
+          "query": "Compare the two relation types in one sentence.",
+          "expected": "Explain distinction"
+        }
+      ]
+    },
+    {
+      "id": "S-E03",
+      "persona": "E",
+      "title": "Two course requests and policy swap",
+      "turns": [
+        {
+          "number": 1,
+          "query": "Compare week 3 of Cognitive Computing and week 4 of NLP.",
+          "expected": "Bind both course/week requests or clarify"
+        },
+        {
+          "number": 2,
+          "query": "Explain the second one briefly.",
+          "expected": "Resolve ordinal"
+        },
+        {
+          "number": 3,
+          "query": "Now tell me when spring starts under the official calendar policy.",
+          "expected": "Switch to policy scope"
+        },
+        {
+          "number": 4,
+          "query": "Back to the first course, what is the topic?",
+          "expected": "Return to earlier course/week or clarify"
+        },
+        {
+          "number": 5,
+          "query": "Can you show the course and policy evidence separately?",
+          "expected": "Keep evidence distinct"
+        }
+      ]
+    },
+    {
+      "id": "S-E04",
+      "persona": "E",
+      "title": "Transformers and follow-up",
+      "turns": [
+        {
+          "number": 1,
+          "query": "Which course covers transformers according to the saved syllabus?",
+          "expected": "Find grounded syllabus"
+        },
+        {
+          "number": 2,
+          "query": "Who teaches it?",
+          "expected": "Resolve course"
+        },
+        {
+          "number": 3,
+          "query": "What week is that topic taught?",
+          "expected": "Hold topic and course constant"
+        },
+        {
+          "number": 4,
+          "query": "Could you double-check whether you mean NLP or another course?",
+          "expected": "Check challenge against evidence"
+        },
+        {
+          "number": 5,
+          "query": "Tell me the course name without restating the whole syllabus.",
+          "expected": "Be concise"
+        }
+      ]
+    },
+    {
+      "id": "S-F01",
+      "persona": "F",
+      "title": "Arabic and English program follow-ups",
+      "turns": [
+        {
+          "number": 1,
+          "query": "عايز أعرف برامج AI في العلمين، ايه الاختيارات؟",
+          "expected": "Recognize bilingual campus/program"
+        },
+        {
+          "number": 2,
+          "query": "طب ال Data Science ده ايه؟",
+          "expected": "Scope Data Science"
+        },
+        {
+          "number": 3,
+          "query": "و careers بتاعته؟",
+          "expected": "Inherit career relation"
+        },
+        {
+          "number": 4,
+          "query": "طيب مين بيدرس NLP؟",
+          "expected": "Switch to NLP instructor"
+        },
+        {
+          "number": 5,
+          "query": "كنت بسأل ايه عن Data Science؟",
+          "expected": "Recall relevant earlier context"
+        }
+      ]
+    },
+    {
+      "id": "S-F02",
+      "persona": "F",
+      "title": "Typos, abbreviations and challenge",
+      "turns": [
+        {
+          "number": 1,
+          "query": "machin lernning prereqs?",
+          "expected": "Normalize typo or clarify"
+        },
+        {
+          "number": 2,
+          "query": "طيب هو له course code؟",
+          "expected": "Resolve ML and course code"
+        },
+        {
+          "number": 3,
+          "query": "what abt CV after it?",
+          "expected": "Clarify CV/sequence if needed"
+        },
+        {
+          "number": 4,
+          "query": "I mean Computer Vision, after Machine Learning.",
+          "expected": "Apply corrected intent"
+        },
+        {
+          "number": 5,
+          "query": "متأكد؟ وريني المصدر",
+          "expected": "Respond with actual evidence"
+        }
+      ]
+    },
+    {
+      "id": "S-F03",
+      "persona": "F",
+      "title": "Bilingual policy and dean switch",
+      "turns": [
+        {
+          "number": 1,
+          "query": "el GPA probation starts when?",
+          "expected": "Scope probation policy"
+        },
+        {
+          "number": 2,
+          "query": "طب لو exactly 2.0؟",
+          "expected": "Respect threshold"
+        },
+        {
+          "number": 3,
+          "query": "مين dean بتاع AI؟",
+          "expected": "Switch to dean"
+        },
+        {
+          "number": 4,
+          "query": "طب ارجع لل probation، احسب ال GPA ازاي؟",
+          "expected": "Return to GPA calculation"
+        },
+        {
+          "number": 5,
+          "query": "say it simply please",
+          "expected": "Rephrase previous supported fact"
+        }
+      ]
+    },
+    {
+      "id": "S-F04",
+      "persona": "F",
+      "title": "Out of domain and topic shifts",
+      "turns": [
+        {
+          "number": 1,
+          "query": "Can you tell me tomorrow’s weather?",
+          "expected": "Avoid unsupported forecast"
+        },
+        {
+          "number": 2,
+          "query": "ok then who teaches NLP at the college?",
+          "expected": "Reset to academic domain"
+        },
+        {
+          "number": 3,
+          "query": "and what about that?",
+          "expected": "Clarify missing attribute"
+        },
+        {
+          "number": 4,
+          "query": "I meant what else does the instructor teach?",
+          "expected": "Resolve prior teacher"
+        },
+        {
+          "number": 5,
+          "query": "Actually back to the course, what is it about?",
+          "expected": "Return to original course scope"
+        }
+      ]
+    }
+  ]
+}

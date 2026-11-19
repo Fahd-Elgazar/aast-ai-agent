@@ -11,16 +11,22 @@ import path from "path";
 import crypto from "crypto";
 
 import decisionRouter from "./routes/decision.js";
+import decisionAdminRouter from "./routes/decisionAdmin.js";
+import createAuthRouter from "./routes/auth.js";
 import createConversationsRouter from "./routes/conversations.js";
 import createHealthRouter from "./routes/health.js";
+import { requireAuth } from "./middleware/auth.js";
 import { searchFAQ } from "./faqService.js";
 import { checkGreeting } from "./greetings.js";
 import { fetchNeo4jContext, convertToGraphData } from "./services/neo4jcontext.js";
 import { connectNeo4j, getSession } from "./db/neo4j.js";
-import { getRecommendation, getUserMemory, buildCareerRoadmap, compareMajors, updateUserMemory, deleteUserMemory } from "./services/decisionService.js";
+import { getRecommendation, getUserMemory, buildCareerRoadmap, toOrchestratorDecisionEvidence, updateUserMemory, deleteUserMemory } from "./services/decisionService.js";
 import { incrementMetric, recordDuration } from "./services/metrics.js";
 import { logger } from "./services/logger.js";
-import { generateUnifiedAnswer } from "./services/unifiedAnswerService.js";
+import {
+  finalizeGroundedAnswer,
+  generateUnifiedAnswer
+} from "./services/unifiedAnswerService.js";
 import { validateGeminiEnvironment } from "./services/geminiService.js";
 import { modelFailoverManager } from "./services/modelFailoverManager.js";
 import { generateStableResponse } from "./services/ollamaService.js";
@@ -28,6 +34,7 @@ import { gemmaWarmService } from "./services/gemmaWarmService.js";
 import { normalizeAcademicQuery } from "./services/academicQueryNormalizer.js";
 import {
   MAX_CONTEXT_TURNS,
+  ConversationOwnershipError,
   deleteConversation,
   flushConversations,
   getConversation,
@@ -53,6 +60,7 @@ import fusionService from "./services/fusionService.js";
 import ragService from "./services/ragService.js";
 import { checkSubsystemHealth, timeoutWrapper, getHealthCacheAge } from "./services/healthProbes.js";
 import responseFormatter from "./services/responseFormatter.js";
+import { hasStrongDirectRagEvidence } from "./services/directRagEvidencePolicy.js";
 import { buildDemoGraphResponse, isDemoGraphQuery } from "./services/demoGraphService.js";
 import { isCourseByTopicLookup } from "./services/queryShape.js";
 import {
@@ -71,12 +79,26 @@ import {
   resolveFollowUpReference
 } from "./services/conversationPriority.js";
 import {
+  detectPromptInjectionAttempt,
+  SECURITY_REFUSAL_MESSAGE
+} from "./services/securityPromptGuard.js";
+import {
   buildGoldenFallbackPayload,
   classifyGoldenQuery,
   extractGoldenEntities,
   parseComparisonEntities
 } from "./config/goldenPathRegistry.js";
 import { runtimeMode } from "./config/runtimeMode.js";
+import {
+  assessGoldenCacheability,
+  buildGoldenCacheKey
+} from "./services/goldenCachePolicy.js";
+import {
+  acquireBeforeDeadline,
+  createBoundedSemaphore,
+  runWithRetainedSemaphoreLease,
+  SemaphoreAcquireTimeoutError
+} from "./services/boundedSemaphore.js";
 
 const app = express();
 const PORT = process.env.ORCHESTRATOR_PORT || 8004;
@@ -152,16 +174,11 @@ const GOLDEN_CACHE_MAX = Number(process.env.GOLDEN_CACHE_MAX || 64);
 const GOLDEN_CACHE_TTL_MS = Number(process.env.GOLDEN_CACHE_TTL_MS || 10 * 60 * 1000);
 const goldenResponseCache = new Map();
 
-function getGoldenCacheKey(goldenMatch) {
-  if (!goldenMatch?.id) return null;
-  return `${goldenMatch.id}:${goldenMatch.route}`;
-}
-
-function getGoldenCachedPayload(goldenMatch) {
+function getGoldenCachedPayload(goldenMatch, query) {
   if (process.env.GOLDEN_CACHE_ENABLED === "false") return null;
   if (!goldenMatch?.cacheable) return null;
 
-  const key = getGoldenCacheKey(goldenMatch);
+  const key = buildGoldenCacheKey(goldenMatch, query);
   const entry = key ? goldenResponseCache.get(key) : null;
   if (!entry) return null;
 
@@ -182,25 +199,18 @@ function getGoldenCachedPayload(goldenMatch) {
  * 10-minute TTL — the single stickiest source of "sometimes perfect,
  * sometimes bad, and it won't change".
  */
-function isGoldenPayloadCacheable(payload) {
-  if (!payload) return false;
-  if (payload.degraded === true) return false;
-  // buildGoldenFallbackPayload() marks every static fallback with a reason.
-  if (payload.explainability?.fallback_reason) return false;
-  return true;
-}
-
-function setGoldenCachedPayload(goldenMatch, payload) {
+function setGoldenCachedPayload(goldenMatch, query, payload, executionState) {
   if (process.env.GOLDEN_CACHE_ENABLED === "false") return;
   if (!goldenMatch?.cacheable || !payload) return;
 
-  if (!isGoldenPayloadCacheable(payload)) {
+  const assessment = assessGoldenCacheability({ goldenMatch, payload, executionState });
+  if (!assessment.cacheable) {
     incrementMetric("golden_cache_degraded_write_skipped");
-    console.log(`[GOLDEN_CACHE_WRITE] id=${goldenMatch.id} skipped=true reason=degraded_payload`);
-    return;
+    console.log(`[GOLDEN_CACHE_WRITE] id=${goldenMatch.id} skipped=true reason=${assessment.reason}`);
+    return false;
   }
 
-  const key = getGoldenCacheKey(goldenMatch);
+  const key = buildGoldenCacheKey(goldenMatch, query);
   if (!key) return;
 
   console.log(`[GOLDEN_CACHE_WRITE] id=${goldenMatch.id} skipped=false route=${payload.route_used || payload.route || "unknown"}`);
@@ -212,6 +222,7 @@ function setGoldenCachedPayload(goldenMatch, payload) {
   while (goldenResponseCache.size > GOLDEN_CACHE_MAX) {
     goldenResponseCache.delete(goldenResponseCache.keys().next().value);
   }
+  return true;
 }
 
 function writeRoutingAudit(event) {
@@ -228,6 +239,7 @@ function writeRoutingAudit(event) {
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use("/api/auth", createAuthRouter());
 
 // TASK 1 — SAFE NEO4J SINGLETON INITIALIZATION (prevents duplicate connections on hot reload)
 if (!global.neo4jInitialized) {
@@ -250,6 +262,7 @@ if (!global.neo4jInitialized) {
 
 // Routes
 app.use("/api/decision", decisionRouter);
+app.use("/api/decision/admin", decisionAdminRouter);
 
 /* ============================================================
    CONVERSATION MEMORY & CACHE (PERSISTENT CHAT HISTORY)
@@ -473,27 +486,19 @@ const MAX_CONCURRENT_LLM = parseInt(process.env.MAX_CONCURRENT_LLM || "5", 10);
 const MAX_CONCURRENT_NEO4J = parseInt(process.env.MAX_CONCURRENT_NEO4J || "10", 10);
 const MAX_CONCURRENT_RAG = parseInt(process.env.MAX_CONCURRENT_RAG || "8", 10);
 
-function makeSemaphore(max) {
-  let active = 0;
-  const queue = [];
-  return {
-    async acquire() {
-      if (active < max) { active++; return; }
-      await new Promise(resolve => queue.push(resolve));
-      active++;
-    },
-    release() {
-      active--;
-      if (queue.length > 0) queue.shift()();
-    },
-    get active() { return active; },
-    get pending() { return queue.length; }
-  };
-}
+const llmSemaphore = createBoundedSemaphore(MAX_CONCURRENT_LLM);
+const neo4jSemaphore = createBoundedSemaphore(MAX_CONCURRENT_NEO4J);
+const ragSemaphore = createBoundedSemaphore(MAX_CONCURRENT_RAG);
 
-const llmSemaphore = makeSemaphore(MAX_CONCURRENT_LLM);
-const neo4jSemaphore = makeSemaphore(MAX_CONCURRENT_NEO4J);
-const ragSemaphore = makeSemaphore(MAX_CONCURRENT_RAG);
+function runProtectedStage(semaphore, operation, budgetMs, label) {
+  const boundedBudgetMs = Math.max(1, Number(budgetMs) || 1);
+  const deadlineAt = Date.now() + boundedBudgetMs;
+  const leasedWork = runWithRetainedSemaphoreLease(semaphore, operation, {
+    deadlineAt,
+    maxWaitMs: boundedBudgetMs
+  });
+  return timeoutWrapper(leasedWork, boundedBudgetMs, null, label);
+}
 
 // RC-15 — PER-CONVERSATION SERIALIZATION
 // getConversation() returns the live object from the in-memory Map and the
@@ -634,7 +639,7 @@ Exact format:
    🤖 PHASE 4: MAIN CHAT ORCHESTRATOR
 =========================================================== */
 
-app.post("/api/chatbot/query", (req, res) => {
+app.post("/api/chatbot/query", requireAuth, (req, res) => {
   // Serialize turns within one conversation (RC-15); new/absent cids get a
   // fresh conversation each and need no lock.
   const lockKey = normalizeConversationId(req.body?.cid);
@@ -655,6 +660,7 @@ async function handleChatbotQuery(req, res) {
   let convo = null;
   let activeUserQuery = "";
   let responseKgCompletionGuard = null;
+  const ownerId = req.auth.subject;
 
   res.json = function (body) {
     const sendBody = (finalBody) => {
@@ -685,7 +691,7 @@ async function handleChatbotQuery(req, res) {
       );
 
       if (finalBody?.cid && !finalBody.conversation) {
-        const conversation = getConversationSummary(finalBody.cid);
+        const conversation = getConversationSummary(finalBody.cid, { ownerId });
         if (conversation) finalBody.conversation = conversation;
       }
       return originalJson.call(this, finalBody);
@@ -721,6 +727,7 @@ async function handleChatbotQuery(req, res) {
           finalBody.final_answer = humanized.answer;
           finalBody.metadata = {
             ...(finalBody.metadata || {}),
+            ...(humanized.grounding ? { grounding: humanized.grounding } : {}),
             humanizer: {
               provider: humanized.provider || "gemini",
               changed: Boolean(humanized.changed),
@@ -780,11 +787,11 @@ async function handleChatbotQuery(req, res) {
       console.log(`[NORMALIZE][${requestId}] "${originalQuery}" -> "${query}"`);
     }
 
-    convo = await getConversation(conversationId);
+    convo = await getConversation(conversationId, { ownerId });
     const priorConversationMessages = Array.isArray(convo.messages)
       ? convo.messages.map(message => ({ ...message }))
       : [];
-    const priorConversationMemory = getConversationMemory(conversationId);
+    const priorConversationMemory = getConversationMemory(conversationId, { ownerId });
 
     console.log(`[CONVERSATION_PRIORITY][${requestId}] pre-router conversation gate active`);
     const metaIntent = detectMetaConversationIntent(originalQuery) || detectMetaConversationIntent(query);
@@ -797,8 +804,8 @@ async function handleChatbotQuery(req, res) {
       });
 
       logToFile(`USER [${conversationId}]: ${originalQuery}`);
-      await pushTurn(conversationId, convo, "user", originalQuery);
-      await pushTurn(conversationId, convo, "assistant", metaAnswer);
+      await pushTurn(conversationId, convo, "user", originalQuery, { ownerId });
+      await pushTurn(conversationId, convo, "assistant", metaAnswer, { ownerId });
 
       incrementMetric("conversation_meta_intent_hits");
       incrementMetric(`conversation_meta_${String(metaIntent.type || "unknown").toLowerCase()}_hits`);
@@ -869,10 +876,10 @@ async function handleChatbotQuery(req, res) {
     }
 
     logToFile(`USER [${conversationId}]: ${originalQuery}`);
-    await pushTurn(conversationId, convo, "user", originalQuery);
+    await pushTurn(conversationId, convo, "user", originalQuery, { ownerId });
 
     const recordAssistantTurn = async (assistantAnswer, memoryContext = {}) => {
-      await pushTurn(conversationId, convo, "assistant", assistantAnswer);
+      await pushTurn(conversationId, convo, "assistant", assistantAnswer, { ownerId });
 
       try {
         await updateConversationMemoryFromTurn(conversationId, convo, {
@@ -880,7 +887,7 @@ async function handleChatbotQuery(req, res) {
           normalizedQuery: query,
           assistantAnswer,
           ...memoryContext
-        });
+        }, { ownerId });
       } catch (memoryErr) {
         logger.warn("Lightweight conversation memory update failed", {
           requestId,
@@ -906,7 +913,7 @@ async function handleChatbotQuery(req, res) {
           ...memoryContext
         });
       } else {
-        await pushTurn(conversationId, convo, "assistant", answer);
+        await pushTurn(conversationId, convo, "assistant", answer, { ownerId });
       }
 
       const routeDiagnostics = {
@@ -974,6 +981,25 @@ async function handleChatbotQuery(req, res) {
       }));
     };
 
+    const securityOverrideAttempt = detectPromptInjectionAttempt(originalQuery);
+    if (securityOverrideAttempt.detected) {
+      incrementMetric("security_prompt_override_rejected");
+      incrementMetric(`security_prompt_override_${String(securityOverrideAttempt.reason || "unknown").toLowerCase()}`);
+      logger.warn("Prompt override attempt rejected before retrieval", {
+        requestId,
+        cid: conversationId,
+        reason: securityOverrideAttempt.reason
+      });
+
+      return await returnLocalConversation({
+        answer: SECURITY_REFUSAL_MESSAGE,
+        route: "CONVERSATION_SECURITY",
+        type: "PROMPT_OVERRIDE_REJECTED",
+        confidence: 1,
+        reasoning: "A deterministic security guard rejected a role override or credential-exfiltration request before routing and retrieval."
+      });
+    }
+
     const lightConversationalIntent = detectLightConversationalIntent(originalQuery, {
       conversationMemory: priorConversationMemory
     });
@@ -995,9 +1021,14 @@ async function handleChatbotQuery(req, res) {
       });
     }
 
+    const standaloneGoldenMatch = classifyGoldenQuery(query);
     const followUpResolution = resolveFollowUpReference(originalQuery, priorConversationMemory);
 
-    if (followUpResolution.detected && !followUpResolution.resolved) {
+    if (
+      followUpResolution.detected &&
+      !followUpResolution.resolved &&
+      !standaloneGoldenMatch
+    ) {
       incrementMetric("conversation_followup_clarification");
       return await returnLocalConversation({
         answer: followUpResolution.clarification,
@@ -1005,6 +1036,20 @@ async function handleChatbotQuery(req, res) {
         type: "FOLLOW_UP_REFERENCE",
         confidence: 0.9,
         reasoning: "Follow-up reference was detected but could not be resolved from lightweight memory."
+      });
+    }
+
+    if (
+      followUpResolution.detected &&
+      !followUpResolution.resolved &&
+      standaloneGoldenMatch
+    ) {
+      incrementMetric("conversation_standalone_golden_pronoun_hits");
+      logger.info("Explicit standalone golden query bypassed follow-up clarification", {
+        requestId,
+        cid: conversationId,
+        goldenId: standaloneGoldenMatch.id,
+        query
       });
     }
 
@@ -1035,7 +1080,7 @@ async function handleChatbotQuery(req, res) {
       console.log(`[FOLLOWUP_RESOLVED][${requestId}] target=${JSON.stringify(followUpResolution.target)} resolved_query="${query}"`);
     }
 
-    goldenMatch = classifyGoldenQuery(query);
+    goldenMatch = classifyGoldenQuery(query) || standaloneGoldenMatch;
     if (goldenMatch) {
       incrementMetric("golden_path_detected");
       logger.info("Golden path query detected", {
@@ -1122,7 +1167,7 @@ async function handleChatbotQuery(req, res) {
     const pMatchQuery = query.match(/\b\d{2,3}\b/);
     const bMatchQuery = query.match(/-?\b\d{4,6}\b/) || query.match(/budget[\s\w]*?(-?\d+)/i);
     const kMatchQuery = query.match(/(-?\d+)\s*[kK]\b/);
-    const memForRouting = getUserMemory(conversationId);
+    const memForRouting = getUserMemory(conversationId, { ownerId });
     const isProfileIncomplete = !memForRouting?.studentProfile?.high_school_percentage || !memForRouting?.studentProfile?.budget;
 
     const factualRegex = /^(who|what|where|which|how|when)\b/i;
@@ -1192,8 +1237,13 @@ async function handleChatbotQuery(req, res) {
       intentKeyword = "GENERAL";
     }
     const PROTECTED_KG_INTENTS = new Set(["TEACHING", "PREREQUISITE", "ADMIN", "PERSON"]);
+    const DIRECT_EXACT_GOLDEN_INTENTS = new Set(["PROGRAM", "COMPARE"]);
     const normalizeIntentKeyword = (candidate) => String(candidate || "").trim().toUpperCase();
     const isProtectedKgIntent = (candidate) => PROTECTED_KG_INTENTS.has(normalizeIntentKeyword(candidate));
+    const isDirectExactGoldenPath = Boolean(
+      goldenMatch?.execution === "DIRECT_NEO4J" &&
+      DIRECT_EXACT_GOLDEN_INTENTS.has(normalizeIntentKeyword(goldenMatch.intent))
+    );
     const inferProtectedKgIntentFromQuery = (text) => {
       const normalized = String(text || "").toLowerCase().replace(/[^a-z0-9+#\s]/g, " ").replace(/\s+/g, " ").trim();
       if (
@@ -1213,19 +1263,21 @@ async function handleChatbotQuery(req, res) {
     const protectedIntentFromQuery = inferProtectedKgIntentFromQuery(query);
     if (isCourseByTopicLookup(query)) {
       intentKeyword = "CURRICULUM";
+    } else if (isDirectExactGoldenPath) {
+      intentKeyword = normalizeIntentKeyword(goldenMatch.intent);
     } else if (isProtectedKgIntent(goldenMatch?.intent)) {
       intentKeyword = normalizeIntentKeyword(goldenMatch.intent);
     } else if (isProtectedKgIntent(protectedIntentFromQuery)) {
       intentKeyword = protectedIntentFromQuery;
     }
-    let lockedOntologyIntent = isProtectedKgIntent(intentKeyword) ? null : normalizeOntologyKgIntent(intentKeyword);
+    let lockedOntologyIntent = (isProtectedKgIntent(intentKeyword) || isDirectExactGoldenPath)
+      ? null
+      : normalizeOntologyKgIntent(intentKeyword);
 
     // ---------- 3. BRAIN ROUTER (PHASE 4) ----------
 
     // Live Health Probing
-    const healthStatus = await checkSubsystemHealth(
-      goldenMatch ? { fast: true, optimistic: true } : {}
-    );
+    const healthStatus = await checkSubsystemHealth();
 
     // LG-01: the exact snapshot that gates this request's routing. Diffing this
     // line across two identical asks answers "why did the route change".
@@ -1313,7 +1365,9 @@ async function handleChatbotQuery(req, res) {
         routeOverrideReasons.push("resolved_followup_person_lock");
     }
 
-    const ontologyRouteIntent = isProtectedKgIntent(goldenMatch?.intent) || isProtectedKgIntent(intentKeyword)
+    const ontologyRouteIntent = isDirectExactGoldenPath ||
+      isProtectedKgIntent(goldenMatch?.intent) ||
+      isProtectedKgIntent(intentKeyword)
       ? null
       : (
           lockedOntologyIntent ||
@@ -1375,7 +1429,7 @@ async function handleChatbotQuery(req, res) {
 
     // ISSUE 4: ROUTE MEMORY PERSISTENCE
     convo.lastRoute = route;
-    await saveConversation(conversationId, convo);
+    await saveConversation(conversationId, convo, { ownerId });
 
     console.log(`[ORCHESTRATOR][${requestId}] Central Route Assigned: ${route}`);
 
@@ -1389,6 +1443,25 @@ async function handleChatbotQuery(req, res) {
     let interactivePrompt = null;
     let degraded_services = [...new Set(prerouteDegradedServices)];
     let kgRawData = null; // Hoisted for universal explainability injection
+    const cacheGoldenPayload = (payload, responseTier) => setGoldenCachedPayload(
+      goldenMatch,
+      query,
+      payload,
+      {
+        degradedServices: [...new Set(degraded_services)],
+        responseTier,
+        evidence: {
+          kgCount: Array.isArray(rawResults.kg)
+            ? rawResults.kg.filter(item => String(item?.evidence || "").trim().length > 0).length
+            : 0,
+          ragCount: Array.isArray(rawResults.rag?.results)
+            ? rawResults.rag.results.filter(source => extractRagSourceText(source).length > 20).length
+            : 0,
+          decisionCount: Array.isArray(rawResults.decision) ? rawResults.decision.length : 0,
+          careerCount: Array.isArray(rawResults.career) ? rawResults.career.length : 0,
+        },
+      }
+    );
     const routeDiagnostics = {
       ...(routingDecision.telemetry || {}),
       initial_route: initialRoute,
@@ -1521,7 +1594,7 @@ async function handleChatbotQuery(req, res) {
         delete convo.lastCurriculumCourse;
       }
 
-      await saveConversation(conversationId, convo);
+      await saveConversation(conversationId, convo, { ownerId });
     };
 
     // TASK 4 — ENHANCED KG CONFIDENCE SCORING
@@ -1560,6 +1633,7 @@ async function handleChatbotQuery(req, res) {
     };
 
     const resolveKgRetrievalIntent = (candidateIntent = intentKeyword) => {
+      if (isDirectExactGoldenPath) return normalizeIntentKeyword(goldenMatch.intent);
       if (isProtectedKgIntent(goldenMatch?.intent)) return normalizeIntentKeyword(goldenMatch.intent);
       if (isProtectedKgIntent(candidateIntent)) return normalizeIntentKeyword(candidateIntent);
       return (
@@ -1584,13 +1658,36 @@ async function handleChatbotQuery(req, res) {
       kgRetrievalState.finished = false;
       kgRetrievalState.intent = resolvedIntent;
 
-      await neo4jSemaphore.acquire();
+      const kgDeadlineAt = Date.now() + kgTimeoutMs;
+      let acquisition;
+
+      try {
+        acquisition = await acquireBeforeDeadline(neo4jSemaphore, {
+          deadlineAt: kgDeadlineAt,
+          maxWaitMs: kgAcquireTimeoutMs
+        });
+      } catch (error) {
+        if (!(error instanceof SemaphoreAcquireTimeoutError)) throw error;
+
+        kgRetrievalState.finished = true;
+        incrementMetric("kg_semaphore_acquire_timeout");
+        logger.warn("KG capacity acquisition exceeded its bounded deadline; degrading", {
+          requestId,
+          intent: resolvedIntent,
+          route_timeout_ms: kgTimeoutMs,
+          acquire_timeout_ms: kgAcquireTimeoutMs,
+          active: neo4jSemaphore.active,
+          pending: neo4jSemaphore.pending
+        });
+        return null;
+      }
+
       const retrievalPromise = fetchNeo4jContext(
         effectiveRetrievalQuery,
         resolvedIntent,
         limit,
         requestId,
-        getConversationContext(conversationId, MAX_CONTEXT_TURNS),
+        getConversationContext(conversationId, MAX_CONTEXT_TURNS, { ownerId }),
         buildGraphRetrievalOptions(routeForOptions)
       );
       kgRetrievalState.pending = retrievalPromise;
@@ -1617,7 +1714,7 @@ async function handleChatbotQuery(req, res) {
       try {
         const raced = await timeoutWrapper(
           retrievalPromise,
-          kgTimeoutMs,
+          acquisition.remainingMs,
           KG_RETRIEVAL_ABANDONED,
           `kg_retrieval_${resolvedIntent}`
         );
@@ -1627,7 +1724,9 @@ async function handleChatbotQuery(req, res) {
           logger.warn("KG retrieval abandoned at route timeout; degrading", {
             requestId,
             intent: resolvedIntent,
-            timeout_ms: kgTimeoutMs
+            timeout_ms: acquisition.remainingMs,
+            route_timeout_ms: kgTimeoutMs,
+            semaphore_wait_ms: acquisition.waitedMs
           });
           // Diagnose late completions without resurrecting them (RC-08 hygiene:
           // the response pipeline must not incorporate results after abandonment).
@@ -1902,9 +2001,26 @@ async function handleChatbotQuery(req, res) {
             })
             .sort((a, b) => b.score - a.score)[0]?.sentence || text;
 
+          const title = extractRagSourceTitle(source);
+          const sourceMetadata = source?.metadata && typeof source.metadata === "object"
+            ? source.metadata
+            : {};
+          const evidenceId = String(
+            source?.evidence_id ||
+            source?.id ||
+            source?.point_id ||
+            sourceMetadata.evidence_id ||
+            sourceMetadata.point_id ||
+            sourceMetadata.chunk_id ||
+            sourceMetadata.document_id ||
+            `rag:${crypto.createHash("sha256").update(`${title}|${bestSentence}`).digest("hex").slice(0, 24)}`
+          );
+
           return {
             index,
-            title: extractRagSourceTitle(source),
+            evidence_id: evidenceId,
+            title,
+            category: source?.category || sourceMetadata.category || sourceMetadata.document_type || "verified_policy",
             excerpt: bestSentence.slice(0, 420),
             score: normalizeNumericConfidence(source?.rerank_score ?? source?.score ?? source?.confidence ?? ragRes?.raw_confidence)
           };
@@ -1914,25 +2030,48 @@ async function handleChatbotQuery(req, res) {
         .slice(0, 3);
 
       const directAnswer = buildConversationalRagAnswer(ragRes, evidence);
+      const groundingEvidence = evidence.map(item => ({
+        evidence_id: item.evidence_id,
+        evidence: item.excerpt,
+        source_type: "RAG",
+        score: item.score,
+        metadata: {
+          evidence_id: item.evidence_id,
+          title: item.title,
+          category: item.category,
+          source: item.title,
+          score: item.score
+        }
+      }));
+      const groundedQuality = finalizeGroundedAnswer({
+        query,
+        answer: directAnswer,
+        evidence: groundingEvidence
+      });
+      const finalAnswer = groundedQuality.answer;
+      const topEvidenceScore = Math.max(...evidence.map(item => item.score), 0);
+      const factualCount = groundedQuality.grounding?.factual_sentence_count || 0;
+      const supportedCount = groundedQuality.grounding?.supported_sentence_count || 0;
+      const supportRatio = factualCount > 0 ? supportedCount / factualCount : 0;
+      const fullyGrounded = groundedQuality.grounding?.status === "fully_supported" &&
+        groundedQuality.citations.length > 0;
+      const evidenceConfidence = fullyGrounded
+        ? Math.min(0.9, Math.max(0.45, (topEvidenceScore * 0.85) + (supportRatio * 0.15)))
+        : 0.25;
 
       return {
-        final_answer: directAnswer,
-        answer: directAnswer,
-        confidence: Math.max(routingDecision.confidence || 0, normalizeNumericConfidence(ragRes?.raw_confidence), 0.86),
+        final_answer: finalAnswer,
+        answer: finalAnswer,
+        confidence: Number(evidenceConfidence.toFixed(3)),
         route_used: ragDecisionRoute,
         contributing_sources: [ragDecisionRoute, "RAG"],
         used_facts: evidence.map(item => item.excerpt),
-        missing_information: [],
+        missing_information: groundedQuality.missing_information,
         graph: {
             nodes: [],
             links: []
         },
-        citations: evidence.map(item => ({
-          title: item.title,
-          source: item.title,
-          excerpt: item.excerpt,
-          confidence: item.score
-        })),
+        citations: groundedQuality.citations,
         explainability: {
           deterministic: true,
           direct_rag: true,
@@ -1946,24 +2085,13 @@ async function handleChatbotQuery(req, res) {
           retrieval_pass: ragRes?.pass_used,
           query_category: ragRes?.query_category || ragRes?.category,
           source_count: sources.length,
-          direct_bypass: true
+          direct_bypass: true,
+          grounding: groundedQuality.grounding,
+          answer_coverage: groundedQuality.coverage,
+          evidence_recomposed: groundedQuality.recomposed,
+          model_calls_added_by_self_check: 0
         }
       };
-    };
-
-    const hasStrongRagEvidence = (ragRes) => {
-      const sources = Array.isArray(ragRes?.sources) ? ragRes.sources : [];
-      const sourceCount = sources.length;
-      const hasReadableEvidence = sources.some(source => extractRagSourceText(source).length >= 30);
-      const topRerank = Math.max(...sources.map(source => normalizeNumericConfidence(source?.rerank_score ?? source?.score ?? source?.confidence)), 0);
-      const retrievalConfidence = normalizeNumericConfidence(ragRes?.raw_confidence ?? ragRes?.confidence);
-
-      return hasReadableEvidence && (
-        retrievalConfidence >= 0.25 ||
-        topRerank >= 0.25 ||
-        sourceCount >= 2 ||
-        typeof ragRes?.answer === "string"
-      );
     };
 
     const extractClarificationTarget = () => {
@@ -2018,7 +2146,8 @@ async function handleChatbotQuery(req, res) {
         ragContext: Array.isArray(rawResults.rag?.results) ? rawResults.rag.results : [],
         decisionContext: rawResults.decision || rawResults.career || null,
         faqContext: faqHit || null,
-        usedFacts: payload.used_facts || []
+        usedFacts: payload.used_facts || [],
+        graph: payload.graph || null
       });
       incrementMetric("golden_path_response");
       if (auditExtra.cache_hit) incrementMetric("golden_path_cache_hit");
@@ -2060,7 +2189,7 @@ async function handleChatbotQuery(req, res) {
     };
 
     if (goldenMatch) {
-      const cachedGoldenPayload = getGoldenCachedPayload(goldenMatch);
+      const cachedGoldenPayload = getGoldenCachedPayload(goldenMatch, query);
       if (cachedGoldenPayload) {
         routeDiagnostics.fallback_triggers.push("GOLDEN_CACHE_HIT");
         cachedGoldenPayload.explainability = {
@@ -2074,14 +2203,15 @@ async function handleChatbotQuery(req, res) {
 
     const retrieveRagEvidence = async (fallbackReason) => {
       routeDiagnostics.fallback_triggers.push(fallbackReason);
-      await ragSemaphore.acquire();
-      const ragRes = await timeoutWrapper(
-        ragService.search(query, { topK: 5, traceId: requestId }),
-        goldenMatch ? Math.min(goldenMatch.timeoutMs || 2500, 2800) : timeoutFromEnv(["RAG_ROUTE_TIMEOUT_MS", "ROUTE_TIMEOUT_MS"], 20000),
-        null,
+      const fallbackRagBudgetMs = goldenMatch
+        ? Math.min(goldenMatch.timeoutMs || 2500, 2800)
+        : timeoutFromEnv(["RAG_ROUTE_TIMEOUT_MS", "ROUTE_TIMEOUT_MS"], 20000);
+      const ragRes = await runProtectedStage(
+        ragSemaphore,
+        () => ragService.search(query, { topK: 5, traceId: requestId }),
+        fallbackRagBudgetMs,
         "rag_fallback_retrieval"
-      )
-        .finally(() => ragSemaphore.release());
+      );
 
       if (!ragRes) {
         degraded_services.push("RAG_TIMEOUT");
@@ -2115,7 +2245,12 @@ async function handleChatbotQuery(req, res) {
     // KG timeout is now ENFORCED (F1.4). Non-golden default raised 5000 -> 12000:
     // a cold nomic-embed-text load can take several seconds, and 12s bounds the
     // worst-case stall while still giving first-touch embeddings a chance.
-    const kgTimeoutMs = goldenMatch ? Math.min(deterministicTimeoutMs, 2800) : timeoutFromEnv(["KG_ROUTE_TIMEOUT_MS"], 12000);
+    const kgTimeoutMs = goldenMatch ? Math.min(deterministicTimeoutMs, 8000) : timeoutFromEnv(["KG_ROUTE_TIMEOUT_MS"], 12000);
+    const configuredKgAcquireTimeoutMs = timeoutFromEnv(["KG_SEMAPHORE_ACQUIRE_TIMEOUT_MS"], 3000);
+    const kgAcquireTimeoutMs = Math.min(
+      kgTimeoutMs,
+      configuredKgAcquireTimeoutMs > 0 ? configuredKgAcquireTimeoutMs : kgTimeoutMs
+    );
     const ragTimeoutMs = goldenMatch ? Math.min(deterministicTimeoutMs, 2800) : timeoutFromEnv(["RAG_ROUTE_TIMEOUT_MS", "ROUTE_TIMEOUT_MS"], 20000);
     const hybridRouteTimeoutMs = goldenMatch ? Math.min(deterministicTimeoutMs, 2800) : timeoutFromEnv(["HYBRID_ROUTE_TIMEOUT_MS", "ROUTE_TIMEOUT_MS"], 20000);
     const decisionTimeoutMs = goldenMatch ? Math.min(Math.max(deterministicTimeoutMs, 2400), 3500) : 8000;
@@ -2124,6 +2259,7 @@ async function handleChatbotQuery(req, res) {
       requestId,
       route,
       kg_timeout_ms: kgTimeoutMs,
+      kg_semaphore_acquire_timeout_ms: kgAcquireTimeoutMs,
       rag_timeout_ms: ragTimeoutMs,
       hybrid_route_timeout_ms: hybridRouteTimeoutMs,
       decision_timeout_ms: decisionTimeoutMs,
@@ -2180,15 +2316,14 @@ async function handleChatbotQuery(req, res) {
         }
 
         if (intentPart.retrieval === "RAG") {
-          await ragSemaphore.acquire();
-          const intentRagRaw = await timeoutWrapper(
-            ragService.search(scopedQuery, { topK: 3, traceId: requestId }),
+          const intentRagRaw = await runProtectedStage(
+            ragSemaphore,
+            () => ragService.search(scopedQuery, { topK: 3, traceId: requestId }),
             ragTimeoutMs,
-            null,
             "rag_multi_intent"
-          ).finally(() => ragSemaphore.release());
+          );
 
-          if (hasStrongRagEvidence(intentRagRaw)) {
+          if (hasStrongDirectRagEvidence(intentRagRaw)) {
             const ragPayload = buildDeterministicRagPayload(intentRagRaw, ROUTES.RAG_DIRECT);
             multiParts.push({
               label: intentPart.label,
@@ -2457,7 +2592,7 @@ async function handleChatbotQuery(req, res) {
 
           if (ragFallbackAllowed) {
             const ragFallback = await retrieveRagEvidence("KG_EMPTY_RAG_ESCALATION");
-            if (rawResults.rag?.results?.length > 0 || hasStrongRagEvidence(ragFallback)) {
+            if (rawResults.rag?.results?.length > 0 || hasStrongDirectRagEvidence(ragFallback)) {
               degraded_services.push("KG_EMPTY");
               routeDiagnostics.failure_diagnostics.push("KG_EMPTY");
               route = ROUTES.RAG_ONLY;
@@ -2480,7 +2615,7 @@ async function handleChatbotQuery(req, res) {
             if (goldenFallback) {
               degraded_services.push("GOLDEN_STATIC_FALLBACK");
               routeDiagnostics.fallback_triggers.push("GOLDEN_KG_STATIC_FALLBACK");
-              setGoldenCachedPayload(goldenMatch, goldenFallback);
+              cacheGoldenPayload(goldenFallback, "GOLDEN_DEGRADED_SUCCESS");
               return await returnGoldenPayload(goldenFallback, "GOLDEN_DEGRADED_SUCCESS");
             }
           }
@@ -2492,6 +2627,13 @@ async function handleChatbotQuery(req, res) {
           const emptyKgAnswer = resolvedTarget
             ? `I resolved that as ${resolvedTarget}, but I couldn't find verified knowledge graph evidence for the requested detail.`
             : "I couldn't find verified knowledge graph evidence for this query.";
+          await recordAssistantTurn(emptyKgAnswer, {
+            route: "KG_ONLY",
+            intent: intentKeyword,
+            entities,
+            neo4jContext: [],
+            usedFacts: []
+          });
           return res.json(
             responseFormatter.format({
               answer: emptyKgAnswer,
@@ -2529,7 +2671,18 @@ async function handleChatbotQuery(req, res) {
               .map(fact => fact.evidence)
               .filter(Boolean)
               .join("\n");
-            const answer = rawResults.kg.answer || selectedEvidenceAnswer || bestKG.evidence;
+            const rawAnswer = rawResults.kg.answer || selectedEvidenceAnswer || bestKG.evidence;
+            const groundingEvidence = rawResults.kg.map(fact => ({
+              evidence: fact.evidence,
+              source_type: fact.source_type || "KG",
+              metadata: fact.metadata || {}
+            }));
+            const groundedQuality = finalizeGroundedAnswer({
+              query,
+              answer: rawAnswer,
+              evidence: groundingEvidence
+            });
+            const answer = groundedQuality.answer;
             const latencyMs = Date.now() - requestStartTime;
             const kgResponseMetadata = rawResults.kg.metadata || {};
             const curriculumExplainability = kgResponseMetadata.source_type === "CURRICULUM_KG" ? {
@@ -2555,7 +2708,8 @@ Fallback Calls: 0`);
                 route_used: ROUTES.KG_DIRECT,
                 sources: ["KG_DIRECT"],
                 used_facts: rawResults.kg.map(f => f.evidence),
-                missing_information: [],
+                citations: groundedQuality.citations,
+                missing_information: groundedQuality.missing_information,
                 graph: convertToGraphData(kgRawData),
                 source: "KG_DIRECT",
                 explainability: {
@@ -2563,7 +2717,13 @@ Fallback Calls: 0`);
                     direct_kg: true,
                     ...curriculumExplainability
                 },
-                metadata: kgResponseMetadata.source_type ? kgResponseMetadata : undefined
+                metadata: {
+                  ...kgResponseMetadata,
+                  grounding: groundedQuality.grounding,
+                  answer_coverage: groundedQuality.coverage,
+                  evidence_recomposed: groundedQuality.recomposed,
+                  model_calls_added_by_self_check: 0
+                }
             };
 
             await updateLastCurriculumCourse(kgRawData, rawResults.kg);
@@ -2585,7 +2745,7 @@ Fallback Calls: 0`);
                   priority: goldenMatch.priority
                 }
               };
-              setGoldenCachedPayload(goldenMatch, deterministicPayload);
+              cacheGoldenPayload(deterministicPayload, "DETERMINISTIC_SUCCESS");
               return await returnGoldenPayload(deterministicPayload, "DETERMINISTIC_SUCCESS");
             }
 
@@ -2615,8 +2775,12 @@ Fallback Calls: 0`);
         }
       }
       else if (route === ROUTES.RAG_ONLY || route === ROUTES.RAG_DIRECT) {
-        await ragSemaphore.acquire();
-        const ragRes = await timeoutWrapper(ragService.search(query, { topK: 5, traceId: requestId }), ragTimeoutMs, null, "rag_route").finally(() => ragSemaphore.release());
+        const ragRes = await runProtectedStage(
+          ragSemaphore,
+          () => ragService.search(query, { topK: 5, traceId: requestId }),
+          ragTimeoutMs,
+          "rag_route"
+        );
         
         if (!ragRes) {
           degraded_services.push("RAG_TIMEOUT");
@@ -2654,15 +2818,23 @@ Fallback Calls: 0`);
               if (goldenFallback) {
                 degraded_services.push("GOLDEN_STATIC_FALLBACK");
                 routeDiagnostics.fallback_triggers.push("GOLDEN_RAG_STATIC_FALLBACK");
-                setGoldenCachedPayload(goldenMatch, goldenFallback);
+                cacheGoldenPayload(goldenFallback, "GOLDEN_DEGRADED_SUCCESS");
                 return await returnGoldenPayload(goldenFallback, "GOLDEN_DEGRADED_SUCCESS");
               }
             }
 
             console.log(`[ORCHESTRATOR][${requestId}] RAG_ONLY empty-result exit triggered.`);
+            const emptyRagAnswer = "I couldn't find verified institutional policy evidence for this query.";
+            await recordAssistantTurn(emptyRagAnswer, {
+              route: "RAG_ONLY",
+              intent: intentKeyword,
+              entities,
+              ragContext: [],
+              usedFacts: []
+            });
             return res.json(
               responseFormatter.format({
-                answer: "I couldn't find verified institutional policy evidence for this query.",
+                answer: emptyRagAnswer,
                 confidence: 0.25,
                 used_facts: [],
                 missing_information: ["No verified institutional policy evidence found."],
@@ -2689,7 +2861,7 @@ Fallback Calls: 0`);
                 routingDecision.confidence >= 0.70 &&
                 routingDecision.deterministic_policy?.strong_policy_evidence
               )) &&
-            hasStrongRagEvidence(ragRes);
+            hasStrongDirectRagEvidence(ragRes);
 
           if (shouldDirectPolicyBypass) {
             const deterministicPayload = buildDeterministicRagPayload(ragRes, ROUTES.RAG_DIRECT);
@@ -2718,7 +2890,7 @@ Sources: ${rawResults.rag.results.length}`);
                 golden_path: true,
                 golden_id: goldenMatch.id
               };
-              setGoldenCachedPayload(goldenMatch, deterministicPayload);
+              cacheGoldenPayload(deterministicPayload, "DETERMINISTIC_SUCCESS");
               writeRoutingAudit({
                 requestId,
                 cid: conversationId,
@@ -2765,7 +2937,12 @@ Sources: ${rawResults.rag.results.length}`);
             limit: 5,
             routeForOptions: route
           }),
-          ragSemaphore.acquire().then(() => timeoutWrapper(ragService.search(query, { topK: 5, traceId: requestId }), hybridRouteTimeoutMs, null, "rag_hybrid").finally(() => ragSemaphore.release()))
+          runProtectedStage(
+            ragSemaphore,
+            () => ragService.search(query, { topK: 5, traceId: requestId }),
+            hybridRouteTimeoutMs,
+            "rag_hybrid"
+          )
         ]);
 
         if (kgOutcome.status === 'fulfilled' && kgOutcome.value) {
@@ -2822,7 +2999,7 @@ Sources: ${rawResults.rag.results.length}`);
               degraded_services.push("GOLDEN_STATIC_FALLBACK");
               routeDiagnostics.failure_diagnostics.push("HYBRID_TOTAL_FAILURE");
               routeDiagnostics.fallback_triggers.push("GOLDEN_HYBRID_STATIC_FALLBACK");
-              setGoldenCachedPayload(goldenMatch, goldenFallback);
+              cacheGoldenPayload(goldenFallback, "GOLDEN_DEGRADED_SUCCESS");
               return await returnGoldenPayload(goldenFallback, "GOLDEN_DEGRADED_SUCCESS");
             }
           }
@@ -2837,7 +3014,7 @@ Sources: ${rawResults.rag.results.length}`);
         }
       }
       else if (route === ROUTES.DECISION_ENGINE) {
-        let memory = getUserMemory(conversationId);
+        let memory = getUserMemory(conversationId, { ownerId });
 
         let updated = false;
         const updates = { studentProfile: {} };
@@ -2849,8 +3026,8 @@ Sources: ${rawResults.rag.results.length}`);
         if (budgetVal !== null) { updates.studentProfile.budget = budgetVal; updated = true; }
 
         if (updated) {
-          await updateUserMemory(conversationId, updates);
-          memory = getUserMemory(conversationId);
+          await updateUserMemory(conversationId, updates, { ownerId });
+          memory = getUserMemory(conversationId, { ownerId });
         }
 
         const hasPercentage = memory?.studentProfile?.high_school_percentage != null;
@@ -2872,20 +3049,10 @@ Sources: ${rawResults.rag.results.length}`);
           if (!majorA || !majorB) {
             interactivePrompt = { msg: `Which two majors would you like to compare?`, missingFields: [] };
           } else {
-            const comparison = compareMajors(
-              majorA,
-              majorB,
-              memory?.studentProfile || { high_school_percentage: 80, budget: null },
-              requestId
-            );
-            rawResults.decision = [{
-              recommendation: `Comparison: ${majorA} vs ${majorB}\nSalary Outlook: ${comparison.salary_outlook}\nSkills Overlap: ${comparison.skills_overlap}`,
-              factors: {
-                ...comparison,
-                profile_used: hasPercentage || hasBudget ? "student_memory" : "demo_default"
-              },
-              confidence: 0.86
-            }];
+            interactivePrompt = {
+              msg: `I don't have a verified Decision Engine comparison for ${majorA} and ${majorB}. Please ask about their curricula, requirements, or documented career outcomes so I can compare grounded evidence instead of estimating.`,
+              missingFields: []
+            };
           }
         } else if (!hasPercentage || !hasBudget) {
           let missingMsg = "To recommend the best major, please tell me your ";
@@ -2902,35 +3069,34 @@ Sources: ${rawResults.rag.results.length}`);
               text: query,
               memory: memory,
               cid: conversationId,
+              ownerId,
               requestId
             }),
             decisionTimeoutMs, null, "decision_engine"
           );
 
-          if (decisionResult && decisionResult.success) {
-            rawResults.decision = [{
-              recommendation: `Recommended Major: ${decisionResult.recommended_major}. Reason: ${decisionResult.reason}`,
-              confidence: decisionResult.confidence / 100 || 0.85,
-              factors: decisionResult
-            }];
+          const decisionEvidence = toOrchestratorDecisionEvidence(decisionResult);
+          if (decisionEvidence) {
+            rawResults.decision = [decisionEvidence];
+          } else if (decisionResult?.success === true && decisionResult?.result_status === "no_results") {
+            interactivePrompt = {
+              msg: decisionResult.reason || "No verified program matched the supplied profile and preferences.",
+              missingFields: []
+            };
           } else if (decisionResult && decisionResult.is_missing_data) {
             interactivePrompt = { msg: `I'd love to help, but I need your ${decisionResult.missing_fields.join(" and ")}!`, missingFields: decisionResult.missing_fields };
           } else {
             degraded_services.push("DECISION_ENGINE_DEGRADED");
             routeDiagnostics.failure_diagnostics.push("DECISION_ENGINE_EMPTY");
-            rawResults.decision = [{
-              recommendation: "Based on your profile, AI, Computer Science, and Software Engineering are strong demo-safe options. For a final ranking, provide interests and budget so the decision engine can score affordability, training intensity, and fit.",
-              confidence: 0.62,
-              factors: {
-                fallback: true,
-                reason: "Decision API did not return a complete result within the route timeout."
-              }
-            }];
+            interactivePrompt = {
+              msg: "I couldn't produce a verified recommendation because the decision service did not return a complete result. Please try again; no major has been recommended from this attempt.",
+              missingFields: []
+            };
           }
         }
       }
       else if (route === ROUTES.CAREER_ENGINE) {
-        const memory = getUserMemory(conversationId);
+        const memory = getUserMemory(conversationId, { ownerId });
         const inferredAiCareer = /\b(ai|artificial intelligence|machine learning|data|robotics|nlp|natural language processing)\b/i.test(query);
         if ((!memory || Object.keys(memory).length === 0) && !goldenMatch && !inferredAiCareer) {
           interactivePrompt = { msg: "We need to find the right major for you first! Should we start with a recommendation?", missingFields: [] };
@@ -3018,14 +3184,14 @@ Sources: ${rawResults.rag.results.length}`);
           if (goldenFallback) {
             degraded_services.push("GOLDEN_STATIC_FALLBACK");
             routeDiagnostics.fallback_triggers.push("GOLDEN_LLM_STATIC_FALLBACK");
-            setGoldenCachedPayload(goldenMatch, goldenFallback);
+            cacheGoldenPayload(goldenFallback, "GOLDEN_DEGRADED_SUCCESS");
             return await returnGoldenPayload(goldenFallback, "GOLDEN_DEGRADED_SUCCESS");
           }
         }
 
         incrementMetric("route_llm_fallback_hits");
         incrementMetric("llm_fallback_rate");
-        const history = getConversationContext(conversationId, 4).map(m => `${m.role.toUpperCase()}: ${m.content}`).join("\n");
+        const history = getConversationContext(conversationId, 4, { ownerId }).map(m => `${m.role.toUpperCase()}: ${m.content}`).join("\n");
 
         const prompt = `You are the AAST Academic Super-Agent, a professional, grounded, and helpful university advisor.
 Your primary role is to assist students with major selection, career advice, and academic policies.
@@ -3044,12 +3210,12 @@ Respond briefly, professionally, and conversationally as the AAST Advisor.`;
           incrementMetric("llm_fallback_presynthesis_bypassed");
           console.log(`[LLM_FALLBACK][${requestId}] pre-synthesis Gemma call bypassed by single-generation mode`);
         } else {
-          await llmSemaphore.acquire();
           const fallbackTimeoutMs = timeoutFromEnv(["FALLBACK_LLM_TIMEOUT_MS"], 20000);
           const fallbackDeadlineMs = timeoutFromEnv(["FALLBACK_LLM_DEADLINE_MS"], 20000);
           console.log(`[LLM_FALLBACK][${requestId}] Effective timeout budget timeout=${fallbackTimeoutMs}ms deadline=${fallbackDeadlineMs}ms`);
-          llmText = await timeoutWrapper(
-            generateStableResponse({
+          llmText = await runProtectedStage(
+            llmSemaphore,
+            () => generateStableResponse({
               prompt,
               model: process.env.OLLAMA_FALLBACK_MODEL || process.env.PRIMARY_MODEL || process.env.OLLAMA_MODEL || "gemma4:e2b",
               requestId: `fallback_${requestId}`,
@@ -3066,8 +3232,9 @@ Respond briefly, professionally, and conversationally as the AAST Advisor.`;
                 num_predict: 220
               }
             }),
-            fallbackDeadlineMs, null, "llm_fallback_generation"
-          ).finally(() => llmSemaphore.release());
+            fallbackDeadlineMs,
+            "llm_fallback_generation"
+          );
         }
         rawResults.llm = [{ response: llmText?.trim() || "Some systems are limited right now, but based on available academic guidance, here is the best support I can provide.", confidence: 0.3 }];
       }
@@ -3101,7 +3268,8 @@ Respond briefly, professionally, and conversationally as the AAST Advisor.`;
       if (
         goldenMatch &&
         route === ROUTES.HYBRID_KG_RAG &&
-        ((rawResults.kg && rawResults.kg.length > 0) || (rawResults.rag?.results && rawResults.rag.results.length > 0))
+        rawResults.kg?.some(item => String(item?.evidence || "").trim().length > 0) &&
+        rawResults.rag?.results?.some(source => extractRagSourceText(source).length > 20)
       ) {
         const kgFacts = (rawResults.kg || []).map(item => item.evidence).filter(Boolean).slice(0, 3);
         const ragFacts = (rawResults.rag?.results || []).map(source => extractRagSourceText(source)).filter(text => text.length > 20).slice(0, 3);
@@ -3135,7 +3303,7 @@ Respond briefly, professionally, and conversationally as the AAST Advisor.`;
           reasoning: "Golden hybrid query answered from retrieved KG/RAG evidence without LLM synthesis."
         };
 
-        setGoldenCachedPayload(goldenMatch, deterministicHybridPayload);
+        cacheGoldenPayload(deterministicHybridPayload, "DETERMINISTIC_SUCCESS");
         return await returnGoldenPayload(deterministicHybridPayload, "DETERMINISTIC_SUCCESS");
       }
 
@@ -3189,7 +3357,7 @@ Respond briefly, professionally, and conversationally as the AAST Advisor.`;
           }
         };
 
-        setGoldenCachedPayload(goldenMatch, deterministicRulePayload);
+        cacheGoldenPayload(deterministicRulePayload, "DETERMINISTIC_SUCCESS");
         return await returnGoldenPayload(deterministicRulePayload, "DETERMINISTIC_SUCCESS");
       }
 
@@ -3212,8 +3380,8 @@ Respond briefly, professionally, and conversationally as the AAST Advisor.`;
             ragContext: Array.isArray(rawResults.rag?.results) ? rawResults.rag.results : [],
             faqContext: faqHit || null,
             decisionContext: rawResults.decision || rawResults.career || null,
-            history: getConversationContext(conversationId, 6),
-            conversationMemory: getConversationMemory(conversationId)
+            history: getConversationContext(conversationId, 6, { ownerId }),
+            conversationMemory: getConversationMemory(conversationId, { ownerId })
           }),
           unifiedSynthesisRouteTimeoutMs,
           null,
@@ -3241,12 +3409,12 @@ Respond briefly, professionally, and conversationally as the AAST Advisor.`;
 
               fusionPayload = {
                   final_answer:
-                      fusionPayload.answer ||
+                      fusionPayload?.answer ||
                       "Partial verified academic information is available based on current institutional data.",
                   answer:
-                      fusionPayload.answer ||
+                      fusionPayload?.answer ||
                       "Partial verified academic information is available based on current institutional data.",
-                  confidence: Math.max(fusionPayload.confidence || 0.15, 0.15),
+                  confidence: Math.max(fusionPayload?.confidence || 0.15, 0.15),
                   route_used: route,
                   degraded: true
               };
@@ -3376,12 +3544,10 @@ Respond briefly, professionally, and conversationally as the AAST Advisor.`;
         // partial evidence — do not freeze it for the cache TTL. The central
         // guard also rejects payloads self-marked degraded; this additionally
         // covers partial hybrid failures that only degraded_services records.
-        if (degraded_services.length === 0) {
-          setGoldenCachedPayload(goldenMatch, fusionPayload);
-        } else {
-          incrementMetric("golden_cache_degraded_write_skipped");
-          console.log(`[GOLDEN_CACHE_WRITE] id=${goldenMatch.id} skipped=true reason=degraded_services:[${degraded_services.join(",")}]`);
-        }
+        cacheGoldenPayload(
+          fusionPayload,
+          degraded_services.length > 0 ? "DEGRADED_SUCCESS" : "FULL_SUCCESS"
+        );
         writeRoutingAudit({
           requestId,
           cid: conversationId,
@@ -3483,6 +3649,9 @@ Respond briefly, professionally, and conversationally as the AAST Advisor.`;
     }
   } catch (globalErr) {
     console.error(`[ORCHESTRATOR][${requestId}] Fatal Global Error:`, globalErr.message);
+    if (globalErr instanceof ConversationOwnershipError) {
+      return res.status(404).json({ error: "conversation_not_found", message: "Conversation not found" });
+    }
     return res.status(500).json(responseFormatter.formatErrorFallback("Fatal Internal Orchestrator Error", "ERROR", "UNKNOWN", requestId, {}));
   }
 }

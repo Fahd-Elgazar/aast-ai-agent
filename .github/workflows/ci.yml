@@ -34,6 +34,12 @@ jobs:
           cache: npm
           cache-dependency-path: aast-ai-agent-main/backend/package-lock.json
       - run: npm ci
+      - run: npm run test:health
+      - run: npm run test:kg
+      - run: npm run test:topology
+      - run: npm run test:auth
+      - run: npm run test:admin-proxy
+      - run: npm run test:golden-cache
       - run: npm run test:routing
 
   decision-api:
@@ -47,4 +53,5 @@ jobs:
         with:
           python-version: "3.11"
       - run: python -m pip install -r requirements-dev.txt
-      - run: python -m pytest -q
+      - name: Run hermetic migrated-database delivery gate
+        run: python scripts/run_delivery_checks.py

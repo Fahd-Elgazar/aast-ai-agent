@@ -1,0 +1,2765 @@
+{
+  "schema": 1,
+  "revision": "4a38cf5f9969e893cf04a39e1306a74cc8fbe939",
+  "method": "Published diagnostic index. The local audit retains the original traces and response text. Join by scenario and turn.",
+  "taxonomy": {
+    "F01": "data coverage",
+    "F02": "query understanding",
+    "F03": "context resolution",
+    "F04": "intent classification",
+    "F05": "routing",
+    "F06": "KG retrieval",
+    "F07": "vector retrieval",
+    "F08": "metadata or reranking",
+    "F09": "fusion",
+    "F10": "answer generation",
+    "F11": "memory",
+    "F12": "robotic response or formatting",
+    "F13": "abstention",
+    "F14": "infrastructure or model",
+    "F15": "multi-intent",
+    "F16": "citation attribution"
+  },
+  "root_causes": {
+    "R01": {
+      "categories": [
+        "F02",
+        "F03"
+      ],
+      "cause": "Context rewrite can change the current relation, subject or requested detail instead of replacing only the referent.",
+      "path": "aast-ai-agent-main/backend/services/conversationPriority.js:189–205,224–289,433–477",
+      "confidence": "strongly indicated",
+      "measure": "Assert explicit current relation, subject, time and requested output survive contextual resolution."
+    },
+    "R02": {
+      "categories": [
+        "F02",
+        "F03",
+        "F11"
+      ],
+      "cause": "Typed selections and short references do not always preserve a pending task, earlier entity or explicit topic correction. Exact mechanism varies by case.",
+      "path": "aast-ai-agent-main/backend/services/conversationPriority.js:189–208,329–378,433–482; conversationService.js:732–775",
+      "confidence": "strongly indicated",
+      "measure": "Test explicit corrections, ambiguous pairs, prior-topic return, policy scope and Arabic-English references with the same CID."
+    },
+    "R03": {
+      "categories": [
+        "F04",
+        "F05"
+      ],
+      "cause": "Lexical route/intent precedence or broad golden/meta matches select the wrong capability despite service health.",
+      "path": "aast-ai-agent-main/backend/orchestrator.js:794–1025,1083–1184,1298–1313; config/goldenPathRegistry.js:436,558; services/conversationMetaIntent.js:215,312",
+      "confidence": "strongly indicated",
+      "measure": "Record route candidates, override reason and result. Assert course recommendation does not become program ranking."
+    },
+    "R04": {
+      "categories": [
+        "F06",
+        "F07",
+        "F08",
+        "F09"
+      ],
+      "cause": "Retrieval or fusion returns evidence for a neighboring topic or the wrong evidence channel. Candidate-level details are incomplete for most turns.",
+      "path": "aast-ai-agent-main/backend/orchestrator.js:2279–2445,2590–2653,2933–3013; services/ragService.js:610,1287–1374; services/fusionService.js:56,438–453",
+      "confidence": "strongly indicated",
+      "measure": "Separate route error, no relevant candidate, filter rejection and misplaced final facts. Preserve source applicability."
+    },
+    "R05": {
+      "categories": [
+        "F13",
+        "F16"
+      ],
+      "cause": "Visible source IDs and a conversational explanation of what supports the current or previous claim are inconsistent across return paths.",
+      "path": "aast-ai-agent-main/backend/orchestrator.js:2046–2090,2371–2445,3375–3444; services/responseFormatter.js; services/groundingVerificationService.js:346,414",
+      "confidence": "strongly indicated",
+      "measure": "Require direct and hybrid outputs to preserve attribution and useful missing-evidence statements. Do not demand fake citations."
+    },
+    "R06": {
+      "categories": [
+        "F10",
+        "F12",
+        "F13"
+      ],
+      "cause": "Repeated templates and conversation-meta routing substitute reciting, a generic refusal or an irrelevant prompt for a requested explanation or rephrase.",
+      "path": "aast-ai-agent-main/backend/services/conversationMetaIntent.js:215,312,542; services/conversationalHumanizer.js:95–106,373–444; services/responseFormatter.js:50,130",
+      "confidence": "strongly indicated",
+      "measure": "Evaluate continuation, concise rephrasing, context-specific clarification and repeated framing with blinded human rubric."
+    },
+    "R07": {
+      "categories": [
+        "F14",
+        "F06"
+      ],
+      "cause": "Specific graph waits or empty retrieval can approach the client deadline or degrade to general passages. A long request alone does not prove unavailability.",
+      "path": "aast-ai-agent-main/backend/orchestrator.js:493–510,2244–2256,2453–2467,2590–2617; services/neo4jcontext.js:3554",
+      "confidence": "strongly indicated",
+      "measure": "Capture stage latency, timeout versus empty result, effective configured deadlines and cancellation. Test isolated service degradation."
+    },
+    "R09": {
+      "categories": [
+        "F15",
+        "F09",
+        "F16"
+      ],
+      "cause": "Supported decomposition rules miss a multi-entity intent or only one part retrieves usable evidence. Different subtypes may have different causes.",
+      "path": "aast-ai-agent-main/backend/services/conversationPriority.js:534–566; orchestrator.js:2279–2445; services/neo4jcontext.js:1102",
+      "confidence": "strongly indicated",
+      "measure": "Retain one subject/relation/week bundle per sub-intent with per-part evidence, coverage and explicit missing parts."
+    }
+  },
+  "turn_dispositions": [
+    {
+      "turn_key": "S-A01/1",
+      "disposition": "sampled behavior consistent with expected",
+      "failure_id": null
+    },
+    {
+      "turn_key": "S-A01/2",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-A01-02"
+    },
+    {
+      "turn_key": "S-A01/3",
+      "disposition": "sampled behavior consistent with expected",
+      "failure_id": null
+    },
+    {
+      "turn_key": "S-A01/4",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-A01-04"
+    },
+    {
+      "turn_key": "S-A01/5",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-A01-05"
+    },
+    {
+      "turn_key": "S-A02/1",
+      "disposition": "sampled behavior consistent with expected",
+      "failure_id": null
+    },
+    {
+      "turn_key": "S-A02/2",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-A02-02"
+    },
+    {
+      "turn_key": "S-A02/3",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-A02-03"
+    },
+    {
+      "turn_key": "S-A02/4",
+      "disposition": "unresolved judgment",
+      "failure_id": null
+    },
+    {
+      "turn_key": "S-A02/5",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-A02-05"
+    },
+    {
+      "turn_key": "S-A03/1",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-A03-01"
+    },
+    {
+      "turn_key": "S-A03/2",
+      "disposition": "sampled behavior consistent with expected",
+      "failure_id": null
+    },
+    {
+      "turn_key": "S-A03/3",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-A03-03"
+    },
+    {
+      "turn_key": "S-A03/4",
+      "disposition": "sampled behavior consistent with expected",
+      "failure_id": null
+    },
+    {
+      "turn_key": "S-A03/5",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-A03-05"
+    },
+    {
+      "turn_key": "S-A04/1",
+      "disposition": "sampled behavior consistent with expected",
+      "failure_id": null
+    },
+    {
+      "turn_key": "S-A04/2",
+      "disposition": "sampled behavior consistent with expected",
+      "failure_id": null
+    },
+    {
+      "turn_key": "S-A04/3",
+      "disposition": "sampled behavior consistent with expected",
+      "failure_id": null
+    },
+    {
+      "turn_key": "S-A04/4",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-A04-04"
+    },
+    {
+      "turn_key": "S-A04/5",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-A04-05"
+    },
+    {
+      "turn_key": "S-B01/1",
+      "disposition": "sampled behavior consistent with expected",
+      "failure_id": null
+    },
+    {
+      "turn_key": "S-B01/2",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-B01-02"
+    },
+    {
+      "turn_key": "S-B01/3",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-B01-03"
+    },
+    {
+      "turn_key": "S-B01/4",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-B01-04"
+    },
+    {
+      "turn_key": "S-B01/5",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-B01-05"
+    },
+    {
+      "turn_key": "S-B02/1",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-B02-01"
+    },
+    {
+      "turn_key": "S-B02/2",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-B02-02"
+    },
+    {
+      "turn_key": "S-B02/3",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-B02-03"
+    },
+    {
+      "turn_key": "S-B02/4",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-B02-04"
+    },
+    {
+      "turn_key": "S-B02/5",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-B02-05"
+    },
+    {
+      "turn_key": "S-B03/1",
+      "disposition": "sampled behavior consistent with expected",
+      "failure_id": null
+    },
+    {
+      "turn_key": "S-B03/2",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-B03-02"
+    },
+    {
+      "turn_key": "S-B03/3",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-B03-03"
+    },
+    {
+      "turn_key": "S-B03/4",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-B03-04"
+    },
+    {
+      "turn_key": "S-B03/5",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-B03-05"
+    },
+    {
+      "turn_key": "S-B04/1",
+      "disposition": "sampled behavior consistent with expected",
+      "failure_id": null
+    },
+    {
+      "turn_key": "S-B04/2",
+      "disposition": "sampled behavior consistent with expected",
+      "failure_id": null
+    },
+    {
+      "turn_key": "S-B04/3",
+      "disposition": "sampled behavior consistent with expected",
+      "failure_id": null
+    },
+    {
+      "turn_key": "S-B04/4",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-B04-04"
+    },
+    {
+      "turn_key": "S-B04/5",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-B04-05"
+    },
+    {
+      "turn_key": "S-C01/1",
+      "disposition": "sampled behavior consistent with expected",
+      "failure_id": null
+    },
+    {
+      "turn_key": "S-C01/2",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-C01-02"
+    },
+    {
+      "turn_key": "S-C01/3",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-C01-03"
+    },
+    {
+      "turn_key": "S-C01/4",
+      "disposition": "sampled behavior consistent with expected",
+      "failure_id": null
+    },
+    {
+      "turn_key": "S-C01/5",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-C01-05"
+    },
+    {
+      "turn_key": "S-C02/1",
+      "disposition": "sampled behavior consistent with expected",
+      "failure_id": null
+    },
+    {
+      "turn_key": "S-C02/2",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-C02-02"
+    },
+    {
+      "turn_key": "S-C02/3",
+      "disposition": "sampled behavior consistent with expected",
+      "failure_id": null
+    },
+    {
+      "turn_key": "S-C02/4",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-C02-04"
+    },
+    {
+      "turn_key": "S-C02/5",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-C02-05"
+    },
+    {
+      "turn_key": "S-C03/1",
+      "disposition": "sampled behavior consistent with expected",
+      "failure_id": null
+    },
+    {
+      "turn_key": "S-C03/2",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-C03-02"
+    },
+    {
+      "turn_key": "S-C03/3",
+      "disposition": "sampled behavior consistent with expected",
+      "failure_id": null
+    },
+    {
+      "turn_key": "S-C03/4",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-C03-04"
+    },
+    {
+      "turn_key": "S-C03/5",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-C03-05"
+    },
+    {
+      "turn_key": "S-C04/1",
+      "disposition": "sampled behavior consistent with expected",
+      "failure_id": null
+    },
+    {
+      "turn_key": "S-C04/2",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-C04-02"
+    },
+    {
+      "turn_key": "S-C04/3",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-C04-03"
+    },
+    {
+      "turn_key": "S-C04/4",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-C04-04"
+    },
+    {
+      "turn_key": "S-C04/5",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-C04-05"
+    },
+    {
+      "turn_key": "S-D01/1",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-D01-01"
+    },
+    {
+      "turn_key": "S-D01/2",
+      "disposition": "sampled behavior consistent with expected",
+      "failure_id": null
+    },
+    {
+      "turn_key": "S-D01/3",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-D01-03"
+    },
+    {
+      "turn_key": "S-D01/4",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-D01-04"
+    },
+    {
+      "turn_key": "S-D01/5",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-D01-05"
+    },
+    {
+      "turn_key": "S-D02/1",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-D02-01"
+    },
+    {
+      "turn_key": "S-D02/2",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-D02-02"
+    },
+    {
+      "turn_key": "S-D02/3",
+      "disposition": "appropriate evidence limitation",
+      "failure_id": null
+    },
+    {
+      "turn_key": "S-D02/4",
+      "disposition": "appropriate evidence limitation",
+      "failure_id": null
+    },
+    {
+      "turn_key": "S-D02/5",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-D02-05"
+    },
+    {
+      "turn_key": "S-D03/1",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-D03-01"
+    },
+    {
+      "turn_key": "S-D03/2",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-D03-02"
+    },
+    {
+      "turn_key": "S-D03/3",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-D03-03"
+    },
+    {
+      "turn_key": "S-D03/4",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-D03-04"
+    },
+    {
+      "turn_key": "S-D03/5",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-D03-05"
+    },
+    {
+      "turn_key": "S-D04/1",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-D04-01"
+    },
+    {
+      "turn_key": "S-D04/2",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-D04-02"
+    },
+    {
+      "turn_key": "S-D04/3",
+      "disposition": "appropriate evidence limitation",
+      "failure_id": null
+    },
+    {
+      "turn_key": "S-D04/4",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-D04-04"
+    },
+    {
+      "turn_key": "S-D04/5",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-D04-05"
+    },
+    {
+      "turn_key": "S-D05/1",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-D05-01"
+    },
+    {
+      "turn_key": "S-D05/2",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-D05-02"
+    },
+    {
+      "turn_key": "S-D05/3",
+      "disposition": "appropriate evidence limitation",
+      "failure_id": null
+    },
+    {
+      "turn_key": "S-D05/4",
+      "disposition": "appropriate evidence limitation",
+      "failure_id": null
+    },
+    {
+      "turn_key": "S-D05/5",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-D05-05"
+    },
+    {
+      "turn_key": "S-E01/1",
+      "disposition": "sampled behavior consistent with expected",
+      "failure_id": null
+    },
+    {
+      "turn_key": "S-E01/2",
+      "disposition": "sampled behavior consistent with expected",
+      "failure_id": null
+    },
+    {
+      "turn_key": "S-E01/3",
+      "disposition": "sampled behavior consistent with expected",
+      "failure_id": null
+    },
+    {
+      "turn_key": "S-E01/4",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-E01-04"
+    },
+    {
+      "turn_key": "S-E01/5",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-E01-05"
+    },
+    {
+      "turn_key": "S-E02/1",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-E02-01"
+    },
+    {
+      "turn_key": "S-E02/2",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-E02-02"
+    },
+    {
+      "turn_key": "S-E02/3",
+      "disposition": "sampled behavior consistent with expected",
+      "failure_id": null
+    },
+    {
+      "turn_key": "S-E02/4",
+      "disposition": "sampled behavior consistent with expected",
+      "failure_id": null
+    },
+    {
+      "turn_key": "S-E02/5",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-E02-05"
+    },
+    {
+      "turn_key": "S-E03/1",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-E03-01"
+    },
+    {
+      "turn_key": "S-E03/2",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-E03-02"
+    },
+    {
+      "turn_key": "S-E03/3",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-E03-03"
+    },
+    {
+      "turn_key": "S-E03/4",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-E03-04"
+    },
+    {
+      "turn_key": "S-E03/5",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-E03-05"
+    },
+    {
+      "turn_key": "S-E04/1",
+      "disposition": "sampled behavior consistent with expected",
+      "failure_id": null
+    },
+    {
+      "turn_key": "S-E04/2",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-E04-02"
+    },
+    {
+      "turn_key": "S-E04/3",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-E04-03"
+    },
+    {
+      "turn_key": "S-E04/4",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-E04-04"
+    },
+    {
+      "turn_key": "S-E04/5",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-E04-05"
+    },
+    {
+      "turn_key": "S-F01/1",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-F01-01"
+    },
+    {
+      "turn_key": "S-F01/2",
+      "disposition": "sampled behavior consistent with expected",
+      "failure_id": null
+    },
+    {
+      "turn_key": "S-F01/3",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-F01-03"
+    },
+    {
+      "turn_key": "S-F01/4",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-F01-04"
+    },
+    {
+      "turn_key": "S-F01/5",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-F01-05"
+    },
+    {
+      "turn_key": "S-F02/1",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-F02-01"
+    },
+    {
+      "turn_key": "S-F02/2",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-F02-02"
+    },
+    {
+      "turn_key": "S-F02/3",
+      "disposition": "sampled behavior consistent with expected",
+      "failure_id": null
+    },
+    {
+      "turn_key": "S-F02/4",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-F02-04"
+    },
+    {
+      "turn_key": "S-F02/5",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-F02-05"
+    },
+    {
+      "turn_key": "S-F03/1",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-F03-01"
+    },
+    {
+      "turn_key": "S-F03/2",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-F03-02"
+    },
+    {
+      "turn_key": "S-F03/3",
+      "disposition": "sampled behavior consistent with expected",
+      "failure_id": null
+    },
+    {
+      "turn_key": "S-F03/4",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-F03-04"
+    },
+    {
+      "turn_key": "S-F03/5",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-F03-05"
+    },
+    {
+      "turn_key": "S-F04/1",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-F04-01"
+    },
+    {
+      "turn_key": "S-F04/2",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-F04-02"
+    },
+    {
+      "turn_key": "S-F04/3",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-F04-03"
+    },
+    {
+      "turn_key": "S-F04/4",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-F04-04"
+    },
+    {
+      "turn_key": "S-F04/5",
+      "disposition": "failure or partial failure against task",
+      "failure_id": "DO-F04-05"
+    }
+  ],
+  "failures": [
+    {
+      "id": "DO-A01-02",
+      "scenario": "S-A01",
+      "turn": 2,
+      "expected": "Compare their evidenced focus",
+      "route": "LLM",
+      "pipeline_point": [
+        "R02"
+      ],
+      "categories": [
+        "F02",
+        "F03"
+      ],
+      "root_cause": "Pure resolver in all three revisions reports detected=false for ‘which of the two’. Runtime selected fallback without evidence.",
+      "severity": "medium",
+      "fix": "Test explicit corrections, ambiguous pairs, prior-topic return, policy scope and Arabic-English references with the same CID.",
+      "confidence": "confirmed",
+      "failure_stage_observed": [
+        "query understanding",
+        "context resolution"
+      ],
+      "stage_attribution_limit": "The effect on this turn is visible. Reference ranking and persistence/state selection may overlap where no state snapshot is available."
+    },
+    {
+      "id": "DO-A01-04",
+      "scenario": "S-A01",
+      "turn": 4,
+      "expected": "Use the other program or clarify",
+      "route": "KG_DIRECT",
+      "pipeline_point": [
+        "R01"
+      ],
+      "categories": [
+        "F02",
+        "F03"
+      ],
+      "root_cause": "Live resolvedQuery changed include Machine Learning to career query. Pure resolver on July, August and W01 does the same with lastTopic=careers.",
+      "severity": "high",
+      "fix": "Assert explicit current relation, subject, time and requested output survive contextual resolution.",
+      "confidence": "confirmed",
+      "failure_stage_observed": [
+        "query understanding",
+        "context resolution"
+      ]
+    },
+    {
+      "id": "DO-A01-05",
+      "scenario": "S-A01",
+      "turn": 5,
+      "expected": "Summarize only verified differences",
+      "route": "LLM",
+      "pipeline_point": [
+        "R06"
+      ],
+      "categories": [
+        "F12",
+        "F13"
+      ],
+      "root_cause": "Repeated templates and conversation-meta routing substitute reciting, a generic refusal or an irrelevant prompt for a requested explanation or rephrase.",
+      "severity": "medium",
+      "fix": "Evaluate continuation, concise rephrasing, context-specific clarification and repeated framing with blinded human rubric.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "robotic response or formatting",
+        "abstention"
+      ]
+    },
+    {
+      "id": "DO-A02-02",
+      "scenario": "S-A02",
+      "turn": 2,
+      "expected": "Resolve college",
+      "route": "KG",
+      "pipeline_point": [
+        "R04",
+        "R07"
+      ],
+      "categories": [
+        "F06",
+        "F13"
+      ],
+      "root_cause": "Trace shows KG_ONLY/PROGRAM with zero matching results and RAG escalation with zero passages. No follow-up normalization event was recorded.",
+      "severity": "high",
+      "fix": "Separate route error, no relevant candidate, filter rejection and misplaced final facts. Preserve source applicability. Capture stage latency, timeout versus empty result, effective configured deadlines and cancellation. Test isolated service degradation.",
+      "confidence": "confirmed",
+      "failure_stage_observed": [
+        "KG retrieval",
+        "abstention"
+      ],
+      "stage_attribution_limit": "The surfaced evidence can be judged against the requested facts. The exact candidate recall, rerank and merge failure stage is unresolved unless separately corroborated by stage evidence."
+    },
+    {
+      "id": "DO-A02-03",
+      "scenario": "S-A02",
+      "turn": 3,
+      "expected": "Resolve the degree",
+      "route": "LLM",
+      "pipeline_point": [
+        "R04"
+      ],
+      "categories": [
+        "F02",
+        "F10"
+      ],
+      "root_cause": "Retrieval or fusion returns evidence for a neighboring topic or the wrong evidence channel. Candidate-level details are incomplete for most turns.",
+      "severity": "high",
+      "fix": "Separate route error, no relevant candidate, filter rejection and misplaced final facts. Preserve source applicability.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "query understanding",
+        "answer generation"
+      ],
+      "stage_attribution_limit": "The surfaced evidence can be judged against the requested facts. The exact candidate recall, rerank and merge failure stage is unresolved unless separately corroborated by stage evidence."
+    },
+    {
+      "id": "DO-A02-05",
+      "scenario": "S-A02",
+      "turn": 5,
+      "expected": "Name a supported facility",
+      "route": "CONVERSATION",
+      "pipeline_point": [
+        "R06"
+      ],
+      "categories": [
+        "F12"
+      ],
+      "root_cause": "Repeated templates and conversation-meta routing substitute reciting, a generic refusal or an irrelevant prompt for a requested explanation or rephrase.",
+      "severity": "medium",
+      "fix": "Evaluate continuation, concise rephrasing, context-specific clarification and repeated framing with blinded human rubric.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "robotic response or formatting"
+      ]
+    },
+    {
+      "id": "DO-A03-01",
+      "scenario": "S-A03",
+      "turn": 1,
+      "expected": "Ground options and keep tone simple",
+      "route": "KG_DIRECT",
+      "pipeline_point": [
+        "R06"
+      ],
+      "categories": [
+        "F12",
+        "F13"
+      ],
+      "root_cause": "Repeated templates and conversation-meta routing substitute reciting, a generic refusal or an irrelevant prompt for a requested explanation or rephrase.",
+      "severity": "medium",
+      "fix": "Evaluate continuation, concise rephrasing, context-specific clarification and repeated framing with blinded human rubric.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "robotic response or formatting",
+        "abstention"
+      ]
+    },
+    {
+      "id": "DO-A03-03",
+      "scenario": "S-A03",
+      "turn": 3,
+      "expected": "Resolve relevant program",
+      "route": "KG_DIRECT",
+      "pipeline_point": [
+        "R04"
+      ],
+      "categories": [
+        "F06"
+      ],
+      "root_cause": "Retrieval or fusion returns evidence for a neighboring topic or the wrong evidence channel. Candidate-level details are incomplete for most turns.",
+      "severity": "high",
+      "fix": "Separate route error, no relevant candidate, filter rejection and misplaced final facts. Preserve source applicability.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "KG retrieval"
+      ],
+      "stage_attribution_limit": "The surfaced evidence can be judged against the requested facts. The exact candidate recall, rerank and merge failure stage is unresolved unless separately corroborated by stage evidence."
+    },
+    {
+      "id": "DO-A03-05",
+      "scenario": "S-A03",
+      "turn": 5,
+      "expected": "Explain conceptually without inventing requirements",
+      "route": "LLM",
+      "pipeline_point": [
+        "R04"
+      ],
+      "categories": [
+        "F10"
+      ],
+      "root_cause": "Retrieval or fusion returns evidence for a neighboring topic or the wrong evidence channel. Candidate-level details are incomplete for most turns.",
+      "severity": "high",
+      "fix": "Separate route error, no relevant candidate, filter rejection and misplaced final facts. Preserve source applicability.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "answer generation"
+      ],
+      "stage_attribution_limit": "The surfaced evidence can be judged against the requested facts. The exact candidate recall, rerank and merge failure stage is unresolved unless separately corroborated by stage evidence."
+    },
+    {
+      "id": "DO-A04-04",
+      "scenario": "S-A04",
+      "turn": 4,
+      "expected": "Restore the NLP teacher",
+      "route": "KG_DIRECT",
+      "pipeline_point": [
+        "R02",
+        "R04"
+      ],
+      "categories": [
+        "F02",
+        "F03",
+        "F06"
+      ],
+      "root_cause": "Typed selections and short references do not always preserve a pending task, earlier entity or explicit topic correction. Exact mechanism varies by case. Retrieval or fusion returns evidence for a neighboring topic or the wrong evidence channel. Candidate-level details are incomplete for most turns.",
+      "severity": "high",
+      "fix": "Test explicit corrections, ambiguous pairs, prior-topic return, policy scope and Arabic-English references with the same CID. Separate route error, no relevant candidate, filter rejection and misplaced final facts. Preserve source applicability.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "query understanding",
+        "context resolution",
+        "KG retrieval"
+      ],
+      "stage_attribution_limit": "The surfaced evidence can be judged against the requested facts. The exact candidate recall, rerank and merge failure stage is unresolved unless separately corroborated by stage evidence."
+    },
+    {
+      "id": "DO-A04-05",
+      "scenario": "S-A04",
+      "turn": 5,
+      "expected": "Expose supporting edge or acknowledge limitation",
+      "route": "LLM",
+      "pipeline_point": [
+        "R05"
+      ],
+      "categories": [
+        "F16"
+      ],
+      "root_cause": "Visible source IDs and a conversational explanation of what supports the current or previous claim are inconsistent across return paths.",
+      "severity": "medium",
+      "fix": "Require direct and hybrid outputs to preserve attribution and useful missing-evidence statements. Do not demand fake citations.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "citation attribution"
+      ]
+    },
+    {
+      "id": "DO-B01-02",
+      "scenario": "S-B01",
+      "turn": 2,
+      "expected": "Explain their preparation value",
+      "route": "KG_DIRECT",
+      "pipeline_point": [
+        "R06"
+      ],
+      "categories": [
+        "F12"
+      ],
+      "root_cause": "Repeated templates and conversation-meta routing substitute reciting, a generic refusal or an irrelevant prompt for a requested explanation or rephrase.",
+      "severity": "medium",
+      "fix": "Evaluate continuation, concise rephrasing, context-specific clarification and repeated framing with blinded human rubric.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "robotic response or formatting"
+      ]
+    },
+    {
+      "id": "DO-B01-03",
+      "scenario": "S-B01",
+      "turn": 3,
+      "expected": "Honor displayed ordering or clarify",
+      "route": "KG_DIRECT",
+      "pipeline_point": [
+        "R02"
+      ],
+      "categories": [
+        "F02",
+        "F03"
+      ],
+      "root_cause": "Typed selections and short references do not always preserve a pending task, earlier entity or explicit topic correction. Exact mechanism varies by case.",
+      "severity": "medium",
+      "fix": "Test explicit corrections, ambiguous pairs, prior-topic return, policy scope and Arabic-English references with the same CID.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "query understanding",
+        "context resolution"
+      ],
+      "stage_attribution_limit": "The effect on this turn is visible. Reference ranking and persistence/state selection may overlap where no state snapshot is available."
+    },
+    {
+      "id": "DO-B01-04",
+      "scenario": "S-B01",
+      "turn": 4,
+      "expected": "Label example as illustrative",
+      "route": "LLM",
+      "pipeline_point": [
+        "R06"
+      ],
+      "categories": [
+        "F12",
+        "F13"
+      ],
+      "root_cause": "Repeated templates and conversation-meta routing substitute reciting, a generic refusal or an irrelevant prompt for a requested explanation or rephrase.",
+      "severity": "medium",
+      "fix": "Evaluate continuation, concise rephrasing, context-specific clarification and repeated framing with blinded human rubric.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "robotic response or formatting",
+        "abstention"
+      ]
+    },
+    {
+      "id": "DO-B01-05",
+      "scenario": "S-B01",
+      "turn": 5,
+      "expected": "Identify supported and missing parts",
+      "route": "LLM",
+      "pipeline_point": [
+        "R06"
+      ],
+      "categories": [
+        "F12",
+        "F13"
+      ],
+      "root_cause": "Repeated templates and conversation-meta routing substitute reciting, a generic refusal or an irrelevant prompt for a requested explanation or rephrase.",
+      "severity": "medium",
+      "fix": "Evaluate continuation, concise rephrasing, context-specific clarification and repeated framing with blinded human rubric.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "robotic response or formatting",
+        "abstention"
+      ]
+    },
+    {
+      "id": "DO-B02-01",
+      "scenario": "S-B02",
+      "turn": 1,
+      "expected": "Keep two courses distinct",
+      "route": "KG_DIRECT",
+      "pipeline_point": [
+        "R09"
+      ],
+      "categories": [
+        "F15"
+      ],
+      "root_cause": "Supported decomposition rules miss a multi-entity intent or only one part retrieves usable evidence. Different subtypes may have different causes.",
+      "severity": "high",
+      "fix": "Retain one subject/relation/week bundle per sub-intent with per-part evidence, coverage and explicit missing parts.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "multi-intent"
+      ]
+    },
+    {
+      "id": "DO-B02-02",
+      "scenario": "S-B02",
+      "turn": 2,
+      "expected": "Clarify if both are plausible",
+      "route": "LLM",
+      "pipeline_point": [
+        "R02",
+        "R07"
+      ],
+      "categories": [
+        "F03",
+        "F06",
+        "F14"
+      ],
+      "root_cause": "Trace resolved to NLP, hit 2.4 s KG timeout and escalated to one generic RAG rule. Generic registration policy does not resolve a specific prerequisite.",
+      "severity": "medium",
+      "fix": "Test explicit corrections, ambiguous pairs, prior-topic return, policy scope and Arabic-English references with the same CID. Capture stage latency, timeout versus empty result, effective configured deadlines and cancellation. Test isolated service degradation.",
+      "confidence": "confirmed",
+      "failure_stage_observed": [
+        "context resolution",
+        "KG retrieval",
+        "infrastructure or model"
+      ],
+      "stage_attribution_limit": "The effect on this turn is visible. Reference ranking and persistence/state selection may overlap where no state snapshot is available."
+    },
+    {
+      "id": "DO-B02-03",
+      "scenario": "S-B02",
+      "turn": 3,
+      "expected": "Apply clarification to pending prerequisite request",
+      "route": "KG_DIRECT",
+      "pipeline_point": [
+        "R02"
+      ],
+      "categories": [
+        "F02",
+        "F03"
+      ],
+      "root_cause": "Typed selections and short references do not always preserve a pending task, earlier entity or explicit topic correction. Exact mechanism varies by case.",
+      "severity": "medium",
+      "fix": "Test explicit corrections, ambiguous pairs, prior-topic return, policy scope and Arabic-English references with the same CID.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "query understanding",
+        "context resolution"
+      ],
+      "stage_attribution_limit": "The effect on this turn is visible. Reference ranking and persistence/state selection may overlap where no state snapshot is available."
+    },
+    {
+      "id": "DO-B02-04",
+      "scenario": "S-B02",
+      "turn": 4,
+      "expected": "Transfer only the requested relation",
+      "route": "KG_DIRECT",
+      "pipeline_point": [
+        "R02"
+      ],
+      "categories": [
+        "F02",
+        "F03"
+      ],
+      "root_cause": "Typed selections and short references do not always preserve a pending task, earlier entity or explicit topic correction. Exact mechanism varies by case.",
+      "severity": "medium",
+      "fix": "Test explicit corrections, ambiguous pairs, prior-topic return, policy scope and Arabic-English references with the same CID.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "query understanding",
+        "context resolution"
+      ],
+      "stage_attribution_limit": "The effect on this turn is visible. Reference ranking and persistence/state selection may overlap where no state snapshot is available."
+    },
+    {
+      "id": "DO-B02-05",
+      "scenario": "S-B02",
+      "turn": 5,
+      "expected": "Attribute or abstain",
+      "route": "LLM",
+      "pipeline_point": [
+        "R05"
+      ],
+      "categories": [
+        "F16"
+      ],
+      "root_cause": "Visible source IDs and a conversational explanation of what supports the current or previous claim are inconsistent across return paths.",
+      "severity": "medium",
+      "fix": "Require direct and hybrid outputs to preserve attribution and useful missing-evidence statements. Do not demand fake citations.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "citation attribution"
+      ]
+    },
+    {
+      "id": "DO-B03-02",
+      "scenario": "S-B03",
+      "turn": 2,
+      "expected": "Preserve fact and change format",
+      "route": "LLM",
+      "pipeline_point": [
+        "R06"
+      ],
+      "categories": [
+        "F12",
+        "F13"
+      ],
+      "root_cause": "Repeated templates and conversation-meta routing substitute reciting, a generic refusal or an irrelevant prompt for a requested explanation or rephrase.",
+      "severity": "medium",
+      "fix": "Evaluate continuation, concise rephrasing, context-specific clarification and repeated framing with blinded human rubric.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "robotic response or formatting",
+        "abstention"
+      ]
+    },
+    {
+      "id": "DO-B03-03",
+      "scenario": "S-B03",
+      "turn": 3,
+      "expected": "Keep concept in scope",
+      "route": "LLM",
+      "pipeline_point": [
+        "R06"
+      ],
+      "categories": [
+        "F12",
+        "F13"
+      ],
+      "root_cause": "Repeated templates and conversation-meta routing substitute reciting, a generic refusal or an irrelevant prompt for a requested explanation or rephrase.",
+      "severity": "medium",
+      "fix": "Evaluate continuation, concise rephrasing, context-specific clarification and repeated framing with blinded human rubric.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "robotic response or formatting",
+        "abstention"
+      ]
+    },
+    {
+      "id": "DO-B03-04",
+      "scenario": "S-B03",
+      "turn": 4,
+      "expected": "Use same course, change week",
+      "route": "KG_DIRECT",
+      "pipeline_point": [
+        "R02"
+      ],
+      "categories": [
+        "F02",
+        "F03"
+      ],
+      "root_cause": "Typed selections and short references do not always preserve a pending task, earlier entity or explicit topic correction. Exact mechanism varies by case.",
+      "severity": "medium",
+      "fix": "Test explicit corrections, ambiguous pairs, prior-topic return, policy scope and Arabic-English references with the same CID.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "query understanding",
+        "context resolution"
+      ],
+      "stage_attribution_limit": "The effect on this turn is visible. Reference ranking and persistence/state selection may overlap where no state snapshot is available."
+    },
+    {
+      "id": "DO-B03-05",
+      "scenario": "S-B03",
+      "turn": 5,
+      "expected": "Identify supported and missing parts",
+      "route": "LLM",
+      "pipeline_point": [
+        "R06"
+      ],
+      "categories": [
+        "F12",
+        "F13"
+      ],
+      "root_cause": "Repeated templates and conversation-meta routing substitute reciting, a generic refusal or an irrelevant prompt for a requested explanation or rephrase.",
+      "severity": "medium",
+      "fix": "Evaluate continuation, concise rephrasing, context-specific clarification and repeated framing with blinded human rubric.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "robotic response or formatting",
+        "abstention"
+      ]
+    },
+    {
+      "id": "DO-B04-04",
+      "scenario": "S-B04",
+      "turn": 4,
+      "expected": "Resolve week 5 in corrected course",
+      "route": "KG_DIRECT",
+      "pipeline_point": [
+        "R01"
+      ],
+      "categories": [
+        "F02",
+        "F03"
+      ],
+      "root_cause": "The router received a new course sequence question over NLP, not the asked week advance for Cognitive Computing.",
+      "severity": "high",
+      "fix": "Assert explicit current relation, subject, time and requested output survive contextual resolution.",
+      "confidence": "confirmed",
+      "failure_stage_observed": [
+        "query understanding",
+        "context resolution"
+      ]
+    },
+    {
+      "id": "DO-B04-05",
+      "scenario": "S-B04",
+      "turn": 5,
+      "expected": "Provide correct claim-level evidence",
+      "route": "KG_DIRECT",
+      "pipeline_point": [
+        "R05"
+      ],
+      "categories": [
+        "F16"
+      ],
+      "root_cause": "Visible source IDs and a conversational explanation of what supports the current or previous claim are inconsistent across return paths.",
+      "severity": "medium",
+      "fix": "Require direct and hybrid outputs to preserve attribution and useful missing-evidence statements. Do not demand fake citations.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "citation attribution"
+      ]
+    },
+    {
+      "id": "DO-C01-02",
+      "scenario": "S-C01",
+      "turn": 2,
+      "expected": "Inherit career relation while switching subject",
+      "route": "KG_DIRECT",
+      "pipeline_point": [
+        "R02"
+      ],
+      "categories": [
+        "F02",
+        "F03"
+      ],
+      "root_cause": "Typed selections and short references do not always preserve a pending task, earlier entity or explicit topic correction. Exact mechanism varies by case.",
+      "severity": "medium",
+      "fix": "Test explicit corrections, ambiguous pairs, prior-topic return, policy scope and Arabic-English references with the same CID.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "query understanding",
+        "context resolution"
+      ],
+      "stage_attribution_limit": "The effect on this turn is visible. Reference ranking and persistence/state selection may overlap where no state snapshot is available."
+    },
+    {
+      "id": "DO-C01-03",
+      "scenario": "S-C01",
+      "turn": 3,
+      "expected": "Resolve first program or clarify",
+      "route": "KG_DIRECT",
+      "pipeline_point": [
+        "R02"
+      ],
+      "categories": [
+        "F02",
+        "F03"
+      ],
+      "root_cause": "Typed selections and short references do not always preserve a pending task, earlier entity or explicit topic correction. Exact mechanism varies by case.",
+      "severity": "medium",
+      "fix": "Test explicit corrections, ambiguous pairs, prior-topic return, policy scope and Arabic-English references with the same CID.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "query understanding",
+        "context resolution"
+      ],
+      "stage_attribution_limit": "The effect on this turn is visible. Reference ranking and persistence/state selection may overlap where no state snapshot is available."
+    },
+    {
+      "id": "DO-C01-05",
+      "scenario": "S-C01",
+      "turn": 5,
+      "expected": "Give conditional next step",
+      "route": "KG",
+      "pipeline_point": [
+        "R06"
+      ],
+      "categories": [
+        "F12",
+        "F13"
+      ],
+      "root_cause": "Repeated templates and conversation-meta routing substitute reciting, a generic refusal or an irrelevant prompt for a requested explanation or rephrase.",
+      "severity": "medium",
+      "fix": "Evaluate continuation, concise rephrasing, context-specific clarification and repeated framing with blinded human rubric.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "robotic response or formatting",
+        "abstention"
+      ]
+    },
+    {
+      "id": "DO-C02-02",
+      "scenario": "S-C02",
+      "turn": 2,
+      "expected": "Distinguish requirement",
+      "route": "HYBRID",
+      "pipeline_point": [
+        "R04"
+      ],
+      "categories": [
+        "F02",
+        "F09"
+      ],
+      "root_cause": "Retrieval or fusion returns evidence for a neighboring topic or the wrong evidence channel. Candidate-level details are incomplete for most turns.",
+      "severity": "high",
+      "fix": "Separate route error, no relevant candidate, filter rejection and misplaced final facts. Preserve source applicability.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "query understanding",
+        "fusion"
+      ],
+      "stage_attribution_limit": "The surfaced evidence can be judged against the requested facts. The exact candidate recall, rerank and merge failure stage is unresolved unless separately corroborated by stage evidence."
+    },
+    {
+      "id": "DO-C02-04",
+      "scenario": "S-C02",
+      "turn": 4,
+      "expected": "Explain relation without inventing eligibility",
+      "route": "KG_DIRECT",
+      "pipeline_point": [
+        "R04"
+      ],
+      "categories": [
+        "F06"
+      ],
+      "root_cause": "Retrieval or fusion returns evidence for a neighboring topic or the wrong evidence channel. Candidate-level details are incomplete for most turns.",
+      "severity": "high",
+      "fix": "Separate route error, no relevant candidate, filter rejection and misplaced final facts. Preserve source applicability.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "KG retrieval"
+      ],
+      "stage_attribution_limit": "The surfaced evidence can be judged against the requested facts. The exact candidate recall, rerank and merge failure stage is unresolved unless separately corroborated by stage evidence."
+    },
+    {
+      "id": "DO-C02-05",
+      "scenario": "S-C02",
+      "turn": 5,
+      "expected": "Name traced relation",
+      "route": "LLM",
+      "pipeline_point": [
+        "R05"
+      ],
+      "categories": [
+        "F16"
+      ],
+      "root_cause": "Visible source IDs and a conversational explanation of what supports the current or previous claim are inconsistent across return paths.",
+      "severity": "medium",
+      "fix": "Require direct and hybrid outputs to preserve attribution and useful missing-evidence statements. Do not demand fake citations.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "citation attribution"
+      ]
+    },
+    {
+      "id": "DO-C03-02",
+      "scenario": "S-C03",
+      "turn": 2,
+      "expected": "Preserve caveated fit or ask",
+      "route": "KG",
+      "pipeline_point": [
+        "R02"
+      ],
+      "categories": [
+        "F02",
+        "F03"
+      ],
+      "root_cause": "Typed selections and short references do not always preserve a pending task, earlier entity or explicit topic correction. Exact mechanism varies by case.",
+      "severity": "medium",
+      "fix": "Test explicit corrections, ambiguous pairs, prior-topic return, policy scope and Arabic-English references with the same CID.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "query understanding",
+        "context resolution"
+      ],
+      "stage_attribution_limit": "The effect on this turn is visible. Reference ranking and persistence/state selection may overlap where no state snapshot is available."
+    },
+    {
+      "id": "DO-C03-04",
+      "scenario": "S-C03",
+      "turn": 4,
+      "expected": "Update preference",
+      "route": "LLM",
+      "pipeline_point": [
+        "R02"
+      ],
+      "categories": [
+        "F02",
+        "F03"
+      ],
+      "root_cause": "Typed selections and short references do not always preserve a pending task, earlier entity or explicit topic correction. Exact mechanism varies by case.",
+      "severity": "medium",
+      "fix": "Test explicit corrections, ambiguous pairs, prior-topic return, policy scope and Arabic-English references with the same CID.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "query understanding",
+        "context resolution"
+      ],
+      "stage_attribution_limit": "The effect on this turn is visible. Reference ranking and persistence/state selection may overlap where no state snapshot is available."
+    },
+    {
+      "id": "DO-C03-05",
+      "scenario": "S-C03",
+      "turn": 5,
+      "expected": "Identify supported and missing parts",
+      "route": "LLM",
+      "pipeline_point": [
+        "R06"
+      ],
+      "categories": [
+        "F12",
+        "F13"
+      ],
+      "root_cause": "Repeated templates and conversation-meta routing substitute reciting, a generic refusal or an irrelevant prompt for a requested explanation or rephrase.",
+      "severity": "medium",
+      "fix": "Evaluate continuation, concise rephrasing, context-specific clarification and repeated framing with blinded human rubric.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "robotic response or formatting",
+        "abstention"
+      ]
+    },
+    {
+      "id": "DO-C04-02",
+      "scenario": "S-C04",
+      "turn": 2,
+      "expected": "Keep alternatives without invented fees",
+      "route": "LLM",
+      "pipeline_point": [
+        "R02",
+        "R04"
+      ],
+      "categories": [
+        "F02",
+        "F03",
+        "F10"
+      ],
+      "root_cause": "Typed selections and short references do not always preserve a pending task, earlier entity or explicit topic correction. Exact mechanism varies by case. Retrieval or fusion returns evidence for a neighboring topic or the wrong evidence channel. Candidate-level details are incomplete for most turns.",
+      "severity": "high",
+      "fix": "Test explicit corrections, ambiguous pairs, prior-topic return, policy scope and Arabic-English references with the same CID. Separate route error, no relevant candidate, filter rejection and misplaced final facts. Preserve source applicability.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "query understanding",
+        "context resolution",
+        "answer generation"
+      ],
+      "stage_attribution_limit": "The surfaced evidence can be judged against the requested facts. The exact candidate recall, rerank and merge failure stage is unresolved unless separately corroborated by stage evidence."
+    },
+    {
+      "id": "DO-C04-03",
+      "scenario": "S-C04",
+      "turn": 3,
+      "expected": "Request relevant fields",
+      "route": "LLM",
+      "pipeline_point": [
+        "R02",
+        "R06"
+      ],
+      "categories": [
+        "F02",
+        "F03",
+        "F12",
+        "F13"
+      ],
+      "root_cause": "Typed selections and short references do not always preserve a pending task, earlier entity or explicit topic correction. Exact mechanism varies by case. Repeated templates and conversation-meta routing substitute reciting, a generic refusal or an irrelevant prompt for a requested explanation or rephrase.",
+      "severity": "medium",
+      "fix": "Test explicit corrections, ambiguous pairs, prior-topic return, policy scope and Arabic-English references with the same CID. Evaluate continuation, concise rephrasing, context-specific clarification and repeated framing with blinded human rubric.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "query understanding",
+        "context resolution",
+        "robotic response or formatting",
+        "abstention"
+      ],
+      "stage_attribution_limit": "The effect on this turn is visible. Reference ranking and persistence/state selection may overlap where no state snapshot is available."
+    },
+    {
+      "id": "DO-C04-04",
+      "scenario": "S-C04",
+      "turn": 4,
+      "expected": "Explain constraints and ranking factors",
+      "route": "INTERACTIVE",
+      "pipeline_point": [
+        "R06"
+      ],
+      "categories": [
+        "F12"
+      ],
+      "root_cause": "Repeated templates and conversation-meta routing substitute reciting, a generic refusal or an irrelevant prompt for a requested explanation or rephrase.",
+      "severity": "medium",
+      "fix": "Evaluate continuation, concise rephrasing, context-specific clarification and repeated framing with blinded human rubric.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "robotic response or formatting"
+      ]
+    },
+    {
+      "id": "DO-C04-05",
+      "scenario": "S-C04",
+      "turn": 5,
+      "expected": "Preserve distinction",
+      "route": "HYBRID",
+      "pipeline_point": [
+        "R03",
+        "R04"
+      ],
+      "categories": [
+        "F04",
+        "F05",
+        "F09"
+      ],
+      "root_cause": "Lexical route/intent precedence or broad golden/meta matches select the wrong capability despite service health. Retrieval or fusion returns evidence for a neighboring topic or the wrong evidence channel. Candidate-level details are incomplete for most turns.",
+      "severity": "high",
+      "fix": "Record route candidates, override reason and result. Assert course recommendation does not become program ranking. Separate route error, no relevant candidate, filter rejection and misplaced final facts. Preserve source applicability.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "intent classification",
+        "routing",
+        "fusion"
+      ],
+      "stage_attribution_limit": "The surfaced evidence can be judged against the requested facts. The exact candidate recall, rerank and merge failure stage is unresolved unless separately corroborated by stage evidence."
+    },
+    {
+      "id": "DO-D01-01",
+      "scenario": "S-D01",
+      "turn": 1,
+      "expected": "Retrieve supported policy threshold",
+      "route": "RAG_DIRECT",
+      "pipeline_point": [
+        "R05",
+        "R06"
+      ],
+      "categories": [
+        "F12",
+        "F16"
+      ],
+      "root_cause": "Direct route returned sources and no citation objects.",
+      "severity": "medium",
+      "fix": "Require direct and hybrid outputs to preserve attribution and useful missing-evidence statements. Do not demand fake citations. Evaluate continuation, concise rephrasing, context-specific clarification and repeated framing with blinded human rubric.",
+      "confidence": "confirmed",
+      "failure_stage_observed": [
+        "robotic response or formatting",
+        "citation attribution"
+      ]
+    },
+    {
+      "id": "DO-D01-03",
+      "scenario": "S-D01",
+      "turn": 3,
+      "expected": "Explain strict inequality",
+      "route": "LLM",
+      "pipeline_point": [
+        "R06"
+      ],
+      "categories": [
+        "F12",
+        "F13"
+      ],
+      "root_cause": "Repeated templates and conversation-meta routing substitute reciting, a generic refusal or an irrelevant prompt for a requested explanation or rephrase.",
+      "severity": "medium",
+      "fix": "Evaluate continuation, concise rephrasing, context-specific clarification and repeated framing with blinded human rubric.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "robotic response or formatting",
+        "abstention"
+      ]
+    },
+    {
+      "id": "DO-D01-04",
+      "scenario": "S-D01",
+      "turn": 4,
+      "expected": "Avoid broader policy inference",
+      "route": "LLM",
+      "pipeline_point": [
+        "R02"
+      ],
+      "categories": [
+        "F02",
+        "F03"
+      ],
+      "root_cause": "Typed selections and short references do not always preserve a pending task, earlier entity or explicit topic correction. Exact mechanism varies by case.",
+      "severity": "medium",
+      "fix": "Test explicit corrections, ambiguous pairs, prior-topic return, policy scope and Arabic-English references with the same CID.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "query understanding",
+        "context resolution"
+      ],
+      "stage_attribution_limit": "The effect on this turn is visible. Reference ranking and persistence/state selection may overlap where no state snapshot is available."
+    },
+    {
+      "id": "DO-D01-05",
+      "scenario": "S-D01",
+      "turn": 5,
+      "expected": "Identify supported and missing parts",
+      "route": "LLM",
+      "pipeline_point": [
+        "R05"
+      ],
+      "categories": [
+        "F16"
+      ],
+      "root_cause": "Visible source IDs and a conversational explanation of what supports the current or previous claim are inconsistent across return paths.",
+      "severity": "medium",
+      "fix": "Require direct and hybrid outputs to preserve attribution and useful missing-evidence statements. Do not demand fake citations.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "citation attribution"
+      ]
+    },
+    {
+      "id": "DO-D02-01",
+      "scenario": "S-D02",
+      "turn": 1,
+      "expected": "Distinguish steps and eligibility",
+      "route": "HYBRID",
+      "pipeline_point": [
+        "R03",
+        "R04"
+      ],
+      "categories": [
+        "F05",
+        "F09"
+      ],
+      "root_cause": "Lexical route/intent precedence or broad golden/meta matches select the wrong capability despite service health. Retrieval or fusion returns evidence for a neighboring topic or the wrong evidence channel. Candidate-level details are incomplete for most turns.",
+      "severity": "high",
+      "fix": "Record route candidates, override reason and result. Assert course recommendation does not become program ranking. Separate route error, no relevant candidate, filter rejection and misplaced final facts. Preserve source applicability.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "routing",
+        "fusion"
+      ],
+      "stage_attribution_limit": "The surfaced evidence can be judged against the requested facts. The exact candidate recall, rerank and merge failure stage is unresolved unless separately corroborated by stage evidence."
+    },
+    {
+      "id": "DO-D02-02",
+      "scenario": "S-D02",
+      "turn": 2,
+      "expected": "State sourced eligibility",
+      "route": "HYBRID",
+      "pipeline_point": [
+        "R04"
+      ],
+      "categories": [
+        "F09"
+      ],
+      "root_cause": "Retrieval or fusion returns evidence for a neighboring topic or the wrong evidence channel. Candidate-level details are incomplete for most turns.",
+      "severity": "high",
+      "fix": "Separate route error, no relevant candidate, filter rejection and misplaced final facts. Preserve source applicability.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "fusion"
+      ],
+      "stage_attribution_limit": "The surfaced evidence can be judged against the requested facts. The exact candidate recall, rerank and merge failure stage is unresolved unless separately corroborated by stage evidence."
+    },
+    {
+      "id": "DO-D02-05",
+      "scenario": "S-D02",
+      "turn": 5,
+      "expected": "Identify supported and missing parts",
+      "route": "LLM",
+      "pipeline_point": [
+        "R06"
+      ],
+      "categories": [
+        "F12",
+        "F13"
+      ],
+      "root_cause": "Repeated templates and conversation-meta routing substitute reciting, a generic refusal or an irrelevant prompt for a requested explanation or rephrase.",
+      "severity": "medium",
+      "fix": "Evaluate continuation, concise rephrasing, context-specific clarification and repeated framing with blinded human rubric.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "robotic response or formatting",
+        "abstention"
+      ]
+    },
+    {
+      "id": "DO-D03-01",
+      "scenario": "S-D03",
+      "turn": 1,
+      "expected": "Cover both sourced intents",
+      "route": "HYBRID",
+      "pipeline_point": [
+        "R04",
+        "R05",
+        "R09"
+      ],
+      "categories": [
+        "F15",
+        "F16"
+      ],
+      "root_cause": "One split ran successfully. Calendar part was explicitly missing, source tag set was RAG_DIRECT, and no citation objects were returned. Candidate ranks were not emitted.",
+      "severity": "high",
+      "fix": "Separate route error, no relevant candidate, filter rejection and misplaced final facts. Preserve source applicability. Require direct and hybrid outputs to preserve attribution and useful missing-evidence statements. Do not demand fake citations. Retain one subject/relation/week bundle per sub-intent with per-part evidence, coverage and explicit missing parts.",
+      "confidence": "confirmed",
+      "failure_stage_observed": [
+        "multi-intent",
+        "citation attribution"
+      ],
+      "stage_attribution_limit": "The surfaced evidence can be judged against the requested facts. The exact candidate recall, rerank and merge failure stage is unresolved unless separately corroborated by stage evidence."
+    },
+    {
+      "id": "DO-D03-02",
+      "scenario": "S-D03",
+      "turn": 2,
+      "expected": "Identify policy part",
+      "route": "KG_DIRECT",
+      "pipeline_point": [
+        "R05"
+      ],
+      "categories": [
+        "F16"
+      ],
+      "root_cause": "Visible source IDs and a conversational explanation of what supports the current or previous claim are inconsistent across return paths.",
+      "severity": "medium",
+      "fix": "Require direct and hybrid outputs to preserve attribution and useful missing-evidence statements. Do not demand fake citations.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "citation attribution"
+      ]
+    },
+    {
+      "id": "DO-D03-03",
+      "scenario": "S-D03",
+      "turn": 3,
+      "expected": "Resolve Mobile Computing",
+      "route": "KG",
+      "pipeline_point": [
+        "R01"
+      ],
+      "categories": [
+        "F02",
+        "F03"
+      ],
+      "root_cause": "Log resolved the course but rewrote the exact week as a general request and then failed KG/RAG.",
+      "severity": "high",
+      "fix": "Assert explicit current relation, subject, time and requested output survive contextual resolution.",
+      "confidence": "confirmed",
+      "failure_stage_observed": [
+        "query understanding",
+        "context resolution"
+      ]
+    },
+    {
+      "id": "DO-D03-04",
+      "scenario": "S-D03",
+      "turn": 4,
+      "expected": "Recover only calendar part",
+      "route": "LLM",
+      "pipeline_point": [
+        "R04"
+      ],
+      "categories": [
+        "F10"
+      ],
+      "root_cause": "Retrieval or fusion returns evidence for a neighboring topic or the wrong evidence channel. Candidate-level details are incomplete for most turns.",
+      "severity": "high",
+      "fix": "Separate route error, no relevant candidate, filter rejection and misplaced final facts. Preserve source applicability.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "answer generation"
+      ],
+      "stage_attribution_limit": "The surfaced evidence can be judged against the requested facts. The exact candidate recall, rerank and merge failure stage is unresolved unless separately corroborated by stage evidence."
+    },
+    {
+      "id": "DO-D03-05",
+      "scenario": "S-D03",
+      "turn": 5,
+      "expected": "Identify supported and missing parts",
+      "route": "LLM",
+      "pipeline_point": [
+        "R06"
+      ],
+      "categories": [
+        "F12",
+        "F13"
+      ],
+      "root_cause": "Repeated templates and conversation-meta routing substitute reciting, a generic refusal or an irrelevant prompt for a requested explanation or rephrase.",
+      "severity": "medium",
+      "fix": "Evaluate continuation, concise rephrasing, context-specific clarification and repeated framing with blinded human rubric.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "robotic response or formatting",
+        "abstention"
+      ]
+    },
+    {
+      "id": "DO-D04-01",
+      "scenario": "S-D04",
+      "turn": 1,
+      "expected": "Use policy authority",
+      "route": "KG",
+      "pipeline_point": [
+        "R03",
+        "R04"
+      ],
+      "categories": [
+        "F05",
+        "F13"
+      ],
+      "root_cause": "Selected KG_DIRECT/GENERAL, retrieved zero facts, then logged empty fallback. No direct calendar document answer.",
+      "severity": "high",
+      "fix": "Record route candidates, override reason and result. Assert course recommendation does not become program ranking. Separate route error, no relevant candidate, filter rejection and misplaced final facts. Preserve source applicability.",
+      "confidence": "confirmed",
+      "failure_stage_observed": [
+        "routing",
+        "abstention"
+      ],
+      "stage_attribution_limit": "The surfaced evidence can be judged against the requested facts. The exact candidate recall, rerank and merge failure stage is unresolved unless separately corroborated by stage evidence."
+    },
+    {
+      "id": "DO-D04-02",
+      "scenario": "S-D04",
+      "turn": 2,
+      "expected": "State only supported timing",
+      "route": "KG_DIRECT",
+      "pipeline_point": [
+        "R03",
+        "R04"
+      ],
+      "categories": [
+        "F04",
+        "F05",
+        "F06"
+      ],
+      "root_cause": "Lexical route/intent precedence or broad golden/meta matches select the wrong capability despite service health. Retrieval or fusion returns evidence for a neighboring topic or the wrong evidence channel. Candidate-level details are incomplete for most turns.",
+      "severity": "high",
+      "fix": "Record route candidates, override reason and result. Assert course recommendation does not become program ranking. Separate route error, no relevant candidate, filter rejection and misplaced final facts. Preserve source applicability.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "intent classification",
+        "routing",
+        "KG retrieval"
+      ],
+      "stage_attribution_limit": "The surfaced evidence can be judged against the requested facts. The exact candidate recall, rerank and merge failure stage is unresolved unless separately corroborated by stage evidence."
+    },
+    {
+      "id": "DO-D04-04",
+      "scenario": "S-D04",
+      "turn": 4,
+      "expected": "Point to current official source",
+      "route": "CONVERSATION",
+      "pipeline_point": [
+        "R06"
+      ],
+      "categories": [
+        "F12"
+      ],
+      "root_cause": "Repeated templates and conversation-meta routing substitute reciting, a generic refusal or an irrelevant prompt for a requested explanation or rephrase.",
+      "severity": "medium",
+      "fix": "Evaluate continuation, concise rephrasing, context-specific clarification and repeated framing with blinded human rubric.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "robotic response or formatting"
+      ]
+    },
+    {
+      "id": "DO-D04-05",
+      "scenario": "S-D04",
+      "turn": 5,
+      "expected": "Restore authority",
+      "route": "KG",
+      "pipeline_point": [
+        "R03"
+      ],
+      "categories": [
+        "F04",
+        "F05"
+      ],
+      "root_cause": "Lexical route/intent precedence or broad golden/meta matches select the wrong capability despite service health.",
+      "severity": "medium",
+      "fix": "Record route candidates, override reason and result. Assert course recommendation does not become program ranking.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "intent classification",
+        "routing"
+      ]
+    },
+    {
+      "id": "DO-D05-01",
+      "scenario": "S-D05",
+      "turn": 1,
+      "expected": "Clarify relevant scope",
+      "route": "HYBRID",
+      "pipeline_point": [
+        "R04",
+        "R06"
+      ],
+      "categories": [
+        "F12",
+        "F13"
+      ],
+      "root_cause": "Retrieval or fusion returns evidence for a neighboring topic or the wrong evidence channel. Candidate-level details are incomplete for most turns. Repeated templates and conversation-meta routing substitute reciting, a generic refusal or an irrelevant prompt for a requested explanation or rephrase.",
+      "severity": "high",
+      "fix": "Separate route error, no relevant candidate, filter rejection and misplaced final facts. Preserve source applicability. Evaluate continuation, concise rephrasing, context-specific clarification and repeated framing with blinded human rubric.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "robotic response or formatting",
+        "abstention"
+      ],
+      "stage_attribution_limit": "The surfaced evidence can be judged against the requested facts. The exact candidate recall, rerank and merge failure stage is unresolved unless separately corroborated by stage evidence."
+    },
+    {
+      "id": "DO-D05-02",
+      "scenario": "S-D05",
+      "turn": 2,
+      "expected": "Narrow institution and program",
+      "route": "KG_DIRECT",
+      "pipeline_point": [
+        "R02"
+      ],
+      "categories": [
+        "F02",
+        "F03"
+      ],
+      "root_cause": "Typed selections and short references do not always preserve a pending task, earlier entity or explicit topic correction. Exact mechanism varies by case.",
+      "severity": "medium",
+      "fix": "Test explicit corrections, ambiguous pairs, prior-topic return, policy scope and Arabic-English references with the same CID.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "query understanding",
+        "context resolution"
+      ],
+      "stage_attribution_limit": "The effect on this turn is visible. Reference ranking and persistence/state selection may overlap where no state snapshot is available."
+    },
+    {
+      "id": "DO-D05-05",
+      "scenario": "S-D05",
+      "turn": 5,
+      "expected": "Identify supported and missing parts",
+      "route": "LLM",
+      "pipeline_point": [
+        "R06"
+      ],
+      "categories": [
+        "F12",
+        "F13"
+      ],
+      "root_cause": "Repeated templates and conversation-meta routing substitute reciting, a generic refusal or an irrelevant prompt for a requested explanation or rephrase.",
+      "severity": "medium",
+      "fix": "Evaluate continuation, concise rephrasing, context-specific clarification and repeated framing with blinded human rubric.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "robotic response or formatting",
+        "abstention"
+      ]
+    },
+    {
+      "id": "DO-E01-04",
+      "scenario": "S-E01",
+      "turn": 4,
+      "expected": "Retain fact and simplify",
+      "route": "CONVERSATION",
+      "pipeline_point": [
+        "R06"
+      ],
+      "categories": [
+        "F12"
+      ],
+      "root_cause": "Repeated templates and conversation-meta routing substitute reciting, a generic refusal or an irrelevant prompt for a requested explanation or rephrase.",
+      "severity": "medium",
+      "fix": "Evaluate continuation, concise rephrasing, context-specific clarification and repeated framing with blinded human rubric.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "robotic response or formatting"
+      ]
+    },
+    {
+      "id": "DO-E01-05",
+      "scenario": "S-E01",
+      "turn": 5,
+      "expected": "Show linked evidence",
+      "route": "KG_DIRECT",
+      "pipeline_point": [
+        "R05",
+        "R04"
+      ],
+      "categories": [
+        "F06",
+        "F16"
+      ],
+      "root_cause": "Visible source IDs and a conversational explanation of what supports the current or previous claim are inconsistent across return paths. Retrieval or fusion returns evidence for a neighboring topic or the wrong evidence channel. Candidate-level details are incomplete for most turns.",
+      "severity": "high",
+      "fix": "Require direct and hybrid outputs to preserve attribution and useful missing-evidence statements. Do not demand fake citations. Separate route error, no relevant candidate, filter rejection and misplaced final facts. Preserve source applicability.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "KG retrieval",
+        "citation attribution"
+      ],
+      "stage_attribution_limit": "The surfaced evidence can be judged against the requested facts. The exact candidate recall, rerank and merge failure stage is unresolved unless separately corroborated by stage evidence."
+    },
+    {
+      "id": "DO-E02-01",
+      "scenario": "S-E02",
+      "turn": 1,
+      "expected": "Scope recommendation edge",
+      "route": "INTERACTIVE",
+      "pipeline_point": [
+        "R03"
+      ],
+      "categories": [
+        "F04",
+        "F05"
+      ],
+      "root_cause": "Runtime matched golden_best_major and chose the Decision route, prompting for high school percentage and budget.",
+      "severity": "medium",
+      "fix": "Record route candidates, override reason and result. Assert course recommendation does not become program ranking.",
+      "confidence": "confirmed",
+      "failure_stage_observed": [
+        "intent classification",
+        "routing"
+      ]
+    },
+    {
+      "id": "DO-E02-02",
+      "scenario": "S-E02",
+      "turn": 2,
+      "expected": "Apply same relation to NLP",
+      "route": "KG_DIRECT",
+      "pipeline_point": [
+        "R02"
+      ],
+      "categories": [
+        "F02",
+        "F03"
+      ],
+      "root_cause": "Typed selections and short references do not always preserve a pending task, earlier entity or explicit topic correction. Exact mechanism varies by case.",
+      "severity": "medium",
+      "fix": "Test explicit corrections, ambiguous pairs, prior-topic return, policy scope and Arabic-English references with the same CID.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "query understanding",
+        "context resolution"
+      ],
+      "stage_attribution_limit": "The effect on this turn is visible. Reference ranking and persistence/state selection may overlap where no state snapshot is available."
+    },
+    {
+      "id": "DO-E02-05",
+      "scenario": "S-E02",
+      "turn": 5,
+      "expected": "Explain distinction",
+      "route": "INTERACTIVE",
+      "pipeline_point": [
+        "R03"
+      ],
+      "categories": [
+        "F04",
+        "F05"
+      ],
+      "root_cause": "Lexical route/intent precedence or broad golden/meta matches select the wrong capability despite service health.",
+      "severity": "medium",
+      "fix": "Record route candidates, override reason and result. Assert course recommendation does not become program ranking.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "intent classification",
+        "routing"
+      ]
+    },
+    {
+      "id": "DO-E03-01",
+      "scenario": "S-E03",
+      "turn": 1,
+      "expected": "Bind both course/week requests or clarify",
+      "route": "KG_DIRECT",
+      "pipeline_point": [
+        "R09"
+      ],
+      "categories": [
+        "F02",
+        "F15"
+      ],
+      "root_cause": "Trace shows only one curriculum target, NLP paired with week 3 instead of the requested NLP week 4.",
+      "severity": "high",
+      "fix": "Retain one subject/relation/week bundle per sub-intent with per-part evidence, coverage and explicit missing parts.",
+      "confidence": "confirmed",
+      "failure_stage_observed": [
+        "query understanding",
+        "multi-intent"
+      ]
+    },
+    {
+      "id": "DO-E03-02",
+      "scenario": "S-E03",
+      "turn": 2,
+      "expected": "Resolve ordinal",
+      "route": "CONVERSATION",
+      "pipeline_point": [
+        "R02"
+      ],
+      "categories": [
+        "F02",
+        "F03"
+      ],
+      "root_cause": "Typed selections and short references do not always preserve a pending task, earlier entity or explicit topic correction. Exact mechanism varies by case.",
+      "severity": "medium",
+      "fix": "Test explicit corrections, ambiguous pairs, prior-topic return, policy scope and Arabic-English references with the same CID.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "query understanding",
+        "context resolution"
+      ],
+      "stage_attribution_limit": "The effect on this turn is visible. Reference ranking and persistence/state selection may overlap where no state snapshot is available."
+    },
+    {
+      "id": "DO-E03-03",
+      "scenario": "S-E03",
+      "turn": 3,
+      "expected": "Switch to policy scope",
+      "route": "KG_DIRECT",
+      "pipeline_point": [
+        "R03",
+        "R04"
+      ],
+      "categories": [
+        "F04",
+        "F05",
+        "F06"
+      ],
+      "root_cause": "Lexical route/intent precedence or broad golden/meta matches select the wrong capability despite service health. Retrieval or fusion returns evidence for a neighboring topic or the wrong evidence channel. Candidate-level details are incomplete for most turns.",
+      "severity": "high",
+      "fix": "Record route candidates, override reason and result. Assert course recommendation does not become program ranking. Separate route error, no relevant candidate, filter rejection and misplaced final facts. Preserve source applicability.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "intent classification",
+        "routing",
+        "KG retrieval"
+      ],
+      "stage_attribution_limit": "The surfaced evidence can be judged against the requested facts. The exact candidate recall, rerank and merge failure stage is unresolved unless separately corroborated by stage evidence."
+    },
+    {
+      "id": "DO-E03-04",
+      "scenario": "S-E03",
+      "turn": 4,
+      "expected": "Return to earlier course/week or clarify",
+      "route": "KG_DIRECT",
+      "pipeline_point": [
+        "R02"
+      ],
+      "categories": [
+        "F02",
+        "F03"
+      ],
+      "root_cause": "Typed selections and short references do not always preserve a pending task, earlier entity or explicit topic correction. Exact mechanism varies by case.",
+      "severity": "medium",
+      "fix": "Test explicit corrections, ambiguous pairs, prior-topic return, policy scope and Arabic-English references with the same CID.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "query understanding",
+        "context resolution"
+      ],
+      "stage_attribution_limit": "The effect on this turn is visible. Reference ranking and persistence/state selection may overlap where no state snapshot is available."
+    },
+    {
+      "id": "DO-E03-05",
+      "scenario": "S-E03",
+      "turn": 5,
+      "expected": "Keep evidence distinct",
+      "route": "KG_DIRECT",
+      "pipeline_point": [
+        "R05",
+        "R09"
+      ],
+      "categories": [
+        "F15",
+        "F16"
+      ],
+      "root_cause": "Visible source IDs and a conversational explanation of what supports the current or previous claim are inconsistent across return paths. Supported decomposition rules miss a multi-entity intent or only one part retrieves usable evidence. Different subtypes may have different causes.",
+      "severity": "high",
+      "fix": "Require direct and hybrid outputs to preserve attribution and useful missing-evidence statements. Do not demand fake citations. Retain one subject/relation/week bundle per sub-intent with per-part evidence, coverage and explicit missing parts.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "multi-intent",
+        "citation attribution"
+      ]
+    },
+    {
+      "id": "DO-E04-02",
+      "scenario": "S-E04",
+      "turn": 2,
+      "expected": "Resolve course",
+      "route": "KG_DIRECT",
+      "pipeline_point": [
+        "R02",
+        "R04"
+      ],
+      "categories": [
+        "F03",
+        "F06"
+      ],
+      "root_cause": "Typed selections and short references do not always preserve a pending task, earlier entity or explicit topic correction. Exact mechanism varies by case. Retrieval or fusion returns evidence for a neighboring topic or the wrong evidence channel. Candidate-level details are incomplete for most turns.",
+      "severity": "high",
+      "fix": "Test explicit corrections, ambiguous pairs, prior-topic return, policy scope and Arabic-English references with the same CID. Separate route error, no relevant candidate, filter rejection and misplaced final facts. Preserve source applicability.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "context resolution",
+        "KG retrieval"
+      ],
+      "stage_attribution_limit": "The surfaced evidence can be judged against the requested facts. The exact candidate recall, rerank and merge failure stage is unresolved unless separately corroborated by stage evidence."
+    },
+    {
+      "id": "DO-E04-03",
+      "scenario": "S-E04",
+      "turn": 3,
+      "expected": "Hold topic and course constant",
+      "route": "CONVERSATION",
+      "pipeline_point": [
+        "R02"
+      ],
+      "categories": [
+        "F02",
+        "F03"
+      ],
+      "root_cause": "Typed selections and short references do not always preserve a pending task, earlier entity or explicit topic correction. Exact mechanism varies by case.",
+      "severity": "medium",
+      "fix": "Test explicit corrections, ambiguous pairs, prior-topic return, policy scope and Arabic-English references with the same CID.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "query understanding",
+        "context resolution"
+      ],
+      "stage_attribution_limit": "The effect on this turn is visible. Reference ranking and persistence/state selection may overlap where no state snapshot is available."
+    },
+    {
+      "id": "DO-E04-04",
+      "scenario": "S-E04",
+      "turn": 4,
+      "expected": "Check challenge against evidence",
+      "route": "KG_DIRECT",
+      "pipeline_point": [
+        "R04"
+      ],
+      "categories": [
+        "F06"
+      ],
+      "root_cause": "Retrieval or fusion returns evidence for a neighboring topic or the wrong evidence channel. Candidate-level details are incomplete for most turns.",
+      "severity": "high",
+      "fix": "Separate route error, no relevant candidate, filter rejection and misplaced final facts. Preserve source applicability.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "KG retrieval"
+      ],
+      "stage_attribution_limit": "The surfaced evidence can be judged against the requested facts. The exact candidate recall, rerank and merge failure stage is unresolved unless separately corroborated by stage evidence."
+    },
+    {
+      "id": "DO-E04-05",
+      "scenario": "S-E04",
+      "turn": 5,
+      "expected": "Be concise",
+      "route": "KG_DIRECT",
+      "pipeline_point": [
+        "R06"
+      ],
+      "categories": [
+        "F12",
+        "F13"
+      ],
+      "root_cause": "Repeated templates and conversation-meta routing substitute reciting, a generic refusal or an irrelevant prompt for a requested explanation or rephrase.",
+      "severity": "medium",
+      "fix": "Evaluate continuation, concise rephrasing, context-specific clarification and repeated framing with blinded human rubric.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "robotic response or formatting",
+        "abstention"
+      ]
+    },
+    {
+      "id": "DO-F01-01",
+      "scenario": "S-F01",
+      "turn": 1,
+      "expected": "Recognize bilingual campus/program",
+      "route": "LLM",
+      "pipeline_point": [
+        "R03",
+        "R04"
+      ],
+      "categories": [
+        "F04",
+        "F05",
+        "F10"
+      ],
+      "root_cause": "Lexical route/intent precedence or broad golden/meta matches select the wrong capability despite service health. Retrieval or fusion returns evidence for a neighboring topic or the wrong evidence channel. Candidate-level details are incomplete for most turns.",
+      "severity": "high",
+      "fix": "Record route candidates, override reason and result. Assert course recommendation does not become program ranking. Separate route error, no relevant candidate, filter rejection and misplaced final facts. Preserve source applicability.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "intent classification",
+        "routing",
+        "answer generation"
+      ],
+      "stage_attribution_limit": "The surfaced evidence can be judged against the requested facts. The exact candidate recall, rerank and merge failure stage is unresolved unless separately corroborated by stage evidence."
+    },
+    {
+      "id": "DO-F01-03",
+      "scenario": "S-F01",
+      "turn": 3,
+      "expected": "Inherit career relation",
+      "route": "INTERACTIVE",
+      "pipeline_point": [
+        "R02",
+        "R03"
+      ],
+      "categories": [
+        "F02",
+        "F03",
+        "F04",
+        "F05"
+      ],
+      "root_cause": "Typed selections and short references do not always preserve a pending task, earlier entity or explicit topic correction. Exact mechanism varies by case. Lexical route/intent precedence or broad golden/meta matches select the wrong capability despite service health.",
+      "severity": "medium",
+      "fix": "Test explicit corrections, ambiguous pairs, prior-topic return, policy scope and Arabic-English references with the same CID. Record route candidates, override reason and result. Assert course recommendation does not become program ranking.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "query understanding",
+        "context resolution",
+        "intent classification",
+        "routing"
+      ],
+      "stage_attribution_limit": "The effect on this turn is visible. Reference ranking and persistence/state selection may overlap where no state snapshot is available."
+    },
+    {
+      "id": "DO-F01-04",
+      "scenario": "S-F01",
+      "turn": 4,
+      "expected": "Switch to NLP instructor",
+      "route": "KG_DIRECT",
+      "pipeline_point": [
+        "R03",
+        "R04"
+      ],
+      "categories": [
+        "F02",
+        "F04",
+        "F05"
+      ],
+      "root_cause": "The abbreviation became natural language processing but the intent was TRACK and cited a specialization, not teaching.",
+      "severity": "high",
+      "fix": "Record route candidates, override reason and result. Assert course recommendation does not become program ranking. Separate route error, no relevant candidate, filter rejection and misplaced final facts. Preserve source applicability.",
+      "confidence": "confirmed",
+      "failure_stage_observed": [
+        "query understanding",
+        "intent classification",
+        "routing"
+      ],
+      "stage_attribution_limit": "The surfaced evidence can be judged against the requested facts. The exact candidate recall, rerank and merge failure stage is unresolved unless separately corroborated by stage evidence."
+    },
+    {
+      "id": "DO-F01-05",
+      "scenario": "S-F01",
+      "turn": 5,
+      "expected": "Recall relevant earlier context",
+      "route": "KG_DIRECT",
+      "pipeline_point": [
+        "R02"
+      ],
+      "categories": [
+        "F03"
+      ],
+      "root_cause": "Typed selections and short references do not always preserve a pending task, earlier entity or explicit topic correction. Exact mechanism varies by case.",
+      "severity": "medium",
+      "fix": "Test explicit corrections, ambiguous pairs, prior-topic return, policy scope and Arabic-English references with the same CID.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "context resolution"
+      ],
+      "stage_attribution_limit": "The effect on this turn is visible. Reference ranking and persistence/state selection may overlap where no state snapshot is available."
+    },
+    {
+      "id": "DO-F02-01",
+      "scenario": "S-F02",
+      "turn": 1,
+      "expected": "Normalize typo or clarify",
+      "route": "LLM",
+      "pipeline_point": [
+        "R02",
+        "R04"
+      ],
+      "categories": [
+        "F02",
+        "F03",
+        "F10"
+      ],
+      "root_cause": "Typed selections and short references do not always preserve a pending task, earlier entity or explicit topic correction. Exact mechanism varies by case. Retrieval or fusion returns evidence for a neighboring topic or the wrong evidence channel. Candidate-level details are incomplete for most turns.",
+      "severity": "high",
+      "fix": "Test explicit corrections, ambiguous pairs, prior-topic return, policy scope and Arabic-English references with the same CID. Separate route error, no relevant candidate, filter rejection and misplaced final facts. Preserve source applicability.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "query understanding",
+        "context resolution",
+        "answer generation"
+      ],
+      "stage_attribution_limit": "The surfaced evidence can be judged against the requested facts. The exact candidate recall, rerank and merge failure stage is unresolved unless separately corroborated by stage evidence."
+    },
+    {
+      "id": "DO-F02-02",
+      "scenario": "S-F02",
+      "turn": 2,
+      "expected": "Resolve ML and course code",
+      "route": "KG",
+      "pipeline_point": [
+        "R02"
+      ],
+      "categories": [
+        "F02",
+        "F03"
+      ],
+      "root_cause": "Typed selections and short references do not always preserve a pending task, earlier entity or explicit topic correction. Exact mechanism varies by case.",
+      "severity": "medium",
+      "fix": "Test explicit corrections, ambiguous pairs, prior-topic return, policy scope and Arabic-English references with the same CID.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "query understanding",
+        "context resolution"
+      ],
+      "stage_attribution_limit": "The effect on this turn is visible. Reference ranking and persistence/state selection may overlap where no state snapshot is available."
+    },
+    {
+      "id": "DO-F02-04",
+      "scenario": "S-F02",
+      "turn": 4,
+      "expected": "Apply corrected intent",
+      "route": "KG_DIRECT",
+      "pipeline_point": [
+        "R01",
+        "R04"
+      ],
+      "categories": [
+        "F02",
+        "F03",
+        "F06"
+      ],
+      "root_cause": "Context rewrite can change the current relation, subject or requested detail instead of replacing only the referent. Retrieval or fusion returns evidence for a neighboring topic or the wrong evidence channel. Candidate-level details are incomplete for most turns.",
+      "severity": "high",
+      "fix": "Assert explicit current relation, subject, time and requested output survive contextual resolution. Separate route error, no relevant candidate, filter rejection and misplaced final facts. Preserve source applicability.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "query understanding",
+        "context resolution",
+        "KG retrieval"
+      ],
+      "stage_attribution_limit": "The surfaced evidence can be judged against the requested facts. The exact candidate recall, rerank and merge failure stage is unresolved unless separately corroborated by stage evidence."
+    },
+    {
+      "id": "DO-F02-05",
+      "scenario": "S-F02",
+      "turn": 5,
+      "expected": "Respond with actual evidence",
+      "route": "LLM",
+      "pipeline_point": [
+        "R05"
+      ],
+      "categories": [
+        "F16"
+      ],
+      "root_cause": "Visible source IDs and a conversational explanation of what supports the current or previous claim are inconsistent across return paths.",
+      "severity": "medium",
+      "fix": "Require direct and hybrid outputs to preserve attribution and useful missing-evidence statements. Do not demand fake citations.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "citation attribution"
+      ]
+    },
+    {
+      "id": "DO-F03-01",
+      "scenario": "S-F03",
+      "turn": 1,
+      "expected": "Scope probation policy",
+      "route": "RAG_DIRECT",
+      "pipeline_point": [
+        "R05",
+        "R06"
+      ],
+      "categories": [
+        "F12",
+        "F16"
+      ],
+      "root_cause": "Visible source IDs and a conversational explanation of what supports the current or previous claim are inconsistent across return paths. Repeated templates and conversation-meta routing substitute reciting, a generic refusal or an irrelevant prompt for a requested explanation or rephrase.",
+      "severity": "medium",
+      "fix": "Require direct and hybrid outputs to preserve attribution and useful missing-evidence statements. Do not demand fake citations. Evaluate continuation, concise rephrasing, context-specific clarification and repeated framing with blinded human rubric.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "robotic response or formatting",
+        "citation attribution"
+      ]
+    },
+    {
+      "id": "DO-F03-02",
+      "scenario": "S-F03",
+      "turn": 2,
+      "expected": "Respect threshold",
+      "route": "LLM",
+      "pipeline_point": [
+        "R02"
+      ],
+      "categories": [
+        "F02",
+        "F03"
+      ],
+      "root_cause": "Typed selections and short references do not always preserve a pending task, earlier entity or explicit topic correction. Exact mechanism varies by case.",
+      "severity": "medium",
+      "fix": "Test explicit corrections, ambiguous pairs, prior-topic return, policy scope and Arabic-English references with the same CID.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "query understanding",
+        "context resolution"
+      ],
+      "stage_attribution_limit": "The effect on this turn is visible. Reference ranking and persistence/state selection may overlap where no state snapshot is available."
+    },
+    {
+      "id": "DO-F03-04",
+      "scenario": "S-F03",
+      "turn": 4,
+      "expected": "Return to GPA calculation",
+      "route": "RAG_DIRECT",
+      "pipeline_point": [
+        "R05",
+        "R06"
+      ],
+      "categories": [
+        "F12",
+        "F16"
+      ],
+      "root_cause": "RAG_DIRECT has sources but zero citation objects. Comparison with F03/1 also shows exact same canned body.",
+      "severity": "medium",
+      "fix": "Require direct and hybrid outputs to preserve attribution and useful missing-evidence statements. Do not demand fake citations. Evaluate continuation, concise rephrasing, context-specific clarification and repeated framing with blinded human rubric.",
+      "confidence": "confirmed",
+      "failure_stage_observed": [
+        "robotic response or formatting",
+        "citation attribution"
+      ]
+    },
+    {
+      "id": "DO-F03-05",
+      "scenario": "S-F03",
+      "turn": 5,
+      "expected": "Provide actual evidence or qualify prior claim",
+      "route": "LLM",
+      "pipeline_point": [
+        "R05"
+      ],
+      "categories": [
+        "F16"
+      ],
+      "root_cause": "Visible source IDs and a conversational explanation of what supports the current or previous claim are inconsistent across return paths.",
+      "severity": "medium",
+      "fix": "Require direct and hybrid outputs to preserve attribution and useful missing-evidence statements. Do not demand fake citations.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "citation attribution"
+      ]
+    },
+    {
+      "id": "DO-F04-01",
+      "scenario": "S-F04",
+      "turn": 1,
+      "expected": "Avoid unsupported forecast",
+      "route": "CONVERSATION",
+      "pipeline_point": [
+        "R03",
+        "R06"
+      ],
+      "categories": [
+        "F04",
+        "F05",
+        "F12"
+      ],
+      "root_cause": "Routing audit recorded LAST_ASSISTANT_RESPONSE with confidence 1 and bypassed route/retrieval. This should have been a domain limit, not a recall reply.",
+      "severity": "medium",
+      "fix": "Record route candidates, override reason and result. Assert course recommendation does not become program ranking. Evaluate continuation, concise rephrasing, context-specific clarification and repeated framing with blinded human rubric.",
+      "confidence": "confirmed",
+      "failure_stage_observed": [
+        "intent classification",
+        "routing",
+        "robotic response or formatting"
+      ]
+    },
+    {
+      "id": "DO-F04-02",
+      "scenario": "S-F04",
+      "turn": 2,
+      "expected": "Reset to academic domain",
+      "route": "KG_DIRECT",
+      "pipeline_point": [
+        "R04"
+      ],
+      "categories": [
+        "F06",
+        "F12"
+      ],
+      "root_cause": "Retrieval or fusion returns evidence for a neighboring topic or the wrong evidence channel. Candidate-level details are incomplete for most turns.",
+      "severity": "high",
+      "fix": "Separate route error, no relevant candidate, filter rejection and misplaced final facts. Preserve source applicability.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "KG retrieval",
+        "robotic response or formatting"
+      ],
+      "stage_attribution_limit": "The surfaced evidence can be judged against the requested facts. The exact candidate recall, rerank and merge failure stage is unresolved unless separately corroborated by stage evidence."
+    },
+    {
+      "id": "DO-F04-03",
+      "scenario": "S-F04",
+      "turn": 3,
+      "expected": "Clarify missing attribute",
+      "route": "LLM",
+      "pipeline_point": [
+        "R02",
+        "R06"
+      ],
+      "categories": [
+        "F02",
+        "F03",
+        "F12",
+        "F13"
+      ],
+      "root_cause": "Typed selections and short references do not always preserve a pending task, earlier entity or explicit topic correction. Exact mechanism varies by case. Repeated templates and conversation-meta routing substitute reciting, a generic refusal or an irrelevant prompt for a requested explanation or rephrase.",
+      "severity": "medium",
+      "fix": "Test explicit corrections, ambiguous pairs, prior-topic return, policy scope and Arabic-English references with the same CID. Evaluate continuation, concise rephrasing, context-specific clarification and repeated framing with blinded human rubric.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "query understanding",
+        "context resolution",
+        "robotic response or formatting",
+        "abstention"
+      ],
+      "stage_attribution_limit": "The effect on this turn is visible. Reference ranking and persistence/state selection may overlap where no state snapshot is available."
+    },
+    {
+      "id": "DO-F04-04",
+      "scenario": "S-F04",
+      "turn": 4,
+      "expected": "Resolve prior teacher",
+      "route": "KG_DIRECT",
+      "pipeline_point": [
+        "R02",
+        "R04"
+      ],
+      "categories": [
+        "F03",
+        "F06"
+      ],
+      "root_cause": "Typed selections and short references do not always preserve a pending task, earlier entity or explicit topic correction. Exact mechanism varies by case. Retrieval or fusion returns evidence for a neighboring topic or the wrong evidence channel. Candidate-level details are incomplete for most turns.",
+      "severity": "high",
+      "fix": "Test explicit corrections, ambiguous pairs, prior-topic return, policy scope and Arabic-English references with the same CID. Separate route error, no relevant candidate, filter rejection and misplaced final facts. Preserve source applicability.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "context resolution",
+        "KG retrieval"
+      ],
+      "stage_attribution_limit": "The surfaced evidence can be judged against the requested facts. The exact candidate recall, rerank and merge failure stage is unresolved unless separately corroborated by stage evidence."
+    },
+    {
+      "id": "DO-F04-05",
+      "scenario": "S-F04",
+      "turn": 5,
+      "expected": "Return to original course scope",
+      "route": "CONVERSATION",
+      "pipeline_point": [
+        "R02"
+      ],
+      "categories": [
+        "F03",
+        "F11"
+      ],
+      "root_cause": "Typed selections and short references do not always preserve a pending task, earlier entity or explicit topic correction. Exact mechanism varies by case.",
+      "severity": "medium",
+      "fix": "Test explicit corrections, ambiguous pairs, prior-topic return, policy scope and Arabic-English references with the same CID.",
+      "confidence": "strongly indicated for stage, exact internal mechanism can be unverified",
+      "failure_stage_observed": [
+        "context resolution",
+        "memory"
+      ],
+      "stage_attribution_limit": "The effect on this turn is visible. Reference ranking and persistence/state selection may overlap where no state snapshot is available."
+    }
+  ]
+}

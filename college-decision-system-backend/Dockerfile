@@ -25,4 +25,4 @@ RUN mkdir -p /app/runtime/voice
 
 EXPOSE 8005
 
-CMD ["sh", "-c", "if [ ! -f /app/runtime/dev.db ] && [ -f /app/dev.db ]; then cp /app/dev.db /app/runtime/dev.db; fi; alembic upgrade head && exec uvicorn app.main:app --host 0.0.0.0 --port 8005"]
+CMD ["sh", "-c", "if [ ! -f /app/runtime/dev.db ] && [ -f /app/dev.db ]; then cp /app/dev.db /app/runtime/dev.db; fi; python scripts/bootstrap_database.py && exec uvicorn app.main:app --host 0.0.0.0 --port 8005"]

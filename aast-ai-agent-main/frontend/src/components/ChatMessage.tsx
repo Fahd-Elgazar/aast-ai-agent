@@ -1,4 +1,4 @@
-import { Bot, Clock3, Network, UserRound, Volume2 } from "lucide-react";
+import { BookOpen, Bot, Clock3, Network, UserRound, Volume2 } from "lucide-react";
 import DecisionCard from "./DecisionCard";
 import type { ChatMessage as ChatMessageType } from "../types";
 import ReactMarkdown from "react-markdown";
@@ -114,6 +114,28 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
                   <Network className="h-3.5 w-3.5" aria-hidden="true" />
                   Open graph evidence
                 </button>
+              )}
+
+              {!isUser && Array.isArray(message.citations) && message.citations.length > 0 && (
+                <details className="mt-3 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2">
+                  <summary className="flex cursor-pointer list-none items-center gap-2 text-xs font-semibold text-slate-700">
+                    <BookOpen className="h-3.5 w-3.5 text-blue-600" aria-hidden="true" />
+                    Verified sources ({message.citations.length})
+                  </summary>
+                  <ol className="mt-2 space-y-2">
+                    {message.citations.map((citation, index) => (
+                      <li key={citation.evidence_id || citation.id || index} className="text-xs text-slate-600">
+                        <p className="font-semibold text-slate-800">
+                          [{index + 1}] {citation.title}
+                        </p>
+                        <p className="mt-0.5 leading-relaxed">{citation.excerpt}</p>
+                        <p className="mt-1 text-[10px] uppercase tracking-wide text-slate-400">
+                          {citation.source}{citation.category ? ` · ${citation.category}` : ""}
+                        </p>
+                      </li>
+                    ))}
+                  </ol>
+                </details>
               )}
 
               <p

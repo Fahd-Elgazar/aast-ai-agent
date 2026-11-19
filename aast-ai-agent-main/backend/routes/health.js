@@ -7,6 +7,7 @@ import { logger } from "../services/logger.js";
 import { getOllamaRuntimeStatus } from "../services/ollamaService.js";
 import { getRuntimeModeStatus } from "../config/runtimeMode.js";
 import ragService from "../services/ragService.js";
+import { areRequiredTopologyServicesReady, isRagHealthReady } from "./healthReadiness.js";
 
 const DEFAULT_TIMEOUT_MS = Number(process.env.HEALTH_TIMEOUT_MS || 2500);
 const DECISION_API_URL = process.env.DECISION_API_URL || "http://127.0.0.1:8005";
@@ -190,15 +191,9 @@ async function checkRag() {
     ]);
 
     return {
-      ok:
-        health === true ||
-        health?.status === "healthy" ||
-        health?.status === "ok" ||
-        health?.system_status === "HEALTHY" ||
-        health?.system_status === "DEGRADED" ||
-        health?.retriever?.ok === true,
       latencyMs: Date.now() - start,
-      ...health
+      ...health,
+      ok: isRagHealthReady(health)
     };
   } catch (err) {
     return {
@@ -260,8 +255,17 @@ async function buildHealthPayload(getCacheStatus) {
   ]);
 
   const processMemory = getProcessMemory();
+  const runtimeStatus = getRuntimeModeStatus();
+  const serviceReadiness = {
+    neo4j: neo4j.ok === true,
+    ollama: ollama.ok === true,
+    decisionApi: decisionApi.ok === true,
+    qdrant: rag.ok === true,
+    ragRetriever: rag.ok === true,
+    ragAnswer: rag?.answer_engine?.ok === true && rag?.answer_engine?.endpoint_valid === true
+  };
   const payload = {
-    ok: neo4j.ok && ollama.ok && decisionApi.ok,
+    ok: areRequiredTopologyServicesReady(runtimeStatus.topologyServices, serviceReadiness),
     timestamp: new Date().toISOString(),
     services: {
       neo4j,
@@ -296,7 +300,7 @@ async function buildHealthPayload(getCacheStatus) {
         processMemory
       })
     },
-    runtimeMode: getRuntimeModeStatus(),
+    runtimeMode: runtimeStatus,
     metrics: buildRuntimeMetricsSnapshot()
   };
 

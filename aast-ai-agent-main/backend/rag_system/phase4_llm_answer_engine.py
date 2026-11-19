@@ -49,6 +49,7 @@ MAX_CONTEXT_CHUNKS = 8
 REQUEST_TIMEOUT = int(os.getenv("RAG_ANSWER_TIMEOUT_SECONDS", "180"))
 RETRIEVER_TIMEOUT = int(os.getenv("RAG_RETRIEVER_TIMEOUT_SECONDS", str(REQUEST_TIMEOUT)))
 HEALTH_TIMEOUT = int(os.getenv("RAG_ANSWER_HEALTH_TIMEOUT_SECONDS", "8"))
+RETRIEVER_READY_STATUSES = {"ready", "healthy"}
 
 MIN_RETRIEVAL_CONFIDENCE = 0.45
 MIN_ANSWER_CONFIDENCE = 0.50
@@ -67,6 +68,19 @@ logger = logging.getLogger(__name__)
 # ============================================================
 # REQUEST MODELS
 # ============================================================
+
+
+def retriever_health_is_ready(response) -> bool:
+    """Accept only an explicit successful readiness response."""
+    if response.status_code != 200:
+        return False
+
+    try:
+        service_status = str((response.json() or {}).get("status", "")).lower()
+    except Exception:
+        return False
+
+    return service_status in RETRIEVER_READY_STATUSES
 
 class AnswerRequest(BaseModel):
     query: str = Field(..., min_length=2)
@@ -470,12 +484,7 @@ def health():
     # 1. Check Retriever
     try:
         r_resp = requests.get(RETRIEVER_HEALTH_URL, timeout=HEALTH_TIMEOUT)
-        retriever_status = None
-        try:
-            retriever_status = (r_resp.json() or {}).get("status")
-        except Exception:
-            retriever_status = None
-        if r_resp.status_code != 200 or (retriever_status and retriever_status != "healthy"):
+        if not retriever_health_is_ready(r_resp):
             unhealthy_services.append("retriever")
     except Exception:
         unhealthy_services.append("retriever")

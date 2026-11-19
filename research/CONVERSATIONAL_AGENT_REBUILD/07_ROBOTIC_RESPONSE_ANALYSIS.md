@@ -1,0 +1,16 @@
+# Conversational tone and response shaping
+
+**Stage D · 125 actual turns**
+
+The robotic interaction mainly comes from a route emitting a prewritten answer or recap when the user asked for a different conversational operation. Use the [transcripts](04_CONVERSATION_TRANSCRIPTS.md) and [failure catalog](failure_catalog.json) for the exact contexts and messages.
+
+| Pattern | Observed evidence | Likely source and fix |
+|---|---|---|
+| Mandatory-sounding repeated offer | “I can also help explain related academic regulations.” appeared in five replies, including D01/1, D05/1 and F03/1 or /4. | Literal suffix at `services/conversationalHumanizer.js:95–106` and expansion at `373–444`. Confirmed source text. T-50 should offer a next step only when useful. |
+| Generic dead-end refusal | Exact “Insufficient verified academic evidence was found for this query.” occurred 12 times. “I'm sorry” occurred 10 times. Adjacent clarification loops include D01/3–5, C03/4–5 and D03/4–5. | Several return paths use fallback framing. Many lack topical resolution or sufficient retrieval first. Acknowledge the supported part and name the unresolved slot, then abstain if appropriate. |
+| Recap instead of transformation | E01/4 asks for a first-year explanation and receives “My last answer was” plus the unchanged prerequisite. A02/5 asks to expand one lab and repeats the prior list. B03/2 requests rephrasing and falls to an insufficient-evidence answer. The exact recap prefix occurred three times. | Recall classification in `conversationMetaIntent.js:215,312,542` and early reply in `orchestrator.js:794–882` are not general transformation skills. Add an explicit, bounded rephrase/explain intent operating on prior verified evidence. |
+| Broad catalog dump | A03/1 requests a simple introduction and gets governance/quality context. B04/1 dumps syllabus weeks. E04/5 explicitly asks for just the course name and gets a refusal. | Lexical normalization, route-specific defaults, and top-N formatting matter more than a global tone prompt. Add target quantity and verbosity policy after grounding rather than removing evidence scope. |
+| Abrupt or repetitive transitions | C04/4 asks why the recommendation needs grades and budget and receives the same information request as C04/1. F01/3 asks about careers and gets a new program recommendation invitation. | Decision collection needs to preserve a pending question and explain why fields matter. Retain `responseFormatter.js:130` and typed envelope while deciding how to present it. |
+| Register and language mismatch | F01/1 and F01/4 code-switch but return unrelated English educational facts. F03/3 successfully resolves the named dean. | The language itself is not the only factor. Resolve intent under mixed lexical cues and choose a response language based on context, with consistent domain and attribution gates. |
+
+A bounded response policy would answer the current question first, keep one concrete reason or missing condition, then attach claim-level evidence. Allow a copy-edit pass only if it preserves facts, citations and uncertainty. Score naturalness per relevant context operation using independent reviewer rubrics. Do not award style improvement for factual drift. [Target design](15_TARGET_ARCHITECTURE.md) · [Regression strategy](18_TESTING_AND_REGRESSION_STRATEGY.md)

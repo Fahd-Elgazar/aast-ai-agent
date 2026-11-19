@@ -2,8 +2,17 @@ import { useState, useRef, useEffect } from 'react';
 import CollegeCard from '../components/CollegeCard';
 import VoiceRecorder from '../components/VoiceRecorder';
 import { Send, Bot, User, Loader2, Sparkles } from 'lucide-react';
-import { askAgent } from '../../services/agentService';
-import type { AgentDecisionResponse, DecisionLike, RecommendationCardData } from '../../types';
+import {
+  AdvisorRequestCoordinator,
+  askAgent,
+  getResponseConversationId,
+} from '../../services/agentService';
+import {
+  HttpTimeoutError,
+  isRequestCancellationError,
+} from '../../services/httpClient';
+import type { AgentDecisionResponse, RecommendationCardData } from '../../types';
+import { extractVerifiedRecommendations } from '../utils/recommendationTruth';
 
 const SUGGESTED_PROMPTS = [
   "Recommend the best AI specialization",
@@ -19,40 +28,8 @@ type Message = {
   recommendations?: RecommendationCardData[];
 };
 
-function decisionToRecommendation(decision: DecisionLike): RecommendationCardData {
-  const rawConf = decision?.confidence || 0;
-  const conf = rawConf > 1 ? rawConf : rawConf * 100;
-
-  return {
-    program_name: decision?.recommended_major || "Recommended Program",
-    college_name: decision?.college_name || "AAST Program",
-    score: conf,
-    match_type: decision?.match_type || "Recommended",
-    confidence_level: conf >= 80 ? "High" : conf >= 50 ? "Medium" : "Low",
-    estimated_semester_fee: decision?.estimated_semester_fee || 0,
-    currency: decision?.currency || "USD",
-    fee_mode: decision?.fee_mode || "Semester",
-    affordability_label: decision?.affordability_label || "Match",
-    score_breakdown: decision?.score_breakdown || {
-      interest_alignment: decision?.confidence_breakdown?.interests_score || conf,
-      affordability: 100,
-      employment_outlook: decision?.confidence_breakdown?.market_score || 85,
-      location_preference: 100,
-      career_flexibility: 90,
-      certificate_compatibility: decision?.confidence_breakdown?.grades_score || 100,
-      decision_data_completeness: 100,
-      missing_data_penalty: 0
-    },
-    warnings: decision?.warnings || (decision?.reason ? [decision.reason] : []),
-    career_roadmap: decision?.career_roadmap || null,
-    next_steps: decision?.next_steps || []
-  };
-}
-
 function extractRecommendations(response: AgentDecisionResponse): RecommendationCardData[] {
-  if (Array.isArray(response?.recommendations)) return response.recommendations;
-  if (response?.decision) return [decisionToRecommendation(response.decision)];
-  return [];
+  return extractVerifiedRecommendations(response);
 }
 
 export default function ChatPage() {
@@ -65,7 +42,10 @@ export default function ChatPage() {
   ]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [cid, setCid] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const cidRef = useRef<string | null>(null);
+  const requestCoordinatorRef = useRef(new AdvisorRequestCoordinator());
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -75,9 +55,21 @@ export default function ChatPage() {
     scrollToBottom();
   }, [messages, isTyping]);
 
+  useEffect(() => () => {
+    requestCoordinatorRef.current.cancel();
+  }, []);
+
+  const adoptCid = (nextCid: string) => {
+    cidRef.current = nextCid;
+    setCid(nextCid);
+  };
+
   const handleSend = async (overrideInput?: string) => {
     const textToSend = typeof overrideInput === 'string' ? overrideInput : input;
-    if (!textToSend.trim()) return;
+    if (!textToSend.trim() || isTyping) return;
+
+    const activeCid = cidRef.current;
+    const request = requestCoordinatorRef.current.begin(activeCid);
 
     const userMsg: Message = { id: Date.now().toString(), role: 'user', content: textToSend };
     setMessages(prev => [...prev, userMsg]);
@@ -85,7 +77,13 @@ export default function ChatPage() {
     setIsTyping(true);
 
     try {
-      const response = (await askAgent(textToSend)) as AgentDecisionResponse;
+      const response = (await askAgent(textToSend, activeCid, {
+        signal: request.controller.signal,
+      })) as AgentDecisionResponse;
+      if (!requestCoordinatorRef.current.isCurrent(request, cidRef.current)) return;
+
+      const responseCid = getResponseConversationId(response, activeCid);
+      if (responseCid && responseCid !== activeCid) adoptCid(responseCid);
 
       const replyMsg: Message = {
         id: (Date.now() + 1).toString(),
@@ -96,14 +94,18 @@ export default function ChatPage() {
 
       setMessages(prev => [...prev, replyMsg]);
     } catch (err) {
+      if (isRequestCancellationError(err)) return;
+      if (!requestCoordinatorRef.current.isCurrent(request, cidRef.current)) return;
       console.error("Orchestrator chat error:", err);
       setMessages(prev => [...prev, {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: "I could not connect to the orchestrator. Please make sure the Node service is running on port 8000."
+        content: err instanceof HttpTimeoutError
+          ? "The advisor did not respond before the request deadline. Please try again."
+          : "The advisor service could not complete this request. Please try again."
       }]);
     } finally {
-      setIsTyping(false);
+      if (requestCoordinatorRef.current.finish(request)) setIsTyping(false);
     }
   };
 
@@ -220,6 +222,10 @@ export default function ChatPage() {
       <div className="flex-none p-4 md:px-8 md:pb-8 md:pt-4 bg-gradient-to-t from-slate-50 via-slate-50 to-transparent">
         <div className="max-w-3xl mx-auto flex gap-3 relative items-center bg-white p-2 rounded-full shadow-lg border border-slate-200/60 focus-within:ring-2 focus-within:ring-aast-navy/20 focus-within:border-aast-navy transition-all">
           <VoiceRecorder
+            cid={cid}
+            onCidChange={adoptCid}
+            requestCoordinator={requestCoordinatorRef.current}
+            disabled={isTyping}
             onResponseFetched={(reply, recs, transcribedText) => {
               const newMessages: Message[] = [];
               if (transcribedText) {

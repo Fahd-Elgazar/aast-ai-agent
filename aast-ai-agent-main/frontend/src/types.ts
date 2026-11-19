@@ -8,6 +8,8 @@ export const DASHBOARD_VIEWS = {
 export type DashboardView = typeof DASHBOARD_VIEWS[keyof typeof DASHBOARD_VIEWS];
 
 export interface User {
+  subject: string;
+  role: "student" | "guest" | "admin";
   name: string;
   major: string;
   studentId: string;
@@ -16,13 +18,21 @@ export interface User {
 
 export interface ScoreBreakdown {
   interest_alignment: number;
+  interest_alignment_contribution: number;
   affordability: number;
+  affordability_contribution: number;
   employment_outlook: number;
+  employment_outlook_contribution: number;
   location_preference: number;
+  location_preference_contribution: number;
   career_flexibility: number;
+  career_flexibility_contribution: number;
   certificate_compatibility: number;
+  certificate_compatibility_contribution: number;
   decision_data_completeness: number;
+  weighted_subtotal: number;
   missing_data_penalty: number;
+  total: number;
 }
 
 export interface DecisionConfidenceBreakdown {
@@ -106,6 +116,17 @@ export interface ChatMessage {
   hasGraph?: boolean;
   source?: string;
   decision?: DecisionData;
+  citations?: EvidenceCitation[];
+}
+
+export interface EvidenceCitation {
+  id: string;
+  evidence_id?: string;
+  source: string;
+  title: string;
+  category?: string;
+  excerpt: string;
+  score?: number;
 }
 
 export interface ChatSession {

@@ -107,7 +107,7 @@ export default function CollegeCard({
             </span>
           </div>
           <div className="font-medium text-slate-800">
-            {fee ? `${fee.toLocaleString()} ${currency} / ${feeMode}` : 'Tuition Unavailable'}
+            {fee !== null ? `${fee.toLocaleString()} ${currency} / ${feeMode}` : 'Tuition Unavailable'}
           </div>
         </div>
       </div>
@@ -141,7 +141,7 @@ export default function CollegeCard({
               </div>
               <div className="min-h-[1.5rem] flex items-center gap-1.5 flex-wrap">
                 <span className="text-slate-500 text-xs">Skills:</span>
-                {careerRoadmap?.top_skills?.map((skill, i) => (
+                {careerRoadmap.top_skills.map((skill, i) => (
                   <button
                     key={i}
                     onClick={(e) => {
@@ -152,15 +152,15 @@ export default function CollegeCard({
                   >
                     {skill}
                   </button>
-                )) || <span className="text-slate-500 text-xs">Core Competencies</span>}
+                ))}
               </div>
               <div className="min-h-[1.5rem] flex items-center">
-                <span className="text-purple-700 font-bold">{careerRoadmap?.target_roles?.[0] || 'Industry Professional'}</span>
+                <span className="text-purple-700 font-bold">{careerRoadmap.target_roles[0]}</span>
               </div>
             </div>
           </div>
           <div className="mt-4 text-[11px] text-slate-500 italic bg-white p-2 rounded border border-slate-100 shadow-sm leading-relaxed">
-            "{careerRoadmap?.industry_demand || 'Stable market demand across regional sectors.'}"
+            "{careerRoadmap.industry_demand}"
           </div>
 
           {selectedSkill && careerRoadmap?.learning_path && (
@@ -175,7 +175,7 @@ export default function CollegeCard({
               <ul className="text-[11px] text-slate-600 space-y-1 list-disc pl-4 marker:text-blue-400">
                 {careerRoadmap.learning_path.find(p => p.skill === selectedSkill)?.steps?.map((step, idx) => (
                   <li key={idx} className="pl-1">{step}</li>
-                )) || <li>Specialized online courses and hands-on labs.</li>}
+                ))}
               </ul>
             </div>
           )}

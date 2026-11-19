@@ -6,8 +6,11 @@
   import { generateStableResponse } from "./ollamaService.js";
   import { expandAcademicQuery } from "./academicQueryNormalizer.js";
   import { runtimeMode } from "../config/runtimeMode.js";
+  import { resolveExactEntities } from "../config/goldenPathRegistry.js";
+  import { shouldQuarantineSemanticRetrieval } from "./kgEmbeddingReadiness.js";
 
   const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL || "http://localhost:11434";
+  const KG_EMBED_MODEL = process.env.KG_EMBED_MODEL || "nomic-embed-text";
 
   /* ============================================================
     OLLAMA EMBEDDING
@@ -31,7 +34,7 @@
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            model: "nomic-embed-text",
+            model: KG_EMBED_MODEL,
             prompt: text
           }),
           signal: controller.signal
@@ -2213,7 +2216,13 @@
     }
 
     if (relType === "HAS_COURSE") {
-      return `${sourceName} includes the ${targetName} course.`;
+      const courseCode = cleanValue(targetProperties.course_code);
+      const credits = Number(targetProperties.credits);
+      const details = [
+        courseCode ? `course code ${courseCode}` : "",
+        Number.isFinite(credits) ? `${credits} credits` : ""
+      ].filter(Boolean);
+      return `${sourceName} includes the ${targetName} course${details.length ? ` (${details.join(", ")})` : ""}.`;
     }
 
     if (relType === "HAS_PREREQUISITE") {
@@ -2233,7 +2242,15 @@
     }
 
     if (relType === "INCLUDES_PROGRAM") {
-      return `${sourceName} includes the ${targetName} program.`;
+      const duration = Number(targetProperties.study_duration_years);
+      const degree = cleanValue(targetProperties.degree_abbrev);
+      const discipline = cleanValue(targetProperties.discipline);
+      const details = [
+        Number.isFinite(duration) ? `${duration}-year` : "",
+        degree,
+        discipline ? `discipline: ${discipline}` : ""
+      ].filter(Boolean);
+      return `${sourceName} includes the ${targetName} program${details.length ? ` (${details.join(", ")})` : ""}.`;
     }
 
     if (relType === "HAS_ACCREDITATION") {
@@ -3080,6 +3097,460 @@
     };
   }
 
+  /* ============================================================
+    CLA-WOW-001 — EXACT ENTITY RETRIEVAL & EVIDENCE ALIGNMENT
+    Deterministic identity lookup that runs before vector search.
+    Exact results carry normalized subject/relation/object, entity
+    types, and an evidence id for later protected integration.
+  ============================================================ */
+
+  const EXACT_RETRIEVAL_INTENTS = new Set([
+    "GENERAL",
+    "PERSON",
+    "TEACHING",
+    "PREREQUISITE",
+    "PROGRAM",
+    "COMPARE",
+    "ADMIN"
+  ]);
+
+  const INTENT_EXPECTED_RELATIONS = {
+    TEACHING: ["TEACHES"],
+    PREREQUISITE: ["HAS_PREREQUISITE"]
+  };
+
+  // Mirrors normalizeCypherExpression(): lowercase and strip space/dash/underscore
+  // so JS-side surfaces line up with the Cypher-side normalized comparison.
+  function toExactSurfaceKey(value) {
+    return String(value || "").toLowerCase().replace(/[ \-_]/g, "");
+  }
+
+  export function normalizeEvidenceText(value) {
+    return String(value || "")
+      .toLowerCase()
+      .replace(/[^a-z0-9+]+/g, "")
+      .trim();
+  }
+
+  export function normalizeRelationToken(value) {
+    return String(value || "")
+      .toUpperCase()
+      .replace(/[\s-]+/g, "_")
+      .replace(/[^A-Z0-9_]/g, "");
+  }
+
+  export function expectedRelationsForIntent(intent) {
+    return INTENT_EXPECTED_RELATIONS[intent] || [];
+  }
+
+  export function expectedRelationsForQuery(query, intent = "GENERAL") {
+    const normalized = normalizeText(query);
+
+    if (/\b(teach|teaches|teaching|taught|instructs)\b|\banything else\b/.test(normalized)) {
+      return ["TEACHES"];
+    }
+    if (/\b(prerequisite|prerequisites|prereq|required before|before taking|complete before|must complete)\b/.test(normalized)) {
+      return ["HAS_PREREQUISITE"];
+    }
+    if (/\b(career|careers|career roles|jobs?|lead to|leads to)\b/.test(normalized)) {
+      return ["LEADS_TO", "CAREER_ALIGNMENT"];
+    }
+    if (/\b(recommended after|take after|study after|comes after|followed by|course follows|what follows|which course follows)\b/.test(normalized)) {
+      return ["RECOMMENDED_AFTER"];
+    }
+    if (/\b(dean of|who is the dean|college dean)\b/.test(normalized)) {
+      return ["DEAN_OF"];
+    }
+    if (/\b(another role|other role|hold.*role|head of|heads?|quality unit)\b/.test(normalized)) {
+      return ["HEAD_OF", "HEAD_OF_UNIT", "HAS_ROLE", "ACTS_AS"];
+    }
+    if (
+      /\b(compare|comparison|difference|differences|versus|vs)\b/.test(normalized) ||
+      /\b(which|what).*\b(program|programs)\b.*\b(include|includes|course)\b/.test(normalized) ||
+      /\bwhich of\b.*\b(include|includes|contain|contains)\b/.test(normalized) ||
+      /\b(curriculum|courses|subjects|modules)\b/.test(normalized)
+    ) {
+      return ["HAS_COURSE"];
+    }
+    if (/\b(bachelor|bachelors|bsc|degree).*\b(program|programs|offer|offers)\b|\bwhich programs\b/.test(normalized)) {
+      return ["OFFERS", "INCLUDES_PROGRAM"];
+    }
+
+    return expectedRelationsForIntent(intent);
+  }
+
+  export function shouldStopAfterExactRelationMiss({
+    exactTargetCount = 0,
+    expectedRelations = [],
+    alignedFactCount = 0,
+    retrievalError = false
+  } = {}) {
+    return Number(exactTargetCount) > 0 &&
+      Array.isArray(expectedRelations) &&
+      expectedRelations.length > 0 &&
+      (retrievalError || Number(alignedFactCount) === 0);
+  }
+
+  export function buildEntityEvidence({
+    subject,
+    subjectType = null,
+    subjectId = null,
+    relation,
+    object,
+    objectType = null,
+    objectId = null,
+    source = "exact",
+    confidence = 1
+  }) {
+    const normalizedSubject = normalizeEvidenceText(subject);
+    const normalizedObject = normalizeEvidenceText(object);
+    const normalizedRelation = normalizeRelationToken(relation) || "IDENTITY";
+
+    return {
+      evidence_id: `${source}:${normalizedSubject}|${normalizedRelation.toLowerCase()}|${normalizedObject}`,
+      subject: { id: subjectId ?? null, name: subject ?? null, type: subjectType ?? null },
+      relation: relation ?? null,
+      object: { id: objectId ?? null, name: object ?? null, type: objectType ?? null },
+      entity_types: { subject: subjectType ?? null, object: objectType ?? null },
+      normalized: {
+        subject: normalizedSubject,
+        relation: normalizedRelation,
+        object: normalizedObject
+      },
+      source,
+      confidence
+    };
+  }
+
+  // Rejects evidence whose subject/object identity or relation does not match the
+  // requested exact target. This is what stops semantically nearby but unrelated
+  // facts (e.g. Blockchain) from answering a query about another entity (e.g. ML).
+  export function alignEvidenceToTarget(evidence, target, options = {}) {
+    if (!evidence || !target) {
+      return { aligned: false, reason: "MISSING_INPUT", matched_role: null };
+    }
+
+    const expectedRelations = (options.expectedRelations || [])
+      .map(normalizeRelationToken)
+      .filter(Boolean);
+
+    const identitySurfaces = new Set(
+      [target.canonical_name, target.course_code, ...(target.aliases || [])]
+        .filter(Boolean)
+        .map(normalizeEvidenceText)
+        .filter(Boolean)
+    );
+    const identityIds = new Set(
+      [target.canonical_id].filter(Boolean).map((id) => String(id))
+    );
+
+    const subjectMatches =
+      identitySurfaces.has(evidence.normalized?.subject) ||
+      (evidence.subject?.id != null && identityIds.has(String(evidence.subject.id)));
+    const objectMatches =
+      identitySurfaces.has(evidence.normalized?.object) ||
+      (evidence.object?.id != null && identityIds.has(String(evidence.object.id)));
+
+    if (!subjectMatches && !objectMatches) {
+      return { aligned: false, reason: "TARGET_ABSENT", matched_role: null };
+    }
+
+    const matchedRole = subjectMatches ? "subject" : "object";
+
+    if (expectedRelations.length > 0) {
+      const relation = normalizeRelationToken(evidence.relation);
+      if (!expectedRelations.includes(relation)) {
+        return { aligned: false, reason: "RELATION_MISMATCH", matched_role: matchedRole };
+      }
+    }
+
+    return { aligned: true, reason: "OK", matched_role: matchedRole };
+  }
+
+  // Exact-only Cypher: identity MATCH by canonical id / normalized name / code with
+  // no vector index call, so an exact lookup never incurs an embedding model call.
+  function buildExactEntityCypher(resultLimit) {
+    const safeLimit = Math.max(1, Math.min(Number.parseInt(resultLimit, 10) || DEFAULT_CONTEXT_LIMIT, 50));
+    const identityFields = [
+      "subject.name",
+      "subject.full_name",
+      "subject.degree_name",
+      "subject.title",
+      "subject.code",
+      "subject.course_code"
+    ];
+    const identityPredicate = identityFields
+      .map(field => `${normalizeCypherExpression(field)} IN $exactSurfaces`)
+      .join("\n        OR ");
+
+    return `
+      MATCH (subject)
+      WHERE (size($exactIds) > 0 AND coalesce(subject.id, "") IN $exactIds)
+        OR ${identityPredicate}
+      OPTIONAL MATCH (subject)-[rel]-(object)
+      WITH subject, rel, object,
+        1.0 AS semanticScore,
+        1.0 AS boostedScore,
+        1.0 AS finalScore,
+        0 AS relationRank,
+        true AS nodeKeywordMatch,
+        true AS relatedKeywordMatch
+      ${returnProjection("subject", "object", "rel")}
+      LIMIT ${safeLimit}
+    `;
+  }
+
+  function buildEvidenceFromRecord(record, source = "exact") {
+    const nodeName = record.get("name");
+    const relatedName = record.get("relatedName");
+    const props = record.get("props") || {};
+    const relatedProps = record.get("relatedProps") || {};
+    const nodeId = props.id ?? null;
+    const relatedId = relatedProps.id ?? null;
+    const relType = record.get("relType");
+    const relSourceName = record.get("relSourceName");
+    const relSourceLabel = record.get("relSourceLabel");
+    const relTargetName = record.get("relTargetName");
+    const relTargetLabel = record.get("relTargetLabel");
+
+    if (!relType || !relTargetName) {
+      return buildEntityEvidence({
+        subject: nodeName,
+        subjectType: record.get("label"),
+        subjectId: nodeId,
+        relation: "IDENTITY",
+        object: nodeName,
+        objectType: record.get("label"),
+        objectId: nodeId,
+        source
+      });
+    }
+
+    const subjectId = relSourceName === nodeName ? nodeId : (relSourceName === relatedName ? relatedId : null);
+    const objectId = relTargetName === nodeName ? nodeId : (relTargetName === relatedName ? relatedId : null);
+
+    return buildEntityEvidence({
+      subject: relSourceName,
+      subjectType: relSourceLabel,
+      subjectId,
+      relation: relType,
+      object: relTargetName,
+      objectType: relTargetLabel,
+      objectId,
+      source
+    });
+  }
+
+  export async function runExactEntityRetrieval(session, target, { resultLimit, expectedRelations = [] } = {}) {
+    const exactSurfaces = Array.from(new Set(
+      [target.canonical_name, target.course_code, ...(target.aliases || [])]
+        .filter(Boolean)
+        .map(toExactSurfaceKey)
+        .filter(Boolean)
+    ));
+    const exactIds = Array.from(new Set([target.canonical_id].filter(Boolean).map(String)));
+
+    const records = await runRetrieval(session, buildExactEntityCypher(resultLimit), { exactSurfaces, exactIds });
+
+    const facts = [];
+    let rejected = 0;
+    for (const record of records) {
+      const fact = formatRecordFact(record);
+      const evidence = buildEvidenceFromRecord(record, "exact");
+      const alignment = alignEvidenceToTarget(evidence, target, { expectedRelations });
+      // Additive metadata: the existing fact fields stay backward-compatible.
+      fact.evidence = evidence;
+      fact.evidence_alignment = alignment;
+      fact.metadata = {
+        ...(fact.metadata || {}),
+        evidence_id: evidence.evidence_id,
+        evidence_subject: evidence.subject,
+        evidence_relation: evidence.relation,
+        evidence_object: evidence.object,
+        evidence_normalized: evidence.normalized,
+        evidence_alignment: alignment,
+        exact_entity_id: target.canonical_id,
+        exact_entity_name: target.canonical_name,
+        exact_entity_type: target.entity_type,
+        graph: fact.graph || null
+      };
+      if (alignment.aligned) {
+        facts.push(fact);
+      } else {
+        rejected += 1;
+      }
+    }
+
+    return { facts: dedupeFacts(facts), rejected, recordCount: records.length };
+  }
+
+  function mergeExactTargetResults(results) {
+    const buckets = results.map(result => result.facts.slice());
+    const merged = [];
+    let remaining = true;
+
+    while (remaining) {
+      remaining = false;
+      for (const bucket of buckets) {
+        if (bucket.length > 0) {
+          merged.push(bucket.shift());
+          remaining = true;
+        }
+      }
+    }
+
+    return dedupeFacts(merged);
+  }
+
+  export async function runExactEntitiesRetrieval(session, targets, options = {}) {
+    const uniqueTargets = Array.from(
+      new Map(
+        (targets || [])
+          .filter(Boolean)
+          .map(target => [target.canonical_id || target.canonical_name, target])
+      ).values()
+    );
+    const results = [];
+
+    for (const target of uniqueTargets) {
+      results.push(await runExactEntityRetrieval(session, target, options));
+    }
+
+    return {
+      facts: mergeExactTargetResults(results),
+      rejected: results.reduce((sum, result) => sum + result.rejected, 0),
+      recordCount: results.reduce((sum, result) => sum + result.recordCount, 0),
+      targetCount: uniqueTargets.length
+    };
+  }
+
+  const PROGRAM_COMPARISON_HIGHLIGHTS = Object.freeze({
+    "Intelligent Systems": [
+      "Machine Learning",
+      "Deep Learning",
+      "Natural Language Processing",
+      "Computer Vision",
+      "Computing Algorithms"
+    ],
+    "Data Science": [
+      "Fundamentals of Data Science",
+      "Statistics for Data Science",
+      "Data Mining",
+      "Big Data Analytics",
+      "Database Systems Design",
+      "Information Retrieval & Search Engines"
+    ]
+  });
+
+  function factQuestionOverlap(fact, query) {
+    const queryTokens = new Set(
+      normalizeText(query)
+        .split(/\s+/)
+        .filter(token => token.length > 3)
+    );
+    const factTokens = new Set(
+      normalizeText(`${fact.relSourceName || ""} ${fact.relTargetName || ""}`)
+        .split(/\s+/)
+        .filter(token => token.length > 3)
+    );
+    return [...queryTokens].filter(token => factTokens.has(token)).length;
+  }
+
+  export function selectExactFactsForQuery(facts, query, intent, limit) {
+    const normalized = normalizeText(query);
+
+    if (
+      intent === "PREREQUISITE" ||
+      /\b(prerequisite|prerequisites|required before|before taking|complete before|must complete)\b/.test(normalized)
+    ) {
+      const requestedCourses = new Set(
+        resolveExactEntities(query)
+          .filter(target => target.entity_type === "course")
+          .map(target => target.canonical_name)
+      );
+      const prerequisites = facts.filter(
+        fact =>
+          fact.relType === "HAS_PREREQUISITE" &&
+          requestedCourses.has(fact.relSourceName)
+      );
+      if (prerequisites.length > 0) return dedupeFacts(prerequisites);
+    }
+
+    if (
+      intent === "COMPARE" ||
+      /\b(compare|comparison|difference|differences|versus|vs)\b/.test(normalized)
+    ) {
+      const highlighted = [];
+      for (const [program, courseNames] of Object.entries(PROGRAM_COMPARISON_HIGHLIGHTS)) {
+        for (const courseName of courseNames) {
+          const match = facts.find(
+            fact =>
+              fact.relType === "HAS_COURSE" &&
+              fact.relSourceName === program &&
+              fact.relTargetName === courseName
+          );
+          if (match) highlighted.push(match);
+        }
+      }
+      if (highlighted.length > 0) return dedupeFacts(highlighted);
+    }
+
+    if (/\b(recommended after|take after|study after|comes after|followed by|course follows|what follows|which course follows)\b/.test(normalized)) {
+      const recommended = facts.filter(fact => fact.relType === "RECOMMENDED_AFTER");
+      if (recommended.length > 1) {
+        const maxOverlap = Math.max(...recommended.map(fact => factQuestionOverlap(fact, query)));
+        const best = recommended.filter(fact => factQuestionOverlap(fact, query) === maxOverlap);
+        const supporting = facts.filter(fact =>
+          best.some(
+            selected =>
+              fact.relType === "HAS_COURSE" &&
+              fact.relTargetName === selected.relSourceName
+          )
+        );
+        return dedupeFacts([...best, ...supporting]);
+      }
+    }
+
+    if (/\b(which|what|does)\b.*\b(include|includes|contain|contains)\b/.test(normalized)) {
+      const requestedCourses = new Set(
+        resolveExactEntities(query)
+          .filter(target => target.entity_type === "course")
+          .map(target => target.canonical_name)
+      );
+      const membership = facts.filter(
+        fact =>
+          fact.relType === "HAS_COURSE" &&
+          requestedCourses.has(fact.relTargetName)
+      );
+      if (membership.length > 0) return dedupeFacts(membership);
+    }
+
+    if (/\b(besides|anything else|what else)\b/.test(normalized)) {
+      const excludedNames = new Set(
+        resolveExactEntities(query)
+          .filter(target => target.entity_type === "course")
+          .map(target => target.canonical_name)
+      );
+      const alternatives = facts.filter(
+        fact => fact.relType !== "TEACHES" || !excludedNames.has(fact.relTargetName)
+      );
+      if (alternatives.length > 0) {
+        return selectTopQualityFacts(alternatives, intent, limit);
+      }
+    }
+
+    if (/\b(another role|other role|hold.*role)\b/.test(normalized)) {
+      const qualityRole = facts.filter(
+        fact =>
+          ["HEAD_OF", "HEAD_OF_UNIT"].includes(fact.relType) &&
+          fact.relTargetName === "Quality Unit"
+      );
+      if (qualityRole.length > 0) return dedupeFacts(qualityRole);
+    }
+
+    return selectTopQualityFacts(facts, intent, limit);
+  }
+
   export async function fetchNeo4jContext(query, intent = "ALL", limit = DEFAULT_CONTEXT_LIMIT, requestId = "none", lastMessages = "", options = {}) {
     const stopQueryTimer = startTimer();
     incrementMetric("retrieval.query_total");
@@ -3096,9 +3567,13 @@
     const requestedProtectedIntent = ["TEACHING", "PREREQUISITE", "ADMIN", "PERSON"].includes(normalizedRequestedIntent)
       ? normalizedRequestedIntent
       : null;
+    const requestedExactIntent = ["PROGRAM", "COMPARE"].includes(normalizedRequestedIntent)
+      ? normalizedRequestedIntent
+      : null;
     const detectedIntent =
       requestedOntologyIntent ||
       requestedProtectedIntent ||
+      requestedExactIntent ||
       exactOntologyEntity?.intent ||
       detectIntent(retrievalQuery, intent);
     const normalizedRetrievalQuery = normalizeText(retrievalQuery);
@@ -3197,6 +3672,175 @@
         }
       }
 
+      // CLA-WOW-001: exact identity retrieval runs before any embedding/vector search.
+      // Resolve every named entity so comparisons and "which of these" questions do
+      // not silently collapse onto the first registry match.
+      const exactTargets = EXACT_RETRIEVAL_INTENTS.has(detectedIntent)
+        ? [
+            ...resolveExactEntities(retrievalQuery),
+            ...resolveExactEntities(query)
+          ].filter(
+            (target, index, all) =>
+              all.findIndex(candidate => candidate.canonical_id === target.canonical_id) === index
+          )
+        : [];
+      const exactTarget = exactTargets[0] || null;
+
+      if (exactTargets.length > 0) {
+        const exactQuestion = query;
+        const expectedRelations = expectedRelationsForQuery(exactQuestion, detectedIntent);
+        try {
+          // Use the user's complete standalone question for relation inference and
+          // selection. An ontology alias may shorten retrievalQuery to a surface
+          // such as "Natural Language Processing track", which must not erase
+          // qualifiers such as "besides", "recommended after", or "other role".
+          const exact = await runExactEntitiesRetrieval(session, exactTargets, {
+            resultLimit: Math.max(resultLimit, 50),
+            expectedRelations
+          });
+
+          if (exact.facts.length > 0) {
+            if (expectedRelations.includes("RECOMMENDED_AFTER")) {
+              const recommendedTargets = exact.facts
+                .filter(fact => fact.relType === "RECOMMENDED_AFTER")
+                .sort((a, b) => factQuestionOverlap(b, exactQuestion) - factQuestionOverlap(a, exactQuestion))
+                .slice(0, 1)
+                .flatMap(fact => resolveExactEntities(fact.relSourceName || ""));
+
+              if (recommendedTargets.length > 0) {
+                const programEvidence = await runExactEntitiesRetrieval(session, recommendedTargets, {
+                  resultLimit: 50,
+                  expectedRelations: ["HAS_COURSE"]
+                });
+                exact.facts = dedupeFacts([...exact.facts, ...programEvidence.facts]);
+                exact.rejected += programEvidence.rejected;
+                exact.recordCount += programEvidence.recordCount;
+              }
+            }
+
+            const selectedFacts = selectExactFactsForQuery(
+              exact.facts,
+              exactQuestion,
+              detectedIntent,
+              effectiveLimit
+            );
+            const chosen = selectedFacts.length > 0 ? selectedFacts : exact.facts.slice(0, effectiveLimit);
+            const confidence = Math.min(chosen[0]?.score || chosen[0]?.baseScore || 0.95, 0.99);
+            const answer = synthesizeAnswer(chosen);
+
+            incrementMetric("knowledge_graph.exact_bypass");
+            console.log(
+              `[KG_EXACT][${requestId}] intent=${detectedIntent} entities=${exactTargets.map(target => target.canonical_id).join(",")} ` +
+              `facts=${chosen.length} rejected=${exact.rejected} model_call=false`
+            );
+
+            return buildGraphResponse(answer, confidence, chosen, true, false, {
+              detected_intent: detectedIntent,
+              retrieval_mode: "exact_entity",
+              semantic_fallback_used: false,
+              exact_entity_id: exactTarget.canonical_id,
+              exact_entity_ids: exactTargets.map(target => target.canonical_id),
+              exact_target_count: exact.targetCount,
+              exact_entity_type: exactTarget.entity_type,
+              exact_matched_surface: exactTarget.matched_surface,
+              exact_expected_relations: expectedRelations,
+              exact_alignment_rejected: exact.rejected,
+              keyword_count: keywords.length,
+              content_keyword_count: contentKeywords.length,
+              ontology_expansions: queryExpansion.expansions || [],
+              exact_entity: exactOntologyEntity,
+              requested_limit: requestedLimit,
+              effective_limit: effectiveLimit,
+              selected_fact_count: chosen.length,
+              top_fact_score: chosen[0]?.score || 0,
+              graph_refinement_skipped: true
+            });
+          }
+
+          if (shouldStopAfterExactRelationMiss({
+            exactTargetCount: exactTargets.length,
+            expectedRelations,
+            alignedFactCount: exact.facts.length
+          })) {
+            incrementMetric("retrieval.exact_relation_miss");
+            console.warn(
+              `[KG_EXACT_RELATION_MISS][${requestId}] intent=${detectedIntent} ` +
+              `entities=${exactTargets.map(target => target.canonical_id).join(",")} ` +
+              `relations=${expectedRelations.join(",")} model_call=false`
+            );
+            return buildGraphResponse(NO_RESULT_MESSAGE, 0, [], isDeterministicKG, false, {
+              detected_intent: detectedIntent,
+              retrieval_mode: "exact_relation_miss",
+              semantic_fallback_used: false,
+              failure_reason: "EXACT_RELATION_NOT_FOUND",
+              exact_entity_id: exactTarget.canonical_id,
+              exact_entity_ids: exactTargets.map(target => target.canonical_id),
+              exact_expected_relations: expectedRelations,
+              exact_alignment_rejected: exact.rejected,
+              requested_limit: requestedLimit,
+              effective_limit: effectiveLimit,
+              selected_fact_count: 0,
+              graph_refinement_skipped: true
+            });
+          }
+
+          console.warn(
+            `[KG_EXACT_EMPTY][${requestId}] intent=${detectedIntent} entities=${exactTargets.map(target => target.canonical_id).join(",")} ` +
+            `records=${exact.recordCount} rejected=${exact.rejected} -> vector fallback`
+          );
+        } catch (err) {
+          incrementMetric("retrieval.exact_error");
+          const exactRelationGuarded = shouldStopAfterExactRelationMiss({
+            exactTargetCount: exactTargets.length,
+            expectedRelations,
+            retrievalError: true
+          });
+          console.warn(
+            `[KG_EXACT_EXCEPTION][${requestId}] intent=${detectedIntent} ` +
+            `entity=${exactTarget?.canonical_id} error="${err.message}" ` +
+            `next=${exactRelationGuarded ? "exact_relation_error" : "vector_fallback"}`
+          );
+          if (exactRelationGuarded) {
+            return buildGraphResponse(NO_RESULT_MESSAGE, 0, [], isDeterministicKG, false, {
+              detected_intent: detectedIntent,
+              retrieval_mode: "exact_relation_error",
+              semantic_fallback_used: false,
+              failure_reason: "EXACT_RELATION_RETRIEVAL_ERROR",
+              exact_entity_id: exactTarget.canonical_id,
+              exact_entity_ids: exactTargets.map(target => target.canonical_id),
+              exact_expected_relations: expectedRelations,
+              requested_limit: requestedLimit,
+              effective_limit: effectiveLimit,
+              selected_fact_count: 0,
+              graph_refinement_skipped: true
+            });
+          }
+        }
+
+        // Exact intent with no aligned exact fact: quarantine semantic search when the
+        // embedding space is known-degenerate. Vector fallback stays available only for
+        // non-exact targets or when embedding diversity is valid.
+        const embeddingDiversity = options?.embeddingDiversity || null;
+        if (shouldQuarantineSemanticRetrieval({ isExactIntent: true, diversity: embeddingDiversity })) {
+          incrementMetric("retrieval.semantic_quarantined");
+          console.warn(
+            `[KG_SEMANTIC_QUARANTINE][${requestId}] intent=${detectedIntent} ` +
+            `entity=${exactTarget.canonical_id} reason=${embeddingDiversity?.reason || "LOW_DIVERSITY"}`
+          );
+          return buildGraphResponse(NO_RESULT_MESSAGE, 0, [], isDeterministicKG, false, {
+            detected_intent: detectedIntent,
+            retrieval_mode: "exact_quarantine",
+            semantic_fallback_used: false,
+            failure_reason: "SEMANTIC_QUARANTINED",
+            semantic_quarantine_reason: embeddingDiversity?.reason || "LOW_DIVERSITY",
+            exact_entity_id: exactTarget.canonical_id,
+            requested_limit: requestedLimit,
+            effective_limit: effectiveLimit,
+            selected_fact_count: 0
+          });
+        }
+      }
+
       const conversationContext = normalizeLastMessages(lastMessages);
       const enrichedQuery = `Conversation:
   ${conversationContext}
@@ -3208,7 +3852,7 @@
       // Log its outcome per request so a cold/absent embed model is attributable.
       const embedStart = Date.now();
       const vector = await embed(embeddingInput, requestId);
-      console.log(`[KG_EMBED][${requestId}] intent=${detectedIntent} ok=true durationMs=${Date.now() - embedStart} model=nomic-embed-text`);
+      console.log(`[KG_EMBED][${requestId}] intent=${detectedIntent} ok=true durationMs=${Date.now() - embedStart} model=${KG_EMBED_MODEL}`);
 
       const baseParams = {
         vector,

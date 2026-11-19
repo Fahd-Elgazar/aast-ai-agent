@@ -10,8 +10,14 @@ const __dirname = path.dirname(__filename);
 
 export const MAX_CONTEXT_TURNS = Number(process.env.MAX_CONTEXT_TURNS || 12);
 const MAX_MEMORY_SUBJECTS = 5;
+const MAX_MEMORY_ENTITIES = 6;
+const MAX_EVIDENCE_ENTITIES_PER_TURN = 64;
+const MAX_MEMORY_TOPICS = 5;
+const MAX_SELECTED_TARGETS = 3;
+const MAX_VERIFIED_TURNS = 12;
 const MAX_MEMORY_FIELD_CHARS = 140;
 const MAX_MEMORY_SUMMARY_CHARS = 220;
+const MAX_VERIFIED_ANSWER_CHARS = 1200;
 
 const DATA_FILE = process.env.CONVERSATIONS_FILE ||
   path.resolve(__dirname, "../data/conversations.json");
@@ -22,7 +28,7 @@ const SYSTEM_PROMPT =
 const persistence = createJsonPersistence({
   filePath: DATA_FILE,
   defaultValue: () => ({
-    version: 1,
+    version: 2,
     updatedAt: new Date().toISOString(),
     conversations: {}
   }),
@@ -32,6 +38,13 @@ const persistence = createJsonPersistence({
 
 const conversations = new Map();
 let loaded = false;
+
+export class ConversationOwnershipError extends Error {
+  constructor() {
+    super("Conversation not found");
+    this.name = "ConversationOwnershipError";
+  }
+}
 
 export async function loadConversations() {
   const store = await persistence.load();
@@ -73,14 +86,17 @@ export function normalizeConversationId(cid) {
   return trimmed;
 }
 
-export async function getConversation(cid) {
+export async function getConversation(cid, { ownerId } = {}) {
   ensureLoaded();
 
+  const owner = requireOwnerId(ownerId);
   const normalizedCid = normalizeConversationId(cid) || makeConversationId();
   let convo = conversations.get(normalizedCid);
 
+  if (convo && convo.ownerId !== owner) throw new ConversationOwnershipError();
+
   if (!convo) {
-    convo = buildFreshConversation(normalizedCid);
+    convo = buildFreshConversation(normalizedCid, owner);
     conversations.set(normalizedCid, convo);
     persistSoon();
   }
@@ -92,28 +108,35 @@ export async function getConversation(cid) {
   return convo;
 }
 
-export function createConversation() {
+export function createConversation({ ownerId } = {}) {
   ensureLoaded();
 
+  const owner = requireOwnerId(ownerId);
   const cid = makeConversationId();
-  const convo = buildFreshConversation(cid);
+  const convo = buildFreshConversation(cid, owner);
   conversations.set(cid, convo);
   persistSoon();
 
   return serializeConversation(convo, { includeMessages: true });
 }
 
-export async function saveConversation(cid, convo) {
+export async function saveConversation(cid, convo, { ownerId } = {}) {
   ensureLoaded();
 
+  const owner = requireOwnerId(ownerId);
   const normalizedCid = normalizeConversationId(cid);
   if (!normalizedCid || !convo) return null;
 
-  const existing = conversations.get(normalizedCid) || buildFreshConversation(normalizedCid);
+  const stored = conversations.get(normalizedCid);
+  if (stored && stored.ownerId !== owner) throw new ConversationOwnershipError();
+  if (convo.ownerId && convo.ownerId !== owner) throw new ConversationOwnershipError();
+
+  const existing = stored || buildFreshConversation(normalizedCid, owner);
   const updated = normalizeConversation(normalizedCid, {
     ...existing,
     ...convo,
     cid: normalizedCid,
+    ownerId: owner,
     updatedAt: new Date().toISOString(),
     lastActive: Date.now()
   });
@@ -124,13 +147,18 @@ export async function saveConversation(cid, convo) {
   return updated;
 }
 
-export async function pushTurn(cid, convo, role, content) {
+export async function pushTurn(cid, convo, role, content, { ownerId } = {}) {
   ensureLoaded();
 
+  const owner = requireOwnerId(ownerId);
   const normalizedCid = normalizeConversationId(cid);
   if (!normalizedCid) throw new Error("Invalid conversation id");
 
-  const target = conversations.get(normalizedCid) || normalizeConversation(normalizedCid, convo);
+  const stored = conversations.get(normalizedCid);
+  if (stored && stored.ownerId !== owner) throw new ConversationOwnershipError();
+  if (convo?.ownerId && convo.ownerId !== owner) throw new ConversationOwnershipError();
+
+  const target = stored || normalizeConversation(normalizedCid, { ...convo, ownerId: owner });
   if (!conversations.has(normalizedCid)) conversations.set(normalizedCid, target);
 
   const message = normalizeMessage({ role, content }, target.updatedAt);
@@ -145,25 +173,36 @@ export async function pushTurn(cid, convo, role, content) {
   return target;
 }
 
-export function getConversationMemory(cid) {
+export function getConversationMemory(cid, { ownerId } = {}) {
   ensureLoaded();
 
+  const owner = requireOwnerId(ownerId);
   const normalizedCid = normalizeConversationId(cid);
   const convo = normalizedCid ? conversations.get(normalizedCid) : null;
+  if (convo && convo.ownerId !== owner) throw new ConversationOwnershipError();
   return cloneMemory(convo?.conversationMemory);
 }
 
-export async function updateConversationMemoryFromTurn(cid, convo, turn = {}) {
+export async function updateConversationMemoryFromTurn(cid, convo, turn = {}, { ownerId } = {}) {
   ensureLoaded();
 
+  const owner = requireOwnerId(ownerId);
   const normalizedCid = normalizeConversationId(cid);
   if (!normalizedCid) throw new Error("Invalid conversation id");
 
-  const target = conversations.get(normalizedCid) || normalizeConversation(normalizedCid, convo);
+  const stored = conversations.get(normalizedCid);
+  if (stored && stored.ownerId !== owner) throw new ConversationOwnershipError();
+  if (convo?.ownerId && convo.ownerId !== owner) throw new ConversationOwnershipError();
+
+  const target = stored || normalizeConversation(normalizedCid, { ...convo, ownerId: owner });
   if (!conversations.has(normalizedCid)) conversations.set(normalizedCid, target);
 
   const current = normalizeConversationMemory(target.conversationMemory);
-  const update = buildLightweightMemoryUpdate(current, turn);
+  const lastUserTurn = [...target.messages].reverse().find(message => message.role === "user");
+  const update = buildLightweightMemoryUpdate(current, {
+    ...turn,
+    turnId: turn.turnId || turn.userTurnId || lastUserTurn?.id || null
+  });
   target.conversationMemory = normalizeConversationMemory({
     ...current,
     ...update
@@ -176,13 +215,17 @@ export async function updateConversationMemoryFromTurn(cid, convo, turn = {}) {
   return cloneMemory(target.conversationMemory);
 }
 
-export async function updateSystemPrompt(cid, convo, content) {
+export async function updateSystemPrompt(cid, convo, content, { ownerId } = {}) {
   ensureLoaded();
 
+  const owner = requireOwnerId(ownerId);
   const normalizedCid = normalizeConversationId(cid);
   if (!normalizedCid) throw new Error("Invalid conversation id");
 
-  const target = conversations.get(normalizedCid) || normalizeConversation(normalizedCid, convo);
+  const stored = conversations.get(normalizedCid);
+  if (stored && stored.ownerId !== owner) throw new ConversationOwnershipError();
+  if (convo?.ownerId && convo.ownerId !== owner) throw new ConversationOwnershipError();
+  const target = stored || normalizeConversation(normalizedCid, { ...convo, ownerId: owner });
   const systemIdx = target.messages.findIndex(m => m.role === "system");
   const message = normalizeMessage({ role: "system", content }, target.updatedAt);
 
@@ -197,12 +240,14 @@ export async function updateSystemPrompt(cid, convo, content) {
   return target;
 }
 
-export function getConversationContext(cid, maxTurns = MAX_CONTEXT_TURNS) {
+export function getConversationContext(cid, maxTurns = MAX_CONTEXT_TURNS, { ownerId } = {}) {
   ensureLoaded();
 
+  const owner = requireOwnerId(ownerId);
   const normalizedCid = normalizeConversationId(cid);
   const convo = normalizedCid ? conversations.get(normalizedCid) : null;
-  if (!convo) return buildFreshConversation(normalizedCid || makeConversationId()).messages;
+  if (convo && convo.ownerId !== owner) throw new ConversationOwnershipError();
+  if (!convo) return buildFreshConversation(normalizedCid || makeConversationId(), owner).messages;
 
   const system = convo.messages.find(m => m.role === "system") ||
     normalizeMessage({ role: "system", content: SYSTEM_PROMPT }, convo.createdAt);
@@ -215,11 +260,13 @@ export function getConversationContext(cid, maxTurns = MAX_CONTEXT_TURNS) {
   }));
 }
 
-export function listConversations({ search = "" } = {}) {
+export function listConversations({ search = "", ownerId } = {}) {
   ensureLoaded();
 
+  const owner = requireOwnerId(ownerId);
   const q = search.trim().toLowerCase();
   return [...conversations.values()]
+    .filter(convo => convo.ownerId === owner)
     .filter(convo => {
       if (!q) return true;
       return `${convo.title} ${getPreview(convo)}`.toLowerCase().includes(q);
@@ -231,22 +278,24 @@ export function listConversations({ search = "" } = {}) {
     .map(convo => serializeConversation(convo));
 }
 
-export function getConversationById(cid, { includeMessages = true } = {}) {
+export function getConversationById(cid, { includeMessages = true, ownerId } = {}) {
   ensureLoaded();
 
+  const owner = requireOwnerId(ownerId);
   const normalizedCid = normalizeConversationId(cid);
   if (!normalizedCid) return null;
 
   const convo = conversations.get(normalizedCid);
-  return convo ? serializeConversation(convo, { includeMessages }) : null;
+  return convo?.ownerId === owner ? serializeConversation(convo, { includeMessages }) : null;
 }
 
-export async function renameConversation(cid, title) {
+export async function renameConversation(cid, title, { ownerId } = {}) {
   ensureLoaded();
 
+  const owner = requireOwnerId(ownerId);
   const normalizedCid = normalizeConversationId(cid);
   const convo = normalizedCid ? conversations.get(normalizedCid) : null;
-  if (!convo) return null;
+  if (!convo || convo.ownerId !== owner) return null;
 
   const cleanTitle = sanitizeTitle(title);
   if (!cleanTitle) throw new Error("Conversation title is required");
@@ -262,12 +311,13 @@ export async function renameConversation(cid, title) {
   return serializeConversation(convo);
 }
 
-export async function pinConversation(cid, pinned = true) {
+export async function pinConversation(cid, pinned = true, { ownerId } = {}) {
   ensureLoaded();
 
+  const owner = requireOwnerId(ownerId);
   const normalizedCid = normalizeConversationId(cid);
   const convo = normalizedCid ? conversations.get(normalizedCid) : null;
-  if (!convo) return null;
+  if (!convo || convo.ownerId !== owner) return null;
 
   convo.pinned = Boolean(pinned);
   convo.updatedAt = new Date().toISOString();
@@ -276,19 +326,22 @@ export async function pinConversation(cid, pinned = true) {
   return serializeConversation(convo);
 }
 
-export async function deleteConversation(cid) {
+export async function deleteConversation(cid, { ownerId } = {}) {
   ensureLoaded();
 
+  const owner = requireOwnerId(ownerId);
   const normalizedCid = normalizeConversationId(cid);
   if (!normalizedCid) return false;
 
+  const convo = conversations.get(normalizedCid);
+  if (!convo || convo.ownerId !== owner) return false;
   const deleted = conversations.delete(normalizedCid);
   if (deleted) persistSoon();
   return deleted;
 }
 
-export function getConversationSummary(cid) {
-  return getConversationById(cid, { includeMessages: false });
+export function getConversationSummary(cid, { ownerId } = {}) {
+  return getConversationById(cid, { includeMessages: false, ownerId });
 }
 
 export function getConversationStats() {
@@ -344,10 +397,11 @@ function normalizeConversationCollection(store) {
   return {};
 }
 
-function buildFreshConversation(cid) {
+function buildFreshConversation(cid, ownerId) {
   const now = new Date().toISOString();
   return {
     cid,
+    ownerId: requireOwnerId(ownerId),
     title: DEFAULT_TITLE,
     titleGenerated: false,
     titleSource: "auto",
@@ -378,6 +432,7 @@ function normalizeConversation(cid, raw = {}) {
   return {
     ...raw,
     cid,
+    ownerId: normalizeOwnerId(raw.ownerId),
     title: sanitizeTitle(raw.title) || DEFAULT_TITLE,
     titleGenerated: Boolean(raw.titleGenerated),
     titleSource: raw.titleSource || (raw.titleGenerated ? "auto" : "auto"),
@@ -394,21 +449,45 @@ function normalizeConversation(cid, raw = {}) {
 function buildEmptyConversationMemory() {
   return {
     lastTopic: null,
+    recentTopics: [],
     lastEntity: null,
+    recentEntities: [],
+    selectedTargets: [],
     lastIntent: null,
     recentSubjects: [],
-    lastAssistantSummary: null
+    lastAssistantSummary: null,
+    lastVerifiedAssistantAnswer: null,
+    verifiedTurns: []
   };
 }
 
 function normalizeConversationMemory(memory = {}) {
   const raw = memory && typeof memory === "object" ? memory : {};
+  const legacyLastEntity = normalizeMemoryEntity(raw.lastEntity);
+  const recentEntities = normalizeRecentEntities(
+    Array.isArray(raw.recentEntities)
+      ? raw.recentEntities
+      : Array.isArray(raw.entities)
+        ? raw.entities
+        : legacyLastEntity
+          ? [legacyLastEntity]
+          : []
+  );
+
   return {
     lastTopic: normalizeMemoryText(raw.lastTopic),
-    lastEntity: normalizeMemoryEntity(raw.lastEntity),
+    recentTopics: normalizeRecentTopics(raw.recentTopics, raw.lastTopic),
+    lastEntity: legacyLastEntity || recentEntities[0] || null,
+    recentEntities,
+    selectedTargets: normalizeRecentEntities(raw.selectedTargets, MAX_SELECTED_TARGETS),
     lastIntent: normalizeMemoryText(raw.lastIntent),
     recentSubjects: normalizeRecentSubjects(raw.recentSubjects),
-    lastAssistantSummary: normalizeMemoryText(raw.lastAssistantSummary, MAX_MEMORY_SUMMARY_CHARS)
+    lastAssistantSummary: normalizeMemoryText(raw.lastAssistantSummary, MAX_MEMORY_SUMMARY_CHARS),
+    lastVerifiedAssistantAnswer: normalizeMemoryText(
+      raw.lastVerifiedAssistantAnswer,
+      MAX_VERIFIED_ANSWER_CHARS
+    ),
+    verifiedTurns: normalizeVerifiedTurns(raw.verifiedTurns)
   };
 }
 
@@ -423,20 +502,191 @@ function normalizeMemoryEntity(entity) {
   if (!entity) return null;
 
   if (typeof entity === "string") {
-    const value = normalizeMemoryText(entity);
-    return value ? { type: "entity", value, source: "legacy" } : null;
+    return makeMemoryEntity("entity", entity, "legacy");
   }
 
   if (typeof entity !== "object") return null;
 
-  const value = normalizeMemoryText(entity.value || entity.name || entity.label);
-  if (!value) return null;
+  const displayValue = normalizeMemoryText(
+    entity.displayValue ||
+    entity.value ||
+    entity.name ||
+    entity.label ||
+    entity.canonicalValue
+  );
+  if (!displayValue) return null;
+
+  const evidenceSource = normalizeMemoryText(
+    entity.evidenceSource || entity.source || "session",
+    40
+  ) || "session";
+  const relatedEntity = normalizeRelatedEntity(entity.relatedEntity || entity.related);
 
   return {
     type: normalizeMemoryText(entity.type || "entity", 40) || "entity",
-    value,
-    source: normalizeMemoryText(entity.source || "session", 40) || "session"
+    canonicalValue: normalizeCanonicalEntityValue(entity.canonicalValue || displayValue),
+    displayValue,
+    value: displayValue,
+    relation: normalizeMemoryRelation(entity.relation),
+    relationRole: ["source", "target"].includes(normalizeMemoryText(entity.relationRole, 12))
+      ? normalizeMemoryText(entity.relationRole, 12)
+      : null,
+    relatedEntity,
+    turnId: normalizeMemoryText(entity.turnId, 128),
+    evidenceSource,
+    source: evidenceSource
   };
+}
+
+function normalizeRelatedEntity(entity) {
+  if (!entity) return null;
+  const raw = typeof entity === "string" ? { displayValue: entity } : entity;
+  if (!raw || typeof raw !== "object") return null;
+
+  const displayValue = normalizeMemoryText(
+    raw.displayValue || raw.value || raw.name || raw.label || raw.canonicalValue
+  );
+  if (!displayValue) return null;
+
+  return {
+    type: normalizeMemoryText(raw.type || "entity", 40) || "entity",
+    canonicalValue: normalizeCanonicalEntityValue(raw.canonicalValue || displayValue),
+    displayValue,
+    value: displayValue
+  };
+}
+
+function normalizeCanonicalEntityValue(value) {
+  const displayValue = normalizeMemoryText(value);
+  if (!displayValue) return null;
+
+  return displayValue
+    .normalize("NFKC")
+    .toLocaleLowerCase("en")
+    .replace(/[’‘]/g, "'")
+    .replace(/[^\p{L}\p{N}+#.'-]+/gu, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function normalizeMemoryRelation(value) {
+  const relation = normalizeMemoryText(value, 80);
+  return relation
+    ? relation.toUpperCase().replace(/[^A-Z0-9]+/g, "_").replace(/^_+|_+$/g, "") || null
+    : null;
+}
+
+function normalizeRecentEntities(entities, limit = MAX_MEMORY_ENTITIES) {
+  if (!Array.isArray(entities)) return [];
+
+  const seen = new Set();
+  const normalized = [];
+
+  for (const entity of entities) {
+    const record = normalizeMemoryEntity(entity);
+    if (!record) continue;
+
+    const key = [
+      record.type.toLowerCase(),
+      record.canonicalValue
+    ].join("|");
+    if (seen.has(key)) continue;
+
+    seen.add(key);
+    normalized.push(record);
+    if (normalized.length >= limit) break;
+  }
+
+  return normalized;
+}
+
+function deriveSelectedTargets(query, verifiedEntities, explicitEntities) {
+  const text = String(query || "").toLowerCase();
+  const explicit = normalizeRecentEntities(explicitEntities, MAX_SELECTED_TARGETS);
+  const verified = normalizeRecentEntities(verifiedEntities, MAX_MEMORY_ENTITIES);
+  const asksForPrograms =
+    /\b(program|programs|major|majors|compare|those two|both of them|first one|second one|the first|the second|other one)\b/.test(text);
+  const asksForCourses =
+    /\b(course|courses|subject|subjects|module|modules)\b/.test(text);
+  const answerChoices = verified.filter(entity => {
+    const type = String(entity.type || "").toLowerCase();
+    if (asksForPrograms) return type === "program";
+    if (asksForCourses) return ["course", "subject", "module"].includes(type);
+    return false;
+  });
+  const distinctAnswerChoices = [];
+  const seenAnswerChoices = new Set();
+  for (const entity of answerChoices) {
+    const key = `${String(entity.type || "").toLowerCase()}|${entity.canonicalValue}`;
+    if (seenAnswerChoices.has(key)) continue;
+    seenAnswerChoices.add(key);
+    distinctAnswerChoices.push(entity);
+  }
+
+  if (distinctAnswerChoices.length >= 2) {
+    return normalizeRecentEntities(distinctAnswerChoices, MAX_SELECTED_TARGETS);
+  }
+
+  return normalizeRecentEntities([
+    ...explicit.filter(entity => {
+      const type = String(entity.type || "").toLowerCase();
+      return !["entity", "career", "role", "unit", "degree", "college"].includes(type);
+    }),
+    ...distinctAnswerChoices
+  ], MAX_SELECTED_TARGETS);
+}
+
+function normalizeRecentTopics(topics, lastTopic = null) {
+  const candidates = [
+    ...(Array.isArray(topics) ? topics : []),
+    lastTopic
+  ];
+  const seen = new Set();
+  const normalized = [];
+
+  for (const topic of candidates) {
+    const value = normalizeMemoryText(topic, 60);
+    const key = value?.toLowerCase();
+    if (!value || seen.has(key)) continue;
+    seen.add(key);
+    normalized.push(value);
+    if (normalized.length >= MAX_MEMORY_TOPICS) break;
+  }
+
+  return normalized;
+}
+
+function normalizeVerifiedTurns(turns) {
+  if (!Array.isArray(turns)) return [];
+
+  const normalized = [];
+  const seen = new Set();
+  for (const turn of turns) {
+    if (!turn || typeof turn !== "object") continue;
+    const answer = normalizeMemoryText(turn.answer, MAX_VERIFIED_ANSWER_CHARS);
+    if (!answer) continue;
+    const turnId = normalizeMemoryText(turn.turnId, 128);
+    const key = turnId || answer.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    normalized.push({
+      turnId,
+      query: normalizeMemoryText(turn.query, 320),
+      answer,
+      topic: normalizeMemoryText(turn.topic, 80),
+      intent: normalizeMemoryText(turn.intent, 80),
+      relations: Array.from(new Set(
+        (Array.isArray(turn.relations) ? turn.relations : [])
+          .map(normalizeMemoryRelation)
+          .filter(Boolean)
+      )).slice(0, 8),
+      entities: normalizeRecentSubjects(turn.entities).slice(0, 8),
+      evidenceCount: Math.max(1, Number.parseInt(turn.evidenceCount, 10) || 1)
+    });
+    if (normalized.length >= MAX_VERIFIED_TURNS) break;
+  }
+
+  return normalized;
 }
 
 function normalizeRecentSubjects(subjects) {
@@ -466,9 +716,23 @@ function buildLightweightMemoryUpdate(currentMemory, turn = {}) {
   const assistantAnswer = normalizeMemoryText(turn.assistantAnswer || "", MAX_MEMORY_SUMMARY_CHARS);
   const topic = detectTopic(userQuery, turn.route);
   const intent = normalizeMemoryText(turn.intent || turn.route || null, 80);
-  const evidenceTexts = collectVerifiedEvidenceTexts(turn);
-  const entity = extractEntityFromEvidence(evidenceTexts, userQuery) ||
-    extractEntityFromExplicitInputs(turn.entities, userQuery);
+  const turnId = normalizeMemoryText(turn.turnId, 128);
+  const evidenceItems = collectVerifiedEvidenceItems(turn);
+  const evidenceTexts = evidenceItems.map(item => item.text);
+  const verifiedEntities = extractEntitiesFromEvidence(evidenceItems, userQuery, turnId);
+  const explicitEntities = extractEntitiesFromExplicitInputs(turn.entities, userQuery, turnId);
+  const newEntities = normalizeRecentEntities([
+    ...verifiedEntities,
+    ...explicitEntities
+  ]);
+  const recentEntities = normalizeRecentEntities([
+    ...newEntities,
+    ...currentMemory.recentEntities
+  ]);
+  const selectedTargets = normalizeRecentEntities([
+    ...deriveSelectedTargets(userQuery, verifiedEntities, explicitEntities),
+    ...currentMemory.selectedTargets
+  ], MAX_SELECTED_TARGETS);
   const subjects = mergeRecentSubjects(
     [
       ...extractSubjectsFromExplicitInputs(turn.entities),
@@ -477,13 +741,39 @@ function buildLightweightMemoryUpdate(currentMemory, turn = {}) {
     ],
     currentMemory.recentSubjects
   );
+  const verifiedTurn = assistantAnswer && evidenceItems.length > 0
+    ? {
+        turnId,
+        query: userQuery,
+        answer: normalizeMemoryText(turn.assistantAnswer, MAX_VERIFIED_ANSWER_CHARS),
+        topic,
+        intent,
+        relations: evidenceItems
+          .map(item => item.structured?.relation)
+          .filter(Boolean),
+        entities: verifiedEntities.map(entity => entity.displayValue),
+        evidenceCount: evidenceItems.length
+      }
+    : null;
+  const verifiedTurns = normalizeVerifiedTurns([
+    ...(verifiedTurn ? [verifiedTurn] : []),
+    ...currentMemory.verifiedTurns
+  ]);
 
   return {
     lastTopic: topic || currentMemory.lastTopic,
-    lastEntity: entity || currentMemory.lastEntity,
+    recentTopics: normalizeRecentTopics(
+      topic ? [topic, ...currentMemory.recentTopics] : currentMemory.recentTopics,
+      currentMemory.lastTopic
+    ),
+    lastEntity: newEntities[0] || currentMemory.lastEntity,
+    recentEntities,
+    selectedTargets,
     lastIntent: intent || currentMemory.lastIntent,
     recentSubjects: subjects,
-    lastAssistantSummary: assistantAnswer || currentMemory.lastAssistantSummary
+    lastAssistantSummary: assistantAnswer || currentMemory.lastAssistantSummary,
+    lastVerifiedAssistantAnswer: verifiedTurn?.answer || currentMemory.lastVerifiedAssistantAnswer,
+    verifiedTurns
   };
 }
 
@@ -498,96 +788,324 @@ function detectTopic(query, route) {
   return normalizeMemoryText(route, 60);
 }
 
-function collectVerifiedEvidenceTexts(turn = {}) {
-  const texts = [];
+function collectVerifiedEvidenceItems(turn = {}) {
+  const items = [];
+  const seen = new Set();
 
-  const pushText = (value) => {
+  const pushText = (value, evidenceSource, structured = null) => {
     const text = normalizeMemoryText(value, 600);
-    if (text) texts.push(text);
+    if (!text) return;
+    const evidenceId = normalizeMemoryText(structured?.evidenceId, 260);
+    const key = evidenceId || `${evidenceSource}|${text.toLowerCase()}`;
+    if (seen.has(key)) return;
+    seen.add(key);
+    items.push({ text, evidenceSource, structured });
   };
 
-  const pushContextItem = (item) => {
+  const pushContextItem = (item, evidenceSource) => {
     if (!item) return;
-    if (typeof item === "string") return pushText(item);
+    if (typeof item === "string") return pushText(item, evidenceSource);
     if (typeof item !== "object") return;
-    pushText(item.evidence || item.text || item.content || item.answer || item.recommendation || item.career_path);
+    const metadata = item.metadata && typeof item.metadata === "object" ? item.metadata : {};
+    const relation = normalizeMemoryRelation(
+      metadata.evidence_relation ||
+      metadata.relation ||
+      item.relType
+    );
+    const subject = normalizeRelatedEntity(
+      metadata.evidence_subject ||
+      (item.relSourceName ? { value: item.relSourceName, type: item.relSourceLabel } : null)
+    );
+    const object = normalizeRelatedEntity(
+      metadata.evidence_object ||
+      (item.relTargetName ? { value: item.relTargetName, type: item.relTargetLabel } : null)
+    );
+    const structured = relation && subject && object
+      ? {
+          evidenceId: metadata.evidence_id || null,
+          relation,
+          subject,
+          object
+        }
+      : null;
+    pushText(
+      item.evidence ||
+      item.text ||
+      item.content ||
+      item.answer ||
+      item.recommendation ||
+      item.career_path,
+      evidenceSource,
+      structured
+    );
   };
 
-  if (turn.faqContext?.answer) pushText(turn.faqContext.answer);
+  if (turn.faqContext?.answer) pushText(turn.faqContext.answer, "verified_faq");
 
   const kgContext = Array.isArray(turn.neo4jContext) ? turn.neo4jContext : [];
-  kgContext.forEach(pushContextItem);
+  kgContext.forEach(item => pushContextItem(item, "verified_kg"));
+
+  // Golden-path cache hits retain the response graph even when the live
+  // neo4jContext array is unavailable. Feed those exact relationships through
+  // the same typed-memory path so ordinals and plural references remain stable.
+  const graphNodes = Array.isArray(turn.graph?.nodes) ? turn.graph.nodes : [];
+  const graphNodeById = new Map();
+  graphNodes.forEach(node => {
+    const id = normalizeMemoryText(node?.id || node?.label || node?.name, 260);
+    if (id) graphNodeById.set(id, node);
+  });
+  const graphLinks = Array.isArray(turn.graph?.links) ? turn.graph.links : [];
+  graphLinks.forEach(link => {
+    const source = normalizeMemoryText(
+      typeof link?.source === "object"
+        ? link.source.label || link.source.name || link.source.id
+        : link?.source,
+      260
+    );
+    const object = normalizeMemoryText(
+      typeof link?.target === "object"
+        ? link.target.label || link.target.name || link.target.id
+        : link?.target,
+      260
+    );
+    const relation = normalizeMemoryRelation(link?.type || link?.relation);
+    if (!source || !object || !relation) return;
+    const sourceNode = graphNodeById.get(source);
+    const objectNode = graphNodeById.get(object);
+    pushContextItem({
+      evidence: `(${source})-[:${relation}]->(${object})`,
+      relSourceName: source,
+      relSourceLabel: sourceNode?.type || sourceNode?.label || null,
+      relTargetName: object,
+      relTargetLabel: objectNode?.type || objectNode?.label || null,
+      relType: relation
+    }, "verified_kg");
+  });
 
   const ragContext = Array.isArray(turn.ragContext) ? turn.ragContext : [];
-  ragContext.forEach(pushContextItem);
+  ragContext.forEach(item => pushContextItem(item, "verified_rag"));
 
   const decisionContext = Array.isArray(turn.decisionContext)
     ? turn.decisionContext
     : turn.decisionContext
       ? [turn.decisionContext]
       : [];
-  decisionContext.forEach(pushContextItem);
+  decisionContext.forEach(item => pushContextItem(item, "decision_engine"));
 
   const usedFacts = Array.isArray(turn.usedFacts) ? turn.usedFacts : [];
-  usedFacts.forEach(pushText);
+  usedFacts.forEach(item => pushText(item, "verified_fact"));
 
-  return texts;
+  return items;
 }
 
-function extractEntityFromEvidence(evidenceTexts, query) {
+function extractEntitiesFromEvidence(evidenceItems, query, turnId) {
+  const entities = [];
   const queryText = String(query || "").toLowerCase();
 
-  for (const evidence of evidenceTexts) {
+  for (const item of evidenceItems) {
+    const evidence = item?.text || "";
+    const evidenceSource = item?.evidenceSource || "verified_fact";
+    if (item?.structured?.relation && item.structured.subject && item.structured.object) {
+      const relation = normalizeMemoryRelation(item.structured.relation);
+      const inferred = inferEntityTypesForRelation(relation);
+      const sourceType = normalizeMemoryText(item.structured.subject.type, 40) || inferred.sourceType;
+      const targetType = normalizeMemoryText(item.structured.object.type, 40) || inferred.targetType;
+      entities.push(
+        makeMemoryEntity(sourceType, item.structured.subject.displayValue, evidenceSource, {
+          relation,
+          relationRole: "source",
+          relatedEntity: {
+            type: targetType,
+            displayValue: item.structured.object.displayValue
+          },
+          turnId
+        }),
+        makeMemoryEntity(targetType, item.structured.object.displayValue, evidenceSource, {
+          relation,
+          relationRole: "target",
+          relatedEntity: {
+            type: sourceType,
+            displayValue: item.structured.subject.displayValue
+          },
+          turnId
+        })
+      );
+      continue;
+    }
+
     const triple = parseGraphTriple(evidence);
     if (triple) {
       const relation = triple.relation.toUpperCase();
-      if (relation === "TEACHES") {
-        return makeMemoryEntity("professor", triple.source, "verified_kg");
-      }
-      if (["WORKS_IN", "HAS_OFFICE", "OFFICE_IN", "LOCATED_IN", "HAS_DEPARTMENT", "BELONGS_TO_DEPARTMENT", "SPECIALIZES_IN", "HAS_SPECIALIZATION"].includes(relation)) {
-        return makeMemoryEntity("professor", triple.source, "verified_kg");
-      }
-      if (["HAS_PREREQUISITE", "REQUIRES", "PREREQUISITE_FOR"].includes(relation)) {
-        return makeMemoryEntity("course", triple.source, "verified_kg");
-      }
-      if (["HAS_COURSE", "BELONGS_TO", "PART_OF"].includes(relation)) {
-        return makeMemoryEntity("program", triple.source, "verified_kg");
-      }
+      const { sourceType, targetType } = inferEntityTypesForRelation(relation);
+      entities.push(
+        makeMemoryEntity(sourceType, triple.source, evidenceSource, {
+          relation,
+          relationRole: "source",
+          relatedEntity: {
+            type: targetType,
+            displayValue: triple.target
+          },
+          turnId
+        }),
+        makeMemoryEntity(targetType, triple.target, evidenceSource, {
+          relation,
+          relationRole: "target",
+          relatedEntity: {
+            type: sourceType,
+            displayValue: triple.source
+          },
+          turnId
+        })
+      );
+      continue;
     }
 
     const teaches = evidence.match(/^(.+?)\s+teaches\s+(.+?)(?:\.|$)/i);
-    if (teaches) return makeMemoryEntity("professor", teaches[1], "verified_kg");
+    if (teaches) {
+      const professor = cleanEvidenceEntityLabel(teaches[1]);
+      for (const course of splitEvidenceEntityList(teaches[2])) {
+        entities.push(
+          makeMemoryEntity("professor", professor, evidenceSource, {
+            relation: "TEACHES",
+            relatedEntity: { type: "course", displayValue: course },
+            turnId
+          }),
+          makeMemoryEntity("course", course, evidenceSource, {
+            relation: "TEACHES",
+            relatedEntity: { type: "professor", displayValue: professor },
+            turnId
+          })
+        );
+      }
+      continue;
+    }
 
     const office = evidence.match(/^(.+?)\s+(?:office|office location|room)\s*[:is-]+\s*(.+)$/i);
     if (office || /\b(his|her|their)\s+office\b/i.test(queryText)) {
-      const subject = office?.[1];
-      const entity = makeMemoryEntity("professor", subject, "verified_kg");
-      if (entity) return entity;
+      const subject = cleanEvidenceEntityLabel(office?.[1]);
+      const location = cleanEvidenceEntityLabel(office?.[2]);
+      if (subject) {
+        entities.push(makeMemoryEntity("professor", subject, evidenceSource, {
+          relation: "HAS_OFFICE",
+          relatedEntity: location ? { type: "location", displayValue: location } : null,
+          turnId
+        }));
+      }
+      continue;
     }
 
     const recommended = evidence.match(/\bRecommended Major:\s*([^.;\n]+)/i);
-    if (recommended) return makeMemoryEntity("program", recommended[1], "decision_engine");
+    if (recommended) {
+      entities.push(makeMemoryEntity("program", recommended[1], evidenceSource, {
+        relation: "RECOMMENDED",
+        turnId
+      }));
+    }
   }
 
-  return null;
+  return normalizeRecentEntities(entities.filter(Boolean), MAX_EVIDENCE_ENTITIES_PER_TURN);
 }
 
-function extractEntityFromExplicitInputs(entities = [], query = "") {
-  const explicit = extractSubjectsFromExplicitInputs(entities)[0] ||
-    extractSubjectsFromQuery(query)[0];
-  if (!explicit) return null;
+function extractEntitiesFromExplicitInputs(entities = [], query = "", turnId = null) {
+  const explicitInputs = Array.isArray(entities) ? entities : [];
+  const records = explicitInputs
+    .map(entity => normalizeExplicitEntity(entity, turnId))
+    .filter(Boolean);
 
-  if (/\b(professor|dr\.?|doctor)\b/i.test(explicit)) {
-    return makeMemoryEntity("professor", explicit, "explicit_user");
-  }
-  if (/\b(course|nlp|natural language processing|[A-Z]{2,5}\s?\d{3,4})\b/i.test(explicit)) {
-    return makeMemoryEntity("course", explicit, "explicit_user");
-  }
-  if (/\b(program|specialization|specialisation|major|track|computer science|software engineering|artificial intelligence|ai)\b/i.test(explicit)) {
-    return makeMemoryEntity("program", explicit, "explicit_user");
+  if (records.length === 0) {
+    records.push(
+      ...extractSubjectsFromQuery(query)
+        .map(value => makeMemoryEntity(inferExplicitEntityType(value), value, "explicit_user", {
+          turnId
+        }))
+        .filter(Boolean)
+    );
   }
 
-  return makeMemoryEntity("entity", explicit, "explicit_user");
+  return normalizeRecentEntities(records);
+}
+
+function normalizeExplicitEntity(entity, turnId) {
+  if (!entity) return null;
+  if (typeof entity === "object") {
+    const displayValue = entity.displayValue || entity.value || entity.name || entity.label;
+    if (!displayValue) return null;
+    return makeMemoryEntity(
+      entity.type || inferExplicitEntityType(displayValue),
+      displayValue,
+      "explicit_user",
+      {
+        relation: entity.relation,
+        relatedEntity: entity.relatedEntity || entity.related,
+        turnId: entity.turnId || turnId
+      }
+    );
+  }
+
+  return makeMemoryEntity(inferExplicitEntityType(entity), entity, "explicit_user", {
+    turnId
+  });
+}
+
+function inferExplicitEntityType(value) {
+  const text = String(value || "");
+  if (/\b(professor|prof\.?|dr\.?|doctor)\b/i.test(text)) return "professor";
+  if (/\b(course|nlp|natural language processing|machine learning|blockchain|[A-Z]{2,5}\s?\d{3,4})\b/i.test(text)) {
+    return "course";
+  }
+  if (/\b(program|specialization|specialisation|major|track|computer science|software engineering|artificial intelligence|ai)\b/i.test(text)) {
+    return "program";
+  }
+  return "entity";
+}
+
+function inferEntityTypesForRelation(relation) {
+  const normalized = normalizeMemoryRelation(relation);
+  if (normalized === "TEACHES") return { sourceType: "professor", targetType: "course" };
+  if (["WORKS_IN", "HAS_DEPARTMENT", "BELONGS_TO_DEPARTMENT"].includes(normalized)) {
+    return { sourceType: "professor", targetType: "department" };
+  }
+  if (["HAS_OFFICE", "OFFICE_IN", "LOCATED_IN"].includes(normalized)) {
+    return { sourceType: "professor", targetType: "location" };
+  }
+  if (["SPECIALIZES_IN", "HAS_SPECIALIZATION"].includes(normalized)) {
+    return { sourceType: "professor", targetType: "specialization" };
+  }
+  if (["HAS_PREREQUISITE", "REQUIRES", "PREREQUISITE_FOR"].includes(normalized)) {
+    return { sourceType: "course", targetType: "course" };
+  }
+  if (normalized === "RECOMMENDED_AFTER") return { sourceType: "course", targetType: "course" };
+  if (normalized === "HAS_COURSE") return { sourceType: "program", targetType: "course" };
+  if (normalized === "INCLUDES_PROGRAM") return { sourceType: "degree", targetType: "program" };
+  if (normalized === "OFFERS") return { sourceType: "college", targetType: "degree" };
+  if (["LEADS_TO", "CAREER_ALIGNMENT"].includes(normalized)) {
+    return { sourceType: "program", targetType: "career" };
+  }
+  if (["DEAN_OF", "HEAD_OF", "HEAD_OF_UNIT"].includes(normalized)) {
+    return { sourceType: "person", targetType: normalized === "DEAN_OF" ? "college" : "unit" };
+  }
+  if (["HAS_ROLE", "ACTS_AS"].includes(normalized)) {
+    return { sourceType: "person", targetType: "role" };
+  }
+  if (["BELONGS_TO", "PART_OF"].includes(normalized)) {
+    return { sourceType: "course", targetType: "program" };
+  }
+  return { sourceType: "entity", targetType: "entity" };
+}
+
+function splitEvidenceEntityList(value) {
+  return String(value || "")
+    .split(/\s*(?:,|;|\band\b|&)\s*/i)
+    .map(cleanEvidenceEntityLabel)
+    .filter(Boolean);
+}
+
+function cleanEvidenceEntityLabel(value) {
+  return normalizeMemoryText(
+    String(value || "")
+      .replace(/^(?:professor|prof\.?|dr\.?|doctor)\s+/i, "")
+      .replace(/\s+(?:at|in)\s+AAST(?:MT)?$/i, "")
+  );
 }
 
 function parseGraphTriple(text) {
@@ -611,19 +1129,41 @@ function cleanGraphLabel(value) {
   return text.replace(/[{}]/g, "").replace(/\s+/g, " ").trim();
 }
 
-function makeMemoryEntity(type, value, source) {
-  const cleanValue = normalizeMemoryText(value);
-  if (!cleanValue) return null;
+function makeMemoryEntity(type, value, source, {
+  relation = null,
+  relationRole = null,
+  relatedEntity = null,
+  turnId = null
+} = {}) {
+  const displayValue = normalizeMemoryText(value);
+  if (!displayValue) return null;
+  const evidenceSource = normalizeMemoryText(source, 40) || "session";
+
   return {
     type: normalizeMemoryText(type, 40) || "entity",
-    value: cleanValue,
-    source: normalizeMemoryText(source, 40) || "session"
+    canonicalValue: normalizeCanonicalEntityValue(displayValue),
+    displayValue,
+    value: displayValue,
+    relation: normalizeMemoryRelation(relation),
+    relationRole: ["source", "target"].includes(relationRole) ? relationRole : null,
+    relatedEntity: normalizeRelatedEntity(relatedEntity),
+    turnId: normalizeMemoryText(turnId, 128),
+    evidenceSource,
+    source: evidenceSource
   };
 }
 
 function extractSubjectsFromExplicitInputs(entities = []) {
   if (!Array.isArray(entities)) return [];
-  return entities.map(entity => normalizeMemoryText(entity)).filter(Boolean);
+  return entities
+    .map(entity => {
+      if (typeof entity === "string") return normalizeMemoryText(entity);
+      if (!entity || typeof entity !== "object") return null;
+      return normalizeMemoryText(
+        entity.displayValue || entity.value || entity.name || entity.label || entity.canonicalValue
+      );
+    })
+    .filter(Boolean);
 }
 
 function extractSubjectsFromQuery(query = "") {
@@ -642,6 +1182,8 @@ function extractSubjectsFromQuery(query = "") {
   courseCodes.forEach(add);
 
   const knownSubjects = [
+    "Machine Learning",
+    "Blockchain",
     "Natural Language Processing",
     "NLP",
     "Artificial Intelligence",
@@ -752,10 +1294,22 @@ function makeMessageId() {
 
 function persistSoon() {
   persistence.scheduleSave({
-    version: 1,
+    version: 2,
     updatedAt: new Date().toISOString(),
     conversations: Object.fromEntries(conversations)
   });
+}
+
+function normalizeOwnerId(ownerId) {
+  if (typeof ownerId !== "string") return null;
+  const normalized = ownerId.trim();
+  return normalized && normalized.length <= 256 ? normalized : null;
+}
+
+function requireOwnerId(ownerId) {
+  const normalized = normalizeOwnerId(ownerId);
+  if (!normalized) throw new Error("A valid conversation owner is required");
+  return normalized;
 }
 
 function ensureLoaded() {

@@ -14,8 +14,8 @@ def test_normalization_smoke_subset(tmp_path: Path) -> None:
     input_dir.mkdir(parents=True, exist_ok=True)
 
     sample_files = [
-        "CCIT_HELIOPOLIS.json",
-        "PHARM_ABUKIR.json",
+        "SAMPLE_COMPUTING_COLLEGE.json",
+        "SAMPLE_HEALTH_COLLEGE.json",
     ]
 
     for file_name in sample_files:

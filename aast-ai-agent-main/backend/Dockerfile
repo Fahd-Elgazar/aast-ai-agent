@@ -12,4 +12,4 @@ RUN mkdir -p /app/logs /app/data
 
 EXPOSE 8004
 
-CMD ["npm", "run", "start:orchestrator"]
+CMD ["npm", "run", "start:container"]

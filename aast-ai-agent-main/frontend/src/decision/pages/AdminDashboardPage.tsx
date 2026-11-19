@@ -1,43 +1,40 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useCallback, useEffect, useState } from 'react';
 import { Settings, Save, X, Edit2, ShieldAlert, Loader2, RefreshCw } from 'lucide-react';
-import { API_BASE } from '../../config/api';
-import { DEFAULT_TIMEOUT_MS } from '../../services/httpClient';
-
-interface Program {
-  id: string;
-  program_name: string;
-  college_id: string;
-  min_percentage: number | null;
-  program_fees: number | null;
-  allowed_tracks: string | null;
-}
+import {
+  listDecisionPrograms,
+  updateDecisionProgram,
+  type DecisionProgram,
+} from '../services/adminApi';
 
 export default function AdminDashboardPage() {
-  const [programs, setPrograms] = useState<Program[]>([]);
+  const [programs, setPrograms] = useState<DecisionProgram[]>([]);
   const [loading, setLoading] = useState(true);
-  const [editingProgram, setEditingProgram] = useState<Program | null>(null);
+  const [editingProgram, setEditingProgram] = useState<DecisionProgram | null>(null);
   const [editForm, setEditForm] = useState<{ min_percentage: number | '', program_fees: number | '', allowed_tracks: string }>({ min_percentage: '', program_fees: '', allowed_tracks: '' });
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
 
-  useEffect(() => {
-    fetchPrograms();
-  }, []);
-
-  const fetchPrograms = async () => {
+  const fetchPrograms = useCallback(async () => {
+    setLoading(true);
+    setError(null);
     try {
-      const response = await axios.get(`${API_BASE}/decision/admin/programs`, { timeout: DEFAULT_TIMEOUT_MS });
-      setPrograms(response.data);
+      setPrograms(await listDecisionPrograms());
     } catch (err) {
       console.error(err);
-      setError('Failed to fetch programs. Make sure the backend is running.');
+      setError(err instanceof Error ? err.message : 'Failed to fetch programs.');
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  const handleEdit = (program: Program) => {
+  useEffect(() => {
+    void fetchPrograms();
+  }, [fetchPrograms]);
+
+  const handleEdit = (program: DecisionProgram) => {
+    setError(null);
+    setSuccess(null);
     setEditingProgram(program);
     setEditForm({
       min_percentage: program.min_percentage ?? '',
@@ -55,27 +52,34 @@ export default function AdminDashboardPage() {
     if (!editingProgram) return;
     
     const minP = editForm.min_percentage === '' ? null : Number(editForm.min_percentage);
+    const fees = editForm.program_fees === '' ? null : Number(editForm.program_fees);
     
     // Percentage Validation
     if (minP !== null && (minP < 0 || minP > 100)) {
         setError('Minimum percentage must be between 0 and 100.');
         return;
     }
+    if (fees !== null && fees < 0) {
+        setError('Program fees cannot be negative.');
+        return;
+    }
 
     setIsSaving(true);
     setError(null);
+    setSuccess(null);
     
     try {
-      await axios.put(`${API_BASE}/decision/admin/programs/${editingProgram.id}`, {
+      const updated = await updateDecisionProgram(editingProgram.id, {
         min_percentage: minP,
-        program_fees: editForm.program_fees === '' ? null : Number(editForm.program_fees),
+        program_fees: fees,
         allowed_tracks: editForm.allowed_tracks === '' ? null : editForm.allowed_tracks
-      }, { timeout: DEFAULT_TIMEOUT_MS });
+      });
+      setPrograms(current => current.map(program => program.id === updated.id ? updated : program));
       setEditingProgram(null);
-      fetchPrograms();
+      setSuccess(`${updated.program_name} was updated successfully.`);
     } catch (err) {
       console.error(err);
-      setError('Failed to update program constraints.');
+      setError(err instanceof Error ? err.message : 'Failed to update program constraints.');
     } finally {
       setIsSaving(false);
     }
@@ -110,6 +114,12 @@ export default function AdminDashboardPage() {
           </div>
         )}
 
+        {success && (
+          <div role="status" className="bg-emerald-50 text-emerald-800 p-4 rounded-lg">
+            {success}
+          </div>
+        )}
+
         {error && programs.length === 0 ? (
           <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-12 text-center flex flex-col items-center justify-center space-y-4 max-w-lg mx-auto mt-8">
             <div className="w-16 h-16 rounded-full bg-red-50 text-red-600 flex items-center justify-center">
@@ -117,13 +127,11 @@ export default function AdminDashboardPage() {
             </div>
             <h2 className="text-xl font-bold text-slate-800">Connection Failed</h2>
             <p className="text-slate-500 text-sm leading-relaxed">
-              Unable to retrieve academic programs configuration. Please ensure the backend orchestrator service is running on port 8000 and the database is accessible.
+              Unable to retrieve academic program configuration through the secured platform API. Check the backend and Decision API health, then retry.
             </p>
             <button
               onClick={() => {
-                setLoading(true);
-                setError(null);
-                fetchPrograms();
+                void fetchPrograms();
               }}
               className="px-5 py-2.5 bg-[rgb(20,41,82)] hover:bg-[rgb(30,55,100)] text-white text-sm font-semibold rounded-lg shadow-sm transition-colors flex items-center gap-2 cursor-pointer focus:ring-2 focus:ring-[rgb(20,41,82)]/30 focus:outline-none"
             >

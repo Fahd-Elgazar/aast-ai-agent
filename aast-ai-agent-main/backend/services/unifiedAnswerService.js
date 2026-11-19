@@ -51,6 +51,11 @@ import { LLM_CONFIG } from "../config/llmConfig.js";
 import { getGemmaTelemetrySnapshot } from "./gemmaTelemetryService.js";
 import { incrementMetric } from "./metrics.js";
 import { runtimeMode } from "../config/runtimeMode.js";
+import {
+    GROUNDING_STATUS,
+    normalizeGroundingEvidence,
+    verifyGroundedAnswer
+} from "./groundingVerificationService.js";
 
 // ─────────────────────────────────────────────────────────────
 // SECTION 0 — CONFIGURATION CONSTANTS
@@ -98,7 +103,7 @@ const CONFIDENCE_GATE_THRESHOLD = 0.40;
 const DEGRADED_CONFIDENCE_THRESHOLD = 0.25;
 
 /** Maximum KG facts to inject into the prompt. */
-const MAX_KG_FACTS = 3;
+const MAX_KG_FACTS = 16;
 
 /** Maximum RAG passages to inject into the prompt. */
 const MAX_RAG_PASSAGES = 3;
@@ -1341,8 +1346,8 @@ function resolveRouteType(routeType) {
         return ROUTE_TYPES.CAREER;
     }
     if (normalizedRoute === "GENERAL") return ROUTE_TYPES.GENERAL;
-    if (normalizedRoute === "KG") return ROUTE_TYPES.KG_ONLY;
-    if (normalizedRoute === "RAG") return ROUTE_TYPES.RAG_ONLY;
+    if (["KG", "KG_DIRECT"].includes(normalizedRoute)) return ROUTE_TYPES.KG_ONLY;
+    if (["RAG", "RAG_DIRECT"].includes(normalizedRoute)) return ROUTE_TYPES.RAG_ONLY;
     if (normalizedRoute === "FAQ") return ROUTE_TYPES.FAQ_ONLY;
 
     return ROUTE_TYPES.LLM_FALLBACK;
@@ -1361,12 +1366,14 @@ function normalizeExplainabilityRoute(routeType, query = "", decisionContext = n
     ).toLowerCase();
 
     if (normalizedRoute === "HYBRID_KG_RAG" || normalizedRoute === "HYBRID") return "HYBRID_KG_RAG";
+    if (normalizedRoute === "KG_DIRECT") return "KG_DIRECT";
+    if (normalizedRoute === "RAG_DIRECT") return "RAG_DIRECT";
     if (["CAREER_ENGINE", "CAREER", "CAREER_PATH_DETAIL"].includes(normalizedRoute)) return "CAREER";
     if (normalizedRoute === "LLM_FALLBACK") return "LLM_FALLBACK";
     if (normalizedRoute === "GENERAL") return "GENERAL";
-    if (normalizedRoute === "FAQ_ONLY") return "GENERAL";
-    if (normalizedRoute === "KG_ONLY") return "GENERAL";
-    if (normalizedRoute === "RAG_ONLY") return "GENERAL";
+    if (normalizedRoute === "FAQ_ONLY") return "FAQ";
+    if (normalizedRoute === "KG_ONLY") return "KG";
+    if (normalizedRoute === "RAG_ONLY") return "RAG";
 
     if (
         normalizedRoute === "COMPARISON" ||
@@ -1905,6 +1912,400 @@ function extractDecisionFacts(decisionContext, limit = 4) {
     return dedupeTextList(evidence.map(text => truncateEvidence(text, 320))).slice(0, limit);
 }
 
+function unwrapRagContext(ragContext) {
+    if (
+        ragContext &&
+        typeof ragContext === "object" &&
+        !Array.isArray(ragContext) &&
+        Array.isArray(ragContext.results)
+    ) {
+        return ragContext.results;
+    }
+    return Array.isArray(ragContext) ? ragContext : ragContext ? [ragContext] : [];
+}
+
+function buildGroundingEvidencePacket({
+    neo4jContext = [],
+    ragContext = [],
+    faqContext = null,
+    decisionContext = null
+} = {}) {
+    const evidence = [];
+    if (Array.isArray(neo4jContext)) {
+        evidence.push(...neo4jContext.map(item => ({
+            ...(typeof item === "object" && item ? item : { evidence: String(item || "") }),
+            source_type: item?.source_type || "KG"
+        })));
+    }
+    evidence.push(...unwrapRagContext(ragContext).map((item, index) => {
+        const raw = typeof item === "string" ? { text: item } : (item || {});
+        const metadata = raw.metadata && typeof raw.metadata === "object" ? raw.metadata : {};
+        return {
+            ...raw,
+            evidence_id:
+                raw.evidence_id ||
+                raw.id ||
+                metadata.evidence_id ||
+                metadata.chunk_id ||
+                `rag:${index + 1}`,
+            text:
+                raw.excerpt ||
+                raw.text ||
+                raw.content ||
+                raw.pageContent ||
+                raw.page_content ||
+                metadata.text ||
+                metadata.content ||
+                "",
+            source: "RAG",
+            metadata: {
+                ...metadata,
+                source: metadata.source || raw.source || "RAG",
+                title: metadata.title || raw.title || null,
+                category: metadata.category || raw.category || null,
+                score: raw.score ?? raw.confidence ?? metadata.score ?? null
+            }
+        };
+    }));
+    if (faqContext?.answer) {
+        evidence.push({
+            evidence_id: faqContext.id || "faq:answer",
+            text: faqContext.answer,
+            source: "FAQ",
+            metadata: {
+                title: faqContext.question || "Verified university FAQ",
+                category: faqContext.category || "FAQ",
+                score: faqContext.confidence ?? 1
+            }
+        });
+    }
+    for (const [index, fact] of extractDecisionFacts(decisionContext, 8).entries()) {
+        evidence.push({
+            evidence_id: `decision:${index + 1}`,
+            text: fact,
+            source: "DECISION",
+            metadata: {
+                title: "Deterministic advisory evaluation",
+                category: "decision",
+                score: unwrapDecisionContext(decisionContext)?.confidence ?? null
+            }
+        });
+    }
+    return evidence;
+}
+
+function naturalList(values) {
+    const items = dedupeTextList(values);
+    if (items.length === 0) return "";
+    if (items.length === 1) return items[0];
+    if (items.length === 2) return `${items[0]} and ${items[1]}`;
+    return `${items.slice(0, -1).join(", ")}, and ${items[items.length - 1]}`;
+}
+
+function relationGroups(normalizedEvidence) {
+    const groups = new Map();
+    for (const item of normalizedEvidence) {
+        const relation = item.structured?.relation;
+        if (!relation) continue;
+        const values = groups.get(relation) || [];
+        values.push(item);
+        groups.set(relation, values);
+    }
+    return groups;
+}
+
+function requestedRelationSet(query) {
+    const text = String(query || "").toLowerCase();
+    const relations = [];
+    if (/\b(teach|teaches|teaching|taught|anything else|what else)\b/.test(text)) relations.push("TEACHES");
+    if (/\b(prerequisite|prerequisites|required before|before taking|must complete)\b/.test(text)) relations.push("HAS_PREREQUISITE");
+    if (/\b(career|careers|career role|jobs?|lead to)\b/.test(text)) relations.push("LEADS_TO", "CAREER_ALIGNMENT");
+    if (/\b(recommended after|take after|comes after)\b/.test(text)) relations.push("RECOMMENDED_AFTER");
+    if (/\b(dean of|college dean|who is the dean)\b/.test(text)) relations.push("DEAN_OF");
+    if (/\b(another role|other role|hold.*role|head of|heads?)\b/.test(text)) {
+        relations.push("HEAD_OF", "HEAD_OF_UNIT", "HAS_ROLE", "ACTS_AS");
+    }
+    if (/\b(compare|comparison|curriculum|courses)\b/.test(text)) relations.push("HAS_COURSE");
+    if (/\b(which|what).*\bprograms?\b.*\b(include|includes)\b/.test(text)) relations.push("HAS_COURSE");
+    if (/\b(bachelor|bachelors|bsc|degree).*\b(program|programs|offer|offers)\b|\bwhich programs\b/.test(text)) {
+        relations.push("OFFERS", "INCLUDES_PROGRAM");
+    }
+    return new Set(relations);
+}
+
+function selectRelevantRelation(groups, acceptedRelations) {
+    for (const relation of acceptedRelations) {
+        const facts = groups.get(relation);
+        if (facts?.length) return { relation, facts };
+    }
+    return { relation: null, facts: [] };
+}
+
+function detailSuffix(item) {
+    const evidence = item?.text || "";
+    const code = evidence.match(/\bcourse code\s+([A-Z]{2,6}\s*-?\s*\d{3,4})\b/i)?.[1];
+    const credits = evidence.match(/\b(\d+)\s+credits?\b/i)?.[1];
+    const details = [
+        code ? `course code ${code.replace(/\s+/g, "")}` : "",
+        credits ? `${credits} credits` : ""
+    ].filter(Boolean);
+    return details.length ? ` (${details.join(", ")})` : "";
+}
+
+function recomposeAnswerFromEvidence(query, evidence = []) {
+    const normalized = normalizeGroundingEvidence(evidence);
+    const groups = relationGroups(normalized);
+    const requested = requestedRelationSet(query);
+    const text = String(query || "").toLowerCase();
+
+    if (requested.has("TEACHES")) {
+        const facts = groups.get("TEACHES") || [];
+        const byPerson = new Map();
+        for (const fact of facts) {
+            const person = fact.structured.subject.name;
+            const courses = byPerson.get(person) || [];
+            courses.push(fact.structured.object.name);
+            byPerson.set(person, courses);
+        }
+        const lines = [...byPerson.entries()].map(
+            ([person, courses]) => `${person} teaches ${naturalList(courses)}.`
+        );
+        if (lines.length) return lines.join(" ");
+    }
+
+    if (requested.has("HAS_PREREQUISITE")) {
+        const facts = groups.get("HAS_PREREQUISITE") || [];
+        const byCourse = new Map();
+        for (const fact of facts) {
+            const course = fact.structured.subject.name;
+            const prerequisites = byCourse.get(course) || [];
+            prerequisites.push(fact.structured.object.name);
+            byCourse.set(course, prerequisites);
+        }
+        const lines = [...byCourse.entries()].map(
+            ([course, prerequisites]) =>
+                `${course} requires ${naturalList(prerequisites)} before it can be taken.`
+        );
+        if (lines.length) return lines.join(" ");
+    }
+
+    if (requested.has("LEADS_TO") || requested.has("CAREER_ALIGNMENT")) {
+        const { facts } = selectRelevantRelation(groups, ["LEADS_TO", "CAREER_ALIGNMENT"]);
+        const byProgram = new Map();
+        for (const fact of facts) {
+            const program = fact.structured.subject.name;
+            const roles = byProgram.get(program) || [];
+            roles.push(fact.structured.object.name);
+            byProgram.set(program, roles);
+        }
+        const lines = [...byProgram.entries()].map(
+            ([program, roles]) => `${program} can lead to ${naturalList(roles)} roles.`
+        );
+        if (lines.length) return lines.join(" ");
+    }
+
+    if (requested.has("RECOMMENDED_AFTER")) {
+        const sequence = groups.get("RECOMMENDED_AFTER") || [];
+        const courseMembership = groups.get("HAS_COURSE") || [];
+        const lines = sequence.map(fact => {
+            const course = fact.structured.subject.name;
+            const prerequisite = fact.structured.object.name;
+            const program = courseMembership.find(
+                membership => membership.structured.object.name === course
+            )?.structured.subject.name;
+            return `${course} is recommended after ${prerequisite}.${program ? ` ${program} includes ${course}.` : ""}`;
+        });
+        if (lines.length) return lines.join(" ");
+    }
+
+    if (requested.has("DEAN_OF")) {
+        const facts = groups.get("DEAN_OF") || [];
+        const lines = facts.map(
+            fact => `${fact.structured.subject.name} is the Dean of ${fact.structured.object.name}.`
+        );
+        if (lines.length) return lines.join(" ");
+    }
+
+    if (
+        requested.has("HEAD_OF") ||
+        requested.has("HEAD_OF_UNIT") ||
+        requested.has("HAS_ROLE") ||
+        requested.has("ACTS_AS")
+    ) {
+        const { relation, facts } = selectRelevantRelation(
+            groups,
+            ["HEAD_OF", "HEAD_OF_UNIT", "HAS_ROLE", "ACTS_AS"]
+        );
+        const lines = facts.map(fact =>
+            ["HEAD_OF", "HEAD_OF_UNIT"].includes(relation)
+                ? `${fact.structured.subject.name} heads ${fact.structured.object.name}.`
+                : `${fact.structured.subject.name} serves as ${fact.structured.object.name}.`
+        );
+        if (lines.length) return lines.join(" ");
+    }
+
+    if (requested.has("OFFERS") || requested.has("INCLUDES_PROGRAM")) {
+        const offers = groups.get("OFFERS") || [];
+        const programs = groups.get("INCLUDES_PROGRAM") || [];
+        const offerText = offers.map(
+            fact => `${fact.structured.subject.name} offers ${fact.structured.object.name}.`
+        );
+        const byDegree = new Map();
+        for (const fact of programs) {
+            const degree = fact.structured.subject.name;
+            const values = byDegree.get(degree) || [];
+            values.push(fact.structured.object.name);
+            byDegree.set(degree, values);
+        }
+        const programText = [...byDegree.entries()].map(
+            ([degree, values]) => `${degree} includes the ${naturalList(values)} programs.`
+        );
+        const lines = [...offerText, ...programText];
+        if (lines.length) return lines.join(" ");
+    }
+
+    if (requested.has("HAS_COURSE")) {
+        const facts = groups.get("HAS_COURSE") || [];
+        if (/\bcompare|comparison\b/.test(text)) {
+            const byProgram = new Map();
+            for (const fact of facts) {
+                const program = fact.structured.subject.name;
+                const courses = byProgram.get(program) || [];
+                courses.push(fact.structured.object.name);
+                byProgram.set(program, courses);
+            }
+            const lines = [...byProgram.entries()].map(
+                ([program, courses]) => `${program} includes ${naturalList(courses)}.`
+            );
+            if (lines.length) return lines.join(" ");
+        }
+        const lines = facts.map(
+            fact =>
+                `${fact.structured.subject.name} includes ${fact.structured.object.name}${detailSuffix(fact)}.`
+        );
+        if (lines.length) return lines.join(" ");
+    }
+
+    const textual = normalized.map(item => item.text).filter(Boolean);
+    return dedupeTextList(textual).slice(0, 6).join(" ");
+}
+
+function requiredEvidenceObjects(query, normalizedEvidence) {
+    const requested = requestedRelationSet(query);
+    if (requested.size === 0) return [];
+    const completeListRequested =
+        /\b(all|both|list|what else|anything else|careers|prerequisites|programs|compare)\b/i.test(query);
+    if (!completeListRequested) return [];
+
+    return uniqueEvidenceObjects(
+        normalizedEvidence
+            .filter(item => requested.has(item.structured?.relation))
+            .map(item => item.structured?.object.name)
+    );
+}
+
+function uniqueEvidenceObjects(values) {
+    return [...new Set(values.filter(Boolean))];
+}
+
+function evaluateAnswerCoverage(query, answer, evidence = []) {
+    const normalizedEvidence = normalizeGroundingEvidence(evidence);
+    const expectedObjects = requiredEvidenceObjects(query, normalizedEvidence);
+    const answerLower = String(answer || "").toLowerCase();
+    const missingObjects = expectedObjects.filter(
+        object => !answerLower.includes(String(object).toLowerCase())
+    );
+    return {
+        complete: missingObjects.length === 0,
+        expected_objects: expectedObjects,
+        missing_objects: missingObjects,
+        requested_relations: [...requestedRelationSet(query)]
+    };
+}
+
+function citationFromEvidence(raw, normalized, index) {
+    const metadata = raw?.metadata && typeof raw.metadata === "object" ? raw.metadata : {};
+    return {
+        id: normalized.evidence_id || `citation:${index + 1}`,
+        evidence_id: normalized.evidence_id || `citation:${index + 1}`,
+        source: normalized.source,
+        title:
+            metadata.title ||
+            metadata.document_title ||
+            normalized.structured?.subject.name ||
+            "Institutional evidence",
+        category:
+            metadata.category ||
+            normalized.structured?.relation ||
+            "verified_evidence",
+        excerpt: truncateEvidence(normalized.text, 360),
+        score: normalizeProbability(
+            metadata.score ?? raw?.score ?? raw?.confidence,
+            normalized.source === "KG" ? 1 : 0
+        )
+    };
+}
+
+function finalizeGroundedAnswer({
+    query,
+    answer,
+    evidence = []
+} = {}) {
+    const rawEvidence = Array.isArray(evidence) ? evidence : [evidence];
+    const normalizedEvidence = normalizeGroundingEvidence(rawEvidence);
+    let finalAnswer = String(answer || "").trim();
+    let grounding = verifyGroundedAnswer({ answer: finalAnswer, evidence: rawEvidence });
+    let coverage = evaluateAnswerCoverage(query, finalAnswer, rawEvidence);
+    let recomposed = false;
+
+    if (
+        grounding.status !== GROUNDING_STATUS.FULLY_SUPPORTED ||
+        !coverage.complete
+    ) {
+        const candidate = recomposeAnswerFromEvidence(query, rawEvidence);
+        if (candidate) {
+            const candidateGrounding = verifyGroundedAnswer({ answer: candidate, evidence: rawEvidence });
+            const candidateCoverage = evaluateAnswerCoverage(query, candidate, rawEvidence);
+            if (
+                candidateGrounding.status === GROUNDING_STATUS.FULLY_SUPPORTED &&
+                candidateCoverage.complete
+            ) {
+                finalAnswer = candidate;
+                grounding = candidateGrounding;
+                coverage = candidateCoverage;
+                recomposed = true;
+            }
+        }
+    }
+
+    if (grounding.status !== GROUNDING_STATUS.FULLY_SUPPORTED) {
+        const supportedSentences = grounding.sentence_results
+            .filter(result => result.status === GROUNDING_STATUS.FULLY_SUPPORTED)
+            .map(result => result.sentence);
+        finalAnswer = supportedSentences.length > 0
+            ? `${supportedSentences.join(" ")} I do not have enough verified information to complete the remaining part.`
+            : INSUFFICIENT_DATA_PHRASE;
+    }
+
+    const usedIds = new Set(grounding.evidence_ids || []);
+    const citations = normalizedEvidence
+        .map((item, index) => ({ item, raw: rawEvidence[index], index }))
+        .filter(entry => usedIds.has(entry.item.evidence_id))
+        .map(entry => citationFromEvidence(entry.raw, entry.item, entry.index));
+
+    return {
+        answer: finalAnswer,
+        grounding,
+        coverage,
+        citations,
+        recomposed,
+        missing_information: [
+            ...coverage.missing_objects.map(object => `Missing verified answer coverage for ${object}.`),
+            ...grounding.unsupported_sentences.map(sentence => `Unsupported sentence removed: ${sentence}`)
+        ]
+    };
+}
+
 function buildExplainabilityGraph(neo4jContext) {
     if (!Array.isArray(neo4jContext) || neo4jContext.length === 0) {
         return { nodes: [], links: [] };
@@ -1926,6 +2327,9 @@ function normalizeContractConfidence(confidence, responseRoute, { failure = fals
 
     if (failure) return 0.2;
     if (responseRoute === "HYBRID_KG_RAG") return parseFloat(Math.max(0.70, Math.min(0.89, numericConfidence)).toFixed(3));
+    if (["KG", "KG_ONLY", "KG_DIRECT", "RAG", "RAG_ONLY", "RAG_DIRECT", "FAQ"].includes(responseRoute)) {
+        return parseFloat(Math.max(0.20, Math.min(0.95, numericConfidence)).toFixed(3));
+    }
     if (["DECISION", "RECOMMENDATION", "CAREER", "COMPARISON"].includes(responseRoute)) {
         return parseFloat(Math.max(0.70, Math.min(0.89, numericConfidence)).toFixed(3));
     }
@@ -1952,6 +2356,14 @@ function buildExplainabilitySources(responseRoute, sources_used, { faqContext, d
     if (["GENERAL", "LLM_FALLBACK"].includes(responseRoute)) {
         if (sources_used?.kg) sources.push("KG_DIRECT");
         if (sources_used?.rag) sources.push("RAG_DIRECT");
+    }
+
+    if (["KG", "KG_ONLY", "KG_DIRECT"].includes(responseRoute) && sources_used?.kg) {
+        sources.push(responseRoute === "KG_DIRECT" ? "KG_DIRECT" : "KG");
+    }
+
+    if (["RAG", "RAG_ONLY", "RAG_DIRECT"].includes(responseRoute) && sources_used?.rag) {
+        sources.push(responseRoute === "RAG_DIRECT" ? "RAG_DIRECT" : "RAG");
     }
 
     if (["DECISION", "RECOMMENDATION", "COMPARISON"].includes(responseRoute)) {
@@ -2059,6 +2471,14 @@ function buildReasoning({
         return `General advisory synthesis used the best available verified context${normalizedConfidence < 0.7 ? " with explicit evidence limitations." : "."}`;
     }
 
+    if (["KG", "KG_ONLY", "KG_DIRECT"].includes(responseRoute)) {
+        return `Verified knowledge-graph evidence was used to answer the academic question${missingInformation.length > 0 ? " with explicit coverage limitations." : "."}`;
+    }
+
+    if (["RAG", "RAG_ONLY", "RAG_DIRECT"].includes(responseRoute)) {
+        return `Verified institutional document evidence was used to answer the academic question${missingInformation.length > 0 ? " with explicit coverage limitations." : "."}`;
+    }
+
     return `Fallback path used limited verified institutional context${normalizedConfidence < 0.5 ? " with weak evidence safeguards." : "."}`;
 }
 
@@ -2161,7 +2581,11 @@ function createResult({
     graph = null,
     sources = null,
 }) {
-    const responseRoute = normalizeExplainabilityRoute(route, query, decisionContext);
+    const normalizedRequestedRoute = String(requestedRoute || "").trim().toUpperCase();
+    const explainabilityRouteInput = ["KG_DIRECT", "RAG_DIRECT"].includes(normalizedRequestedRoute)
+        ? normalizedRequestedRoute
+        : route;
+    const responseRoute = normalizeExplainabilityRoute(explainabilityRouteInput, query, decisionContext);
     const normalizedConfidence = normalizeContractConfidence(confidence, responseRoute, {
         failure,
         weak: normalizeProbability(confidence, 0) < 0.5
@@ -2184,8 +2608,30 @@ function createResult({
                         ? [...kgFacts.slice(0, 2), ...ragFacts.slice(0, 2), ...faqFacts.slice(0, 1)]
                         : [...faqFacts.slice(0, 1), ...kgFacts.slice(0, 1), ...ragFacts.slice(0, 1)]
     );
-    const finalUsedFacts = dedupeTextList(compiledFacts).slice(0, 6);
-    const finalMissingInformation = Array.isArray(missing_information)
+    const evidencePacket = buildGroundingEvidencePacket({
+        neo4jContext,
+        ragContext,
+        faqContext,
+        decisionContext
+    });
+    const quality = failure
+        ? {
+            answer,
+            grounding: null,
+            coverage: { complete: false, missing_objects: [], requested_relations: [] },
+            citations: [],
+            recomposed: false,
+            missing_information: []
+        }
+        : finalizeGroundedAnswer({
+            query,
+            answer,
+            evidence: evidencePacket
+        });
+    answer = quality.answer;
+
+    const finalUsedFacts = dedupeTextList(compiledFacts).slice(0, 20);
+    const baseMissingInformation = Array.isArray(missing_information)
         ? missing_information
         : buildMissingInformation({
             responseRoute,
@@ -2196,6 +2642,10 @@ function createResult({
             failure,
             limitedEvidenceMessage: "Response generated with limited institutional evidence."
         });
+    const finalMissingInformation = dedupeTextList([
+        ...baseMissingInformation,
+        ...(quality.missing_information || [])
+    ]);
     const finalSources = Array.isArray(sources)
         ? [...new Set(sources)]
         : buildExplainabilitySources(responseRoute, sources_used, { faqContext, decisionContext });
@@ -2224,6 +2674,10 @@ function createResult({
     });
     finalMetadata.source_count = Array.isArray(finalSources) ? finalSources.length : 0;
     finalMetadata.used_fact_count = Array.isArray(finalUsedFacts) ? finalUsedFacts.length : 0;
+    finalMetadata.grounding = quality.grounding;
+    finalMetadata.answer_coverage = quality.coverage;
+    finalMetadata.evidence_recomposed = quality.recomposed;
+    finalMetadata.model_calls_added_by_self_check = 0;
 
     const result = {
         answer,
@@ -2233,6 +2687,7 @@ function createResult({
         graph: explainabilityGraph || EMPTY_GRAPH,
         route: responseRoute,
         sources: finalSources,
+        citations: quality.citations || [],
         reasoning: finalReasoning,
         metadata: finalMetadata,
         sources_used,
@@ -2801,6 +3256,9 @@ export {
     ROUTE_INSTRUCTIONS,
     ROUTE_INFERENCE_OPTIONS,
     resolveRouteType,
+    normalizeExplainabilityRoute,
+    buildExplainabilitySources,
+    buildReasoning,
     buildInferenceOptions,
 
     // ── Context builders ──────────────────────────────────────────────
@@ -2810,6 +3268,9 @@ export {
     buildDecisionBlock,
     buildContextPayload,
     normalizeGraphEvidence,
+    evaluateAnswerCoverage,
+    finalizeGroundedAnswer,
+    recomposeAnswerFromEvidence,
     depthLimitedSerialize,
     trimContextToBudget,                  // NEW Phase 3
     buildDeterministicFallbackAnswer,     // NEW Phase 3

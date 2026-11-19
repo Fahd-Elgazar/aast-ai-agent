@@ -19,6 +19,9 @@ class Settings(BaseSettings):
     GEMINI_API_KEY: SecretStr | None = None
     DECISION_GEMINI_ENABLED: bool = False
     INTERNAL_SECRET_KEY: SecretStr | None = None
+    AUTH_JWT_SECRET: SecretStr | None = None
+    AUTH_JWT_ISSUER: str = "aast-ai-agent"
+    AUTH_JWT_AUDIENCE: str = "aast-ai-agent-ui"
 
     VOICE_ENABLED: bool = False
     VOICE_WHISPER_MODEL: str = "base"

@@ -1,0 +1,43 @@
+{
+  "source": {
+    "data_source_type": "manual",
+    "last_updated": "2026-07-07"
+  },
+  "campus": {
+    "campus_id": "SAMPLE_CITY",
+    "name": "Sample City Campus",
+    "city": "Sample City",
+    "country": "Exampleland"
+  },
+  "college": {
+    "college_id": "SAMPLE_COMPUTING",
+    "name": "Sample College of Computing",
+    "parent_institution": "Sample University",
+    "branch": "Sample City",
+    "overview": "Synthetic fixture used only to validate the normalization pipeline."
+  },
+  "programs": [
+    {
+      "name": "Software Systems",
+      "level": "Undergraduate",
+      "discipline": "computing",
+      "duration_years": 4,
+      "teaching_language": "English",
+      "admission_rules": {
+        "min_score": 70,
+        "certificate_types": ["sample_certificate"],
+        "mandatory_subjects": ["Mathematics"]
+      },
+      "study_profile": {
+        "theoretical_intensity": "medium",
+        "practical_intensity": "high",
+        "technology_dependency": "high"
+      },
+      "career_outcomes": {
+        "common_roles": ["Software Developer"],
+        "employment_sectors": ["Technology"],
+        "employability_level": "high"
+      }
+    }
+  ]
+}

@@ -86,7 +86,7 @@ class ResponseFormatter {
                 ...(fusionPayload.explainability || { deterministic: false }),
                 route_diagnostics: traceData.route_diagnostics || fusionPayload.route_diagnostics || null
             },
-            citations: Array.isArray(fusionPayload.citations) ? fusionPayload.citations : [],
+            citations: this._normalizeCitations(fusionPayload.citations),
             reasoning: fusionPayload.reasoning || "Response generated via standardized formatting layer.",
             metadata: metadata,
             cid: cid,
@@ -253,6 +253,33 @@ class ResponseFormatter {
 
         // Deduplicate via Set
         return [...new Set(normalizedArray)];
+    }
+
+    _normalizeCitations(citations) {
+        if (!Array.isArray(citations)) return [];
+        const seen = new Set();
+        const normalized = [];
+        for (const citation of citations) {
+            if (!citation || typeof citation !== "object") continue;
+            const evidenceId = String(
+                citation.evidence_id || citation.id || ""
+            ).trim();
+            const excerpt = String(
+                citation.excerpt || citation.text || citation.content || ""
+            ).replace(/\s+/g, " ").trim();
+            if (!evidenceId || !excerpt || seen.has(evidenceId)) continue;
+            seen.add(evidenceId);
+            normalized.push({
+                id: evidenceId,
+                evidence_id: evidenceId,
+                source: String(citation.source || "Institutional evidence"),
+                title: String(citation.title || "Institutional evidence"),
+                category: String(citation.category || "verified_evidence"),
+                excerpt: excerpt.slice(0, 420),
+                score: this._normalizeConfidence(citation.score ?? citation.confidence)
+            });
+        }
+        return normalized.slice(0, 20);
     }
 
     _normalizeConfidence(conf) {

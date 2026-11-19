@@ -1,5 +1,6 @@
 import { generateGeminiSynthesis } from "./geminiService.js";
 import { runtimeMode } from "../config/runtimeMode.js";
+import { verifyGroundedAnswer } from "./groundingVerificationService.js";
 
 const DEFAULT_HUMANIZER_TIMEOUT_MS = 7000;
 const DEFAULT_MAX_OUTPUT_TOKENS = 180;
@@ -45,6 +46,22 @@ function wordCount(value) {
   return cleanText(value).split(/\s+/).filter(Boolean).length;
 }
 
+function normalizeComparable(value) {
+  return cleanText(value, 300)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function formatNaturalList(values) {
+  const unique = [...new Set(values.map(value => cleanText(value, 180)).filter(Boolean))];
+  if (unique.length === 0) return "";
+  if (unique.length === 1) return unique[0];
+  if (unique.length === 2) return `${unique[0]} and ${unique[1]}`;
+  return `${unique.slice(0, -1).join(", ")}, and ${unique[unique.length - 1]}`;
+}
+
 function stripGroundingFrame(answer) {
   return cleanText(answer)
     .replace(/^(according to verified university policy[:,]?\s*)/i, "")
@@ -78,14 +95,14 @@ function hasVerifiedOfficeAnswer(answer) {
 function buildGroundedOffer(query, answer, route) {
   if (hasOptionalOffer(answer) || wordCount(answer) > 70 || INSUFFICIENT_INFO_RE.test(answer)) return "";
 
-  const text = `${query} ${answer} ${route}`.toLowerCase();
-  if (/\b(who teaches|teaches|teacher|instructor|professor|lecturer|faculty|kg_direct)\b/.test(text)) {
+  const text = `${query} ${answer}`.toLowerCase();
+  if (/\b(who teaches|teaches|teacher|instructor|professor|lecturer|faculty)\b/.test(text)) {
     return " I can also help with office information or related courses if that information is available.";
   }
   if (/\b(course|subject|prerequisite|prerequisites|required before|machine learning|deep learning|nlp)\b/.test(text)) {
     return " I can also explain prerequisites or related subjects.";
   }
-  if (/\b(policy|regulation|transfer|admission|grading|grades|gpa|fee|fees|scholarship|rag_direct|hybrid)\b/.test(text)) {
+  if (/\b(policy|regulation|transfer|admission|grading|grades|gpa|fee|fees|scholarship)\b/.test(text)) {
     return " I can also help explain related academic regulations.";
   }
 
@@ -101,13 +118,57 @@ function rewriteTeachingAnswer(answer, query, route) {
   const course = cleanText(match[2], 120).replace(/\s+course$/i, "");
   if (!person || !course) return "";
 
-  const rewritten = `${course} is taught by ${person}.`;
-  return rewritten + buildGroundedOffer(query, rewritten, route);
+  return `${person} teaches ${course}.`;
+}
+
+function rewriteRoleAnswer(answer) {
+  const text = stripGroundingFrame(answer);
+  const match = text.match(/^(.+?)\s+serves as Head of Unit for\s+(.+?)\.?$/i);
+  if (!match) return "";
+  const person = cleanText(match[1], 120);
+  const unit = cleanText(match[2], 160);
+  if (!person || !unit) return "";
+  return `${person} is the Head of the ${unit}.`;
 }
 
 function rewritePrerequisiteAnswer(answer, query, route) {
   const text = stripGroundingFrame(answer);
-  const match = text.match(/^(.+?)\s+(?:is|are)\s+(?:a\s+)?prerequisites?\s+(?:for|to)\s+(.+?)\.?$/i);
+  const relationPattern = /(?:^|\.\s+)([^.]+?)\s+(?:is|are)\s+(?:a\s+)?prerequisites?\s+(?:for|to)\s+([^.]+?)\.?\s*(?=$|\.)/gi;
+  const relations = [];
+  let relationMatch;
+  while ((relationMatch = relationPattern.exec(text)) !== null) {
+    relations.push({
+      prerequisite: cleanText(relationMatch[1], 180),
+      course: cleanText(relationMatch[2], 120)
+    });
+  }
+
+  if (relations.length > 1) {
+    const comparableQuery = normalizeComparable(query);
+    const directRelations = relations.filter(({ course }) => {
+      const comparableCourse = normalizeComparable(course);
+      return comparableCourse && comparableQuery.includes(comparableCourse);
+    });
+
+    if (directRelations.length > 0) {
+      const course = directRelations[0].course;
+      const prerequisites = formatNaturalList(
+        directRelations
+          .filter(relation => normalizeComparable(relation.course) === normalizeComparable(course))
+          .map(relation => relation.prerequisite)
+      );
+      if (course && prerequisites) {
+        const rewritten = `To take ${course}, you'll first need ${prerequisites}.`;
+        return rewritten + buildGroundedOffer(query, rewritten, route);
+      }
+    }
+
+    // Preserve multi-relation evidence when the user's requested course cannot
+    // be identified safely instead of collapsing unrelated facts together.
+    return "";
+  }
+
+  const match = text.match(/^([^.]+?)\s+(?:is|are)\s+(?:a\s+)?prerequisites?\s+(?:for|to)\s+([^.]+?)\.?$/i);
   if (!match) return "";
 
   const prerequisites = cleanText(match[1], 180);
@@ -153,6 +214,162 @@ function rewriteMultiIntentAnswer(answer) {
   return `${intro}\n${body}`;
 }
 
+function splitFactSentences(answer) {
+  return String(answer || "")
+    .replace(/\r\n/g, "\n")
+    .split(/\n+|(?<=\.)\s+/)
+    .map(line => cleanText(line, 700))
+    .filter(Boolean);
+}
+
+function rewriteCompleteRelationList(answer, query) {
+  const facts = splitFactSentences(stripGroundingFrame(answer));
+  const lowerQuery = cleanText(query, 500).toLowerCase();
+  if (facts.length < 2) return "";
+
+  if (/\b(career|careers|jobs?|lead to)\b/.test(lowerQuery)) {
+    const grouped = new Map();
+    for (const fact of facts) {
+      const match = fact.match(/^(.+?)\s+(?:can\s+)?leads?\s+to\s+(.+?)\.?$/i);
+      if (!match) continue;
+      const roles = grouped.get(match[1]) || [];
+      roles.push(match[2].replace(/\s+career role$/i, ""));
+      grouped.set(match[1], roles);
+    }
+    if (grouped.size > 0) {
+      return [...grouped.entries()]
+        .map(([program, roles]) => `${program} can lead to ${formatNaturalList(roles)} roles.`)
+        .join(" ");
+    }
+  }
+
+  if (/\b(compare|comparison)\b/.test(lowerQuery)) {
+    const grouped = new Map();
+    for (const fact of facts) {
+      const match = fact.match(/^(.+?)\s+includes\s+(?:the\s+)?(.+?)(?:\s+course)?(?:\s+\([^)]*\))?\.?$/i);
+      if (!match) continue;
+      const courses = grouped.get(match[1]) || [];
+      courses.push(match[2]);
+      grouped.set(match[1], courses);
+    }
+    if (grouped.size >= 2) {
+      return [...grouped.entries()]
+        .map(([program, courses]) => `**${program}:** ${formatNaturalList(courses)}.`)
+        .join("\n");
+    }
+  }
+
+  if (/\b(teach|teaches|teaching|taught|anything else|what else)\b/.test(lowerQuery)) {
+    const grouped = new Map();
+    for (const fact of facts) {
+      const match = fact.match(/^(.+?)\s+teaches\s+(?:the\s+)?(.+?)(?:\s+course)?\.?$/i);
+      if (!match) continue;
+      const courses = grouped.get(match[1]) || [];
+      courses.push(match[2].replace(/\s+course$/i, ""));
+      grouped.set(match[1], courses);
+    }
+    if (grouped.size > 0) {
+      return [...grouped.entries()]
+        .map(([person, courses]) => `${person} teaches ${formatNaturalList(courses)}.`)
+        .join(" ");
+    }
+  }
+
+  if (/\b(bachelor|bachelors|bsc|degree|which programs|programs.*offer)\b/.test(lowerQuery)) {
+    const offers = [];
+    const programs = new Map();
+    for (const fact of facts) {
+      const offer = fact.match(/^(.+?)\s+offers\s+(.+?)\.?$/i);
+      if (offer) offers.push(`${offer[1]} offers ${offer[2]}.`);
+      const program = fact.match(/^(.+?)\s+includes\s+(?:the\s+)?(.+?)\s+program(?:\s+\(([^)]*)\))?\.?$/i);
+      if (program) {
+        const values = programs.get(program[1]) || [];
+        const details = String(program[3] || "")
+          .split(",")
+          .map(value => value.trim())
+          .filter(Boolean)
+          .map(value => value.replace(/^discipline:\s*/i, ""));
+        values.push(details.length > 0 ? `${program[2]} (${details.join(", ")})` : program[2]);
+        programs.set(program[1], values);
+      }
+    }
+    const programLines = [...programs.entries()].map(
+      ([degree, values]) =>
+        `${degree} includes the following ${values.length === 1 ? "program" : "programs"}: ${formatNaturalList(values)}.`
+    );
+    if (offers.length > 0 || programLines.length > 0) {
+      return [...offers, ...programLines].join(" ");
+    }
+  }
+
+  if (/\b(recommended after|language technology|take after)\b/.test(lowerQuery)) {
+    const sequence = facts.find(fact => /\brecommended after\b/i.test(fact));
+    const membership = facts.find(fact => /\bincludes\b/i.test(fact));
+    if (sequence) return [sequence, membership].filter(Boolean).join(" ");
+  }
+
+  return "";
+}
+
+function hasVerifiedResponseEvidence(responseBody = {}) {
+  return (
+    (Array.isArray(responseBody.used_facts) && responseBody.used_facts.length > 0) ||
+    (Array.isArray(responseBody.citations) && responseBody.citations.length > 0) ||
+    (Array.isArray(responseBody.graph?.links) && responseBody.graph.links.length > 0) ||
+    responseBody?.metadata?.grounding?.grounded === true
+  );
+}
+
+function buildResponseGroundingEvidence(responseBody = {}) {
+  const citations = Array.isArray(responseBody.citations) ? responseBody.citations : [];
+  const citedExcerpts = new Set();
+  const evidence = citations
+    .map((citation, index) => {
+      const excerpt = cleanText(citation?.excerpt, 700);
+      if (!excerpt) return null;
+      citedExcerpts.add(normalizeComparable(excerpt));
+      return {
+        evidence: excerpt,
+        evidence_id: citation.evidence_id || citation.id || `citation:${index + 1}`,
+        source_type: citation.source || "KG"
+      };
+    })
+    .filter(Boolean);
+
+  const usedFacts = Array.isArray(responseBody.used_facts) ? responseBody.used_facts : [];
+  usedFacts.forEach((fact, index) => {
+    const text = cleanText(fact, 700);
+    if (!text || citedExcerpts.has(normalizeComparable(text))) return;
+    evidence.push({
+      evidence: text,
+      evidence_id: `response-fact:${index + 1}`,
+      source_type: "KG"
+    });
+  });
+
+  // Graph links are a last-resort grounding source. Mixing them with complete
+  // cited list evidence can incorrectly look like a numeric conflict merely
+  // because one degree legitimately has multiple program relationships.
+  if (evidence.length === 0) {
+    const links = Array.isArray(responseBody.graph?.links) ? responseBody.graph.links : [];
+    links.forEach((link, index) => {
+      const subject = cleanText(link?.source?.label || link?.source?.name || link?.source, 180);
+      const object = cleanText(link?.target?.label || link?.target?.name || link?.target, 180);
+      const relation = cleanText(link?.type || link?.relation, 100);
+      if (!subject || !object || !relation) return;
+      evidence.push({
+        evidence_id: `response-graph:${index + 1}`,
+        source_type: "KG",
+        relSourceName: subject,
+        relTargetName: object,
+        relType: relation
+      });
+    });
+  }
+
+  return evidence;
+}
+
 export function applyGroundedConversationalExpansion({
   query,
   groundedAnswer,
@@ -170,8 +387,25 @@ export function applyGroundedConversationalExpansion({
     return { answer: multiIntentAnswer, changed: multiIntentAnswer !== answer, reason: "MULTI_INTENT_FLOW" };
   }
 
-  const stripped = stripGroundingFrame(answer);
   const lowerQuery = cleanText(query, 500).toLowerCase();
+  const verifiedFacts = Array.isArray(responseBody.used_facts)
+    ? responseBody.used_facts.map(fact => cleanText(fact, 700)).filter(Boolean)
+    : [];
+  const relationListSource =
+    /\b(bachelor|bachelors|bsc|degree|which programs|programs?.*offer)\b/.test(lowerQuery) &&
+    verifiedFacts.length > 0
+      ? verifiedFacts.join("\n")
+      : groundedAnswer;
+  const relationListAnswer = rewriteCompleteRelationList(relationListSource, query);
+  if (relationListAnswer) {
+    return {
+      answer: relationListAnswer,
+      changed: relationListAnswer !== answer,
+      reason: "COMPLETE_RELATION_LIST"
+    };
+  }
+
+  const stripped = stripGroundingFrame(answer);
   const resolvedTarget = getResolvedFollowUpTarget(responseBody);
 
   if (
@@ -183,6 +417,11 @@ export function applyGroundedConversationalExpansion({
   ) {
     const continuityAnswer = `I resolved that as ${resolvedTarget}, but I couldn't find verified office information.`;
     return { answer: continuityAnswer, changed: continuityAnswer !== answer, reason: "FOLLOWUP_MISSING_OFFICE" };
+  }
+
+  const roleAnswer = rewriteRoleAnswer(stripped);
+  if (!hasMultilineGrounding && roleAnswer) {
+    return { answer: roleAnswer, changed: roleAnswer !== answer, reason: "ROLE_FLOW" };
   }
 
   const teachingAnswer = rewriteTeachingAnswer(stripped, query, route);
@@ -331,10 +570,42 @@ export async function humanizeGroundedAnswer({
     route,
     responseBody
   });
-  const answer = cleanText(expansion.answer);
+  const answer = String(expansion.answer || "").includes("\n")
+    ? cleanMultilineText(expansion.answer)
+    : cleanText(expansion.answer);
   if (!answer) {
     console.log(`[GEMINI_HUMANIZER][HUMANIZER_SKIPPED][${requestId}] reason=EMPTY_GROUNDED_ANSWER route=${route}`);
     return { answer, changed: false, skipped: true, reason: "EMPTY_GROUNDED_ANSWER" };
+  }
+
+  if (hasVerifiedResponseEvidence(responseBody)) {
+    const groundingEvidence = buildResponseGroundingEvidence(responseBody);
+    const formattedGrounding = groundingEvidence.length > 0
+      ? verifyGroundedAnswer({ answer, evidence: groundingEvidence })
+      : responseBody?.metadata?.grounding || null;
+    if (expansion.changed && formattedGrounding?.status !== "fully_supported") {
+      console.log(`[GEMINI_HUMANIZER][HUMANIZER_FALLBACK][${requestId}] reason=FORMATTED_GROUNDING_REJECTED route=${route}`);
+      return {
+        answer: originalAnswer,
+        changed: false,
+        skipped: true,
+        fallback: true,
+        reason: "FORMATTED_GROUNDING_REJECTED",
+        expansionReason: expansion.reason,
+        grounding: responseBody?.metadata?.grounding || null,
+        modelCallsAdded: 0
+      };
+    }
+    console.log(`[GEMINI_HUMANIZER][HUMANIZER_SKIPPED][${requestId}] reason=VERIFIED_LOCAL_FORMATTING route=${route}`);
+    return {
+      answer,
+      changed: expansion.changed,
+      skipped: true,
+      reason: "VERIFIED_LOCAL_FORMATTING",
+      expansionReason: expansion.reason,
+      grounding: formattedGrounding,
+      modelCallsAdded: 0
+    };
   }
 
   if (!runtimeMode.humanizerEnabled) {

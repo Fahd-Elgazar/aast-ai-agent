@@ -13,6 +13,7 @@ from app.infrastructure.db.repositories.decision_fee_repo import DecisionFeeRepo
 from app.infrastructure.db.repositories.decision_program_repo import DecisionProgramRepository
 from app.infrastructure.db.repositories.chat_repo import ChatRepository
 from app.infrastructure.db.session import SessionLocal
+from app.api.v1.dependencies.security import Principal, require_current_user
 
 router = APIRouter(prefix="/chat", tags=["chat"])
 
@@ -49,11 +50,13 @@ def get_agent_service() -> Iterator[AgentService]:
 )
 def process_chat_message(
     payload: ChatRequestSchema,
-    agent_service: AgentService = Depends(get_agent_service)
+    agent_service: AgentService = Depends(get_agent_service),
+    principal: Principal = Depends(require_current_user),
 ) -> ChatResponseSchema:
     try:
+        owned_session_id = f"{len(principal.subject)}:{principal.subject}:{payload.session_id}"
         reply, recommendations = agent_service.process_message(
-            session_id=payload.session_id,
+            session_id=owned_session_id,
             message=payload.message
         )
         return ChatResponseSchema(
