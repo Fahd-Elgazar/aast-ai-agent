@@ -1,0 +1,580 @@
+{
+  "schemaVersion": 1,
+  "status": "proposed-for-approval",
+  "asOf": "2026-11-19",
+  "planningBranch": "plan/conversation-two-developer",
+  "publicParent": "3e2f0100254a0d20a9e81b52d28c127d612f9dc1",
+  "sourceParent": "6367b0df91f208e518fb7e04cd7c81bdb82b9ae4",
+  "cleanedCommit": null,
+  "integrationBranch": "integration/conversation-v1",
+  "estimates": {
+    "taskDays": 37.5,
+    "reviewDaysPerDeveloper": 2,
+    "totalEngineerDays": 41.5,
+    "elapsedWorkingDays": [
+      26,
+      30
+    ]
+  },
+  "phases": [
+    {
+      "id": "P0",
+      "name": "Reproducible baseline and contract freeze",
+      "primaryOwner": "Mohammed Hassan",
+      "joint": true,
+      "dependsOn": [],
+      "objective": "Resolve source, cleanup and profile drift before either developer changes behavior.",
+      "parallel": "Start BASE immediately after plan approval. Machine 2 can read the plan and check tools while waiting for the review ref.",
+      "exit": "Both accounts can reproduce and approve a cleaned, isolated reference run.",
+      "boundary": "Only the baseline review materials and signed examples change in this phase.",
+      "taskIds": [
+        "BASE",
+        "AUDIT",
+        "FREEZE"
+      ]
+    },
+    {
+      "id": "P1",
+      "name": "Turn planning, memory and routing",
+      "primaryOwner": "Mohammed Hassan",
+      "joint": false,
+      "dependsOn": [
+        "P0"
+      ],
+      "objective": "Preserve the student’s present question from session load through route choice.",
+      "parallel": "Run beside P2. Use agreed adapter doubles. Mohammed serializes all orchestrator, memory and routing changes.",
+      "exit": "Real ordered plans satisfy reference fixtures and old callers retain their behavior.",
+      "boundary": "Keep the optional legacy single-question adapter until both lanes pass.",
+      "taskIds": [
+        "TRACE",
+        "STATE",
+        "PLAN"
+      ]
+    },
+    {
+      "id": "P2",
+      "name": "Retrieval and evidence adjudication",
+      "primaryOwner": "Teammate",
+      "joint": false,
+      "dependsOn": [
+        "P0"
+      ],
+      "objective": "Return typed evidence, source gaps and claim support for each ordered part.",
+      "parallel": "Run beside P1. Graph and document work have no technical dependency on each other, but one teammate schedules them serially. Complete both before adjudication.",
+      "exit": "Real adapters and judge satisfy the same fixtures that P1 consumes.",
+      "boundary": "Keep existing single-part entry points, direct-RAG checks, schemas and index layouts.",
+      "taskIds": [
+        "GRAPH",
+        "DOC",
+        "JUDGE"
+      ]
+    },
+    {
+      "id": "P3",
+      "name": "Grounded replies and request lifecycle",
+      "primaryOwner": "Mohammed Hassan",
+      "joint": false,
+      "dependsOn": [
+        "P1",
+        "P2"
+      ],
+      "objective": "Carry accepted facts to all reply paths, keep style faithful and bound work after abandonment.",
+      "parallel": "Run beside P4. Only Mohammed edits request, provider lifecycle and public rendering. Sequence all central file edits.",
+      "exit": "Actual advisor and browser pass grounded reply, cancellation and backward-compatibility tests.",
+      "boundary": "The part-aware adapter must work under both registered profiles.",
+      "taskIds": [
+        "BIND",
+        "VOICE",
+        "BUDGET"
+      ]
+    },
+    {
+      "id": "P4",
+      "name": "Independent evidence and fault qualification",
+      "primaryOwner": "Teammate",
+      "joint": false,
+      "dependsOn": [
+        "P1",
+        "P2"
+      ],
+      "objective": "Establish a test oracle across producer and consumer boundaries independent of the public presentation changes.",
+      "parallel": "Run beside P3 using integration-head planner and real evidence adapters with injected failures. Public end-to-end scoring waits for P5.",
+      "exit": "Named positive and negative controls distinguish routing errors, evidence errors, true gaps and timeouts.",
+      "boundary": "Only teammate-owned tests change. Production fixes go back to their owner.",
+      "taskIds": [
+        "CASES",
+        "QUALIFY"
+      ]
+    },
+    {
+      "id": "P5",
+      "name": "Integrated candidate and release decision",
+      "primaryOwner": "Mohammed Hassan",
+      "joint": true,
+      "dependsOn": [
+        "P3",
+        "P4"
+      ],
+      "objective": "Verify the same candidate on both machines or on the agreed shared capacity host and demonstrate reversal.",
+      "parallel": "Joint checkpoint. Mohammed builds and queues merges. Teammate reviews independently. Both attest to one SHA and digest.",
+      "exit": "Accept only after native tests, integrated 125-turn replay, isolation and rollback pass.",
+      "boundary": "Retain the last verified digest and compatible fixture snapshot until promotion is accepted.",
+      "taskIds": [
+        "CANDIDATE",
+        "SIGNOFF"
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "id": "BASE",
+      "phase": "P0",
+      "owner": "Mohammed Hassan",
+      "tool": "Codex",
+      "reviewer": "Teammate",
+      "engineerDays": 1.5,
+      "dependsOn": [],
+      "legacyTasks": [
+        "T-00"
+      ],
+      "writePaths": [],
+      "scope": "Secure an approved common source location and independent cleanup-review ref. Inventory locked dependencies, eligible historical patches, fixture rights, model IDs, capacity and a disposable deployment profile. Record the clean parent, five normalized Git blobs and allowlisted fixture fingerprints in the baseline review.",
+      "acceptance": "Both machines can fetch the same clean parent and read the review diff and synthetic case pack. Shared mounts, published ports and model/dataset substitutions are ruled out by inspecting resolved settings locally.",
+      "gates": "BASELINE",
+      "risk": "The public remote lacks 61 commits. Replaying a branch wholesale can duplicate prior integrations or disclose private history.",
+      "rollback": "Withdraw the proposed ref from consideration and keep development gated on the last agreed identity.",
+      "evidence": "Version drift / D-01,D-02",
+      "newPaths": [
+        "research/conversation-baseline/profile.json",
+        "research/conversation-baseline/replay.json"
+      ]
+    },
+    {
+      "id": "AUDIT",
+      "phase": "P0",
+      "owner": "Teammate",
+      "tool": "Claude Code",
+      "reviewer": "Mohammed Hassan",
+      "engineerDays": 1.5,
+      "dependsOn": [
+        "BASE"
+      ],
+      "legacyTasks": [
+        "T-02"
+      ],
+      "writePaths": [],
+      "scope": "Independently review five cleanup diffs on machine 2. Inspect exports, call sites and dependency usage. Run paired clean/cleaned checks and identify authoritative synthetic passage and edge controls.",
+      "acceptance": "Five signed dispositions with before/after blob IDs, commands and outcomes. Each positive fixture has a known ID/version, each missing administrative fact is labeled. Any overlapping or behavioral hunk blocks acceptance.",
+      "gates": "BASELINE NATIVE",
+      "risk": "A green historical smoke used the July image. Line-ending changes can obscure the true patch.",
+      "rollback": "Request a corrected cleanup-only review from the owner. Keep the original patch intact.",
+      "evidence": "C00–C03 / D-02,D-03",
+      "newPaths": [
+        "research/conversation-baseline/cleanup-review.md"
+      ]
+    },
+    {
+      "id": "FREEZE",
+      "phase": "P0",
+      "owner": "Mohammed Hassan",
+      "tool": "Codex",
+      "reviewer": "Teammate",
+      "engineerDays": 2,
+      "dependsOn": [
+        "AUDIT"
+      ],
+      "legacyTasks": [
+        "T-00",
+        "T-01",
+        "T-70"
+      ],
+      "writePaths": [],
+      "scope": "Lead the joint freeze. Build and smoke the reviewed cleaned baseline on a disposable full stack. Agree producer/consumer examples, latency profile, absence semantics, synthetic export limits, and tests. Admit the plan documents to the approved integration line as a separate documentation commit.",
+      "acceptance": "Both sign the exact cleaned source, image identity, fixture hashes, contract examples and baseline smoke evidence. Record a parity run on both machines for native checks. Source and data authorization must cover both accounts.",
+      "gates": "BASELINE NATIVE STACK CONTRACT",
+      "risk": "A mutable image tag or missing evidence pack makes later regression results uninterpretable.",
+      "rollback": "Keep the last verified image and reschedule after correcting the baseline profile.",
+      "evidence": "Release parity / D-01,D-04,D-05",
+      "newPaths": [
+        "research/conversation-baseline/freeze.md",
+        "evaluation/contracts/retrieval/advisor-v1.examples.json"
+      ]
+    },
+    {
+      "id": "TRACE",
+      "phase": "P1",
+      "owner": "Mohammed Hassan",
+      "tool": "Codex",
+      "reviewer": "Teammate",
+      "engineerDays": 1.5,
+      "dependsOn": [
+        "FREEZE"
+      ],
+      "legacyTasks": [
+        "T-01"
+      ],
+      "writePaths": [
+        "aast-ai-agent-main/backend/orchestrator.js",
+        "aast-ai-agent-main/backend/services/logger.js",
+        "aast-ai-agent-main/backend/services/metrics.js",
+        "aast-ai-agent-main/backend/testing/conversationalIntelligence.test.js"
+      ],
+      "scope": "Emit bounded stage outcomes at the request boundary for normal, bypass, partial and early-return paths. Supply an optional sink to adapters. Compare trace-on and trace-off behavior.",
+      "acceptance": "One server UUID per synthetic turn, a ran/skipped/unavailable/error outcome for each required stage, identical answers and CID semantics with tracing disabled, and no sensitive exported fields.",
+      "gates": "TRACE AUTH",
+      "risk": "Early returns omit stages or double-log completed requests.",
+      "rollback": "Revert the sink/wiring commit and keep request IDs and response structure.",
+      "evidence": "R04,R05,R07,R09 · D03/1, B02/2",
+      "newPaths": []
+    },
+    {
+      "id": "STATE",
+      "phase": "P1",
+      "owner": "Mohammed Hassan",
+      "tool": "Codex",
+      "reviewer": "Teammate",
+      "engineerDays": 3.5,
+      "dependsOn": [
+        "TRACE"
+      ],
+      "legacyTasks": [
+        "T-10",
+        "T-11"
+      ],
+      "writePaths": [
+        "aast-ai-agent-main/backend/services/conversationPriority.js",
+        "aast-ai-agent-main/backend/testing/demoConversationFollowup.test.js",
+        "aast-ai-agent-main/backend/testing/conversationalIntelligence.test.js",
+        "aast-ai-agent-main/backend/services/conversationService.js",
+        "aast-ai-agent-main/backend/services/persistenceLayer.js",
+        "aast-ai-agent-main/backend/testing/demoConversationMemory.test.js",
+        "aast-ai-agent-main/backend/testing/authIsolation.test.js"
+      ],
+      "scope": "Fill only missing referents. Honor explicit subject, predicate, week, comparison order and format. Persist confirmed corrections, pending clarification and prior verified claim IDs per owner. Normalize older records and serialize same-CID writes.",
+      "acceptance": "A01/2 compares or clarifies, A01/4 keeps Data Science and Machine Learning, B04/4 requests Cognitive Computing week 5, D03/3 retains week 3. Owner isolation, restart, stale target, concurrent turns and old-format records pass.",
+      "gates": "STATE AUTH",
+      "risk": "Inherited topic overrides an explicit relation or reopening a legacy CID leaks a previous owner.",
+      "rollback": "Revert readers/writers as a pair, keeping optional stored fields ignorable by the old reader.",
+      "evidence": "R01,R02 · A01/2,/4, B04/4, D03/3",
+      "newPaths": []
+    },
+    {
+      "id": "PLAN",
+      "phase": "P1",
+      "owner": "Mohammed Hassan",
+      "tool": "Codex",
+      "reviewer": "Teammate",
+      "engineerDays": 3.5,
+      "dependsOn": [
+        "STATE"
+      ],
+      "legacyTasks": [
+        "T-20",
+        "T-21"
+      ],
+      "writePaths": [
+        "aast-ai-agent-main/backend/orchestrator.js",
+        "aast-ai-agent-main/backend/services/brainRouter.js",
+        "aast-ai-agent-main/backend/services/conversationMetaIntent.js",
+        "aast-ai-agent-main/backend/config/goldenPathRegistry.js",
+        "aast-ai-agent-main/backend/testing/routingPrecisionCalibration.test.js",
+        "aast-ai-agent-main/backend/services/conversationPriority.js",
+        "aast-ai-agent-main/backend/testing/conversationalIntelligence.test.js",
+        "aast-ai-agent-main/backend/services/goldenCachePolicy.js"
+      ],
+      "scope": "Build ordered clauses before per-part classification. Apply scoped golden/meta/Decision gates per clause and retain requested/effective route, reason and budget. Fence cached answers by material constraints. Use frozen fake adapters until the integration join.",
+      "acceptance": "E03/1 produces independent course/week pairs in order. D03/1 keeps document and syllabus scopes. E02/1 uses sequence evidence, F04/1 exits unsupported, F01/4 preserves teaching intent. Positive advising, FAQ and recall still work.",
+      "gates": "ROUTE STATE",
+      "risk": "Shared orchestrator early exits, golden hits and hybrid fallback can bypass the plan.",
+      "rollback": "Revert the planner wiring and scoped rule changes together after dependents are disabled.",
+      "evidence": "R03,R09 · E02/1, F04/1, E03/1, D03/1",
+      "newPaths": []
+    },
+    {
+      "id": "GRAPH",
+      "phase": "P2",
+      "owner": "Teammate",
+      "tool": "Claude Code",
+      "reviewer": "Mohammed Hassan",
+      "engineerDays": 3,
+      "dependsOn": [
+        "FREEZE"
+      ],
+      "legacyTasks": [
+        "T-30",
+        "T-60"
+      ],
+      "writePaths": [
+        "aast-ai-agent-main/backend/services/neo4jcontext.js",
+        "aast-ai-agent-main/backend/testing/kgReliability.test.js",
+        "aast-ai-agent-main/backend/testing/retrievalEntityAlignment.test.js"
+      ],
+      "scope": "Adapt exact and semantic graph retrieval to the frozen part and execution options. Match target, relation and direction, carry rejection/status events, bound queries and close sessions on abort. Preserve broad general queries and graph visualization.",
+      "acceptance": "Positive typed edge preserves direction and ID. Reject reversed/adjoining entities, semantic substitutes for an exact miss, and prerequisites inferred from RECOMMENDED_AFTER. Empty and timed-out retrieval produce distinct results.",
+      "gates": "KG FAULT",
+      "risk": "A graph label can be both a course and a program. Broad suppression could drop valid discovery results.",
+      "rollback": "Revert the part-aware graph adapter, preserving the fixture failure and prior schema.",
+      "evidence": "R04,R07 · C02/2, E02/1, D02/1",
+      "newPaths": []
+    },
+    {
+      "id": "DOC",
+      "phase": "P2",
+      "owner": "Teammate",
+      "tool": "Claude Code",
+      "reviewer": "Mohammed Hassan",
+      "engineerDays": 3,
+      "dependsOn": [
+        "FREEZE"
+      ],
+      "legacyTasks": [
+        "T-31",
+        "T-60"
+      ],
+      "writePaths": [
+        "aast-ai-agent-main/backend/services/ragService.js",
+        "aast-ai-agent-main/backend/rag_system/phase3_retriever.py",
+        "aast-ai-agent-main/backend/rag_system/test_phase3_retriever.py",
+        "aast-ai-agent-main/backend/rag_system/test_rag_readiness.py"
+      ],
+      "scope": "Keep /search defaults. Carry part scope through Node capability discovery, Python recall, ranking, eligibility and bounded fallback. Propagate budget/abort where supported and cap in-flight synchronous work. Record stable passage, authority and version or reason for absence.",
+      "acceptance": "D04 calendar and D02 eligibility positives retain approved passage IDs. Procedure/deadline requests abstain without a matching source. Wrong-topic or wrong-week passages fail. Abort cancels queued retries and capability probes.",
+      "gates": "RAG FAULT",
+      "risk": "A score or exact title alone can admit the wrong record. Synchronous embedding can outlive a canceled HTTP call.",
+      "rollback": "Revert Node/Python adapter changes together without reindexing or touching stored vectors.",
+      "evidence": "R04,R07,R09 · D02/1, D04/1, B04/4",
+      "newPaths": []
+    },
+    {
+      "id": "JUDGE",
+      "phase": "P2",
+      "owner": "Teammate",
+      "tool": "Claude Code",
+      "reviewer": "Mohammed Hassan",
+      "engineerDays": 3,
+      "dependsOn": [
+        "GRAPH",
+        "DOC"
+      ],
+      "legacyTasks": [
+        "T-40"
+      ],
+      "writePaths": [
+        "aast-ai-agent-main/backend/services/fusionService.js",
+        "aast-ai-agent-main/backend/services/directRagEvidencePolicy.js",
+        "aast-ai-agent-main/backend/services/groundingVerificationService.js",
+        "evaluation/contracts/retrieval/entity-evidence.schema.json",
+        "evaluation/contracts/retrieval/grounding-result.schema.json",
+        "aast-ai-agent-main/backend/testing/fusionEvidenceContract.test.js",
+        "aast-ai-agent-main/backend/testing/groundingVerification.test.js"
+      ],
+      "scope": "Adapt existing fusion, direct-RAG and sentence verifier to accept scoped items. Select by part, authority and version, deduplicate stable IDs within scope, and carry conflict, rejection and claim-to-ID mappings. Build against shared contract examples before the real planner arrives.",
+      "acceptance": "A complete, missing and conflicting part survive independently. Every supported institutional sentence cites selected evidence from its part. History and score alone cannot support facts. Existing single-part and legacy callers pass.",
+      "gates": "EVIDENCE CONTRACT",
+      "risk": "Existing exact-evidence source enum describes retrieval method. Changing it to a KG/RAG lane breaks consumers.",
+      "rollback": "Revert the wrapper/verifier changes after any dependent public formatter is reversed.",
+      "evidence": "R04,R05,R09 · D01/1, F03/1, D03/1",
+      "newPaths": []
+    },
+    {
+      "id": "BIND",
+      "phase": "P3",
+      "owner": "Mohammed Hassan",
+      "tool": "Codex",
+      "reviewer": "Teammate",
+      "engineerDays": 2.5,
+      "dependsOn": [
+        "PLAN",
+        "JUDGE"
+      ],
+      "legacyTasks": [
+        "T-41"
+      ],
+      "writePaths": [
+        "aast-ai-agent-main/backend/orchestrator.js",
+        "aast-ai-agent-main/backend/services/responseFormatter.js",
+        "aast-ai-agent-main/frontend/src/components/ChatMessage.tsx",
+        "aast-ai-agent-main/frontend/src/types.ts",
+        "aast-ai-agent-main/backend/testing/directRagGroundingContract.test.js",
+        "aast-ai-agent-main/frontend/src/components/pages/AdvisorPage.tsx",
+        "aast-ai-agent-main/frontend/testing/frontendCorrectness.test.ts"
+      ],
+      "scope": "Wire actual planner to both adapters, adjudicator, deterministic exits, fallback and React. Bind supported claims and localized gaps before response formatting. Adopt CID and evidence safely across navigation/reload.",
+      "acceptance": "D01/1, F03/1, F03/4 and D03/1 produce attributable claims or a localized gap. Older envelopes still display, empty citations stay empty, and late replies cannot overwrite a new session.",
+      "gates": "PUBLIC EVIDENCE STATE",
+      "risk": "A correct backend citation can disappear in normalization, CID adoption or history reload.",
+      "rollback": "Revert public rendering and bridge commits first. Keep readable optional storage fields.",
+      "evidence": "R05,R09 · D01/1, F03/4, D03/1",
+      "newPaths": []
+    },
+    {
+      "id": "VOICE",
+      "phase": "P3",
+      "owner": "Mohammed Hassan",
+      "tool": "Codex",
+      "reviewer": "Teammate",
+      "engineerDays": 2,
+      "dependsOn": [
+        "BIND"
+      ],
+      "legacyTasks": [
+        "T-50"
+      ],
+      "writePaths": [
+        "aast-ai-agent-main/backend/services/conversationMetaIntent.js",
+        "aast-ai-agent-main/backend/services/conversationalHumanizer.js",
+        "aast-ai-agent-main/backend/services/unifiedAnswerService.js",
+        "aast-ai-agent-main/frontend/src/components/ChatMessage.tsx",
+        "aast-ai-agent-main/backend/testing/demoConversationAnswer.test.js"
+      ],
+      "scope": "Distinguish recall, rephrase, why and example. Shape only prior verified material, preserve evidence, use requested language/length, and give one scoped clarification if needed. Gate all model and deterministic replies.",
+      "acceptance": "Two reviewers accept B01/4, B03/2 and E01/4 for the requested operation with equal supported claims and IDs. Repeated generic refusal count falls on matched cases while warranted limitations remain correct.",
+      "gates": "VOICE PUBLIC",
+      "risk": "A fluent model can add a new rule or change uncertainty.",
+      "rollback": "Revert shaping independently and keep the citation bridge.",
+      "evidence": "R06 · B01/4, B03/2, E01/4",
+      "newPaths": []
+    },
+    {
+      "id": "BUDGET",
+      "phase": "P3",
+      "owner": "Mohammed Hassan",
+      "tool": "Codex",
+      "reviewer": "Teammate",
+      "engineerDays": 2.5,
+      "dependsOn": [
+        "VOICE"
+      ],
+      "legacyTasks": [
+        "T-60"
+      ],
+      "writePaths": [
+        "aast-ai-agent-main/backend/orchestrator.js",
+        "aast-ai-agent-main/backend/services/ollamaService.js",
+        "aast-ai-agent-main/backend/services/circuitStateManager.js",
+        "aast-ai-agent-main/backend/services/healthMonitor.js",
+        "aast-ai-agent-main/backend/config/runtimeMode.js",
+        "aast-ai-agent-main/backend/testing/healthReadiness.test.js",
+        "aast-ai-agent-main/frontend/src/services/agentService.ts",
+        "aast-ai-agent-main/frontend/src/services/httpClient.ts",
+        "aast-ai-agent-main/backend/testing/fallbackTruthContract.test.js"
+      ],
+      "scope": "Apply one lifecycle deadline across browser, queue, router, graph/document and generation. Honor disconnect before persistence and retries, check breaker transitions and compare residual cancellation/admission branches by behavior. Agree explicit handling of non-interruptible work.",
+      "acceptance": "On delay/disconnect no new work, retry or late write begins after abort. Abortable calls stop; any non-interruptible call drains within its declared bound with its result discarded. Partial truth, HTTP status and envelope stay consistent. Matched latency gate passes.",
+      "gates": "FAULT PUBLIC",
+      "risk": "Promise timeout can leave work running or silently write stale memory.",
+      "rollback": "Revert orchestration policy and restore measured prior timeout settings in the isolated profile.",
+      "evidence": "R07 · B02/2, A02/2",
+      "newPaths": []
+    },
+    {
+      "id": "CASES",
+      "phase": "P4",
+      "owner": "Teammate",
+      "tool": "Claude Code",
+      "reviewer": "Mohammed Hassan",
+      "engineerDays": 2.5,
+      "dependsOn": [
+        "PLAN",
+        "JUDGE"
+      ],
+      "legacyTasks": [
+        "T-61"
+      ],
+      "writePaths": [
+        "aast-ai-agent-main/backend/testing/retrievalEntityAlignment.test.js",
+        "aast-ai-agent-main/backend/testing/fusionEvidenceContract.test.js",
+        "aast-ai-agent-main/backend/rag_system/test_phase3_retriever.py",
+        "aast-ai-agent-main/backend/rag_system/test_rag_readiness.py"
+      ],
+      "scope": "Qualify both lane outputs at their real contract boundary with positive/negative, bilingual and conflicting-version fixtures. Detect true source absence independently from routing and ranking misses.",
+      "acceptance": "Every P0 evidence failure has a passing positive and a rejecting negative control. E03/D03 keep order, ID and provenance through the real planner and evaluator. Save fixture hashes and a per-part verdict.",
+      "gates": "CONTRACT KG RAG EVIDENCE",
+      "risk": "Using the same selection heuristic to generate expectations makes the test circular.",
+      "rollback": "Restore last reviewed oracle only after independent evidence review. Keep failed cases recorded.",
+      "evidence": "R04,R05,R09 · E03/1, D03/1, F01/4",
+      "newPaths": []
+    },
+    {
+      "id": "QUALIFY",
+      "phase": "P4",
+      "owner": "Teammate",
+      "tool": "Claude Code",
+      "reviewer": "Mohammed Hassan",
+      "engineerDays": 2,
+      "dependsOn": [
+        "CASES"
+      ],
+      "legacyTasks": [
+        "T-60",
+        "T-61"
+      ],
+      "writePaths": [
+        "aast-ai-agent-main/backend/testing/retrievalEntityAlignment.test.js",
+        "aast-ai-agent-main/backend/testing/fusionEvidenceContract.test.js"
+      ],
+      "scope": "Independently inject adapter delay, unavailable versus empty sources, cancellation and provider degradation with fake clocks, fixed data and deterministic model outcomes. Prepare the blind scoring sheet and comparable latency protocol for the joined candidate.",
+      "acceptance": "Oracle distinguishes canceled from unavailable and true negative from dropped candidate. Positive, wrong-source, slow, mixed and bilingual controls all have expected IDs or explicit absence. The final public-stack verdict is reserved for P5.",
+      "gates": "FAULT EVIDENCE",
+      "risk": "Live timing makes tests flaky or leaks a host-specific dependency.",
+      "rollback": "Revert defective fixture setup, retain reproducible failed assertions for the owner.",
+      "evidence": "R04,R07 · D02/1, B02/2",
+      "newPaths": []
+    },
+    {
+      "id": "CANDIDATE",
+      "phase": "P5",
+      "owner": "Mohammed Hassan",
+      "tool": "Codex",
+      "reviewer": "Teammate",
+      "engineerDays": 2,
+      "dependsOn": [
+        "BUDGET",
+        "QUALIFY"
+      ],
+      "legacyTasks": [
+        "T-70"
+      ],
+      "writePaths": [
+        ".github/workflows/ci.yml",
+        "appliance/Dockerfile",
+        "docker-compose.appliance.yml",
+        "docker-compose.yml",
+        "appliance/README.md"
+      ],
+      "scope": "As integration owner, merge completed lanes, close CI coverage gaps, build one exact candidate, run isolated stack gates and the fixed 25-session replay, and rehearse prior-digest rollback. Only change packaging if a verified gate requires it.",
+      "acceptance": "CI and native gates green at the integration head. Candidate label, image, data/model fingerprints, 125 turn records, latency comparison and rollback times recorded. All P0s closed; unexplained regression blocks promotion.",
+      "gates": "NATIVE STACK REPLAY FAULT",
+      "risk": "Different index/model/hardware or volume reuse makes comparative scores invalid.",
+      "rollback": "Stop promotion, revert the whole failing phase via reviewed PR in reverse dependency order, and restore the last verified fixture-image pair.",
+      "evidence": "Release parity / R01–R07,R09",
+      "newPaths": [
+        "research/conversation-release/candidate.md"
+      ]
+    },
+    {
+      "id": "SIGNOFF",
+      "phase": "P5",
+      "owner": "Teammate",
+      "tool": "Claude Code",
+      "reviewer": "Mohammed Hassan",
+      "engineerDays": 1.5,
+      "dependsOn": [
+        "CANDIDATE"
+      ],
+      "legacyTasks": [
+        "T-70"
+      ],
+      "writePaths": [],
+      "scope": "Independently verify the candidate SHA and digest, evidence links, negative cases, specialized routes, reviewer agreement and rollback on machine 2 or the agreed capacity host. Return a signed recommendation to Mohammed.",
+      "acceptance": "Two named reviewers record SHA/digest and complete dispositions. A rollback restores health and the three-turn smoke; stable promotion and tagging require separate maintainer authorization.",
+      "gates": "REPLAY STACK",
+      "risk": "A green unit suite or successful July image can be mistaken for cleaned-source certification.",
+      "rollback": "Withhold sign-off and return the failing case and stage to its single owner.",
+      "evidence": "Independent review / D-01,D-05",
+      "newPaths": [
+        "research/conversation-release/independent-review.md"
+      ]
+    }
+  ]
+}

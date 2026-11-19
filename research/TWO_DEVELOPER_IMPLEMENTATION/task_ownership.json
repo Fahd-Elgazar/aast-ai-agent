@@ -1,0 +1,296 @@
+{
+  "schemaVersion": 1,
+  "owners": [
+    {
+      "name": "Mohammed Hassan",
+      "tool": "Codex",
+      "taskDays": 21,
+      "reviewDays": 2
+    },
+    {
+      "name": "Teammate",
+      "tool": "Claude Code",
+      "taskDays": 16.5,
+      "reviewDays": 2
+    }
+  ],
+  "tasks": [
+    {
+      "id": "BASE",
+      "phase": "P0",
+      "owner": "Mohammed Hassan",
+      "reviewer": "Teammate",
+      "writePaths": [],
+      "newPaths": [
+        "research/conversation-baseline/profile.json",
+        "research/conversation-baseline/replay.json"
+      ]
+    },
+    {
+      "id": "AUDIT",
+      "phase": "P0",
+      "owner": "Teammate",
+      "reviewer": "Mohammed Hassan",
+      "writePaths": [],
+      "newPaths": [
+        "research/conversation-baseline/cleanup-review.md"
+      ]
+    },
+    {
+      "id": "FREEZE",
+      "phase": "P0",
+      "owner": "Mohammed Hassan",
+      "reviewer": "Teammate",
+      "writePaths": [],
+      "newPaths": [
+        "research/conversation-baseline/freeze.md",
+        "evaluation/contracts/retrieval/advisor-v1.examples.json"
+      ]
+    },
+    {
+      "id": "TRACE",
+      "phase": "P1",
+      "owner": "Mohammed Hassan",
+      "reviewer": "Teammate",
+      "writePaths": [
+        "aast-ai-agent-main/backend/orchestrator.js",
+        "aast-ai-agent-main/backend/services/logger.js",
+        "aast-ai-agent-main/backend/services/metrics.js",
+        "aast-ai-agent-main/backend/testing/conversationalIntelligence.test.js"
+      ],
+      "newPaths": []
+    },
+    {
+      "id": "STATE",
+      "phase": "P1",
+      "owner": "Mohammed Hassan",
+      "reviewer": "Teammate",
+      "writePaths": [
+        "aast-ai-agent-main/backend/services/conversationPriority.js",
+        "aast-ai-agent-main/backend/testing/demoConversationFollowup.test.js",
+        "aast-ai-agent-main/backend/testing/conversationalIntelligence.test.js",
+        "aast-ai-agent-main/backend/services/conversationService.js",
+        "aast-ai-agent-main/backend/services/persistenceLayer.js",
+        "aast-ai-agent-main/backend/testing/demoConversationMemory.test.js",
+        "aast-ai-agent-main/backend/testing/authIsolation.test.js"
+      ],
+      "newPaths": []
+    },
+    {
+      "id": "PLAN",
+      "phase": "P1",
+      "owner": "Mohammed Hassan",
+      "reviewer": "Teammate",
+      "writePaths": [
+        "aast-ai-agent-main/backend/orchestrator.js",
+        "aast-ai-agent-main/backend/services/brainRouter.js",
+        "aast-ai-agent-main/backend/services/conversationMetaIntent.js",
+        "aast-ai-agent-main/backend/config/goldenPathRegistry.js",
+        "aast-ai-agent-main/backend/testing/routingPrecisionCalibration.test.js",
+        "aast-ai-agent-main/backend/services/conversationPriority.js",
+        "aast-ai-agent-main/backend/testing/conversationalIntelligence.test.js",
+        "aast-ai-agent-main/backend/services/goldenCachePolicy.js"
+      ],
+      "newPaths": []
+    },
+    {
+      "id": "GRAPH",
+      "phase": "P2",
+      "owner": "Teammate",
+      "reviewer": "Mohammed Hassan",
+      "writePaths": [
+        "aast-ai-agent-main/backend/services/neo4jcontext.js",
+        "aast-ai-agent-main/backend/testing/kgReliability.test.js",
+        "aast-ai-agent-main/backend/testing/retrievalEntityAlignment.test.js"
+      ],
+      "newPaths": []
+    },
+    {
+      "id": "DOC",
+      "phase": "P2",
+      "owner": "Teammate",
+      "reviewer": "Mohammed Hassan",
+      "writePaths": [
+        "aast-ai-agent-main/backend/services/ragService.js",
+        "aast-ai-agent-main/backend/rag_system/phase3_retriever.py",
+        "aast-ai-agent-main/backend/rag_system/test_phase3_retriever.py",
+        "aast-ai-agent-main/backend/rag_system/test_rag_readiness.py"
+      ],
+      "newPaths": []
+    },
+    {
+      "id": "JUDGE",
+      "phase": "P2",
+      "owner": "Teammate",
+      "reviewer": "Mohammed Hassan",
+      "writePaths": [
+        "aast-ai-agent-main/backend/services/fusionService.js",
+        "aast-ai-agent-main/backend/services/directRagEvidencePolicy.js",
+        "aast-ai-agent-main/backend/services/groundingVerificationService.js",
+        "evaluation/contracts/retrieval/entity-evidence.schema.json",
+        "evaluation/contracts/retrieval/grounding-result.schema.json",
+        "aast-ai-agent-main/backend/testing/fusionEvidenceContract.test.js",
+        "aast-ai-agent-main/backend/testing/groundingVerification.test.js"
+      ],
+      "newPaths": []
+    },
+    {
+      "id": "BIND",
+      "phase": "P3",
+      "owner": "Mohammed Hassan",
+      "reviewer": "Teammate",
+      "writePaths": [
+        "aast-ai-agent-main/backend/orchestrator.js",
+        "aast-ai-agent-main/backend/services/responseFormatter.js",
+        "aast-ai-agent-main/frontend/src/components/ChatMessage.tsx",
+        "aast-ai-agent-main/frontend/src/types.ts",
+        "aast-ai-agent-main/backend/testing/directRagGroundingContract.test.js",
+        "aast-ai-agent-main/frontend/src/components/pages/AdvisorPage.tsx",
+        "aast-ai-agent-main/frontend/testing/frontendCorrectness.test.ts"
+      ],
+      "newPaths": []
+    },
+    {
+      "id": "VOICE",
+      "phase": "P3",
+      "owner": "Mohammed Hassan",
+      "reviewer": "Teammate",
+      "writePaths": [
+        "aast-ai-agent-main/backend/services/conversationMetaIntent.js",
+        "aast-ai-agent-main/backend/services/conversationalHumanizer.js",
+        "aast-ai-agent-main/backend/services/unifiedAnswerService.js",
+        "aast-ai-agent-main/frontend/src/components/ChatMessage.tsx",
+        "aast-ai-agent-main/backend/testing/demoConversationAnswer.test.js"
+      ],
+      "newPaths": []
+    },
+    {
+      "id": "BUDGET",
+      "phase": "P3",
+      "owner": "Mohammed Hassan",
+      "reviewer": "Teammate",
+      "writePaths": [
+        "aast-ai-agent-main/backend/orchestrator.js",
+        "aast-ai-agent-main/backend/services/ollamaService.js",
+        "aast-ai-agent-main/backend/services/circuitStateManager.js",
+        "aast-ai-agent-main/backend/services/healthMonitor.js",
+        "aast-ai-agent-main/backend/config/runtimeMode.js",
+        "aast-ai-agent-main/backend/testing/healthReadiness.test.js",
+        "aast-ai-agent-main/frontend/src/services/agentService.ts",
+        "aast-ai-agent-main/frontend/src/services/httpClient.ts",
+        "aast-ai-agent-main/backend/testing/fallbackTruthContract.test.js"
+      ],
+      "newPaths": []
+    },
+    {
+      "id": "CASES",
+      "phase": "P4",
+      "owner": "Teammate",
+      "reviewer": "Mohammed Hassan",
+      "writePaths": [
+        "aast-ai-agent-main/backend/testing/retrievalEntityAlignment.test.js",
+        "aast-ai-agent-main/backend/testing/fusionEvidenceContract.test.js",
+        "aast-ai-agent-main/backend/rag_system/test_phase3_retriever.py",
+        "aast-ai-agent-main/backend/rag_system/test_rag_readiness.py"
+      ],
+      "newPaths": []
+    },
+    {
+      "id": "QUALIFY",
+      "phase": "P4",
+      "owner": "Teammate",
+      "reviewer": "Mohammed Hassan",
+      "writePaths": [
+        "aast-ai-agent-main/backend/testing/retrievalEntityAlignment.test.js",
+        "aast-ai-agent-main/backend/testing/fusionEvidenceContract.test.js"
+      ],
+      "newPaths": []
+    },
+    {
+      "id": "CANDIDATE",
+      "phase": "P5",
+      "owner": "Mohammed Hassan",
+      "reviewer": "Teammate",
+      "writePaths": [
+        ".github/workflows/ci.yml",
+        "appliance/Dockerfile",
+        "docker-compose.appliance.yml",
+        "docker-compose.yml",
+        "appliance/README.md"
+      ],
+      "newPaths": [
+        "research/conversation-release/candidate.md"
+      ]
+    },
+    {
+      "id": "SIGNOFF",
+      "phase": "P5",
+      "owner": "Teammate",
+      "reviewer": "Mohammed Hassan",
+      "writePaths": [],
+      "newPaths": [
+        "research/conversation-release/independent-review.md"
+      ]
+    }
+  ],
+  "fileOwners": {
+    ".github/workflows/ci.yml": "Mohammed Hassan",
+    "aast-ai-agent-main/backend/config/goldenPathRegistry.js": "Mohammed Hassan",
+    "aast-ai-agent-main/backend/config/runtimeMode.js": "Mohammed Hassan",
+    "aast-ai-agent-main/backend/orchestrator.js": "Mohammed Hassan",
+    "aast-ai-agent-main/backend/rag_system/phase3_retriever.py": "Teammate",
+    "aast-ai-agent-main/backend/rag_system/test_phase3_retriever.py": "Teammate",
+    "aast-ai-agent-main/backend/rag_system/test_rag_readiness.py": "Teammate",
+    "aast-ai-agent-main/backend/services/brainRouter.js": "Mohammed Hassan",
+    "aast-ai-agent-main/backend/services/circuitStateManager.js": "Mohammed Hassan",
+    "aast-ai-agent-main/backend/services/conversationMetaIntent.js": "Mohammed Hassan",
+    "aast-ai-agent-main/backend/services/conversationPriority.js": "Mohammed Hassan",
+    "aast-ai-agent-main/backend/services/conversationService.js": "Mohammed Hassan",
+    "aast-ai-agent-main/backend/services/conversationalHumanizer.js": "Mohammed Hassan",
+    "aast-ai-agent-main/backend/services/directRagEvidencePolicy.js": "Teammate",
+    "aast-ai-agent-main/backend/services/fusionService.js": "Teammate",
+    "aast-ai-agent-main/backend/services/goldenCachePolicy.js": "Mohammed Hassan",
+    "aast-ai-agent-main/backend/services/groundingVerificationService.js": "Teammate",
+    "aast-ai-agent-main/backend/services/healthMonitor.js": "Mohammed Hassan",
+    "aast-ai-agent-main/backend/services/logger.js": "Mohammed Hassan",
+    "aast-ai-agent-main/backend/services/metrics.js": "Mohammed Hassan",
+    "aast-ai-agent-main/backend/services/neo4jcontext.js": "Teammate",
+    "aast-ai-agent-main/backend/services/ollamaService.js": "Mohammed Hassan",
+    "aast-ai-agent-main/backend/services/persistenceLayer.js": "Mohammed Hassan",
+    "aast-ai-agent-main/backend/services/ragService.js": "Teammate",
+    "aast-ai-agent-main/backend/services/responseFormatter.js": "Mohammed Hassan",
+    "aast-ai-agent-main/backend/services/unifiedAnswerService.js": "Mohammed Hassan",
+    "aast-ai-agent-main/backend/testing/authIsolation.test.js": "Mohammed Hassan",
+    "aast-ai-agent-main/backend/testing/conversationalIntelligence.test.js": "Mohammed Hassan",
+    "aast-ai-agent-main/backend/testing/demoConversationAnswer.test.js": "Mohammed Hassan",
+    "aast-ai-agent-main/backend/testing/demoConversationFollowup.test.js": "Mohammed Hassan",
+    "aast-ai-agent-main/backend/testing/demoConversationMemory.test.js": "Mohammed Hassan",
+    "aast-ai-agent-main/backend/testing/directRagGroundingContract.test.js": "Mohammed Hassan",
+    "aast-ai-agent-main/backend/testing/fallbackTruthContract.test.js": "Mohammed Hassan",
+    "aast-ai-agent-main/backend/testing/fusionEvidenceContract.test.js": "Teammate",
+    "aast-ai-agent-main/backend/testing/groundingVerification.test.js": "Teammate",
+    "aast-ai-agent-main/backend/testing/healthReadiness.test.js": "Mohammed Hassan",
+    "aast-ai-agent-main/backend/testing/kgReliability.test.js": "Teammate",
+    "aast-ai-agent-main/backend/testing/retrievalEntityAlignment.test.js": "Teammate",
+    "aast-ai-agent-main/backend/testing/routingPrecisionCalibration.test.js": "Mohammed Hassan",
+    "aast-ai-agent-main/frontend/src/components/ChatMessage.tsx": "Mohammed Hassan",
+    "aast-ai-agent-main/frontend/src/components/pages/AdvisorPage.tsx": "Mohammed Hassan",
+    "aast-ai-agent-main/frontend/src/services/agentService.ts": "Mohammed Hassan",
+    "aast-ai-agent-main/frontend/src/services/httpClient.ts": "Mohammed Hassan",
+    "aast-ai-agent-main/frontend/src/types.ts": "Mohammed Hassan",
+    "aast-ai-agent-main/frontend/testing/frontendCorrectness.test.ts": "Mohammed Hassan",
+    "appliance/Dockerfile": "Mohammed Hassan",
+    "appliance/README.md": "Mohammed Hassan",
+    "docker-compose.appliance.yml": "Mohammed Hassan",
+    "docker-compose.yml": "Mohammed Hassan",
+    "evaluation/contracts/retrieval/advisor-v1.examples.json": "Mohammed Hassan",
+    "evaluation/contracts/retrieval/entity-evidence.schema.json": "Teammate",
+    "evaluation/contracts/retrieval/grounding-result.schema.json": "Teammate",
+    "research/conversation-baseline/cleanup-review.md": "Teammate",
+    "research/conversation-baseline/freeze.md": "Mohammed Hassan",
+    "research/conversation-baseline/profile.json": "Mohammed Hassan",
+    "research/conversation-baseline/replay.json": "Mohammed Hassan",
+    "research/conversation-release/candidate.md": "Mohammed Hassan",
+    "research/conversation-release/independent-review.md": "Teammate"
+  }
+}
