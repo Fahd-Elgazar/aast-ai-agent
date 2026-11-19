@@ -25,9 +25,9 @@
     "prewarm:golden": "node testing/prewarmGoldenQueries.js"
   },
   "dependencies": {
-    "axios": "^1.15.0",
+    "axios": "^1.19.0",
     "axios-retry": "^4.5.0",
-    "body-parser": "^1.20.2",
+    "body-parser": "^1.20.6",
     "boxen": "^8.0.1",
     "chalk": "^5.3.0",
     "cli-table3": "^0.6.5",
