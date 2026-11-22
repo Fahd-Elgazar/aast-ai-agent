@@ -44,4 +44,23 @@ const lone = ragService._stitchFragmentSources([
 ], "scholarship eligibility");
 assert.equal(lone[0].text, "Awards are renewed yearly. To qualify, a student must maintain a GPA of at least 3.4.");
 
+// Live-run shape: the transfer-student rule shares the scholarship title and
+// ranks first. It must not lead a general merit question, and must not repeat.
+const live = [
+  { id: "x1", title: S, text: "Transferred students from abroad or other institutions are only eligible for tuition fee exemption scholarships after they have completed at least two full semesters within the same major at CAI." },
+  { id: "x2", title: S, text: "To qualify, a student must maintain a GPA of at least 3.4," },
+  { id: "x3", title: S, text: "and have completed all previous study hours without interruption." },
+  { id: "x4", title: S, text: "Transferred students from abroad or other institutions are only eligible for tuition fee exemption scholarships after they have completed at least two full semesters within the same major at CAI." },
+];
+const merit = ragService._stitchFragmentSources(live, "What are the merit scholarship eligibility criteria?");
+assert.equal(merit[0].text, "To qualify, a student must maintain a GPA of at least 3.4, and have completed all previous study hours without interruption.");
+assert.equal(merit[1].audience, "transferred_students");
+assert.match(merit[1].text, /^For transferred students: Transferred students from abroad/);
+assert.equal((merit[1].text.match(/Transferred students/g) || []).length, 1, "the repeated transfer rule appears once");
+
+// A transfer question keeps the transfer rule inline.
+const asked = ragService._stitchFragmentSources(live, "Can transfer students get a scholarship?");
+assert.equal(asked.length, 1);
+assert.match(asked[0].text, /^Transferred students from abroad/);
+
 console.log("RAG fragment stitch tests passed.");

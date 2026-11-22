@@ -2146,6 +2146,7 @@ class RAGService {
         const queryTokens = new Set(
             String(query || '').toLowerCase().match(/[a-z]{4,}/g) || []
         );
+        const queryAsksTransfer = /\btransfer|\bfrom abroad\b/i.test(String(query || ''));
         const titleOverlap = source => {
             const tokens = String(source?.title || '').toLowerCase().match(/[a-z]{4,}/g) || [];
             return tokens.filter(token => queryTokens.has(token) || queryTokens.has(token.replace(/s$/, ''))).length;
@@ -2182,16 +2183,43 @@ class RAGService {
             const lead = group.items[0].source;
             let text = ordered.map(item => item.text).join(' ').replace(/\s+([,.;:])/g, '$1').trim();
             if (text && endsMidSentence(text)) text = text.replace(/[,;\s]+$/, '') + '.';
-            passages.push({
-                firstIndex: group.firstIndex,
-                source: {
-                    ...lead,
-                    text,
-                    excerpt: text.slice(0, 420),
-                    merged_chunk_ids: group.items.map(item => item.source?.id ?? item.source?.doc_id ?? null).filter(Boolean),
-                    merged_fragment_count: group.items.length,
-                }
+
+            // Drop repeated sentences, and when the question is not about
+            // transferred students, move the transfer-only rules into their
+            // own labelled passage after the general criteria.
+            const seenSentences = new Set();
+            const sentences = text.split(/(?<=[.!?])\s+(?=[A-Z])/)
+                .map(sentence => sentence.trim())
+                .filter(sentence => {
+                    const key = sentence.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+                    if (!key || seenSentences.has(key)) return false;
+                    seenSentences.add(key);
+                    return true;
+                });
+            const isTransferRule = sentence => /\btransfer(?:red|s)?\b|\bfrom abroad\b/i.test(sentence);
+            const splitTransfer = !queryAsksTransfer && sentences.some(isTransferRule) && sentences.some(sentence => !isTransferRule(sentence));
+            const general = splitTransfer ? sentences.filter(sentence => !isTransferRule(sentence)) : sentences;
+            const transfer = splitTransfer ? sentences.filter(isTransferRule) : [];
+            const chunkIds = group.items.map(item => item.source?.id ?? item.source?.doc_id ?? null).filter(Boolean);
+            const passageFrom = (passageText, extra = {}) => ({
+                ...lead,
+                ...extra,
+                text: passageText,
+                excerpt: passageText.slice(0, 420),
+                merged_chunk_ids: chunkIds,
+                merged_fragment_count: group.items.length,
             });
+
+            passages.push({ firstIndex: group.firstIndex, source: passageFrom(general.join(' ')) });
+            if (transfer.length) {
+                passages.push({
+                    firstIndex: group.firstIndex + 0.5,
+                    source: passageFrom(`For transferred students: ${transfer.join(' ')}`, {
+                        title: `${lead.title} (transferred students)`,
+                        audience: 'transferred_students',
+                    })
+                });
+            }
         }
 
         if (!passages.some(passage => passage.source.merged_fragment_count > 1)) return sources;
@@ -2199,7 +2227,9 @@ class RAGService {
         // Only a stitched passage whose title names the question's topic moves
         // ahead; every other source keeps its retrieval rank.
         const promoted = passages.filter(passage =>
-            passage.source.merged_fragment_count > 1 && titleOverlap(passage.source) > 0
+            passage.source.merged_fragment_count > 1 &&
+            passage.source.audience !== 'transferred_students' &&
+            titleOverlap(passage.source) > 0
         );
         promoted.sort((a, b) => (titleOverlap(b.source) - titleOverlap(a.source)) || (a.firstIndex - b.firstIndex));
         const rest = passages.filter(passage => !promoted.includes(passage));
