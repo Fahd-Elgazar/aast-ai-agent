@@ -1,0 +1,367 @@
+diff --git a/aast-ai-agent-main/backend/orchestrator.js b/aast-ai-agent-main/backend/orchestrator.js
+index 10d0ee2a..31856fa4 100644
+--- a/aast-ai-agent-main/backend/orchestrator.js
++++ b/aast-ai-agent-main/backend/orchestrator.js
+@@ -19,7 +19,7 @@ import { requireAuth } from "./middleware/auth.js";
+ import { searchFAQ } from "./faqService.js";
+ import { checkGreeting } from "./greetings.js";
+ import { fetchNeo4jContext, convertToGraphData } from "./services/neo4jcontext.js";
+-import { connectNeo4j, getSession } from "./db/neo4j.js";
++import { connectNeo4j } from "./db/neo4j.js";
+ import { getRecommendation, getUserMemory, buildCareerRoadmap, toOrchestratorDecisionEvidence, updateUserMemory, deleteUserMemory } from "./services/decisionService.js";
+ import { incrementMetric, recordDuration } from "./services/metrics.js";
+ import { logger } from "./services/logger.js";
+diff --git a/aast-ai-agent-main/backend/rag_system/phase3_retriever.py b/aast-ai-agent-main/backend/rag_system/phase3_retriever.py
+index c61d5135..d1b2a374 100644
+--- a/aast-ai-agent-main/backend/rag_system/phase3_retriever.py
++++ b/aast-ai-agent-main/backend/rag_system/phase3_retriever.py
+@@ -1132,7 +1132,7 @@ def search_endpoint(request: SearchRequest):
+             priority_only=request.priority_only
+         )
+ 
+-    except Exception as e:
++    except Exception:
+         logger.exception("Search failed.")
+         raise HTTPException(
+             status_code=500,
+@@ -1426,7 +1426,7 @@ def run_benchmark():
+             "avg_confidence": avg_confidence,
+             "retriever_readiness_score": f"{readiness_score}/100"
+         }
+-    except Exception as e:
++    except Exception:
+         logger.exception("Benchmark failed.")
+         return {
+             "status": "unhealthy",
+diff --git a/aast-ai-agent-main/backend/rag_system/phase4_llm_answer_engine.py b/aast-ai-agent-main/backend/rag_system/phase4_llm_answer_engine.py
+index 7076c565..738f8abb 100644
+--- a/aast-ai-agent-main/backend/rag_system/phase4_llm_answer_engine.py
++++ b/aast-ai-agent-main/backend/rag_system/phase4_llm_answer_engine.py
+@@ -20,7 +20,7 @@ import requests
+ from typing import Dict, Any, List, Optional
+ from contextlib import asynccontextmanager
+ 
+-from fastapi import FastAPI, HTTPException
++from fastapi import FastAPI
+ from fastapi.responses import JSONResponse
+ from pydantic import BaseModel, Field
+ from tenacity import retry, stop_after_attempt, wait_exponential
+@@ -465,7 +465,7 @@ def answer_endpoint(request: AnswerRequest):
+                 "system_status": "DEGRADED"
+             }
+         )
+-    except Exception as e:
++    except Exception:
+         logger.exception("Answer generation failed.")
+         return JSONResponse(
+             status_code=500,
+diff --git a/aast-ai-agent-main/backend/services/decisionService.js b/aast-ai-agent-main/backend/services/decisionService.js
+index 9a684b57..31e52926 100644
+--- a/aast-ai-agent-main/backend/services/decisionService.js
++++ b/aast-ai-agent-main/backend/services/decisionService.js
+@@ -347,203 +347,6 @@ async function safeExtractProfileData(text) {
+   }
+ }
+ 
+-/* ============================================================
+-   🚀 DYNAMIC CAREER ROADMAP ENGINE
+-============================================================ */
+-
+-function generateRoles(profile, pref, major) {
+-  const majorName = String(major || "").toLowerCase();
+-  
+-  if (majorName) {
+-    if (majorName.includes("cybersecurity")) {
+-      return ["Cybersecurity Analyst", "Information Security Officer", "Security Architect"];
+-    }
+-    if (majorName.includes("software")) {
+-      return ["Software Engineer", "Full-Stack Developer", "Systems Architect"];
+-    }
+-    if (majorName.includes("artificial intelligence") || majorName.includes("intelligent systems")) {
+-      return ["AI Engineer", "Machine Learning Specialist", "Data Scientist"];
+-    }
+-    if (majorName.includes("computer science") || majorName.includes("computing")) {
+-      return ["Software Developer", "Data Scientist", "Systems Analyst"];
+-    }
+-    if (majorName.includes("mechanical") || majorName.includes("mechatronics")) {
+-      return ["Mechanical Engineer", "Mechatronics Specialist", "Robotics Integrator"];
+-    }
+-    if (majorName.includes("civil") || majorName.includes("construction") || majorName.includes("architectural") || majorName.includes("design")) {
+-      if (majorName.includes("graphic") || majorName.includes("interior")) {
+-        return ["UX/UI Designer", "Creative Lead", "Interior Architect"];
+-      }
+-      return ["Project Architect", "Structural Engineer", "Site Engineer"];
+-    }
+-    if (majorName.includes("computer engineering")) {
+-      return ["Computer Engineer", "Hardware Developer", "Embedded Systems Specialist"];
+-    }
+-    if (majorName.includes("engineering")) {
+-      return ["Engineering Consultant", "Project Engineer", "Operations Manager"];
+-    }
+-    if (majorName.includes("accounting") || majorName.includes("finance") || majorName.includes("business") || majorName.includes("management") || majorName.includes("economics") || majorName.includes("marketing")) {
+-      return ["Business Analyst", "Product Manager", "Operations Consultant"];
+-    }
+-    if (majorName.includes("logistics") || majorName.includes("transport") || majorName.includes("trade")) {
+-      return ["Supply Chain Analyst", "Logistics Coordinator", "Import/Export Specialist"];
+-    }
+-    if (majorName.includes("medicine") || majorName.includes("pharmacy") || majorName.includes("dentistry") || majorName.includes("pharmd") || majorName.includes("dental")) {
+-      return ["Medical Practitioner", "Clinical Specialist", "Healthcare Consultant"];
+-    }
+-    if (majorName.includes("law")) {
+-      return ["Legal Advisor", "Corporate Attorney", "Compliance Officer"];
+-    }
+-    if (majorName.includes("media") || majorName.includes("translation")) {
+-      return ["Creative Director", "UX/UI Designer", "Translator/Content Lead"];
+-    }
+-  }
+-
+-  const interests = (pref?.interests || []).join(" ").toLowerCase();
+-  
+-  if (/\b(ai|artificial\s+intelligence|intelligent\s+systems|machine\s+learning|deep\s+learning|data\s+science|neural\s+networks|data|compute|computing|computer\s+science|software)\b/i.test(interests)) {
+-    return ["AI Engineer", "Data Scientist", "Systems Architect"];
+-  }
+-  if (/\b(robotics?|embedded|hardware|mechatronics?|control|automation)\b/i.test(interests)) {
+-    return ["Mechanical Engineer", "Mechatronics Specialist", "Robotics Integrator"];
+-  }
+-  if (/\b(business|manage|management|finance|accounting|economics?|marketing|trade|logistics?|supply\s+chain)\b/i.test(interests)) {
+-    return ["Business Analyst", "Product Manager", "Operations Consultant"];
+-  }
+-  if (/\b(design|art|creative|graphic|interior|fashion|media|translation)\b/i.test(interests)) {
+-    return ["UX/UI Designer", "Creative Lead", "Frontend Developer"];
+-  }
+-  if (/\b(engineering|build|construction|structural|mechanical|electrical|civil|chemical|petroleum|aerospace|marine)\b/i.test(interests)) {
+-    return ["Mechanical Engineer", "Project Architect", "Drilling Engineer"];
+-  }
+-  
+-  return ["Industry Specialist", "Technical Consultant", "Project Coordinator"];
+-}
+-
+-function generateSkills(profile, pref, major) {
+-  const majorName = String(major || "").toLowerCase();
+-  
+-  if (majorName) {
+-    if (majorName.includes("cybersecurity")) {
+-      return ["Network Security", "Ethical Hacking", "Cryptography", "Incident Response"];
+-    }
+-    if (majorName.includes("software")) {
+-      return ["Software Development", "Clean Code Principles", "Database Design", "Project Management"];
+-    }
+-    if (majorName.includes("artificial intelligence") || majorName.includes("intelligent systems")) {
+-      return ["Python", "Machine Learning", "Neural Networks", "Data Engineering"];
+-    }
+-    if (majorName.includes("computer science") || majorName.includes("computing")) {
+-      return ["Python", "Machine Learning", "Software Development", "Data Engineering"];
+-    }
+-    if (majorName.includes("mechanical") || majorName.includes("mechatronics") || majorName.includes("electrical") || majorName.includes("electronics") || majorName.includes("computer engineering")) {
+-      return ["CAD Operations", "Control Systems", "Embedded Programming", "Project Management"];
+-    }
+-    if (majorName.includes("engineering") || majorName.includes("architectural") || majorName.includes("construction")) {
+-      return ["CAD Operations", "Structural Analysis", "Project Management", "Cost Estimation"];
+-    }
+-    if (majorName.includes("accounting") || majorName.includes("finance") || majorName.includes("business") || majorName.includes("management") || majorName.includes("economics") || majorName.includes("marketing")) {
+-      return ["Strategic Planning", "Financial Modeling", "Agile Management"];
+-    }
+-    if (majorName.includes("logistics") || majorName.includes("transport") || majorName.includes("trade")) {
+-      return ["Supply Chain Optimization", "Warehouse Management", "Freight Forwarding", "Project Management"];
+-    }
+-    if (majorName.includes("medicine") || majorName.includes("pharmacy") || majorName.includes("dentistry") || majorName.includes("pharmd") || majorName.includes("dental")) {
+-      return ["Clinical Diagnostics", "Patient Care", "Medical Ethics"];
+-    }
+-    if (majorName.includes("law")) {
+-      return ["Legal Research", "Contract Drafting", "Litigation Strategy"];
+-    }
+-    if (majorName.includes("media") || majorName.includes("translation") || majorName.includes("design")) {
+-      return ["Graphic Design", "Technical Translation", "Communication Strategy"];
+-    }
+-  }
+-
+-  const interests = (pref?.interests || []).join(" ").toLowerCase();
+-  
+-  if (/\b(ai|artificial\s+intelligence|intelligent\s+systems|machine\s+learning|deep\s+learning|data\s+science|neural\s+networks|data|compute|computing|computer\s+science|software)\b/i.test(interests)) {
+-    return ["Python", "Machine Learning", "Neural Networks", "Data Engineering"];
+-  }
+-  if (/\b(robotics?|embedded|hardware|mechatronics?|control|automation)\b/i.test(interests)) {
+-    return ["Control Systems", "Embedded Programming", "Robotics", "Project Management"];
+-  }
+-  if (/\b(business|manage|management|finance|accounting|economics?|marketing|trade|logistics?|supply\s+chain)\b/i.test(interests)) {
+-    return ["Strategic Planning", "Financial Modeling", "Agile Management"];
+-  }
+-  if (/\b(engineering|build|construction|structural|mechanical|electrical|civil|chemical|petroleum|aerospace|marine)\b/i.test(interests)) {
+-    return ["CAD Operations", "Structural Analysis", "Project Management"];
+-  }
+-  
+-  return ["Problem Solving", "Critical Thinking", "Digital Literacy"];
+-}
+-
+-function estimateMarket(profile) {
+-  return "High Growth trajectory in Egypt/MENA with strong global remote-work integration.";
+-}
+-
+-const skills_map = {
+-  "analysis": ["Python for Data Science", "SQL Fundamentals", "Data Visualization (Tableau/PowerBI)"],
+-  "ai & ml": ["Linear Algebra", "Neural Networks basics", "PyTorch or TensorFlow"],
+-  "machine learning": ["Linear Algebra", "Neural Networks basics", "PyTorch or TensorFlow"],
+-  "software development": ["Git & GitHub", "Clean Code Principles", "Unit Testing"],
+-  "petroleum engineering": ["Reservoir Simulation basics", "Well Logging interpretation", "Petrel Software intro"],
+-  "business & management": ["Project Management (PMP basics)", "Strategic Thinking", "Financial Accounting"],
+-  "python": ["Python Syntax Basics", "Data Structures", "Object-Oriented Programming (OOP)"],
+-  "neural networks": ["Mathematics for ML", "Deep Learning Architectures", "Model Optimization"],
+-  "data engineering": ["Database Design", "ETL Pipelines", "Cloud Infrastructure (AWS/Azure)"],
+-  "strategic planning": ["SWOT Analysis", "Goal Setting Frameworks", "Market Research"],
+-  "financial modeling": ["Excel mastery", "Valuation methodologies", "Forecasting techniques"],
+-  "agile management": ["Scrum Framework", "Sprint Planning", "Jira/Trello usage"],
+-  "cad operations": ["AutoCAD Basics", "3D Modeling", "Drafting Standards"],
+-  "structural analysis": ["Statics & Dynamics", "Material Science", "Finite Element Analysis (FEA)"],
+-  "project management": ["Risk Assessment", "Resource Allocation", "Timeline Management"],
+-  "problem solving": ["Root Cause Analysis", "Logical Reasoning", "Algorithm Design"],
+-  "critical thinking": ["Information Evaluation", "Bias Identification", "Decision Matrix Analysis"],
+-  "digital literacy": ["Office Suites", "Basic Scripting", "Cybersecurity Awareness"],
+-  "network security": ["Firewall configuration", "Intrusion Detection Systems", "Network Protocols (TCP/IP)"],
+-  "ethical hacking": ["Penetration Testing methodologies", "Vulnerability Assessment", "OWASP Top 10"],
+-  "cryptography": ["Symmetric/Asymmetric Encryption", "Hashing algorithms", "SSL/TLS protocols"],
+-  "incident response": ["Threat Detection", "Containment strategies", "Post-Incident Analysis"],
+-  "clean code principles": ["Refactoring techniques", "DRY & SOLID principles", "Code Review checklist"],
+-  "database design": ["Normalization (1NF-3NF)", "ER Diagramming", "Index optimization"],
+-  "control systems": ["Feedback loops", "PID Controllers", "System modeling"],
+-  "embedded programming": ["C/C++ for Microcontrollers", "RTOS concepts", "Hardware interfacing (I2C/SPI)"],
+-  "cost estimation": ["Quantity surveying", "Material takeoff", "Budget forecasting"],
+-  "supply chain optimization": ["Inventory management", "Demand forecasting", "Operations Research"],
+-  "warehouse management": ["Logistics & Warehousing", "Inventory tracking", "Safety standards"],
+-  "freight forwarding": ["Customs regulations", "Shipping documentation", "Route planning"],
+-  "clinical diagnostics": ["Laboratory techniques", "Symptom analysis", "Diagnostic tools"],
+-  "patient care": ["Communication skills", "Basic life support", "Clinical procedures"],
+-  "medical ethics": ["Bioethics principles", "Patient confidentiality", "Informed consent"],
+-  "legal research": ["LexisNexis/Westlaw usage", "Case law analysis", "Statutory interpretation"],
+-  "contract drafting": ["Clause structuring", "Liability limitations", "Legal writing"],
+-  "litigation strategy": ["Courtroom procedures", "Evidence gathering", "Argument preparation"],
+-  "graphic design": ["Adobe Creative Suite (Photoshop/Illustrator)", "Typography & Layout", "Color Theory"],
+-  "technical translation": ["Terminology management", "Translation tools (CAT)", "Cross-cultural communication"],
+-  "communication strategy": ["Audience analysis", "PR & Media relations", "Crisis communication"],
+-  "agile methodologies": ["Scrum & Kanban", "Sprint cycles", "User Story mapping"],
+-  "database management": ["SQL queries", "DBMS administration", "Backup & Recovery"],
+-  "java/c++": ["Object-Oriented Programming", "Memory Management", "Standard Libraries"]
+-};
+-
+-function mapSkillsToLearning(skillsArray) {
+-  if (!skillsArray || !Array.isArray(skillsArray)) return [];
+-  
+-  return skillsArray.map(skill => {
+-    const key = String(skill).toLowerCase().trim();
+-    const steps = skills_map[key] || ["Online research and specialized courses"];
+-    return { skill, steps };
+-  });
+-}
+-
+-function generateTimeline(profile) {
+-  return [
+-    "University Fundamentals (Years 1-2)",
+-    "Specialization & Internships (Years 3-4)",
+-    "Junior Role Placement (Post-Graduation)"
+-  ];
+-}
+-
+ export function buildCareerRoadmap(profile, preferences, memory) {
+   const candidates = [
+     profile?.career_roadmap,
+diff --git a/aast-ai-agent-main/backend/services/neo4jcontext.js b/aast-ai-agent-main/backend/services/neo4jcontext.js
+index dbb66a04..3a9d40af 100644
+--- a/aast-ai-agent-main/backend/services/neo4jcontext.js
++++ b/aast-ai-agent-main/backend/services/neo4jcontext.js
+@@ -107,7 +107,6 @@
+ 
+     const maxAttempts = Number(process.env.GRAPH_MAX_ATTEMPTS || 2);
+     const timeoutMs = Number(process.env.GRAPH_TIMEOUT_MS || 8000);
+-    let lastError = null;
+ 
+     for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+       try {
+@@ -143,8 +142,6 @@
+           throw new Error("GRAPH response empty");
+         }
+       } catch (err) {
+-        lastError = err;
+-
+         if (err.name === "AbortError" || /timeout|timed out/i.test(err.message || "")) {
+           incrementMetric("knowledge_graph.timeout");
+           logger.warn("GRAPH request timed out", {
+@@ -167,72 +164,6 @@
+     return null;
+   }
+ 
+-  async function safeDeterministicReformatter(baseAnswer, query) {
+-    if (process.env.ENABLE_GRAPH === 'false') return null;
+-    if (!runtimeMode.safeReformatEnabled || runtimeMode.singleGemmaGenerationMode || runtimeMode.defenseMode) {
+-      incrementMetric("knowledge_graph.safe_reformat_policy_bypass");
+-      return null;
+-    }
+-
+-    const maxAttempts = Number(process.env.REFORMAT_MAX_ATTEMPTS || 1);
+-    const timeoutMs = Number(process.env.REFORMAT_TIMEOUT_MS || 4000);
+-
+-    for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+-      try {
+-        const response = await generateStableResponse({
+-          model: process.env.OLLAMA_GRAPH_MODEL || process.env.PRIMARY_MODEL || process.env.OLLAMA_MODEL || "gemma4:e2b",
+-          requestId: `graph_reformat_${Date.now()}`,
+-          timeoutMs,
+-          deadlineMs: Math.max(timeoutMs, 8000),
+-          routeType: "KG_ONLY",
+-          trafficType: "graph_reformat",
+-          options: {
+-            temperature: 0.05,
+-            top_p: 0.70,
+-            repeat_penalty: 1.12,
+-            num_predict: Number.parseInt(process.env.KG_REFORMAT_NUM_PREDICT || "96", 10)
+-          },
+-          prompt: `Reformat the following academic answer for clarity and professionalism.
+-
+-  STRICT RULES:
+-  - Use ONLY the provided facts
+-  - Do NOT add new information
+-  - Do NOT infer
+-  - Do NOT assume
+-  - Do NOT change factual meaning
+-  - Do NOT omit important facts
+-  - Keep answer concise
+-  - If facts are insufficient, return original answer unchanged
+-
+-  User Question:
+-  ${query}
+-
+-  Facts:
+-  ${baseAnswer}`,
+-        });
+-
+-        const cleanedResponse = response?.trim();
+-        if (cleanedResponse && cleanedResponse.length > 0) {
+-          incrementMetric("knowledge_graph.safe_reformat_success");
+-          return cleanedResponse;
+-        }
+-        throw new Error("Empty reformat response");
+-      } catch (err) {
+-        if (err.name === "AbortError" || /timeout|timed out/i.test(err.message || "")) {
+-          incrementMetric("knowledge_graph.safe_reformat_timeout");
+-        } else {
+-          incrementMetric("knowledge_graph.safe_reformat_failure");
+-        }
+-        logger.warn("Safe reformat failed, using base answer", {
+-          attempt,
+-          error: err.message
+-        });
+-      }
+-    }
+-
+-    return null;
+-  }
+-
+   /* ============================================================
+     QUERY UNDERSTANDING
+   ============================================================ */
+@@ -242,7 +173,6 @@
+   const DEFAULT_CONTEXT_LIMIT = Number.parseInt(process.env.KG_DEFAULT_CONTEXT_LIMIT || "10", 10);
+   const RELATIONS_PER_NODE = Number.parseInt(process.env.KG_RELATIONS_PER_NODE || "12", 10);
+   const GENERAL_RELATIONS_PER_NODE = Number.parseInt(process.env.KG_GENERAL_RELATIONS_PER_NODE || "10", 10);
+-  const ONTOLOGY_RELATIONS_PER_NODE = Number.parseInt(process.env.KG_ONTOLOGY_RELATIONS_PER_NODE || "12", 10);
+   const MAX_PERSON_SUMMARY_LINES = Number.parseInt(process.env.KG_MAX_PERSON_SUMMARY_LINES || "6", 10);
+   const MAX_FACTS_BY_INTENT = {
+     PERSON: Number.parseInt(process.env.KG_PERSON_MAX_FACTS || "18", 10),
