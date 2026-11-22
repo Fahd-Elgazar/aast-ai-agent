@@ -898,6 +898,13 @@ function collectVerifiedEvidenceItems(turn = {}) {
   return items;
 }
 
+// Graph nodes without a specific label arrive typed "Entity". That generic type must
+// not override the type implied by the relation (for example INCLUDES_PROGRAM -> program).
+function specificMemoryType(type) {
+  const value = normalizeMemoryText(type, 40);
+  return value && !/^(entity|node|thing|unknown)$/i.test(value) ? value : null;
+}
+
 function extractEntitiesFromEvidence(evidenceItems, query, turnId) {
   const entities = [];
   const queryText = String(query || "").toLowerCase();
@@ -908,8 +915,8 @@ function extractEntitiesFromEvidence(evidenceItems, query, turnId) {
     if (item?.structured?.relation && item.structured.subject && item.structured.object) {
       const relation = normalizeMemoryRelation(item.structured.relation);
       const inferred = inferEntityTypesForRelation(relation);
-      const sourceType = normalizeMemoryText(item.structured.subject.type, 40) || inferred.sourceType;
-      const targetType = normalizeMemoryText(item.structured.object.type, 40) || inferred.targetType;
+      const sourceType = specificMemoryType(item.structured.subject.type) || inferred.sourceType;
+      const targetType = specificMemoryType(item.structured.object.type) || inferred.targetType;
       entities.push(
         makeMemoryEntity(sourceType, item.structured.subject.displayValue, evidenceSource, {
           relation,
@@ -1053,6 +1060,7 @@ function inferExplicitEntityType(value) {
   if (/\b(course|nlp|natural language processing|machine learning|blockchain|[A-Z]{2,5}\s?\d{3,4})\b/i.test(text)) {
     return "course";
   }
+  if (/^(the\s+)?(college|faculty|school|university|bachelor|bsc|b\.sc)\b/i.test(text.trim())) return "entity";
   if (/\b(program|specialization|specialisation|major|track|computer science|software engineering|artificial intelligence|ai)\b/i.test(text)) {
     return "program";
   }

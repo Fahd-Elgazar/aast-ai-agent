@@ -78,6 +78,39 @@ try {
   assert.equal(programMemory.verifiedTurns.length, 1);
   assert.equal(programMemory.lastVerifiedAssistantAnswer, "The degree includes Intelligent Systems and Data Science.");
 
+  // Live graph nodes arrive typed "Entity", and the golden program path passes the question's own
+  // entities. Neither may hide the two programs or turn the college into a selectable program.
+  const genericCreated = createConversation({ ownerId: "dean-generic-test" });
+  const genericConversation = await getConversation(genericCreated.cid, { ownerId: "dean-generic-test" });
+  const genericMemory = await updateConversationMemoryFromTurn(genericCreated.cid, genericConversation, {
+    userQuery: "Which bachelor programs does the College of Artificial Intelligence offer at El Alamein?",
+    assistantAnswer: "The Bachelor of Science includes Intelligent Systems and Data Science.",
+    route: "KG_DIRECT",
+    intent: "PROGRAM",
+    entities: ["College of Artificial Intelligence", "Bachelor of Science in Artificial Intelligence"],
+    neo4jContext: [
+      exactEvidence("Bachelor of Science", "Entity", "INCLUDES_PROGRAM", "Intelligent Systems", "Entity"),
+      exactEvidence("Bachelor of Science", "Entity", "INCLUDES_PROGRAM", "Data Science", "Entity")
+    ]
+  }, { ownerId: "dean-generic-test" });
+  assert.deepEqual(
+    genericMemory.selectedTargets.map(target => target.displayValue),
+    ["Intelligent Systems", "Data Science"]
+  );
+  const genericFirst = resolveFollowUpReference("What careers can the first one lead to?", genericMemory);
+  assert.equal(genericFirst.target, "Intelligent Systems");
+  const genericOther = resolveFollowUpReference("Does the other one include Machine Learning?", genericMemory);
+  assert.equal(genericOther.standaloneQuery, "Does Data Science include Machine Learning?");
+  const ofTheTwo = resolveFollowUpReference("Which of the two focuses more on data?", genericMemory);
+  assert.equal(ofTheTwo.standaloneQuery, "Which of Intelligent Systems and Data Science focuses more on data?");
+
+  // A curriculum answer keeps its course outside typed memory; "that course" must still resolve.
+  const curriculumFollowUp = resolveFollowUpReference("What about week 3 of that course?", {
+    lastCurriculumCourse: "Mobile Computing"
+  });
+  assert.equal(curriculumFollowUp.target, "Mobile Computing");
+  assert.equal(curriculumFollowUp.standaloneQuery, "What about week 3 of Mobile Computing?");
+
   const cachedCreated = createConversation({ ownerId: "dean-cache-test" });
   const cachedConversation = await getConversation(cachedCreated.cid, { ownerId: "dean-cache-test" });
   await pushTurn(

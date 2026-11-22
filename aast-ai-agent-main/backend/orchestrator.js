@@ -792,7 +792,11 @@ async function handleChatbotQuery(req, res) {
     const priorConversationMessages = Array.isArray(convo.messages)
       ? convo.messages.map(message => ({ ...message }))
       : [];
-    const priorConversationMemory = getConversationMemory(conversationId, { ownerId });
+    const priorConversationMemory = {
+      ...getConversationMemory(conversationId, { ownerId }),
+      // Curriculum answers keep the course here; follow-ups such as "week 3 of that course" need it.
+      lastCurriculumCourse: convo?.lastCurriculumCourse || null
+    };
 
     console.log(`[CONVERSATION_PRIORITY][${requestId}] pre-router conversation gate active`);
     const metaIntent = detectMetaConversationIntent(originalQuery) || detectMetaConversationIntent(query);
