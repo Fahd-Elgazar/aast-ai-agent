@@ -28,6 +28,7 @@ if "%MODE%"=="" (
         shift
         goto :parse_stop_args
     )
+    if /I "%MODE%"=="docker" goto :run_docker
     if /I "%MODE%"=="demo" goto :start_mode_ok
     if /I "%MODE%"=="full" goto :start_mode_ok
     if /I "%MODE%"=="quick" goto :start_mode_ok
@@ -101,7 +102,16 @@ if /I "%COMMAND%"=="status" (
 )
 exit /b %ERRORLEVEL%
 
+:run_docker
+if "%~2"=="" (
+    powershell -NoProfile -ExecutionPolicy Bypass -File ".\scripts\load-fixtures.ps1"
+) else (
+    powershell -NoProfile -ExecutionPolicy Bypass -File ".\scripts\load-fixtures.ps1" -DataDir "%~2"
+)
+exit /b %ERRORLEVEL%
+
 :usage
+echo   starter.bat docker [data-directory]  Starts the isolated conference Docker stack
 echo.
 echo AAST launcher usage:
 echo.
