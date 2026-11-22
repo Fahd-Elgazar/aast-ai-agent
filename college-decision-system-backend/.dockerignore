@@ -11,3 +11,11 @@ ffmpeg.exe.*
 requirements-dev.txt
 tests
 docs
+
+# Local runtime databases and file-based fixtures are mounted separately.
+.env.*
+!.env.example
+*.db
+*.db-*
+*.sqlite*
+runtime
