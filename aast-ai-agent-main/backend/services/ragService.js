@@ -2222,18 +2222,35 @@ class RAGService {
             }
         }
 
-        if (!passages.some(passage => passage.source.merged_fragment_count > 1)) return sources;
+        // A passage written only for transferred students (by title or by the
+        // split above) goes after the general ones when the question is not
+        // about transfer, and is labelled so it is not read as a general rule.
+        const isTransferPassage = passage =>
+            passage.source.audience === 'transferred_students' ||
+            /\btransfer(?:red|s)?\b/i.test(String(passage.source.title || ''));
+        const moveTransfer = !queryAsksTransfer &&
+            passages.some(isTransferPassage) && passages.some(passage => !isTransferPassage(passage));
+        const anyMerged = passages.some(passage => passage.source.merged_fragment_count > 1);
+        if (!anyMerged && !moveTransfer) return sources;
+
+        const transferPassages = moveTransfer ? passages.filter(isTransferPassage) : [];
+        const general = passages.filter(passage => !transferPassages.includes(passage));
 
         // Only a stitched passage whose title names the question's topic moves
         // ahead; every other source keeps its retrieval rank.
-        const promoted = passages.filter(passage =>
+        const promoted = general.filter(passage =>
             passage.source.merged_fragment_count > 1 &&
-            passage.source.audience !== 'transferred_students' &&
             titleOverlap(passage.source) > 0
         );
         promoted.sort((a, b) => (titleOverlap(b.source) - titleOverlap(a.source)) || (a.firstIndex - b.firstIndex));
-        const rest = passages.filter(passage => !promoted.includes(passage));
-        return [...promoted, ...rest].map(passage => passage.source);
+        const rest = general.filter(passage => !promoted.includes(passage));
+        const labelled = transferPassages.map(passage => {
+            const text = String(passage.source.text ?? passage.source.excerpt ?? '');
+            if (/^For transferred students:/.test(text)) return passage.source;
+            const labelledText = `For transferred students: ${text}`;
+            return { ...passage.source, text: labelledText, excerpt: labelledText.slice(0, 420), audience: 'transferred_students' };
+        });
+        return [...promoted.map(p => p.source), ...rest.map(p => p.source), ...labelled];
     }
 
     _buildUsedFacts(sources, limit = 3) {

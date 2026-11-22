@@ -28,10 +28,10 @@ assert.equal(
   "To qualify, a student must maintain a GPA of at least 3.4, and complete at least 15 credit hours per semester. Scholarships are reviewed at the end of each academic year."
 );
 assert.deepEqual(out[0].merged_chunk_ids, ["s2", "s1", "s3"]);
-assert.equal(out[1].title, T);
-assert.equal(out[1].text, "Transfer students must submit an official transcript from their previous institution.");
-assert.equal(out[2].title, "Official Academic Calendar", "a whole passage is kept as it was");
-assert.equal(out[2].merged_fragment_count, undefined);
+assert.equal(out[1].title, "Official Academic Calendar", "a whole passage is kept as it was");
+assert.equal(out[1].merged_fragment_count, undefined);
+assert.equal(out[2].title, T, "a transfer-only passage goes last on a general question");
+assert.equal(out[2].text, "For transferred students: Transfer students must submit an official transcript from their previous institution.");
 
 // Without fragments, sources and their order are returned unchanged.
 const whole = [ranked[5], { id: "p1", title: "Academic Probation Rule", text: "A student whose cumulative GPA falls below 2.0 is placed on academic probation for the following semester." }];
@@ -62,5 +62,21 @@ assert.equal((merit[1].text.match(/Transferred students/g) || []).length, 1, "th
 const asked = ragService._stitchFragmentSources(live, "Can transfer students get a scholarship?");
 assert.equal(asked.length, 1);
 assert.match(asked[0].text, /^Transferred students from abroad/);
+
+// Live-run shape 2: transfer rules in their own titled chunks rank first.
+const titled = [
+  { id: "y1", title: "Scholarship Eligibility for Transfer Students", text: "Transferred students from abroad or other institutions are only eligible for tuition fee exemption scholarships after they have completed at least two full semesters within the same major at CAI." },
+  { id: "y2", title: S, text: "To qualify, a student must maintain a GPA of at least 3.4," },
+  { id: "y3", title: S, text: "and have completed all previous study hours without interruption." },
+  { id: "y4", title: "Scholarship Tie Rules", text: "If multiple students achieve a 4.00, each receives a full scholarship." },
+  { id: "y5", title: "Transfer Student Scholarship Eligibility", text: "Transferred students from abroad are eligible only after completing two semesters in the same major." },
+];
+const ordered = ragService._stitchFragmentSources(titled, "What are the merit scholarship eligibility criteria?");
+assert.deepEqual(ordered.map(o => o.id), ["y2", "y4", "y1", "y5"], "general criteria first, transfer rules last");
+assert.match(ordered[2].text, /^For transferred students: /);
+assert.equal(ordered[0].text, "To qualify, a student must maintain a GPA of at least 3.4, and have completed all previous study hours without interruption.");
+const transferAsk = ragService._stitchFragmentSources(titled, "Scholarships for transfer students?");
+assert.equal(transferAsk[0].id, "y1", "a transfer question keeps rank order");
+assert.ok(transferAsk.every(o => !/^For transferred/.test(o.text)), "and adds no label");
 
 console.log("RAG fragment stitch tests passed.");
