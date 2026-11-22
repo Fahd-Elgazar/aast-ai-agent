@@ -20,7 +20,7 @@ import requests
 from typing import Dict, Any, List, Optional
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 from tenacity import retry, stop_after_attempt, wait_exponential
@@ -465,7 +465,7 @@ def answer_endpoint(request: AnswerRequest):
                 "system_status": "DEGRADED"
             }
         )
-    except Exception as e:
+    except Exception:
         logger.exception("Answer generation failed.")
         return JSONResponse(
             status_code=500,

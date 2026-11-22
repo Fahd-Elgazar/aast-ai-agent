@@ -107,7 +107,6 @@
 
     const maxAttempts = Number(process.env.GRAPH_MAX_ATTEMPTS || 2);
     const timeoutMs = Number(process.env.GRAPH_TIMEOUT_MS || 8000);
-    let lastError = null;
 
     for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
       try {
@@ -143,8 +142,6 @@
           throw new Error("GRAPH response empty");
         }
       } catch (err) {
-        lastError = err;
-
         if (err.name === "AbortError" || /timeout|timed out/i.test(err.message || "")) {
           incrementMetric("knowledge_graph.timeout");
           logger.warn("GRAPH request timed out", {
@@ -167,72 +164,6 @@
     return null;
   }
 
-  async function safeDeterministicReformatter(baseAnswer, query) {
-    if (process.env.ENABLE_GRAPH === 'false') return null;
-    if (!runtimeMode.safeReformatEnabled || runtimeMode.singleGemmaGenerationMode || runtimeMode.defenseMode) {
-      incrementMetric("knowledge_graph.safe_reformat_policy_bypass");
-      return null;
-    }
-
-    const maxAttempts = Number(process.env.REFORMAT_MAX_ATTEMPTS || 1);
-    const timeoutMs = Number(process.env.REFORMAT_TIMEOUT_MS || 4000);
-
-    for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
-      try {
-        const response = await generateStableResponse({
-          model: process.env.OLLAMA_GRAPH_MODEL || process.env.PRIMARY_MODEL || process.env.OLLAMA_MODEL || "gemma4:e2b",
-          requestId: `graph_reformat_${Date.now()}`,
-          timeoutMs,
-          deadlineMs: Math.max(timeoutMs, 8000),
-          routeType: "KG_ONLY",
-          trafficType: "graph_reformat",
-          options: {
-            temperature: 0.05,
-            top_p: 0.70,
-            repeat_penalty: 1.12,
-            num_predict: Number.parseInt(process.env.KG_REFORMAT_NUM_PREDICT || "96", 10)
-          },
-          prompt: `Reformat the following academic answer for clarity and professionalism.
-
-  STRICT RULES:
-  - Use ONLY the provided facts
-  - Do NOT add new information
-  - Do NOT infer
-  - Do NOT assume
-  - Do NOT change factual meaning
-  - Do NOT omit important facts
-  - Keep answer concise
-  - If facts are insufficient, return original answer unchanged
-
-  User Question:
-  ${query}
-
-  Facts:
-  ${baseAnswer}`,
-        });
-
-        const cleanedResponse = response?.trim();
-        if (cleanedResponse && cleanedResponse.length > 0) {
-          incrementMetric("knowledge_graph.safe_reformat_success");
-          return cleanedResponse;
-        }
-        throw new Error("Empty reformat response");
-      } catch (err) {
-        if (err.name === "AbortError" || /timeout|timed out/i.test(err.message || "")) {
-          incrementMetric("knowledge_graph.safe_reformat_timeout");
-        } else {
-          incrementMetric("knowledge_graph.safe_reformat_failure");
-        }
-        logger.warn("Safe reformat failed, using base answer", {
-          attempt,
-          error: err.message
-        });
-      }
-    }
-
-    return null;
-  }
-
   /* ============================================================
     QUERY UNDERSTANDING
   ============================================================ */
@@ -242,7 +173,6 @@
   const DEFAULT_CONTEXT_LIMIT = Number.parseInt(process.env.KG_DEFAULT_CONTEXT_LIMIT || "10", 10);
   const RELATIONS_PER_NODE = Number.parseInt(process.env.KG_RELATIONS_PER_NODE || "12", 10);
   const GENERAL_RELATIONS_PER_NODE = Number.parseInt(process.env.KG_GENERAL_RELATIONS_PER_NODE || "10", 10);
-  const ONTOLOGY_RELATIONS_PER_NODE = Number.parseInt(process.env.KG_ONTOLOGY_RELATIONS_PER_NODE || "12", 10);
   const MAX_PERSON_SUMMARY_LINES = Number.parseInt(process.env.KG_MAX_PERSON_SUMMARY_LINES || "6", 10);
   const MAX_FACTS_BY_INTENT = {
     PERSON: Number.parseInt(process.env.KG_PERSON_MAX_FACTS || "18", 10),

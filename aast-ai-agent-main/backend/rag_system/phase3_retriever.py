@@ -1132,7 +1132,7 @@ def search_endpoint(request: SearchRequest):
             priority_only=request.priority_only
         )
 
-    except Exception as e:
+    except Exception:
         logger.exception("Search failed.")
         raise HTTPException(
             status_code=500,
@@ -1426,7 +1426,7 @@ def run_benchmark():
             "avg_confidence": avg_confidence,
             "retriever_readiness_score": f"{readiness_score}/100"
         }
-    except Exception as e:
+    except Exception:
         logger.exception("Benchmark failed.")
         return {
             "status": "unhealthy",
