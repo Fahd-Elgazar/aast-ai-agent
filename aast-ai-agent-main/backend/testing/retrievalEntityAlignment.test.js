@@ -413,6 +413,25 @@ async function testRecommendedAfterUsesLanguageClueAndKeepsProgramEvidence() {
   );
 }
 
+async function testMembershipQuestionRejectsAnotherProgramsEdge() {
+  const facts = [
+    { text: "Intelligent Systems includes the Machine Learning course (IN221, 3 credits).", relType: "HAS_COURSE", relSourceName: "Intelligent Systems", relTargetName: "Machine Learning" },
+  ];
+  const negative = selectExactFactsForQuery(facts, "Does Data Science include Machine Learning?", "PROGRAM", 10);
+  assert.equal(negative[0].relType, "HAS_COURSE_ABSENT");
+  assert.equal(
+    negative[0].text,
+    "No. Data Science does not include Machine Learning in the knowledge graph; Machine Learning is part of Intelligent Systems."
+  );
+  assert.equal(negative[1].relSourceName, "Intelligent Systems", "the real edge stays as supporting evidence");
+
+  const positive = selectExactFactsForQuery(facts, "Does Intelligent Systems have Machine Learning?", "PROGRAM", 10);
+  assert.deepEqual(positive.map(fact => fact.relType), ["HAS_COURSE"]);
+
+  const unnamedProgram = selectExactFactsForQuery(facts, "Which program includes Machine Learning?", "PROGRAM", 10);
+  assert.deepEqual(unnamedProgram.map(fact => fact.relSourceName), ["Intelligent Systems"]);
+}
+
 async function testPrerequisiteSelectionRejectsReverseDependency() {
   const facts = [
     { text: "Machine Learning has prerequisite Fundamentals of AI.", relType: "HAS_PREREQUISITE", relSourceName: "Machine Learning", relTargetName: "Fundamentals of AI" },
@@ -578,6 +597,7 @@ const tests = [
   testExactRetrievalReturnsAlignedFactsOnly,
   testMultiTargetRetrievalKeepsBothPrograms,
   testRecommendedAfterUsesLanguageClueAndKeepsProgramEvidence,
+  testMembershipQuestionRejectsAnotherProgramsEdge,
   testPrerequisiteSelectionRejectsReverseDependency,
   testComparisonHighlightsAreBalancedAndGrounded,
   testBesidesTeachingExcludesPreviouslyDiscussedCourse,

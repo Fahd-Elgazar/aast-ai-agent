@@ -3456,6 +3456,34 @@
     return [...queryTokens].filter(token => factTokens.has(token)).length;
   }
 
+  // The curated graph is authoritative for program membership, so a missing
+  // HAS_COURSE edge between a named program and course is stated explicitly,
+  // together with the programs whose edges do include that course.
+  function buildMembershipAbsenceFacts(programs, courses, membership) {
+    const absence = [];
+    for (const program of programs) {
+      for (const course of courses) {
+        const holders = [...new Set(
+          membership
+            .filter(fact => fact.relTargetName === course && fact.relSourceName !== program)
+            .map(fact => fact.relSourceName)
+        )];
+        if (holders.length === 0) continue;
+        absence.push({
+          text: `No. ${program} does not include ${course} in the knowledge graph; ${course} is part of ${formatNaturalList(holders)}.`,
+          kind: "membership_absence",
+          relType: "HAS_COURSE_ABSENT",
+          relSourceName: program,
+          relTargetName: course,
+          score: 0.95,
+          baseScore: 0.95,
+          graph: null
+        });
+      }
+    }
+    return absence;
+  }
+
   export function selectExactFactsForQuery(facts, query, intent, limit) {
     const normalized = normalizeText(query);
 
@@ -3511,17 +3539,31 @@
       }
     }
 
-    if (/\b(which|what|does)\b.*\b(include|includes|contain|contains)\b/.test(normalized)) {
+    if (/\b(which|what|does|do|is)\b.*\b(include|includes|contain|contains|have|has)\b/.test(normalized)) {
+      const requestedTargets = resolveExactEntities(query);
       const requestedCourses = new Set(
-        resolveExactEntities(query)
+        requestedTargets
           .filter(target => target.entity_type === "course")
           .map(target => target.canonical_name)
       );
+      const requestedPrograms = requestedTargets
+        .filter(target => target.entity_type === "program")
+        .map(target => target.canonical_name);
       const membership = facts.filter(
         fact =>
           fact.relType === "HAS_COURSE" &&
           requestedCourses.has(fact.relTargetName)
       );
+      if (membership.length > 0 && requestedPrograms.length > 0) {
+        // A named program must match the edge source. Another program's edge to the
+        // same course is not evidence that the named program includes it.
+        const inRequestedPrograms = membership.filter(fact => requestedPrograms.includes(fact.relSourceName));
+        if (inRequestedPrograms.length > 0) return dedupeFacts(inRequestedPrograms);
+        return [
+          ...buildMembershipAbsenceFacts(requestedPrograms, [...requestedCourses], membership),
+          ...dedupeFacts(membership)
+        ];
+      }
       if (membership.length > 0) return dedupeFacts(membership);
     }
 
