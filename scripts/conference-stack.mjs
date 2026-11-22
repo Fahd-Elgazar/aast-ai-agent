@@ -110,7 +110,8 @@ function typedGraph(profile) {
     "MATCH ()-[r]->()",
     "WITH courses, count(r) AS edges, count(CASE WHEN type(r) = 'RECOMMENDED_AFTER' THEN 1 END) AS sequences",
     "MATCH (n)",
-    "RETURN toString(courses) + ':' + toString(sequences) + ':' + toString(count(n)) + ':' + toString(edges) AS proof",
+    "WITH courses, sequences, edges, count(n) AS nodes",
+    "RETURN toString(courses) + ':' + toString(sequences) + ':' + toString(nodes) + ':' + toString(edges) AS proof",
   ].join(" ");
   const proof = compose([
     "exec", "-T", "neo4j", "sh", "-ec",
