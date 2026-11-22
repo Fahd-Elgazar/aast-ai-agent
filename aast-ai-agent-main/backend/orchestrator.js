@@ -85,6 +85,7 @@ import {
 import {
   buildGoldenFallbackPayload,
   classifyGoldenQuery,
+  normalizeGraphSequenceQuestion,
   extractGoldenEntities,
   parseComparisonEntities
 } from "./config/goldenPathRegistry.js";
@@ -760,7 +761,7 @@ async function handleChatbotQuery(req, res) {
 
     const originalQuery = rawQuery.trim();
     activeUserQuery = originalQuery;
-    const normalization = normalizeAcademicQuery(originalQuery);
+    const normalization = normalizeAcademicQuery(normalizeGraphSequenceQuestion(originalQuery));
     let query = normalization.normalized || originalQuery;
     let goldenMatch = null;
     const normalizationTrace = {
