@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import brainRouter from "../services/brainRouter.js";
 import { normalizeAcademicQuery } from "../services/academicQueryNormalizer.js";
-import { classifyGoldenQuery } from "../config/goldenPathRegistry.js";
+import { classifyGoldenQuery, normalizeGraphSequenceQuestion } from "../config/goldenPathRegistry.js";
 
 const HEALTHY = {
   kg: true,
@@ -43,6 +43,11 @@ function routeQuery(rawQuery, intent = "GENERAL") {
     group: ROUTE_GROUPS[decision.route] || decision.route,
   };
 }
+
+const explicitGraphSequence = "Does the graph recommend Computer Vision after Machine Learning?";
+assert.equal(normalizeGraphSequenceQuestion(explicitGraphSequence), "Is Computer Vision recommended after Machine Learning?");
+assert.equal(classifyGoldenQuery(explicitGraphSequence)?.id, "golden_dean_course_sequence");
+assert.equal(classifyGoldenQuery("Which major should I choose?")?.id, "golden_best_major");
 
 const cases = [
   // Dean WOW deterministic conversation and standalone bank

@@ -137,6 +137,22 @@ try {
   assert.equal(second.target, "Data Science");
   assert.equal(second.standaloneQuery, "What careers can Data Science lead to?");
 
+  const explicitCourse = resolveFollowUpReference("Does the other one include Machine Learning?", {
+    ...programMemory,
+    lastTopic: "careers"
+  });
+  assert.equal(explicitCourse.target, "Data Science");
+  assert.equal(explicitCourse.standaloneQuery, "Does Data Science include Machine Learning?");
+
+  const explicitWeek = resolveFollowUpReference("What about week 3 of that course?", {
+    recentEntities: [entity("course", "Mobile Computing")]
+  });
+  assert.equal(explicitWeek.target, "Mobile Computing");
+  assert.equal(explicitWeek.standaloneQuery, "What about week 3 of Mobile Computing?");
+
+  assert.equal(detectMetaConversationIntent("Can you tell me tomorrow’s weather?"), null);
+  assert.equal(detectMetaConversationIntent("What did you say earlier?")?.type, META_INTENTS.LAST_ASSISTANT_RESPONSE);
+
   const they = resolveFollowUpReference("Do they include Machine Learning?", programMemory);
   assert.deepEqual(they.target, ["Intelligent Systems", "Data Science"]);
   assert.equal(

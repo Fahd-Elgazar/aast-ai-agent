@@ -235,7 +235,8 @@ function buildResolvedQuery(query, slot, target, memory = {}) {
   }
 
   if (["ordinal_first", "ordinal_second", "other"].includes(slot)) {
-    if (/\b(career|careers|jobs?|lead to)\b/i.test(original) || normalizeText(memory.lastTopic) === "careers") {
+    const selectionOnly = /^(?:(?:and|what about|how about) )?(?:(?:the )?(?:first|second|other)(?: one)?|(?:the )?(?:former|latter))$/.test(normalizeText(original));
+    if (selectionOnly && normalizeText(memory.lastTopic) === "careers") {
       return `What careers can ${targetText} lead to?`;
     }
     return original
@@ -266,6 +267,9 @@ function buildResolvedQuery(query, slot, target, memory = {}) {
   }
 
   if (slot === "course") {
+    if (/\bweek\s+\d+\b/i.test(original) && /\b(?:that|this) (?:course|subject)\b/i.test(original)) {
+      return original.replace(/\b(?:that|this) (?:course|subject)\b/ig, () => targetText);
+    }
     if (/\b(recommended after|after that|take after|comes after)\b/i.test(original)) {
       return `Which course is recommended after ${targetText}${/\blanguage technology\b/i.test(original) ? " for language technology" : ""}?`;
     }
