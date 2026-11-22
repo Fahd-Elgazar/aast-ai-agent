@@ -1662,7 +1662,10 @@ class RAGService {
      * @private
      */
     _buildSearchResult(payload, pass, queryUsed, queryCategory, passLatencies, totalLatency) {
-        const rankedSources = Array.isArray(payload.sources) ? payload.sources : [];
+        const rankedSources = this._stitchFragmentSources(
+            Array.isArray(payload.sources) ? payload.sources : [],
+            queryUsed
+        );
         const diversityMetrics =
             payload.source_diversity && typeof payload.source_diversity === 'object'
                 ? payload.source_diversity
@@ -2108,6 +2111,99 @@ class RAGService {
             text: source?.text || excerpt,
             attribution: title
         };
+    }
+
+    /**
+     * The production corpus stores some passages as sentence fragments
+     * (for example "To qualify, a student must maintain a GPA of at least 3.4,").
+     * Listing them one by one in rank order reads as a garbled answer.
+     *
+     * This joins fragments that share a document title into one passage,
+     * continuing a fragment that ends mid-sentence with the fragment that
+     * starts mid-sentence, and moves the passage whose title matches the
+     * question to the front. Retrieval data and scores are not changed.
+     * @private
+     */
+    _stitchFragmentSources(sources, query = '') {
+        if (!Array.isArray(sources) || sources.length < 2) return Array.isArray(sources) ? sources : [];
+
+        const MAX_FRAGMENT_CHARS = 200;
+        const textOf = source => String(source?.text ?? source?.excerpt ?? source?.content ?? '').replace(/\s+/g, ' ').trim();
+        const titleKey = source => String(source?.title || '').trim().toLowerCase();
+        const endsMidSentence = text => !/[.!?:;)"\u201d]$/.test(text);
+        const startsMidSentence = text => /^[a-z(,;]/.test(text);
+
+        const groups = new Map();
+        sources.forEach((source, index) => {
+            const key = titleKey(source);
+            const text = textOf(source);
+            const isFragment = key && text && text.length <= MAX_FRAGMENT_CHARS;
+            const groupKey = isFragment ? `t:${key}` : `s:${index}`;
+            if (!groups.has(groupKey)) groups.set(groupKey, { firstIndex: index, items: [] });
+            groups.get(groupKey).items.push({ source, text, index });
+        });
+
+        const queryTokens = new Set(
+            String(query || '').toLowerCase().match(/[a-z]{4,}/g) || []
+        );
+        const titleOverlap = source => {
+            const tokens = String(source?.title || '').toLowerCase().match(/[a-z]{4,}/g) || [];
+            return tokens.filter(token => queryTokens.has(token) || queryTokens.has(token.replace(/s$/, ''))).length;
+        };
+
+        const passages = [];
+        for (const group of groups.values()) {
+            if (group.items.length === 1) {
+                passages.push({ source: group.items[0].source, firstIndex: group.firstIndex });
+                continue;
+            }
+
+            // Build sentence chains: a fragment that stops mid-sentence is
+            // continued by the best-ranked fragment that starts mid-sentence.
+            const remaining = [...group.items];
+            const starters = remaining.filter(item => !startsMidSentence(item.text));
+            const ordered = [];
+            const take = item => {
+                remaining.splice(remaining.indexOf(item), 1);
+                ordered.push(item);
+            };
+            const queue = starters.length ? [...starters] : [remaining[0]];
+            while (remaining.length) {
+                let current = queue.find(item => remaining.includes(item)) || remaining[0];
+                take(current);
+                while (endsMidSentence(current.text)) {
+                    const next = remaining.find(item => startsMidSentence(item.text));
+                    if (!next) break;
+                    take(next);
+                    current = next;
+                }
+            }
+
+            const lead = group.items[0].source;
+            let text = ordered.map(item => item.text).join(' ').replace(/\s+([,.;:])/g, '$1').trim();
+            if (text && endsMidSentence(text)) text = text.replace(/[,;\s]+$/, '') + '.';
+            passages.push({
+                firstIndex: group.firstIndex,
+                source: {
+                    ...lead,
+                    text,
+                    excerpt: text.slice(0, 420),
+                    merged_chunk_ids: group.items.map(item => item.source?.id ?? item.source?.doc_id ?? null).filter(Boolean),
+                    merged_fragment_count: group.items.length,
+                }
+            });
+        }
+
+        if (!passages.some(passage => passage.source.merged_fragment_count > 1)) return sources;
+
+        // Only a stitched passage whose title names the question's topic moves
+        // ahead; every other source keeps its retrieval rank.
+        const promoted = passages.filter(passage =>
+            passage.source.merged_fragment_count > 1 && titleOverlap(passage.source) > 0
+        );
+        promoted.sort((a, b) => (titleOverlap(b.source) - titleOverlap(a.source)) || (a.firstIndex - b.firstIndex));
+        const rest = passages.filter(passage => !promoted.includes(passage));
+        return [...promoted, ...rest].map(passage => passage.source);
     }
 
     _buildUsedFacts(sources, limit = 3) {
