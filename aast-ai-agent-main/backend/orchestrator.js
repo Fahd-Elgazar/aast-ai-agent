@@ -19,7 +19,7 @@ import { requireAuth } from "./middleware/auth.js";
 import { searchFAQ } from "./faqService.js";
 import { checkGreeting } from "./greetings.js";
 import { fetchNeo4jContext, convertToGraphData } from "./services/neo4jcontext.js";
-import { connectNeo4j, getSession } from "./db/neo4j.js";
+import { connectNeo4j } from "./db/neo4j.js";
 import { getRecommendation, getUserMemory, buildCareerRoadmap, toOrchestratorDecisionEvidence, updateUserMemory, deleteUserMemory } from "./services/decisionService.js";
 import { incrementMetric, recordDuration } from "./services/metrics.js";
 import { logger } from "./services/logger.js";
