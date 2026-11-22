@@ -68,13 +68,15 @@ const titled = [
   { id: "y1", title: "Scholarship Eligibility for Transfer Students", text: "Transferred students from abroad or other institutions are only eligible for tuition fee exemption scholarships after they have completed at least two full semesters within the same major at CAI." },
   { id: "y2", title: S, text: "To qualify, a student must maintain a GPA of at least 3.4," },
   { id: "y3", title: S, text: "and have completed all previous study hours without interruption." },
-  { id: "y4", title: "Scholarship Tie Rules", text: "If multiple students achieve a 4.00, each receives a full scholarship." },
+  { id: "y4", title: "Scholarship Tie Rules", text: "scholarship is divided equally, except if multiple students achieve a 4.00." },
   { id: "y5", title: "Transfer Student Scholarship Eligibility", text: "Transferred students from abroad are eligible only after completing two semesters in the same major." },
 ];
 const ordered = ragService._stitchFragmentSources(titled, "What are the merit scholarship eligibility criteria?");
-assert.deepEqual(ordered.map(o => o.id), ["y2", "y4", "y1", "y5"], "general criteria first, transfer rules last");
-assert.match(ordered[2].text, /^For transferred students: /);
+assert.deepEqual(ordered.map(o => o.id), ["y2", "y4", "y1"], "general criteria first, transfer rules last");
+assert.equal(ordered[2].text, "For transferred students: Transferred students from abroad or other institutions are only eligible for tuition fee exemption scholarships after they have completed at least two full semesters within the same major at CAI.", "the restated transfer rule is merged away");
+assert.deepEqual(ordered[2].merged_chunk_ids, ["y1", "y5"]);
 assert.equal(ordered[0].text, "To qualify, a student must maintain a GPA of at least 3.4, and have completed all previous study hours without interruption.");
+assert.equal(ordered[1].text, "Scholarship is divided equally, except if multiple students achieve a 4.00.", "a passage starting mid-sentence is capitalised");
 const transferAsk = ragService._stitchFragmentSources(titled, "Scholarships for transfer students?");
 assert.equal(transferAsk[0].id, "y1", "a transfer question keeps rank order");
 assert.ok(transferAsk.every(o => !/^For transferred/.test(o.text)), "and adds no label");

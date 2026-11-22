@@ -2244,13 +2244,39 @@ class RAGService {
         );
         promoted.sort((a, b) => (titleOverlap(b.source) - titleOverlap(a.source)) || (a.firstIndex - b.firstIndex));
         const rest = general.filter(passage => !promoted.includes(passage));
-        const labelled = transferPassages.map(passage => {
-            const text = String(passage.source.text ?? passage.source.excerpt ?? '');
-            if (/^For transferred students:/.test(text)) return passage.source;
-            const labelledText = `For transferred students: ${text}`;
-            return { ...passage.source, text: labelledText, excerpt: labelledText.slice(0, 420), audience: 'transferred_students' };
-        });
-        return [...promoted.map(p => p.source), ...rest.map(p => p.source), ...labelled];
+        // All transfer rules become one labelled passage, without restating
+        // a rule that another transfer passage already covers.
+        const wordsOf = text => new Set(String(text).toLowerCase().match(/[a-z0-9]{3,}/g) || []);
+        const keptRules = [];
+        for (const passage of transferPassages) {
+            const text = String(passage.source.text ?? passage.source.excerpt ?? '').replace(/^For transferred students:\s*/, '');
+            const words = wordsOf(text);
+            const covered = keptRules.some(kept => {
+                const shared = [...words].filter(word => kept.words.has(word)).length;
+                return words.size > 0 && shared / words.size >= 0.7;
+            });
+            if (!covered) keptRules.push({ text, words });
+        }
+        const labelled = transferPassages.length ? [(() => {
+            const labelledText = `For transferred students: ${keptRules.map(rule => rule.text).join(' ')}`;
+            return {
+                ...transferPassages[0].source,
+                text: labelledText,
+                excerpt: labelledText.slice(0, 420),
+                audience: 'transferred_students',
+                merged_chunk_ids: transferPassages.flatMap(passage =>
+                    passage.source.merged_chunk_ids || [passage.source.id ?? passage.source.doc_id].filter(Boolean)),
+            };
+        })()] : [];
+
+        // A passage that starts mid-sentence still reads as a sentence.
+        const capitalised = source => {
+            const text = String(source.text ?? '');
+            if (!/^[a-z]/.test(text)) return source;
+            const fixed = text.charAt(0).toUpperCase() + text.slice(1);
+            return { ...source, text: fixed, excerpt: fixed.slice(0, 420) };
+        };
+        return [...promoted.map(p => p.source), ...rest.map(p => p.source), ...labelled].map(capitalised);
     }
 
     _buildUsedFacts(sources, limit = 3) {
