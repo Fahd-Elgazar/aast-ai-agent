@@ -111,6 +111,18 @@ try {
   assert.equal(curriculumFollowUp.target, "Mobile Computing");
   assert.equal(curriculumFollowUp.standaloneQuery, "What about week 3 of Mobile Computing?");
 
+  const weekFollowUp = "What about week 3 of that course?";
+  const mixedCourseMemory = {
+    lastIntent: "CURRICULUM",
+    lastCurriculumCourse: "Mobile Computing",
+    recentEntities: [entity("course", "Machine Learning", { turnId: "earlier-graph-turn" })]
+  };
+  assert.equal(resolveFollowUpReference(weekFollowUp, mixedCourseMemory).target, "Mobile Computing");
+  assert.equal(
+    resolveFollowUpReference(weekFollowUp, { ...mixedCourseMemory, lastIntent: "COURSE" }).target,
+    "Machine Learning"
+  );
+
   const cachedCreated = createConversation({ ownerId: "dean-cache-test" });
   const cachedConversation = await getConversation(cachedCreated.cid, { ownerId: "dean-cache-test" });
   await pushTurn(

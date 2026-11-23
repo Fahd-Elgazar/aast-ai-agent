@@ -299,12 +299,17 @@ function buildResolvedQuery(query, slot, target, memory = {}) {
 
 function selectCourseTarget(query, memory = {}) {
   const candidates = getTypedEntities(memory, "course");
+  const normalizedQuery = normalizeText(query);
+  const curriculumCourse = cleanText(memory.lastCurriculumCourse, 120);
+  const isRecentCurriculumWeek = memory.lastIntent === "CURRICULUM" &&
+    /\bweek\s+\d+\b/.test(normalizedQuery);
+
+  if (curriculumCourse && (isRecentCurriculumWeek || candidates.length === 0)) {
+    return { target: curriculumCourse, candidates: [curriculumCourse], source: "lastCurriculumCourse" };
+  }
+
   if (candidates.length === 0) {
     const subjects = Array.isArray(memory.recentSubjects) ? memory.recentSubjects : [];
-    const curriculumCourse = cleanText(memory.lastCurriculumCourse, 120);
-    if (curriculumCourse) {
-      return { target: curriculumCourse, candidates: [curriculumCourse], source: "lastCurriculumCourse" };
-    }
     const fallback = cleanText(subjects[0], 120);
     return { target: fallback || null, candidates: fallback ? [fallback] : [], source: fallback ? "recentSubjects" : null };
   }
@@ -313,7 +318,6 @@ function selectCourseTarget(query, memory = {}) {
   const recent = newestTurnId
     ? candidates.filter(entity => entity.turnId === newestTurnId)
     : candidates.slice(0, 3);
-  const normalizedQuery = normalizeText(query);
   const dependencyFocus = recent.find(entity =>
     entity.relationRole === "source" &&
     ["HAS_PREREQUISITE", "REQUIRES", "PREREQUISITE_FOR"].includes(entity.relation) &&

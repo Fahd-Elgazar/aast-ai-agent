@@ -48,6 +48,7 @@ const explicitGraphSequence = "Does the graph recommend Computer Vision after Ma
 assert.equal(normalizeGraphSequenceQuestion(explicitGraphSequence), "Is Computer Vision recommended after Machine Learning?");
 assert.equal(classifyGoldenQuery(explicitGraphSequence)?.id, "golden_dean_course_sequence");
 assert.equal(classifyGoldenQuery("Which major should I choose?")?.id, "golden_best_major");
+assert.equal(routeQuery("Who issues the official academic calendar?").decision.route, "RAG_DIRECT");
 
 const cases = [
   // Dean WOW deterministic conversation and standalone bank
