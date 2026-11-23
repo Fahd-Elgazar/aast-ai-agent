@@ -22,6 +22,9 @@ import {
   runExactEntitiesRetrieval,
   runExactEntityRetrieval,
   selectExactFactsForQuery,
+  membershipKey,
+  membershipQuestionTargets,
+  verifyProgramCourseMembership,
   shouldStopAfterExactRelationMiss,
 } from "../services/neo4jcontext.js";
 
@@ -413,6 +416,90 @@ async function testRecommendedAfterUsesLanguageClueAndKeepsProgramEvidence() {
   );
 }
 
+async function testMembershipQuestionRejectsAnotherProgramsEdge() {
+  const facts = [
+    { text: "Intelligent Systems includes the Machine Learning course (IN221, 3 credits).", relType: "HAS_COURSE", relSourceName: "Intelligent Systems", relTargetName: "Machine Learning" },
+  ];
+  const checked = new Map([
+    [membershipKey("Data Science", "Machine Learning"), false],
+    [membershipKey("Intelligent Systems", "Machine Learning"), true],
+  ]);
+
+  // Demo Q3: "No" only after the direct pair check found no edge.
+  const negative = selectExactFactsForQuery(facts, "Does Data Science include Machine Learning?", "PROGRAM", 10, { membershipVerification: checked });
+  assert.equal(negative[0].relType, "HAS_COURSE_ABSENT");
+  assert.equal(
+    negative[0].text,
+    "No. Data Science does not include Machine Learning in the knowledge graph; Machine Learning is part of Intelligent Systems."
+  );
+  assert.equal(negative[1].relSourceName, "Intelligent Systems", "the real edge stays as supporting evidence");
+
+  // A missing edge in a limited search is not enough for "No".
+  const unchecked = selectExactFactsForQuery(facts, "Does Data Science include Machine Learning?", "PROGRAM", 10);
+  assert.equal(unchecked[0].relType, "HAS_COURSE_UNVERIFIED");
+  assert.doesNotMatch(unchecked[0].text, /^No\b/);
+  const failedCheck = selectExactFactsForQuery(facts, "Does Data Science include Machine Learning?", "PROGRAM", 10, { membershipVerification: new Map() });
+  assert.equal(failedCheck[0].relType, "HAS_COURSE_UNVERIFIED", "a failed check never becomes a negative answer");
+
+  const positive = selectExactFactsForQuery(facts, "Does Intelligent Systems have Machine Learning?", "PROGRAM", 10);
+  assert.deepEqual(positive.map(fact => fact.relType), ["HAS_COURSE"]);
+
+  const unnamedProgram = selectExactFactsForQuery(facts, "Which program includes Machine Learning?", "PROGRAM", 10);
+  assert.deepEqual(unnamedProgram.map(fact => fact.relSourceName), ["Intelligent Systems"]);
+}
+
+async function testMembershipQuestionAnswersEveryNamedProgram() {
+  const question = "Do Intelligent Systems and Data Science both include Machine Learning?";
+  const isEdge = { text: "Intelligent Systems includes the Machine Learning course (IN221, 3 credits).", relType: "HAS_COURSE", relSourceName: "Intelligent Systems", relTargetName: "Machine Learning" };
+
+  const both = selectExactFactsForQuery([isEdge], question, "PROGRAM", 10, {
+    membershipVerification: new Map([
+      [membershipKey("Intelligent Systems", "Machine Learning"), true],
+      [membershipKey("Data Science", "Machine Learning"), false],
+    ]),
+  });
+  assert.equal(both[0].text, "No, not both. Intelligent Systems includes Machine Learning, but Data Science does not.", "the verdict comes first");
+  assert.deepEqual(both.slice(1).map(fact => [fact.relSourceName, fact.relType]), [
+    ["Intelligent Systems", "HAS_COURSE"],
+    ["Data Science", "HAS_COURSE_ABSENT"],
+  ], "then each named program gets its own answer");
+
+  // The edge for Data Science fell outside the limited search, but the direct
+  // check found it: the answer is "yes" for both, never "no".
+  const verifiedYes = selectExactFactsForQuery([isEdge], question, "PROGRAM", 10, {
+    membershipVerification: new Map([
+      [membershipKey("Intelligent Systems", "Machine Learning"), true],
+      [membershipKey("Data Science", "Machine Learning"), true],
+    ]),
+  });
+  assert.equal(verifiedYes[0].text, "Yes, both Intelligent Systems and Data Science include Machine Learning.");
+  assert.deepEqual(verifiedYes.slice(1).map(fact => fact.relType), ["HAS_COURSE", "HAS_COURSE"]);
+  assert.equal(verifiedYes[2].text, "Yes. Data Science includes Machine Learning in the knowledge graph.");
+
+  // No verdict while any program is unconfirmed.
+  const partial = selectExactFactsForQuery([isEdge], question, "PROGRAM", 10, { membershipVerification: new Map() });
+  assert.notEqual(partial[0].relType, "HAS_COURSE_SUMMARY");
+
+  // The direct check builds one pair per program and course.
+  const calls = [];
+  const fakeSession = {
+    run: async (cypher, params) => {
+      calls.push(params.pairs.map(pair => `${pair.program}|${pair.course}`));
+      return {
+        records: params.pairs.map(pair => ({
+          get: key => ({ program: pair.program, course: pair.course, edges: pair.program === "Intelligent Systems" ? 1 : 0 })[key],
+        })),
+      };
+    },
+  };
+  const targets = membershipQuestionTargets(question);
+  const verification = await verifyProgramCourseMembership(fakeSession, targets.programs, targets.courses);
+  assert.deepEqual(calls[0], ["Intelligent Systems|Machine Learning", "Data Science|Machine Learning"]);
+  assert.equal(verification.get(membershipKey("Intelligent Systems", "Machine Learning")), true);
+  assert.equal(verification.get(membershipKey("Data Science", "Machine Learning")), false);
+  assert.equal(membershipQuestionTargets("Which program includes Machine Learning?"), null);
+}
+
 async function testPrerequisiteSelectionRejectsReverseDependency() {
   const facts = [
     { text: "Machine Learning has prerequisite Fundamentals of AI.", relType: "HAS_PREREQUISITE", relSourceName: "Machine Learning", relTargetName: "Fundamentals of AI" },
@@ -578,6 +665,8 @@ const tests = [
   testExactRetrievalReturnsAlignedFactsOnly,
   testMultiTargetRetrievalKeepsBothPrograms,
   testRecommendedAfterUsesLanguageClueAndKeepsProgramEvidence,
+  testMembershipQuestionRejectsAnotherProgramsEdge,
+  testMembershipQuestionAnswersEveryNamedProgram,
   testPrerequisiteSelectionRejectsReverseDependency,
   testComparisonHighlightsAreBalancedAndGrounded,
   testBesidesTeachingExcludesPreviouslyDiscussedCourse,
