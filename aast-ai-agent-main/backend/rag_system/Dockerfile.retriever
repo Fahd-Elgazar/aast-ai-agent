@@ -11,7 +11,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.retriever.txt .
-RUN pip install --no-cache-dir --index-url https://download.pytorch.org/whl/cpu torch==2.3.1+cpu \
+RUN pip install --no-cache-dir --default-timeout=120 --retries 10 --index-url https://download.pytorch.org/whl/cpu torch==2.3.1+cpu \
     && pip install --no-cache-dir 'torch==2.3.1+cpu' -r requirements.retriever.txt
 
 # The retriever serves an already-ingested Qdrant collection. Institutional
