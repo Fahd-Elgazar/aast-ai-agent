@@ -209,8 +209,9 @@ function detectSemanticMetaIntent(text) {
 
   if (
     hasAnyToken(tokens, ["say", "answer"]) &&
-    (text.includes("you") || text.includes("your")) &&
-    (hasToken(tokens, "previous") || hasAnyToken(tokens, ["say", "answer"]))
+    /\b(?:you|your)\b/.test(text) &&
+    (hasAnyToken(tokens, ["previous", "earlier", "before", "last"]) ||
+      /\b(?:your (?:answer|response|reply)|did you (?:say|tell|answer|respond))\b/.test(text))
   ) {
     return { type: META_INTENTS.LAST_ASSISTANT_RESPONSE, confidence: 0.95, source: "semantic_token_family" };
   }

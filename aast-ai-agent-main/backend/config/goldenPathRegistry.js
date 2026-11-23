@@ -545,8 +545,15 @@ export const GOLDEN_PATH_REGISTRY = Object.freeze([
   },
 ]);
 
+export function normalizeGraphSequenceQuestion(query) {
+  return String(query || "").replace(
+    /^does the (?:knowledge )?graph recommend (.+?) after ([^?!.]+)[?!.]?$/i,
+    (_, course, predecessor) => `Is ${course} recommended after ${predecessor}?`
+  );
+}
+
 function normalizeForGoldenPath(value) {
-  return String(value || "")
+  return normalizeGraphSequenceQuestion(value)
     .toLowerCase()
     .replace(/\b(?:a\.?i\.?|ai)\b/g, "artificial intelligence")
     .replace(/\bcyber\s+security\b/g, "cybersecurity")

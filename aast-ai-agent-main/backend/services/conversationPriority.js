@@ -195,6 +195,7 @@ function inferReferenceSlot(query, memory = {}) {
   if (/\b(the first one|first one|the first|former)\b/.test(text)) return "ordinal_first";
   if (/\b(the second one|second one|the second|latter)\b/.test(text)) return "ordinal_second";
   if (/\b(those two|both of them|those programs|these programs)\b/.test(text)) return "plural_program";
+  if (/\bwhich (?:one )?of (?:the|these|those) two\b/.test(text)) return "plural_program";
   if (/\b(what|where).*\b(his|her|their)\s+(office|room|location)\b/.test(text)) return "person_office";
   if (/\b(that professor|that instructor|that teacher|that doctor)\b/.test(text)) return "person";
   if (/\b(he|him|his|she|her)\b/.test(text)) return /\b(office|room|location)\b/.test(text) ? "person_office" : "person";
@@ -235,7 +236,8 @@ function buildResolvedQuery(query, slot, target, memory = {}) {
   }
 
   if (["ordinal_first", "ordinal_second", "other"].includes(slot)) {
-    if (/\b(career|careers|jobs?|lead to)\b/i.test(original) || normalizeText(memory.lastTopic) === "careers") {
+    const selectionOnly = /^(?:(?:and|what about|how about) )?(?:(?:the )?(?:first|second|other)(?: one)?|(?:the )?(?:former|latter))$/.test(normalizeText(original));
+    if (selectionOnly && normalizeText(memory.lastTopic) === "careers") {
       return `What careers can ${targetText} lead to?`;
     }
     return original
@@ -266,6 +268,9 @@ function buildResolvedQuery(query, slot, target, memory = {}) {
   }
 
   if (slot === "course") {
+    if (/\bweek\s+\d+\b/i.test(original) && /\b(?:that|this) (?:course|subject)\b/i.test(original)) {
+      return original.replace(/\b(?:that|this) (?:course|subject)\b/ig, () => targetText);
+    }
     if (/\b(recommended after|after that|take after|comes after)\b/i.test(original)) {
       return `Which course is recommended after ${targetText}${/\blanguage technology\b/i.test(original) ? " for language technology" : ""}?`;
     }
@@ -283,7 +288,7 @@ function buildResolvedQuery(query, slot, target, memory = {}) {
 
   if (slot === "plural_program" || slot === "plural") {
     return original
-      .replace(/\b(those two|both of them|those programs|these programs|them|those)\b/ig, targetText)
+      .replace(/\b(?:(?:the|these|those) two|both of them|those programs|these programs|them|those)\b/ig, targetText)
       .replace(/\bthey\b/ig, targetText)
       .replace(/\s+/g, " ")
       .trim();
@@ -294,6 +299,15 @@ function buildResolvedQuery(query, slot, target, memory = {}) {
 
 function selectCourseTarget(query, memory = {}) {
   const candidates = getTypedEntities(memory, "course");
+  const normalizedQuery = normalizeText(query);
+  const curriculumCourse = cleanText(memory.lastCurriculumCourse, 120);
+  const isRecentCurriculumWeek = memory.lastIntent === "CURRICULUM" &&
+    /\bweek\s+\d+\b/.test(normalizedQuery);
+
+  if (curriculumCourse && (isRecentCurriculumWeek || candidates.length === 0)) {
+    return { target: curriculumCourse, candidates: [curriculumCourse], source: "lastCurriculumCourse" };
+  }
+
   if (candidates.length === 0) {
     const subjects = Array.isArray(memory.recentSubjects) ? memory.recentSubjects : [];
     const fallback = cleanText(subjects[0], 120);
@@ -304,7 +318,6 @@ function selectCourseTarget(query, memory = {}) {
   const recent = newestTurnId
     ? candidates.filter(entity => entity.turnId === newestTurnId)
     : candidates.slice(0, 3);
-  const normalizedQuery = normalizeText(query);
   const dependencyFocus = recent.find(entity =>
     entity.relationRole === "source" &&
     ["HAS_PREREQUISITE", "REQUIRES", "PREREQUISITE_FOR"].includes(entity.relation) &&
