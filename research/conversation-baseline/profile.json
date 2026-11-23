@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "purpose": "ICCTA 2026 conference fixture baseline",
+  "capturedOn": "2026-11-22",
+  "sourceBase": "3e5ef3eaf9f15ec60a3778786e29ed15fe607bb2",
+  "applianceRevision": "4a38cf5f9969e893cf04a39e1306a74cc8fbe939",
+  "neo4j": {
+    "version": "5.26.26",
+    "edition": "community",
+    "database": "neo4j",
+    "nodes": 144,
+    "relationships": 254,
+    "recommendedAfter": 6,
+    "dataSha256": "370dd27b30f0d3093f2fe8989e81e4ed55fb84085af480fda68138fb3eb27d9f",
+    "schemaSha256": "155cc015046268f71b0ab87f6ecabd07c8e429ba9722058cb6c06d7d71f7cf5a",
+    "vectorIndexes": [
+      "course_index",
+      "node_embedding_index",
+      "professor_embedding_index",
+      "program_embedding_index",
+      "staff_embedding_index"
+    ],
+    "dump": {
+      "file": "neo4j.dump",
+      "bytes": 162551,
+      "sha256": "dcf73448faf75c1bab26aa9e7377b1552ba7df3e624ee9173b6263f64f35e1ca"
+    },
+    "provenance": "Read-only capture of the graph mounted by the running July-image appliance on 22 November. Rebuilt on Neo4j 5.26.26 in isolation and matched graph and schema fingerprints before producing an offline dump. Historical archive filenames are not aliases for this fixture.",
+    "evidence": {
+      "sequenceRelation": "RECOMMENDED_AFTER",
+      "program": "Intelligent Systems",
+      "relation": "HAS_COURSE",
+      "course": "Machine Learning",
+      "legacyExportRelationshipId": "6917538923245731855",
+      "machineLearningGraphId": "COURSE_IN221"
+    }
+  },
+  "qdrant": {
+    "version": "1.12.5",
+    "collection": "aast_academic_rag_production",
+    "points": 184,
+    "dimensions": 1024,
+    "distance": "Cosine",
+    "embedding": "BAAI/bge-m3",
+    "observedHuggingFaceRevision": "5617a9f61b028005a4858fdac845db406aefb181",
+    "snapshot": {
+      "file": "aast_academic_rag_production.snapshot",
+      "bytes": 2676224,
+      "sha256": "2b9573d912e7e28ec7dd07b0ec32880832e5c67c9bdd17a6efbab5d1e2a72798"
+    },
+    "corpus": {
+      "file": "cleaned_chunked_cai_production_v4.json",
+      "bytes": 108615,
+      "sha256": "30b407b286c26dcf04551c12d75dcc5489ea0a06f272afd60bb05de655bee259",
+      "provenance": "5 May ingestion artifact. All 184 IDs and all indexed payload fields matched the captured live collection."
+    },
+    "evidence": {
+      "calendar": "3c96ff39-cd80-5534-aa00-30b286f60f02",
+      "probation": "12092411-eda6-04ca-4c5d-a32a8540608b",
+      "scholarship": [
+        "69f61f86-9450-f038-6277-5018fc2146f5",
+        "72fbf043-b10a-f32c-7c42-082b37f8f91d",
+        "7d919aff-7949-8753-2f02-1e587afb1112"
+      ]
+    }
+  },
+  "decision": {
+    "alembicHead": "4a4dbd1d4c6c",
+    "fixture": {
+      "file": "college-decision-system-backend/tests/fixtures/decision_seed.py",
+      "bytes": 10828,
+      "sha256": "308423d6f11442d81dfde84f7c93c8c4e31e9b7ee02c1638b45f9f38c347fb55"
+    },
+    "institutionalDataset": "Not used. Synthetic data covers service startup and health for the proposed Graph/RAG demo. Excludes institutional recommendation results."
+  },
+  "models": {
+    "ollama": [
+      {
+        "name": "gemma4:e2b",
+        "role": "primary",
+        "bytes": 4587156505,
+        "sha256": "b37049369adfe3d2b653af0ab301a062ca5cbe96ace6aa0d3f2559ee9b563fc2"
+      },
+      {
+        "name": "tinyllama:latest",
+        "role": "backup",
+        "bytes": 637700138,
+        "sha256": "2644915ede352ea7bdfaff0bfac0be74c719d5d5202acb63a6fb095b52f394a4"
+      },
+      {
+        "name": "nomic-embed-text:latest",
+        "role": "graph embeddings",
+        "bytes": 274302450,
+        "sha256": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f"
+      }
+    ],
+    "reranker": {
+      "name": "RetrievalReranker",
+      "version": "Built-in Phase B metadata-aware reranker, no separate model package",
+      "source": {
+        "file": "aast-ai-agent-main/backend/rag_system/phase3_retriever.py",
+        "bytes": 53324,
+        "sha256": "837412a0d8bb1fc813eb90aec5d7340ef7133ff556fdbe14a75fd43bd3ad14d2"
+      }
+    }
+  },
+  "environment": {
+    "requiredForManualSetup": [
+      "AAST_DATA_DIR",
+      "NEO4J_PASSWORD",
+      "INTERNAL_SECRET_KEY",
+      "AUTH_JWT_SECRET"
+    ],
+    "examples": [
+      ".env.docker.example",
+      "aast-ai-agent-main/backend/.env.example"
+    ],
+    "launcher": "Creates random per-machine secrets in .env.iccta.local. The private release contains only data artifacts and this manifest."
+  },
+  "distribution": {
+    "visibility": "private",
+    "repository": "MohammedHssan11/aast-ai-agent-data",
+    "releaseTag": "iccta-2026-fixtures-v1"
+  }
+}

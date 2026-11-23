@@ -7,12 +7,12 @@ services:
       dockerfile: Dockerfile
       args:
         VITE_API_BASE: /api
-    image: aast-ai-agent/frontend:local
+    image: aast-ai-agent/frontend:iccta-2026-p0
     depends_on:
       backend:
-        condition: service_started
+        condition: service_healthy
     ports:
-      - "127.0.0.1:5173:5173"
+      - "127.0.0.1:${AAST_FRONTEND_PORT:-5173}:5173"
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:5173/ >/dev/null || exit 1"]
@@ -27,7 +27,7 @@ services:
     build:
       context: ./aast-ai-agent-main/backend
       dockerfile: Dockerfile
-    image: aast-ai-agent/backend:local
+    image: aast-ai-agent/backend:iccta-2026-p0
     env_file:
       - path: ./aast-ai-agent-main/backend/.env
         required: false
@@ -53,6 +53,7 @@ services:
       SINGLE_GEMMA_GENERATION_MODE: ${SINGLE_GEMMA_GENERATION_MODE:-true}
       GEMINI_BACKUP_ENABLED: ${GEMINI_BACKUP_ENABLED:-true}
       PRIMARY_MODEL: ${PRIMARY_MODEL:-gemma4:e2b}
+      BACKUP_MODEL: ${BACKUP_MODEL:-tinyllama:latest}
       PRIMARY_TIMEOUT_MS: ${PRIMARY_TIMEOUT_MS:-60000}
       SYNTHESIS_TIMEOUT_MS: ${SYNTHESIS_TIMEOUT_MS:-60000}
       PRIMARY_COLD_START_TIMEOUT_MS: ${PRIMARY_COLD_START_TIMEOUT_MS:-90000}
@@ -77,9 +78,13 @@ services:
       rag-retriever:
         condition: service_healthy
       rag-answer:
-        condition: service_started
+        condition: service_healthy
+      qdrant:
+        condition: service_healthy
+      ollama-ready:
+        condition: service_completed_successfully
     ports:
-      - "127.0.0.1:8004:8004"
+      - "127.0.0.1:${AAST_BACKEND_PORT:-8004}:8004"
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
@@ -87,7 +92,7 @@ services:
       - backend_data:/app/data
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "node -e \"fetch('http://127.0.0.1:8004/health').then(r=>process.exit(r.status < 500 ? 0 : 1)).catch(()=>process.exit(1))\""]
+      test: ["CMD-SHELL", "node -e \"fetch('http://127.0.0.1:8004/health').then(r=>process.exit(r.ok ? 0 : 1)).catch(()=>process.exit(1))\""]
       interval: 30s
       timeout: 10s
       retries: 6
@@ -99,7 +104,7 @@ services:
     build:
       context: ./college-decision-system-backend
       dockerfile: Dockerfile
-    image: aast-ai-agent/decision-api:local
+    image: aast-ai-agent/decision-api:iccta-2026-p0
     env_file:
       - path: ./college-decision-system-backend/.env
         required: false
@@ -111,7 +116,7 @@ services:
       INTERNAL_SECRET_KEY: ${INTERNAL_SECRET_KEY:?Set INTERNAL_SECRET_KEY in .env}
       AUTH_JWT_SECRET: ${AUTH_JWT_SECRET:?Set AUTH_JWT_SECRET in .env}
     ports:
-      - "127.0.0.1:8005:8005"
+      - "127.0.0.1:${AAST_DECISION_PORT:-8005}:8005"
     volumes:
       - decision_data:/app/runtime
       - decision_whisper_cache:/root/.cache/whisper
@@ -129,7 +134,7 @@ services:
     build:
       context: ./aast-ai-agent-main/backend/rag_system
       dockerfile: Dockerfile.retriever
-    image: aast-ai-agent/rag-retriever:local
+    image: aast-ai-agent/rag-retriever:iccta-2026-p0
     environment:
       QDRANT_HOST: qdrant
       QDRANT_PORT: 6333
@@ -148,7 +153,7 @@ services:
       qdrant:
         condition: service_healthy
     ports:
-      - "127.0.0.1:8001:8001"
+      - "127.0.0.1:${AAST_RETRIEVER_PORT:-8001}:8001"
     volumes:
       - rag_hf_cache:/root/.cache/huggingface
       - rag_torch_cache:/root/.cache/torch
@@ -166,7 +171,7 @@ services:
     build:
       context: ./aast-ai-agent-main/backend/rag_system
       dockerfile: Dockerfile.answer
-    image: aast-ai-agent/rag-answer:local
+    image: aast-ai-agent/rag-answer:iccta-2026-p0
     environment:
       RAG_RETRIEVER_URL: http://rag-retriever:8001
       OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
@@ -179,7 +184,7 @@ services:
       rag-retriever:
         condition: service_healthy
     ports:
-      - "127.0.0.1:8002:8002"
+      - "127.0.0.1:${AAST_RAG_ANSWER_PORT:-8002}:8002"
     extra_hosts:
       - "host.docker.internal:host-gateway"
     restart: unless-stopped
@@ -193,14 +198,22 @@ services:
       - ai-agent-net
 
   qdrant:
-    image: qdrant/qdrant:v1.12.5
+    image: qdrant/qdrant:v1.12.5@sha256:05fecce7dce45d1254e0468bc037e8210e187fd56fa847688b012293d5f08aae
     ports:
-      - "127.0.0.1:6333:6333"
+      - "127.0.0.1:${AAST_QDRANT_PORT:-6333}:6333"
     volumes:
       - qdrant_data:/qdrant/storage
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "bash -ec 'exec 3<>/dev/tcp/127.0.0.1/6333'"]
+      test:
+        - CMD
+        - bash
+        - -ec
+        - |
+          exec 3<>/dev/tcp/127.0.0.1/6333
+          printf 'GET /readyz HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n' >&3
+          read -r status <&3
+          [[ "$$status" == 'HTTP/1.1 200 '* ]]
       interval: 20s
       timeout: 5s
       retries: 8
@@ -209,16 +222,18 @@ services:
       - ai-agent-net
 
   neo4j:
-    image: neo4j:5.26-community
+    image: neo4j:5.26.26-community@sha256:0b5d3ab6ec1b866890dbfb53bf4fe1cf039f9e03c96165599a403005b7e7bcc3
     environment:
       NEO4J_AUTH: ${NEO4J_USER:-neo4j}/${NEO4J_PASSWORD:?Set NEO4J_PASSWORD in .env}
+      AAST_NEO4J_USER: ${NEO4J_USER:-neo4j}
+      AAST_NEO4J_PASSWORD: ${NEO4J_PASSWORD:?Set NEO4J_PASSWORD in .env}
       NEO4J_dbms_default__database: ${NEO4J_DATABASE:-neo4j}
       NEO4J_server_memory_heap_initial__size: ${NEO4J_HEAP_INITIAL:-512m}
       NEO4J_server_memory_heap_max__size: ${NEO4J_HEAP_MAX:-1G}
       NEO4J_server_memory_pagecache_size: ${NEO4J_PAGECACHE:-512m}
     ports:
-      - "127.0.0.1:7474:7474"
-      - "127.0.0.1:7687:7687"
+      - "127.0.0.1:${AAST_NEO4J_HTTP_PORT:-7474}:7474"
+      - "127.0.0.1:${AAST_NEO4J_BOLT_PORT:-7687}:7687"
     volumes:
       - neo4j_data:/data
       - neo4j_logs:/logs
@@ -226,11 +241,48 @@ services:
       - neo4j_plugins:/plugins
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "cypher-shell -u ${NEO4J_USER:-neo4j} -p ${NEO4J_PASSWORD:-12345678} 'RETURN 1' >/dev/null 2>&1 || exit 1"]
+      test: ["CMD-SHELL", "cypher-shell -u \"$$AAST_NEO4J_USER\" -p \"$$AAST_NEO4J_PASSWORD\" 'RETURN 1' >/dev/null 2>&1 || exit 1"]
       interval: 20s
       timeout: 10s
       retries: 12
       start_period: 60s
+    networks:
+      - ai-agent-net
+
+  ollama-ready:
+    image: node:20-bookworm-slim@sha256:2cf067cfed83d5ea958367df9f966191a942351a2df77d6f0193e162b5febfc0
+    restart: "no"
+    environment:
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
+      PRIMARY_MODEL: ${PRIMARY_MODEL:-gemma4:e2b}
+      BACKUP_MODEL: ${BACKUP_MODEL:-tinyllama:latest}
+      KG_EMBED_MODEL: ${KG_EMBED_MODEL:-nomic-embed-text}
+      OLLAMA_WARM_TIMEOUT_MS: ${OLLAMA_WARM_TIMEOUT_MS:-240000}
+      AAST_ICCTA_PIN_MODELS: ${AAST_ICCTA_PIN_MODELS:-false}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./scripts/warm-ollama.mjs:/warm-ollama.mjs:ro
+      - ./research/conversation-baseline/profile.json:/profile.json:ro
+    command: ["node", "/warm-ollama.mjs"]
+    networks:
+      - ai-agent-net
+
+  rag-corpus-ingest:
+    profiles: ["fixture-ingest"]
+    image: aast-ai-agent/rag-ingestion:iccta-2026-p0
+    build:
+      context: ./aast-ai-agent-main/backend/rag_system
+      dockerfile: Dockerfile.ingestion
+    environment:
+      QDRANT_HOST: qdrant
+      QDRANT_PORT: 6333
+      RAG_COLLECTION_NAME: aast_academic_rag_production
+      RAG_CORPUS_PATH: /run/private/corpus.json
+      RAG_EMBEDDING_DEVICE: ${RAG_EMBEDDING_DEVICE:-cpu}
+      RAG_TORCH_NUM_THREADS: ${RAG_TORCH_NUM_THREADS:-4}
+    volumes:
+      - rag_hf_cache:/root/.cache/huggingface
     networks:
       - ai-agent-net
 

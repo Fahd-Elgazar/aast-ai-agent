@@ -1,4 +1,4 @@
-FROM python:3.11-slim
+FROM python:3.11-slim@sha256:07d4824036af339fa1b6ef769cc99d9c10a141769538b52b3b597c84f7a7b535
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
@@ -12,7 +12,7 @@ RUN apt-get update \
 
 COPY requirements.retriever.txt .
 RUN pip install --no-cache-dir --index-url https://download.pytorch.org/whl/cpu torch==2.3.1+cpu \
-    && pip install --no-cache-dir -r requirements.retriever.txt
+    && pip install --no-cache-dir 'torch==2.3.1+cpu' -r requirements.retriever.txt
 
 # The retriever serves an already-ingested Qdrant collection. Institutional
 # corpus files are private deployment inputs and are deliberately not baked
