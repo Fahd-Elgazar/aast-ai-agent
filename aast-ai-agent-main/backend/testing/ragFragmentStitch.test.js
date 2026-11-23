@@ -69,7 +69,7 @@ const MERIT = "What are the merit scholarship eligibility criteria?";
   const out = stitch(live, MERIT);
   assert.deepEqual(out.map(o => o.id), ["y2", "y4", "y1"], "general criteria first, transfer rules last");
   assert.equal(out[0].text, "To qualify, a student must maintain a GPA of at least 3.4, and have completed all previous study hours without interruption.");
-  assert.equal(out[1].text, "Scholarship is divided equally, except if multiple students achieve a 4.00.", "a passage starting mid-sentence is capitalised");
+  assert.equal(out[1].text, "scholarship is divided equally, except if multiple students achieve a 4.00.", "a lone fragment is not capitalised mid-sentence");
   assert.match(out[2].text, /^For transferred students: Transferred students from abroad or other institutions/);
   assert.equal((out[2].text.match(/Transferred students/g) || []).length, 1, "the restated transfer rule appears once");
   assert.deepEqual(out[2].citations.map(c => c.id), ["y1", "y5"], "the merged-away transfer chunk is still cited");
@@ -98,6 +98,28 @@ const MERIT = "What are the merit scholarship eligibility criteria?";
     { id: "p1", title: "Academic Probation Rule", text: "A student whose cumulative GPA falls below 2.0 is placed on academic probation for the following semester." },
   ];
   assert.equal(stitch(whole, "scholarship"), whole);
+}
+
+// 8. Live Q5 shape: three general fragments whose order is ambiguous stay as
+//    written (no capital letters mid-sentence), and the two tie-rule
+//    fragments, which can only follow each other, are joined.
+{
+  const tie = { source: "tie.pdf", document_type: "policy", category: "scholarships" };
+  const out = stitch([
+    { id: "e1", title: S, ...doc, text: "To qualify, a student must maintain a GPA of at least 3.4," },
+    { id: "e2", title: S, ...doc, text: "and have completed all previous study hours without interruption" },
+    { id: "e3", title: S, ...doc, text: "belong to a major with at least 15 students," },
+    { id: "r1", title: "Scholarship Tie Rules", ...tie, text: "scholarship is divided equally, except if multiple students achieve a 4.00," },
+    { id: "r2", title: "Scholarship Tie Rules", ...tie, text: "in which case each receives a full scholarship." },
+  ], MERIT);
+  const texts = out.map(o => o.text);
+  assert.deepEqual(texts.slice(0, 3), [
+    "To qualify, a student must maintain a GPA of at least 3.4,",
+    "and have completed all previous study hours without interruption",
+    "belong to a major with at least 15 students,",
+  ]);
+  assert.ok(texts.includes("Scholarship is divided equally, except if multiple students achieve a 4.00, in which case each receives a full scholarship."));
+  assert.ok(texts.every(text => !/[,a-z] [A-Z][a-z]+ (have|to|which)\b/.test(text)), "no capital letter in the middle of a sentence");
 }
 
 console.log("RAG fragment stitch tests passed.");

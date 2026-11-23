@@ -2127,7 +2127,8 @@ class RAGService {
      *     document starts mid-sentence). Anything else stays a separate source.
      * Every joined passage keeps the citation of each chunk it came from.
      * When the question is not about transfer, transfer-only passages are
-     * labelled and moved after the general ones. Scores are not changed.
+     * labelled and moved after the general ones. Rank order and scores are
+     * otherwise unchanged.
      * @private
      */
     _stitchFragmentSources(sources, query = '') {
@@ -2161,11 +2162,6 @@ class RAGService {
             source: source?.source ?? source?.source_file ?? null,
         });
         const queryAsksTransfer = /\btransfer|\bfrom abroad\b/i.test(String(query || ''));
-        const queryTokens = new Set(String(query || '').toLowerCase().match(/[a-z]{4,}/g) || []);
-        const titleOverlap = source => {
-            const tokens = String(source?.title || '').toLowerCase().match(/[a-z]{4,}/g) || [];
-            return tokens.filter(token => queryTokens.has(token) || queryTokens.has(token.replace(/s$/, ''))).length;
-        };
 
         // 1. Group short fragments by document identity, keeping rank order.
         const groups = new Map();
@@ -2198,12 +2194,15 @@ class RAGService {
             const chains = [];
             const used = new Set();
             for (const item of items) {
-                if (used.has(item) || startsMidSentence(item.text)) continue;
+                // A fragment that starts mid-sentence may still open a chain
+                // when no other fragment of the document could precede it.
+                const couldFollowAnother = openers.some(other => other !== item);
+                if (used.has(item) || (startsMidSentence(item.text) && couldFollowAnother)) continue;
                 const chain = [item];
                 used.add(item);
                 let current = item;
                 while (endsMidSentence(current.text)) {
-                    const candidates = continuations.filter(next => !used.has(next) && next !== current);
+                    const candidates = continuations.filter(next => !used.has(next) && !chain.includes(next));
                     // Exactly one continuation, and it can only continue this
                     // fragment, otherwise the order is not supported.
                     const otherOpeners = openers.filter(other => other !== current && !chain.includes(other));
@@ -2262,11 +2261,8 @@ class RAGService {
 
         const transferPassages = moveTransfer ? passages.filter(isTransferPassage) : [];
         const general = passages.filter(passage => !transferPassages.includes(passage));
-        const promoted = queryAsksTransfer ? [] : general.filter(passage =>
-            passage.source.merged_fragment_count > 1 && titleOverlap(passage.source) > 0
-        );
-        promoted.sort((a, b) => (titleOverlap(b.source) - titleOverlap(a.source)) || (a.firstIndex - b.firstIndex));
-        const rest = general.filter(passage => !promoted.includes(passage));
+        // General passages keep their retrieval rank.
+        const rest = general;
 
         // Restated transfer rules collapse into one line, but only when they
         // share every number (a 3.4 rule never absorbs a 3.8 rule).
@@ -2300,13 +2296,16 @@ class RAGService {
             };
         })()] : [];
 
+        // A joined passage reads as a sentence, so it starts with a capital.
+        // A lone fragment is left as written: capitalising it would put a
+        // capital letter in the middle of the sentence it came from.
         const capitalised = source => {
             const text = String(source.text ?? '');
-            if (!/^[a-z]/.test(text)) return source;
+            if (!/^[a-z]/.test(text) || !(source.merged_fragment_count > 1)) return source;
             const fixed = text.charAt(0).toUpperCase() + text.slice(1);
             return { ...source, text: fixed, excerpt: fixed.slice(0, 420) };
         };
-        return [...promoted.map(p => p.source), ...rest.map(p => p.source), ...labelled].map(capitalised);
+        return [...rest.map(p => p.source), ...labelled].map(capitalised);
     }
 
     _buildUsedFacts(sources, limit = 3) {
