@@ -1351,7 +1351,7 @@ async function handleChatbotQuery(req, res) {
     if (
         route !== ROUTES.HYBRID_KG_RAG &&
         !routingDecision?.routing_features?.force_hybrid &&
-        /who teaches|who is teaching|who is|dean|vice dean|head of department|program director|department head/i.test(query)
+        /who teaches|who is teaching|\bwho is\b|dean|vice dean|head of department|program director|department head/i.test(query)
     ) {
         route = ROUTES.KG_DIRECT;
         routeOverrideReasons.push("direct_academic_entity_lock");
