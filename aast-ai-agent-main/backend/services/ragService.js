@@ -699,14 +699,20 @@ class RAGService {
                 defense_mode: runtimeMode.defenseMode,
             });
 
-            // Only surface retrieval-only evidence when PASS 2 cleared the relevance
+            // Only surface retrieval-only evidence when a pass cleared the relevance
             // floor. A weak PASS 2 abstains (returns no evidence) instead of being
-            // accepted merely because some sources exist.
-            if (this._retrievalOnlyAcceptable(pass2)) {
-                const ranked = this.rankSources(pass2.sources, queryCategory);
+            // accepted merely because some sources exist. When PASS 2 is too weak
+            // but PASS 1 already cleared the floor, PASS 1 is not discarded: the
+            // simplified rewrite can lose the entity words that made PASS 1 match.
+            const retrievalOnlyPass =
+                this._retrievalOnlyAcceptable(pass2) ? { result: pass2, label: 'PASS_2_RETRIEVAL_ONLY', usedQuery: simplifiedQuery }
+                : this._retrievalOnlyAcceptable(pass1) ? { result: pass1, label: 'PASS_1_RETRIEVAL_ONLY', usedQuery: expandedQuery }
+                : null;
+            if (retrievalOnlyPass) {
+                const ranked = this.rankSources(retrievalOnlyPass.result.sources, queryCategory);
                 return this._buildSearchResult(
                     {
-                        ...pass2,
+                        ...retrievalOnlyPass.result,
                         sources: ranked,
                         fallback_used: false,
                         metadata: {
@@ -715,8 +721,8 @@ class RAGService {
                             retrieval_only: true
                         }
                     },
-                    'PASS_2_RETRIEVAL_ONLY',
-                    simplifiedQuery,
+                    retrievalOnlyPass.label,
+                    retrievalOnlyPass.usedQuery,
                     queryCategory,
                     passLatencies,
                     elapsedMs(totalStart)
