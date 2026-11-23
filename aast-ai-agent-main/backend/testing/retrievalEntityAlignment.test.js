@@ -458,10 +458,11 @@ async function testMembershipQuestionAnswersEveryNamedProgram() {
       [membershipKey("Data Science", "Machine Learning"), false],
     ]),
   });
-  assert.deepEqual(both.map(fact => [fact.relSourceName, fact.relType]), [
+  assert.equal(both[0].text, "No, not both. Intelligent Systems includes Machine Learning, but Data Science does not.", "the verdict comes first");
+  assert.deepEqual(both.slice(1).map(fact => [fact.relSourceName, fact.relType]), [
     ["Intelligent Systems", "HAS_COURSE"],
     ["Data Science", "HAS_COURSE_ABSENT"],
-  ], "each named program gets its own answer");
+  ], "then each named program gets its own answer");
 
   // The edge for Data Science fell outside the limited search, but the direct
   // check found it: the answer is "yes" for both, never "no".
@@ -471,8 +472,13 @@ async function testMembershipQuestionAnswersEveryNamedProgram() {
       [membershipKey("Data Science", "Machine Learning"), true],
     ]),
   });
-  assert.deepEqual(verifiedYes.map(fact => fact.relType), ["HAS_COURSE", "HAS_COURSE"]);
-  assert.equal(verifiedYes[1].text, "Yes. Data Science includes Machine Learning in the knowledge graph.");
+  assert.equal(verifiedYes[0].text, "Yes, both Intelligent Systems and Data Science include Machine Learning.");
+  assert.deepEqual(verifiedYes.slice(1).map(fact => fact.relType), ["HAS_COURSE", "HAS_COURSE"]);
+  assert.equal(verifiedYes[2].text, "Yes. Data Science includes Machine Learning in the knowledge graph.");
+
+  // No verdict while any program is unconfirmed.
+  const partial = selectExactFactsForQuery([isEdge], question, "PROGRAM", 10, { membershipVerification: new Map() });
+  assert.notEqual(partial[0].relType, "HAS_COURSE_SUMMARY");
 
   // The direct check builds one pair per program and course.
   const calls = [];

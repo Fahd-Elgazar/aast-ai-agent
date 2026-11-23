@@ -3521,7 +3521,7 @@
   // The curated graph is authoritative for program membership. Each named
   // program gets its own answer: "yes" from an edge or a direct check, "no"
   // only when the direct check found no edge, and "not confirmed" otherwise.
-  function selectMembershipFacts(programs, courses, membership, verification, { askWhich = false } = {}) {
+  function selectMembershipFacts(programs, courses, membership, verification, { askWhich = false, askBoth = false } = {}) {
     const answers = [];
     const used = new Set();
     for (const program of programs) {
@@ -3576,7 +3576,42 @@
       }
     }
     const supporting = membership.filter(fact => !used.has(fact));
-    return [...answers, ...dedupeFacts(supporting)];
+    return [...summarizeMembershipAcrossPrograms(answers, programs, courses, { askBoth }), ...answers, ...dedupeFacts(supporting)];
+  }
+
+  // "Do A and B both include C?" gets the overall verdict first, then the
+  // answer for each program. Only decided answers count toward the verdict.
+  function summarizeMembershipAcrossPrograms(answers, programs, courses, { askBoth = false } = {}) {
+    if (!askBoth || programs.length < 2 || courses.length !== 1) return [];
+    const course = courses[0];
+    const decided = programs.map(program => {
+      const answer = answers.find(fact => fact.relSourceName === program && fact.relTargetName === course);
+      if (!answer) return null;
+      if (answer.relType === "HAS_COURSE") return { program, includes: true };
+      if (answer.relType === "HAS_COURSE_ABSENT") return { program, includes: false };
+      return null;
+    });
+    if (decided.some(entry => entry === null)) return [];
+    const holders = decided.filter(entry => entry.includes).map(entry => entry.program);
+    const others = decided.filter(entry => !entry.includes).map(entry => entry.program);
+    let text;
+    if (others.length === 0) {
+      text = `Yes, both ${formatNaturalList(holders)} include ${course}.`;
+    } else if (holders.length === 0) {
+      text = `No. None of ${formatNaturalList(others)} includes ${course} in the knowledge graph.`;
+    } else {
+      text = `No, not both. ${formatNaturalList(holders)} ${holders.length > 1 ? "include" : "includes"} ${course}, but ${formatNaturalList(others)} ${others.length > 1 ? "do" : "does"} not.`;
+    }
+    return [{
+      text,
+      kind: "membership_summary",
+      relType: "HAS_COURSE_SUMMARY",
+      relSourceName: programs.join(", "),
+      relTargetName: course,
+      score: 0.96,
+      baseScore: 0.96,
+      graph: null
+    }];
   }
 
   export function selectExactFactsForQuery(facts, query, intent, limit, options = {}) {
@@ -3656,7 +3691,8 @@
         // A named program must match the edge source. Another program's edge to
         // the same course is not evidence either way for the named program.
         return selectMembershipFacts(requestedPrograms, requestedCourses, membership, options.membershipVerification, {
-          askWhich: /^\s*which\b/.test(normalized)
+          askWhich: /^\s*which\b/.test(normalized),
+          askBoth: /\b(both|all of them|each of them)\b/.test(normalized)
         });
       }
       if (membership.length > 0) return dedupeFacts(membership);
