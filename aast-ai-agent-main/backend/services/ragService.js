@@ -2264,37 +2264,62 @@ class RAGService {
         // General passages keep their retrieval rank.
         const rest = general;
 
-        // Restated transfer rules collapse into one line, but only when they
-        // share every number (a 3.4 rule never absorbs a 3.8 rule).
-        const wordsOf = text => new Set(String(text).toLowerCase().match(/[a-z0-9.]{3,}/g) || []);
+        // Transfer rules that restate each other collapse into one claim. Rules
+        // are treated as the same claim only when they share every number, have
+        // the same polarity (both affirm or both negate) and the shorter one is
+        // contained in the longer one. Conflicting rules are both kept, each with its own
+        // citations, and marked with conflicts_with so the answer can show it.
+        const wordsOf = text => new Set(String(text).toLowerCase().match(/[a-z0-9.']{3,}/g) || []);
         const numbersOf = text => (String(text).match(/\d+(?:\.\d+)?/g) || []).sort().join(',');
+        const isNegated = text => /\b(not|no|never|ineligible|cannot|can't|isn't|aren't|won't|doesn't|don't|neither|nor|excluded|unable)\b/i.test(text);
+        const overlap = (a, b) => a.size === 0 ? 0 : [...a].filter(word => b.has(word)).length / a.size;
         const keptRules = [];
         for (const passage of transferPassages) {
             const text = textOf(passage.source).replace(/^For transferred students:\s*/, '');
-            const words = wordsOf(text);
-            const covered = keptRules.some(kept => {
-                if (kept.numbers !== numbersOf(text)) return false;
-                const shared = [...words].filter(word => kept.words.has(word)).length;
-                return words.size > 0 && shared / words.size >= 0.7;
-            });
-            if (covered) {
-                keptRules[keptRules.length - 1].citations.push(...(passage.source.citations || [citationOf(passage.source)]));
+            const rule = {
+                text,
+                words: wordsOf(text),
+                numbers: numbersOf(text),
+                negated: isNegated(text),
+                source: passage.source,
+                citations: [...(passage.source.citations || [citationOf(passage.source)])],
+                conflicts: [],
+            };
+            const same = keptRules.find(kept =>
+                kept.numbers === rule.numbers &&
+                kept.negated === rule.negated &&
+                // The shorter rule must be contained in the longer one.
+                (rule.words.size <= kept.words.size
+                    ? overlap(rule.words, kept.words)
+                    : overlap(kept.words, rule.words)) >= 0.7
+            );
+            if (same) {
+                same.citations.push(...rule.citations);
                 continue;
             }
-            keptRules.push({ text, words, numbers: numbersOf(text), citations: [...(passage.source.citations || [citationOf(passage.source)])] });
+            for (const kept of keptRules) {
+                const opposite = kept.numbers === rule.numbers && kept.negated !== rule.negated &&
+                    overlap(rule.words, kept.words) >= 0.5;
+                if (opposite) {
+                    kept.conflicts.push(rule);
+                    rule.conflicts.push(kept);
+                }
+            }
+            keptRules.push(rule);
         }
-        const labelled = transferPassages.length ? [(() => {
-            const labelledText = `For transferred students: ${keptRules.map(rule => rule.text).join(' ')}`;
-            const citations = keptRules.flatMap(rule => rule.citations);
+        const firstCitationId = rule => rule.citations.map(citation => citation.id).find(Boolean) ?? null;
+        const labelled = keptRules.map((rule, index) => {
+            const text = index === 0 ? `For transferred students: ${rule.text}` : rule.text;
             return {
-                ...transferPassages[0].source,
-                text: labelledText,
-                excerpt: labelledText.slice(0, 420),
+                ...rule.source,
+                text,
+                excerpt: text.slice(0, 420),
                 audience: 'transferred_students',
-                citations,
-                merged_chunk_ids: citations.map(citation => citation.id).filter(Boolean),
+                citations: rule.citations,
+                merged_chunk_ids: rule.citations.map(citation => citation.id).filter(Boolean),
+                ...(rule.conflicts.length ? { conflicts_with: rule.conflicts.map(firstCitationId).filter(Boolean) } : {}),
             };
-        })()] : [];
+        });
 
         // A joined passage reads as a sentence, so it starts with a capital.
         // A lone fragment is left as written: capitalising it would put a

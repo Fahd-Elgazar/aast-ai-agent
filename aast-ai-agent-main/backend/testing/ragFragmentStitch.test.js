@@ -87,8 +87,11 @@ const MERIT = "What are the merit scholarship eligibility criteria?";
     { id: "t1", title: "Transfer Student Scholarship Eligibility", source: "t1", text: "Transferred students need a GPA of at least 3.4 after two semesters." },
     { id: "t2", title: "Scholarship Eligibility for Transfer Students", source: "t2", text: "Transferred students need a GPA of at least 3.8 after two semesters." },
   ], MERIT);
-  assert.match(out[1].text, /3\.4/);
-  assert.match(out[1].text, /3\.8/);
+  const transfer = out.filter(o => o.audience === "transferred_students");
+  assert.equal(transfer.length, 2, "a 3.4 rule never absorbs a 3.8 rule");
+  assert.match(transfer[0].text, /3\.4/);
+  assert.match(transfer[1].text, /3\.8/);
+  assert.deepEqual(transfer.map(o => o.citations.map(c => c.id)), [["t1"], ["t2"]]);
 }
 
 // 7. Whole passages and unrelated sources come back unchanged.
@@ -122,4 +125,39 @@ const MERIT = "What are the merit scholarship eligibility criteria?";
   assert.ok(texts.every(text => !/[,a-z] [A-Z][a-z]+ (have|to|which)\b/.test(text)), "no capital letter in the middle of a sentence");
 }
 
+// 9. Two transfer rules from different sources share the 3.4 threshold but
+//    disagree. Both are kept, each with only its own citation, and each is
+//    marked as conflicting with the other.
+{
+  const out = stitch([
+    { id: "m1", title: S, ...doc, text: "Merit awards require a GPA of at least 3.4." },
+    { id: "ta", title: "Transfer Student Scholarship Eligibility", source: "transfer_a.pdf", text: "Transferred students with a GPA of at least 3.4 are eligible for the scholarship." },
+    { id: "tb", title: "Scholarship Eligibility for Transfer Students", source: "transfer_b.pdf", text: "Transferred students with a GPA of at least 3.4 are not eligible for the scholarship." },
+  ], MERIT);
+  const transfer = out.filter(o => o.audience === "transferred_students");
+  assert.equal(transfer.length, 2, "both conflicting rules are kept");
+  assert.equal(transfer[0].text, "For transferred students: Transferred students with a GPA of at least 3.4 are eligible for the scholarship.");
+  assert.equal(transfer[1].text, "Transferred students with a GPA of at least 3.4 are not eligible for the scholarship.");
+  assert.deepEqual(transfer[0].citations.map(c => c.id), ["ta"], "each claim keeps only its own citation");
+  assert.deepEqual(transfer[1].citations.map(c => c.id), ["tb"]);
+  assert.deepEqual(transfer[0].conflicts_with, ["tb"]);
+  assert.deepEqual(transfer[1].conflicts_with, ["ta"]);
+}
+
 console.log("RAG fragment stitch tests passed.");
+
+// 10. Fusion keeps one citation per joined chunk, so a claim's citations are
+//     not reduced to the first chunk.
+{
+  const { default: fusionService } = await import("../services/fusionService.js");
+  const [evidence] = fusionService.processRAGResults([{
+    title: "Scholarship Eligibility Criteria",
+    text: "To qualify, a student must maintain a GPA of at least 3.4, and complete at least 15 credit hours per semester.",
+    citations: [
+      { id: "s1", title: "Scholarship Eligibility Criteria", source: "cai_scholarships.pdf" },
+      { id: "s2", title: "Scholarship Eligibility Criteria", source: "cai_scholarships.pdf" },
+    ],
+  }]);
+  assert.deepEqual(evidence.citations.map(c => c.id), ["s1", "s2"]);
+  console.log("RAG fragment stitch fusion citation test passed.");
+}

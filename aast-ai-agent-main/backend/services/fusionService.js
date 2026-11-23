@@ -255,13 +255,17 @@ class FusionService {
                 source_type: 'RAG',
                 confidence: item?.score ?? item?.confidence ?? envelope?.confidence ?? 0.7,
                 evidence,
-                citations: [this._buildEvidenceCitation({
-                    item,
+                // A passage joined from several chunks keeps one citation per chunk.
+                citations: (Array.isArray(item?.citations) && item.citations.length > 1
+                    ? item.citations.map(citation => ({ ...item, citations: [citation] }))
+                    : [item]
+                ).map(citedItem => this._buildEvidenceCitation({
+                    item: citedItem,
                     evidence,
                     sourceType: 'RAG',
                     fallbackId: `rag-${index}`,
                     fallbackSource: item?.source || metadata.source_file || metadata.source || 'Institutional document'
-                })],
+                })),
                 officiality: 0.9,
                 freshness: this._calculateFreshness(metadata),
                 metadata
