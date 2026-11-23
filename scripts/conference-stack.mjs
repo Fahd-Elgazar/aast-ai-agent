@@ -54,7 +54,7 @@ function initEnv(dataDirectory) {
     AUTH_JWT_SECRET: randomBytes(32).toString("hex"),
   };
   assert(!/["\r\n$]/.test(replacements.AAST_DATA_DIR), "Fixture path contains unsupported characters");
-  const output = template.replace(/^([A-Z_]+)=.*$/gm, (line, key) =>
+  const output = template.replace(/^([A-Z][A-Z0-9_]*)=.*$/gm, (line, key) =>
     Object.hasOwn(replacements, key) ? key + "=" + JSON.stringify(replacements[key]) : line);
   writeFileSync(envFile, output, { flag: "wx", mode: 0o600 });
 }
@@ -115,7 +115,7 @@ function typedGraph(profile) {
   ].join(" ");
   const proof = compose([
     "exec", "-T", "neo4j", "sh", "-ec",
-    'cypher-shell --format plain -d neo4j -u "$NEO4J_USER" -p "$NEO4J_PASSWORD" --param "$1" "$2"',
+    'cypher-shell --format plain -d neo4j -u "$AAST_NEO4J_USER" -p "$AAST_NEO4J_PASSWORD" --param "$1" "$2"',
     "neo4j-proof", "{id: '" + profile.neo4j.evidence.machineLearningGraphId + "'}", query,
   ], { capture: true }).stdout.trim().split(/\r?\n/).at(-1);
   assert.equal(proof?.replace(/"/g, ""),
