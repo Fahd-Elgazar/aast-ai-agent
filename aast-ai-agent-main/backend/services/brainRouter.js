@@ -511,6 +511,7 @@ class BrainRouter {
             admission: /\b(admission|admissions|apply|application|enrollment|joining|entry requirements|acceptance)\b/i,
             tuition: /\b(tuition|fees|payment|cost|charge|late payment|overdue|semester fees)\b/i,
             regulation: /\b(regulation|regulations|rules|handbook|bylaw|academic regulations)\b/i,
+            calendar: /\b(academic calendar|official calendar|university calendar|term dates|semester dates|registration dates|add[\s\/-]*drop (?:period|dates?|deadline))\b/i,
             policy: /\b(policy|policies|academic policy|institutional policy|student affairs|student conduct)\b/i
         };
 
@@ -530,6 +531,7 @@ class BrainRouter {
         const strongPolicyEvidence =
             matchedCategories.length >= 2 ||
             (matchedCategories.length >= 1 && questionFraming) ||
+            matchedCategories.includes('calendar') ||
             /\b(probation rules|scholarship eligibility|admission requirements|tuition regulations|minimum gpa|gpa for transfer)\b/i.test(query);
 
         return {
