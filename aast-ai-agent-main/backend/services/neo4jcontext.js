@@ -3456,35 +3456,130 @@
     return [...queryTokens].filter(token => factTokens.has(token)).length;
   }
 
-  // The curated graph is authoritative for program membership, so a missing
-  // HAS_COURSE edge between a named program and course is stated explicitly,
-  // together with the programs whose edges do include that course.
-  function buildMembershipAbsenceFacts(programs, courses, membership) {
-    const absence = [];
+  const MEMBERSHIP_QUESTION_PATTERN = /\b(which|what|does|do|is|are)\b.*\b(include|includes|contain|contains|have|has)\b/;
+
+  export function membershipKey(program, course) {
+    return `${program}\u0000${course}`;
+  }
+
+  export function membershipQuestionTargets(query) {
+    if (!MEMBERSHIP_QUESTION_PATTERN.test(normalizeText(query))) return null;
+    const targets = resolveExactEntities(query);
+    const programs = targets.filter(target => target.entity_type === "program");
+    const courses = targets.filter(target => target.entity_type === "course");
+    return programs.length > 0 && courses.length > 0 ? { programs, courses } : null;
+  }
+
+  function exactSurfacesFor(target) {
+    return Array.from(new Set(
+      [target.canonical_name, target.course_code, ...(target.aliases || [])]
+        .filter(Boolean)
+        .map(toExactSurfaceKey)
+        .filter(Boolean)
+    ));
+  }
+
+  // Checks each named program-course pair directly in the graph, instead of
+  // inferring a missing edge from a limited retrieval. Returns a Map from
+  // membershipKey(program, course) to true or false. Pairs that could not be
+  // checked are left out, so they are never answered with "No".
+  export async function verifyProgramCourseMembership(session, programs, courses) {
+    const pairs = [];
     for (const program of programs) {
       for (const course of courses) {
-        const holders = [...new Set(
-          membership
-            .filter(fact => fact.relTargetName === course && fact.relSourceName !== program)
-            .map(fact => fact.relSourceName)
-        )];
-        if (holders.length === 0) continue;
-        absence.push({
-          text: `No. ${program} does not include ${course} in the knowledge graph; ${course} is part of ${formatNaturalList(holders)}.`,
-          kind: "membership_absence",
-          relType: "HAS_COURSE_ABSENT",
-          relSourceName: program,
-          relTargetName: course,
-          score: 0.95,
-          baseScore: 0.95,
-          graph: null
+        pairs.push({
+          program: program.canonical_name,
+          course: course.canonical_name,
+          programSurfaces: exactSurfacesFor(program),
+          courseSurfaces: exactSurfacesFor(course)
         });
       }
     }
-    return absence;
+    const verification = new Map();
+    if (!session || pairs.length === 0) return verification;
+
+    const programMatch = ["p.name", "p.full_name", "p.degree_name", "p.title"]
+      .map(field => `${normalizeCypherExpression(field)} IN pair.programSurfaces`)
+      .join(" OR ");
+    const courseMatch = ["c.name", "c.title", "c.code", "c.course_code"]
+      .map(field => `${normalizeCypherExpression(field)} IN pair.courseSurfaces`)
+      .join(" OR ");
+    const cypher = `
+      UNWIND $pairs AS pair
+      OPTIONAL MATCH (p)-[r:HAS_COURSE]->(c)
+      WHERE (${programMatch}) AND (${courseMatch})
+      RETURN pair.program AS program, pair.course AS course, count(r) AS edges
+    `;
+    const records = await runRetrieval(session, cypher, { pairs });
+    for (const record of records) {
+      const edges = Number(record.get("edges")?.toNumber?.() ?? record.get("edges") ?? 0);
+      verification.set(membershipKey(record.get("program"), record.get("course")), edges > 0);
+    }
+    return verification;
   }
 
-  export function selectExactFactsForQuery(facts, query, intent, limit) {
+  // The curated graph is authoritative for program membership. Each named
+  // program gets its own answer: "yes" from an edge or a direct check, "no"
+  // only when the direct check found no edge, and "not confirmed" otherwise.
+  function selectMembershipFacts(programs, courses, membership, verification, { askWhich = false } = {}) {
+    const answers = [];
+    const used = new Set();
+    for (const program of programs) {
+      for (const course of courses) {
+        const edge = membership.find(fact => fact.relSourceName === program && fact.relTargetName === course);
+        const verified = verification instanceof Map ? verification.get(membershipKey(program, course)) : undefined;
+        if (edge) {
+          used.add(edge);
+          answers.push(edge);
+        } else if (verified === true) {
+          answers.push({
+            text: `Yes. ${program} includes ${course} in the knowledge graph.`,
+            kind: "membership_verified",
+            relType: "HAS_COURSE",
+            relSourceName: program,
+            relTargetName: course,
+            score: 0.95,
+            baseScore: 0.95,
+            graph: null
+          });
+        } else if (verified === false) {
+          const holders = [...new Set(
+            membership
+              .filter(fact => fact.relTargetName === course && fact.relSourceName !== program)
+              .map(fact => fact.relSourceName)
+          )];
+          const elsewhere = holders.length > 0 ? `; ${course} is part of ${formatNaturalList(holders)}` : "";
+          answers.push({
+            text: `No. ${program} does not include ${course} in the knowledge graph${elsewhere}.`,
+            kind: "membership_absence",
+            relType: "HAS_COURSE_ABSENT",
+            relSourceName: program,
+            relTargetName: course,
+            score: 0.95,
+            baseScore: 0.95,
+            graph: null
+          });
+        } else if (!askWhich) {
+          // "Which of A and B includes C?" is answered by the programs that do;
+          // a yes/no question about a named program says it was not confirmed.
+          answers.push({
+            text: `I could not confirm from the knowledge graph whether ${program} includes ${course}.`,
+            kind: "membership_unverified",
+            relType: "HAS_COURSE_UNVERIFIED",
+            relSourceName: program,
+            relTargetName: course,
+            score: 0.5,
+            baseScore: 0.5,
+            graph: null
+          });
+        }
+      }
+    }
+    const supporting = membership.filter(fact => !used.has(fact));
+    return [...answers, ...dedupeFacts(supporting)];
+  }
+
+  export function selectExactFactsForQuery(facts, query, intent, limit, options = {}) {
     const normalized = normalizeText(query);
 
     if (
@@ -3539,30 +3634,30 @@
       }
     }
 
-    if (/\b(which|what|does|do|is)\b.*\b(include|includes|contain|contains|have|has)\b/.test(normalized)) {
+    if (MEMBERSHIP_QUESTION_PATTERN.test(normalized)) {
       const requestedTargets = resolveExactEntities(query);
-      const requestedCourses = new Set(
+      const requestedCourses = [...new Set(
         requestedTargets
           .filter(target => target.entity_type === "course")
           .map(target => target.canonical_name)
-      );
-      const requestedPrograms = requestedTargets
-        .filter(target => target.entity_type === "program")
-        .map(target => target.canonical_name);
+      )];
+      const requestedPrograms = [...new Set(
+        requestedTargets
+          .filter(target => target.entity_type === "program")
+          .map(target => target.canonical_name)
+      )];
       const membership = facts.filter(
         fact =>
           fact.relType === "HAS_COURSE" &&
-          requestedCourses.has(fact.relTargetName)
+          requestedCourses.includes(fact.relTargetName)
       );
-      if (membership.length > 0 && requestedPrograms.length > 0) {
-        // A named program must match the edge source. Another program's edge to the
-        // same course is not evidence that the named program includes it.
-        const inRequestedPrograms = membership.filter(fact => requestedPrograms.includes(fact.relSourceName));
-        if (inRequestedPrograms.length > 0) return dedupeFacts(inRequestedPrograms);
-        return [
-          ...buildMembershipAbsenceFacts(requestedPrograms, [...requestedCourses], membership),
-          ...dedupeFacts(membership)
-        ];
+      if (requestedPrograms.length > 0 && requestedCourses.length > 0 &&
+          (membership.length > 0 || options.membershipVerification instanceof Map)) {
+        // A named program must match the edge source. Another program's edge to
+        // the same course is not evidence either way for the named program.
+        return selectMembershipFacts(requestedPrograms, requestedCourses, membership, options.membershipVerification, {
+          askWhich: /^\s*which\b/.test(normalized)
+        });
       }
       if (membership.length > 0) return dedupeFacts(membership);
     }
@@ -3760,11 +3855,27 @@
               }
             }
 
+            let membershipVerification;
+            const membershipTargets = membershipQuestionTargets(exactQuestion);
+            if (membershipTargets) {
+              try {
+                membershipVerification = await verifyProgramCourseMembership(
+                  session,
+                  membershipTargets.programs,
+                  membershipTargets.courses
+                );
+              } catch (verificationError) {
+                // Without a direct check, no program is answered with "No".
+                console.warn(`[KG_EXACT][${requestId}] membership verification failed: ${verificationError?.message}`);
+                membershipVerification = new Map();
+              }
+            }
             const selectedFacts = selectExactFactsForQuery(
               exact.facts,
               exactQuestion,
               detectedIntent,
-              effectiveLimit
+              effectiveLimit,
+              { membershipVerification }
             );
             const chosen = selectedFacts.length > 0 ? selectedFacts : exact.facts.slice(0, effectiveLimit);
             const confidence = Math.min(chosen[0]?.score || chosen[0]?.baseScore || 0.95, 0.99);
