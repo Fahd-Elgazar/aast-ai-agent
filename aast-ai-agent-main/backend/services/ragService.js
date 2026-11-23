@@ -2116,160 +2116,190 @@ class RAGService {
     /**
      * The production corpus stores some passages as sentence fragments
      * (for example "To qualify, a student must maintain a GPA of at least 3.4,").
-     * Listing them one by one in rank order reads as a garbled answer.
+     * Listing them in rank order reads as a garbled answer.
      *
-     * This joins fragments that share a document title into one passage,
-     * continuing a fragment that ends mid-sentence with the fragment that
-     * starts mid-sentence, and moves the passage whose title matches the
-     * question to the front. Retrieval data and scores are not changed.
+     * Fragments are joined only when the join is supported:
+     *   - same document: title, source, document type and category all match,
+     *     so different documents that share a title stay apart;
+     *   - supported order: an explicit position field when the chunks carry
+     *     one, otherwise a single unambiguous sentence continuation (one
+     *     fragment stops mid-sentence and exactly one fragment of the same
+     *     document starts mid-sentence). Anything else stays a separate source.
+     * Every joined passage keeps the citation of each chunk it came from.
+     * When the question is not about transfer, transfer-only passages are
+     * labelled and moved after the general ones. Scores are not changed.
      * @private
      */
     _stitchFragmentSources(sources, query = '') {
         if (!Array.isArray(sources) || sources.length < 2) return Array.isArray(sources) ? sources : [];
 
         const MAX_FRAGMENT_CHARS = 200;
+        const norm = value => String(value ?? '').trim().toLowerCase();
         const textOf = source => String(source?.text ?? source?.excerpt ?? source?.content ?? '').replace(/\s+/g, ' ').trim();
-        const titleKey = source => String(source?.title || '').trim().toLowerCase();
-        const endsMidSentence = text => !/[.!?:;)"\u201d]$/.test(text);
+        const metaOf = source => source?.metadata || source?.payload || {};
+        const documentKey = source => {
+            const meta = metaOf(source);
+            const title = norm(source?.title ?? meta.title);
+            if (!title) return '';
+            return [
+                title,
+                norm(source?.source_file ?? source?.source ?? meta.source_file ?? meta.source),
+                norm(source?.document_type ?? meta.document_type),
+                norm(source?.category ?? meta.category),
+            ].join('|');
+        };
+        const positionOf = source => {
+            const meta = metaOf(source);
+            const value = source?.chunk_index ?? source?.position ?? meta.chunk_index ?? meta.position ?? meta.chunk_order;
+            return Number.isFinite(Number(value)) && value !== null && value !== '' ? Number(value) : null;
+        };
+        const endsMidSentence = text => !/[.!?:;)"”]$/.test(text);
         const startsMidSentence = text => /^[a-z(,;]/.test(text);
-
-        const groups = new Map();
-        sources.forEach((source, index) => {
-            const key = titleKey(source);
-            const text = textOf(source);
-            const isFragment = key && text && text.length <= MAX_FRAGMENT_CHARS;
-            const groupKey = isFragment ? `t:${key}` : `s:${index}`;
-            if (!groups.has(groupKey)) groups.set(groupKey, { firstIndex: index, items: [] });
-            groups.get(groupKey).items.push({ source, text, index });
+        const citationOf = source => ({
+            id: source?.id ?? source?.doc_id ?? null,
+            title: source?.title ?? null,
+            source: source?.source ?? source?.source_file ?? null,
         });
-
-        const queryTokens = new Set(
-            String(query || '').toLowerCase().match(/[a-z]{4,}/g) || []
-        );
         const queryAsksTransfer = /\btransfer|\bfrom abroad\b/i.test(String(query || ''));
+        const queryTokens = new Set(String(query || '').toLowerCase().match(/[a-z]{4,}/g) || []);
         const titleOverlap = source => {
             const tokens = String(source?.title || '').toLowerCase().match(/[a-z]{4,}/g) || [];
             return tokens.filter(token => queryTokens.has(token) || queryTokens.has(token.replace(/s$/, ''))).length;
         };
 
-        const passages = [];
-        for (const group of groups.values()) {
-            if (group.items.length === 1) {
-                passages.push({ source: group.items[0].source, firstIndex: group.firstIndex });
-                continue;
-            }
+        // 1. Group short fragments by document identity, keeping rank order.
+        const groups = new Map();
+        sources.forEach((source, index) => {
+            const key = documentKey(source);
+            const text = textOf(source);
+            const isFragment = key && text && text.length <= MAX_FRAGMENT_CHARS;
+            const groupKey = isFragment ? `d:${key}` : `s:${index}`;
+            if (!groups.has(groupKey)) groups.set(groupKey, { firstIndex: index, items: [] });
+            groups.get(groupKey).items.push({ source, text, index });
+        });
 
-            // Build sentence chains: a fragment that stops mid-sentence is
-            // continued by the best-ranked fragment that starts mid-sentence.
-            const remaining = [...group.items];
-            const starters = remaining.filter(item => !startsMidSentence(item.text));
-            const ordered = [];
-            const take = item => {
-                remaining.splice(remaining.indexOf(item), 1);
-                ordered.push(item);
-            };
-            const queue = starters.length ? [...starters] : [remaining[0]];
-            while (remaining.length) {
-                let current = queue.find(item => remaining.includes(item)) || remaining[0];
-                take(current);
-                while (endsMidSentence(current.text)) {
-                    const next = remaining.find(item => startsMidSentence(item.text));
-                    if (!next) break;
-                    take(next);
-                    current = next;
+        // 2. Within a document, build only the chains whose order is supported.
+        const buildChains = items => {
+            const positioned = items.every(item => positionOf(item.source) !== null);
+            if (positioned) {
+                const ordered = [...items].sort((a, b) => positionOf(a.source) - positionOf(b.source));
+                const chains = [];
+                for (const item of ordered) {
+                    const last = chains[chains.length - 1];
+                    const previous = last?.[last.length - 1];
+                    const adjacent = previous && positionOf(item.source) === positionOf(previous.source) + 1;
+                    if (adjacent && endsMidSentence(previous.text)) last.push(item);
+                    else chains.push([item]);
                 }
+                return chains;
             }
+            const continuations = items.filter(item => startsMidSentence(item.text));
+            const openers = items.filter(item => endsMidSentence(item.text));
+            const chains = [];
+            const used = new Set();
+            for (const item of items) {
+                if (used.has(item) || startsMidSentence(item.text)) continue;
+                const chain = [item];
+                used.add(item);
+                let current = item;
+                while (endsMidSentence(current.text)) {
+                    const candidates = continuations.filter(next => !used.has(next) && next !== current);
+                    // Exactly one continuation, and it can only continue this
+                    // fragment, otherwise the order is not supported.
+                    const otherOpeners = openers.filter(other => other !== current && !chain.includes(other));
+                    if (candidates.length !== 1 || otherOpeners.length > 0) break;
+                    chain.push(candidates[0]);
+                    used.add(candidates[0]);
+                    current = candidates[0];
+                }
+                chains.push(chain);
+            }
+            for (const item of items) if (!used.has(item)) chains.push([item]);
+            return chains;
+        };
 
-            const lead = group.items[0].source;
-            let text = ordered.map(item => item.text).join(' ').replace(/\s+([,.;:])/g, '$1').trim();
-            if (text && endsMidSentence(text)) text = text.replace(/[,;\s]+$/, '') + '.';
-
-            // Drop repeated sentences, and when the question is not about
-            // transferred students, move the transfer-only rules into their
-            // own labelled passage after the general criteria.
-            const seenSentences = new Set();
-            const sentences = text.split(/(?<=[.!?])\s+(?=[A-Z])/)
-                .map(sentence => sentence.trim())
-                .filter(sentence => {
-                    const key = sentence.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
-                    if (!key || seenSentences.has(key)) return false;
-                    seenSentences.add(key);
-                    return true;
-                });
-            const isTransferRule = sentence => /\btransfer(?:red|s)?\b|\bfrom abroad\b/i.test(sentence);
-            const splitTransfer = !queryAsksTransfer && sentences.some(isTransferRule) && sentences.some(sentence => !isTransferRule(sentence));
-            const general = splitTransfer ? sentences.filter(sentence => !isTransferRule(sentence)) : sentences;
-            const transfer = splitTransfer ? sentences.filter(isTransferRule) : [];
-            const chunkIds = group.items.map(item => item.source?.id ?? item.source?.doc_id ?? null).filter(Boolean);
-            const passageFrom = (passageText, extra = {}) => ({
-                ...lead,
-                ...extra,
-                text: passageText,
-                excerpt: passageText.slice(0, 420),
-                merged_chunk_ids: chunkIds,
-                merged_fragment_count: group.items.length,
-            });
-
-            passages.push({ firstIndex: group.firstIndex, source: passageFrom(general.join(' ')) });
-            if (transfer.length) {
+        const passages = [];
+        let joinedAny = false;
+        for (const group of groups.values()) {
+            const chains = group.items.length === 1 ? [group.items] : buildChains(group.items);
+            const seenTexts = new Set();
+            for (const chain of chains) {
+                const lead = chain[0];
+                if (chain.length === 1) {
+                    const key = norm(lead.text);
+                    if (seenTexts.has(key)) continue; // identical chunk text from the same document
+                    seenTexts.add(key);
+                    passages.push({ source: lead.source, firstIndex: lead.index });
+                    continue;
+                }
+                joinedAny = true;
+                let text = chain.map(item => item.text).join(' ').replace(/\s+([,.;:])/g, '$1').trim();
+                if (endsMidSentence(text)) text = text.replace(/[,;\s]+$/, '') + '.';
+                seenTexts.add(norm(text));
                 passages.push({
-                    firstIndex: group.firstIndex + 0.5,
-                    source: passageFrom(`For transferred students: ${transfer.join(' ')}`, {
-                        title: `${lead.title} (transferred students)`,
-                        audience: 'transferred_students',
-                    })
+                    firstIndex: Math.min(...chain.map(item => item.index)),
+                    source: {
+                        ...lead.source,
+                        text,
+                        excerpt: text.slice(0, 420),
+                        merged_chunk_ids: chain.map(item => citationOf(item.source).id).filter(Boolean),
+                        merged_fragment_count: chain.length,
+                        citations: chain.map(item => citationOf(item.source)),
+                    }
                 });
             }
         }
+        passages.sort((a, b) => a.firstIndex - b.firstIndex);
 
-        // A passage written only for transferred students (by title or by the
-        // split above) goes after the general ones when the question is not
-        // about transfer, and is labelled so it is not read as a general rule.
+        // 3. Transfer-only passages go after the general ones, labelled, when
+        // the question is not about transfer.
         const isTransferPassage = passage =>
-            passage.source.audience === 'transferred_students' ||
-            /\btransfer(?:red|s)?\b/i.test(String(passage.source.title || ''));
+            /\btransfer(?:red|s)?\b/i.test(String(passage.source.title || '')) ||
+            /^\s*transfer(?:red)? students\b/i.test(textOf(passage.source));
         const moveTransfer = !queryAsksTransfer &&
             passages.some(isTransferPassage) && passages.some(passage => !isTransferPassage(passage));
-        const anyMerged = passages.some(passage => passage.source.merged_fragment_count > 1);
-        if (!anyMerged && !moveTransfer) return sources;
+        if (!joinedAny && !moveTransfer && passages.length === sources.length) return sources;
 
         const transferPassages = moveTransfer ? passages.filter(isTransferPassage) : [];
         const general = passages.filter(passage => !transferPassages.includes(passage));
-
-        // Only a stitched passage whose title names the question's topic moves
-        // ahead; every other source keeps its retrieval rank.
-        const promoted = general.filter(passage =>
-            passage.source.merged_fragment_count > 1 &&
-            titleOverlap(passage.source) > 0
+        const promoted = queryAsksTransfer ? [] : general.filter(passage =>
+            passage.source.merged_fragment_count > 1 && titleOverlap(passage.source) > 0
         );
         promoted.sort((a, b) => (titleOverlap(b.source) - titleOverlap(a.source)) || (a.firstIndex - b.firstIndex));
         const rest = general.filter(passage => !promoted.includes(passage));
-        // All transfer rules become one labelled passage, without restating
-        // a rule that another transfer passage already covers.
-        const wordsOf = text => new Set(String(text).toLowerCase().match(/[a-z0-9]{3,}/g) || []);
+
+        // Restated transfer rules collapse into one line, but only when they
+        // share every number (a 3.4 rule never absorbs a 3.8 rule).
+        const wordsOf = text => new Set(String(text).toLowerCase().match(/[a-z0-9.]{3,}/g) || []);
+        const numbersOf = text => (String(text).match(/\d+(?:\.\d+)?/g) || []).sort().join(',');
         const keptRules = [];
         for (const passage of transferPassages) {
-            const text = String(passage.source.text ?? passage.source.excerpt ?? '').replace(/^For transferred students:\s*/, '');
+            const text = textOf(passage.source).replace(/^For transferred students:\s*/, '');
             const words = wordsOf(text);
             const covered = keptRules.some(kept => {
+                if (kept.numbers !== numbersOf(text)) return false;
                 const shared = [...words].filter(word => kept.words.has(word)).length;
                 return words.size > 0 && shared / words.size >= 0.7;
             });
-            if (!covered) keptRules.push({ text, words });
+            if (covered) {
+                keptRules[keptRules.length - 1].citations.push(...(passage.source.citations || [citationOf(passage.source)]));
+                continue;
+            }
+            keptRules.push({ text, words, numbers: numbersOf(text), citations: [...(passage.source.citations || [citationOf(passage.source)])] });
         }
         const labelled = transferPassages.length ? [(() => {
             const labelledText = `For transferred students: ${keptRules.map(rule => rule.text).join(' ')}`;
+            const citations = keptRules.flatMap(rule => rule.citations);
             return {
                 ...transferPassages[0].source,
                 text: labelledText,
                 excerpt: labelledText.slice(0, 420),
                 audience: 'transferred_students',
-                merged_chunk_ids: transferPassages.flatMap(passage =>
-                    passage.source.merged_chunk_ids || [passage.source.id ?? passage.source.doc_id].filter(Boolean)),
+                citations,
+                merged_chunk_ids: citations.map(citation => citation.id).filter(Boolean),
             };
         })()] : [];
 
-        // A passage that starts mid-sentence still reads as a sentence.
         const capitalised = source => {
             const text = String(source.text ?? '');
             if (!/^[a-z]/.test(text)) return source;
