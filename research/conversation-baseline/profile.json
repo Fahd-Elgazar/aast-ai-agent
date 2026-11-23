@@ -78,8 +78,8 @@
       {
         "name": "gemma4:e2b",
         "role": "primary",
-        "bytes": 7163585787,
-        "sha256": "2cf98652fdc60fbb161f69c1c5cd5cca671992211d1214edb11dabeb56434a0d"
+        "bytes": 4587156505,
+        "sha256": "b37049369adfe3d2b653af0ab301a062ca5cbe96ace6aa0d3f2559ee9b563fc2"
       },
       {
         "name": "tinyllama:latest",
