@@ -1668,7 +1668,10 @@ class RAGService {
      * @private
      */
     _buildSearchResult(payload, pass, queryUsed, queryCategory, passLatencies, totalLatency) {
-        const rankedSources = Array.isArray(payload.sources) ? payload.sources : [];
+        const rankedSources = this._stitchFragmentSources(
+            Array.isArray(payload.sources) ? payload.sources : [],
+            queryUsed
+        );
         const diversityMetrics =
             payload.source_diversity && typeof payload.source_diversity === 'object'
                 ? payload.source_diversity
@@ -2114,6 +2117,226 @@ class RAGService {
             text: source?.text || excerpt,
             attribution: title
         };
+    }
+
+    /**
+     * The production corpus stores some passages as sentence fragments
+     * (for example "To qualify, a student must maintain a GPA of at least 3.4,").
+     * Listing them in rank order reads as a garbled answer.
+     *
+     * Fragments are joined only when the join is supported:
+     *   - same document: title, source, document type and category all match,
+     *     so different documents that share a title stay apart;
+     *   - supported order: an explicit position field when the chunks carry
+     *     one, otherwise a single unambiguous sentence continuation (one
+     *     fragment stops mid-sentence and exactly one fragment of the same
+     *     document starts mid-sentence). Anything else stays a separate source.
+     * Every joined passage keeps the citation of each chunk it came from.
+     * When the question is not about transfer, transfer-only passages are
+     * labelled and moved after the general ones. Rank order and scores are
+     * otherwise unchanged.
+     * @private
+     */
+    _stitchFragmentSources(sources, query = '') {
+        if (!Array.isArray(sources) || sources.length < 2) return Array.isArray(sources) ? sources : [];
+
+        const MAX_FRAGMENT_CHARS = 200;
+        const norm = value => String(value ?? '').trim().toLowerCase();
+        const textOf = source => String(source?.text ?? source?.excerpt ?? source?.content ?? '').replace(/\s+/g, ' ').trim();
+        const metaOf = source => source?.metadata || source?.payload || {};
+        const documentKey = source => {
+            const meta = metaOf(source);
+            const title = norm(source?.title ?? meta.title);
+            if (!title) return '';
+            return [
+                title,
+                norm(source?.source_file ?? source?.source ?? meta.source_file ?? meta.source),
+                norm(source?.document_type ?? meta.document_type),
+                norm(source?.category ?? meta.category),
+            ].join('|');
+        };
+        const positionOf = source => {
+            const meta = metaOf(source);
+            const value = source?.chunk_index ?? source?.position ?? meta.chunk_index ?? meta.position ?? meta.chunk_order;
+            return Number.isFinite(Number(value)) && value !== null && value !== '' ? Number(value) : null;
+        };
+        const endsMidSentence = text => !/[.!?:;)"”]$/.test(text);
+        const startsMidSentence = text => /^[a-z(,;]/.test(text);
+        const citationOf = source => ({
+            id: source?.id ?? source?.doc_id ?? null,
+            title: source?.title ?? null,
+            source: source?.source ?? source?.source_file ?? null,
+        });
+        const queryAsksTransfer = /\btransfer|\bfrom abroad\b/i.test(String(query || ''));
+
+        // 1. Group short fragments by document identity, keeping rank order.
+        const groups = new Map();
+        sources.forEach((source, index) => {
+            const key = documentKey(source);
+            const text = textOf(source);
+            const isFragment = key && text && text.length <= MAX_FRAGMENT_CHARS;
+            const groupKey = isFragment ? `d:${key}` : `s:${index}`;
+            if (!groups.has(groupKey)) groups.set(groupKey, { firstIndex: index, items: [] });
+            groups.get(groupKey).items.push({ source, text, index });
+        });
+
+        // 2. Within a document, build only the chains whose order is supported.
+        const buildChains = items => {
+            const positioned = items.every(item => positionOf(item.source) !== null);
+            if (positioned) {
+                const ordered = [...items].sort((a, b) => positionOf(a.source) - positionOf(b.source));
+                const chains = [];
+                for (const item of ordered) {
+                    const last = chains[chains.length - 1];
+                    const previous = last?.[last.length - 1];
+                    const adjacent = previous && positionOf(item.source) === positionOf(previous.source) + 1;
+                    if (adjacent && endsMidSentence(previous.text)) last.push(item);
+                    else chains.push([item]);
+                }
+                return chains;
+            }
+            const continuations = items.filter(item => startsMidSentence(item.text));
+            const openers = items.filter(item => endsMidSentence(item.text));
+            const chains = [];
+            const used = new Set();
+            for (const item of items) {
+                // A fragment that starts mid-sentence may still open a chain
+                // when no other fragment of the document could precede it.
+                const couldFollowAnother = openers.some(other => other !== item);
+                if (used.has(item) || (startsMidSentence(item.text) && couldFollowAnother)) continue;
+                const chain = [item];
+                used.add(item);
+                let current = item;
+                while (endsMidSentence(current.text)) {
+                    const candidates = continuations.filter(next => !used.has(next) && !chain.includes(next));
+                    // Exactly one continuation, and it can only continue this
+                    // fragment, otherwise the order is not supported.
+                    const otherOpeners = openers.filter(other => other !== current && !chain.includes(other));
+                    if (candidates.length !== 1 || otherOpeners.length > 0) break;
+                    chain.push(candidates[0]);
+                    used.add(candidates[0]);
+                    current = candidates[0];
+                }
+                chains.push(chain);
+            }
+            for (const item of items) if (!used.has(item)) chains.push([item]);
+            return chains;
+        };
+
+        const passages = [];
+        let joinedAny = false;
+        for (const group of groups.values()) {
+            const chains = group.items.length === 1 ? [group.items] : buildChains(group.items);
+            const seenTexts = new Set();
+            for (const chain of chains) {
+                const lead = chain[0];
+                if (chain.length === 1) {
+                    const key = norm(lead.text);
+                    if (seenTexts.has(key)) continue; // identical chunk text from the same document
+                    seenTexts.add(key);
+                    passages.push({ source: lead.source, firstIndex: lead.index });
+                    continue;
+                }
+                joinedAny = true;
+                let text = chain.map(item => item.text).join(' ').replace(/\s+([,.;:])/g, '$1').trim();
+                if (endsMidSentence(text)) text = text.replace(/[,;\s]+$/, '') + '.';
+                seenTexts.add(norm(text));
+                passages.push({
+                    firstIndex: Math.min(...chain.map(item => item.index)),
+                    source: {
+                        ...lead.source,
+                        text,
+                        excerpt: text.slice(0, 420),
+                        merged_chunk_ids: chain.map(item => citationOf(item.source).id).filter(Boolean),
+                        merged_fragment_count: chain.length,
+                        citations: chain.map(item => citationOf(item.source)),
+                    }
+                });
+            }
+        }
+        passages.sort((a, b) => a.firstIndex - b.firstIndex);
+
+        // 3. Transfer-only passages go after the general ones, labelled, when
+        // the question is not about transfer.
+        const isTransferPassage = passage =>
+            /\btransfer(?:red|s)?\b/i.test(String(passage.source.title || '')) ||
+            /^\s*transfer(?:red)? students\b/i.test(textOf(passage.source));
+        const moveTransfer = !queryAsksTransfer &&
+            passages.some(isTransferPassage) && passages.some(passage => !isTransferPassage(passage));
+        if (!joinedAny && !moveTransfer && passages.length === sources.length) return sources;
+
+        const transferPassages = moveTransfer ? passages.filter(isTransferPassage) : [];
+        const general = passages.filter(passage => !transferPassages.includes(passage));
+        // General passages keep their retrieval rank.
+        const rest = general;
+
+        // Transfer rules that restate each other collapse into one claim. Rules
+        // are treated as the same claim only when they share every number, have
+        // the same polarity (both affirm or both negate) and the shorter one is
+        // contained in the longer one. Conflicting rules are both kept, each with its own
+        // citations, and marked with conflicts_with so the answer can show it.
+        const wordsOf = text => new Set(String(text).toLowerCase().match(/[a-z0-9.']{3,}/g) || []);
+        const numbersOf = text => (String(text).match(/\d+(?:\.\d+)?/g) || []).sort().join(',');
+        const isNegated = text => /\b(not|no|never|ineligible|cannot|can't|isn't|aren't|won't|doesn't|don't|neither|nor|excluded|unable)\b/i.test(text);
+        const overlap = (a, b) => a.size === 0 ? 0 : [...a].filter(word => b.has(word)).length / a.size;
+        const keptRules = [];
+        for (const passage of transferPassages) {
+            const text = textOf(passage.source).replace(/^For transferred students:\s*/, '');
+            const rule = {
+                text,
+                words: wordsOf(text),
+                numbers: numbersOf(text),
+                negated: isNegated(text),
+                source: passage.source,
+                citations: [...(passage.source.citations || [citationOf(passage.source)])],
+                conflicts: [],
+            };
+            const same = keptRules.find(kept =>
+                kept.numbers === rule.numbers &&
+                kept.negated === rule.negated &&
+                // The shorter rule must be contained in the longer one.
+                (rule.words.size <= kept.words.size
+                    ? overlap(rule.words, kept.words)
+                    : overlap(kept.words, rule.words)) >= 0.7
+            );
+            if (same) {
+                same.citations.push(...rule.citations);
+                continue;
+            }
+            for (const kept of keptRules) {
+                const opposite = kept.numbers === rule.numbers && kept.negated !== rule.negated &&
+                    overlap(rule.words, kept.words) >= 0.5;
+                if (opposite) {
+                    kept.conflicts.push(rule);
+                    rule.conflicts.push(kept);
+                }
+            }
+            keptRules.push(rule);
+        }
+        const firstCitationId = rule => rule.citations.map(citation => citation.id).find(Boolean) ?? null;
+        const labelled = keptRules.map((rule, index) => {
+            const text = index === 0 ? `For transferred students: ${rule.text}` : rule.text;
+            return {
+                ...rule.source,
+                text,
+                excerpt: text.slice(0, 420),
+                audience: 'transferred_students',
+                citations: rule.citations,
+                merged_chunk_ids: rule.citations.map(citation => citation.id).filter(Boolean),
+                ...(rule.conflicts.length ? { conflicts_with: rule.conflicts.map(firstCitationId).filter(Boolean) } : {}),
+            };
+        });
+
+        // A joined passage reads as a sentence, so it starts with a capital.
+        // A lone fragment is left as written: capitalising it would put a
+        // capital letter in the middle of the sentence it came from.
+        const capitalised = source => {
+            const text = String(source.text ?? '');
+            if (!/^[a-z]/.test(text) || !(source.merged_fragment_count > 1)) return source;
+            const fixed = text.charAt(0).toUpperCase() + text.slice(1);
+            return { ...source, text: fixed, excerpt: fixed.slice(0, 420) };
+        };
+        return [...rest.map(p => p.source), ...labelled].map(capitalised);
     }
 
     _buildUsedFacts(sources, limit = 3) {
